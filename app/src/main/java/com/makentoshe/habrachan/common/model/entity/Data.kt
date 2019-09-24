@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Data(
     @SerializedName("articles")
-    val articles: List<Article>,
+    val articles: List<Article>?,
     @SerializedName("code")
     val code: Int = 200,
     @SerializedName("message")
@@ -13,5 +13,5 @@ data class Data(
     @SerializedName("data")
     val data: Any?,
     @SerializedName("pages")
-    val pages: Int
+    val pages: Int?
 )
