@@ -37,6 +37,11 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
 
+    // Mockk
+    // https://github.com/mockk/mockk
+    def mockk = "1.9"
+    testImplementation "io.mockk:mockk:$mockk"
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
