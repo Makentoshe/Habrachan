@@ -33,11 +33,11 @@ data class Author(
     @SerializedName("path")
     val path: String,
     @SerializedName("rating")
-    val rating: Double,
+    val rating: Float,
     @SerializedName("rating_position")
     val ratingPosition: Int,
     @SerializedName("score")
-    val score: Int,
+    val score: Float,
     @SerializedName("sex")
     val sex: String,
     @SerializedName("specializm")
