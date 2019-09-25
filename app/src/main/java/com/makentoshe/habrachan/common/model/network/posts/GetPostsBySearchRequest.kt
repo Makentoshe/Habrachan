@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.model.network
+package com.makentoshe.habrachan.common.model.network.posts
 
 data class GetPostsBySearchRequest(
     val query: String = "",

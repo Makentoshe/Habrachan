@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.common.model.network
 
-import com.makentoshe.habrachan.common.model.entity.GetPostsBySearchResult
+import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
+import com.makentoshe.habrachan.common.model.network.posts.GetPostsResultConverterFactory
 import com.makentoshe.habrachan.resources.testResourcesDirectory
 import io.mockk.every
 import io.mockk.mockk
@@ -11,10 +12,10 @@ import org.junit.Test
 import retrofit2.Converter
 import java.io.File
 
-class GetPostsBySearchResultConverterFactoryTest {
+class GetPostsResultConverterFactoryTest {
 
-    private val factory = GetPostsBySearchResultConverterFactory()
-    private lateinit var converter: Converter<ResponseBody, GetPostsBySearchResult>
+    private val factory = GetPostsResultConverterFactory()
+    private lateinit var converter: Converter<ResponseBody, GetPostsResult>
 
     @Before
     fun init() {

@@ -1,12 +1,12 @@
-package com.makentoshe.habrachan.common.model.network
+package com.makentoshe.habrachan.common.model.network.posts
 
 import com.makentoshe.habrachan.common.model.entity.Data
-import com.makentoshe.habrachan.common.model.entity.GetPostsBySearchResult
+import com.makentoshe.habrachan.common.model.network.HabrApi
 
 class GetPostsBySearch(
     private val api: HabrApi
 ) {
-    fun execute(request: GetPostsBySearchRequest): GetPostsBySearchResult {
+    fun execute(request: GetPostsBySearchRequest): GetPostsResult {
         if (request.page < 1) return createErrorResult(400, "Page should not be less 0")
 
         val response = api.getPostsBySearch(
@@ -16,9 +16,9 @@ class GetPostsBySearch(
         return response.body() ?: createErrorResult(response.code(), response.message())
     }
 
-    private fun createErrorResult(code: Int, message: String): GetPostsBySearchResult {
+    private fun createErrorResult(code: Int, message: String): GetPostsResult {
         val data = createErrorData(code, message)
-        return GetPostsBySearchResult(data, false)
+        return GetPostsResult(data, false)
     }
 
     private fun createErrorData(code: Int, message: String?) = Data(
