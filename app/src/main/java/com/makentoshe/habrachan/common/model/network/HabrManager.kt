@@ -1,12 +1,14 @@
 package com.makentoshe.habrachan.common.model.network
 
-import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
+import com.makentoshe.habrachan.common.model.network.login.Login
+import com.makentoshe.habrachan.common.model.network.login.LoginRequest
+import com.makentoshe.habrachan.common.model.network.login.LoginResult
 import com.makentoshe.habrachan.common.model.network.posts.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
 open class HabrManager(
-    protected val api: HabrApi
+    protected val api: HabrApi, protected val cookieStorage: CookieStorage
 ) {
 
     fun getPostsBySearch(request: GetPostsBySearchRequest): GetPostsResult {
@@ -17,15 +19,24 @@ open class HabrManager(
         return GetPosts(api).execute(request)
     }
 
+    fun login(request: LoginRequest): LoginResult {
+        return Login(api, cookieStorage).execute(request)
+    }
+
     companion object {
         fun build(
-            client: OkHttpClient = OkHttpClient.Builder().build(),
-            baseUrl: String = "https://m.habr.com/"
+            cookie: SessionCookie = SessionCookie(),
+            client: OkHttpClient = OkHttpClient.Builder().cookieJar(cookie).build(),
+            baseUrl: String = "https://habr.com/"
         ): HabrManager {
-            val retrofit = Retrofit.Builder().client(client).baseUrl(baseUrl)
-                .addConverterFactory(PostsConverterFactory())
-                .build()
-            return HabrManager(retrofit.create(HabrApi::class.java))
+            val retrofit =
+                Retrofit.Builder().client(client).baseUrl(baseUrl)
+                    .addConverterFactory(PostsConverterFactory())
+                    .addConverterFactory(StringConverterFactory())
+                    .addConverterFactory(ByteArrayConverterFactory())
+                    .addConverterFactory(LoginConverterFactory())
+                    .build()
+            return HabrManager(retrofit.create(HabrApi::class.java), cookie)
         }
     }
 }
