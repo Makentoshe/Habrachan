@@ -15,7 +15,7 @@ import java.io.File
 class PostsConverterFactoryTest {
 
     private val factory = PostsConverterFactory()
-    private lateinit var converter: Converter<ResponseBody, GetPostsResult>
+    private var converter: Converter<ResponseBody, GetPostsResult>? = null
 
     @Before
     fun init() {
@@ -29,7 +29,7 @@ class PostsConverterFactoryTest {
         val responseBody = mockk<ResponseBody>()
         every { responseBody.string() } returns successJson.readText()
 
-        converter.convert(responseBody).also {
+        converter!!.convert(responseBody).also {
             assertTrue(it.success)
             assertEquals(50, it.data.pages)
             assertEquals(20, it.data.articles!!.size)
@@ -43,7 +43,7 @@ class PostsConverterFactoryTest {
         val responseBody = mockk<ResponseBody>()
         every { responseBody.string() } returns errorJson.readText()
 
-        converter.convert(responseBody).also {
+        converter!!.convert(responseBody).also {
             assertFalse(it.success)
             assertEquals(400, it.data.code)
             assertNull(it.data.data)
