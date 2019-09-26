@@ -28,4 +28,8 @@ interface HabrApi {
     @GET("kek/v1/auth/{path}")
     fun getState(@Path("path") path: String = "habrahabr"): Call<String>
 
+    @GET("https://account.habr.com/captcha/")
+    fun captcha(
+        @Query("random") random: Double = Random.nextDouble()
+    ): Call<ByteArray>
 }
