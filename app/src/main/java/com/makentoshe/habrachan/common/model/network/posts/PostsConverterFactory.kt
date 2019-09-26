@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.common.model.network.posts
 
 import com.google.gson.Gson
 import com.makentoshe.habrachan.common.model.network.login.LoginResult
+import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -23,7 +24,7 @@ class PostsConverterFactory : Converter.Factory() {
 
 }
 
-class StringConverterFactory: Converter.Factory() {
+class StringConverterFactory : Converter.Factory() {
 
     private val converter by lazy {
         Converter<ResponseBody, String> { it.string() }
@@ -36,7 +37,7 @@ class StringConverterFactory: Converter.Factory() {
     }
 }
 
-class ByteArrayConverterFactory: Converter.Factory() {
+class ByteArrayConverterFactory : Converter.Factory() {
 
     private val converter by lazy {
         Converter<ResponseBody, ByteArray> { it.bytes() }
@@ -49,7 +50,7 @@ class ByteArrayConverterFactory: Converter.Factory() {
     }
 }
 
-class LoginConverterFactory: Converter.Factory() {
+class LoginConverterFactory : Converter.Factory() {
 
     private val converter by lazy {
         Converter<ResponseBody, LoginResult> {
@@ -63,3 +64,19 @@ class LoginConverterFactory: Converter.Factory() {
         return if (type == LoginResult::class.java) converter else null
     }
 }
+
+class VotePostConverterFactory : Converter.Factory() {
+
+    private val converter by lazy {
+        Converter<ResponseBody, VotePostResult> {
+            Gson().fromJson(it.string(), VotePostResult::class.java)
+        }
+    }
+
+    override fun responseBodyConverter(
+        type: Type, annotations: Array<Annotation>, retrofit: Retrofit
+    ): Converter<ResponseBody, VotePostResult>? {
+        return if (type == VotePostResult::class.java) converter else null
+    }
+}
+

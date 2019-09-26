@@ -4,6 +4,9 @@ import com.makentoshe.habrachan.common.model.network.login.Login
 import com.makentoshe.habrachan.common.model.network.login.LoginRequest
 import com.makentoshe.habrachan.common.model.network.login.LoginResult
 import com.makentoshe.habrachan.common.model.network.posts.*
+import com.makentoshe.habrachan.common.model.network.votepost.VotePost
+import com.makentoshe.habrachan.common.model.network.votepost.VotePostRequest
+import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
@@ -23,6 +26,10 @@ open class HabrManager(
         return Login(api, cookieStorage).execute(request)
     }
 
+    fun votePost(request: VotePostRequest): VotePostResult {
+        return VotePost(api, cookieStorage).execute(request)
+    }
+
     companion object {
         fun build(
             cookie: SessionCookie = SessionCookie(),
@@ -35,6 +42,7 @@ open class HabrManager(
                     .addConverterFactory(StringConverterFactory())
                     .addConverterFactory(ByteArrayConverterFactory())
                     .addConverterFactory(LoginConverterFactory())
+                    .addConverterFactory(VotePostConverterFactory())
                     .build()
             return HabrManager(retrofit.create(HabrApi::class.java), cookie)
         }

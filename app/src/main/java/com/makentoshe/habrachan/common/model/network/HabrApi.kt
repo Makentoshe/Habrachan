@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.common.model.network
 
 import com.makentoshe.habrachan.common.model.network.login.LoginResult
 import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
+import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -36,5 +37,13 @@ interface HabrApi {
         @Field("grant_type") grantType: String = "password",
         @Field("client_id") clientId: String = clientKey
     ) : Call<LoginResult>
+
+    @PUT("https://habr.com/api/v1/post/{postId}/vote")
+    fun votePostThroughApi(
+        @Header("client") clientKey: String,
+        @Header("token") accessToken: String,
+        @Path("postId") postId: Int,
+        @Query("vote") score: Int
+    ): Call<VotePostResult>
 
 }
