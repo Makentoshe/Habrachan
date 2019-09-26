@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.common.model.network
 
 import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
+import kotlin.random.Random
 
 interface HabrApi {
 
@@ -24,5 +24,8 @@ interface HabrApi {
         @Query("date") date: String? = null,
         @Query("custom") custom: Boolean? = null
     ): Call<GetPostsResult>
+
+    @GET("kek/v1/auth/{path}")
+    fun getState(@Path("path") path: String = "habrahabr"): Call<String>
 
 }
