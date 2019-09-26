@@ -32,4 +32,16 @@ interface HabrApi {
     fun captcha(
         @Query("random") random: Double = Random.nextDouble()
     ): Call<ByteArray>
+
+    @FormUrlEncoded
+    @POST("https://account.habr.com/ajax/login")
+    fun login(
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("state") state: String? = null,
+        @Field("consumer") consumer: String? = null,
+        @Field("captcha") captchaAlt: String = "",
+        @Field("captcha_type") captchaType: String? = null,
+        @Field("captcha") captcha: String? = null
+    ): Call<String>
 }
