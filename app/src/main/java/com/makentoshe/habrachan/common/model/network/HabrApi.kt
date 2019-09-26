@@ -1,13 +1,13 @@
 package com.makentoshe.habrachan.common.model.network
 
+import com.makentoshe.habrachan.common.model.network.login.LoginResult
 import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
 import retrofit2.Call
 import retrofit2.http.*
-import kotlin.random.Random
 
 interface HabrApi {
 
-    @GET("kek/v1/articles/")
+    @GET("https://m.habr.com/kek/v1/articles/")
     fun getPostsBySearch(
         @Query("query") query: String,
         @Query("page") page: Int,
@@ -15,7 +15,7 @@ interface HabrApi {
         @Query("fl") fl: String? = null
     ): Call<GetPostsResult>
 
-    @GET("kek/v1/articles")
+    @GET("https://m.habr.com/kek/v1/articles")
     fun getPosts(
         @Query("page") page: Int,
         @Query("sort") sort: String? = null,
@@ -25,23 +25,16 @@ interface HabrApi {
         @Query("custom") custom: Boolean? = null
     ): Call<GetPostsResult>
 
-    @GET("kek/v1/auth/{path}")
-    fun getState(@Path("path") path: String = "habrahabr"): Call<String>
-
-    @GET("https://account.habr.com/captcha/")
-    fun captcha(
-        @Query("random") random: Double = Random.nextDouble()
-    ): Call<ByteArray>
-
     @FormUrlEncoded
-    @POST("https://account.habr.com/ajax/login")
-    fun login(
+    @POST("https://habr.com/auth/o/access-token")
+    fun loginThroughApi(
+        @Header("client") clientKey: String,
+        @Header("apikey") apiKey: String,
         @Field("email") email: String,
         @Field("password") password: String,
-        @Field("state") state: String? = null,
-        @Field("consumer") consumer: String? = null,
-        @Field("captcha") captchaAlt: String = "",
-        @Field("captcha_type") captchaType: String? = null,
-        @Field("captcha") captcha: String? = null
-    ): Call<String>
+        @Field("client_secret") clientSecret: String,
+        @Field("grant_type") grantType: String = "password",
+        @Field("client_id") clientId: String = clientKey
+    ) : Call<LoginResult>
+
 }
