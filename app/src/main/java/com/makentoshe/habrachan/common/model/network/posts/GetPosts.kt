@@ -27,6 +27,6 @@ class GetPosts(
     }
 
     private fun createErrorData(code: Int, message: String?) = Data(
-        code = code, message = message, articles = null, pages = null, data = null
+        code = code, message = message, articles = null, pages = null, data = null, users = null
     )
 }

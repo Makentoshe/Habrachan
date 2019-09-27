@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.common.model.network.HabrApi
 class GetPostsBySearch(
     private val api: HabrApi
 ) {
-    fun execute(request: GetPostsBySearchRequest): GetPostsResult {
+    fun execute(request: GetPostsBySearchRequest): GetPostsBySearchResult {
         if (request.page < 1) return createErrorResult(400, "Page should not be less 0")
 
         val response = api.getPostsBySearch(
@@ -16,12 +16,13 @@ class GetPostsBySearch(
         return response.body() ?: createErrorResult(response.code(), response.message())
     }
 
-    private fun createErrorResult(code: Int, message: String): GetPostsResult {
+    private fun createErrorResult(code: Int, message: String): GetPostsBySearchResult {
         val data = createErrorData(code, message)
-        return GetPostsResult(data, false)
+        return GetPostsBySearchResult(data, false)
     }
 
     private fun createErrorData(code: Int, message: String?) = Data(
-        code = code, message = message, articles = null, pages = null, data = null
+        code = code, message = message, articles = null, pages = null, data = null, users = null
     )
 }
+
