@@ -13,5 +13,7 @@ data class Data(
     @SerializedName("data")
     val data: Any?,
     @SerializedName("pages")
-    val pages: Int?
+    val pages: Int?,
+    @SerializedName("users")
+    val users: List<User>?
 )
