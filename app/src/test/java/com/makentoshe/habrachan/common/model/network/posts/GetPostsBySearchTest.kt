@@ -1,8 +1,6 @@
-package com.makentoshe.habrachan.common.model.network
+package com.makentoshe.habrachan.common.model.network.posts
 
-import com.makentoshe.habrachan.common.model.network.posts.GetPostsBySearch
-import com.makentoshe.habrachan.common.model.network.posts.GetPostsBySearchRequest
-import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
+import com.makentoshe.habrachan.common.model.network.HabrApi
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
@@ -15,12 +13,12 @@ class GetPostsBySearchTest {
 
     @Test
     fun `should return a result`() {
-        val result: GetPostsResult = mockk()
+        val result: GetPostsBySearchResult = mockk()
 
-        val response: Response<GetPostsResult> = mockk()
+        val response: Response<GetPostsBySearchResult> = mockk()
         every { response.body() } returns result
 
-        val call: Call<GetPostsResult> = mockk()
+        val call: Call<GetPostsBySearchResult> = mockk()
         every { call.execute() } returns response
 
         val habrApi: HabrApi = mockk()
@@ -36,12 +34,12 @@ class GetPostsBySearchTest {
         val code = 21345
         val message = "asdfghkjl;htr"
 
-        val response: Response<GetPostsResult> = mockk()
+        val response: Response<GetPostsBySearchResult> = mockk()
         every { response.body() } returns null
         every { response.code() } returns code
         every { response.message() } returns message
 
-        val call: Call<GetPostsResult> = mockk()
+        val call: Call<GetPostsBySearchResult> = mockk()
         every { call.execute() } returns response
 
         val habrApi: HabrApi = mockk()

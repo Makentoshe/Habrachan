@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.common.model.network.posts
 import com.makentoshe.habrachan.resources.testResourcesDirectory
 import io.mockk.every
 import io.mockk.mockk
+import junit.framework.TestCase.assertEquals
 import okhttp3.ResponseBody
 import org.junit.Assert.*
 import org.junit.Before
@@ -10,19 +11,14 @@ import org.junit.Test
 import retrofit2.Converter
 import java.io.File
 
-class PostsConverterFactoryTest {
+class PostBySearchConverterFactoryTest {
 
-    private val factory = PostsConverterFactory()
-    private lateinit var converter: Converter<ResponseBody, GetPostsResult>
+    private val factory = PostsBySearchConverterFactory()
+    private var converter: Converter<ResponseBody, GetPostsBySearchResult>? = null
 
     @Before
     fun init() {
-        converter = factory.responseBodyConverter(GetPostsResult::class.java, arrayOf(), mockk())!!
-    }
-
-    @Test
-    fun `converter should be null for incompatible type`() {
-        assertNull(factory.responseBodyConverter(Any::class.java, arrayOf(), mockk()))
+        converter = factory.responseBodyConverter(GetPostsBySearchResult::class.java, arrayOf(), mockk())
     }
 
     @Test
@@ -54,4 +50,3 @@ class PostsConverterFactoryTest {
         }
     }
 }
-

@@ -1,6 +1,6 @@
-package com.makentoshe.habrachan.common.model.network
+package com.makentoshe.habrachan.common.model.network.posts
 
-import com.makentoshe.habrachan.common.model.network.posts.*
+import com.makentoshe.habrachan.common.model.network.HabrApi
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
