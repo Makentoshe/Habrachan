@@ -22,6 +22,11 @@ class PostBySearchConverterFactoryTest {
     }
 
     @Test
+    fun `converter should be null for incompatible type`() {
+        assertNull(factory.responseBodyConverter(Any::class.java, arrayOf(), mockk()))
+    }
+
+    @Test
     fun `should parse success result`() {
         val successJson = File(testResourcesDirectory, "GetPostsBySearchSuccess.json")
 
