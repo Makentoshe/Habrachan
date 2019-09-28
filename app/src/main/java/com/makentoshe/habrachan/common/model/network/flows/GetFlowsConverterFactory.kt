@@ -11,19 +11,19 @@ import java.lang.reflect.Type
 class GetFlowsConverterFactory : Converter.Factory() {
 
     private val converter by lazy {
-        Converter<ResponseBody, Result.GetFlowsResult2> {
+        Converter<ResponseBody, Result.GetFlowsResponse> {
             val result = Gson().fromJson(it.string(), GetFlowsResult::class.java)
             if (result.data == null && result.serverTime == null) {
                 val error = Gson().fromJson(it.string(), ErrorResult::class.java)
-                return@Converter Result.GetFlowsResult2(success = null, error = error)
+                return@Converter Result.GetFlowsResponse(success = null, error = error)
             }
-            return@Converter Result.GetFlowsResult2(success = result, error = null)
+            return@Converter Result.GetFlowsResponse(success = result, error = null)
         }
     }
 
     override fun responseBodyConverter(
         type: Type, annotations: Array<Annotation>, retrofit: Retrofit
-    ): Converter<ResponseBody, Result.GetFlowsResult2>? {
-        return if (type == Result.GetFlowsResult2::class.java) converter else null
+    ): Converter<ResponseBody, Result.GetFlowsResponse>? {
+        return if (type == Result.GetFlowsResponse::class.java) converter else null
     }
 }

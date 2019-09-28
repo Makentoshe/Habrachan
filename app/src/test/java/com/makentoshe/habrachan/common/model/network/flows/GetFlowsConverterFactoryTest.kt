@@ -15,11 +15,11 @@ import java.io.File
 class GetFlowsConverterFactoryTest {
 
     private val factory = GetFlowsConverterFactory()
-    private lateinit var converter: Converter<ResponseBody, Result.GetFlowsResult2>
+    private lateinit var converter: Converter<ResponseBody, Result.GetFlowsResponse>
 
     @Before
     fun init() {
-        converter = factory.responseBodyConverter(Result.GetFlowsResult2::class.java, arrayOf(), mockk())!!
+        converter = factory.responseBodyConverter(Result.GetFlowsResponse::class.java, arrayOf(), mockk())!!
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.common.model.network.flows
 
-import com.makentoshe.habrachan.common.model.network.ErrorResult
 import com.makentoshe.habrachan.common.model.network.HabrApi
 import com.makentoshe.habrachan.common.model.network.Result
 import io.mockk.every
@@ -27,14 +26,14 @@ class GetFlowsTest {
     fun `should return success result`() {
         val success = mockk<GetFlowsResult>()
 
-        val result = mockk<Result.GetFlowsResult2>()
+        val result = mockk<Result.GetFlowsResponse>()
         every { result.success } returns success
         every { result.error } returns null
 
-        val response = mockk<Response<Result.GetFlowsResult2>>()
+        val response = mockk<Response<Result.GetFlowsResponse>>()
         every { response.body() } returns result
 
-        val call = mockk<Call<Result.GetFlowsResult2>>()
+        val call = mockk<Call<Result.GetFlowsResponse>>()
         every { call.execute() } returns response
 
         every { api.getFlows(any(), any(), any()) } returns call
@@ -50,12 +49,12 @@ class GetFlowsTest {
         val message = "Message"
         val code = 444
 
-        val response = mockk<Response<Result.GetFlowsResult2>>()
+        val response = mockk<Response<Result.GetFlowsResponse>>()
         every { response.body() } returns null
         every { response.errorBody()?.string() } returns message
         every { response.code() } returns code
 
-        val call = mockk<Call<Result.GetFlowsResult2>>()
+        val call = mockk<Call<Result.GetFlowsResponse>>()
         every { call.execute() } returns response
 
         every { api.getFlows(any(), any(), any()) } returns call

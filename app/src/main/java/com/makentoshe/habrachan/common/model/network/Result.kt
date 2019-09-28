@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.common.model.network.flows.GetFlowsResult
 
 sealed class Result<T>(val success: T?, val error: ErrorResult?) {
-    class GetFlowsResult2(success: GetFlowsResult?, error: ErrorResult?): Result<GetFlowsResult>(success, error)
+    class GetFlowsResponse(success: GetFlowsResult?, error: ErrorResult?): Result<GetFlowsResult>(success, error)
 }
 
 data class ErrorResult(
