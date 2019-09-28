@@ -50,7 +50,6 @@ class PostBySearchConverterFactoryTest {
         converter!!.convert(responseBody).also {
             assertFalse(it.success)
             assertEquals(400, it.data.code)
-            assertNull(it.data.data)
             assertEquals("Сожалеем, поиск в публикациях не дал результатов", it.data.message)
         }
     }

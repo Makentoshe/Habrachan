@@ -50,7 +50,6 @@ class GetPostsTest {
             assertEquals(code, it.data.code)
             assertEquals(message, it.data.message)
             assertNull(it.data.articles)
-            assertNull(it.data.data)
             assertNull(it.data.pages)
         }
     }

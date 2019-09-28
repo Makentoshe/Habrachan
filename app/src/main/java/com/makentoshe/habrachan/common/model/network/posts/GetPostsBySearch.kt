@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.common.model.network.posts
 
-import com.makentoshe.habrachan.common.model.entity.Data
+import com.makentoshe.habrachan.common.model.entity.ArticlesData
 import com.makentoshe.habrachan.common.model.network.HabrApi
 
 class GetPostsBySearch(
@@ -21,8 +21,8 @@ class GetPostsBySearch(
         return GetPostsBySearchResult(data, false)
     }
 
-    private fun createErrorData(code: Int, message: String?) = Data(
-        code = code, message = message, articles = null, pages = null, data = null, users = null
+    private fun createErrorData(code: Int, message: String?) = ArticlesData(
+        code = code, message = message, articles = null, pages = null
     )
 }
 
