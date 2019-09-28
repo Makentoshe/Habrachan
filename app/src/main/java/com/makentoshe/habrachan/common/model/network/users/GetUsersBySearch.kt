@@ -7,11 +7,13 @@ class GetUsersBySearch(private val api: HabrApi) {
 
     fun execute(request: GetUsersBySearchRequest): GetUsersBySearchResult {
         if (request.page < 1) return createErrorResult(400, "Page should not be less than 1")
-        return executeThroughMobileApi(request) ?: createErrorResult(404, "No one of the presented apis are not available")
-    }
 
-    private fun executeThroughMobileApi(request: GetUsersBySearchRequest): GetUsersBySearchResult? {
-        return api.getUsersBySearch(page = request.page, query = request.query).execute().body()
+        val response = api.getUsersBySearch(page = request.page, query = request.query).execute()
+
+        return response.body() ?: createErrorResult(
+            response.code(),
+            response.errorBody()?.string() ?: response.message() ?: ""
+        )
     }
 
     private fun createErrorResult(code: Int, message: String): GetUsersBySearchResult {
