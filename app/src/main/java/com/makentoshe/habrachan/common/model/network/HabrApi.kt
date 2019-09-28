@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.common.model.network
 import com.makentoshe.habrachan.common.model.network.login.LoginResult
 import com.makentoshe.habrachan.common.model.network.posts.GetPostsBySearchResult
 import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
+import com.makentoshe.habrachan.common.model.network.users.GetUserByLoginResult
 import com.makentoshe.habrachan.common.model.network.users.GetUsersBySearchResult
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
 import retrofit2.Call
@@ -53,5 +54,13 @@ interface HabrApi {
         @Query("page") page: Int,
         @Query("query") query: String
     ): Call<GetUsersBySearchResult>
+
+    @GET("https://habr.com/api/v1/users/{login}")
+    fun getUserByLogin(
+        @Header("client") clientKey: String,
+        @Header("apikey") apiKey: String? = null,
+        @Header("token") accessToken: String? = null,
+        @Path("login") login: String
+    ): Call<GetUserByLoginResult>
 
 }

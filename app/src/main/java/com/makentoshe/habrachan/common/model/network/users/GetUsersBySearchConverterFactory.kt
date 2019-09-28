@@ -6,12 +6,11 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import java.lang.reflect.Type
 
-class UsersConverterFactory: Converter.Factory() {
+class GetUsersBySearchConverterFactory : Converter.Factory() {
 
     private val converter by lazy {
         Converter<ResponseBody, GetUsersBySearchResult> {
-            Gson()
-                .fromJson(it.string(), GetUsersBySearchResult::class.java)
+            Gson().fromJson(it.string(), GetUsersBySearchResult::class.java)
         }
     }
 
@@ -21,3 +20,4 @@ class UsersConverterFactory: Converter.Factory() {
         return if (type == GetUsersBySearchResult::class.java) converter else null
     }
 }
+

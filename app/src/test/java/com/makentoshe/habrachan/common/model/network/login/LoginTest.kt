@@ -51,6 +51,8 @@ class LoginTest {
     fun `should return result on success`() {
         val request = LoginRequest("", "", "", "", "")
         val result = mockk<LoginResult>()
+        val copiedResult = LoginResult(true)
+        every { result.copy(any(), any(), any(), any(), any(), any()) } returns copiedResult
 
         val response = mockk<Response<LoginResult>>()
         every { response.body() } returns result
@@ -61,7 +63,7 @@ class LoginTest {
         every { api.loginThroughApi(any(), any(), any(), any(), any(), any(), any()) } returns call
 
         login.execute(request).also {
-            assertEquals(result, it)
+            assertEquals(copiedResult, it)
         }
     }
 }

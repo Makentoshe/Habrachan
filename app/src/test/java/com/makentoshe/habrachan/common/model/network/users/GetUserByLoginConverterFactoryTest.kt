@@ -10,24 +10,19 @@ import org.junit.Test
 import retrofit2.Converter
 import java.io.File
 
-class UsersConverterFactoryTest {
+class GetUserByLoginConverterFactoryTest {
 
-    private val factory = UsersConverterFactory()
-    private lateinit var converter: Converter<ResponseBody, GetUsersBySearchResult>
+    private val factory = GetUserByLoginConverterFactory()
+    private lateinit var converter: Converter<ResponseBody, GetUserByLoginResult>
 
     @Before
     fun init() {
-        converter = factory.responseBodyConverter(GetUsersBySearchResult::class.java, arrayOf(), mockk())!!
+        converter = factory.responseBodyConverter(GetUserByLoginResult::class.java, arrayOf(), mockk())!!
     }
 
     @Test
     fun `converter should be null for incompatible type`() {
         assertNull(factory.responseBodyConverter(Any::class.java, arrayOf(), mockk()))
-    }
-
-    @Test
-    fun `converter should not be null for compatible types`() {
-        assertNotNull(factory.responseBodyConverter(GetUsersBySearchResult::class.java, arrayOf(), mockk()))
     }
 
     @Test
@@ -39,10 +34,6 @@ class UsersConverterFactoryTest {
 
         converter.convert(responseBody).also {
             assertTrue(it.success)
-            assertNull(it.data.code)
-            assertNull(it.data.message)
-            assertEquals(12, it.data.users?.size)
-            assertEquals(1, it.data.pages)
         }
     }
 
@@ -55,10 +46,6 @@ class UsersConverterFactoryTest {
 
         converter.convert(responseBody).also {
             assertFalse(it.success)
-            assertNull(it.data.pages)
-            assertNull(it.data.users)
-            assertEquals(400, it.data.code)
-            assertEquals("Сожалеем, поиск в публикациях не дал результатов", it.data.message)
         }
     }
 }

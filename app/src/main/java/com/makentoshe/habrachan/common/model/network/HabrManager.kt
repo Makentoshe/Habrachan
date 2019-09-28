@@ -5,10 +5,7 @@ import com.makentoshe.habrachan.common.model.network.login.LoginConverterFactory
 import com.makentoshe.habrachan.common.model.network.login.LoginRequest
 import com.makentoshe.habrachan.common.model.network.login.LoginResult
 import com.makentoshe.habrachan.common.model.network.posts.*
-import com.makentoshe.habrachan.common.model.network.users.GetUsersBySearch
-import com.makentoshe.habrachan.common.model.network.users.GetUsersBySearchRequest
-import com.makentoshe.habrachan.common.model.network.users.GetUsersBySearchResult
-import com.makentoshe.habrachan.common.model.network.users.UsersConverterFactory
+import com.makentoshe.habrachan.common.model.network.users.*
 import com.makentoshe.habrachan.common.model.network.votepost.VotePost
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostConverterFactory
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostRequest
@@ -40,6 +37,10 @@ open class HabrManager(
         return GetUsersBySearch(api).execute(request)
     }
 
+    fun getUserByLogin(request: GetUserByLoginRequest): GetUserByLoginResult {
+        return GetUserByLogin(api).execute(request)
+    }
+
     companion object {
         fun build(
             cookie: SessionCookie = SessionCookie(),
@@ -53,7 +54,8 @@ open class HabrManager(
                     .addConverterFactory(ByteArrayConverterFactory())
                     .addConverterFactory(LoginConverterFactory())
                     .addConverterFactory(VotePostConverterFactory())
-                    .addConverterFactory(UsersConverterFactory())
+                    .addConverterFactory(GetUsersBySearchConverterFactory())
+                    .addConverterFactory(GetUserByLoginConverterFactory())
                     .addConverterFactory(PostsBySearchConverterFactory())
                     .build()
             return HabrManager(retrofit.create(HabrApi::class.java), cookie)
