@@ -8,23 +8,21 @@ class Login(
 ) {
 
     fun execute(request: LoginRequest): LoginResult {
-        return executeThroughApi(request) ?: errorResponse()
-    }
-
-    private fun executeThroughApi(request: LoginRequest): LoginResult? {
         val response = api.loginThroughApi(
             email = request.email,
             password = request.password,
-            apiKey = request.apiKey ?: return null,
-            clientKey = request.clientKey ?: return null,
-            clientSecret = request.clientSecret ?: return null
+            apiKey = request.apiKey,
+            clientKey = request.clientKey,
+            clientSecret = request.clientSecret
         ).execute()
 
-        return response.body()
+        return response.body()?.copy(success = true) ?: createErrorResponse(
+            code = response.code(), message = response.message() ?: response.errorBody()?.string()
+        )
     }
 
-    private fun errorResponse(): LoginResult {
-        return LoginResult(success = false)
+    private fun createErrorResponse(code: Int, message: String?): LoginResult {
+        return LoginResult(success = false, code = code, message = message)
     }
 
 }
