@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.common.model.network
 
+import com.makentoshe.habrachan.common.model.network.flows.GetFlowsResult
 import com.makentoshe.habrachan.common.model.network.login.LoginResult
 import com.makentoshe.habrachan.common.model.network.posts.GetPostsBySearchResult
 import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
@@ -62,5 +63,12 @@ interface HabrApi {
         @Header("token") accessToken: String? = null,
         @Path("login") login: String
     ): Call<GetUserByLoginResult>
+
+    @GET("https://habr.com/api/v1/flows")
+    fun getFlows(
+        @Header("client") clientKey: String,
+        @Header("apikey") apiKey: String? = null,
+        @Header("token") accessToken: String? = null
+    ): Call<Result.GetFlowsResult2>
 
 }
