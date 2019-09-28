@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.common.model.entity
 
-
 import com.google.gson.annotations.SerializedName
 
 data class Badge(
@@ -9,7 +8,7 @@ data class Badge(
     @SerializedName("description")
     val description: String,
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("is_disabled")
     val isDisabled: Boolean,
     @SerializedName("is_removable")
