@@ -1,10 +1,16 @@
 package com.makentoshe.habrachan.common.model.network
 
 import com.makentoshe.habrachan.common.model.network.login.Login
+import com.makentoshe.habrachan.common.model.network.login.LoginConverterFactory
 import com.makentoshe.habrachan.common.model.network.login.LoginRequest
 import com.makentoshe.habrachan.common.model.network.login.LoginResult
 import com.makentoshe.habrachan.common.model.network.posts.*
+import com.makentoshe.habrachan.common.model.network.users.GetUsersBySearch
+import com.makentoshe.habrachan.common.model.network.users.GetUsersBySearchRequest
+import com.makentoshe.habrachan.common.model.network.users.GetUsersBySearchResult
+import com.makentoshe.habrachan.common.model.network.users.UsersConverterFactory
 import com.makentoshe.habrachan.common.model.network.votepost.VotePost
+import com.makentoshe.habrachan.common.model.network.votepost.VotePostConverterFactory
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostRequest
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
 import okhttp3.OkHttpClient
@@ -14,7 +20,7 @@ open class HabrManager(
     protected val api: HabrApi, protected val cookieStorage: CookieStorage
 ) {
 
-    fun getPostsBySearch(request: GetPostsBySearchRequest): GetPostsResult {
+    fun getPostsBySearch(request: GetPostsBySearchRequest): GetPostsBySearchResult {
         return GetPostsBySearch(api).execute(request)
     }
 
@@ -30,6 +36,10 @@ open class HabrManager(
         return VotePost(api, cookieStorage).execute(request)
     }
 
+    fun getUsersBySearch(request: GetUsersBySearchRequest): GetUsersBySearchResult {
+        return GetUsersBySearch(api).execute(request)
+    }
+
     companion object {
         fun build(
             cookie: SessionCookie = SessionCookie(),
@@ -43,6 +53,8 @@ open class HabrManager(
                     .addConverterFactory(ByteArrayConverterFactory())
                     .addConverterFactory(LoginConverterFactory())
                     .addConverterFactory(VotePostConverterFactory())
+                    .addConverterFactory(UsersConverterFactory())
+                    .addConverterFactory(PostsBySearchConverterFactory())
                     .build()
             return HabrManager(retrofit.create(HabrApi::class.java), cookie)
         }

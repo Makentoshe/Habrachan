@@ -1,7 +1,9 @@
 package com.makentoshe.habrachan.common.model.network
 
 import com.makentoshe.habrachan.common.model.network.login.LoginResult
+import com.makentoshe.habrachan.common.model.network.posts.GetPostsBySearchResult
 import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
+import com.makentoshe.habrachan.common.model.network.users.GetUsersBySearchResult
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
 import retrofit2.Call
 import retrofit2.http.*
@@ -14,7 +16,7 @@ interface HabrApi {
         @Query("page") page: Int,
         @Query("hl") hl: String? = null,
         @Query("fl") fl: String? = null
-    ): Call<GetPostsResult>
+    ): Call<GetPostsBySearchResult>
 
     @GET("https://m.habr.com/kek/v1/articles")
     fun getPosts(
@@ -45,5 +47,11 @@ interface HabrApi {
         @Path("postId") postId: Int,
         @Query("vote") score: Int
     ): Call<VotePostResult>
+
+    @GET("https://m.habr.com/kek/v1/search/users/")
+    fun getUsersBySearch(
+        @Query("page") page: Int,
+        @Query("query") query: String
+    ): Call<GetUsersBySearchResult>
 
 }
