@@ -1,5 +1,9 @@
 package com.makentoshe.habrachan.common.model.network
 
+import com.makentoshe.habrachan.common.model.network.flows.GetFlows
+import com.makentoshe.habrachan.common.model.network.flows.GetFlowsConverterFactory
+import com.makentoshe.habrachan.common.model.network.flows.GetFlowsRequest
+import com.makentoshe.habrachan.common.model.network.flows.GetFlowsResult
 import com.makentoshe.habrachan.common.model.network.login.Login
 import com.makentoshe.habrachan.common.model.network.login.LoginConverterFactory
 import com.makentoshe.habrachan.common.model.network.login.LoginRequest
@@ -41,6 +45,10 @@ open class HabrManager(
         return GetUserByLogin(api).execute(request)
     }
 
+    fun getFlows(request: GetFlowsRequest): Result.GetFlowsResult2 {
+        return GetFlows(api).execute(request)
+    }
+
     companion object {
         fun build(
             cookie: SessionCookie = SessionCookie(),
@@ -57,6 +65,7 @@ open class HabrManager(
                     .addConverterFactory(GetUsersBySearchConverterFactory())
                     .addConverterFactory(GetUserByLoginConverterFactory())
                     .addConverterFactory(PostsBySearchConverterFactory())
+                    .addConverterFactory(GetFlowsConverterFactory())
                     .build()
             return HabrManager(retrofit.create(HabrApi::class.java), cookie)
         }
