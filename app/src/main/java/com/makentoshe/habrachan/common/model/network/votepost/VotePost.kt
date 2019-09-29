@@ -2,27 +2,25 @@ package com.makentoshe.habrachan.common.model.network.votepost
 
 import com.makentoshe.habrachan.common.model.network.CookieStorage
 import com.makentoshe.habrachan.common.model.network.HabrApi
+import com.makentoshe.habrachan.common.model.network.Result
 
 class VotePost(
     private val api: HabrApi,
-    private val cookieStorage: CookieStorage
+    private val cookieStorage: CookieStorage,
+    private val factory: VotePostConverterFactory
 ) {
 
-    fun execute(request: VotePostRequest): VotePostResult {
-        return executeThroughApi(request) ?: errorResult()
-    }
-
-    private fun executeThroughApi(request: VotePostRequest): VotePostResult? {
+    fun execute(request: VotePostRequest): Result.VotePostResponse {
         val response = api.votePostThroughApi(
             clientKey = request.clientKey,
             accessToken = request.accessToken,
             postId = request.postId,
             score = request.vote.toScore()
         ).execute()
-        return response.body()
-    }
-
-    private fun errorResult(): VotePostResult {
-        return VotePostResult(success = false)
+        return if (response.isSuccessful) {
+            response.body()!!
+        } else {
+            factory.converter.convert(response.errorBody()!!)
+        }
     }
 }

@@ -14,10 +14,13 @@ import com.makentoshe.habrachan.common.model.network.votepost.VotePostConverterF
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostRequest
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
 import okhttp3.OkHttpClient
+import retrofit2.Converter
 import retrofit2.Retrofit
 
 open class HabrManager(
-    protected val api: HabrApi, protected val cookieStorage: CookieStorage
+    protected val api: HabrApi,
+    protected val cookieStorage: CookieStorage,
+    protected val factories: MutableList<Converter.Factory>
 ) {
 
     fun getPostsBySearch(request: GetPostsBySearchRequest): GetPostsBySearchResult {
@@ -32,8 +35,13 @@ open class HabrManager(
         return Login(api, cookieStorage).execute(request)
     }
 
-    fun votePost(request: VotePostRequest): VotePostResult {
-        return VotePost(api, cookieStorage).execute(request)
+    fun votePost(request: VotePostRequest): Result.VotePostResponse {
+        val factory = factories.find {
+            it::class.java == VotePostConverterFactory::class.java
+        }.let {
+            it as VotePostConverterFactory
+        }
+        return VotePost(api, cookieStorage, factory).execute(request)
     }
 
     fun getUsersBySearch(request: GetUsersBySearchRequest): GetUsersBySearchResult {
@@ -66,7 +74,7 @@ open class HabrManager(
                     .addConverterFactory(PostsBySearchConverterFactory())
                     .addConverterFactory(GetFlowsConverterFactory())
                     .build()
-            return HabrManager(retrofit.create(HabrApi::class.java), cookie)
+            return HabrManager(retrofit.create(HabrApi::class.java), cookie, retrofit.converterFactories())
         }
     }
 }

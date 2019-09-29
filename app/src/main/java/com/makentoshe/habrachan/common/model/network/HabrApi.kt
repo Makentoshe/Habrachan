@@ -47,7 +47,7 @@ interface HabrApi {
         @Header("token") accessToken: String,
         @Path("postId") postId: Int,
         @Query("vote") score: Int
-    ): Call<VotePostResult>
+    ): Call<Result.VotePostResponse>
 
     @GET("https://m.habr.com/kek/v1/search/users/")
     fun getUsersBySearch(
