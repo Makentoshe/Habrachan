@@ -70,4 +70,13 @@ interface HabrApi {
         @Header("token") accessToken: String? = null
     ): Call<Result.GetFlowsResponse>
 
+    @GET("https://habr.com/api/v1/flows/{hub}/hubs")
+    fun getHubs(
+        @Header("client") clientKey: String,
+        @Header("apikey") apiKey: String? = null,
+        @Header("token") accessToken: String? = null,
+        @Path("hub") hubAlias: String,
+        @Query("page") page: Int
+    ): Call<Result.GetHubsResponse>
+
 }

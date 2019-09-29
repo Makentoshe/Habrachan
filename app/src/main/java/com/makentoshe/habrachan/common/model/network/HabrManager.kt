@@ -3,6 +3,9 @@ package com.makentoshe.habrachan.common.model.network
 import com.makentoshe.habrachan.common.model.network.flows.GetFlows
 import com.makentoshe.habrachan.common.model.network.flows.GetFlowsConverterFactory
 import com.makentoshe.habrachan.common.model.network.flows.GetFlowsRequest
+import com.makentoshe.habrachan.common.model.network.hubs.GetHubs
+import com.makentoshe.habrachan.common.model.network.hubs.GetHubsConverterFactory
+import com.makentoshe.habrachan.common.model.network.hubs.GetHubsRequest
 import com.makentoshe.habrachan.common.model.network.login.Login
 import com.makentoshe.habrachan.common.model.network.login.LoginConverterFactory
 import com.makentoshe.habrachan.common.model.network.login.LoginRequest
@@ -56,6 +59,15 @@ open class HabrManager(
         return GetFlows(api).execute(request)
     }
 
+    fun getHubs(request: GetHubsRequest): Result.GetHubsResponse {
+        val factory = factories.find {
+            it::class.java == GetHubsConverterFactory::class.java
+        }.let {
+            it as GetHubsConverterFactory
+        }
+        return GetHubs(api, factory).execute(request)
+    }
+
     companion object {
         fun build(
             cookie: SessionCookie = SessionCookie(),
@@ -73,6 +85,7 @@ open class HabrManager(
                     .addConverterFactory(GetUserByLoginConverterFactory())
                     .addConverterFactory(PostsBySearchConverterFactory())
                     .addConverterFactory(GetFlowsConverterFactory())
+                    .addConverterFactory(GetHubsConverterFactory())
                     .build()
             return HabrManager(retrofit.create(HabrApi::class.java), cookie, retrofit.converterFactories())
         }
