@@ -1,8 +1,10 @@
 package com.makentoshe.habrachan.common.model.network
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.common.model.entity.Additional
 import com.makentoshe.habrachan.common.model.network.flows.GetFlowsResult
 import com.makentoshe.habrachan.common.model.network.hubs.GetHubsResult
+import com.makentoshe.habrachan.common.model.network.login.LoginResult
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
 
 sealed class Result<T>(val success: T?, val error: ErrorResult?) {
@@ -12,6 +14,8 @@ sealed class Result<T>(val success: T?, val error: ErrorResult?) {
     class VotePostResponse(success: VotePostResult?, error: ErrorResult?): Result<VotePostResult>(success, error)
 
     class GetHubsResponse(success: GetHubsResult?, error: ErrorResult?) : Result<GetHubsResult>(success, error)
+
+    class LoginResponse(success: LoginResult?, error: ErrorResult?) : Result<LoginResult>(success, error)
 }
 
 data class ErrorResult(
@@ -20,5 +24,12 @@ data class ErrorResult(
     @SerializedName("message")
     val message: String,
     @SerializedName("additional")
-    val additional: List<String> = emptyList()
-)
+    private val rawAdditional: Any? = null
+) {
+    val additional: List<String>
+        get() = when (rawAdditional) {
+            is Additional -> listOf(rawAdditional.errors)
+            is List<*> -> rawAdditional.filterIsInstance<String>()
+            else -> listOf()
+    }
+}

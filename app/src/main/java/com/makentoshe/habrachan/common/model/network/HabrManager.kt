@@ -34,8 +34,13 @@ open class HabrManager(
         return GetPosts(api).execute(request)
     }
 
-    fun login(request: LoginRequest): LoginResult {
-        return Login(api, cookieStorage).execute(request)
+    fun login(request: LoginRequest): Result.LoginResponse {
+        val factory = factories.find {
+            it::class.java == LoginConverterFactory::class.java
+        }.let {
+            it as LoginConverterFactory
+        }
+        return Login(api, factory).execute(request)
     }
 
     fun votePost(request: VotePostRequest): Result.VotePostResponse {

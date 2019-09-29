@@ -39,7 +39,7 @@ dependencies {
 
     // Mockk
     // https://github.com/mockk/mockk
-    def mockk = "1.9"
+    def mockk = "1.9.1"
     testImplementation "io.mockk:mockk:$mockk"
 
     implementation 'androidx.appcompat:appcompat:1.1.0'

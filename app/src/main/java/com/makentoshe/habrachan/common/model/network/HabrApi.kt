@@ -39,7 +39,7 @@ interface HabrApi {
         @Field("client_secret") clientSecret: String,
         @Field("grant_type") grantType: String = "password",
         @Field("client_id") clientId: String = clientKey
-    ) : Call<LoginResult>
+    ) : Call<Result.LoginResponse>
 
     @PUT("https://habr.com/api/v1/post/{postId}/vote")
     fun votePostThroughApi(

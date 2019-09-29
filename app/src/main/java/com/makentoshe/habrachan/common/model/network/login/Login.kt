@@ -1,13 +1,14 @@
 package com.makentoshe.habrachan.common.model.network.login
 
-import com.makentoshe.habrachan.common.model.network.CookieStorage
 import com.makentoshe.habrachan.common.model.network.HabrApi
+import com.makentoshe.habrachan.common.model.network.Result
 
 class Login(
-    private val api: HabrApi, private val cookieStorage: CookieStorage
+    private val api: HabrApi,
+    private val factory: LoginConverterFactory
 ) {
 
-    fun execute(request: LoginRequest): LoginResult {
+    fun execute(request: LoginRequest): Result.LoginResponse {
         val response = api.loginThroughApi(
             email = request.email,
             password = request.password,
@@ -16,13 +17,10 @@ class Login(
             clientSecret = request.clientSecret
         ).execute()
 
-        return response.body()?.copy(success = true) ?: createErrorResponse(
-            code = response.code(), message = response.message() ?: response.errorBody()?.string()
-        )
+        return if (response.isSuccessful) {
+            response.body()!!
+        } else {
+            factory.converter.convert(response.errorBody()!!)
+        }
     }
-
-    private fun createErrorResponse(code: Int, message: String?): LoginResult {
-        return LoginResult(success = false, code = code, message = message)
-    }
-
 }
