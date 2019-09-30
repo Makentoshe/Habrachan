@@ -1,5 +1,7 @@
 package com.makentoshe.habrachan.common.model.network.users
 
+
+import com.makentoshe.habrachan.common.model.network.Result
 import com.makentoshe.habrachan.resources.testResourcesDirectory
 import io.mockk.every
 import io.mockk.mockk
@@ -13,11 +15,11 @@ import java.io.File
 class GetUsersBySearchConverterFactoryTest {
 
     private val factory = GetUsersBySearchConverterFactory()
-    private lateinit var converter: Converter<ResponseBody, GetUsersBySearchResult>
+    private lateinit var converter: Converter<ResponseBody, Result.GetUsersBySearchResponse>
 
     @Before
     fun init() {
-        converter = factory.responseBodyConverter(GetUsersBySearchResult::class.java, arrayOf(), mockk())!!
+        converter = factory.responseBodyConverter(Result.GetUsersBySearchResponse::class.java, arrayOf(), mockk())!!
     }
 
     @Test
@@ -33,27 +35,21 @@ class GetUsersBySearchConverterFactoryTest {
         every { responseBody.string() } returns successJson.readText()
 
         converter.convert(responseBody).also {
-            assertTrue(it.success)
-            assertNull(it.data.code)
-            assertNull(it.data.message)
-            assertEquals(12, it.data.users?.size)
-            assertEquals(1, it.data.pages)
+            assertNotNull(it.success)
+            assertNull(it.error)
         }
     }
 
     @Test
     fun `should parse error result`() {
-        val errorJson = File(testResourcesDirectory, "GetPostsBySearchError.json")
+        val errorJson = File(testResourcesDirectory, "GetUsersBySearchError.json")
 
         val responseBody = mockk<ResponseBody>()
         every { responseBody.string() } returns errorJson.readText()
 
         converter.convert(responseBody).also {
-            assertFalse(it.success)
-            assertNull(it.data.pages)
-            assertNull(it.data.users)
-            assertEquals(400, it.data.code)
-            assertEquals("Сожалеем, поиск в публикациях не дал результатов", it.data.message)
+            assertNotNull(it.error)
+            assertNull(it.success)
         }
     }
 }

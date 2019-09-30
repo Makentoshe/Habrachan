@@ -1,18 +1,13 @@
 package com.makentoshe.habrachan.common.model.network.users
 
 import com.makentoshe.habrachan.common.model.network.HabrApi
+import com.makentoshe.habrachan.common.model.network.Result
 
-class GetUserByLogin(private val api: HabrApi) {
+class GetUserByLogin(
+    private val api: HabrApi, private val factory: GetUserByLoginConverterFactory
+) {
 
-    fun execute(request: GetUserByLoginRequest): GetUserByLoginResult {
-        if (request.accessToken != null && request.apiKey != null) {
-
-        }
-
-        if (request.accessToken == null && request.apiKey == null) {
-            return createErrorResult(400, "Token and api not specified. Authorisation required.")
-        }
-
+    fun execute(request: GetUserByLoginRequest): Result.GetUserByLoginResponse {
         val response = api.getUserByLogin(
             clientKey = request.clientKey,
             accessToken = request.accessToken,
@@ -20,18 +15,10 @@ class GetUserByLogin(private val api: HabrApi) {
             login = request.login
         ).execute()
 
-        return response.body()?: createErrorResult(
-            code = response.code(),
-            message = response?.errorBody()?.string() ?: response.message()
-        )
-    }
-
-    private fun createErrorResult(code: Int, message: String): GetUserByLoginResult {
-        return GetUserByLoginResult(
-            data = null,
-            serverTime = null,
-            code = code,
-            message = message
-        )
+        return if (response.isSuccessful) {
+            return response.body()!!
+        } else {
+            factory.converter.convert(response.errorBody()!!)
+        }
     }
 }

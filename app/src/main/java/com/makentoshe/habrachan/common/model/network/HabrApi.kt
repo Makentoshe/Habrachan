@@ -53,7 +53,7 @@ interface HabrApi {
     fun getUsersBySearch(
         @Query("page") page: Int,
         @Query("query") query: String
-    ): Call<GetUsersBySearchResult>
+    ): Call<Result.GetUsersBySearchResponse>
 
     @GET("https://habr.com/api/v1/users/{login}")
     fun getUserByLogin(
@@ -61,7 +61,7 @@ interface HabrApi {
         @Header("apikey") apiKey: String? = null,
         @Header("token") accessToken: String? = null,
         @Path("login") login: String
-    ): Call<GetUserByLoginResult>
+    ): Call<Result.GetUserByLoginResponse>
 
     @GET("https://habr.com/api/v1/flows")
     fun getFlows(

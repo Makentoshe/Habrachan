@@ -1,14 +1,14 @@
 package com.makentoshe.habrachan.common.model.network.users
 
 import com.makentoshe.habrachan.common.model.network.HabrApi
-import com.makentoshe.habrachan.common.model.network.Result
-import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import org.junit.Test
 import retrofit2.Response
+import com.makentoshe.habrachan.common.model.network.Result
+import io.mockk.every
+import io.mockk.verify
 
-class GetUsersBySearchTest {
+class GetUserByLoginTest {
 
     @Test
     fun `should return error if response body is null`() {

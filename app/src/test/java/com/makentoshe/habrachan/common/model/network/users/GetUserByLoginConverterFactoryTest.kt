@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.common.model.network.users
 
+import com.makentoshe.habrachan.common.model.network.Result
 import com.makentoshe.habrachan.resources.testResourcesDirectory
 import io.mockk.every
 import io.mockk.mockk
@@ -13,11 +14,11 @@ import java.io.File
 class GetUserByLoginConverterFactoryTest {
 
     private val factory = GetUserByLoginConverterFactory()
-    private lateinit var converter: Converter<ResponseBody, GetUserByLoginResult>
+    private lateinit var converter: Converter<ResponseBody, Result.GetUserByLoginResponse>
 
     @Before
     fun init() {
-        converter = factory.responseBodyConverter(GetUserByLoginResult::class.java, arrayOf(), mockk())!!
+        converter = factory.responseBodyConverter(Result.GetUserByLoginResponse::class.java, arrayOf(), mockk())!!
     }
 
     @Test
@@ -27,25 +28,27 @@ class GetUserByLoginConverterFactoryTest {
 
     @Test
     fun `should parse success result`() {
-        val successJson = File(testResourcesDirectory, "GetUsersBySearchSuccess.json")
+        val successJson = File(testResourcesDirectory, "GetUserByLoginSuccess.json")
 
         val responseBody = mockk<ResponseBody>()
         every { responseBody.string() } returns successJson.readText()
 
         converter.convert(responseBody).also {
-            assertTrue(it.success)
+            assertNotNull(it.success)
+            assertNull(it.error)
         }
     }
 
     @Test
     fun `should parse error result`() {
-        val errorJson = File(testResourcesDirectory, "GetPostsBySearchError.json")
+        val errorJson = File(testResourcesDirectory, "GetUserByLoginError.json")
 
         val responseBody = mockk<ResponseBody>()
         every { responseBody.string() } returns errorJson.readText()
 
         converter.convert(responseBody).also {
-            assertFalse(it.success)
+            assertNotNull(it.error)
+            assertNull(it.success)
         }
     }
 }

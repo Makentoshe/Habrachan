@@ -52,12 +52,22 @@ open class HabrManager(
         return VotePost(api, cookieStorage, factory).execute(request)
     }
 
-    fun getUsersBySearch(request: GetUsersBySearchRequest): GetUsersBySearchResult {
-        return GetUsersBySearch(api).execute(request)
+    fun getUsers(request: GetUsersBySearchRequest): Result.GetUsersBySearchResponse{
+        val factory = factories.find {
+            it::class.java == GetUsersBySearchConverterFactory::class.java
+        }.let {
+            it as GetUsersBySearchConverterFactory
+        }
+        return GetUsersBySearch(api, factory).execute(request)
     }
 
-    fun getUserByLogin(request: GetUserByLoginRequest): GetUserByLoginResult {
-        return GetUserByLogin(api).execute(request)
+    fun getUser(request: GetUserByLoginRequest): Result.GetUserByLoginResponse {
+        val factory = factories.find {
+            it::class.java == GetUserByLoginConverterFactory::class.java
+        }.let {
+            it as GetUserByLoginConverterFactory
+        }
+        return GetUserByLogin(api, factory).execute(request)
     }
 
     fun getFlows(request: GetFlowsRequest): Result.GetFlowsResponse {
