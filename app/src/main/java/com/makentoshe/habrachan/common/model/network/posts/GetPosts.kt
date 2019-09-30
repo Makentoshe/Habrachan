@@ -1,14 +1,13 @@
 package com.makentoshe.habrachan.common.model.network.posts
 
-import com.makentoshe.habrachan.common.model.entity.ArticlesData
 import com.makentoshe.habrachan.common.model.network.HabrApi
+import com.makentoshe.habrachan.common.model.network.Result
 
 class GetPosts(
-    private val api: HabrApi
+    private val api: HabrApi,
+    private val factory: GetPostsConverterFactory
 ) {
-    fun execute(request: GetPostsRequest): GetPostsResult {
-        if (request.page < 1) return createErrorResult(400, "Page should not be less 0")
-
+    fun execute(request: GetPostsRequest): Result.GetPostsResponse{
         val response = api.getPosts(
             page = request.page,
             sort = request.sort,
@@ -18,15 +17,12 @@ class GetPosts(
             custom = request.custom
         ).execute()
 
-        return response.body() ?: createErrorResult(response.code(), response.message())
+        return if (response.isSuccessful) {
+            response.body()!!
+        } else {
+            factory.converter.convert(response.errorBody()!!)
+        }
     }
 
-    private fun createErrorResult(code: Int, message: String): GetPostsResult {
-        val data = createErrorData(code, message)
-        return GetPostsResult(data, false)
-    }
 
-    private fun createErrorData(code: Int, message: String?) = ArticlesData(
-        code = code, message = message, articles = null, pages = null
-    )
 }

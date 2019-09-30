@@ -5,6 +5,8 @@ import com.makentoshe.habrachan.common.model.entity.Additional
 import com.makentoshe.habrachan.common.model.network.flows.GetFlowsResult
 import com.makentoshe.habrachan.common.model.network.hubs.GetHubsResult
 import com.makentoshe.habrachan.common.model.network.login.LoginResult
+import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQueryResult
+import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
 import com.makentoshe.habrachan.common.model.network.users.GetUserByLoginResult
 import com.makentoshe.habrachan.common.model.network.users.GetUsersBySearchResult
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
@@ -26,6 +28,14 @@ sealed class Result<T>(val success: T?, val error: ErrorResult?) {
     class GetUsersBySearchResponse(
         success: GetUsersBySearchResult?, error: ErrorResult?
     ): Result<GetUsersBySearchResult>(success, error)
+
+    class GetPostsByQueryResponse(
+        success: GetPostsByQueryResult?, error: ErrorResult?
+    ): Result<GetPostsByQueryResult>(success, error)
+
+    class GetPostsResponse(
+        success: GetPostsResult?, error: ErrorResult?
+    ): Result<GetPostsResult>(success, error)
 }
 
 data class ErrorResult(

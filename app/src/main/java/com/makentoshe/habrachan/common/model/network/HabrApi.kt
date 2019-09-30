@@ -1,23 +1,17 @@
 package com.makentoshe.habrachan.common.model.network
 
-import com.makentoshe.habrachan.common.model.network.login.LoginResult
-import com.makentoshe.habrachan.common.model.network.posts.GetPostsBySearchResult
-import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
-import com.makentoshe.habrachan.common.model.network.users.GetUserByLoginResult
-import com.makentoshe.habrachan.common.model.network.users.GetUsersBySearchResult
-import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
 import retrofit2.Call
 import retrofit2.http.*
 
 interface HabrApi {
 
     @GET("https://m.habr.com/kek/v1/articles/")
-    fun getPostsBySearch(
+    fun getPostsByQuery(
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("hl") hl: String? = null,
         @Query("fl") fl: String? = null
-    ): Call<GetPostsBySearchResult>
+    ): Call<Result.GetPostsByQueryResponse>
 
     @GET("https://m.habr.com/kek/v1/articles")
     fun getPosts(
@@ -27,7 +21,7 @@ interface HabrApi {
         @Query("fl") fl: String? = null,
         @Query("date") date: String? = null,
         @Query("custom") custom: Boolean? = null
-    ): Call<GetPostsResult>
+    ): Call<Result.GetPostsResponse>
 
     @FormUrlEncoded
     @POST("https://habr.com/auth/o/access-token")

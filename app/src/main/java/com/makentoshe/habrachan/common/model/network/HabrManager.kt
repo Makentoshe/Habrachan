@@ -9,13 +9,14 @@ import com.makentoshe.habrachan.common.model.network.hubs.GetHubsRequest
 import com.makentoshe.habrachan.common.model.network.login.Login
 import com.makentoshe.habrachan.common.model.network.login.LoginConverterFactory
 import com.makentoshe.habrachan.common.model.network.login.LoginRequest
-import com.makentoshe.habrachan.common.model.network.login.LoginResult
 import com.makentoshe.habrachan.common.model.network.posts.*
+import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQuery
+import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQueryConverterFactory
+import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQueryRequest
 import com.makentoshe.habrachan.common.model.network.users.*
 import com.makentoshe.habrachan.common.model.network.votepost.VotePost
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostConverterFactory
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostRequest
-import com.makentoshe.habrachan.common.model.network.votepost.VotePostResult
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -26,12 +27,22 @@ open class HabrManager(
     protected val factories: MutableList<Converter.Factory>
 ) {
 
-    fun getPostsBySearch(request: GetPostsBySearchRequest): GetPostsBySearchResult {
-        return GetPostsBySearch(api).execute(request)
+    fun getPosts(request: GetPostsByQueryRequest): Result.GetPostsByQueryResponse {
+        val factory = factories.find {
+            it::class.java == GetPostsByQueryConverterFactory::class.java
+        }.let {
+            it as GetPostsByQueryConverterFactory
+        }
+        return GetPostsByQuery(api, factory).execute(request)
     }
 
-    fun getPosts(request: GetPostsRequest): GetPostsResult {
-        return GetPosts(api).execute(request)
+    fun getPosts(request: GetPostsRequest): Result.GetPostsResponse{
+        val factory = factories.find {
+            it::class.java == GetPostsConverterFactory::class.java
+        }.let {
+            it as GetPostsConverterFactory
+        }
+        return GetPosts(api, factory).execute(request)
     }
 
     fun login(request: LoginRequest): Result.LoginResponse {
@@ -91,14 +102,14 @@ open class HabrManager(
         ): HabrManager {
             val retrofit =
                 Retrofit.Builder().client(client).baseUrl(baseUrl)
-                    .addConverterFactory(PostsConverterFactory())
+                    .addConverterFactory(GetPostsConverterFactory())
                     .addConverterFactory(StringConverterFactory())
                     .addConverterFactory(ByteArrayConverterFactory())
                     .addConverterFactory(LoginConverterFactory())
                     .addConverterFactory(VotePostConverterFactory())
                     .addConverterFactory(GetUsersBySearchConverterFactory())
                     .addConverterFactory(GetUserByLoginConverterFactory())
-                    .addConverterFactory(PostsBySearchConverterFactory())
+                    .addConverterFactory(GetPostsByQueryConverterFactory())
                     .addConverterFactory(GetFlowsConverterFactory())
                     .addConverterFactory(GetHubsConverterFactory())
                     .build()
