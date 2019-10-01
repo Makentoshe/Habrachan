@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -36,6 +38,19 @@ dependencies {
     def retrofit = "2.3.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
+    // Toothpick
+    // https://github.com/stephanenicolas/toothpick
+    def toothpick = "3.1.0"
+    implementation "com.github.stephanenicolas.toothpick:ktp:$toothpick"
+    kapt "com.github.stephanenicolas.toothpick:toothpick-compiler:$toothpick"
+    implementation "com.github.stephanenicolas.toothpick:smoothie:$toothpick"
+    implementation "com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpick"
+
+    // Cicerone
+    // https://github.com/terrakok/Cicerone
+    def cicerone = "5.0.0"
+    implementation "ru.terrakok.cicerone:cicerone:$cicerone"
 
     // Mockk
     // https://github.com/mockk/mockk
