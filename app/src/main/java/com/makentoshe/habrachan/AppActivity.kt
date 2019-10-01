@@ -25,7 +25,6 @@ class AppActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
 
         }
-
         println("sas")
     }
 
