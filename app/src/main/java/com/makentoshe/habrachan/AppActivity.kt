@@ -40,14 +40,14 @@ class AppActivity : AppCompatActivity() {
         super.onPause()
         navigatorHolder.removeNavigator()
     }
-}
 
-fun AppActivity.injectDependencies() {
-    val supportAppNavigator = SupportAppNavigator(this@injectDependencies, R.id.activity_main)
+    private fun injectDependencies() {
+        val supportAppNavigator = SupportAppNavigator(this, R.id.activity_main)
 
-    Toothpick.openScopes(ApplicationScope::class.java).openSubScope(AppActivityScope::class.java) {
-        it.installModules(module {
-            bind<Navigator>().toInstance(supportAppNavigator)
-        }).inject(this)
-    }.inject(this)
+        Toothpick.openScopes(ApplicationScope::class.java).openSubScope(AppActivityScope::class.java) {
+            it.installModules(module {
+                bind<Navigator>().toInstance(supportAppNavigator)
+            }).inject(this)
+        }.inject(this)
+    }
 }
