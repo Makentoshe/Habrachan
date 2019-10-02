@@ -10,10 +10,10 @@ import java.lang.reflect.Type
 
 class GetFlowsConverterFactory : Converter.Factory() {
 
-    private val converter by lazy {
+    val converter by lazy {
         Converter<ResponseBody, Result.GetFlowsResponse> {
             val result = Gson().fromJson(it.string(), GetFlowsResult::class.java)
-            if (result.data == null && result.serverTime == null) {
+            if (result.data == null) {
                 val error = Gson().fromJson(it.string(), ErrorResult::class.java)
                 return@Converter Result.GetFlowsResponse(success = null, error = error)
             }

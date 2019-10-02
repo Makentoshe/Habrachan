@@ -106,7 +106,12 @@ open class HabrManager(
     }
 
     fun getFlows(request: GetFlowsRequest): Result.GetFlowsResponse {
-        return GetFlows(api).execute(request)
+        val factory = factories.find {
+            it::class.java == GetFlowsConverterFactory::class.java
+        }.let {
+            it as GetFlowsConverterFactory
+        }
+        return GetFlows(api, factory).execute(request)
     }
 
     fun getHubs(request: GetHubsRequest): Result.GetHubsResponse {

@@ -4,6 +4,7 @@ import com.makentoshe.habrachan.common.model.network.HabrApi
 import com.makentoshe.habrachan.common.model.network.Result
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -13,55 +14,50 @@ import retrofit2.Response
 
 class GetFlowsTest {
 
-    private lateinit var api: HabrApi
-    private lateinit var getFlows: GetFlows
+    @Test
+    fun `should return error if response body is null`() {
+        val mockedResponse = mockk<Response<Result.GetFlowsResponse>> {
+            every { isSuccessful } returns false
+            every { errorBody() } returns mockk {
+                every { string() } returns "{}"
+            }
+        }
 
-    @Before
-    fun init() {
-        api = mockk()
-        getFlows = GetFlows(api)
+        val mockedHabrApi = mockk<HabrApi> {
+            every {
+                getFlows(allAny(), allAny(), allAny()).execute()
+            } returns mockedResponse
+        }
+
+        val login = GetFlows(mockedHabrApi, GetFlowsConverterFactory())
+        val response = login.execute(GetFlowsRequest("", "", ""))
+
+        verify(exactly = 1) { mockedResponse.isSuccessful }
+        verify(exactly = 0) { mockedResponse.body() }
+        verify(exactly = 1) { mockedResponse.errorBody() }
     }
 
     @Test
-    fun `should return success result`() {
-        val success = mockk<GetFlowsResult>()
-
-        val result = mockk<Result.GetFlowsResponse>()
-        every { result.success } returns success
-        every { result.error } returns null
-
-        val response = mockk<Response<Result.GetFlowsResponse>>()
-        every { response.body() } returns result
-
-        val call = mockk<Call<Result.GetFlowsResponse>>()
-        every { call.execute() } returns response
-
-        every { api.getFlows(any(), any(), any()) } returns call
-
-        getFlows.execute(GetFlowsRequest("", "")).also {
-            assertNotNull(it.success)
-            assertNull(it.error)
+    fun `should return result on success`() {
+        val mockedResponse = mockk<Response<Result.GetFlowsResponse>> {
+            every { isSuccessful } returns true
+            every { body() } returns mockk {
+                every { error } returns null
+                every { success } returns mockk()
+            }
         }
-    }
 
-    @Test
-    fun `should return error result`() {
-        val message = "Message"
-        val code = 444
-
-        val response = mockk<Response<Result.GetFlowsResponse>>()
-        every { response.body() } returns null
-        every { response.errorBody()?.string() } returns message
-        every { response.code() } returns code
-
-        val call = mockk<Call<Result.GetFlowsResponse>>()
-        every { call.execute() } returns response
-
-        every { api.getFlows(any(), any(), any()) } returns call
-
-        getFlows.execute(GetFlowsRequest("", "")).also {
-            assertNull(it.success)
-            assertNotNull(it.error)
+        val mockedHabrApi = mockk<HabrApi> {
+            every {
+                getFlows(allAny(), allAny(), allAny()).execute()
+            } returns mockedResponse
         }
+
+        val login = GetFlows(mockedHabrApi, GetFlowsConverterFactory())
+        val response = login.execute(GetFlowsRequest("", "", ""))
+
+        verify(exactly = 1) { mockedResponse.isSuccessful }
+        verify(exactly = 1) { mockedResponse.body() }
+        verify(exactly = 0) { mockedResponse.errorBody() }
     }
 }
