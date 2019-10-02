@@ -2,11 +2,12 @@ package com.makentoshe.habrachan.common.model.network.posts.bysort
 
 
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.common.model.entity.ArticlesData
+import com.makentoshe.habrachan.common.model.entity.Article
+import com.makentoshe.habrachan.common.model.entity.Data
 
 data class GetPostsBySortResult(
     @SerializedName("data")
-    val data: ArticlesData,
+    val data: Data<Article>,
     @SerializedName("success")
     val success: Boolean
 )

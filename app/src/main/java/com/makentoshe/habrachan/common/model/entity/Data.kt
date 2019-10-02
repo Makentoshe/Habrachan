@@ -3,9 +3,9 @@ package com.makentoshe.habrachan.common.model.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class ArticlesData(
-    @SerializedName("articles")
-    val articles: List<Article>,
+data class Data<T>(
+    @SerializedName(value = "article", alternate = ["users"])
+    val data: List<T>,
     @SerializedName("pages")
     val pages: Int
 )
