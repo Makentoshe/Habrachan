@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Article(
     @SerializedName("author")
-    val author: Author,
+    val author: User,
     @SerializedName("comments_count")
     val commentsCount: String,
     @SerializedName("comments_new")

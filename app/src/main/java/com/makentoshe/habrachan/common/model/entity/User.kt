@@ -33,15 +33,17 @@ data class User(
     @SerializedName("path")
     val path: String,
     @SerializedName("rating")
-    val rating: Int,
+    val rating: Float,
     @SerializedName("rating_position")
     val ratingPosition: Int,
     @SerializedName("score")
-    val score: Int,
+    val score: Float,
     @SerializedName("sex")
     val sex: String,
     @SerializedName("specializm")
     val specializm: String,
     @SerializedName("time_registered")
-    val timeRegistered: String
+    val timeRegistered: String,
+    @SerializedName("vote")
+    val vote: Int = 0
 )
