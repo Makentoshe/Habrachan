@@ -13,6 +13,9 @@ import com.makentoshe.habrachan.common.model.network.posts.*
 import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQuery
 import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQueryConverterFactory
 import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQueryRequest
+import com.makentoshe.habrachan.common.model.network.posts.bysort.GetPostsBySort
+import com.makentoshe.habrachan.common.model.network.posts.bysort.GetPostsBySortConverterFactory
+import com.makentoshe.habrachan.common.model.network.posts.bysort.GetPostsBySortRequest
 import com.makentoshe.habrachan.common.model.network.users.*
 import com.makentoshe.habrachan.common.model.network.votepost.VotePost
 import com.makentoshe.habrachan.common.model.network.votepost.VotePostConverterFactory
@@ -34,6 +37,15 @@ open class HabrManager(
             it as GetPostsByQueryConverterFactory
         }
         return GetPostsByQuery(api, factory).execute(request)
+    }
+
+    fun getPosts(request: GetPostsBySortRequest): Result.GetPostsBySortResponse {
+        val factory = factories.find {
+            it::class.java == GetPostsBySortConverterFactory::class.java
+        }.let {
+            it as GetPostsBySortConverterFactory
+        }
+        return GetPostsBySort(api, factory).execute(request)
     }
 
     fun getPosts(request: GetPostsRequest): Result.GetPostsResponse{
@@ -112,6 +124,7 @@ open class HabrManager(
                     .addConverterFactory(GetPostsByQueryConverterFactory())
                     .addConverterFactory(GetFlowsConverterFactory())
                     .addConverterFactory(GetHubsConverterFactory())
+                    .addConverterFactory(GetPostsBySortConverterFactory())
                     .build()
             return HabrManager(retrofit.create(HabrApi::class.java), cookie, retrofit.converterFactories())
         }

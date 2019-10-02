@@ -13,6 +13,14 @@ interface HabrApi {
         @Query("fl") fl: String? = null
     ): Call<Result.GetPostsByQueryResponse>
 
+    @GET("https://m.habr.com/kek/v1/articles/")
+    fun getPostsBySort(
+        @Query("sort") sort: String,
+        @Query("page") page: Int,
+        @Query("hl") hl: String? = null,
+        @Query("fl") fl: String? = null
+    ): Call<Result.GetPostsBySortResponse>
+
     @GET("https://m.habr.com/kek/v1/articles")
     fun getPosts(
         @Query("page") page: Int,
