@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.model.AppActivityScope
 import com.makentoshe.habrachan.model.ApplicationScope
+import com.makentoshe.habrachan.model.main.MainFlowScreen
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import toothpick.Toothpick
 import toothpick.ktp.binding.bind
@@ -18,14 +20,15 @@ class AppActivity : AppCompatActivity() {
 
     private val navigatorHolder by inject<NavigatorHolder>()
 
+    private val router by inject<Router>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         injectDependencies()
         if (savedInstanceState == null) {
-
+            router.newRootScreen(MainFlowScreen())
         }
-        println("sas")
     }
 
     override fun onResumeFragments() {
@@ -40,7 +43,7 @@ class AppActivity : AppCompatActivity() {
 }
 
 fun AppActivity.injectDependencies() {
-    val supportAppNavigator = SupportAppNavigator(this@injectDependencies, R.layout.activity_main)
+    val supportAppNavigator = SupportAppNavigator(this@injectDependencies, R.id.activity_main)
 
     Toothpick.openScopes(ApplicationScope::class.java).openSubScope(AppActivityScope::class.java) {
         it.installModules(module {
