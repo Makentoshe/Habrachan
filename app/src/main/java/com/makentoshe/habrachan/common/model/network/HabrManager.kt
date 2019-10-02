@@ -10,6 +10,9 @@ import com.makentoshe.habrachan.common.model.network.login.Login
 import com.makentoshe.habrachan.common.model.network.login.LoginConverterFactory
 import com.makentoshe.habrachan.common.model.network.login.LoginRequest
 import com.makentoshe.habrachan.common.model.network.posts.*
+import com.makentoshe.habrachan.common.model.network.posts.bydate.GetPostsByDate
+import com.makentoshe.habrachan.common.model.network.posts.bydate.GetPostsByDateConverterFactory
+import com.makentoshe.habrachan.common.model.network.posts.bydate.GetPostsByDateRequest
 import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQuery
 import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQueryConverterFactory
 import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQueryRequest
@@ -37,6 +40,15 @@ open class HabrManager(
             it as GetPostsByQueryConverterFactory
         }
         return GetPostsByQuery(api, factory).execute(request)
+    }
+
+    fun getPosts(request: GetPostsByDateRequest): Result.GetPostsByDateResponse {
+        val factory = factories.find {
+            it::class.java == GetPostsByDateConverterFactory::class.java
+        }.let {
+            it as GetPostsByDateConverterFactory
+        }
+        return GetPostsByDate(api, factory).execute(request)
     }
 
     fun getPosts(request: GetPostsBySortRequest): Result.GetPostsBySortResponse {
@@ -125,6 +137,7 @@ open class HabrManager(
                     .addConverterFactory(GetFlowsConverterFactory())
                     .addConverterFactory(GetHubsConverterFactory())
                     .addConverterFactory(GetPostsBySortConverterFactory())
+                    .addConverterFactory(GetPostsByDateConverterFactory())
                     .build()
             return HabrManager(retrofit.create(HabrApi::class.java), cookie, retrofit.converterFactories())
         }
