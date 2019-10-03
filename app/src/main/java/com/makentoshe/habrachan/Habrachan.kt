@@ -2,6 +2,7 @@ package com.makentoshe.habrachan
 
 import android.app.Application
 import com.makentoshe.habrachan.model.ApplicationScope
+import io.realm.Realm
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -17,5 +18,10 @@ class Habrachan : Application() {
         bind<Router>().toInstance(cicerone.router)
         bind<NavigatorHolder>().toInstance(cicerone.navigatorHolder)
     })
+
+    override fun onCreate() {
+        super.onCreate()
+        Realm.init(this)
+    }
 
 }
