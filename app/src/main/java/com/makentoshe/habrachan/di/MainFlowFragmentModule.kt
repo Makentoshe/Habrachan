@@ -1,12 +1,22 @@
 package com.makentoshe.habrachan.di
 
+import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.ui.MainFlowFragmentUi
+import com.makentoshe.habrachan.view.MainFlowFragment
+import com.makentoshe.habrachan.viewmodel.MainFlowViewModel
+import ru.terrakok.cicerone.Cicerone
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 
-class MainFlowFragmentModule : Module() {
+class MainFlowFragmentModule(fragment: MainFlowFragment) : Module() {
 
     init {
         bind<MainFlowFragmentUi>().toInstance(MainFlowFragmentUi())
+        bind<MainFlowViewModel>().toInstance(getViewModel(fragment))
+    }
+
+    private fun getViewModel(fragment: MainFlowFragment): MainFlowViewModel {
+        val factory = MainFlowViewModel.Factory(Cicerone.create())
+        return ViewModelProviders.of(fragment, factory)[MainFlowViewModel::class.java]
     }
 }
