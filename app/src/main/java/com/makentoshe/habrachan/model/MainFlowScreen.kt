@@ -1,7 +1,7 @@
-package com.makentoshe.habrachan.model.main
+package com.makentoshe.habrachan.model
 
 import androidx.fragment.app.Fragment
-import com.makentoshe.habrachan.view.main.MainFlowFragment
+import com.makentoshe.habrachan.view.MainFlowFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class MainFlowScreen : SupportAppScreen() {

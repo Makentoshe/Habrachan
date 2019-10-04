@@ -1,10 +1,11 @@
-package com.makentoshe.habrachan.di.main
+package com.makentoshe.habrachan.di
 
-import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
+import com.makentoshe.habrachan.ui.MainFlowFragmentUi
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 
-class MainFlowFragmentModule: Module() {
+class MainFlowFragmentModule : Module() {
+
     init {
         bind<MainFlowFragmentUi>().toInstance(MainFlowFragmentUi())
     }

@@ -10,6 +10,6 @@ import toothpick.ktp.binding.bind
 class AppActivityModule(appActivity: AppActivity) : Module() {
 
     init {
-        bind<Navigator>().toInstance(SupportAppNavigator(appActivity, R.id.activity_main))
+        bind<Navigator>().toInstance(SupportAppNavigator(appActivity, R.id.main_container))
     }
 }

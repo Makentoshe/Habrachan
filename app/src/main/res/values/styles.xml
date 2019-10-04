@@ -6,4 +6,13 @@
         <item name="colorPrimaryDark">#ff728e96</item>
     </style>
 
+    <style name="Habrachan.Light" parent="Habrachan">
+        <item name="colorsas">@color/colorPrimary</item>
+        <item name="main_flow_toolbar_style">@style/Habrachan.Light.Toolbar</item>
+    </style>
+
+    <style name="Habrachan.Light.Toolbar" parent="Habrachan.Light">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
 </resources>

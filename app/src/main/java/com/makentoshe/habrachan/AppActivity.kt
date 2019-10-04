@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.di.AppActivityModule
 import com.makentoshe.habrachan.di.AppActivityScope
 import com.makentoshe.habrachan.di.ApplicationScope
-import com.makentoshe.habrachan.model.main.MainFlowScreen
+import com.makentoshe.habrachan.model.MainFlowScreen
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
