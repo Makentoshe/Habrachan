@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.posts.PostsPageFragmentModule
 import com.makentoshe.habrachan.di.posts.PostsPageFragmentScope
+import com.makentoshe.habrachan.model.posts.PostsPageRecyclerViewAdapter
 import com.makentoshe.habrachan.ui.posts.PostsPageFragmentUi
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
@@ -34,7 +36,9 @@ class PostsPageFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.findViewById<TextView>(R.id.textview).text = position.toString()
+        val recyclerView = view.findViewById<RecyclerView>(R.id.main_posts_page_recyclerview)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = PostsPageRecyclerViewAdapter()
     }
 
     companion object {
