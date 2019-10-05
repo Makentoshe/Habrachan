@@ -32,7 +32,6 @@ class MainFlowFragment : Fragment() {
         val module = MainFlowFragmentModule(this)
         Toothpick.openScopes(MainFlowFragmentScope::class.java)
             .installModules(module).closeOnDestroy(this).inject(this)
-
         broadcastReceiver.addOnReceiveListener { page ->
             viewModel.page = page
         }
@@ -55,6 +54,7 @@ class MainFlowFragment : Fragment() {
             when (it.itemId) {
                 R.id.action_account -> presenter.onAccountClicked()
                 R.id.action_posts -> presenter.onPostsClicked()
+                R.id.action_menu -> presenter.onMenuClicked()
                 else -> false
             }
         }

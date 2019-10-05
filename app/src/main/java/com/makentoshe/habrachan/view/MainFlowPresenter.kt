@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.view
 
 import com.makentoshe.habrachan.common.model.navigation.Navigator
 import com.makentoshe.habrachan.model.account.AccountScreen
+import com.makentoshe.habrachan.model.menu.MenuScreen
 import com.makentoshe.habrachan.model.posts.PostsScreen
 import com.makentoshe.habrachan.viewmodel.MainFlowViewModel
 
@@ -30,6 +31,12 @@ class MainFlowPresenter(
     fun onPostsClicked(): Boolean {
         val screen = PostsScreen(viewModel.page)
         viewModel.router.replaceScreen(screen)
+        return true
+    }
+
+    fun onMenuClicked(): Boolean {
+        val screen = MenuScreen()
+        viewModel.router.replaceScreen(MenuScreen())
         return true
     }
 }
