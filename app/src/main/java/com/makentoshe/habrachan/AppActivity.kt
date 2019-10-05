@@ -11,6 +11,7 @@ import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
+import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class AppActivity : AppCompatActivity() {
 
@@ -42,6 +43,6 @@ class AppActivity : AppCompatActivity() {
     private fun injectDependencies() {
         Toothpick.openScopes(ApplicationScope::class.java).openSubScope(AppActivityScope::class.java) {
             it.installModules(AppActivityModule(this)).inject(this)
-        }.inject(this)
+        }.closeOnDestroy(this).inject(this)
     }
 }
