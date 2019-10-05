@@ -28,7 +28,8 @@ class MainFlowPresenter(
     }
 
     fun onPostsClicked(): Boolean {
-        viewModel.router.replaceScreen(PostsScreen())
+        val screen = PostsScreen(viewModel.page)
+        viewModel.router.replaceScreen(screen)
         return true
     }
 }

@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.posts.PostsFragmentModule
 import com.makentoshe.habrachan.di.posts.PostsFragmentScope
+import com.makentoshe.habrachan.model.MainFlowBroadcastReceiver
 import com.makentoshe.habrachan.model.posts.PostsFragmentViewPagerAdapter
 import com.makentoshe.habrachan.ui.posts.PostsFragmentUi
 import toothpick.Toothpick
@@ -19,6 +20,10 @@ import toothpick.smoothie.lifecycle.closeOnDestroy
 class PostsFragment : Fragment() {
 
     private val uiFactory by inject<PostsFragmentUi>()
+
+    private var pageArg: Int
+        set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("Page", value)
+        get() = arguments!!.getInt("Page")
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -33,5 +38,20 @@ class PostsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val viewpager = view.findViewById<ViewPager>(R.id.main_posts_viewpager)
         viewpager.adapter = PostsFragmentViewPagerAdapter(childFragmentManager)
+        viewpager.currentItem = pageArg
+
+        viewpager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+            override fun onPageScrollStateChanged(state: Int) = Unit
+            override fun onPageSelected(position: Int) {
+                MainFlowBroadcastReceiver.sendBroadcast(requireContext(), position)
+            }
+        })
+    }
+
+    companion object {
+        fun build(page: Int) = PostsFragment().apply {
+            this.pageArg = page
+        }
     }
 }

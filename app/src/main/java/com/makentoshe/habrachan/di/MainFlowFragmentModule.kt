@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.di
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.model.navigation.Navigator
+import com.makentoshe.habrachan.model.MainFlowBroadcastReceiver
 import com.makentoshe.habrachan.ui.MainFlowFragmentUi
 import com.makentoshe.habrachan.view.MainFlowFragment
 import com.makentoshe.habrachan.view.MainFlowPresenter
@@ -19,10 +20,12 @@ class MainFlowFragmentModule(fragment: MainFlowFragment) : Module() {
         bind<MainFlowFragmentUi>().toInstance(MainFlowFragmentUi())
         bind<MainFlowViewModel>().toInstance(getViewModel(fragment))
         bind<MainFlowPresenter>().toInstance(MainFlowPresenter(getViewModel(fragment), navigator))
+        val broadcastReceiver = MainFlowBroadcastReceiver.registerReceiver(fragment.requireActivity())
+        bind<MainFlowBroadcastReceiver>().toInstance(broadcastReceiver)
     }
 
     private fun getViewModel(fragment: MainFlowFragment): MainFlowViewModel {
-        val factory = MainFlowViewModel.Factory(Cicerone.create())
+        val factory = MainFlowViewModel.Factory(Cicerone.create(), page = 0)
         return ViewModelProviders.of(fragment, factory)[MainFlowViewModel::class.java]
     }
 }

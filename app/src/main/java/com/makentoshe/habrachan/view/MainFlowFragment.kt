@@ -10,7 +10,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.MainFlowFragmentScope
+import com.makentoshe.habrachan.model.MainFlowBroadcastReceiver
 import com.makentoshe.habrachan.ui.MainFlowFragmentUi
+import com.makentoshe.habrachan.viewmodel.MainFlowViewModel
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -21,11 +23,19 @@ class MainFlowFragment : Fragment() {
 
     private val presenter by inject<MainFlowPresenter>()
 
+    private val broadcastReceiver by inject<MainFlowBroadcastReceiver>()
+
+    private val viewModel by inject<MainFlowViewModel>()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val module = MainFlowFragmentModule(this)
         Toothpick.openScopes(MainFlowFragmentScope::class.java)
             .installModules(module).closeOnDestroy(this).inject(this)
+
+        broadcastReceiver.addOnReceiveListener { page ->
+            viewModel.page = page
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.model.navigation.Screen
 import com.makentoshe.habrachan.view.posts.PostsFragment
 
-class PostsScreen : Screen(){
+class PostsScreen(private val page: Int) : Screen(){
     override val fragment: Fragment
-        get() = PostsFragment()
+        get() = PostsFragment.build(page)
 }

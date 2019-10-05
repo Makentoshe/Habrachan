@@ -2,10 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_account"
-        android:icon="@drawable/ic_magnify"
+        android:icon="@drawable/ic_account_outline"
         android:title="@string/menu_account" />
     <item
         android:id="@+id/action_posts"
-        android:icon="@drawable/ic_magnify"
+        android:icon="@drawable/ic_agenda"
         android:title="@string/menu_posts" />
+    <item
+        android:id="@+id/action_menu"
+        android:icon="@drawable/ic_menu"
+        android:title="@string/menu_menu"/>
 </menu>
