@@ -36,9 +36,29 @@ class PostsPageFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        showProgressBar(view)
+    }
+
+    private fun initRecyclerView(view: View, adapter: RecyclerView.Adapter<*>) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.main_posts_page_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = PostsPageRecyclerViewAdapter()
+        recyclerView.adapter = adapter
+    }
+
+    private fun showRecyclerView(view: View = this.view!!) {
+        view.findViewById<RecyclerView>(R.id.main_posts_page_recyclerview).visibility = View.VISIBLE
+    }
+
+    private fun hideRecyclerView(view: View = this.view!!) {
+        view.findViewById<RecyclerView>(R.id.main_posts_page_recyclerview).visibility = View.GONE
+    }
+
+    private fun showProgressBar(view: View = this.view!!) {
+        view.findViewById<View>(R.id.main_posts_page_progressbar).visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar(view: View = this.view!!) {
+        view.findViewById<View>(R.id.main_posts_page_progressbar).visibility = View.GONE
     }
 
     companion object {
