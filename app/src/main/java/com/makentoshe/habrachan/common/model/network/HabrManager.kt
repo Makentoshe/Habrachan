@@ -60,15 +60,6 @@ open class HabrManager(
         return GetPostsBySort(api, factory).execute(request)
     }
 
-    fun getPosts(request: GetPostsRequest): Result.GetPostsResponse{
-        val factory = factories.find {
-            it::class.java == GetPostsConverterFactory::class.java
-        }.let {
-            it as GetPostsConverterFactory
-        }
-        return GetPosts(api, factory).execute(request)
-    }
-
     fun login(request: LoginRequest): Result.LoginResponse {
         val factory = factories.find {
             it::class.java == LoginConverterFactory::class.java
@@ -131,7 +122,6 @@ open class HabrManager(
         ): HabrManager {
             val retrofit =
                 Retrofit.Builder().client(client).baseUrl(baseUrl)
-                    .addConverterFactory(GetPostsConverterFactory())
                     .addConverterFactory(StringConverterFactory())
                     .addConverterFactory(ByteArrayConverterFactory())
                     .addConverterFactory(LoginConverterFactory())
