@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.posts.PostsPageFragmentModule
 import com.makentoshe.habrachan.di.posts.PostsPageFragmentScope
-import com.makentoshe.habrachan.model.posts.PostsPageRecyclerViewAdapter
 import com.makentoshe.habrachan.ui.posts.PostsPageFragmentUi
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
@@ -36,29 +35,29 @@ class PostsPageFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        showProgressBar(view)
+        showProgressBar()
     }
 
-    private fun initRecyclerView(view: View, adapter: RecyclerView.Adapter<*>) {
-        val recyclerView = view.findViewById<RecyclerView>(R.id.main_posts_page_recyclerview)
+    private fun initRecyclerView(adapter: RecyclerView.Adapter<*>) {
+        val recyclerView = requireView().findViewById<RecyclerView>(R.id.main_posts_page_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
     }
 
-    private fun showRecyclerView(view: View = this.view!!) {
-        view.findViewById<RecyclerView>(R.id.main_posts_page_recyclerview).visibility = View.VISIBLE
+    private fun showRecyclerView() {
+        requireView().findViewById<RecyclerView>(R.id.main_posts_page_recyclerview).visibility = View.VISIBLE
     }
 
-    private fun hideRecyclerView(view: View = this.view!!) {
-        view.findViewById<RecyclerView>(R.id.main_posts_page_recyclerview).visibility = View.GONE
+    private fun hideRecyclerView() {
+        requireView().findViewById<RecyclerView>(R.id.main_posts_page_recyclerview).visibility = View.GONE
     }
 
-    private fun showProgressBar(view: View = this.view!!) {
-        view.findViewById<View>(R.id.main_posts_page_progressbar).visibility = View.VISIBLE
+    private fun showProgressBar() {
+        requireView().findViewById<View>(R.id.main_posts_page_progressbar).visibility = View.VISIBLE
     }
 
-    private fun hideProgressBar(view: View = this.view!!) {
-        view.findViewById<View>(R.id.main_posts_page_progressbar).visibility = View.GONE
+    private fun hideProgressBar() {
+        requireView().findViewById<View>(R.id.main_posts_page_progressbar).visibility = View.GONE
     }
 
     companion object {
