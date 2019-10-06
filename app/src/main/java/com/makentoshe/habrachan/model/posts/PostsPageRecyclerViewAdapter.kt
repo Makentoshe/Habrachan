@@ -14,7 +14,13 @@ class PostsPageRecyclerViewAdapter : RecyclerView.Adapter<PostsPageRecyclerViewH
     }
 
     override fun onBindViewHolder(holder: PostsPageRecyclerViewHolder, position: Int) {
-//        holder.itemView.findViewById<TextView>(R.id.).text = position.toString()
+        holder.timePublished = "Завтра в 25:84"
+        holder.author = "Makentoshe"
+        holder.title = "Sas asa anus psa - Title contains 8 words"
+        holder.hubsTitles = "Короткий хаб, Немного более длинный хаб, Перенос на новую сточку, Мемные названия"
+        holder.score = 39
+        holder.readingCount = 393939
+        holder.commentsCount = -1
     }
 
     override fun getItemCount(): Int {

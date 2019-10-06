@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Завтра в 25:83" />
+        />
 
     <TextView
         android:id="@+id/author_login"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Makentoshe" />
+        />
 
     <TextView
         android:id="@+id/title"
@@ -34,14 +34,13 @@
         android:textSize="22sp"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        android:text="Sas asa anus psa - Title contains 4 words" />
+        />
 
     <TextView
         android:id="@+id/hubs_titles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Короткий хаб, Немного более длинный хаб, Перенос на новую сточку, Мемные названия"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -64,7 +63,6 @@
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
         android:gravity="center"
-        android:text="+39"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/score_imageview"
         app:layout_constraintStart_toEndOf="@+id/score_imageview"
@@ -88,7 +86,6 @@
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
         android:gravity="center"
-        android:text="393939"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/reading_count_imageview"
         app:layout_constraintStart_toEndOf="@+id/reading_count_imageview"
@@ -112,7 +109,6 @@
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
         android:gravity="center"
-        android:text="-1"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/comments_count_imageview"
         app:layout_constraintStart_toEndOf="@+id/comments_count_imageview"
