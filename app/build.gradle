@@ -78,6 +78,11 @@ dependencies {
     def rxandroid = "2.1.1"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
 
+    // SlidingUpPanelLayout
+    // https://github.com/umano/AndroidSlidingUpPanel
+    def slidinguppanel = "3.4.0"
+    implementation "com.sothree.slidinguppanel:library:$slidinguppanel"
+
     // Mockk
     // https://github.com/mockk/mockk
     def mockk = "1.9.1"

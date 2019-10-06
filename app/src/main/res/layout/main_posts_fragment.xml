@@ -17,25 +17,24 @@
         android:id="@+id/main_posts_toolbar_magnify"
         android:layout_width="56dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_posts_viewpager"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@id/toolbar">
 
         <ImageView
-            android:layout_gravity="center"
             android:id="@+id/main_posts_toolbar_magnify_icon"
             style="@style/Habrachan.Light.Toolbar"
             android:layout_width="28dp"
             android:layout_height="28dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_magnify" />
 
     </FrameLayout>
 
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/main_posts_viewpager"
-        android:layout_width="match_parent"
+    <include
+        layout="@layout/main_posts_fragment_content"
         android:layout_height="0dp"
+        android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

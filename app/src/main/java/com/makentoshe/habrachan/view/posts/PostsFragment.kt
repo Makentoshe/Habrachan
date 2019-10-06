@@ -13,10 +13,10 @@ import com.makentoshe.habrachan.di.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.MainFlowBroadcastReceiver
 import com.makentoshe.habrachan.model.posts.PostsFragmentViewPagerAdapter
 import com.makentoshe.habrachan.ui.posts.PostsFragmentUi
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
-import java.text.FieldPosition
 
 class PostsFragment : Fragment() {
 
@@ -37,6 +37,7 @@ class PostsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initPanel()
         val adapter = PostsFragmentViewPagerAdapter(childFragmentManager)
         initViewPager(adapter, pageArg)
 
@@ -45,15 +46,36 @@ class PostsFragment : Fragment() {
         }
     }
 
-    private fun onMagnifyClicked() {
+    private fun onMagnifyClicked() = when (getPanelState()) {
+        SlidingUpPanelLayout.PanelState.EXPANDED -> openPanel()
+        SlidingUpPanelLayout.PanelState.COLLAPSED -> closePanel()
+        else -> Unit
+    }
 
+    private fun initPanel() {
+        val panel = view!!.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel)
+        panel.isTouchEnabled = false
+    }
+
+    private fun getPanelState(): SlidingUpPanelLayout.PanelState {
+        return view!!.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel).panelState
+    }
+
+    private fun openPanel() {
+        view!!.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel).panelState =
+            SlidingUpPanelLayout.PanelState.COLLAPSED
+    }
+
+    private fun closePanel() {
+        view!!.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel).panelState =
+            SlidingUpPanelLayout.PanelState.EXPANDED
     }
 
     private fun initViewPager(adapter: PostsFragmentViewPagerAdapter, initialPage: Int) {
         val viewpager = view!!.findViewById<ViewPager>(R.id.main_posts_viewpager)
         viewpager.adapter = adapter
         viewpager.currentItem = initialPage
-        viewpager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+        viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
             override fun onPageScrollStateChanged(state: Int) = Unit
             override fun onPageSelected(position: Int) = this@PostsFragment.onPageSelected(position)
