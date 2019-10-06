@@ -29,7 +29,7 @@ class PostBySearchConverterFactoryTest {
 
     @Test
     fun `should parse success result`() {
-        val successJson = File(testResourcesDirectory, "GetPostsBySearchSuccess.json")
+        val successJson = File(testResourcesDirectory, "GetPostsByQuerySuccess.json")
 
         val responseBody = mockk<ResponseBody>()
         every { responseBody.string() } returns successJson.readText()
@@ -42,7 +42,7 @@ class PostBySearchConverterFactoryTest {
 
     @Test
     fun `should parse error result`() {
-        val errorJson = File(testResourcesDirectory, "GetPostsBySearchError.json")
+        val errorJson = File(testResourcesDirectory, "GetPostsByQueryError.json")
 
         val responseBody = mockk<ResponseBody>()
         every { responseBody.string() } returns errorJson.readText()
