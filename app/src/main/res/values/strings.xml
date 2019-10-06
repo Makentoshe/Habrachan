@@ -3,4 +3,8 @@
     <string name="menu_account">Account</string>
     <string name="menu_posts">Posts</string>
     <string name="menu_menu">Menu</string>
+    <string name="top">Top</string>
+    <string name="interesting">Interesting</string>
+    <string name="all_posts">All posts</string>
+    <string name="by_subscription">By subscription</string>
 </resources>
