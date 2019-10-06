@@ -1,41 +1,31 @@
 package com.makentoshe.habrachan.common.model.network.posts
 
-import com.makentoshe.habrachan.common.model.network.Result
+import com.makentoshe.habrachan.common.model.network.posts.bysort.GetPostsBySortConverter
 import com.makentoshe.habrachan.resources.testResourcesDirectory
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.ResponseBody
 import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Test
-import retrofit2.Converter
 import java.io.File
 
-class GetPostsConverterFactoryTest {
+class GetPostsBySortConverterTest {
 
-    private val factory = GetPostsConverterFactory()
-    private lateinit var converter: Converter<ResponseBody, Result.GetPostsResponse>
-
-    @Before
-    fun init() {
-        converter = factory.responseBodyConverter(Result.GetPostsResponse::class.java, arrayOf(), mockk())!!
-    }
+    private val converter = GetPostsBySortConverter()
 
     @Test
-    fun `converter should be null for incompatible type`() {
-        assertNull(factory.responseBodyConverter(Any::class.java, arrayOf(), mockk()))
-    }
-
-    @Test
-    fun `should parse GetPostsSuccess`() {
-        val successJson = File(testResourcesDirectory, "GetPostsSuccess.json")
+    fun `should parse GetPostsBySortSuccess`() {
+        val successJson = File(testResourcesDirectory, "GetPostsBySortSuccess.json")
 
         val responseBody = mockk<ResponseBody>()
         every { responseBody.string() } returns successJson.readText()
 
         converter.convert(responseBody).also {
-            assertNotNull(it.success)
             assertNull(it.error)
+            assertNotNull(it.success)
+            val data = it.success!!.data
+            assertEquals(50, data.pages)
+            assertEquals(20, data.data.size)
         }
     }
 
@@ -47,22 +37,27 @@ class GetPostsConverterFactoryTest {
         every { responseBody.string() } returns errorJson.readText()
 
         converter.convert(responseBody).also {
-            assertNotNull(it.error)
             assertNull(it.success)
+            it.error.also(::assertNotNull)!!.let { errorResult ->
+                assertEquals(403, errorResult.code)
+                assertEquals("Authorization required", errorResult.message)
+            }
         }
     }
 
     @Test
-    fun `should parse GetPostsError`() {
-        val errorJson = File(testResourcesDirectory, "GetPostsError.json")
+    fun `should parse GetPostsBySortError`() {
+        val errorJson = File(testResourcesDirectory, "GetPostsBySortError.json")
 
         val responseBody = mockk<ResponseBody>()
         every { responseBody.string() } returns errorJson.readText()
 
         converter.convert(responseBody).also {
-            assertNotNull(it.error)
             assertNull(it.success)
+            assertNotNull(it.error)
+            assertEquals(400, it.error!!.code)
+            assertEquals("invalid page", it.error!!.message)
+            assertTrue(it.error!!.additional.isEmpty())
         }
     }
 }
-

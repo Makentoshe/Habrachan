@@ -25,6 +25,7 @@ interface HabrApi {
     fun getPostsByDate(
         @Query("date") date: String,
         @Query("page") page: Int,
+        @Query("sort") sort: String = "date",
         @Query("hl") hl: String? = null,
         @Query("fl") fl: String? = null
     ): Call<Result.GetPostsByDateResponse>

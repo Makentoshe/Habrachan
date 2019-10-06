@@ -5,8 +5,8 @@ import com.makentoshe.habrachan.common.model.entity.Additional
 import com.makentoshe.habrachan.common.model.network.flows.GetFlowsResult
 import com.makentoshe.habrachan.common.model.network.hubs.GetHubsResult
 import com.makentoshe.habrachan.common.model.network.login.LoginResult
-import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQueryResult
 import com.makentoshe.habrachan.common.model.network.posts.GetPostsResult
+import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQueryResult
 import com.makentoshe.habrachan.common.model.network.posts.bydate.GetPostsByDateResult
 import com.makentoshe.habrachan.common.model.network.posts.bysort.GetPostsBySortResult
 import com.makentoshe.habrachan.common.model.network.users.GetUserByLoginResult
@@ -49,7 +49,7 @@ sealed class Result<T>(val success: T?, val error: ErrorResult?) {
 }
 
 data class ErrorResult(
-    @SerializedName("code")
+    @SerializedName("code", alternate = [])
     val code: Int,
     @SerializedName("message")
     val message: String,

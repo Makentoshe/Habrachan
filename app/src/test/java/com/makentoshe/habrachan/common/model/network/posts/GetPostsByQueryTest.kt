@@ -18,7 +18,7 @@ class GetPostsByQueryTest {
         val mockedResponse = mockk<Response<Result.GetPostsByQueryResponse>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockk {
-                every { string() } returns "{}"
+                every { string() } returns "{\"data\":null}"
             }
         }
 
@@ -28,18 +28,8 @@ class GetPostsByQueryTest {
             } returns mockedResponse
         }
 
-        val login = GetPostsByQuery(
-            mockedHabrApi,
-            GetPostsByQueryConverterFactory()
-        )
-        val response = login.execute(
-            GetPostsByQueryRequest(
-                "",
-                1,
-                "",
-                ""
-            )
-        )
+        val login = GetPostsByQuery(mockedHabrApi, GetPostsByQueryConverterFactory())
+        val response = login.execute(GetPostsByQueryRequest("", 1, "", ""))
 
         verify(exactly = 1) { mockedResponse.isSuccessful }
         verify(exactly = 0) { mockedResponse.body() }

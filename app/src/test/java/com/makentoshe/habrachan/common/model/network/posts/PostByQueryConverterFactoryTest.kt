@@ -1,15 +1,15 @@
 package com.makentoshe.habrachan.common.model.network.posts
 
 import com.makentoshe.habrachan.common.model.network.Result
-import com.makentoshe.habrachan.common.model.network.posts.bysort.GetPostsBySortConverterFactory
+import com.makentoshe.habrachan.common.model.network.posts.byquery.GetPostsByQueryConverterFactory
 import io.mockk.mockk
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Test
 
-class GetPostsBySortConverterFactoryTest {
+class PostByQueryConverterFactoryTest {
 
-    private val factory = GetPostsBySortConverterFactory()
+    private val factory = GetPostsByQueryConverterFactory()
 
     @Test
     fun `converter should be null for incompatible type`() {
@@ -18,6 +18,6 @@ class GetPostsBySortConverterFactoryTest {
 
     @Test
     fun `converter should not be null`() {
-        assertNotNull(factory.responseBodyConverter(Result.GetPostsBySortResponse::class.java, arrayOf(), mockk()))
+        assertNotNull(factory.responseBodyConverter(Result.GetPostsByQueryResponse::class.java, arrayOf(), mockk()))
     }
 }

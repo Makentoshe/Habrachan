@@ -49,7 +49,7 @@ class VotePostTest {
     @Test
     fun `should return error result`() {
         val errorBody = mockk<ResponseBody>()
-        every { errorBody.string() } returns "{}"
+        every { errorBody.string() } returns "{\"data\":{}}"
 
         val response = mockk<Response<Result.VotePostResponse>>()
         every { response.isSuccessful } returns false
