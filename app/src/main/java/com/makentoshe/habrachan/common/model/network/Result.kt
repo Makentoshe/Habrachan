@@ -49,7 +49,7 @@ sealed class Result<T>(val success: T?, val error: ErrorResult?) {
 }
 
 data class ErrorResult(
-    @SerializedName("code")
+    @SerializedName("code", alternate = [])
     val code: Int,
     @SerializedName("message")
     val message: String,
