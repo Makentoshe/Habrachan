@@ -17,7 +17,7 @@ class GetPostsBySortTest {
         val mockedResponse = mockk<Response<Result.GetPostsBySortResponse>> {
             every { isSuccessful } returns false
             every { errorBody() } returns mockk {
-                every { string() } returns "{}"
+                every { string() } returns "{\"data\":{}}"
             }
         }
 
