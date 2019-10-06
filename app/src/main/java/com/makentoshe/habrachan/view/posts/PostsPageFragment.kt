@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.posts.PostsPageFragmentModule
 import com.makentoshe.habrachan.di.posts.PostsPageFragmentScope
 import com.makentoshe.habrachan.ui.posts.PostsPageFragmentUi
+import com.makentoshe.habrachan.viewmodel.posts.PostsPageViewModel
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -20,13 +22,18 @@ class PostsPageFragment : Fragment() {
 
     private val uiFactory by inject<PostsPageFragmentUi>()
 
+    private val vmFactory by inject<PostsPageViewModel.Factory>()
+
+    private val viewModel: PostsPageViewModel
+        get() = ViewModelProviders.of(this, vmFactory)[PostsPageViewModel::class.java]
+
     private var position: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("Position", value)
         get() = arguments!!.getInt("Position")
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val module = PostsPageFragmentModule()
+        val module = PostsPageFragmentModule(position)
         Toothpick.openScope(PostsPageFragmentScope::class.java).installModules(module).closeOnDestroy(this).inject(this)
     }
 
@@ -66,3 +73,4 @@ class PostsPageFragment : Fragment() {
         }
     }
 }
+
