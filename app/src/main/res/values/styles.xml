@@ -13,6 +13,8 @@
 
     <style name="Habrachan.Light.Toolbar" parent="Habrachan.Light">
         <item name="android:background">@color/colorPrimary</item>
+        <item name="android:tint">@android:color/white</item>
+        <item name="android:tintMode">src_atop</item>
     </style>
 
 </resources>
