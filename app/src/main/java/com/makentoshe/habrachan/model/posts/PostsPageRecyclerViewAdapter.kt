@@ -2,9 +2,9 @@ package com.makentoshe.habrachan.model.posts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.view.posts.PostsPageRecyclerViewHolder
 
 class PostsPageRecyclerViewAdapter : RecyclerView.Adapter<PostsPageRecyclerViewHolder>() {
 

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.posts
+package com.makentoshe.habrachan.view.posts
 
 import android.view.View
 import android.widget.TextView
