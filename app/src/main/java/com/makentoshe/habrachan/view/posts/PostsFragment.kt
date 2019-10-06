@@ -16,6 +16,7 @@ import com.makentoshe.habrachan.ui.posts.PostsFragmentUi
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
+import java.text.FieldPosition
 
 class PostsFragment : Fragment() {
 
@@ -36,17 +37,31 @@ class PostsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val viewpager = view.findViewById<ViewPager>(R.id.main_posts_viewpager)
-        viewpager.adapter = PostsFragmentViewPagerAdapter(childFragmentManager)
-        viewpager.currentItem = pageArg
+        val adapter = PostsFragmentViewPagerAdapter(childFragmentManager)
+        initViewPager(adapter, pageArg)
 
+        view.findViewById<View>(R.id.main_posts_toolbar_magnify).setOnClickListener {
+            onMagnifyClicked()
+        }
+    }
+
+    private fun onMagnifyClicked() {
+
+    }
+
+    private fun initViewPager(adapter: PostsFragmentViewPagerAdapter, initialPage: Int) {
+        val viewpager = view!!.findViewById<ViewPager>(R.id.main_posts_viewpager)
+        viewpager.adapter = adapter
+        viewpager.currentItem = initialPage
         viewpager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
             override fun onPageScrollStateChanged(state: Int) = Unit
-            override fun onPageSelected(position: Int) {
-                MainFlowBroadcastReceiver.sendBroadcast(requireContext(), position)
-            }
+            override fun onPageSelected(position: Int) = this@PostsFragment.onPageSelected(position)
         })
+    }
+
+    private fun onPageSelected(position: Int) {
+        MainFlowBroadcastReceiver.sendBroadcast(requireContext(), position)
     }
 
     companion object {
