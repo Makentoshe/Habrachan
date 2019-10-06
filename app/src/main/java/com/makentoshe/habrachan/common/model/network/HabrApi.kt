@@ -30,6 +30,16 @@ interface HabrApi {
         @Query("fl") fl: String? = null
     ): Call<Result.GetPostsByDateResponse>
 
+    @GET("https://m.habr.com/kek/v1/articles")
+    fun getPosts(
+        @Query("page") page: Int,
+        @Query("sort") sort: String? = null,
+        @Query("hl") hl: String? = null,
+        @Query("fl") fl: String? = null,
+        @Query("date") date: String? = null,
+        @Query("custom") custom: Boolean? = null
+    ): Call<Result.GetPostsResponse>
+
     @FormUrlEncoded
     @POST("https://habr.com/auth/o/access-token")
     fun loginThroughApi(

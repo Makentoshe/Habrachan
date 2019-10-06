@@ -1,12 +1,9 @@
 package com.makentoshe.habrachan
 
 import com.makentoshe.habrachan.common.model.network.HabrManager
-import com.makentoshe.habrachan.common.model.network.posts.bydate.GetPostsByDate
-import com.makentoshe.habrachan.common.model.network.posts.bydate.GetPostsByDateRequest
-import com.makentoshe.habrachan.common.model.network.posts.bysort.GetPostsBySortRequest
+import com.makentoshe.habrachan.common.model.network.posts.GetPostsRequest
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -22,7 +19,7 @@ class ExampleUnitTest {
     @Test
     fun sas() {
         val manager = HabrManager.build()
-        val request = GetPostsByDateRequest(date = "day", page = 1)
+        val request = GetPostsRequest(date = "day", page = 1)
         val result = manager.getPosts(request)
         println(result)
     }
