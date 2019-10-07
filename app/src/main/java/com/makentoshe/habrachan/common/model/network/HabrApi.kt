@@ -91,3 +91,4 @@ interface HabrApi {
     ): Call<Result.GetHubsResponse>
 
 }
+

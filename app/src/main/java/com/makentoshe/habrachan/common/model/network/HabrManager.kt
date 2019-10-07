@@ -9,7 +9,9 @@ import com.makentoshe.habrachan.common.model.network.hubs.GetHubsRequest
 import com.makentoshe.habrachan.common.model.network.login.Login
 import com.makentoshe.habrachan.common.model.network.login.LoginConverterFactory
 import com.makentoshe.habrachan.common.model.network.login.LoginRequest
-import com.makentoshe.habrachan.common.model.network.posts.*
+import com.makentoshe.habrachan.common.model.network.posts.GetPosts
+import com.makentoshe.habrachan.common.model.network.posts.GetPostsConverterFactory
+import com.makentoshe.habrachan.common.model.network.posts.GetPostsRequest
 import com.makentoshe.habrachan.common.model.network.posts.bydate.GetPostsByDate
 import com.makentoshe.habrachan.common.model.network.posts.bydate.GetPostsByDateConverterFactory
 import com.makentoshe.habrachan.common.model.network.posts.bydate.GetPostsByDateRequest
@@ -60,7 +62,7 @@ open class HabrManager(
         return GetPostsBySort(api, factory).execute(request)
     }
 
-    fun getPosts(request: GetPostsRequest): Result.GetPostsResponse{
+    fun getPosts(request: GetPostsRequest): Result.GetPostsResponse {
         val factory = factories.find {
             it::class.java == GetPostsConverterFactory::class.java
         }.let {
@@ -87,7 +89,7 @@ open class HabrManager(
         return VotePost(api, cookieStorage, factory).execute(request)
     }
 
-    fun getUsers(request: GetUsersBySearchRequest): Result.GetUsersBySearchResponse{
+    fun getUsers(request: GetUsersBySearchRequest): Result.GetUsersBySearchResponse {
         val factory = factories.find {
             it::class.java == GetUsersBySearchConverterFactory::class.java
         }.let {
@@ -130,21 +132,17 @@ open class HabrManager(
             baseUrl: String = "https://habr.com/"
         ): HabrManager {
             val retrofit =
-                Retrofit.Builder().client(client).baseUrl(baseUrl)
-                    .addConverterFactory(GetPostsConverterFactory())
-                    .addConverterFactory(StringConverterFactory())
-                    .addConverterFactory(ByteArrayConverterFactory())
-                    .addConverterFactory(LoginConverterFactory())
-                    .addConverterFactory(VotePostConverterFactory())
+                Retrofit.Builder().client(client).baseUrl(baseUrl).addConverterFactory(GetPostsConverterFactory())
+                    .addConverterFactory(StringConverterFactory()).addConverterFactory(ByteArrayConverterFactory())
+                    .addConverterFactory(LoginConverterFactory()).addConverterFactory(VotePostConverterFactory())
                     .addConverterFactory(GetUsersBySearchConverterFactory())
                     .addConverterFactory(GetUserByLoginConverterFactory())
                     .addConverterFactory(GetPostsByQueryConverterFactory())
-                    .addConverterFactory(GetFlowsConverterFactory())
-                    .addConverterFactory(GetHubsConverterFactory())
+                    .addConverterFactory(GetFlowsConverterFactory()).addConverterFactory(GetHubsConverterFactory())
                     .addConverterFactory(GetPostsBySortConverterFactory())
-                    .addConverterFactory(GetPostsByDateConverterFactory())
-                    .build()
+                    .addConverterFactory(GetPostsByDateConverterFactory()).build()
             return HabrManager(retrofit.create(HabrApi::class.java), cookie, retrofit.converterFactories())
         }
     }
 }
+

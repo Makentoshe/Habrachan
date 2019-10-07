@@ -1,0 +1,3272 @@
+{
+  "pages": 50,
+  "next_page": {
+    "url": "https:\/\/habr.com\/api\/v1\/posts\/interesting?page=2",
+    "int": 2
+  },
+  "sorted_by": "time_interesting",
+  "data": [
+    {
+      "id": 470115,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-07T10:00:02+03:00",
+      "time_interesting": "2019-10-07T11:49:19+03:00",
+      "comments_count": 19,
+      "score": 5,
+      "votes_count": 9,
+      "favorites_count": 4,
+      "lang": "ru",
+      "tags_string": "дорожное движение, трафик, пробки, навигаторы",
+      "title": "Ваш мобильный навигатор затрудняет управление дорожным движением",
+      "preview_html": "\u003Ch3\u003EРаспространение приложений вроде Waze, Apple Maps и Google Maps умножает хаос\u003C\/h3\u003E\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/getpro\/habr\/post_images\/082\/079\/91d\/08207991dd6e43a2ac05693268620a07.jpg\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nМигель-стрит – это извилистая узкая дорога, проходящая по району Глен-Парк города Сан-Франциско. Ещё несколько лет назад по ней ездили только жители окрестных домов, и они хорошо знали все её проблемы. Теперь она забита машинами, которые используют её как короткий путь от переполненной Мишн-стрит до популярной Маркет-стрит. Местные жители с трудом добираются до дома, а ДТП случаются ежедневно.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nЭта проблема началась, когда приложения Waze, Apple Maps и Google Maps получили широкое распространение, и начали предлагать водителям объезды пробок в реальном времени. Во всём мире такими приложениями пользуется порядка миллиарда водителей.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nСегодня транспортные пробки появляются неожиданно, в местах, ранее бывших спокойными, во всех городах и странах мира. В Бостоне, в районе Дорчестер жители Адамс-стрит жалуются на быстро движущиеся в час пик машины, водители многих из которых уставились вниз, на свои телефоны, планируя следующий манёвр. Лондонские объездные пути, ранее бывшие секретным достоянием таксистов, теперь заполнены пользователями приложений. Одним из первых от этой напасти пострадал Израиль, поскольку именно там основали Waze; там быстро развился такой хаос, что один из жителей Герцлия-бет даже засудил компанию.\u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 22024,
+          "rating": 65.6066,
+          "is_profiled": false,
+          "title": "Урбанизм",
+          "alias": "urban",
+          "about_small": "Как устроены города",
+          "about": "Направление в градостроительстве XX века, утверждающее необходимость создания и развития больших городов.",
+          "count_subscribers": 9816,
+          "count_posts": 313,
+          "tags_string": "урбанизм, урбанистика, урбан",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 7,
+            "name": "Гиктаймс",
+            "alias": "geektimes",
+            "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+            "path": "\/flows\/geektimes\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/geektimes\/hub\/94a\/85a\/578\/94a85a57823586d9bac5bc4b9cd11238.png",
+          "path": "hub\/urban\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 7,
+          "name": "Гиктаймс",
+          "alias": "geektimes",
+          "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+          "path": "\/flows\/geektimes\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 2168,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/post\/470115\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470115\/",
+      "author": {
+        "id": 60351,
+        "login": "SLY_G",
+        "time_registered": "2010-12-31T19:31:09+03:00",
+        "score": 477.2,
+        "fullname": "Вячеслав Голованов",
+        "specializm": "Редактор Хабрахабра",
+        "sex": 1,
+        "rating": 597.3,
+        "vote": 0,
+        "rating_position": 0,
+        "path": "\/users\/sly_g\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Москва и Московская обл.",
+          "city": "Москва"
+        },
+        "counters": {
+          "posts": 3235,
+          "comments": 4137,
+          "followed": 9,
+          "followers": 1779,
+          "favorites": 112
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {
+            "id": 5,
+            "title": "Легенда",
+            "alias": "legend",
+            "description": "Пользователь, опубликовавший 30 и более топиков; рейтинг каждого топика должен быть более 50 баллов",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {
+            "id": 6,
+            "title": "Комментатор",
+            "alias": "commentator",
+            "description": "Пользователь, оставивший более 5 комментариев, рейтинг которых должен быть более 50 баллов",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {
+            "id": 7,
+            "title": "Старожил",
+            "alias": "oldresident",
+            "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {
+            "id": 11,
+            "title": "Переводчик",
+            "alias": "translator",
+            "description": "Пользователь, опубликовавший не менее 5 переводов, которые набрали более 50 баллов",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {},
+          {
+            "id": 1018,
+            "title": "Дед Мороз",
+            "alias": "habra_adm",
+            "description": "Пользователь, отправивший подарок в Клубе анонимных Дедов Морозов",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": true
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/329\/fc8\/9e5\/329fc89e55a9132bf200ff315065f3f7.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470115\/",
+      "source_author": "Jane Macfarlane",
+      "source_link": "https:\/\/spectrum.ieee.org\/computing\/hardware\/your-navigation-app-is-making-traffic-unmanageable",
+      "post_type": 2,
+      "post_type_str": "translation",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 19
+    },
+    {
+      "id": 467919,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2019-10-05T12:45:53+03:00",
+      "time_interesting": "2019-10-07T11:15:47+03:00",
+      "comments_count": 0,
+      "score": 5,
+      "votes_count": 5,
+      "favorites_count": 18,
+      "lang": "ru",
+      "tags_string": "Java, Kotlin, производительность, батчинг",
+      "title": "Проблемы пакетной обработки запросов и их решения (часть 2)",
+      "preview_html": "\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/ad\/_6\/oe\/ad_6oeq50j8z5q33t5ixjrcssqs.jpeg\u0022\u003E\u003Cbr\u003E\r\nЭто продолжение статьи \u003Ca href=\u0022https:\/\/habr.com\/ru\/company\/custis\/blog\/460291\u0022\u003E«Проблемы пакетной обработки запросов и их решения»\u003C\/a\u003E. Рекомендуется сначала ознакомиться с первой частью, так как в ней подробно описана суть задачи и некоторые подходы к ее решению. Здесь же мы рассмотрим другие методы.\u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 18087,
+          "rating": 63.7322,
+          "is_profiled": false,
+          "title": "Блог компании CUSTIS",
+          "alias": "custis",
+          "about_small": "",
+          "about": "CUSTIS",
+          "count_subscribers": 120,
+          "count_posts": 22,
+          "tags_string": "",
+          "is_membership": false,
+          "is_company": true,
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/company\/957\/21a\/9f2\/95721a9f22be61476d4d031d6d6cd814.png",
+          "path": "company\/custis\/"
+        },
+        {
+          "id": 4,
+          "rating": 106.0497,
+          "is_profiled": true,
+          "title": "Высокая производительность",
+          "alias": "hi",
+          "about_small": "Методы получения высокой производительности систем",
+          "about": "Все о методах получения высокой производительности веб-систем.",
+          "count_subscribers": 117803,
+          "count_posts": 1856,
+          "tags_string": "high perfomance, highload, high load, hpc, high performance computing",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/d4c\/97c\/de3\/d4c97cde31f59169b6159e7fc7020503.png",
+          "path": "hub\/hi\/"
+        },
+        {
+          "id": 375,
+          "rating": 137.2406,
+          "is_profiled": true,
+          "title": "Java",
+          "alias": "java",
+          "about_small": "Объектно-ориентированный язык программирования",
+          "about": "Java — объектно-ориентированный язык программирования, разработанный компанией Sun Microsystems (в последующем приобретённой компанией Oracle). Приложения Java обычно транслируются в специальный байт-код, поэтому они могут работать на любой виртуальной Java-машине вне зависимости от компьютерной архитектуры. Дата официального выпуска — 23 мая 1995 года.",
+          "count_subscribers": 118449,
+          "count_posts": 3258,
+          "tags_string": "java, ява, джава",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/4c9\/821\/d2a\/4c9821d2ad5a9844eb6d0f8c77991772.png",
+          "path": "hub\/java\/"
+        },
+        {
+          "id": 19441,
+          "rating": 34.36,
+          "is_profiled": true,
+          "title": "Kotlin",
+          "alias": "kotlin",
+          "about_small": "Статически типизированный язык программирования",
+          "about": "Kotlin (Котлин) — статически типизированный язык программирования, работающий поверх JVM, и разрабатываемый компанией JetBrains. Компилируется также в JavaScript. Язык назван в честь острова Котлин в Финском заливе, на котором расположена часть Кронштадта.",
+          "count_subscribers": 7675,
+          "count_posts": 362,
+          "tags_string": "kotlin, java",
+          "is_membership": true,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/75b\/b3b\/1c6\/75bb3b1c69225d61f235ef52be4d23dd.png",
+          "path": "hub\/kotlin\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 1220,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/webt\/yx\/dl\/x7\/yxdlx7ncjhymfor78jqhq9qz7n8.png"
+      },
+      "path": "\/company\/custis\/blog\/467919\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/custis\/blog\/467919\/",
+      "author": {
+        "id": 295401,
+        "login": "MZinchenko",
+        "time_registered": "2013-01-08T13:41:45+04:00",
+        "score": 2,
+        "fullname": "Максим Зинченко",
+        "specializm": "Java разработчик",
+        "sex": 1,
+        "rating": 4,
+        "vote": 0,
+        "rating_position": 1618,
+        "path": "\/users\/mzinchenko\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Москва и Московская обл.",
+          "city": "Москва"
+        },
+        "counters": {
+          "posts": 2,
+          "comments": 0,
+          "followed": 0,
+          "followers": 1,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/company\/custis\/blog\/467919\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 470389,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2019-10-07T10:31:32+03:00",
+      "time_interesting": "2019-10-07T10:50:07+03:00",
+      "comments_count": 11,
+      "score": 9,
+      "votes_count": 11,
+      "favorites_count": 9,
+      "lang": "ru",
+      "tags_string": "DNS-over-HTTPS, DoH, RFC 8484, шифрование трафика, Великобритания",
+      "title": "Mozilla пообещала не включать шифрование DoH в Великобритании. Что это значит для России?",
+      "preview_html": "\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/2l\/ur\/qf\/2lurqf1jd9nl8gpxk4kng9epmg0.png\u0022\u003E\u003Cbr\u003E\r\n \u003Cbr\u003E\r\nДве недели назад на Хабре \u003Ca href=\u0022https:\/\/habr.com\/ru\/company\/globalsign\/blog\/468445\/\u0022\u003Eрассказывали о протоколе DNS-over-HTTPS (DoH) \u003C\/a\u003E, недавно принятом в качестве стандарта RFC 8484. Разработанный Mozilla, Google и Cloudflare протокол DNS-шифрования сводит на нет попытки мониторинга трафика «человеком-в-середине». Он устраняет самое «слабое звено» в HTTPS — открытые DNS-запросы, по которым сейчас государство или злоумышленник на уровне провайдера может отслеживать содержимое DNS-пакетов и даже подменять их. Это позволяет блокировать доступ к ресурсу по IP-адресу или доменному имени.\u003Cbr\u003E\r\n \u003Cbr\u003E\r\nИ самое главное — организация Mozilla приняла решение включить его по умолчанию в браузере Firefox. Пока что только для пользователей США. Но в свете того, что менее полутора месяцев осталось до вступления в силу закона об изоляции Рунета, а закон Яровой уже вступил в силу, методы шифрования трафика как никогда актуальны для защиты от слежки в российском интернете.\u003Cbr\u003E\r\n \u003Cbr\u003E\r\nНо сейчас пришла не очень приятная новость. Оказывается, в некоторых странах, где уже действует цензура трафика на государственном уровне, Mozilla может изменить своё решение. Такое \u003Ca href=\u0022https:\/\/www.theguardian.com\/technology\/2019\/sep\/24\/firefox-no-uk-plans-to-make-encrypted-browser-tool-its-default\u0022\u003Eобсуждается в Великобритании\u003C\/a\u003E. Теоретически, такое может произойти и в России.\u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 21354,
+          "rating": 225.7623,
+          "is_profiled": false,
+          "title": "Блог компании GlobalSign",
+          "alias": "globalsign",
+          "about_small": "",
+          "about": "GlobalSign",
+          "count_subscribers": 5420,
+          "count_posts": 108,
+          "tags_string": "",
+          "is_membership": false,
+          "is_company": true,
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/company\/02b\/285\/e10\/02b285e10c9b26e6481977a53630c8d7.jpg",
+          "path": "company\/globalsign\/"
+        },
+        {
+          "id": 50,
+          "rating": 696.4528,
+          "is_profiled": true,
+          "title": "Информационная безопасность",
+          "alias": "infosecurity",
+          "about_small": "Защита данных",
+          "about": "О том, как мы защищаем свою информацию - от взлома, повреждения, фишинга и т.д. Новости мира anti-virus, anti-spam, anti-spy  и т.д. Личные впечатления, опыт, мнения.",
+          "count_subscribers": 513662,
+          "count_posts": 9501,
+          "tags_string": "безопасность, фишинг, fishing, защита, взлом, XSS, CSRF, SQL-inj, sql-инъекция, PHP-inj, DoS, DDoS, социальная инженерия, capcha, капча, sql injection, php injection, хакер, хакеры, хакерская атака",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/135\/2db\/187\/1352db18765addaa6e0b2ac013d386d8.png",
+          "path": "hub\/infosecurity\/"
+        },
+        {
+          "id": 19257,
+          "rating": 60.4976,
+          "is_profiled": false,
+          "title": "Браузеры",
+          "alias": "browsers",
+          "about_small": "Веб-обозреватели",
+          "about": "Браузер или веб-обозреватель — прикладное программное обеспечение для просмотра веб-страниц; содержания веб-документов, компьютерных файлов и их каталогов; управления веб-приложениями; а также для решения других задач.",
+          "count_subscribers": 121907,
+          "count_posts": 547,
+          "tags_string": "браузеры",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/b13\/8a7\/176\/b138a7176c8cbb20de86d55b43d2ce8f.png",
+          "path": "hub\/browsers\/"
+        },
+        {
+          "id": 20738,
+          "rating": 84.3363,
+          "is_profiled": false,
+          "title": "Законодательство в IT",
+          "alias": "business-laws",
+          "about_small": "Следим за тем, как регулируют IT-индустрию",
+          "about": "Хаб об изменениях в законодательстве, влияющих на условия ведения бизнеса в индустрии высоких технологий.",
+          "count_subscribers": 109152,
+          "count_posts": 2786,
+          "tags_string": "законы, закон, законодательство, бизнес, компании",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 3,
+            "name": "Менеджмент",
+            "alias": "management",
+            "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+            "path": "\/flows\/management\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/a57\/348\/ade\/a57348ade2b5c33e99e869aaee204c3f.png",
+          "path": "hub\/business-laws\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        },
+        {
+          "id": 3,
+          "name": "Менеджмент",
+          "alias": "management",
+          "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+          "path": "\/flows\/management\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 2545,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/company\/globalsign\/blog\/470389\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/globalsign\/blog\/470389\/",
+      "author": {
+        "id": 1390138,
+        "login": "GlobalSign_admin",
+        "time_registered": "2017-01-11T13:01:51+03:00",
+        "score": 64,
+        "fullname": "GlobalSign_admin",
+        "specializm": "информационная безопасность",
+        "sex": 0,
+        "rating": 326.4,
+        "vote": 0,
+        "rating_position": 0,
+        "path": "\/users\/globalsign_admin\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 108,
+          "comments": 9,
+          "followed": 8,
+          "followers": 57,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/daf\/215\/442\/daf2154423e23eb42c800a893f2337a3.png",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": true,
+      "url": "https:\/\/habr.com\/ru\/company\/globalsign\/blog\/470389\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 11
+    },
+    {
+      "id": 470133,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2019-10-07T10:11:21+03:00",
+      "time_interesting": "2019-10-07T10:23:50+03:00",
+      "comments_count": 0,
+      "score": 9,
+      "votes_count": 9,
+      "favorites_count": 11,
+      "lang": "ru",
+      "tags_string": "Ruby, Ruby gem, Prometheus, metrics, Tracer",
+      "title": "Как с Prometheus собирать метрики, не искаженные привязкой ко времени",
+      "preview_html": "\u003Cp\u003E\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/-6\/xs\/ee\/-6xseehi1ojmkxmb_phq6tr3h_a.jpeg\u0022\u003E\u003Cbr\u003E\r\nМногие сетевые приложения состоят из веб-сервера, обрабатывающего трафик в реальном времени, и дополнительного обработчика, запускаемого в фоне асинхронно. Есть множество отличных советов по проверке состояния трафика да и сообщество не перестает разрабатывать инструменты вроде Prometheus, которые помогают в оценке. Но обработчики порой не менее – а то и более – важны. Им также нужны внимание и оценка, однако руководства по тому, как осуществлять это, избегая распространенных подводных камней, мало.\u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EЭта статья посвящена ловушкам, наиболее часто встречающимся в процессе оценки асинхронных обработчиков, — на примере инцидента в рабочей среде, когда даже при наличии метрик невозможно было точно определить, чем заняты обработчики. Применение метрик сместило фокус настолько, что сами же метрики откровенно врали, мол, обработчики ваши ни к черту.\u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EМы увидим, как использовать метрики таким образом, чтобы обеспечить точную оценку, а в заключении покажем эталонную реализацию \u003Ca href=\u0022https:\/\/github.com\/lawrencejones\/prometheus-client-tracer-ruby\u0022\u003Eprometheus-client-tracer\u003C\/a\u003E с открытым исходным кодом, который и вы можете применить в своих приложениях.\u003C\/p\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 17901,
+          "rating": 694.8058,
+          "is_profiled": false,
+          "title": "Блог компании Southbridge",
+          "alias": "southbridge",
+          "about_small": "Обеспечиваем стабильную работу серверов",
+          "about": "Southbridge",
+          "count_subscribers": 7119,
+          "count_posts": 280,
+          "tags_string": "",
+          "is_membership": false,
+          "is_company": true,
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/company\/754\/d93\/3ca\/754d933caeb494c6127add17ff60feb5.png",
+          "path": "company\/southbridge\/"
+        },
+        {
+          "id": 221,
+          "rating": 270.4095,
+          "is_profiled": true,
+          "title": "Системное администрирование",
+          "alias": "sys_admin",
+          "about_small": "Лишь бы юзер был доволен",
+          "about": "Всё, что связано с системным администрированием. Полезные и интересные материалы, статьи. Делимся опытом.",
+          "count_subscribers": 111204,
+          "count_posts": 3779,
+          "tags_string": "пинг, ping, trace, трассировка, маршруты, маршрутизация, админ, администратор, admin, драйвера, пакеты, дрова, родительский контроль, права, консоль, терминал, настройка",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 6,
+            "name": "Администрирование",
+            "alias": "admin",
+            "url": "https:\/\/habr.com\/ru\/flows\/admin\/",
+            "path": "\/flows\/admin\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/6c5\/db3\/8c2\/6c5db38c23972b6c0916e91e408edff8.png",
+          "path": "hub\/sys_admin\/"
+        },
+        {
+          "id": 17350,
+          "rating": 153.8072,
+          "is_profiled": true,
+          "title": "Серверное администрирование",
+          "alias": "s_admin",
+          "about_small": "Установка, настройка, обслуживание",
+          "about": "Все про установку, настройку и обслуживание программного обеспечения веб-серверов и самого железа.",
+          "count_subscribers": 101376,
+          "count_posts": 1661,
+          "tags_string": "Серверное администрирование, zabbix, munin, cacti, nagios",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 6,
+            "name": "Администрирование",
+            "alias": "admin",
+            "url": "https:\/\/habr.com\/ru\/flows\/admin\/",
+            "path": "\/flows\/admin\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/1b7\/37e\/2d9\/1b737e2d9b2f7b60a2f5700eb5f93f1e.png",
+          "path": "hub\/s_admin\/"
+        },
+        {
+          "id": 20788,
+          "rating": 267.7161,
+          "is_profiled": true,
+          "title": "DevOps",
+          "alias": "devops",
+          "about_small": "Методология разработки программного обеспечения",
+          "about": "DevOps (акроним от англ. development и operations) — методология разработки программного обеспечения, нацеленная на активное взаимодействие и интеграцию специалистов по разработке и специалистов по информационно-технологическому обслуживанию. Базируется на идее о тесной взаимозависимости разработки и эксплуатации программного обеспечения, и нацелена на то, чтобы помогать организациям быстрее создавать и обновлять программные продукты и сервисы.\r\n\r\nЗадача DevOps — сделать процесс разработки и поставки программного обеспечения согласованным с эксплуатацией, часто эти задачи решаются при поддержке автоматических средств.",
+          "count_subscribers": 7012,
+          "count_posts": 1011,
+          "tags_string": "devops",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 6,
+            "name": "Администрирование",
+            "alias": "admin",
+            "url": "https:\/\/habr.com\/ru\/flows\/admin\/",
+            "path": "\/flows\/admin\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/57d\/092\/3fc\/57d0923fc4dbf24622761210161f5b47.jpg",
+          "path": "hub\/devops\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 6,
+          "name": "Администрирование",
+          "alias": "admin",
+          "url": "https:\/\/habr.com\/ru\/flows\/admin\/",
+          "path": "\/flows\/admin\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 468,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/webt\/-6\/xs\/ee\/-6xseehi1ojmkxmb_phq6tr3h_a.jpeg"
+      },
+      "path": "\/company\/southbridge\/blog\/470133\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/southbridge\/blog\/470133\/",
+      "author": {
+        "id": 1829125,
+        "login": "nAbdullin",
+        "time_registered": "2018-09-13T11:02:44+03:00",
+        "score": 82,
+        "fullname": null,
+        "specializm": null,
+        "sex": 0,
+        "rating": 168,
+        "vote": 0,
+        "rating_position": 50,
+        "path": "\/users\/nabdullin\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 82,
+          "comments": 31,
+          "followed": 4,
+          "followers": 55,
+          "favorites": 54
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/company\/southbridge\/blog\/470133\/",
+      "source_author": "Lawrence Jones",
+      "source_link": "https:\/\/blog.lawrencejones.dev\/incremental-measurement\/",
+      "post_type": 2,
+      "post_type_str": "translation",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 470295,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-07T08:16:24+03:00",
+      "time_interesting": "2019-10-07T09:59:38+03:00",
+      "comments_count": 4,
+      "score": 5,
+      "votes_count": 5,
+      "favorites_count": 25,
+      "lang": "ru",
+      "tags_string": "sqlite, sqleet, assembler, криптография",
+      "title": "Простое шифрование БД SQlite",
+      "preview_html": "\u003Cp\u003E\u003Cimg width=\u0022240\u0022 src=\u0022https:\/\/habrastorage.org\/webt\/ha\/jo\/rw\/hajorwfi7l9n0kboytvj9tiivbs.png\u0022 align=\u0022left\u0022\u003EТак получилось, что я очень люблю использовать SQLite СУБД. \u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EПрограммируя на ассемблере, я иногда нуждаюсь в полноценной СУБД. Мои программы редко превышают в размере несколько сотен килобайт. Понятно, что использовать с ним СУБД в несколько сотен мегабайт по меньшей мере просто смешно, а в конце концов, очень неудобно – сразу возрастают требования к оборудованию и сложности установки и настройки, а в итоге уменьшается надежность всей системы.\u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003ESQLite совершенно другое дело. Во-первых, она маленькая – всего несколько сот килобайт, прекрасное дополнение к компактным программам на ассемблере. Во-вторых, это ультра-надежная система хранения данных. Никаких специальных установок и настроек ей не нужно. Ну и насчет быстродействия – не из последних. \u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EК примеру, я использовал SQLite в моем движке форума \u003Ca href=\u0022https:\/\/board.asm32.info\u0022\u003EAsmBB\u003C\/a\u003E о котором \u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/318916\/\u0022\u003Eуже писал\u003C\/a\u003E на хабре. (Кстати, после этого он так и \u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/319028\/\u0022\u003Eне упал\u003C\/a\u003E).\u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EС того времени проект медленно, но уверенно развивается. Появились новые функции, повысились безопасность и быстродействие. \u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EИ вот однажды я задумался как повысить и так неплохую безопасность проекта. И сразу подумал, что неплохо было бы сделать шифрование БД форума. Ведь если даже база и утечёт, то доступ к личным данным пользователей никто не получит.\u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EБыстрый поиск по Интернету показал, что есть нескольких расширений SQLite для шифрования БД. К сожалению, официальное расширение \u003Ca href=\u0022https:\/\/www.hwaci.com\/sw\/sqlite\/see.html\u0022\u003ESEE\u003C\/a\u003E несвободно и вообще продается за деньги.\u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EНо, конечно, свято место пусто не бывает и я сразу наткнулся на расширение \u003Ca href=\u0022https:\/\/github.com\/resilar\/sqleet\u0022\u003ESQLeet\u003C\/a\u003E. И в нем мне понравилось буквально все. \u003C\/p\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 91,
+          "rating": 399.0559,
+          "is_profiled": true,
+          "title": "Разработка веб-сайтов",
+          "alias": "webdev",
+          "about_small": "Делаем веб лучше",
+          "about": "Веб-разработка — процесс создания веб-сайта или веб-приложения. Основными этапами процесса являются веб-дизайн, вёрстка страниц, программирование для веб на стороне клиента и сервера, а также конфигурирование веб-сервера.",
+          "count_subscribers": 524405,
+          "count_posts": 11430,
+          "tags_string": "web development",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/2a2\/ac7\/3dd\/2a2ac73dd5cddc6e05b47a3d502b4c0d.png",
+          "path": "hub\/webdev\/"
+        },
+        {
+          "id": 118,
+          "rating": 54.8267,
+          "is_profiled": true,
+          "title": "Криптография",
+          "alias": "crypto",
+          "about_small": "Шифрование и криптоанализ",
+          "about": "Криптография (от др.-греч. κρυπτός — скрытый и γράφω — пишу) — наука о методах обеспечения конфиденциальности (невозможности прочтения информации посторонним), целостности данных (невозможности незаметного изменения информации), аутентификации (проверки подлинности авторства или иных свойств объекта), а также невозможности отказа от авторства.",
+          "count_subscribers": 111604,
+          "count_posts": 1145,
+          "tags_string": "криптография, криптология, крипто, crypto, анализ, шифрование, md5, sha2",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/de4\/a7f\/775\/de4a7f775624db2496fbbe6399b25467.png",
+          "path": "hub\/crypto\/"
+        },
+        {
+          "id": 18554,
+          "rating": 4.5334,
+          "is_profiled": true,
+          "title": "SQLite",
+          "alias": "sqlite",
+          "about_small": "Компактная встраиваемая реляционная база данных",
+          "about": "SQLite — компактная встраиваемая реляционная база данных. Исходный код библиотеки передан в общественное достояние. В 2005 году проект получил награду Google-O’Reilly Open Source Awards.",
+          "count_subscribers": 40722,
+          "count_posts": 88,
+          "tags_string": "sqlite",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/f4c\/c28\/ccc\/f4cc28cccd00584f8002be209d504555.png",
+          "path": "hub\/sqlite\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 1495,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/post\/470295\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470295\/",
+      "author": {
+        "id": 895979,
+        "login": "johnfound",
+        "time_registered": "2015-01-05T19:19:41+03:00",
+        "score": 65,
+        "fullname": "John Found",
+        "specializm": "Инженер автоматизации",
+        "sex": 0,
+        "rating": 4.2,
+        "vote": 0,
+        "rating_position": 1600,
+        "path": "\/users\/johnfound\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 3,
+          "comments": 534,
+          "followed": 2,
+          "followers": 32,
+          "favorites": 1
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {
+            "id": 7,
+            "title": "Старожил",
+            "alias": "oldresident",
+            "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/3fb\/fd7\/eb6\/3fbfd7eb682088db220ba30e7792a85f.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470295\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 4
+    },
+    {
+      "id": 470265,
+      "is_corporative": 0,
+      "is_tutorial": true,
+      "time_published": "2019-10-07T09:17:39+03:00",
+      "time_interesting": "2019-10-07T09:41:00+03:00",
+      "comments_count": 4,
+      "score": 11,
+      "votes_count": 11,
+      "favorites_count": 51,
+      "lang": "ru",
+      "tags_string": "с++, аббревиатуры, акронимы, программирование, разработка",
+      "title": "Шпаргалка по аббревиатурам C++ и не только. Часть 1: C++",
+      "preview_html": "Когда-то я собеседовался на должность C++ разработчика в одну приличную и даже известную контору. Опыт у меня тогда уже кое-какой был, я даже назывался ведущим разработчиком у тогдашнего своего работодателя. Но на вопросы о том, знаком ли я такими вещами, как DRY, KISS, YAGNI, NIH, раз за разом мне приходилось отвечать «Нет». \u003Cbr\u003E\r\n\u003Cbr\u003E\r\nСобеседование я с треском провалил, конечно. Но упомянутые аббревиатуры потом загуглил и запомнил. По мере чтения тематических статей и книг, подготовок к собеседованиям и просто общения с коллегами я узнавал больше новых вещей, забывал их, снова гуглил и разбирался. Пару месяцев назад кто-то из коллег небрежно упомянул в рабочем чате IIFE в контексте C++. Я, как тот дед в анекдоте, чуть с печки не свалился и опять полез в гугл.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/i7\/7u\/fc\/i77ufc8-ui3-rtrvpu-421lmpfq.png\u0022\u003E\u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 359,
+          "rating": 950.9541,
+          "is_profiled": true,
+          "title": "Программирование",
+          "alias": "programming",
+          "about_small": "Искусство создания компьютерных программ",
+          "about": "Процесс и искусство создания компьютерных программ с помощью языков программирования.",
+          "count_subscribers": 260316,
+          "count_posts": 10158,
+          "tags_string": "программинг, кодирование, разработка, языки программирования",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/db2\/c8f\/4a1\/db2c8f4a1974bf334d01595732f339c1.png",
+          "path": "hub\/programming\/"
+        },
+        {
+          "id": 559,
+          "rating": 262.1901,
+          "is_profiled": true,
+          "title": "C++",
+          "alias": "cpp",
+          "about_small": "Типизированный язык программирования",
+          "about": "C++: прошлое, настоящее, будущее.",
+          "count_subscribers": 109404,
+          "count_posts": 2521,
+          "tags_string": "C++, c plus plus, си плюс плюс, Страуструп, Cxx",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/01b\/2ed\/295\/01b2ed29584e1245479ca857b0264ff1.png",
+          "path": "hub\/cpp\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 1605,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/webt\/i7\/7u\/fc\/i77ufc8-ui3-rtrvpu-421lmpfq.png"
+      },
+      "path": "\/post\/470265\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470265\/",
+      "author": {
+        "id": 1880817,
+        "login": "Fyret",
+        "time_registered": "2018-11-13T21:48:08+03:00",
+        "score": 69,
+        "fullname": "Михаил Зинин",
+        "specializm": "Разработчик",
+        "sex": 1,
+        "rating": 8.8,
+        "vote": 0,
+        "rating_position": 1239,
+        "path": "\/users\/fyret\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 6,
+          "comments": 93,
+          "followed": 0,
+          "followers": 138,
+          "favorites": 23
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470265\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 4
+    },
+    {
+      "id": 470379,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-07T08:55:55+03:00",
+      "time_interesting": "2019-10-07T09:33:06+03:00",
+      "comments_count": 5,
+      "score": 16,
+      "votes_count": 18,
+      "favorites_count": 21,
+      "lang": "ru",
+      "tags_string": "психология игр",
+      "title": "Задача о трех горах, неуловимая теория ума и проблема периодизации детского развития",
+      "preview_html": "\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/mp\/vh\/en\/mpvhengijyffwb2zr0kew9j1ixw.jpeg\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nВ прошлый раз мы немного затронули эгоцентрическую позицию ребенка в дошкольном детстве. Жан Пиаже в свое время выдвинул тезис, что ребенку дошкольного возраста в принципе свойственен эгоцентризм мышления – то есть он по умолчанию считает, что в голове у другого человека все происходит точно так же, как у него самого. Пользуясь более современным термином, Пиаже считал, что дошкольник не имеет теории ума, поэтому не способен учесть или принять чужую точку зрения. В обоснование этого он приводил результаты следующего эксперимента:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nРебенку предъявляется макет с тремя горами. Он имеет возможность рассмотреть его со всех сторон. Потом ребенка сажают на стул с одной стороны от макета, с другой стороны усаживается кукла. Экспериментатор показывает ребенку фотографии макета в четырех разных ракурсах и спрашивает, что видит кукла.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nПримерно до семи лет испытуемые в этом эксперименте выбирали картинку с тем ракурсом, который видели сами.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nВпоследствии Жана Пиаже немало ругали за то, как сильно он недооценил возможности детей дошкольного возраста – и как сильно переоценил продолжительность периода эгоцентрического мышления.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nОткуда взялась эта ошибка?\u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 21990,
+          "rating": 115.0576,
+          "is_profiled": false,
+          "title": "Мозг",
+          "alias": "brain",
+          "about_small": "Как он работает",
+          "about": "Хаб про всё, что связано с человеческим мозгом",
+          "count_subscribers": 11425,
+          "count_posts": 939,
+          "tags_string": "мозг, мозги",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 7,
+            "name": "Гиктаймс",
+            "alias": "geektimes",
+            "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+            "path": "\/flows\/geektimes\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/geektimes\/hub\/d50\/aab\/5e0\/d50aab5e00dd47a9fdeffee5714170e9.png",
+          "path": "hub\/brain\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 7,
+          "name": "Гиктаймс",
+          "alias": "geektimes",
+          "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+          "path": "\/flows\/geektimes\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 4003,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/post\/470379\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470379\/",
+      "author": {
+        "id": 2179749,
+        "login": "ElizavetaKluchikova",
+        "time_registered": "2019-09-30T20:31:18+03:00",
+        "score": 25,
+        "fullname": "",
+        "specializm": "психолог, игротерапевт",
+        "sex": 2,
+        "rating": 36.1,
+        "vote": 0,
+        "rating_position": 407,
+        "path": "\/users\/elizavetakluchikova\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Москва и Московская обл.",
+          "city": "Москва"
+        },
+        "counters": {
+          "posts": 4,
+          "comments": 26,
+          "followed": 1,
+          "followers": 25,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/db1\/7dd\/079\/db17dd0792ed706ae989fd7a11c613e1.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470379\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 5
+    },
+    {
+      "id": 468937,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2019-10-07T05:00:01+03:00",
+      "time_interesting": "2019-10-07T09:13:38+03:00",
+      "comments_count": 8,
+      "score": 8,
+      "votes_count": 10,
+      "favorites_count": 52,
+      "lang": "ru",
+      "tags_string": "информационная безопасность, банковские карты, emv",
+      "title": "Атаки на бесконтактные банковские карты",
+      "preview_html": "\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/mq\/0i\/ja\/mq0ijaoac7t0hg252hv4dotkijq.jpeg\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Ci\u003EАвтор: \u003Ca href=\u0022https:\/\/habr.com\/ru\/users\/cuamckuu\/\u0022 class=\u0022user_link\u0022\u003Ecuamckuu\u003C\/a\u003E\u003C\/i\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nИзвлечение содержимого карты и работа с EMV-командами может быть интересна не только в исследовательских целях. Существует несколько видов атак на бесконтактные банковские карты, про реализацию которых будет рассказано под катом. \u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 17744,
+          "rating": 341.6951,
+          "is_profiled": false,
+          "title": "Блог компании Digital Security",
+          "alias": "dsec",
+          "about_small": "Безопасность как искусство",
+          "about": "Блог компании «Digital Security»",
+          "count_subscribers": 9740,
+          "count_posts": 156,
+          "tags_string": "",
+          "is_membership": false,
+          "is_company": true,
+          "icon": "",
+          "path": "company\/dsec\/"
+        },
+        {
+          "id": 50,
+          "rating": 696.4528,
+          "is_profiled": true,
+          "title": "Информационная безопасность",
+          "alias": "infosecurity",
+          "about_small": "Защита данных",
+          "about": "О том, как мы защищаем свою информацию - от взлома, повреждения, фишинга и т.д. Новости мира anti-virus, anti-spam, anti-spy  и т.д. Личные впечатления, опыт, мнения.",
+          "count_subscribers": 513662,
+          "count_posts": 9501,
+          "tags_string": "безопасность, фишинг, fishing, защита, взлом, XSS, CSRF, SQL-inj, sql-инъекция, PHP-inj, DoS, DDoS, социальная инженерия, capcha, капча, sql injection, php injection, хакер, хакеры, хакерская атака",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/135\/2db\/187\/1352db18765addaa6e0b2ac013d386d8.png",
+          "path": "hub\/infosecurity\/"
+        },
+        {
+          "id": 233,
+          "rating": 61.7133,
+          "is_profiled": true,
+          "title": "Платежные системы",
+          "alias": "pay_system",
+          "about_small": "Отправляем деньги через Сеть",
+          "about": "Платёжная систе́ма — совокупность правил, процедур и технической инфраструктуры, обеспечивающих перевод стоимости от одного субъекта экономики другому. Платёжные системы являются одной из ключевых частей современных монетарных систем. Электронные платёжные системы являются подвидом платёжных систем, которые обеспечивают осуществление транзакций электронных платежей через сети (например, Интернет) или платёжные чипы.",
+          "count_subscribers": 106444,
+          "count_posts": 909,
+          "tags_string": "платежные системы, платежи",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/e7d\/fbf\/c3c\/e7dfbfc3cf0165469a372abd09c5ef10.png",
+          "path": "hub\/pay_system\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 8297,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/company\/dsec\/blog\/468937\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/dsec\/blog\/468937\/",
+      "author": {
+        "id": 1551417,
+        "login": "forkyforky",
+        "time_registered": "2017-09-13T17:52:14+03:00",
+        "score": 32,
+        "fullname": null,
+        "specializm": "Пользователь",
+        "sex": 0,
+        "rating": 84,
+        "vote": 0,
+        "rating_position": 141,
+        "path": "\/users\/forkyforky\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 13,
+          "comments": 5,
+          "followed": 0,
+          "followers": 10,
+          "favorites": 2
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/fe4\/915\/b42\/fe4915b425d954d72659d4f7c1814d0c.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/company\/dsec\/blog\/468937\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 8
+    },
+    {
+      "id": 470311,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-07T06:09:32+03:00",
+      "time_interesting": "2019-10-07T08:47:23+03:00",
+      "comments_count": 21,
+      "score": 10,
+      "votes_count": 10,
+      "favorites_count": 13,
+      "lang": "ru",
+      "tags_string": "игры, ретро-игры, ретрогейминг",
+      "title": "Деревянные игрушки, часть седьмая — 1993",
+      "preview_html": "1993 для меня получился годом квестов. И потихоньку начинают появляться игры на компакт-дисках — в первую очередь те же квесты. Место забивают видеороликами или аудиотреками. С пометкой «если втыкать диск в CD-проигрыватель, то первый трек не играть». Но это тоже пока где-то вдали от меня — сменил школу, остался без MSX. Доступ к РС по прежнему дозированный. Играем в основном на денди, а про компьютерные игры читаем всякие «энциклопедии компьютерных игр».\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cdiv style=\u0022text-align:center;\u0022\u003E\u003Cimg src=\u0022https:\/\/habrastorage.org\/getpro\/habr\/post_images\/f8b\/917\/549\/f8b9175493435b82af73a8ed28050293.jpg\u0022 width=\u0022667\u0022 height=\u0022500\u0022\u003E\u003C\/div\u003E\u003Cbr\u003E\r\n\u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/469739\/\u0022\u003EДеревянные игрушки, часть шестая — 1992\u003C\/a\u003E\u003Cbr\u003E\r\n\u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/469737\/\u0022\u003EДеревянные игрушки, часть пятая — 1991\u003C\/a\u003E\u003Cbr\u003E\r\n\u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/469427\/\u0022\u003EДеревянные игрушки, часть четвертая — 1990\u003C\/a\u003E\u003Cbr\u003E\r\n\u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/469109\/\u0022\u003EДеревянные игрушки, часть третья — 1989\u003C\/a\u003E\u003Cbr\u003E\r\n\u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/468767\/\u0022\u003EДеревянные игрушки, часть вторая — 1986-1988 \u003C\/a\u003E\u003Cbr\u003E\r\n\u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/468525\/\u0022\u003EДеревянные игрушки, часть первая — 1982-1985 \u003C\/a\u003E\u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 21906,
+          "rating": 216.3952,
+          "is_profiled": false,
+          "title": "История IT",
+          "alias": "history",
+          "about_small": "Занимательные истории из прошлого",
+          "about": "Исторические вехи развития компьютеров и интернета.",
+          "count_subscribers": 104188,
+          "count_posts": 1521,
+          "tags_string": "история, интернет, рунет, вехи, железо, развитие, компьютеры",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 7,
+            "name": "Гиктаймс",
+            "alias": "geektimes",
+            "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+            "path": "\/flows\/geektimes\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/geektimes\/hub\/bbe\/ec1\/498\/bbeec149811969c7214c33d0a6911160.png",
+          "path": "hub\/history\/"
+        },
+        {
+          "id": 21930,
+          "rating": 261.934,
+          "is_profiled": false,
+          "title": "Старое железо",
+          "alias": "antikvariat",
+          "about_small": "Как это было, когда мы были молоды",
+          "about": "Все старое, практически никому не нужное сейчас, но оттого не менее интересное, железо.",
+          "count_subscribers": 107448,
+          "count_posts": 1086,
+          "tags_string": "железо, антиквариат, рухлядь, старье, ностальгия",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 7,
+            "name": "Гиктаймс",
+            "alias": "geektimes",
+            "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+            "path": "\/flows\/geektimes\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/geektimes\/hub\/064\/e29\/0f4\/064e290f484ad3bf745ebe9163b9276a.png",
+          "path": "hub\/antikvariat\/"
+        },
+        {
+          "id": 21980,
+          "rating": 120.4858,
+          "is_profiled": false,
+          "title": "Игры и игровые приставки",
+          "alias": "games",
+          "about_small": "Камень, ножницы, бумага",
+          "about": "Хаб про компьютерные игры",
+          "count_subscribers": 105152,
+          "count_posts": 2012,
+          "tags_string": "игры",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 7,
+            "name": "Гиктаймс",
+            "alias": "geektimes",
+            "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+            "path": "\/flows\/geektimes\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/geektimes\/hub\/250\/e19\/5fa\/250e195faa1708e4df5cb8664394a54f.png",
+          "path": "hub\/games\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 7,
+          "name": "Гиктаймс",
+          "alias": "geektimes",
+          "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+          "path": "\/flows\/geektimes\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 3758,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/post\/470311\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470311\/",
+      "author": {
+        "id": 48605,
+        "login": "aik",
+        "time_registered": "2009-06-02T13:58:29+04:00",
+        "score": 138,
+        "fullname": "Антон",
+        "specializm": null,
+        "sex": 1,
+        "rating": 125.1,
+        "vote": 0,
+        "rating_position": 81,
+        "path": "\/users\/aik\/",
+        "geo": {
+          "country": "Россия",
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 60,
+          "comments": 4193,
+          "followed": 0,
+          "followers": 59,
+          "favorites": 19
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {
+            "id": 7,
+            "title": "Старожил",
+            "alias": "oldresident",
+            "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/488\/219\/39f\/48821939f1830428bbf04e177f8c3e30.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470311\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 21
+    },
+    {
+      "id": 470373,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-07T04:41:53+03:00",
+      "time_interesting": "2019-10-07T08:29:12+03:00",
+      "comments_count": 0,
+      "score": 24,
+      "votes_count": 24,
+      "favorites_count": 12,
+      "lang": "ru",
+      "tags_string": "дайджест, php-дайджест, PHP, Symfony, Laravel, Yii, PHP 7.4, PHP 8, PSR",
+      "title": "PHP-Дайджест № 165 (23 сентября – 7 октября 2019)",
+      "preview_html": "\u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/470373\/\u0022\u003E\u003Cdiv style=\u0022text-align:center;\u0022\u003E\u003Cimg src=\u0022https:\/\/habrastorage.org\/web\/de5\/25b\/8b9\/de525b8b9f694ea5a59e120ae5f04cad.jpg\u0022 width=\u0022600\u0022\u003E\u003C\/div\u003E\u003C\/a\u003E\u003Cbr\u003E\r\n\u003Cp\u003EСвежая подборка со ссылками на новости и материалы. В выпуске: PHP 7.4.0 RC3, поддержка Composer-зависимостей на GitHub, обновление стандартов PSR, RFC предложения из PHP Internals и о координации проекта PHP, порция полезных инструментов, подкасты, митапы, и многое другое.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nПриятного чтения!\u003C\/p\u003E\u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 91,
+          "rating": 399.0559,
+          "is_profiled": true,
+          "title": "Разработка веб-сайтов",
+          "alias": "webdev",
+          "about_small": "Делаем веб лучше",
+          "about": "Веб-разработка — процесс создания веб-сайта или веб-приложения. Основными этапами процесса являются веб-дизайн, вёрстка страниц, программирование для веб на стороне клиента и сервера, а также конфигурирование веб-сервера.",
+          "count_subscribers": 524405,
+          "count_posts": 11430,
+          "tags_string": "web development",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/2a2\/ac7\/3dd\/2a2ac73dd5cddc6e05b47a3d502b4c0d.png",
+          "path": "hub\/webdev\/"
+        },
+        {
+          "id": 260,
+          "rating": 93.3899,
+          "is_profiled": true,
+          "title": "PHP",
+          "alias": "php",
+          "about_small": "Скриптовый язык общего назначения",
+          "about": "PHP (англ. PHP: Hypertext Preprocessor — «PHP: препроцессор гипертекста»; первоначально Personal Home Page Tools — «Инструменты для создания персональных веб-страниц»; произносится пи-эйч-пи) — скриптовый язык общего назначения, интенсивно применяемый для разработки веб-приложений. В настоящее время поддерживается подавляющим большинством хостинг-провайдеров и является одним из лидеров среди языков, применяющихся для создания динамических веб-сайтов. Язык и его интерпретатор разрабатываются группой энтузиастов в рамках проекта с открытым кодом. Проект распространяется под собственной лицензией, несовместимой с GNU GPL.",
+          "count_subscribers": 117177,
+          "count_posts": 3062,
+          "tags_string": "PHP, Hypertext Preprocessor, Personal Home Page Tools",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/98a\/7a8\/831\/98a7a88319d5644cdc627b5e04b47d0f.png",
+          "path": "hub\/php\/"
+        },
+        {
+          "id": 477,
+          "rating": 33.1203,
+          "is_profiled": true,
+          "title": "Symfony",
+          "alias": "symfony",
+          "about_small": "Свободный фреймворк, написанный на PHP5",
+          "about": "Symfony — свободный фреймворк, написанный на PHP5, который использует паттерн Model-View-Controller. Symfony предлагает быструю разработку и управление веб-приложениями, позволяет легко решать рутинные задачи веб-программиста. Работает только с PHP 5 (\u003E=5.2.4 и желательно не 5.2.9 для Symfony 1.4, \u003E=5.3.2 для Symfony2). Имеет поддержку множества баз данных (MySQL, PostgreSQL, SQLite или любая другая PDO-совместимая СУБД). Информация о реляционной базе данных в проекте должна быть связана с объектной моделью. Это можно сделать при помощи ORM инструмента. Symfony поставляется с двумя из них: Propel и Doctrine.",
+          "count_subscribers": 74812,
+          "count_posts": 322,
+          "tags_string": "symfony, symfony framework, symfony2, symfony2 framework, symfony 2, twig",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/999\/7ee\/481\/9997ee481b6d2834c797fb4d8e913266.png",
+          "path": "hub\/symfony\/"
+        },
+        {
+          "id": 9554,
+          "rating": 15.4298,
+          "is_profiled": true,
+          "title": "Yii",
+          "alias": "yii",
+          "about_small": "Фреймворк, реализующий парадигму MVC",
+          "about": "Yii (акроним от «Yes It Is!», произносится как «Yee» или [ji:]) — фреймворк, написанный на PHP, и реализующий парадигму MVC.",
+          "count_subscribers": 77385,
+          "count_posts": 307,
+          "tags_string": "yii, Yii Framework, YiiFramework, framework, фрэймворк",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/b4f\/b06\/003\/b4fb06003337b47d9e87e85aa274579f.png",
+          "path": "hub\/yii\/"
+        },
+        {
+          "id": 18812,
+          "rating": 15.9634,
+          "is_profiled": true,
+          "title": "Laravel",
+          "alias": "laravel",
+          "about_small": "Бесплатный веб-фреймворк с открытым кодом",
+          "about": "Laravel — бесплатный веб-фреймворк с открытым кодом, предназначенный для разработки с использованием архитектурной модели MVC (англ. Model View Controller — модель-представление-контроллер). Laravel выпущен под лицензией MIT. Исходный код проекта размещается на GitHub. Гибкая и расширяемая библиотека с интуитивным синтаксисом для создания веб-приложений на PHP.",
+          "count_subscribers": 29547,
+          "count_posts": 183,
+          "tags_string": "laravel, php",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/0bd\/b91\/ce8\/0bdb91ce8e124137ee8f67fa9faa943e.png",
+          "path": "hub\/laravel\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 3217,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/web\/de5\/25b\/8b9\/de525b8b9f694ea5a59e120ae5f04cad.jpg"
+      },
+      "path": "\/post\/470373\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470373\/",
+      "author": {
+        "id": 100489,
+        "login": "pronskiy",
+        "time_registered": "2011-10-28T12:27:47+04:00",
+        "score": 223,
+        "fullname": "Роман Пронский",
+        "specializm": "PHP",
+        "sex": 1,
+        "rating": 288,
+        "vote": 0,
+        "rating_position": 19,
+        "path": "\/users\/pronskiy\/",
+        "geo": {
+          "country": "Украина",
+          "region": "Харьковская обл.",
+          "city": "Харьков"
+        },
+        "counters": {
+          "posts": 158,
+          "comments": 177,
+          "followed": 39,
+          "followers": 594,
+          "favorites": 873
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {
+            "id": 5,
+            "title": "Легенда",
+            "alias": "legend",
+            "description": "Пользователь, опубликовавший 30 и более топиков; рейтинг каждого топика должен быть более 50 баллов",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {
+            "id": 7,
+            "title": "Старожил",
+            "alias": "oldresident",
+            "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/4ff\/b7e\/1e6\/4ffb7e1e672b59a5d54622150d6d1039.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470373\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 470323,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-07T02:10:58+03:00",
+      "time_interesting": "2019-10-07T07:18:44+03:00",
+      "comments_count": 1,
+      "score": 14,
+      "votes_count": 14,
+      "favorites_count": 58,
+      "lang": "ru",
+      "tags_string": "deepfake, C#, .net standard, .net core, .net framework 4.6.1, dlib, компьютерное зрение",
+      "title": "DeepFake своими руками [часть 1]",
+      "preview_html": "Не смотря на все прелести интернета, у него есть много минусов, и один из самых ужасных – это введения людей в заблуждение. Кликбейт, монтаж фотографий, ложные новости – все эти инструменты активно используются для обмана обычных пользователей в мировой сети, но в последние годы набирает обороты новый потенциально опасный инструмент, известный как DeepFake. \u003Cbr\u003E\r\n \u003Cbr\u003E\r\nМеня данная технология заинтересовала недавно. Впервые о ней я узнал из доклада одного из спикеров на “AI Conference 2018”. Там демонстрировалось видео, в котором по аудиозаписи алгоритм сгенерировал видео с обращением Барака Обамы. \u003Ca href=\u0022https:\/\/youtu.be\/-QvIX3cY4lc\u0022\u003E Ссылка на подборку видео созданных с помощью этой технологии\u003C\/a\u003E. Результаты меня сильно вдохновили, и мною было принято решение лучше разобраться с данной технологией, чтобы в будущем противодействовать ей. Для этого я решил написать DeepFake на языке C#. В итоге получил такой результат.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/w1\/bw\/lp\/w1bwlpk1ulrf5srvffcrow1i_gm.jpeg\u0022 alt=\u0022image\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nПриятного чтения!\u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 546,
+          "rating": 190.8416,
+          "is_profiled": true,
+          "title": ".NET",
+          "alias": "net",
+          "about_small": "Хаб со знаниями про NET Framework",
+          "about": "NET Framework — программная платформа, выпущенная компанией Microsoft в 2002 году. Основой платформы является общеязыковая среда исполнения Common Language Runtime (CLR), которая подходит для разных языков программирования. Функциональные возможности CLR доступны в любых языках программирования, использующих эту среду.",
+          "count_subscribers": 99075,
+          "count_posts": 3328,
+          "tags_string": ".net, net, dot.net, win forms, wpf, wcf, wf, ado.net, entity framework, linq, plinq, msil, vb.net, asp.net, дот нет, дот.нет, il",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/a5a\/5ae\/a29\/a5a5aea294f48a0d81c4b1968432e5e1.png",
+          "path": "hub\/net\/"
+        },
+        {
+          "id": 17718,
+          "rating": 142.9741,
+          "is_profiled": true,
+          "title": "C#",
+          "alias": "csharp",
+          "about_small": "Объектно-ориентированный язык программирования",
+          "about": "Программирование на C#",
+          "count_subscribers": 101927,
+          "count_posts": 1827,
+          "tags_string": "C, C Sharp",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/bc7\/f1e\/783\/bc7f1e78397bca57cf5adcd5bf1725be.png",
+          "path": "hub\/csharp\/"
+        },
+        {
+          "id": 19439,
+          "rating": 310.8478,
+          "is_profiled": true,
+          "title": "Машинное обучение",
+          "alias": "machine_learning",
+          "about_small": "Основа искусственного интеллекта",
+          "about": "Машинное обучение — обширный подраздел искусственного интеллекта, изучающий методы построения моделей, способных обучаться, и алгоритмов для их построения и обучения.",
+          "count_subscribers": 26553,
+          "count_posts": 2108,
+          "tags_string": "машинное обучение, machine learning, компьютеры, искусственный интеллект",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/882\/37a\/b33\/88237ab33b6f8acc090d443651c4f2f9.png",
+          "path": "hub\/machine_learning\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 3794,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/webt\/o7\/x3\/mr\/o7x3mr05sqtmtu5mcvwqbszvgmy.png"
+      },
+      "path": "\/post\/470323\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470323\/",
+      "author": {
+        "id": 679347,
+        "login": "Zachar_5",
+        "time_registered": "2014-05-29T21:37:01+04:00",
+        "score": 17,
+        "fullname": "Понимаш Захар Алексеевич",
+        "specializm": "Программист",
+        "sex": 1,
+        "rating": 11.2,
+        "vote": 0,
+        "rating_position": 1086,
+        "path": "\/users\/zachar_5\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Ростовская обл.",
+          "city": "Таганрог"
+        },
+        "counters": {
+          "posts": 6,
+          "comments": 58,
+          "followed": 4,
+          "followers": 25,
+          "favorites": 4
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/466\/41c\/c27\/46641cc27bf1aaaab5d1e1549fff370a.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470323\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 1
+    },
+    {
+      "id": 470361,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-06T23:44:09+03:00",
+      "time_interesting": "2019-10-07T02:45:50+03:00",
+      "comments_count": 0,
+      "score": 7,
+      "votes_count": 7,
+      "favorites_count": 23,
+      "lang": "ru",
+      "tags_string": "дайджест, фронтенд, css, js, es6, vue, react, angular, html5, браузеры, ссылки",
+      "title": "Дайджест свежих материалов из мира фронтенда за последнюю неделю №383 (1 — 6 октября 2019)",
+      "preview_html": "Предлагаем вашему вниманию подборку с ссылками на новые материалы из области фронтенда и около него.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cp\u003E\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/0a\/bf\/ea\/0abfeabnxhqbjipkkyf3qd85kge.png\u0022\u003E\u003C\/p\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 91,
+          "rating": 399.0559,
+          "is_profiled": true,
+          "title": "Разработка веб-сайтов",
+          "alias": "webdev",
+          "about_small": "Делаем веб лучше",
+          "about": "Веб-разработка — процесс создания веб-сайта или веб-приложения. Основными этапами процесса являются веб-дизайн, вёрстка страниц, программирование для веб на стороне клиента и сервера, а также конфигурирование веб-сервера.",
+          "count_subscribers": 524405,
+          "count_posts": 11430,
+          "tags_string": "web development",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/2a2\/ac7\/3dd\/2a2ac73dd5cddc6e05b47a3d502b4c0d.png",
+          "path": "hub\/webdev\/"
+        },
+        {
+          "id": 307,
+          "rating": 67.1338,
+          "is_profiled": true,
+          "title": "CSS",
+          "alias": "css",
+          "about_small": "Каскадные таблицы стилей",
+          "about": "Блог о CSS, его применении, новости по теме.",
+          "count_subscribers": 115041,
+          "count_posts": 1547,
+          "tags_string": "CSS, Каскадные Таблицы Стилей, css3, каскадные таблицы стилей 3, css версия 3, css версии 3",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/20a\/faf\/e86\/20afafe861e9814e46e8a20c8527bd80.png",
+          "path": "hub\/css\/"
+        },
+        {
+          "id": 357,
+          "rating": 371.76,
+          "is_profiled": true,
+          "title": "JavaScript",
+          "alias": "javascript",
+          "about_small": "Прототипно-ориентированный язык программирования",
+          "about": "JavaScript (аббр. JS) — прототипно-ориентированный сценарный язык программирования. Является реализацией языка ECMAScript (стандарт ECMA-262). JavaScript обычно используется как встраиваемый язык для программного доступа к объектам приложений.",
+          "count_subscribers": 123859,
+          "count_posts": 5862,
+          "tags_string": "javascript, ECMAScript, ECMA, ECMA-262, prototype.js, jQuery, Dojo, Google Closure Compiler, JSON, Backbone, underscore, knockoutjs, JSONP",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/2b3\/99b\/964\/2b399b964d456f3ad1bfddc0346b60d4.png",
+          "path": "hub\/javascript\/"
+        },
+        {
+          "id": 17103,
+          "rating": 56.1204,
+          "is_profiled": true,
+          "title": "HTML",
+          "alias": "html5",
+          "about_small": "Стандартный язык разметки web-страниц",
+          "about": "HTML (HyperText Markup Language — «язык гипертекстовой разметки») — стандартный язык разметки документов во Всемирной паутине. Большинство веб-страниц содержат описание разметки на языке HTML (или XHTML). Язык HTML интерпретируется браузерами; полученный в результате интерпретации форматированный текст отображается на экране монитора компьютера или мобильного устройства.\r\n\r\nHTML5 — пятая версия основного языка разметки web-страниц.",
+          "count_subscribers": 115192,
+          "count_posts": 1314,
+          "tags_string": "html, html5, tag video, WebM",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/e0d\/bdc\/393\/e0dbdc393c996e7a628c5d051d0fcf8b.png",
+          "path": "hub\/html5\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 3053,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/post\/470361\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470361\/",
+      "author": {
+        "id": 59347,
+        "login": "alexzfort",
+        "time_registered": "2010-10-21T18:26:55+04:00",
+        "score": 306.2,
+        "fullname": null,
+        "specializm": null,
+        "sex": 0,
+        "rating": 438.4,
+        "vote": 0,
+        "rating_position": 10,
+        "path": "\/users\/alexzfort\/",
+        "geo": {
+          "country": "Украина",
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 402,
+          "comments": 346,
+          "followed": 4,
+          "followers": 1561,
+          "favorites": 590
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {
+            "id": 4,
+            "title": "Звезда",
+            "alias": "star",
+            "description": "Пользователь, опубликовавший 20 и более топиков; рейтинг каждого топика должен быть более 50 баллов",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          },
+          {
+            "id": 7,
+            "title": "Старожил",
+            "alias": "oldresident",
+            "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/d2a\/e8a\/5ac\/d2ae8a5ac9876f838ebdd45f3ea3bc3b.png",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470361\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 470353,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2019-10-06T22:20:23+03:00",
+      "time_interesting": "2019-10-06T22:25:59+03:00",
+      "comments_count": 2,
+      "score": 9,
+      "votes_count": 19,
+      "favorites_count": 25,
+      "lang": "ru",
+      "tags_string": "Юрий Мильнер, NetBridge, fomenko.ru, list.ru, Алексей Кривенков, port.ru, mail.ru, Дмитрий Гришин, Игорь Моцанюк, Легенда, Одноклассники, Вконтакте, Лев Левиев, Вячеслав Мирилашвили, Facebook, Алишер Усманов",
+      "title": "Холивар. История рунета. Часть 4. Mail.ru: игры, соцсети, Дуров",
+      "preview_html": "\u003Ca href=\u0022https:\/\/habr.com\/ru\/company\/ua-hosting\/blog\/469341\/\u0022\u003EХоливар. История рунета. Часть 1. Начало: хиппи из Калифорнии, Носик и лихие 90-е\u003C\/a\u003E\u003Cbr\u003E\r\n\u003Ca href=\u0022https:\/\/habr.com\/ru\/company\/ua-hosting\/blog\/469423\/\u0022\u003EХоливар. История рунета. Часть 2. Контркультура: пАдонки, марихуана и Кремль\u003C\/a\u003E\u003Cbr\u003E\r\n\u003Ca href=\u0022https:\/\/habr.com\/ru\/company\/ua-hosting\/blog\/470221\/\u0022\u003EХоливар. История рунета. Часть 3. Поисковики: Яндекс vs Рамблер. Как не делать инвестиции\u003C\/a\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n«Дамы и господа, Марк Цукурберг и Юрий Мильнер». \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/oc\/zi\/4i\/oczi4iwf0aa8dcegvibf_phoezi.jpeg\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cblockquote\u003E\u003Csup\u003E\u003Cb\u003EDisclaimer\u003C\/b\u003E. Эта статья — расшифровка замечательного фильма «Холивар» Андрея Лошака. Есть люди, которые экономят время и любят текст, есть те, кто не может на работе или в дороге смотреть видео, но с радостью читает Хабр, есть слабослышащие, для которых звуковая дорожка недоступна или сложна для восприятия. Мы решили для всех них и вас расшифровать отличный контент. Кто всё же предпочитает видео — ссылка в конце.\u003C\/sup\u003E\u003C\/blockquote\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 17847,
+          "rating": 501.293,
+          "is_profiled": false,
+          "title": "Блог компании ua-hosting.company",
+          "alias": "ua-hosting",
+          "about_small": "Хостинг-провайдер: серверы в NL \/ US до 100 Гбит\/с",
+          "about": "Блог компании ua-hosting.company",
+          "count_subscribers": 6314,
+          "count_posts": 1074,
+          "tags_string": "",
+          "is_membership": false,
+          "is_company": true,
+          "icon": "",
+          "path": "company\/ua-hosting\/"
+        },
+        {
+          "id": 20,
+          "rating": 96.9472,
+          "is_profiled": false,
+          "title": "Хостинг",
+          "alias": "hosting",
+          "about_small": "Виртуальный, Dedicated, Colocation",
+          "about": "Хостинг (англ. hosting) — услуга по предоставлению ресурсов для размещения информации на сервере, постоянно находящемся в сети (обычно Интернет).",
+          "count_subscribers": 97617,
+          "count_posts": 1097,
+          "tags_string": "провайдер, трафик, хост, хостинг, VPS, VDS, hosting, virtual hosting, cloud hosting",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 6,
+            "name": "Администрирование",
+            "alias": "admin",
+            "url": "https:\/\/habr.com\/ru\/flows\/admin\/",
+            "path": "\/flows\/admin\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/270\/fae\/79d\/270fae79d4cd7070a1bcc27f41f68ce6.png",
+          "path": "hub\/hosting\/"
+        },
+        {
+          "id": 6398,
+          "rating": 230.3761,
+          "is_profiled": true,
+          "title": "IT-инфраструктура",
+          "alias": "it-infrastructure",
+          "about_small": "Инфоцентры + базы данных + системы связи",
+          "about": "ИТ-инфраструктура — это совокупность информационных центров, баз данных и систем связи, обеспечивающая доступ пользователей к информационным ресурсам предприятия. На сегодняшний день, ИТ–инфраструктура является основой для стабильного функционирования любого предприятия или компании. ИТ-инфраструктура должна соответствовать трем главным параметрам: доступности, надежности и безопасности.",
+          "count_subscribers": 104861,
+          "count_posts": 3060,
+          "tags_string": "ЛВС, сетевое оборудование, UPS, СКС, сеть, сервер, почта, инфраструктура, wi-fi, маршрутизатор",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 6,
+            "name": "Администрирование",
+            "alias": "admin",
+            "url": "https:\/\/habr.com\/ru\/flows\/admin\/",
+            "path": "\/flows\/admin\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/594\/546\/45b\/59454645b38d9a58a92e6870133ae8e6.png",
+          "path": "hub\/it-infrastructure\/"
+        },
+        {
+          "id": 21906,
+          "rating": 216.3952,
+          "is_profiled": false,
+          "title": "История IT",
+          "alias": "history",
+          "about_small": "Занимательные истории из прошлого",
+          "about": "Исторические вехи развития компьютеров и интернета.",
+          "count_subscribers": 104188,
+          "count_posts": 1521,
+          "tags_string": "история, интернет, рунет, вехи, железо, развитие, компьютеры",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 7,
+            "name": "Гиктаймс",
+            "alias": "geektimes",
+            "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+            "path": "\/flows\/geektimes\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/geektimes\/hub\/bbe\/ec1\/498\/bbeec149811969c7214c33d0a6911160.png",
+          "path": "hub\/history\/"
+        },
+        {
+          "id": 22026,
+          "rating": 104.9229,
+          "is_profiled": false,
+          "title": "IT-компании",
+          "alias": "itcompanies",
+          "about_small": "Компании из индустрии №1",
+          "about": "Хаб про IT-компании",
+          "count_subscribers": 441171,
+          "count_posts": 7992,
+          "tags_string": "IT, компании",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 7,
+            "name": "Гиктаймс",
+            "alias": "geektimes",
+            "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+            "path": "\/flows\/geektimes\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/geektimes\/hub\/dfb\/d32\/674\/dfbd326740d2d30fba37f441919619f5.png",
+          "path": "hub\/itcompanies\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 6,
+          "name": "Администрирование",
+          "alias": "admin",
+          "url": "https:\/\/habr.com\/ru\/flows\/admin\/",
+          "path": "\/flows\/admin\/"
+        },
+        {
+          "id": 7,
+          "name": "Гиктаймс",
+          "alias": "geektimes",
+          "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+          "path": "\/flows\/geektimes\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 3496,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/company\/ua-hosting\/blog\/470353\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/ua-hosting\/blog\/470353\/",
+      "author": {
+        "id": 231363,
+        "login": "HostingManager",
+        "time_registered": "2012-09-25T22:03:39+04:00",
+        "score": 38.2,
+        "fullname": "",
+        "specializm": null,
+        "sex": 0,
+        "rating": 58.5,
+        "vote": 0,
+        "rating_position": 0,
+        "path": "\/users\/hostingmanager\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 131,
+          "comments": 1125,
+          "followed": 1,
+          "followers": 65,
+          "favorites": 1
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/company\/ua-hosting\/blog\/470353\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 2
+    },
+    {
+      "id": 470299,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-06T16:20:21+03:00",
+      "time_interesting": "2019-10-06T21:34:04+03:00",
+      "comments_count": 2,
+      "score": 6,
+      "votes_count": 6,
+      "favorites_count": 20,
+      "lang": "ru",
+      "tags_string": "signalr core",
+      "title": "Эффективное управление подключениями SignalR",
+      "preview_html": "Здравствуй, Хабрахабр. В настоящий момент я работаю над созданием движка чата в основе которого лежит библиотека \u003Ca href=\u0022https:\/\/en.wikipedia.org\/wiki\/SignalR\u0022\u003ESignalR\u003C\/a\u003E. Помимо увлекательного процесса погружения в мир real-time приложений пришлось столкнуться и с рядом вызовов технического характера. Об одном из них я и хочу с вами поделиться в этой статье. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Ch3\u003EВведение\u003C\/h3\u003E\u003Cbr\u003E\r\nЧто такое SignalR — это свое рода фасад над технологиями \u003Cb\u003EWebSockets\u003C\/b\u003E, \u003Cb\u003ELong polling\u003C\/b\u003E, \u003Cb\u003EServer-send events\u003C\/b\u003E. Благодаря этому фасаду можно единообразно работать с любой из этих технологий и не беспокоиться о деталях. Кроме того, благодаря технологии Long polling можно поддерживать клиентов, которые по каким-то причинам не могут работать по веб-сокетам, например IE-8. Фасад представлен высокоуровневым API, работающим по принципу \u003Ca href=\u0022https:\/\/en.wikipedia.org\/wiki\/Remote_procedure_call\u0022\u003ERPC\u003C\/a\u003E. Кроме того, SignalR предлагает выстраивать коммуникации по принципу «publisher-subscriber» что в терминологии API называется группами. Об этом и пойдет речь далее.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Ch3\u003EВызовы\u003C\/h3\u003E\u003Cbr\u003E\r\nПожалуй самое интересное в программировании это возможность решать нестандартные задачи. И одну из таких задач мы сегодня обозначим и рассмотрим ее решение.\u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 91,
+          "rating": 399.0559,
+          "is_profiled": true,
+          "title": "Разработка веб-сайтов",
+          "alias": "webdev",
+          "about_small": "Делаем веб лучше",
+          "about": "Веб-разработка — процесс создания веб-сайта или веб-приложения. Основными этапами процесса являются веб-дизайн, вёрстка страниц, программирование для веб на стороне клиента и сервера, а также конфигурирование веб-сервера.",
+          "count_subscribers": 524405,
+          "count_posts": 11430,
+          "tags_string": "web development",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/2a2\/ac7\/3dd\/2a2ac73dd5cddc6e05b47a3d502b4c0d.png",
+          "path": "hub\/webdev\/"
+        },
+        {
+          "id": 546,
+          "rating": 190.8416,
+          "is_profiled": true,
+          "title": ".NET",
+          "alias": "net",
+          "about_small": "Хаб со знаниями про NET Framework",
+          "about": "NET Framework — программная платформа, выпущенная компанией Microsoft в 2002 году. Основой платформы является общеязыковая среда исполнения Common Language Runtime (CLR), которая подходит для разных языков программирования. Функциональные возможности CLR доступны в любых языках программирования, использующих эту среду.",
+          "count_subscribers": 99075,
+          "count_posts": 3328,
+          "tags_string": ".net, net, dot.net, win forms, wpf, wcf, wf, ado.net, entity framework, linq, plinq, msil, vb.net, asp.net, дот нет, дот.нет, il",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/a5a\/5ae\/a29\/a5a5aea294f48a0d81c4b1968432e5e1.png",
+          "path": "hub\/net\/"
+        },
+        {
+          "id": 21482,
+          "rating": 32.4934,
+          "is_profiled": true,
+          "title": "Распределённые системы",
+          "alias": "distributed_systems",
+          "about_small": "Нюансы проектирования распределенных систем",
+          "about": "Распределённые системы любых типов",
+          "count_subscribers": 1494,
+          "count_posts": 159,
+          "tags_string": "распределённые системы",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 6,
+            "name": "Администрирование",
+            "alias": "admin",
+            "url": "https:\/\/habr.com\/ru\/flows\/admin\/",
+            "path": "\/flows\/admin\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/e1b\/fc5\/b45\/e1bfc5b451e464edfe155fad4a678a66.png",
+          "path": "hub\/distributed_systems\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        },
+        {
+          "id": 6,
+          "name": "Администрирование",
+          "alias": "admin",
+          "url": "https:\/\/habr.com\/ru\/flows\/admin\/",
+          "path": "\/flows\/admin\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 1497,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/post\/470299\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470299\/",
+      "author": {
+        "id": 367645,
+        "login": "aesamson",
+        "time_registered": "2013-04-29T15:56:57+04:00",
+        "score": 6,
+        "fullname": "Andrew",
+        "specializm": "Пользователь",
+        "sex": 1,
+        "rating": 4.8,
+        "vote": 0,
+        "rating_position": 1548,
+        "path": "\/users\/aesamson\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Москва и Московская обл.",
+          "city": "Москва"
+        },
+        "counters": {
+          "posts": 2,
+          "comments": 8,
+          "followed": 5,
+          "followers": 2,
+          "favorites": 338
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/ac9\/8dd\/295\/ac98dd295de53429516f3b990181eabc.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": true,
+      "url": "https:\/\/habr.com\/ru\/post\/470299\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 2
+    },
+    {
+      "id": 470333,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-06T19:27:14+03:00",
+      "time_interesting": "2019-10-06T21:32:03+03:00",
+      "comments_count": 10,
+      "score": 6,
+      "votes_count": 10,
+      "favorites_count": 14,
+      "lang": "ru",
+      "tags_string": "tdd, bdd, тестирование, критерии приемки, управление разработкой",
+      "title": "Программист, менеджер, MVC и критерии приемки",
+      "preview_html": "\u003Cp\u003EЗаметил. что работа с любым заказчиком очень похожа на работу веб-приложения. В статье показано как можно воспользоваться этим знанием для улучшения процессов.\u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EО том кто же является контроллером, а кто моделью под катом.\u003C\/p\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 210,
+          "rating": 80.7802,
+          "is_profiled": true,
+          "title": "Тестирование IT-систем",
+          "alias": "it_testing",
+          "about_small": "Тестируем все и вся",
+          "about": "Хаб для публикаций о тестировании программного и аппаратного обеспечения, веб-сервисов, сайтов и всего-всего, что только можно (и нужно) протестировать.",
+          "count_subscribers": 101649,
+          "count_posts": 1582,
+          "tags_string": "тестирование, ПО, software, hardware, testing, веб, сайты, службы, сервисы",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/88c\/d88\/dc5\/88cd88dc5a3ea03d8d8e3f73bd35aafe.png",
+          "path": "hub\/it_testing\/"
+        },
+        {
+          "id": 7606,
+          "rating": 5.36,
+          "is_profiled": true,
+          "title": "TDD",
+          "alias": "tdd",
+          "about_small": "Разработка через тестирование",
+          "about": "Разработка через тестирование (англ. test-driven development, TDD) — техника разработки программного обеспечения, которая основывается на повторении очень коротких циклов разработки: сначала пишется тест, покрывающий желаемое изменение, затем пишется код, который позволит пройти тест, и под конец проводится рефакторинг нового кода к соответствующим стандартам. Кент Бек, считающийся изобретателем этой техники, утверждал в 2003 году, что разработка через тестирование поощряет простой дизайн и внушает уверенность.",
+          "count_subscribers": 88627,
+          "count_posts": 196,
+          "tags_string": "tdd, bdd, xp, agile, pairing",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/75e\/504\/d76\/75e504d7671eb26e30add73b8b1df482.png",
+          "path": "hub\/tdd\/"
+        },
+        {
+          "id": 19583,
+          "rating": 89.6734,
+          "is_profiled": true,
+          "title": "Управление разработкой",
+          "alias": "dev_management",
+          "about_small": "Планирование, отслеживание и контроль",
+          "about": "Управление разработкой программного обеспечения (англ. Software project management) — особый вид управления проектами, в рамках которого происходит планирование, отслеживание и контроль за проектами по разработке программного обеспечения. Ключевым моментом в управлении проектом по разработке программного обеспечения является правильный выбор метода разработки.",
+          "count_subscribers": 19462,
+          "count_posts": 1183,
+          "tags_string": "управление, разработка, программирование",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 3,
+            "name": "Менеджмент",
+            "alias": "management",
+            "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+            "path": "\/flows\/management\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/979\/b7b\/9be\/979b7b9bec5637525f70e76f05a498fb.png",
+          "path": "hub\/dev_management\/"
+        },
+        {
+          "id": 20682,
+          "rating": 142.5345,
+          "is_profiled": true,
+          "title": "Управление проектами",
+          "alias": "pm",
+          "about_small": "Как заставить всё работать",
+          "about": "С какими проблемами приходится сталкиваться при ведении проекта? Какое ПО используем?\r\n\r\nСмежные блоги:\r\n\u003Cul\u003E\r\n\u003Cli\u003E\u003Ca href=\u0022http:\/\/www.habrahabr.ru\/blog\/iproducer\/\u0022\u003EПродюсирование интернет-проектов\u003C\/a\u003E\u003C\/li\u003E\r\n\u003Cli\u003E\u003Ca href=\u0022http:\/\/www.habrahabr.ru\/blog\/webdev\/\u0022\u003EWeb-разработка\u003C\/a\u003E\u003C\/li\u003E\r\n\u003C\/ul\u003E",
+          "count_subscribers": 36593,
+          "count_posts": 3298,
+          "tags_string": "управление проектами, project management",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 3,
+            "name": "Менеджмент",
+            "alias": "management",
+            "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+            "path": "\/flows\/management\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/94a\/b35\/1ad\/94ab351adac61ac363e9de79c1382a67.png",
+          "path": "hub\/pm\/"
+        },
+        {
+          "id": 22026,
+          "rating": 104.9229,
+          "is_profiled": false,
+          "title": "IT-компании",
+          "alias": "itcompanies",
+          "about_small": "Компании из индустрии №1",
+          "about": "Хаб про IT-компании",
+          "count_subscribers": 441171,
+          "count_posts": 7992,
+          "tags_string": "IT, компании",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 7,
+            "name": "Гиктаймс",
+            "alias": "geektimes",
+            "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+            "path": "\/flows\/geektimes\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/geektimes\/hub\/dfb\/d32\/674\/dfbd326740d2d30fba37f441919619f5.png",
+          "path": "hub\/itcompanies\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        },
+        {
+          "id": 3,
+          "name": "Менеджмент",
+          "alias": "management",
+          "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+          "path": "\/flows\/management\/"
+        },
+        {
+          "id": 7,
+          "name": "Гиктаймс",
+          "alias": "geektimes",
+          "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+          "path": "\/flows\/geektimes\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 1899,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/post\/470333\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470333\/",
+      "author": {
+        "id": 298871,
+        "login": "aak74",
+        "time_registered": "2013-01-13T14:20:41+04:00",
+        "score": 2,
+        "fullname": "Андрей Копылов",
+        "specializm": "Тимлид тимлидов",
+        "sex": 1,
+        "rating": 4.8,
+        "vote": 0,
+        "rating_position": 1548,
+        "path": "\/users\/aak74\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Ярославская обл.",
+          "city": "Ярославль"
+        },
+        "counters": {
+          "posts": 3,
+          "comments": 34,
+          "followed": 8,
+          "followers": 4,
+          "favorites": 11
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/cbd\/0ac\/ade\/cbd0acadec0f0cf0715b92bd9b79af22.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470333\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 10
+    },
+    {
+      "id": 470337,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-06T20:18:53+03:00",
+      "time_interesting": "2019-10-06T20:39:35+03:00",
+      "comments_count": 238,
+      "score": 320,
+      "votes_count": 360,
+      "favorites_count": 148,
+      "lang": "ru",
+      "tags_string": "frontend react",
+      "title": "Как я проработала 3 месяца в Я.Маркете и уволилась",
+      "preview_html": "\u003Ch3\u003EПервая попытка\u003C\/h3\u003E\u003Cbr\u003E\r\nВсе началось с того, что я люблю ходить по конференциям и частенько хожу на них в Яндекс, Mail.ru и другие крупные компании. Однажды мне написал HR из Яндекса и попросила сделать тестовое на стажера фронтенд разработчика.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nЯ его сделала, вот \u003Ca href=\u0022https:\/\/volokolamskspb.github.io\/\u0022\u003Eоно\u003C\/a\u003E. По условию оно должно было работать на айфонах и андроидах, поэтому я проверила его в Browser Stack и дописала пару префиксов и css стилей.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nЧерез какое-то время и поняла, что не хочу быть стажером, имея несколько лет опыта за плечами и зааплаилась в Я.Маркет через форму \u003Ca href=\u0022https:\/\/yandex.ru\/jobs\/?cities=213\u0022\u003Eна их сайте\u003C\/a\u003E. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\nМне позвонила HR и предложила пройти скайп интервью с лайвкодингом. Перед собеседованием я повторила структуры данных, сложность алгоритмов, сортировки. Тогда я еще не знала, что этого недостаточно.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nНа интервью я не смогла решить алгоритмические задачки, не знала внутренности JS и меня сбрили. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\nЭто задело мою самооценку и весь следующий год параллельно с работой я учила JS на глубоком уровне и решала задачки на codewars. \u003Ca href=\u0022https:\/\/www.codewars.com\/users\/julskuz\u0022\u003EЗдесь\u003C\/a\u003E можно оценить мой прогресс. \u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 20736,
+          "rating": 265.1492,
+          "is_profiled": true,
+          "title": "Управление персоналом",
+          "alias": "hr_management",
+          "about_small": "Как правильно нанимать, управлять и расставаться",
+          "about": "Все об управлении персоналом, найме сотрудников, etc",
+          "count_subscribers": 19682,
+          "count_posts": 1737,
+          "tags_string": "hr, персонал, управление персоналом",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 3,
+            "name": "Менеджмент",
+            "alias": "management",
+            "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+            "path": "\/flows\/management\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/2c0\/c6b\/86a\/2c0c6b86a9011cf811ce4b6820865115.png",
+          "path": "hub\/hr_management\/"
+        },
+        {
+          "id": 20740,
+          "rating": 371.788,
+          "is_profiled": false,
+          "title": "Карьера в IT-индустрии",
+          "alias": "career",
+          "about_small": "Работать, работать и работать (в IT)",
+          "about": "Коллективный блог об HR: поиск, подбор, адаптация, тренинги, компенсации, льготы, обучение, и др.",
+          "count_subscribers": 35882,
+          "count_posts": 2559,
+          "tags_string": "работа, HR, вакансия, вакансии, резюме",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 3,
+            "name": "Менеджмент",
+            "alias": "management",
+            "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+            "path": "\/flows\/management\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/cab\/f82\/067\/cabf82067c7be08c90a5903f860c9abf.png",
+          "path": "hub\/career\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 3,
+          "name": "Менеджмент",
+          "alias": "management",
+          "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+          "path": "\/flows\/management\/"
+        }
+      ],
+      "reading_count": 49053,
+      "metadata": {
+        "meta_image": ""
+      },
+      "path": "\/post\/470337\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470337\/",
+      "author": {
+        "id": 2114269,
+        "login": "sashavoloh",
+        "time_registered": "2019-07-26T20:07:03+03:00",
+        "score": 145,
+        "fullname": "Юлмя Кузнецова",
+        "specializm": "Фронтенд",
+        "sex": 0,
+        "rating": 256,
+        "vote": 0,
+        "rating_position": 24,
+        "path": "\/users\/sashavoloh\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 1,
+          "comments": 6,
+          "followed": 0,
+          "followers": 7,
+          "favorites": 0
+        },
+        "badges": [],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470337\/",
+      "post_type": 11,
+      "post_type_str": "sandbox",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "is_recovery_mode": false,
+      "comments_new": 238
+    },
+    {
+      "id": 470309,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-06T17:18:33+03:00",
+      "time_interesting": "2019-10-06T20:20:22+03:00",
+      "comments_count": 2,
+      "score": 9,
+      "votes_count": 9,
+      "favorites_count": 21,
+      "lang": "ru",
+      "tags_string": "xamarin.forms, c#, xaml, net",
+      "title": "Xamarin.Forms Shell",
+      "preview_html": "В конце мая Microsoft выпустила в релиз Xamarin.Forms Shell — оболочку нацеленную на упрощение создания кроссплатформенных мобильных приложений и включающий в себя следующий функционал: боковое меню, вкладки, навигация, поиск.\u003Cbr\/\u003E\r\n",
+      "text_cut": "Читать дальше \u0026rarr;",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 546,
+          "rating": 190.8416,
+          "is_profiled": true,
+          "title": ".NET",
+          "alias": "net",
+          "about_small": "Хаб со знаниями про NET Framework",
+          "about": "NET Framework — программная платформа, выпущенная компанией Microsoft в 2002 году. Основой платформы является общеязыковая среда исполнения Common Language Runtime (CLR), которая подходит для разных языков программирования. Функциональные возможности CLR доступны в любых языках программирования, использующих эту среду.",
+          "count_subscribers": 99075,
+          "count_posts": 3328,
+          "tags_string": ".net, net, dot.net, win forms, wpf, wcf, wf, ado.net, entity framework, linq, plinq, msil, vb.net, asp.net, дот нет, дот.нет, il",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/a5a\/5ae\/a29\/a5a5aea294f48a0d81c4b1968432e5e1.png",
+          "path": "hub\/net\/"
+        },
+        {
+          "id": 17718,
+          "rating": 142.9741,
+          "is_profiled": true,
+          "title": "C#",
+          "alias": "csharp",
+          "about_small": "Объектно-ориентированный язык программирования",
+          "about": "Программирование на C#",
+          "count_subscribers": 101927,
+          "count_posts": 1827,
+          "tags_string": "C, C Sharp",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/bc7\/f1e\/783\/bc7f1e78397bca57cf5adcd5bf1725be.png",
+          "path": "hub\/csharp\/"
+        },
+        {
+          "id": 21374,
+          "rating": 0,
+          "is_profiled": true,
+          "title": "Xamarin",
+          "alias": "Xamarin",
+          "about_small": "Инструменты для кросс-платформенной разработки",
+          "about": "Инструменты для кросс-платформенной разработки мобильных приложений.",
+          "count_subscribers": 6888,
+          "count_posts": 115,
+          "tags_string": "Xamarin",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/169\/334\/f50\/169334f506dc179631ec91889a47da71.png",
+          "path": "hub\/xamarin\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "reading_count": 1692,
+      "path": "\/post\/470309\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470309\/",
+      "author": {
+        "id": 1626905,
+        "login": "relov",
+        "time_registered": "2018-01-06T09:56:10+03:00",
+        "score": 4,
+        "fullname": "Александр",
+        "specializm": "Пользователь",
+        "sex": 1,
+        "rating": 7.2,
+        "vote": 0,
+        "rating_position": 1347,
+        "path": "\/users\/relov\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Челябинская обл.",
+          "city": "Челябинск"
+        },
+        "counters": {
+          "posts": 1,
+          "comments": 1,
+          "followed": 2,
+          "followers": 0,
+          "favorites": 1
+        },
+        "badges": [],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470309\/",
+      "post_type": 11,
+      "post_type_str": "sandbox",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "is_recovery_mode": false,
+      "comments_new": 2
+    },
+    {
+      "id": 470327,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-06T18:33:09+03:00",
+      "time_interesting": "2019-10-06T20:17:19+03:00",
+      "comments_count": 5,
+      "score": 19,
+      "votes_count": 19,
+      "favorites_count": 15,
+      "lang": "ru",
+      "tags_string": "matlab, simulink, fpga, цифровая обработка сигналов, ацп, цап, генератор, usb 3.0, программирование, разделяемая память",
+      "title": "Применение MATLAB\/Simulink с аппаратурой производства АО «ИнСис»",
+      "preview_html": "Важной практической задачей является использование Matlab\/Simulink с реальной аппаратурой которая позволит принять сигнал из реального мира. Это очень полезно для отладки алгоритмов. В данной работе представлена технология подключения к Simulink устройств АЦП производства АО «ИнСис». Для подключения используется DLL, которая видна в Simulink как компонент sm_adc. Для работы с аппаратурой используется отдельная консольная программа. Связь с DLL производится через разделяемую память. По данной технологии могут быть подключены любые АЦП на любых несущих модулях АО «ИнСис». В работе представлена система из генератора A7_DAC и модуля сбора FMC128E\/FM412x500M. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\nДанная работа демонстрировалась на конференции «Технологии разработки и отладки сложных технических систем» 27-28 марта 2018 года. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/2q\/2y\/7a\/2q2y7ajg2jcoezpe6x1ptohzjia.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 19733,
+          "rating": 39.9203,
+          "is_profiled": true,
+          "title": "FPGA",
+          "alias": "fpga",
+          "about_small": "Программируемые логические интегральные схемы",
+          "about": "field-programmable gate array",
+          "count_subscribers": 13985,
+          "count_posts": 249,
+          "tags_string": "FPGA, field-programmable gate array",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/990\/bab\/e4e\/990babe4e54942287161ea2ecc01f347.png",
+          "path": "hub\/fpga\/"
+        },
+        {
+          "id": 21360,
+          "rating": 39.6671,
+          "is_profiled": true,
+          "title": "Matlab",
+          "alias": "matlab",
+          "about_small": "Математическое моделирование и одноимённый ЯП",
+          "about": "MATLAB (сокращение от англ. «Matrix Laboratory») — пакет прикладных программ для решения задач технических вычислений и одноимённый язык программирования, используемый в этом пакете.",
+          "count_subscribers": 835,
+          "count_posts": 86,
+          "tags_string": "Matlab, Matrix Laboratory, Матлаб",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/899\/cf6\/e6a\/899cf6e6abbc157b9ac601d8c90704d9.jpg",
+          "path": "hub\/matlab\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 1491,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/webt\/mb\/w8\/aq\/mbw8aq0g8ddsb2wnkbk9p6dhr8c.png"
+      },
+      "path": "\/post\/470327\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470327\/",
+      "author": {
+        "id": 798801,
+        "login": "dsmv2014",
+        "time_registered": "2014-09-26T14:29:04+04:00",
+        "score": 32,
+        "fullname": "Дмитрий Смехов",
+        "specializm": "Инженер-разработчик FPGA",
+        "sex": 1,
+        "rating": 15.3,
+        "vote": 0,
+        "rating_position": 888,
+        "path": "\/users\/dsmv2014\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Москва и Московская обл.",
+          "city": "Москва"
+        },
+        "counters": {
+          "posts": 10,
+          "comments": 134,
+          "followed": 17,
+          "followers": 37,
+          "favorites": 31
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/aca\/130\/bb2\/aca130bb29fd023ccf9dece307777f58.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": true,
+      "url": "https:\/\/habr.com\/ru\/post\/470327\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 5
+    },
+    {
+      "id": 470285,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-06T10:39:29+03:00",
+      "time_interesting": "2019-10-06T20:10:34+03:00",
+      "comments_count": 5,
+      "score": 5,
+      "votes_count": 7,
+      "favorites_count": 68,
+      "lang": "ru",
+      "tags_string": "sqlalchemy, python, postgresql",
+      "title": "Крадущийся тигр, затаившийся SQLAlchemy. Основы",
+      "preview_html": "\u003Cp\u003E\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/3o\/ji\/ei\/3ojiei46dcl8pihke7rjjojlgn4.jpeg\u0022\u003E\u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EДоброго дня.\u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EСегодня хочу рассказать про ORM SQLAlchemy. Поговорим о том, что это, про его возможности и гибкость, а также рассмотрим случаи, которые не всегда понятно описаны.\u003C\/p\u003E\u003Cbr\u003E\r\n\u003Cp\u003EДанная ORM имеет порог вхождения выше среднего, поэтому я попытаюсь объяснить всё простым языком и с примерами. Статья будет полезна тем, кто уже работает с sqlalchemy и хочет прокачать свои навыки или только знакомится с этой библиотекой.\u003C\/p\u003E",
+      "text_cut": "Читать дальше →",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 340,
+          "rating": 238.7076,
+          "is_profiled": true,
+          "title": "Python",
+          "alias": "python",
+          "about_small": "Высокоуровневый язык программирования",
+          "about": "Python (в русском языке распространено название питон) — высокоуровневый язык программирования общего назначения, ориентированный на повышение производительности разработчика и читаемости кода. Синтаксис ядра Python минималистичен. В то же время стандартная библиотека включает большой объём полезных функций.",
+          "count_subscribers": 122101,
+          "count_posts": 2985,
+          "tags_string": "python, питон, пайтон, py, py3k",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/1c6\/724\/437\/1c6724437b83f3d71abd08e5c2877a7a.png",
+          "path": "hub\/python\/"
+        },
+        {
+          "id": 358,
+          "rating": 31.0534,
+          "is_profiled": true,
+          "title": "PostgreSQL",
+          "alias": "postgresql",
+          "about_small": "Свободная объектно-реляционная СУБД",
+          "about": "PostgreSQL (произносится «Пост-Грес-Кью-Эль») — свободная объектно-реляционная система управления базами данных (СУБД). Существует в реализациях для множества UNIX-подобных платформ, включая AIX, различные BSD-системы, HP-UX, IRIX, Linux, Mac OS X, Solaris\/OpenSolaris, Tru64, QNX, а также для Microsoft Windows.",
+          "count_subscribers": 88880,
+          "count_posts": 621,
+          "tags_string": "postgresql, postgres, постгрес, pgsql, база данных, db, rdbms, ordbms, dbms",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/391\/633\/8e2\/3916338e24104572809b971807686a8f.png",
+          "path": "hub\/postgresql\/"
+        },
+        {
+          "id": 594,
+          "rating": 49.4534,
+          "is_profiled": true,
+          "title": "SQL",
+          "alias": "sql",
+          "about_small": "Формальный непроцедурный язык программирования",
+          "about": "SQL (structured query language — «язык структурированных запросов») — формальный непроцедурный язык программирования, применяемый для создания, модификации и управления данными в произвольной реляционной базе данных, управляемой соответствующей системой управления базами данных (СУБД). SQL основывается на исчислении кортежей.",
+          "count_subscribers": 107188,
+          "count_posts": 809,
+          "tags_string": "SQL, база данных, db, structured query language",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 1,
+            "name": "Разработка",
+            "alias": "develop",
+            "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+            "path": "\/flows\/develop\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/64b\/22b\/8b6\/64b22b8b6c4677778423e971d52eb05d.png",
+          "path": "hub\/sql\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 3299,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/webt\/xv\/dg\/yr\/xvdgyrdwu_os-pavyyrs7g3blic.png"
+      },
+      "path": "\/post\/470285\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470285\/",
+      "author": {
+        "id": 1937959,
+        "login": "NapoleonIT",
+        "time_registered": "2019-01-17T10:43:32+03:00",
+        "score": 7,
+        "fullname": "Napoleon IT",
+        "specializm": "IT-компания",
+        "sex": 0,
+        "rating": 4,
+        "vote": 0,
+        "rating_position": 1618,
+        "path": "\/users\/napoleonit\/",
+        "geo": {
+          "country": "Россия",
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 3,
+          "comments": 0,
+          "followed": 0,
+          "followers": 2,
+          "favorites": 1
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_disabled": false,
+            "is_removable": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/5a2\/462\/845\/5a2462845b5b5599bb8a75992e25eaa6.png",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470285\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": 5
+    },
+    {
+      "id": 470331,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2019-10-06T18:44:43+03:00",
+      "time_interesting": "2019-10-06T19:21:27+03:00",
+      "comments_count": 4,
+      "score": 13,
+      "votes_count": 17,
+      "favorites_count": 13,
+      "lang": "ru",
+      "tags_string": "публикация статей, scopus, web of sciense",
+      "title": "Как определить индексированные журналы ISI, Scopus или Scimago?",
+      "preview_html": "Когда вы хотите представить свою исследовательскую статью в журнале. Вы должны выбрать целевой журнал для своей области исследования, а также журнал должен быть проиндексирован в любой из основных баз данных индексации, таких как ISI, Scopus, SCI, SCI-E или ESCI. Но определить целевой журнал с хорошим отчетом о цитировании не так просто. В этой статье издательство «Взгляд Учёного» предоставляет ответы на часто задаваемые вопросы о выборе журнала. Также в этой статье обсуждается различие между журналами SCI, SCIE и SCImago.\u003Cbr\/\u003E\r\n\u003Cbr\/\u003E\r\nКак проверить журнал, проиндексированный в базе данных индексации ISI?\u003Cbr\/\u003E\r\n\u003Cbr\/\u003E\r\nЧтобы проверить журнал, проиндексирован ли он в базе данных ISI Web of Science или нет, выполните следующие действия.\u003Cbr\/\u003E\r\n",
+      "text_cut": "Читать дальше \u0026rarr;",
+      "is_comments_hide": 0,
+      "hubs": [
+        {
+          "id": 20732,
+          "rating": 2.32,
+          "is_profiled": false,
+          "title": "Образование за рубежом",
+          "alias": "edu",
+          "about_small": "Истории образования за рубежом",
+          "about": "О том, как учиться",
+          "count_subscribers": 4915,
+          "count_posts": 112,
+          "tags_string": "образование",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 5,
+            "name": "Разное",
+            "alias": "misc",
+            "url": "https:\/\/habr.com\/ru\/flows\/misc\/",
+            "path": "\/flows\/misc\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/habr\/hub\/16a\/6e7\/098\/16a6e70985287425074a4033b296cad7.png",
+          "path": "hub\/edu\/"
+        },
+        {
+          "id": 21910,
+          "rating": 456.0228,
+          "is_profiled": false,
+          "title": "Научно-популярное",
+          "alias": "popular_science",
+          "about_small": "Научпоп какой он есть",
+          "about": "Попытаемся собрать в одном месте научно-популярное видео, статьи, документальные фильмы, книги и прочие источники информации.",
+          "count_subscribers": 114921,
+          "count_posts": 6972,
+          "tags_string": "Науч-поп, научпоп, наука",
+          "is_membership": false,
+          "is_company": false,
+          "flow": {
+            "id": 7,
+            "name": "Гиктаймс",
+            "alias": "geektimes",
+            "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+            "path": "\/flows\/geektimes\/"
+          },
+          "icon": "https:\/\/habrastorage.org\/getpro\/geektimes\/hub\/02f\/206\/0b9\/02f2060b99e6f4d9403eee0420d7d5b8.png",
+          "path": "hub\/popular_science\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 5,
+          "name": "Разное",
+          "alias": "misc",
+          "url": "https:\/\/habr.com\/ru\/flows\/misc\/",
+          "path": "\/flows\/misc\/"
+        },
+        {
+          "id": 7,
+          "name": "Гиктаймс",
+          "alias": "geektimes",
+          "url": "https:\/\/habr.com\/ru\/flows\/geektimes\/",
+          "path": "\/flows\/geektimes\/"
+        }
+      ],
+      "reading_count": 861,
+      "path": "\/post\/470331\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/470331\/",
+      "author": {
+        "id": 1412702,
+        "login": "jhost_mc",
+        "time_registered": "2017-02-09T00:12:06+03:00",
+        "score": 2,
+        "fullname": null,
+        "specializm": null,
+        "sex": 0,
+        "rating": 6.5,
+        "vote": 0,
+        "rating_position": 1407,
+        "path": "\/users\/jhost_mc\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 1,
+          "comments": 0,
+          "followed": 0,
+          "followers": 0,
+          "favorites": 0
+        },
+        "badges": [],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": [],
+        "contacts": [],
+        "is_can_vote": true
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/470331\/",
+      "post_type": 11,
+      "post_type_str": "sandbox",
+      "vote": null,
+      "is_can_vote": true,
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "is_recovery_mode": false,
+      "comments_new": 4
+    }
+  ],
+  "server_time": "2019-10-07T11:53:16+03:00"
+}

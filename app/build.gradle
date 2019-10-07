@@ -44,6 +44,7 @@ dependencies {
     def retrofit = "2.3.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
 
     // Toothpick
     // https://github.com/stephanenicolas/toothpick
