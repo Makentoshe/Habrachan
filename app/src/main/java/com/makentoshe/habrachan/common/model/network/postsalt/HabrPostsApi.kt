@@ -9,6 +9,19 @@ import retrofit2.http.Query
 
 interface HabrPostsApi {
 
+    @GET("https://habr.com/api/v1/{type1}/{type2}")
+    fun getRawPosts(
+        @Header("client") clientKey: String,
+        @Header("token") token: String?,
+        @Header("apiKey") apiKey: String?,
+        @Path("type1") type1: String,
+        @Path("type2") type2: String,
+        @Query("page") page: Int,
+        @Query("include") include: String?,
+        @Query("get_article") getArticle: Boolean?,
+        @Query("exclude") exclude: String?
+    ):Single<PostsResponse>
+
     // Type can be interesting, all
     @GET("https://habr.com/api/v1/posts/{type}")
     fun getPosts(

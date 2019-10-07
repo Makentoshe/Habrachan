@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.viewmodel.posts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.model.network.postsalt.GetInterestingRequest
+import com.makentoshe.habrachan.common.model.network.postsalt.GetRawRequest
 import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
 import com.makentoshe.habrachan.common.model.network.postsalt.entity.PostsResponse
 import io.reactivex.Observable
@@ -28,13 +29,15 @@ class PostsPageViewModel(position: Int, manager: HabrPostsManager) : ViewModel()
         get() = errorSubject
 
     init {
-        val request = GetInterestingRequest(
+        val request = GetRawRequest(
             client = "85cab69095196f3.89453480",
             api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
             token = null,
-            page = position + 1
+            page = position + 1,
+            path1 = "posts",
+            path2 = "interesting"
         )
-        manager.getInteresting(request).subscribe { p, t -> onRequestComplete(p, t) }.let(disposables::add)
+        manager.getRaw(request).subscribe { p, t -> onRequestComplete(p, t) }.let(disposables::add)
     }
 
     private fun onRequestComplete(posts: PostsResponse?, error: Throwable?) {
