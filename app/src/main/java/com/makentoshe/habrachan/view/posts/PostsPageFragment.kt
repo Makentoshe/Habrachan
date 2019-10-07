@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.view.posts
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,45 +9,49 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.di.posts.PostsPageFragmentModule
-import com.makentoshe.habrachan.di.posts.PostsPageFragmentScope
+import com.makentoshe.habrachan.model.posts.PostsPageRecyclerViewAdapter
 import com.makentoshe.habrachan.ui.posts.PostsPageFragmentUi
 import com.makentoshe.habrachan.viewmodel.posts.PostsPageViewModel
-import toothpick.Toothpick
-import toothpick.ktp.delegate.inject
-import toothpick.smoothie.lifecycle.closeOnDestroy
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 
 class PostsPageFragment : Fragment() {
 
-    private val uiFactory by inject<PostsPageFragmentUi>()
-
-    private val vmFactory by inject<PostsPageViewModel.Factory>()
-
     private val viewModel: PostsPageViewModel
-        get() = ViewModelProviders.of(this, vmFactory)[PostsPageViewModel::class.java]
+        get() {
+            val factory = PostsPageViewModel.Factory(position)
+            return ViewModelProviders.of(this, factory)[PostsPageViewModel::class.java]
+        }
 
     private var position: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("Position", value)
         get() = arguments!!.getInt("Position")
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val module = PostsPageFragmentModule(position)
-        Toothpick.openScope(PostsPageFragmentScope::class.java).installModules(module).closeOnDestroy(this).inject(this)
-    }
+    private val disposables = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return uiFactory.createView(requireContext())
+        return PostsPageFragmentUi().createView(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         showProgressBar()
+        viewModel.errorObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            hideProgressBar()
+            hideRecyclerView()
+        }.let(disposables::add)
+        viewModel.postsObservable.map {
+            PostsPageRecyclerViewAdapter(it)
+        }.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            initRecyclerView(it)
+            hideProgressBar()
+        }.let(disposables::add)
     }
 
     private fun initRecyclerView(adapter: RecyclerView.Adapter<*>) {
         val recyclerView = requireView().findViewById<RecyclerView>(R.id.main_posts_page_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+        showRecyclerView()
     }
 
     private fun showRecyclerView() {
@@ -65,6 +68,11 @@ class PostsPageFragment : Fragment() {
 
     private fun hideProgressBar() {
         requireView().findViewById<View>(R.id.main_posts_page_progressbar).visibility = View.GONE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 
     companion object {

@@ -17,16 +17,12 @@ class ExampleUnitTest {
 
     @Test
     fun sas() {
-        val manager = HabrPostsManager.build()
-        val request = GetFeedRequest(
-            client = "85cab69095196f3.89453480",
-//            api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
-            token = "ee828f6b64a066b352dc18e3034038c905c4d8ca",
-            page = 1
-        )
-        manager.getFeed(request).subscribe { s, t ->
-           println(s)
-        }
-        Thread.sleep(100000)
+//        val manager = HabrPostsManager.build()
+//        val request = GetFeedRequest(
+//        )
+//        manager.getFeed(request).subscribe { s, t ->
+//           println(s)
+//        }
+//        Thread.sleep(100000)
     }
 }
