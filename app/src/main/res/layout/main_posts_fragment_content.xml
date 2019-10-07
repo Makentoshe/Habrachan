@@ -61,7 +61,7 @@
             android:background="@color/colorPrimaryDark"
             sothree:layout_constraintEnd_toEndOf="parent"
             sothree:layout_constraintStart_toStartOf="parent"
-            sothree:layout_constraintTop_toBottomOf="@+id/search_by_query_button" />
+            sothree:layout_constraintTop_toBottomOf="@+id/main_posts_query_search_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
