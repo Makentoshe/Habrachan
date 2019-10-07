@@ -44,6 +44,10 @@ class PostsFragment : Fragment() {
         view.findViewById<View>(R.id.main_posts_toolbar_magnify).setOnClickListener {
             onMagnifyClicked()
         }
+
+        view.findViewById<View>(R.id.main_posts_query_search_button).setOnClickListener {
+            closePanel()
+        }
     }
 
     private fun onMagnifyClicked() = when (getPanelState()) {

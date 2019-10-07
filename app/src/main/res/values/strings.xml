@@ -7,4 +7,5 @@
     <string name="interesting">Interesting</string>
     <string name="all_posts">All posts</string>
     <string name="by_subscription">By subscription</string>
+    <string name="start_search">Start search by query</string>
 </resources>
