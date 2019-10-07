@@ -9,9 +9,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 
-class PostsPageViewModel(
-    private val position: Int, private val manager: HabrPostsManager
-) : ViewModel() {
+class PostsPageViewModel(position: Int, manager: HabrPostsManager) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
@@ -33,7 +31,7 @@ class PostsPageViewModel(
         val request = GetInterestingRequest(
             client = "85cab69095196f3.89453480",
             api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
-            token = "ee828f6b64a066b352dc18e3034038c905c4d8ca",
+            token = null,
             page = position + 1
         )
         manager.getInteresting(request).subscribe { p, t -> onRequestComplete(p, t) }.let(disposables::add)
