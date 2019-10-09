@@ -45,15 +45,18 @@ class PostsPageViewModel(
             path1 = "posts",
             path2 = "interesting"
         )
-        val success = cache.get(request)
-        if (success == null) {
-            manager.getRaw(request).subscribe({
-                cache.set(request, it)
-                postsSubject.onNext(it)
-            },errorSubject::onNext).let(disposables::add)
-        } else {
-            postsSubject.onNext(success)
-        }
+
+        manager.getRaw(request).subscribe({
+            postsSubject.onNext(it)
+            cache.set(request, it)
+        }, {
+            val cachedSuccess = cache.get(request)
+            if (cachedSuccess != null) {
+                postsSubject.onNext(cachedSuccess)
+            } else {
+                errorSubject.onNext(it)
+            }
+        }).let(disposables::add)
     }
 
     override fun onCleared() {
