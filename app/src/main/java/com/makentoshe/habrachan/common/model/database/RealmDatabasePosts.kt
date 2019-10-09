@@ -22,13 +22,13 @@ class RealmDatabasePosts(
 
     override fun set(key: GetRawRequest, value: PostsResponse) {
         realm.use {
+            it.beginTransaction()
             if (get(key) != null) {
                 it.where(PostsResponseRealmDatabaseObject::class.java)
                     .equalTo("page", key.page)
                     .findFirst()
                     ?.deleteFromRealm()
             }
-            it.beginTransaction()
             it.createObject(PostsResponseRealmDatabaseObject::class.java, key.page).apply {
                 json = value.toJson()
             }

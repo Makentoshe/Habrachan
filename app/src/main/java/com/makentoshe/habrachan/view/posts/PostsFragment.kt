@@ -11,6 +11,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.posts.PostsFragmentModule
 import com.makentoshe.habrachan.di.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.MainFlowBroadcastReceiver
+import com.makentoshe.habrachan.model.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.posts.PostsFragmentViewPagerAdapter
 import com.makentoshe.habrachan.ui.posts.PostsFragmentUi
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -19,6 +20,8 @@ import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class PostsFragment : Fragment() {
+
+    private val broadcastReceiver by inject<PostsBroadcastReceiver>()
 
     private val uiFactory by inject<PostsFragmentUi>()
 
@@ -48,6 +51,14 @@ class PostsFragment : Fragment() {
         view.findViewById<View>(R.id.main_posts_query_search_button).setOnClickListener {
             closePanel()
         }
+        broadcastReceiver.register(requireActivity()).addOnReceiveListener {
+            initViewPager(adapter, pageArg)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        broadcastReceiver.unregister(requireActivity())
     }
 
     private fun onMagnifyClicked() = when (getPanelState()) {

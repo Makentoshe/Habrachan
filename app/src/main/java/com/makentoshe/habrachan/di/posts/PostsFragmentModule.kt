@@ -8,6 +8,7 @@ import com.makentoshe.habrachan.model.posts.PostsResponseCache
 import com.makentoshe.habrachan.common.model.network.postsalt.GetRawRequest
 import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
 import com.makentoshe.habrachan.common.model.network.postsalt.entity.PostsResponse
+import com.makentoshe.habrachan.model.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.ui.posts.PostsFragmentUi
 import okhttp3.OkHttpClient
 import toothpick.config.Module
@@ -19,6 +20,9 @@ class PostsFragmentModule : Module() {
 
         val client = OkHttpClient.Builder().build()
         bind<HabrPostsManager>().toInstance(HabrPostsManager.build(client = client))
+
+        val broadcastReceiver = PostsBroadcastReceiver()
+        bind<PostsBroadcastReceiver>().toInstance(broadcastReceiver)
 
         val database = Database.Builder().posts("posts").build()
         val cache = PostsResponseCache(PostsResponseDatabaseCacheStorage(database))

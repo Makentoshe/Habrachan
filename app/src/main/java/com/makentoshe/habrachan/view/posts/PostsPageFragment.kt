@@ -9,20 +9,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.model.cache.Cache
 import com.makentoshe.habrachan.common.model.network.postsalt.GetRawRequest
 import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
 import com.makentoshe.habrachan.common.model.network.postsalt.entity.PostsResponse
 import com.makentoshe.habrachan.di.posts.PostsFragmentScope
+import com.makentoshe.habrachan.model.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.posts.PostsPageRecyclerViewAdapter
 import com.makentoshe.habrachan.ui.posts.PostsPageFragmentUi
-import com.makentoshe.habrachan.common.model.cache.Cache
 import com.makentoshe.habrachan.viewmodel.posts.PostsPageViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
-import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class PostsPageFragment : Fragment() {
 
@@ -61,15 +62,25 @@ class PostsPageFragment : Fragment() {
             PostsPageRecyclerViewAdapter(it)
         }.observeOn(AndroidSchedulers.mainThread()).subscribe {
             initRecyclerView(it)
+            showRecyclerView()
             hideProgressBar()
         }.let(disposables::add)
+        requireView().findViewById<SwipeRefreshLayout>(R.id.main_posts_page_swiperefresh).also {
+            it.setOnRefreshListener {
+                onRefresh(it)
+            }
+        }
     }
 
     private fun initRecyclerView(adapter: RecyclerView.Adapter<*>) {
         val recyclerView = requireView().findViewById<RecyclerView>(R.id.main_posts_page_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
-        showRecyclerView()
+    }
+
+    private fun onRefresh(view: SwipeRefreshLayout) {
+        view.isRefreshing = false
+        PostsBroadcastReceiver.sendRefreshBroadcast(requireContext())
     }
 
     private fun showRecyclerView() {

@@ -69,6 +69,11 @@ class MainFlowFragment : Fragment() {
         super.onStop()
         presenter.releaseNavigator()
     }
+
+    override fun onDetach() {
+        super.onDetach()
+        requireActivity().unregisterReceiver(broadcastReceiver)
+    }
 }
 
 
