@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.view.posts
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,17 +10,29 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.model.network.postsalt.GetRawRequest
+import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
+import com.makentoshe.habrachan.common.model.network.postsalt.entity.PostsResponse
+import com.makentoshe.habrachan.di.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.posts.PostsPageRecyclerViewAdapter
 import com.makentoshe.habrachan.ui.posts.PostsPageFragmentUi
+import com.makentoshe.habrachan.common.model.cache.Cache
 import com.makentoshe.habrachan.viewmodel.posts.PostsPageViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import toothpick.Toothpick
+import toothpick.ktp.delegate.inject
+import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class PostsPageFragment : Fragment() {
 
+    private val manager: HabrPostsManager by inject()
+
+    private val cache: Cache<GetRawRequest, PostsResponse> by inject()
+
     private val viewModel: PostsPageViewModel
         get() {
-            val factory = PostsPageViewModel.Factory(position)
+            val factory = PostsPageViewModel.Factory(position, manager, cache)
             return ViewModelProviders.of(this, factory)[PostsPageViewModel::class.java]
         }
 
@@ -28,6 +41,11 @@ class PostsPageFragment : Fragment() {
         get() = arguments!!.getInt("Position")
 
     private val disposables = CompositeDisposable()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Toothpick.openScope(PostsFragmentScope::class.java).inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return PostsPageFragmentUi().createView(requireContext())
