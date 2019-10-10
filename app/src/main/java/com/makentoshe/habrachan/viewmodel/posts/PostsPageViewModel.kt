@@ -13,7 +13,8 @@ import io.reactivex.subjects.BehaviorSubject
 class PostsPageViewModel(
     private val position: Int,
     private val manager: HabrPostsManager,
-    private val cache: Cache<GetRawRequest, PostsResponse>
+    private val cache: Cache<GetRawRequest, PostsResponse>,
+    private val requestCache: Cache<Int, GetRawRequest>
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -36,15 +37,26 @@ class PostsPageViewModel(
         requestPostsResponse()
     }
 
-    private fun requestPostsResponse() {
-        val request = GetRawRequest(
+    private fun getRequest(): GetRawRequest {
+        val page = position + 1
+        return requestCache.get(page) ?: getDefaultRequest(page).also {
+            requestCache.set(page, it)
+        }
+    }
+
+    private fun getDefaultRequest(page: Int): GetRawRequest {
+        return GetRawRequest(
             client = "85cab69095196f3.89453480",
             api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
             token = null,
-            page = position + 1,
+            page = page,
             path1 = "posts",
             path2 = "interesting"
         )
+    }
+
+    private fun requestPostsResponse() {
+        val request = getRequest()
 
         manager.getRaw(request).subscribe({
             postsSubject.onNext(it)
@@ -66,10 +78,11 @@ class PostsPageViewModel(
     class Factory(
         private val position: Int,
         private val manager: HabrPostsManager,
-        private val cache: Cache<GetRawRequest, PostsResponse>
+        private val cache: Cache<GetRawRequest, PostsResponse>,
+        private val requestCache: Cache<Int, GetRawRequest>
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostsPageViewModel(position, manager, cache) as T
+            return PostsPageViewModel(position, manager, cache, requestCache) as T
         }
     }
 }

@@ -11,9 +11,14 @@ interface DatabasePosts: Database  {
     fun set(key: GetRawRequest, value: PostsResponse)
 
     class Builder(private val title: String) {
+
         fun build(): DatabasePosts {
             val configuration = RealmConfiguration.Builder().name(title).build()
             return RealmDatabasePosts(configuration)
+        }
+
+        fun configuration(): DatabasePostsConfiguration.Builder {
+            return DatabasePostsConfiguration.Builder(title)
         }
     }
 }
