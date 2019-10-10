@@ -6,8 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-apply plugin: 'realm-android'
-
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -45,6 +43,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
 
     // Toothpick
     // https://github.com/stephanenicolas/toothpick

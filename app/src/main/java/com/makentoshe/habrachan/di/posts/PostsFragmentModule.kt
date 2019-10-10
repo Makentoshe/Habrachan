@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.di.posts
 
+import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.cache.InMemoryCacheStorage
@@ -10,6 +11,7 @@ import com.makentoshe.habrachan.model.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.posts.PostsResponseCache
 import com.makentoshe.habrachan.ui.posts.PostsFragmentUi
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 
@@ -17,7 +19,12 @@ class PostsFragmentModule : Module() {
     init {
         bind<PostsFragmentUi>().toInstance(PostsFragmentUi())
 
-        val client = OkHttpClient.Builder().build()
+        val client = OkHttpClient.Builder().apply {
+            if (!BuildConfig.DEBUG) return@apply
+            val logging = HttpLoggingInterceptor()
+            logging.level = HttpLoggingInterceptor.Level.HEADERS
+            addInterceptor(logging)
+        }.build()
         val manager = HabrPostsManager.Builder(client).build()
         bind<HabrPostsManager>().toInstance(manager)
 

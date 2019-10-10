@@ -39,7 +39,7 @@ class PostsPageViewModel(
     }
 
     private fun getDefaultRequest(page: Int): GetPostsRequest {
-        return requestFactory.interesting(page)
+        return requestFactory.stored(page)
     }
 
     private fun requestPostsResponse() {
