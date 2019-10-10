@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.common.model.network.postsalt
 
 import com.google.gson.Gson
-import com.makentoshe.habrachan.common.model.network.postsalt.entity.PostsResponse
+import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -20,3 +20,4 @@ class PostsConverterFactory: Converter.Factory(){
         return if (type == PostsResponse::class.java) converter else null
     }
 }
+

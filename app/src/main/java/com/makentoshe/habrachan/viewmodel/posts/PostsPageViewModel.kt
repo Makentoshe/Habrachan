@@ -3,9 +3,10 @@ package com.makentoshe.habrachan.viewmodel.posts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.model.cache.Cache
-import com.makentoshe.habrachan.common.model.network.postsalt.GetRawRequest
+import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
 import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
-import com.makentoshe.habrachan.common.model.network.postsalt.entity.PostsResponse
+import com.makentoshe.habrachan.common.entity.posts.PostsResponse
+import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequestFactory
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
@@ -13,8 +14,8 @@ import io.reactivex.subjects.BehaviorSubject
 class PostsPageViewModel(
     private val position: Int,
     private val manager: HabrPostsManager,
-    private val cache: Cache<GetRawRequest, PostsResponse>,
-    private val requestCache: Cache<Int, GetRawRequest>
+    private val cache: Cache<GetPostsRequest, PostsResponse>,
+    private val requestFactory: GetPostsRequestFactory
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -37,28 +38,14 @@ class PostsPageViewModel(
         requestPostsResponse()
     }
 
-    private fun getRequest(): GetRawRequest {
-        val page = position + 1
-        return requestCache.get(page) ?: getDefaultRequest(page).also {
-            requestCache.set(page, it)
-        }
-    }
-
-    private fun getDefaultRequest(page: Int): GetRawRequest {
-        return GetRawRequest(
-            client = "85cab69095196f3.89453480",
-            api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
-            token = null,
-            page = page,
-            path1 = "posts",
-            path2 = "interesting"
-        )
+    private fun getDefaultRequest(page: Int): GetPostsRequest {
+        return requestFactory.interesting(page)
     }
 
     private fun requestPostsResponse() {
-        val request = getRequest()
+        val request = getDefaultRequest(position + 1)
 
-        manager.getRaw(request).subscribe({
+        manager.getPosts(request).subscribe({
             postsSubject.onNext(it)
             cache.set(request, it)
         }, {
@@ -78,11 +65,11 @@ class PostsPageViewModel(
     class Factory(
         private val position: Int,
         private val manager: HabrPostsManager,
-        private val cache: Cache<GetRawRequest, PostsResponse>,
-        private val requestCache: Cache<Int, GetRawRequest>
+        private val cache: Cache<GetPostsRequest, PostsResponse>,
+        private val factory: GetPostsRequestFactory
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostsPageViewModel(position, manager, cache, requestCache) as T
+            return PostsPageViewModel(position, manager, cache, factory) as T
         }
     }
 }

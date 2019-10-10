@@ -2,18 +2,18 @@ package com.makentoshe.habrachan.model.posts
 
 import com.makentoshe.habrachan.common.model.cache.Cache
 import com.makentoshe.habrachan.common.model.cache.CacheStorage
-import com.makentoshe.habrachan.common.model.network.postsalt.GetRawRequest
-import com.makentoshe.habrachan.common.model.network.postsalt.entity.PostsResponse
+import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
+import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 
 class PostsResponseCache(
-    private val storage: CacheStorage<GetRawRequest, PostsResponse>
-) : Cache<GetRawRequest, PostsResponse> {
+    private val storage: CacheStorage<GetPostsRequest, PostsResponse>
+) : Cache<GetPostsRequest, PostsResponse> {
 
-    override fun get(k: GetRawRequest): PostsResponse? {
+    override fun get(k: GetPostsRequest): PostsResponse? {
         return storage.get(k)
     }
 
-    override fun set(k: GetRawRequest, v: PostsResponse) {
+    override fun set(k: GetPostsRequest, v: PostsResponse) {
         storage.set(k, v)
     }
 }

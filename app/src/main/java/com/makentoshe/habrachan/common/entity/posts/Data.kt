@@ -1,7 +1,8 @@
-package com.makentoshe.habrachan.common.model.network.postsalt.entity
+package com.makentoshe.habrachan.common.entity.posts
 
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.common.entity.posts.Author
 import com.makentoshe.habrachan.common.model.entity.Flow
 import com.makentoshe.habrachan.common.model.entity.Hub
 import com.makentoshe.habrachan.common.model.entity.Metadata
@@ -53,6 +54,8 @@ data class Data(
     val postTypeStr: String,
     @SerializedName("preview_html")
     val previewHtml: String,
+    @SerializedName("text_html")
+    val textHtml: String?,
     @SerializedName("reading_count")
     val readingCount: Int,
     @SerializedName("score")

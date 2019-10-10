@@ -1,14 +1,15 @@
 package com.makentoshe.habrachan.common.model.network.postsalt
 
-import com.makentoshe.habrachan.common.model.network.postsalt.entity.PostsResponse
+import com.makentoshe.habrachan.common.entity.post.PostResponse
+import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import io.reactivex.Single
 
 class HabrPostsManagerImpl (
     private val api: HabrPostsApi
 ) : HabrPostsManager {
 
-    override fun getRaw(request: GetRawRequest): Single<PostsResponse> {
-        return api.getRawPosts(
+    override fun getPosts(request: GetPostsRequest): Single<PostsResponse> {
+        return api.getPosts(
             clientKey = request.client,
             token = request.token,
             apiKey = request.api,
@@ -21,19 +22,30 @@ class HabrPostsManagerImpl (
         )
     }
 
-    fun getInteresting(request: GetInterestingRequest): Single<PostsResponse> {
-        return api.getPosts(request.client, request.token, request.api, "interesting", request.page, null, null, null)
+    override fun getPostsWithBody(request: GetPostsRequest): Single<PostsResponse> {
+        return api.getPosts(
+            clientKey = request.client,
+            token = request.token,
+            apiKey = request.api,
+            type1 = request.path1,
+            type2 = request.path2,
+            page = request.page,
+            include = "text_html",
+            getArticle = null,
+            exclude = null
+        )
     }
 
-    fun getAll(request: GetAllRequest): Single<PostsResponse> {
-        return api.getPosts(request.client, request.token, request.api, "all", request.page, null, null, null)
+    override fun getPost(request: GetPostRequest): Single<PostResponse> {
+        return api.getPost(
+            clientKey = request.client,
+            token = request.token,
+            apiKey = request.api,
+            id = request.id,
+            getArticle = null,
+            include = null,
+            exclude = null
+        )
     }
 
-    fun getTop(request: GetTopRequest): Single<PostsResponse> {
-        return api.getTopPosts(request.client, request.token, request.api, request.type, request.page, null, null, null)
-    }
-
-    fun getFeed(request: GetFeedRequest): Single<PostsResponse> {
-        return api.getFeed(request.client, request.token, request.page, null, null, null)
-    }
 }

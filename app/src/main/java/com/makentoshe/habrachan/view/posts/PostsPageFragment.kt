@@ -12,11 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.model.cache.Cache
-import com.makentoshe.habrachan.common.model.database.Database
-import com.makentoshe.habrachan.common.model.database.DatabasePostsConfiguration
-import com.makentoshe.habrachan.common.model.network.postsalt.GetRawRequest
+import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
 import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
-import com.makentoshe.habrachan.common.model.network.postsalt.entity.PostsResponse
+import com.makentoshe.habrachan.common.entity.posts.PostsResponse
+import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequestFactory
 import com.makentoshe.habrachan.di.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.posts.PostsPageRecyclerViewAdapter
@@ -31,13 +30,13 @@ class PostsPageFragment : Fragment() {
 
     private val manager: HabrPostsManager by inject()
 
-    private val cache: Cache<GetRawRequest, PostsResponse> by inject()
+    private val cache: Cache<GetPostsRequest, PostsResponse> by inject()
 
-    private val requestCache: Cache<Int, GetRawRequest> by inject()
+    private val factory by inject<GetPostsRequestFactory>()
 
     private val viewModel: PostsPageViewModel
         get() {
-            val factory = PostsPageViewModel.Factory(position, manager, cache, requestCache)
+            val factory = PostsPageViewModel.Factory(position, manager, cache, factory)
             return ViewModelProviders.of(this, factory)[PostsPageViewModel::class.java]
         }
 

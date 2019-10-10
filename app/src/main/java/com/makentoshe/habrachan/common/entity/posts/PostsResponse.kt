@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.model.network.postsalt.entity
+package com.makentoshe.habrachan.common.entity.posts
 
 
 import com.google.gson.Gson
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 data class PostsResponse(
     @SerializedName("data")
-    val `data`: List<Data>,
+    val data: List<Data>,
     @SerializedName("next_page")
     val nextPage: NextPage,
     @SerializedName("pages")
@@ -16,6 +16,7 @@ data class PostsResponse(
     @SerializedName("sorted_by")
     val sortedBy: String
 ) {
+
     fun toJson(): String {
         return Gson().toJson(this)
     }

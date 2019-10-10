@@ -1,15 +1,14 @@
 package com.makentoshe.habrachan.di.posts
 
+import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import com.makentoshe.habrachan.common.model.cache.Cache
-import com.makentoshe.habrachan.common.model.cache.PostsResponseDatabaseCacheStorage
-import com.makentoshe.habrachan.common.model.database.Database
-import com.makentoshe.habrachan.model.posts.PostsResponseCache
-import com.makentoshe.habrachan.common.model.network.postsalt.GetRawRequest
+import com.makentoshe.habrachan.common.model.cache.InMemoryCacheStorage
+import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
+import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequestFactory
 import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
-import com.makentoshe.habrachan.common.model.network.postsalt.entity.PostsResponse
 import com.makentoshe.habrachan.model.posts.PostsBroadcastReceiver
+import com.makentoshe.habrachan.model.posts.PostsResponseCache
 import com.makentoshe.habrachan.ui.posts.PostsFragmentUi
-import com.makentoshe.habrachan.common.model.cache.PostsRequestCache
 import okhttp3.OkHttpClient
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -24,12 +23,12 @@ class PostsFragmentModule : Module() {
         val broadcastReceiver = PostsBroadcastReceiver()
         bind<PostsBroadcastReceiver>().toInstance(broadcastReceiver)
 
-        val databasePosts = Database.Builder().posts("posts").build()
-        val cache = PostsResponseCache(PostsResponseDatabaseCacheStorage(databasePosts))
-        bind<Cache<GetRawRequest, PostsResponse>>().toInstance(cache)
+        val cache = PostsResponseCache(InMemoryCacheStorage())
+        bind<Cache<GetPostsRequest, PostsResponse>>().toInstance(cache)
 
-        val databaseConfig = Database.Builder().posts("posts").configuration().build()
-        val configCache = PostsRequestCache(databaseConfig)
-        bind<Cache<Int, GetRawRequest>>().toInstance(configCache)
+        val factory = GetPostsRequestFactory(
+            client = "85cab69095196f3.89453480", api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b", token = null
+        )
+        bind<GetPostsRequestFactory>().toInstance(factory)
     }
 }

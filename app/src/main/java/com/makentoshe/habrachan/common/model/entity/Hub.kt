@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.common.model.entity
 
 
+
 import com.google.gson.annotations.SerializedName
 
 data class Hub(
@@ -11,9 +12,9 @@ data class Hub(
     @SerializedName("alias")
     val alias: String,
     @SerializedName("count_posts")
-    val countPosts: String,
+    val countPosts: Int,
     @SerializedName("count_subscribers")
-    val countSubscribers: String,
+    val countSubscribers: Int,
     @SerializedName("flow")
     val flow: Flow,
     @SerializedName("icon")
@@ -29,7 +30,7 @@ data class Hub(
     @SerializedName("path")
     val path: String,
     @SerializedName("rating")
-    val rating: String,
+    val rating: Double,
     @SerializedName("tags_string")
     val tagsString: String,
     @SerializedName("title")
