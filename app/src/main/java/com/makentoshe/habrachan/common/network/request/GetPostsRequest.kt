@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.model.network.postsalt
+package com.makentoshe.habrachan.common.network.request
 
 data class GetPostsRequest(
     val path1: String,

@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.model.posts
 
 import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.cache.CacheStorage
-import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
+import com.makentoshe.habrachan.common.network.request.GetPostsRequest
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 
 class PostsResponseCache(

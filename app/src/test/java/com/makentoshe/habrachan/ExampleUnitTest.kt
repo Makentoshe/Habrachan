@@ -1,8 +1,7 @@
 package com.makentoshe.habrachan
 
-import com.makentoshe.habrachan.common.model.network.postsalt.GetPostRequest
-import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
-import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
+import com.makentoshe.habrachan.common.network.request.GetPostsRequest
+import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

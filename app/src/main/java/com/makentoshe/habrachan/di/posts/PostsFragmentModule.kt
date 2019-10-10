@@ -3,9 +3,9 @@ package com.makentoshe.habrachan.di.posts
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.cache.InMemoryCacheStorage
-import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
-import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequestFactory
-import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
+import com.makentoshe.habrachan.common.network.request.GetPostsRequest
+import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
+import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.model.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.posts.PostsResponseCache
 import com.makentoshe.habrachan.ui.posts.PostsFragmentUi
@@ -18,7 +18,8 @@ class PostsFragmentModule : Module() {
         bind<PostsFragmentUi>().toInstance(PostsFragmentUi())
 
         val client = OkHttpClient.Builder().build()
-        bind<HabrPostsManager>().toInstance(HabrPostsManager.build(client = client))
+        val manager = HabrPostsManager.Builder(client).build()
+        bind<HabrPostsManager>().toInstance(manager)
 
         val broadcastReceiver = PostsBroadcastReceiver()
         bind<PostsBroadcastReceiver>().toInstance(broadcastReceiver)

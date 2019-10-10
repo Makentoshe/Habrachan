@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.model.network.postsalt
+package com.makentoshe.habrachan.common.network.api
 
 import com.makentoshe.habrachan.common.entity.post.PostResponse
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse

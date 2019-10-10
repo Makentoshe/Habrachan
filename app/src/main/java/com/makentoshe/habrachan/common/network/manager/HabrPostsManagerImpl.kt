@@ -1,7 +1,10 @@
-package com.makentoshe.habrachan.common.model.network.postsalt
+package com.makentoshe.habrachan.common.network.manager
 
 import com.makentoshe.habrachan.common.entity.post.PostResponse
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
+import com.makentoshe.habrachan.common.network.api.HabrPostsApi
+import com.makentoshe.habrachan.common.network.request.GetPostRequest
+import com.makentoshe.habrachan.common.network.request.GetPostsRequest
 import io.reactivex.Single
 
 class HabrPostsManagerImpl (
@@ -47,5 +50,4 @@ class HabrPostsManagerImpl (
             exclude = null
         )
     }
-
 }

@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.cache.Cache
-import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
-import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
+import com.makentoshe.habrachan.common.network.request.GetPostsRequest
+import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
-import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequestFactory
+import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.di.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.posts.PostsPageRecyclerViewAdapter

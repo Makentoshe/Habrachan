@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.model.network.postsalt
+package com.makentoshe.habrachan.common.network.request
 
 data class GetPostRequest(
     val client: String,

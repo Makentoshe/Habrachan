@@ -3,10 +3,10 @@ package com.makentoshe.habrachan.viewmodel.posts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.cache.Cache
-import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
-import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
+import com.makentoshe.habrachan.common.network.request.GetPostsRequest
+import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
-import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequestFactory
+import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
