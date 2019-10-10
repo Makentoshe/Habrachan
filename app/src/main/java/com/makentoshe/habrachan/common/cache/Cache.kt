@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.model.cache
+package com.makentoshe.habrachan.common.cache
 
 interface Cache<K, V> {
     fun get(k: K): V?

@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.viewmodel.posts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.common.model.cache.Cache
+import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
 import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse

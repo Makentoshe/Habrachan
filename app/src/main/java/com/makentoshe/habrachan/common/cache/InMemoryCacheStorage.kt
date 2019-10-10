@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.model.cache
+package com.makentoshe.habrachan.common.cache
 
 class InMemoryCacheStorage<K, V> : CacheStorage<K, V> {
 

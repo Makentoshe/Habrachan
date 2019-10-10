@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.di.posts
 
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
-import com.makentoshe.habrachan.common.model.cache.Cache
-import com.makentoshe.habrachan.common.model.cache.InMemoryCacheStorage
+import com.makentoshe.habrachan.common.cache.Cache
+import com.makentoshe.habrachan.common.cache.InMemoryCacheStorage
 import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequest
 import com.makentoshe.habrachan.common.model.network.postsalt.GetPostsRequestFactory
 import com.makentoshe.habrachan.common.model.network.postsalt.HabrPostsManager
