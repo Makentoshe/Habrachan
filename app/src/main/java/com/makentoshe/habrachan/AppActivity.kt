@@ -2,7 +2,7 @@ package com.makentoshe.habrachan
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.makentoshe.habrachan.common.model.navigation.Navigator
+import com.makentoshe.habrachan.common.navigation.Navigator
 import com.makentoshe.habrachan.di.AppActivityModule
 import com.makentoshe.habrachan.di.AppActivityScope
 import com.makentoshe.habrachan.di.ApplicationScope

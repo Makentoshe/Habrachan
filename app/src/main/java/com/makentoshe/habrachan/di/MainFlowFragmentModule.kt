@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.di
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.model.navigation.Navigator
+import com.makentoshe.habrachan.common.navigation.Navigator
 import com.makentoshe.habrachan.model.MainFlowBroadcastReceiver
 import com.makentoshe.habrachan.ui.MainFlowFragmentUi
 import com.makentoshe.habrachan.view.MainFlowFragment

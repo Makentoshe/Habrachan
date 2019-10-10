@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.view
 
-import com.makentoshe.habrachan.common.model.navigation.Navigator
+import com.makentoshe.habrachan.common.navigation.Navigator
 import com.makentoshe.habrachan.model.account.AccountScreen
 import com.makentoshe.habrachan.model.menu.MenuScreen
 import com.makentoshe.habrachan.model.posts.PostsScreen

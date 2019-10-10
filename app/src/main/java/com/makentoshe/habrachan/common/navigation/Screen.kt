@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.model.navigation
+package com.makentoshe.habrachan.common.navigation
 
 import androidx.fragment.app.Fragment
 
