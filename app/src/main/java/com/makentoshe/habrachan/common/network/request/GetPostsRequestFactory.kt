@@ -29,7 +29,7 @@ data class GetPostsRequestFactory(
     }
 
     /** Should return a request for receiving a posts by query */
-    fun query(page: Int, query: String, sort: String): GetPostsRequest {
+    fun query(page: Int, query: String, sort: String? = null): GetPostsRequest {
         require(api != null || token != null)
         return GetPostsRequest("search", "posts/$query", client, token, api, page, query, sort, true)
     }

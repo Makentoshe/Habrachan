@@ -35,16 +35,11 @@ class PostsPageViewModel(
         get() = errorSubject
 
     init {
-        requestPostsResponse()
+        val request = requestFactory.stored(position + 1)
+        requestPostsResponse(request)
     }
 
-    private fun getDefaultRequest(page: Int): GetPostsRequest {
-        return requestFactory.stored(page)
-    }
-
-    private fun requestPostsResponse() {
-        val request = getDefaultRequest(position + 1)
-
+    private fun requestPostsResponse(request: GetPostsRequest) {
         manager.getPosts(request).subscribe({
             postsSubject.onNext(it)
             cache.set(request, it)

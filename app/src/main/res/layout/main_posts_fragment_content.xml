@@ -10,60 +10,7 @@
     sothree:umanoShadowHeight="4dp"
     android:focusableInTouchMode="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/Habrachan.Light.Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="By query"
-            sothree:boxStrokeColor="@android:color/white"
-            sothree:hintTextColor="@android:color/white"
-            sothree:layout_constraintEnd_toEndOf="parent"
-            sothree:layout_constraintStart_toStartOf="parent"
-            sothree:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/main_posts_query_search_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/main_posts_query_search_button"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="4dp"
-            android:text="@string/start_search"
-            sothree:layout_constraintEnd_toEndOf="parent"
-            sothree:layout_constraintStart_toStartOf="parent"
-            sothree:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-            sothree:strokeColor="@android:color/white"
-            sothree:strokeWidth="1dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorPrimaryDark"
-            sothree:layout_constraintEnd_toEndOf="parent"
-            sothree:layout_constraintStart_toStartOf="parent"
-            sothree:layout_constraintTop_toBottomOf="@+id/main_posts_query_search_button" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/main_posts_fragment_content_search"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/main_posts_viewpager"
