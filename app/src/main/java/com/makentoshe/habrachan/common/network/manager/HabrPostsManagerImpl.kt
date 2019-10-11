@@ -19,9 +19,8 @@ class HabrPostsManagerImpl (
             type1 = request.path1,
             type2 = request.path2,
             page = request.page,
-            include = null,
-            getArticle = null,
-            exclude = null
+            sort = request.sort,
+            getArticle = request.getArticle
         )
     }
 

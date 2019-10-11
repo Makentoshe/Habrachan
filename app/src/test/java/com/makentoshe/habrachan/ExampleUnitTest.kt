@@ -24,7 +24,7 @@ class ExampleUnitTest {
         val factory = GetPostsRequestFactory(
             client = "85cab69095196f3.89453480", api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b", token = null
         )
-        val request = factory.all(1)
+        val request = factory.query(1, "anko", "relevance")
         val result = manager.getPosts(request).blockingGet()
         println(result)
     }

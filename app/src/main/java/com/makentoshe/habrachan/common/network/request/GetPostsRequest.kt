@@ -6,6 +6,9 @@ data class GetPostsRequest(
     val client: String,
     val token: String?,
     val api: String?,
-    val page: Int
+    val page: Int,
+    val query: String? = null,
+    val sort: String? = null,
+    val getArticle: Boolean? = null
 )
 

@@ -18,9 +18,10 @@ interface HabrPostsApi {
         @Path("type1") type1: String,
         @Path("type2") type2: String,
         @Query("page") page: Int,
-        @Query("include") include: String?,
-        @Query("get_article") getArticle: Boolean?,
-        @Query("exclude") exclude: String?
+        @Query("include") include: String? = null,
+        @Query("get_article") getArticle: Boolean? = null,
+        @Query("exclude") exclude: String? = null,
+        @Query("sort") sort: String? = null
     ):Single<PostsResponse>
 
     @GET("https://habr.com/api/v1/post/{id}")

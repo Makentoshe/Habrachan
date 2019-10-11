@@ -28,6 +28,12 @@ data class GetPostsRequestFactory(
         return GetPostsRequest("feed", "all", client, token, null, page)
     }
 
+    /** Should return a request for receiving a posts by query */
+    fun query(page: Int, query: String, sort: String): GetPostsRequest {
+        require(api != null || token != null)
+        return GetPostsRequest("search", "posts/$query", client, token, api, page, query, sort, true)
+    }
+
     /**
      * Should return a request saved from previous search.
      * Request should be stored in cache memory on the device
