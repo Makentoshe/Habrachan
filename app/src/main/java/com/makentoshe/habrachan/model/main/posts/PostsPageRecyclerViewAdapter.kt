@@ -12,9 +12,9 @@ import io.reactivex.subjects.PublishSubject
 
 class PostsPageRecyclerViewAdapter(private val response: PostsResponse) : RecyclerView.Adapter<PostsPageRecyclerViewHolder>() {
 
-    private val clickSubject = PublishSubject.create<Data>()
+    private val clickSubject = PublishSubject.create<Int>()
 
-    val clickObservable: Observable<Data>
+    val clickObservable: Observable<Int>
         get() = clickSubject
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsPageRecyclerViewHolder {
@@ -32,7 +32,7 @@ class PostsPageRecyclerViewAdapter(private val response: PostsResponse) : Recycl
         holder.commentsCount = response.data[position].commentsCount
 
         holder.itemView.setOnClickListener {
-            clickSubject.onNext(response.data[position])
+            clickSubject.onNext(position)
         }
     }
 

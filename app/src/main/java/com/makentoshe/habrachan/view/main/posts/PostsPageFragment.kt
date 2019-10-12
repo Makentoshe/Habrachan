@@ -6,23 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.entity.posts.Data
-import com.makentoshe.habrachan.common.entity.posts.PostsResponse
-import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
-import com.makentoshe.habrachan.common.network.request.GetPostsRequest
-import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.di.AppActivityScope
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.main.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.main.posts.PostsPageRecyclerViewAdapter
+import com.makentoshe.habrachan.model.post.PostScreen
 import com.makentoshe.habrachan.ui.main.posts.PostsPageFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.posts.PostsPageViewModel
+import com.makentoshe.habrachan.viewmodel.main.posts.PostsPageViewModelFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router
@@ -33,17 +29,10 @@ class PostsPageFragment : Fragment() {
 
     private val router by inject<Router>()
 
-    private val manager: HabrPostsManager by inject()
-
-    private val cache: Cache<GetPostsRequest, PostsResponse> by inject()
-
-    private val factory by inject<GetPostsRequestFactory>()
+    private val viewModelFactory by inject<PostsPageViewModelFactory>()
 
     private val viewModel: PostsPageViewModel
-        get() {
-            val factory = PostsPageViewModel.Factory(position, manager, cache, factory)
-            return ViewModelProviders.of(this, factory)[PostsPageViewModel::class.java]
-        }
+        get() = viewModelFactory.build(this, position)
 
     private var position: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("Position", value)
@@ -85,8 +74,9 @@ class PostsPageFragment : Fragment() {
         adapter.clickObservable.subscribe(::onElementClick).let(disposables::add)
     }
 
-    private fun onElementClick(data: Data) {
-        // todo something
+    private fun onElementClick(position: Int) {
+        val screen = PostScreen(this.position, position)
+        router.navigateTo(screen)
     }
 
     private fun onRefresh(view: SwipeRefreshLayout) {
@@ -121,4 +111,3 @@ class PostsPageFragment : Fragment() {
         }
     }
 }
-

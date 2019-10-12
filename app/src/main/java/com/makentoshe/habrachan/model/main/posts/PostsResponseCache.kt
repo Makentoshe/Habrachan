@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.model.main.posts
 
 import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.cache.CacheStorage
+import com.makentoshe.habrachan.common.entity.posts.Data
 import com.makentoshe.habrachan.common.network.request.GetPostsRequest
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 

@@ -22,9 +22,9 @@ class AppActivity : AppCompatActivity() {
     private val router by inject<Router>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        injectDependencies()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        injectDependencies()
         if (savedInstanceState == null) {
             router.newRootScreen(MainFlowScreen())
         }
