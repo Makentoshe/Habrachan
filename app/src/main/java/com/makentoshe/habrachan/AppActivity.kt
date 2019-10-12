@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.common.navigation.Navigator
 import com.makentoshe.habrachan.di.AppActivityModule
 import com.makentoshe.habrachan.di.AppActivityScope
 import com.makentoshe.habrachan.di.ApplicationScope
-import com.makentoshe.habrachan.model.MainFlowScreen
+import com.makentoshe.habrachan.model.main.MainFlowScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
