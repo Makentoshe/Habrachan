@@ -3,9 +3,7 @@ package com.makentoshe.habrachan
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.common.navigation.Navigator
-import com.makentoshe.habrachan.di.AppActivityModule
-import com.makentoshe.habrachan.di.AppActivityScope
-import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.di.common.NavigationScope
 import com.makentoshe.habrachan.model.main.MainFlowScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -15,7 +13,7 @@ import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class AppActivity : AppCompatActivity() {
 
-    private val navigator by inject<Navigator>()
+    private val navigator = Navigator(this, R.id.main_container)
 
     private val navigatorHolder by inject<NavigatorHolder>()
 
@@ -41,8 +39,7 @@ class AppActivity : AppCompatActivity() {
     }
 
     private fun injectDependencies() {
-        Toothpick.openScopes(ApplicationScope::class.java).openSubScope(AppActivityScope::class.java) {
-            it.installModules(AppActivityModule(this)).inject(this)
-        }.closeOnDestroy(this).inject(this)
+        Toothpick.openScopes(NavigationScope::class.java).closeOnDestroy(this).inject(this)
     }
+
 }

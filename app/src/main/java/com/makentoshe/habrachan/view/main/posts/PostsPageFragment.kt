@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.posts.Data
-import com.makentoshe.habrachan.di.AppActivityScope
+import com.makentoshe.habrachan.di.common.NavigationScope
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.main.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.main.posts.PostsPageRecyclerViewAdapter
@@ -21,6 +20,7 @@ import com.makentoshe.habrachan.viewmodel.main.posts.PostsPageViewModel
 import com.makentoshe.habrachan.viewmodel.main.posts.PostsPageViewModelFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
@@ -42,7 +42,7 @@ class PostsPageFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Toothpick.openScope(AppActivityScope::class.java).openSubScope(PostsFragmentScope::class.java).inject(this)
+        Toothpick.openScope(NavigationScope::class.java).openSubScope(PostsFragmentScope::class.java).inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
