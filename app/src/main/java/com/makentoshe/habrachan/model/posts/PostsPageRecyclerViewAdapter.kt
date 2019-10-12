@@ -4,10 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.entity.posts.Data
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import com.makentoshe.habrachan.view.posts.PostsPageRecyclerViewHolder
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 
 class PostsPageRecyclerViewAdapter(private val response: PostsResponse) : RecyclerView.Adapter<PostsPageRecyclerViewHolder>() {
+
+    private val clickSubject = PublishSubject.create<Data>()
+
+    val clickObservable: Observable<Data>
+        get() = clickSubject
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsPageRecyclerViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.main_posts_page_fragment_element, parent, false)
@@ -22,6 +30,10 @@ class PostsPageRecyclerViewAdapter(private val response: PostsResponse) : Recycl
         holder.score = response.data[position].score
         holder.readingCount = response.data[position].readingCount
         holder.commentsCount = response.data[position].commentsCount
+
+        holder.itemView.setOnClickListener {
+            clickSubject.onNext(response.data[position])
+        }
     }
 
     override fun getItemCount(): Int {

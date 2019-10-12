@@ -13,10 +13,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.database.RequestStorage
+import com.makentoshe.habrachan.common.entity.posts.Data
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequest
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
+import com.makentoshe.habrachan.di.AppActivityScope
 import com.makentoshe.habrachan.di.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.posts.PostsPageRecyclerViewAdapter
@@ -24,10 +26,13 @@ import com.makentoshe.habrachan.ui.posts.PostsPageFragmentUi
 import com.makentoshe.habrachan.viewmodel.posts.PostsPageViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 
 class PostsPageFragment : Fragment() {
+
+    private val router by inject<Router>()
 
     private val manager: HabrPostsManager by inject()
 
@@ -49,7 +54,7 @@ class PostsPageFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Toothpick.openScope(PostsFragmentScope::class.java).inject(this)
+        Toothpick.openScope(AppActivityScope::class.java).openSubScope(PostsFragmentScope::class.java).inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -74,10 +79,15 @@ class PostsPageFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView(adapter: RecyclerView.Adapter<*>) {
+    private fun initRecyclerView(adapter: PostsPageRecyclerViewAdapter) {
         val recyclerView = requireView().findViewById<RecyclerView>(R.id.main_posts_page_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+        adapter.clickObservable.subscribe(::onElementClick).let(disposables::add)
+    }
+
+    private fun onElementClick(data: Data) {
+        // todo something
     }
 
     private fun onRefresh(view: SwipeRefreshLayout) {
