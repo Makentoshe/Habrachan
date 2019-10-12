@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.database.RequestStorage
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.di.posts.PostsFragmentModule
 import com.makentoshe.habrachan.di.posts.PostsFragmentScope
@@ -24,6 +25,9 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
+import android.app.Activity
+import android.view.inputmethod.InputMethodManager
+
 
 class PostsFragment : Fragment() {
 
@@ -33,13 +37,15 @@ class PostsFragment : Fragment() {
 
     private val requestFactory by inject<GetPostsRequestFactory>()
 
+    private val requestStorage by inject<RequestStorage>()
+
     private var pageArg: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("Page", value)
         get() = arguments!!.getInt("Page")
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val module = PostsFragmentModule()
+        val module = PostsFragmentModule(context)
         Toothpick.openScope(PostsFragmentScope::class.java).installModules(module).closeOnDestroy(this).inject(this)
     }
 
@@ -66,7 +72,10 @@ class PostsFragment : Fragment() {
 
     private fun onMagnifyClicked() = when (getPanelState()) {
         SlidingUpPanelLayout.PanelState.EXPANDED -> openPanel()
-        SlidingUpPanelLayout.PanelState.COLLAPSED -> closePanel()
+        SlidingUpPanelLayout.PanelState.COLLAPSED -> {
+            closePanel()
+            closeSoftKeyboard()
+        }
         else -> Unit
     }
 
@@ -105,9 +114,10 @@ class PostsFragment : Fragment() {
             else -> ""
         }
         val request = requestFactory.query(pageArg + 1, queryString, sort)
-        // todo save request to the storage
+        requestStorage.set(request)
         PostsBroadcastReceiver.sendRefreshBroadcast(requireContext())
         closePanel()
+        closeSoftKeyboard()
     }
 
     private fun getPanelState(): SlidingUpPanelLayout.PanelState {
@@ -122,6 +132,12 @@ class PostsFragment : Fragment() {
     private fun closePanel() {
         requireView().findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel).panelState =
             SlidingUpPanelLayout.PanelState.EXPANDED
+    }
+
+    private fun closeSoftKeyboard() {
+        val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = requireActivity().currentFocus ?: View(requireActivity())
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun initViewPager(adapter: PostsFragmentViewPagerAdapter, initialPage: Int) {

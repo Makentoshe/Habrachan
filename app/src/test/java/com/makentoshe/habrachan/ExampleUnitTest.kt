@@ -17,15 +17,23 @@ class ExampleUnitTest {
         assertEquals(4, 2 + 2)
     }
 
+
+
     @Test
     fun sas() {
-        val client = OkHttpClient.Builder().build()
-        val manager = HabrPostsManager.Builder(client).build()
-        val factory = GetPostsRequestFactory(
-            client = "85cab69095196f3.89453480", api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b", token = null
-        )
-        val request = factory.query(1, "anko")
-        val result = manager.getPosts(request).blockingGet()
-        println(result)
+        var words = emptyArray<String>()
+        var counts = emptyArray<Int>()
+        val string = readLine()!!
+        val split = string.split(" ")
+        for (i in 0 until split.size) {
+            val word = split[i]
+            if (words.contains(word)) {
+                val index = words.indexOf(word)
+                counts[index] = counts[index].inc()
+            } else {
+                words = words.plusElement(word)
+                counts = counts.plusElement(1)
+            }
+        }
     }
 }

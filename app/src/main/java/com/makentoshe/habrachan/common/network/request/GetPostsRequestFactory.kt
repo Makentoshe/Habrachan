@@ -1,9 +1,12 @@
 package com.makentoshe.habrachan.common.network.request
 
+import com.makentoshe.habrachan.common.database.RequestStorage
+
 data class GetPostsRequestFactory(
     private val client: String,
     private val api: String?,
-    private val token: String?
+    private val token: String?,
+    private val requestStorage: RequestStorage
 ) {
 
     /**
@@ -41,7 +44,6 @@ data class GetPostsRequestFactory(
      * If previous request was not stored for some reason - return default request
      */
     fun stored(page: Int): GetPostsRequest {
-        // return "default" request
-        return interesting(page)
+        return requestStorage.getOrDefault(page, interesting(page))
     }
 }

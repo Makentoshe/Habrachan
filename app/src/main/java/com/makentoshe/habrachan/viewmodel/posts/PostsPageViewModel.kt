@@ -12,10 +12,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 
 class PostsPageViewModel(
-    private val position: Int,
+    position: Int,
     private val manager: HabrPostsManager,
     private val cache: Cache<GetPostsRequest, PostsResponse>,
-    private val requestFactory: GetPostsRequestFactory
+    requestFactory: GetPostsRequestFactory
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
