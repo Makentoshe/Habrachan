@@ -37,6 +37,12 @@ data class GetPostsRequestFactory(
         return GetPostsRequest("search", "posts/$query", client, token, api, page, query, sort, true)
     }
 
+    /** Should return a request for receiving a single post by id */
+    fun single(id: Int): GetPostRequest {
+        require(api != null || token != null)
+        return GetPostRequest(client, token, api, id)
+    }
+
     /**
      * Should return a request saved from previous search.
      * Request should be stored in cache memory on the device
