@@ -10,7 +10,7 @@ import com.makentoshe.habrachan.view.main.posts.PostsPageRecyclerViewHolder
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
-class PostsPageRecyclerViewAdapter(private val response: PostsResponse) : RecyclerView.Adapter<PostsPageRecyclerViewHolder>() {
+class PostsPageRecyclerViewAdapter(private val posts: List<Data>) : RecyclerView.Adapter<PostsPageRecyclerViewHolder>() {
 
     private val clickSubject = PublishSubject.create<Int>()
 
@@ -23,13 +23,13 @@ class PostsPageRecyclerViewAdapter(private val response: PostsResponse) : Recycl
     }
 
     override fun onBindViewHolder(holder: PostsPageRecyclerViewHolder, position: Int) {
-        holder.timePublished = response.data[position].timePublished
-        holder.author = response.data[position].author.login
-        holder.title = response.data[position].title
-        holder.hubsTitles = response.data[position].hubs.joinToString(", ") { it.title }
-        holder.score = response.data[position].score
-        holder.readingCount = response.data[position].readingCount
-        holder.commentsCount = response.data[position].commentsCount
+        holder.timePublished = posts[position].timePublished
+        holder.author = posts[position].author.login
+        holder.title = posts[position].title
+        holder.hubsTitles = posts[position].hubs.joinToString(", ") { it.title }
+        holder.score = posts[position].score
+        holder.readingCount = posts[position].readingCount
+        holder.commentsCount = posts[position].commentsCount
 
         holder.itemView.setOnClickListener {
             clickSubject.onNext(position)
@@ -37,7 +37,7 @@ class PostsPageRecyclerViewAdapter(private val response: PostsResponse) : Recycl
     }
 
     override fun getItemCount(): Int {
-        return response.data.size
+        return posts.size
     }
 
 }

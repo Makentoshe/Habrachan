@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.di.main.posts
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.database.RequestStorage
+import com.makentoshe.habrachan.common.entity.posts.Data
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequest
@@ -20,14 +21,14 @@ annotation class PostsPageFragmentScope
 
 class PostsPageFragmentModule private constructor(): Module() {
 
-    private val cache by inject<Cache<GetPostsRequest, PostsResponse>>()
+    private val postsCache by inject<Cache<Int, Data>>()
 
     private val requestFactory by inject<GetPostsRequestFactory>()
 
     private val manager by inject<HabrPostsManager>()
 
     private fun bindViewModel(fragment: PostsPageFragment, position: Int) {
-        val factory = PostsPageViewModel.Factory(position, manager, cache, requestFactory)
+        val factory = PostsPageViewModel.Factory(position, manager, requestFactory, postsCache)
         val viewmodel = ViewModelProviders.of(fragment, factory)[PostsPageViewModel::class.java]
         bind<PostsPageViewModel>().toInstance(viewmodel)
     }

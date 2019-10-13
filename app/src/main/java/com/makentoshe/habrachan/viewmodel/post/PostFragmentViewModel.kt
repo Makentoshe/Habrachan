@@ -5,17 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.entity.posts.Data
-import com.makentoshe.habrachan.common.entity.posts.PostsResponse
-import com.makentoshe.habrachan.common.network.request.GetPostsRequest
-import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
 class PostFragmentViewModel(
     private val page: Int,
     private val position: Int,
-    private val requestFactory: GetPostsRequestFactory,
-    private val cache: Cache<GetPostsRequest, PostsResponse>
+    private val cache: Cache<Int, Data>
 ) : ViewModel() {
 
     private val publicationSubject = BehaviorSubject.create<Data>()
@@ -24,18 +20,15 @@ class PostFragmentViewModel(
         get() = publicationSubject
 
     init {
-        val request = requestFactory.stored(page + 1)
-        val posts = cache.get(request)
-        if (posts != null) {
-            val post = posts.data[position]
-            if (post.textHtml != null) {
-                pushPublicationText(post)
-            } else {
-                pushPublicationPreview(post)
-                startPublicationDownload()
-            }
+        val post = cache.get((page + 1) + position)
+        if (post == null) {
+            // load post with body
         } else {
-            //todo add error observable
+            if (post.textHtml != null) {
+                // show post body
+            } else {
+                // load post's body
+            }
         }
     }
 
@@ -62,11 +55,10 @@ class PostFragmentViewModel(
     class Factory(
         private val page: Int,
         private val position: Int,
-        private val requestFactory: GetPostsRequestFactory,
-        private val cache: Cache<GetPostsRequest, PostsResponse>
+        private val cache: Cache<Int, Data>
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostFragmentViewModel(page, position, requestFactory, cache) as T
+            return PostFragmentViewModel(page, position, cache) as T
         }
     }
 }

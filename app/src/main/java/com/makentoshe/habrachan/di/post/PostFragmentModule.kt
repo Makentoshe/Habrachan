@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.di.post
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.cache.Cache
+import com.makentoshe.habrachan.common.entity.posts.Data
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import com.makentoshe.habrachan.common.network.request.GetPostsRequest
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
@@ -19,9 +20,7 @@ annotation class PostFragmentScope
 
 class PostFragmentModule private constructor(): Module() {
 
-    private val requestFactory by inject<GetPostsRequestFactory>()
-
-    private val cache by inject<Cache<GetPostsRequest, PostsResponse>>()
+    private val postsCache by inject<Cache<Int, Data>>()
 
     init {
         val postFragmentUi = PostFragmentUi()
@@ -29,7 +28,7 @@ class PostFragmentModule private constructor(): Module() {
     }
 
     private fun bindViewModel(fragment: PostFragment, position: Int, page: Int) {
-        val factory = PostFragmentViewModel.Factory(position, page, requestFactory, cache)
+        val factory = PostFragmentViewModel.Factory(position, page, postsCache)
         val viewModel = ViewModelProviders.of(fragment, factory)[PostFragmentViewModel::class.java]
 
         bind<PostFragmentViewModel>().toInstance(viewModel)
@@ -39,7 +38,7 @@ class PostFragmentModule private constructor(): Module() {
 
         fun build(fragment: PostFragment) : PostFragmentModule {
             val module = PostFragmentModule()
-            val scope = Toothpick.openScopes(CacheScope::class.java, NetworkScope::class.java)
+            val scope = Toothpick.openScopes(CacheScope::class.java)
             scope.inject(module)
             module.bindViewModel(fragment, position, page)
             scope.release()

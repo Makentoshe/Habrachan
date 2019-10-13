@@ -3,28 +3,29 @@ package com.makentoshe.habrachan.viewmodel.main.posts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.cache.Cache
-import com.makentoshe.habrachan.common.network.request.GetPostsRequest
-import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
+import com.makentoshe.habrachan.common.entity.posts.Data
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
+import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
+import com.makentoshe.habrachan.common.network.request.GetPostsRequest
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 
 class PostsPageViewModel(
-    position: Int,
+    private val position: Int,
     private val manager: HabrPostsManager,
-    private val cache: Cache<GetPostsRequest, PostsResponse>,
-    requestFactory: GetPostsRequestFactory
+    requestFactory: GetPostsRequestFactory,
+    private val postsCache: Cache<Int, Data>
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
     /** Emitter for successful network request events */
-    private val postsSubject = BehaviorSubject.create<PostsResponse>()
+    private val postsSubject = BehaviorSubject.create<List<Data>>()
 
     /** Observable for successful network request events */
-    val postsObservable: Observable<PostsResponse>
+    val postsObservable: Observable<List<Data>>
         get() = postsSubject
 
     /** Emitter for unsuccessful network request events */
@@ -41,15 +42,13 @@ class PostsPageViewModel(
 
     private fun requestPostsResponse(request: GetPostsRequest) {
         manager.getPosts(request).subscribe({
-            postsSubject.onNext(it)
-            cache.set(request, it)
-        }, {
-            val cachedSuccess = cache.get(request)
-            if (cachedSuccess != null) {
-                postsSubject.onNext(cachedSuccess)
-            } else {
-                errorSubject.onNext(it)
+            postsSubject.onNext(it.data)
+            it.data.forEachIndexed { index, data ->
+                postsCache.set((position + 1) * 20 + index, data)
             }
+        }, {
+            val cachedSuccess = Array(20) { i -> postsCache.get((position + 1) + i) }.filterNotNull().toList()
+            postsSubject.onNext(cachedSuccess)
         }).let(disposables::add)
     }
 
@@ -60,11 +59,11 @@ class PostsPageViewModel(
     class Factory(
         private val position: Int,
         private val manager: HabrPostsManager,
-        private val cache: Cache<GetPostsRequest, PostsResponse>,
-        private val factory: GetPostsRequestFactory
+        private val factory: GetPostsRequestFactory,
+        private val postsCache: Cache<Int, Data>
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostsPageViewModel(position, manager, cache, factory) as T
+            return PostsPageViewModel(position, manager, factory, postsCache) as T
         }
     }
 }
