@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.di.common.CacheScope
 import com.makentoshe.habrachan.di.common.NavigationScope
+import com.makentoshe.habrachan.di.common.NetworkScope
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.main.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.main.posts.PostsPageRecyclerViewAdapter
@@ -23,7 +25,9 @@ import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
+import toothpick.config.Module
 import toothpick.ktp.delegate.inject
+import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class PostsPageFragment : Fragment() {
 
@@ -42,7 +46,7 @@ class PostsPageFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Toothpick.openScope(NavigationScope::class.java).openSubScope(PostsFragmentScope::class.java).inject(this)
+        injectDependencies()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -109,5 +113,13 @@ class PostsPageFragment : Fragment() {
         fun build(position: Int) = PostsPageFragment().apply {
             this.position = position
         }
+    }
+
+    private fun injectDependencies() {
+        val scopes = Toothpick.openScopes(
+            CacheScope::class.java, NetworkScope::class.java, NavigationScope::class.java
+        ).openSubScope(PostsFragmentScope::class.java)
+        scopes.closeOnDestroy(this)
+        scopes.inject(this)
     }
 }

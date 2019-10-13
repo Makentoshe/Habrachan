@@ -39,7 +39,7 @@ class AppActivity : AppCompatActivity() {
     }
 
     private fun injectDependencies() {
-        Toothpick.openScopes(NavigationScope::class.java).closeOnDestroy(this).inject(this)
+        Toothpick.openScopes(NavigationScope::class.java).inject(this)
     }
 
 }

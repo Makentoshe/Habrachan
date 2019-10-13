@@ -1,10 +1,7 @@
 package com.makentoshe.habrachan
 
 import android.app.Application
-import com.makentoshe.habrachan.di.common.CacheModule
-import com.makentoshe.habrachan.di.common.CacheScope
-import com.makentoshe.habrachan.di.common.NavigationModule
-import com.makentoshe.habrachan.di.common.NavigationScope
+import com.makentoshe.habrachan.di.common.*
 import ru.terrakok.cicerone.Cicerone
 import toothpick.Toothpick
 
@@ -16,6 +13,7 @@ class Habrachan : Application() {
         super.onCreate()
         injectCacheDependencies()
         injectNavigationDependencies()
+        injectNetworkDependencies()
     }
 
     private fun injectCacheDependencies() {
@@ -26,6 +24,11 @@ class Habrachan : Application() {
     private fun injectNavigationDependencies() {
         val module = NavigationModule(cicerone)
         Toothpick.openScope(NavigationScope::class.java).installModules(module)
+    }
+
+    private fun injectNetworkDependencies() {
+        val module = NetworkModule(applicationContext)
+        Toothpick.openScope(NetworkScope::class.java).installModules(module)
     }
 
 }

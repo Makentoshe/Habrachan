@@ -20,6 +20,7 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 
 class PostsFragmentModule(context: Context) : Module() {
+
     init {
         bind<PostsFragmentUi>().toInstance(PostsFragmentUi())
 

@@ -11,12 +11,13 @@ import toothpick.ktp.binding.bind
 
 annotation class CacheScope
 
-class CacheModule: Module() {
-    init {
-        val cacheStorage = InMemoryCacheStorage<GetPostsRequest, PostsResponse>()
-        bind<CacheStorage<GetPostsRequest, PostsResponse>>().toInstance(cacheStorage)
+class CacheModule : Module() {
 
-        val cache = PostsResponseCache(InMemoryCacheStorage())
+    private val cacheStorage = InMemoryCacheStorage<GetPostsRequest, PostsResponse>()
+    private val cache = PostsResponseCache(cacheStorage)
+
+    init {
+        bind<CacheStorage<GetPostsRequest, PostsResponse>>().toInstance(cacheStorage)
         bind<Cache<GetPostsRequest, PostsResponse>>().toInstance(cache)
     }
 }
