@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.common.model.network.users
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.common.model.entity.Data
-import com.makentoshe.habrachan.common.model.entity.User
+import com.makentoshe.habrachan.common.entity.User
 
 data class GetUsersBySearchResult(
     @SerializedName("data")

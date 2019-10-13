@@ -1,15 +1,11 @@
-package com.makentoshe.habrachan.common.entity.posts
+package com.makentoshe.habrachan.common.entity
 
 
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.common.entity.posts.Author
-import com.makentoshe.habrachan.common.model.entity.Flow
-import com.makentoshe.habrachan.common.model.entity.Hub
-import com.makentoshe.habrachan.common.model.entity.Metadata
 
 data class Data(
     @SerializedName("author")
-    val author: Author,
+    val author: User,
     @SerializedName("comments_count")
     val commentsCount: Int,
     @SerializedName("comments_new")
@@ -45,7 +41,7 @@ data class Data(
     @SerializedName("lang")
     val lang: String,
     @SerializedName("metadata")
-    val metadata: Metadata,
+    val metadata: Metadata?,
     @SerializedName("path")
     val path: String,
     @SerializedName("post_type")
@@ -79,5 +75,7 @@ data class Data(
     @SerializedName("vote")
     val vote: Any,
     @SerializedName("votes_count")
-    val votesCount: Int
+    val votesCount: Int,
+    @SerializedName("is_can_comment")
+    val isCanComment: Boolean?
 )

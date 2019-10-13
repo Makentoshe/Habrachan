@@ -1,8 +1,9 @@
-package com.makentoshe.habrachan.common.model.entity
+package com.makentoshe.habrachan.common.entity
 
 
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.common.entity.Flow
 
 data class Hub(
     @SerializedName("about")

@@ -4,7 +4,7 @@ import android.text.Spannable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.cache.Cache
-import com.makentoshe.habrachan.common.entity.posts.Data
+import com.makentoshe.habrachan.common.entity.Data
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 

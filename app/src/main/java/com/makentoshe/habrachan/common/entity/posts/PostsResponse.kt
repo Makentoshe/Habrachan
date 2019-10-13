@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.common.entity.posts
 
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.common.entity.Data
 
 data class PostsResponse(
     @SerializedName("data")

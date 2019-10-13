@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.common.model.network.hubs
 
 
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.common.model.entity.Hub
+import com.makentoshe.habrachan.common.entity.Hub
 
 data class GetHubsResult(
     @SerializedName("data")

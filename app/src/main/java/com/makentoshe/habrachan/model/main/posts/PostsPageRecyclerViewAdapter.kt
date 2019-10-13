@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.posts.Data
-import com.makentoshe.habrachan.common.entity.posts.PostsResponse
+import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.view.main.posts.PostsPageRecyclerViewHolder
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

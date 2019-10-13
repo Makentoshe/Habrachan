@@ -3,8 +3,7 @@ package com.makentoshe.habrachan.viewmodel.main.posts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.cache.Cache
-import com.makentoshe.habrachan.common.entity.posts.Data
-import com.makentoshe.habrachan.common.entity.posts.PostsResponse
+import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequest
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory

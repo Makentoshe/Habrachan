@@ -1,12 +1,9 @@
-package com.makentoshe.habrachan.common.entity.post
+package com.makentoshe.habrachan.common.entity
 
 
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.common.model.entity.Badge
-import com.makentoshe.habrachan.common.model.entity.Counters
-import com.makentoshe.habrachan.common.model.entity.Geo
 
-data class Author(
+data class User(
     @SerializedName("avatar")
     val avatar: String,
     @SerializedName("badges")
@@ -22,7 +19,7 @@ data class Author(
     @SerializedName("geo")
     val geo: Geo,
     @SerializedName("id")
-    val id: Int,
+    val id: String,
     @SerializedName("is_can_vote")
     val isCanVote: Boolean,
     @SerializedName("is_rc")
@@ -35,20 +32,20 @@ data class Author(
     val login: String,
     @SerializedName("path")
     val path: String,
-    @SerializedName("payment_methods")
-    val paymentMethods: List<PaymentMethod>,
     @SerializedName("rating")
-    val rating: Double,
+    val rating: Float,
     @SerializedName("rating_position")
     val ratingPosition: Int,
     @SerializedName("score")
-    val score: Int,
+    val score: Float,
     @SerializedName("sex")
-    val sex: Int,
+    val sex: String,
     @SerializedName("specializm")
     val specializm: String,
     @SerializedName("time_registered")
     val timeRegistered: String,
     @SerializedName("vote")
-    val vote: Int
+    val vote: Int = 0,
+    @SerializedName("payment_methods")
+    val paymentMethods: List<PaymentMethod>?
 )
