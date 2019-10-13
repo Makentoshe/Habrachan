@@ -1,11 +1,13 @@
 package com.makentoshe.habrachan.view.main.posts
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.NO_ID
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
@@ -24,9 +26,6 @@ import com.makentoshe.habrachan.ui.main.posts.PostsFragmentUi
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
-import toothpick.smoothie.lifecycle.closeOnDestroy
-import android.app.Activity
-import android.view.inputmethod.InputMethodManager
 
 
 class PostsFragment : Fragment() {
@@ -45,8 +44,7 @@ class PostsFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val module = PostsFragmentModule(context)
-        Toothpick.openScope(PostsFragmentScope::class.java).installModules(module).closeOnDestroy(this).inject(this)
+        injectDependencies()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -159,6 +157,13 @@ class PostsFragment : Fragment() {
         fun build(page: Int) = PostsFragment().apply {
             this.pageArg = page
         }
+    }
+
+    private fun injectDependencies() {
+        val module = PostsFragmentModule.Builder().build(this)
+        val scopes = Toothpick.openScope(PostsFragmentScope::class.java)
+        scopes.installModules(module).inject(this)
+        scopes.release()
     }
 
     private class QueryCheckedChangeListener : ChipGroup.OnCheckedChangeListener {

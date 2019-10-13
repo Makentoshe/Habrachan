@@ -10,33 +10,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.di.common.CacheScope
 import com.makentoshe.habrachan.di.common.NavigationScope
-import com.makentoshe.habrachan.di.common.NetworkScope
-import com.makentoshe.habrachan.di.main.posts.PostsFragmentScope
+import com.makentoshe.habrachan.di.main.posts.PostsPageFragmentModule
+import com.makentoshe.habrachan.di.main.posts.PostsPageFragmentScope
 import com.makentoshe.habrachan.model.main.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.main.posts.PostsPageRecyclerViewAdapter
 import com.makentoshe.habrachan.model.post.PostScreen
 import com.makentoshe.habrachan.ui.main.posts.PostsPageFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.posts.PostsPageViewModel
-import com.makentoshe.habrachan.viewmodel.main.posts.PostsPageViewModelFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
-import toothpick.config.Module
 import toothpick.ktp.delegate.inject
-import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class PostsPageFragment : Fragment() {
 
     private val router by inject<Router>()
 
-    private val viewModelFactory by inject<PostsPageViewModelFactory>()
-
-    private val viewModel: PostsPageViewModel
-        get() = viewModelFactory.build(this, position)
+    private val viewModel by inject<PostsPageViewModel>()
 
     private var position: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("Position", value)
@@ -116,10 +108,12 @@ class PostsPageFragment : Fragment() {
     }
 
     private fun injectDependencies() {
+        val module = PostsPageFragmentModule.Builder(position).build(this)
         val scopes = Toothpick.openScopes(
-            CacheScope::class.java, NetworkScope::class.java, NavigationScope::class.java
-        ).openSubScope(PostsFragmentScope::class.java)
-        scopes.closeOnDestroy(this)
+            PostsPageFragmentScope::class.java, NavigationScope::class.java
+        )
+        scopes.installModules(module)
         scopes.inject(this)
+        scopes.release()
     }
 }
