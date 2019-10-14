@@ -2,10 +2,12 @@ package com.makentoshe.habrachan.view.post
 
 import android.content.Context
 import android.os.Bundle
+import android.text.style.ImageSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.common.CacheScope
@@ -45,7 +47,7 @@ class PostFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.publicationObservable.subscribe {
-            view.findViewById<TextView>(R.id.textview).text = it.toString()
+            view.findViewById<TextView>(R.id.textview).text = it
         }.let(disposables::add)
     }
 
@@ -71,4 +73,3 @@ class PostFragment : Fragment() {
         scopes.release()
     }
 }
-

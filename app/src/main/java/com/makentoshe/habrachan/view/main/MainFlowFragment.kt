@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
 import com.makentoshe.habrachan.model.main.MainFlowBroadcastReceiver
@@ -30,7 +31,7 @@ class MainFlowFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val module = MainFlowFragmentModule(this)
-        Toothpick.openScopes(MainFlowFragmentScope::class.java)
+        Toothpick.openScopes(ApplicationScope::class.java, MainFlowFragmentScope::class.java)
             .installModules(module).closeOnDestroy(this).inject(this)
         broadcastReceiver.addOnReceiveListener { page ->
             viewModel.page = page

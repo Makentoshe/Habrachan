@@ -32,6 +32,7 @@ class NetworkModule(context: Context) : Module() {
         bind<RequestStorage>().toInstance(requestStorage)
         bind<GetPostsRequestFactory>().toInstance(factory)
         bind<HabrPostsManager>().toInstance(manager)
+        bind<OkHttpClient>().toInstance(client)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {

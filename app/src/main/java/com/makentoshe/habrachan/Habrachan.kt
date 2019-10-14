@@ -1,6 +1,8 @@
 package com.makentoshe.habrachan
 
 import android.app.Application
+import com.makentoshe.habrachan.di.ApplicationModule
+import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.common.*
 import ru.terrakok.cicerone.Cicerone
 import toothpick.Toothpick
@@ -14,14 +16,16 @@ class Habrachan : Application() {
         super.onCreate()
         Toothpick.setConfiguration(getToothpickConfiguration())
         injectCacheDependencies()
-        injectNavigationDependencies()
         injectNetworkDependencies()
+        injectNavigationDependencies()
+        val scopes = Toothpick.openScopes(NavigationScope::class.java, ApplicationScope::class.java)
+        scopes.installModules(ApplicationModule(applicationContext))
     }
 
     private fun getToothpickConfiguration(): Configuration {
         return if (BuildConfig.DEBUG) {
             // allowing multiple root scopes
-            Configuration.forDevelopment()
+            Configuration.forDevelopment().preventMultipleRootScopes()
         } else {
             Configuration.forProduction()
         }
@@ -32,14 +36,15 @@ class Habrachan : Application() {
         Toothpick.openScope(CacheScope::class.java).installModules(module)
     }
 
-    private fun injectNavigationDependencies() {
-        val module = NavigationModule(cicerone)
-        Toothpick.openScope(NavigationScope::class.java).installModules(module)
-    }
-
     private fun injectNetworkDependencies() {
         val module = NetworkModule(applicationContext)
-        Toothpick.openScope(NetworkScope::class.java).installModules(module)
+        Toothpick.openScopes(CacheScope::class.java, NetworkScope::class.java).installModules(module)
     }
+
+    private fun injectNavigationDependencies() {
+        val module = NavigationModule(cicerone)
+        Toothpick.openScopes(NetworkScope::class.java, NavigationScope::class.java).installModules(module)
+    }
+
 
 }

@@ -6,13 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.cache.Cache
+import com.makentoshe.habrachan.common.entity.Data
+import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
+import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
+import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.di.common.CacheScope
 import com.makentoshe.habrachan.di.common.NavigationScope
-import com.makentoshe.habrachan.di.main.posts.PostsPageFragmentModule
-import com.makentoshe.habrachan.di.main.posts.PostsPageFragmentScope
+import com.makentoshe.habrachan.di.common.NetworkScope
 import com.makentoshe.habrachan.model.main.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.main.posts.PostsPageRecyclerViewAdapter
 import com.makentoshe.habrachan.model.post.PostScreen
@@ -28,7 +34,16 @@ class PostsPageFragment : Fragment() {
 
     private val router by inject<Router>()
 
-    private val viewModel by inject<PostsPageViewModel>()
+    private val manager: HabrPostsManager by inject()
+
+    private val requestFactory: GetPostsRequestFactory by inject()
+
+    private val postsCache: Cache<Int, Data> by inject()
+
+    private val viewModel by lazy {
+        val factory = PostsPageViewModel.Factory(position, manager, requestFactory, postsCache)
+        ViewModelProviders.of(this, factory)[PostsPageViewModel::class.java]
+    }
 
     private var position: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("Position", value)
@@ -108,12 +123,7 @@ class PostsPageFragment : Fragment() {
     }
 
     private fun injectDependencies() {
-        val module = PostsPageFragmentModule.Builder(position).build(this)
-        val scopes = Toothpick.openScopes(
-            PostsPageFragmentScope::class.java, NavigationScope::class.java
-        )
-        scopes.installModules(module)
+        val scopes = Toothpick.openScope(ApplicationScope::class.java)
         scopes.inject(this)
-        scopes.release()
     }
 }

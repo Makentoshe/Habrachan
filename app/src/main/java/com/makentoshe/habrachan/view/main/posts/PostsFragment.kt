@@ -17,6 +17,7 @@ import com.google.android.material.chip.ChipGroup
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.RequestStorage
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
+import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentModule
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.main.MainFlowBroadcastReceiver
@@ -161,7 +162,7 @@ class PostsFragment : Fragment() {
 
     private fun injectDependencies() {
         val module = PostsFragmentModule.Builder().build(this)
-        val scopes = Toothpick.openScope(PostsFragmentScope::class.java)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostsFragmentScope::class.java)
         scopes.installModules(module).inject(this)
         scopes.release()
     }

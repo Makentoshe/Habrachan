@@ -43,7 +43,7 @@ class PostsPageViewModel(
         manager.getPosts(request).subscribe({
             postsSubject.onNext(it.data)
             it.data.forEachIndexed { index, data ->
-                postsCache.set((position + 1) * 20 + index, data)
+                postsCache.set(position * 20 + index, data)
             }
         }, {
             val cachedSuccess = Array(20) { i -> postsCache.get((position + 1) + i) }.filterNotNull().toList()
