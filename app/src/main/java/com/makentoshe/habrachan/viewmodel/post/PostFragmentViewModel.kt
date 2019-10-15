@@ -8,6 +8,7 @@ import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.model.post.PublicationParser
+import com.makentoshe.habrachan.model.post.PublicationRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,10 +17,8 @@ import io.reactivex.subjects.BehaviorSubject
 class PostFragmentViewModel(
     private val position: Int,
     private val page: Int,
-    private val cache: Cache<Int, Data>,
-    private val requestFactory: GetPostsRequestFactory,
-    private val postsManager: HabrPostsManager,
-    private val publicationParser: PublicationParser
+    private val publicationParser: PublicationParser,
+    private val publicationRepository: PublicationRepository
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -30,36 +29,22 @@ class PostFragmentViewModel(
         get() = publicationSubject.observeOn(AndroidSchedulers.mainThread())
 
     init {
-        val int = page * 20 + position
-        val post = cache.get(int)
-        if (post != null) {
-            if (post.textHtml != null) {
+        publicationRepository.get(page, position).subscribe({ post ->
+            val html = post.textHtml
+            if (html != null) {
                 pushPublicationText(post)
             } else {
-//                pushPublicationPreview(post)
-                startPublicationDownload(post.id)
+                // error
             }
-        } else {
-            println("error sas")
-            // error message wtf
-        }
+        }, {
+
+        }).let(disposables::add)
     }
 
     private fun pushPublicationText(post: Data) {
         post.textHtml ?: return //todo add error observable
         val spanned = publicationParser.parse(post.textHtml)
         publicationSubject.onNext(spanned)
-    }
-
-    private fun startPublicationDownload(id: Int) {
-        val request = requestFactory.single(id)
-        postsManager.getPost(request).subscribe({
-            cache.set(page * 20 + position, it.data)
-            pushPublicationText(it.data)
-        }, {
-            // error
-            println("sas")
-        }).let(disposables::add)
     }
 
     override fun onCleared() {
@@ -69,13 +54,11 @@ class PostFragmentViewModel(
     class Factory(
         private val page: Int,
         private val position: Int,
-        private val cache: Cache<Int, Data>,
-        private val requestFactory: GetPostsRequestFactory,
-        private val postsManager: HabrPostsManager,
-        private val publicationParser: PublicationParser
+        private val publicationParser: PublicationParser,
+        private val publicationRepository: PublicationRepository
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostFragmentViewModel(page, position, cache, requestFactory, postsManager, publicationParser) as T
+            return PostFragmentViewModel(page, position, publicationParser, publicationRepository) as T
         }
     }
 }

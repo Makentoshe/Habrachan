@@ -70,6 +70,6 @@ class PostFragment : Fragment() {
         )
         scopes.installModules(module)
         scopes.inject(this)
-        scopes.release()
+        Toothpick.closeScope(scopes)
     }
 }

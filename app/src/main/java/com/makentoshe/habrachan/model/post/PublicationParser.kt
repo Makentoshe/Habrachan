@@ -10,34 +10,20 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.net.SocketTimeoutException
 
-
-interface PublicationParser {
-    fun parse(html: String): Spanned
-}
-
-class OkHttpPublicationParser(
-    private val client: OkHttpClient,
-    private val imageCache: Cache<String, Drawable>,
-    private val converter: Converter
-) : PublicationParser {
+class PublicationParser(
+    private val imageCache: Cache<String, Drawable>
+) {
 
     private val imageGetter = Html.ImageGetter { url ->
         try {
             val drawable = imageCache.get(url)
-            if (drawable != null) return@ImageGetter drawable
-
-            val request = Request.Builder().url(url).build()
-            val response = client.newCall(request).execute()
-            val stream = response.body?.byteStream() ?: return@ImageGetter null
-            Drawable.createFromStream(stream, url).apply {
-                setBounds(0, 0, converter.px2dp(intrinsicWidth).toInt(), converter.px2dp(intrinsicHeight).toInt())
-            }.also { imageCache.set(url, it) }
+            if (drawable != null) return@ImageGetter drawable else return@ImageGetter null
         } catch (ste: SocketTimeoutException) {
             null
         }
     }
 
-    override fun parse(html: String): Spanned {
+    fun parse(html: String): Spanned {
         val spannable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             parseNougat(html)
         } else {

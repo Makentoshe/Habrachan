@@ -8,18 +8,16 @@ import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.di.ApplicationScope
-import com.makentoshe.habrachan.di.common.CacheScope
-import com.makentoshe.habrachan.di.common.NetworkScope
-import com.makentoshe.habrachan.model.post.Converter
-import com.makentoshe.habrachan.model.post.OkHttpPublicationParser
+import com.makentoshe.habrachan.model.post.PublicationParser
+import com.makentoshe.habrachan.model.post.PublicationRepository
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.view.post.PostFragment
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
-import okhttp3.OkHttpClient
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
+import toothpick.smoothie.lifecycle.closeOnDestroy
 
 annotation class PostFragmentScope
 
@@ -31,20 +29,18 @@ class PostFragmentModule private constructor() : Module() {
 
     private val postsManager by inject<HabrPostsManager>()
 
-    private val client by inject<OkHttpClient>()
-
-    private val converter by inject<Converter>()
-
     init {
         val postFragmentUi = PostFragmentUi()
         bind<PostFragmentUi>().toInstance(postFragmentUi)
     }
 
     private fun bindViewModel(fragment: PostFragment, position: Int, page: Int) {
+        val publicationRepository = PublicationRepository(postsCache, requestFactory, postsManager)
+
         val imagesCache = ImagesCache(InMemoryCacheStorage())
-        val publicationParser = OkHttpPublicationParser(client, imagesCache, converter)
+        val publicationParser = PublicationParser(imagesCache)
         val factory = PostFragmentViewModel.Factory(
-            position, page, postsCache, requestFactory, postsManager, publicationParser
+            position, page, publicationParser, publicationRepository
         )
         val viewModel = ViewModelProviders.of(fragment, factory)[PostFragmentViewModel::class.java]
 
@@ -55,8 +51,7 @@ class PostFragmentModule private constructor() : Module() {
 
         fun build(fragment: PostFragment): PostFragmentModule {
             val module = PostFragmentModule()
-            val scope = Toothpick.openScope(ApplicationScope::class.java)
-            scope.inject(module)
+            Toothpick.openScope(ApplicationScope::class.java).closeOnDestroy(fragment).inject(module)
             module.bindViewModel(fragment, position, page)
             return module
         }
