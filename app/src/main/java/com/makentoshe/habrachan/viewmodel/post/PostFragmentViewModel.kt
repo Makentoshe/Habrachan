@@ -54,7 +54,7 @@ class PostFragmentViewModel(
     private fun startPublicationDownload(id: Int) {
         val request = requestFactory.single(id)
         postsManager.getPost(request).subscribe({
-            cache.set((page + 1) * 20 + position, it.data)
+            cache.set(page * 20 + position, it.data)
             pushPublicationText(it.data)
         }, {
             // error
