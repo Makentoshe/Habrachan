@@ -40,12 +40,17 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <TextView
-                android:id="@+id/textview"
+            <org.sufficientlysecure.htmltextview.HtmlTextView
+                android:id="@+id/htmltextview"
+                android:textSize="16sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Small" />
 
         </androidx.core.widget.NestedScrollView>
 

@@ -1,8 +1,0 @@
-{
-  "code": 400,
-  "message": "Incorrect parameters",
-  "additional": [
-    "Повторное голосование запрещено"
-  ],
-  "data": null
-}

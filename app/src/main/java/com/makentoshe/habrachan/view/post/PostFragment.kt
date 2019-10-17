@@ -2,21 +2,19 @@ package com.makentoshe.habrachan.view.post
 
 import android.content.Context
 import android.os.Bundle
-import android.text.style.ImageSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.di.common.CacheScope
-import com.makentoshe.habrachan.di.common.NetworkScope
+import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.post.PostFragmentModule
 import com.makentoshe.habrachan.di.post.PostFragmentScope
+import com.makentoshe.habrachan.model.post.HtmlHttpImageGetter
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
+import org.sufficientlysecure.htmltextview.HtmlTextView
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 
@@ -46,9 +44,15 @@ class PostFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.publicationObservable.subscribe {
-            view.findViewById<TextView>(R.id.textview).text = it
+        viewModel.publicationObservable.subscribe { post ->
+            val html = post.textHtml ?: return@subscribe
+            setPublicationHtmlText(html)
         }.let(disposables::add)
+    }
+
+    private fun setPublicationHtmlText(html: String) {
+        val htmlTextView = requireView().findViewById<HtmlTextView>(R.id.htmltextview)
+        htmlTextView.setHtml(html, HtmlHttpImageGetter(htmlTextView))
     }
 
     override fun onDestroy() {
@@ -66,10 +70,11 @@ class PostFragment : Fragment() {
     private fun injectDependencies() {
         val module = PostFragmentModule.Builder(position, page).build(this)
         val scopes = Toothpick.openScopes(
-            CacheScope::class.java, NetworkScope::class.java, PostFragmentScope::class.java
+            ApplicationScope::class.java, PostFragmentScope::class.java
         )
         scopes.installModules(module)
         scopes.inject(this)
         Toothpick.closeScope(scopes)
     }
 }
+

@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan
 
-import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
-import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
+import com.makentoshe.habrachan.common.repository.InputStreamRepository
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -18,22 +17,13 @@ class ExampleUnitTest {
     }
 
 
-
     @Test
     fun sas() {
-        var words = emptyArray<String>()
-        var counts = emptyArray<Int>()
-        val string = readLine()!!
-        val split = string.split(" ")
-        for (i in 0 until split.size) {
-            val word = split[i]
-            if (words.contains(word)) {
-                val index = words.indexOf(word)
-                counts[index] = counts[index].inc()
-            } else {
-                words = words.plusElement(word)
-                counts = counts.plusElement(1)
-            }
-        }
+        val client = OkHttpClient()
+        val repository = InputStreamRepository(client)
+        val stream = repository.get("https://habrastorage.org/getpro/habr/formulas/08d/9fa/efb/08d9faefbe272bdf8fbb80773542e343.svg")
+        val bytes = stream!!.readBytes()
+        val string = String(bytes)
+        println(string)
     }
 }

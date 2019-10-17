@@ -1,8 +1,0 @@
-{
-  "code": 403,
-  "message": "Authorization required",
-  "additional": [
-    "token problem"
-  ],
-  "data": null
-}
