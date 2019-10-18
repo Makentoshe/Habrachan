@@ -7,10 +7,11 @@ import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.common.repository.InputStreamRepository
-import com.makentoshe.habrachan.common.repository.Repository
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.model.post.PublicationRepository
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
+import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
+import com.makentoshe.habrachan.model.post.PublicationTextPrettify
 import com.makentoshe.habrachan.view.post.PostFragment
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import okhttp3.OkHttpClient
@@ -19,7 +20,6 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
-import java.io.InputStream
 
 annotation class PostFragmentScope
 
@@ -38,6 +38,11 @@ class PostFragmentModule private constructor() : Module() {
     init {
         val postFragmentUi = PostFragmentUi()
         bind<PostFragmentUi>().toInstance(postFragmentUi)
+
+        val webViewClient = HabrachanWebViewClient()
+        bind<HabrachanWebViewClient>().toInstance(webViewClient)
+
+        bind<PublicationTextPrettify>().toClass<PublicationTextPrettify>().singleton()
     }
 
     private fun bindViewModel(fragment: PostFragment, position: Int, page: Int) {

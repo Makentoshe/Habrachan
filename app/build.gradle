@@ -93,11 +93,6 @@ dependencies {
     def jsoup = "1.11.3"
     implementation "org.jsoup:jsoup:$jsoup"
 
-    // HtmlTextView
-    // https://github.com/SufficientlySecure/html-textview
-    def htmlview = "3.7"
-    implementation "org.sufficientlysecure:html-textview:$htmlview"
-
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

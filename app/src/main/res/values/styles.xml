@@ -14,8 +14,21 @@
     <style name="Habrachan.Light.Toolbar" parent="Habrachan.Light">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAppearance">@style/Habrachan.Light.TextAppearance</item>
         <item name="android:tint">@android:color/white</item>
         <item name="android:tintMode">src_atop</item>
+    </style>
+
+    <style name="Habrachan.Light.TextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Habrachan.Light.TextAppearance.Large" parent="Habrachan.Light.TextAppearance">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="Habrachan.Light.TextAppearance.Small" parent="Habrachan.Light.TextAppearance">
+        <item name="android:textSize">14sp</item>
     </style>
 
 </resources>
