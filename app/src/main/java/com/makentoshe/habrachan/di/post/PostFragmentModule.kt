@@ -61,7 +61,7 @@ class PostFragmentModule private constructor() : Module() {
 
         fun build(fragment: PostFragment): PostFragmentModule {
             val module = PostFragmentModule()
-            Toothpick.openScope(ApplicationScope::class.java).closeOnDestroy(fragment).inject(module)
+            Toothpick.openScope(ApplicationScope::class.java).inject(module)
             module.bindViewModel(fragment, position, page)
             module.bind()
             return module

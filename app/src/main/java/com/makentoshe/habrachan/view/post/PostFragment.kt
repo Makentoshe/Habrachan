@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.ApplicationScope
@@ -18,8 +19,10 @@ import com.makentoshe.habrachan.model.post.PublicationTextPrettify
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
+import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class PostFragment : Fragment() {
 
@@ -30,6 +33,8 @@ class PostFragment : Fragment() {
     private val webViewClient by inject<HabrachanWebViewClient>()
 
     private val publicationPrettify by inject<PublicationTextPrettify>()
+
+    private val router by inject<Router>()
 
     private var position: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("position", value)
@@ -51,12 +56,17 @@ class PostFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
+
         viewModel.publicationObservable.subscribe { post ->
+            val html = post.textHtml ?: return@subscribe //mb error
             setTitle(post.title)
-            val html = post.textHtml ?: return@subscribe
             setPublicationHtmlText(html)
-            showPublication()
         }.let(disposables::add)
+
+        webViewClient.onPublicationReadyToShow {
+            view.findViewById<View>(R.id.post_fragment_body).visibility = View.VISIBLE
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -77,16 +87,18 @@ class PostFragment : Fragment() {
         webview.loadData(publicationBody, "text/html", "UFT-8")
     }
 
-    private fun showPublication() {
-        requireView().findViewById<WebView>(R.id.post_fragment_webview).visibility = View.VISIBLE
-    }
-
-    private fun hidePublication() {
-        requireView().findViewById<WebView>(R.id.post_fragment_webview).visibility = View.VISIBLE
-    }
-
     private fun setTitle(title: String) {
         requireView().findViewById<TextView>(R.id.post_fragment_title).text = title
+    }
+
+    private fun initToolbar() {
+        val toolbar = requireView().findViewById<Toolbar>(R.id.post_fragment_toolbar)
+        val navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, context?.theme)
+        toolbar.navigationIcon = navigationIcon
+
+        toolbar.setNavigationOnClickListener {
+            router.exit()
+        }
     }
 
     override fun onDestroy() {
@@ -106,6 +118,7 @@ class PostFragment : Fragment() {
         val scopes = Toothpick.openScopes(
             ApplicationScope::class.java, PostFragmentScope::class.java
         )
+        scopes.closeOnDestroy(this)
         scopes.installModules(module)
         scopes.inject(this)
         Toothpick.closeScope(scopes)

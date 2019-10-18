@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.model.post
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -8,6 +9,13 @@ import android.webkit.WebViewClient
 import androidx.core.content.ContextCompat
 
 class HabrachanWebViewClient : WebViewClient() {
+
+    private var listener: (() -> Unit)? = null
+
+    override fun onPageCommitVisible(view: WebView?, url: String?) {
+        super.onPageCommitVisible(view, url)
+        listener?.invoke()
+    }
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         val url = request?.url
@@ -20,5 +28,9 @@ class HabrachanWebViewClient : WebViewClient() {
     override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
         super.onReceivedError(view, request, error)
         println(request)
+    }
+
+    fun onPublicationReadyToShow(listener: () -> Unit) {
+        this.listener = listener
     }
 }

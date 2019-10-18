@@ -140,7 +140,11 @@ class PostsFragment : Fragment() {
     }
 
     private fun initViewPager(adapter: PostsFragmentViewPagerAdapter, initialPage: Int) {
-        val viewpager = view!!.findViewById<ViewPager>(R.id.main_posts_viewpager)
+        val viewpager = if (view == null) {
+            requireActivity().findViewById<ViewPager>(R.id.main_posts_viewpager)
+        } else {
+            requireView().findViewById<ViewPager>(R.id.main_posts_viewpager)
+        }
         viewpager.adapter = adapter
         viewpager.currentItem = initialPage
         viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
