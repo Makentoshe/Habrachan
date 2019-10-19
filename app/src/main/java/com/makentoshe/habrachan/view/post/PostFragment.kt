@@ -53,6 +53,8 @@ class PostFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initWebView()
+
         viewModel.publicationObservable.subscribe { html ->
             setPublicationHtmlText(html)
         }.let(disposables::add)
@@ -63,11 +65,16 @@ class PostFragment : Fragment() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun setPublicationHtmlText(html: String) {
+    private fun initWebView() {
         val webview = requireView().findViewById<WebView>(R.id.post_fragment_webview)
         webview.webViewClient = webViewClient
         webview.settings.javaScriptEnabled = true
         webview.isHorizontalScrollBarEnabled = false
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun setPublicationHtmlText(html: String) {
+        val webview = requireView().findViewById<WebView>(R.id.post_fragment_webview)
         webview.loadData(html, "text/html", "UFT-8")
     }
 
