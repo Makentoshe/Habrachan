@@ -17,7 +17,7 @@ class PublicationRepository(
         val int = page * 20 + position
         val post = cache.get(int)
         return if (post != null) {
-            if (post.textHtml != null) {
+            if (post.textHtml != null && post.textHtml != post.previewHtml) {
                 Single.just(post).observeOn(Schedulers.io())
             } else {
                 val request = requestFactory.single(post.id)
