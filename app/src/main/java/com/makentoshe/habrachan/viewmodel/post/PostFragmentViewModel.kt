@@ -53,7 +53,7 @@ class PostFragmentViewModel(position: Int, page: Int, publicationRepository: Pub
 
 class TitleHtmlBuilder(private val title: String) {
     fun build(): CharSequence {
-        return StringBuilder().append("<h2>").append(title).append("</h2>")
+        return StringBuilder().append("<h1>").append(title).append("</h1>")
     }
 }
 
@@ -87,8 +87,9 @@ class StyleHtmlBuilder {
     }
 
     private fun buildTitleStyle(): CharSequence {
-        val builder = StringBuilder("h2{")
+        val builder = StringBuilder("h1{")
         builder.append("text-align:center;")
+        builder.append("font-size:150%;")
         builder.append("}")
         return builder
     }
