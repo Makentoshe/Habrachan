@@ -14,7 +14,6 @@ import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.post.PostFragmentModule
 import com.makentoshe.habrachan.di.post.PostFragmentScope
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
-import com.makentoshe.habrachan.model.post.PublicationTextPrettify
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -28,8 +27,6 @@ class PostFragment : Fragment() {
     private val viewModel by inject<PostFragmentViewModel>()
 
     private val webViewClient by inject<HabrachanWebViewClient>()
-
-    private val publicationPrettify by inject<PublicationTextPrettify>()
 
     private var position: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("position", value)
@@ -51,42 +48,18 @@ class PostFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.publicationObservable.subscribe { post ->
-            setTitle(post.title)
-            val html = post.textHtml ?: return@subscribe
+        viewModel.publicationObservable.subscribe { html ->
             setPublicationHtmlText(html)
-            showPublication()
         }.let(disposables::add)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setPublicationHtmlText(html: String) {
-        // image should fits screen width
-        publicationPrettify.setImageDisplay("inline")
-        publicationPrettify.setImageHeight("auto")
-        publicationPrettify.setImageMaxWidth("100%")
-
-        publicationPrettify.setTextJustify("justify")
-
-        val publicationBody = publicationPrettify.prettify(html)
-
         val webview = requireView().findViewById<WebView>(R.id.post_fragment_webview)
         webview.webViewClient = webViewClient
         webview.settings.javaScriptEnabled = true
         webview.isHorizontalScrollBarEnabled = false
-        webview.loadData(publicationBody, "text/html", "UFT-8")
-    }
-
-    private fun showPublication() {
-        requireView().findViewById<WebView>(R.id.post_fragment_webview).visibility = View.VISIBLE
-    }
-
-    private fun hidePublication() {
-        requireView().findViewById<WebView>(R.id.post_fragment_webview).visibility = View.VISIBLE
-    }
-
-    private fun setTitle(title: String) {
-        requireView().findViewById<TextView>(R.id.post_fragment_title).text = title
+        webview.loadData(html, "text/html", "UFT-8")
     }
 
     override fun onDestroy() {

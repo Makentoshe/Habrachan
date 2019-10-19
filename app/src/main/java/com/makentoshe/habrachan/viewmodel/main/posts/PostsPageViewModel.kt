@@ -40,7 +40,7 @@ class PostsPageViewModel(
     }
 
     private fun requestPostsResponse(request: GetPostsRequest) {
-        manager.getPosts(request).subscribe({
+        manager.getPostsWithBody(request).subscribe({
             postsSubject.onNext(it.data)
             it.data.forEachIndexed { index, data ->
                 postsCache.set(position * 20 + index, data)

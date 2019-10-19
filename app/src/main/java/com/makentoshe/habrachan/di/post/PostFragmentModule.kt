@@ -11,7 +11,6 @@ import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.model.post.PublicationRepository
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
-import com.makentoshe.habrachan.model.post.PublicationTextPrettify
 import com.makentoshe.habrachan.view.post.PostFragment
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import okhttp3.OkHttpClient
@@ -41,8 +40,6 @@ class PostFragmentModule private constructor() : Module() {
 
         val webViewClient = HabrachanWebViewClient()
         bind<HabrachanWebViewClient>().toInstance(webViewClient)
-
-        bind<PublicationTextPrettify>().toClass<PublicationTextPrettify>().singleton()
     }
 
     private fun bindViewModel(fragment: PostFragment, position: Int, page: Int) {

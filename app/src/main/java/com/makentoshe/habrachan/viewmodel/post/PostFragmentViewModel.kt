@@ -13,22 +13,29 @@ class PostFragmentViewModel(position: Int, page: Int, publicationRepository: Pub
 
     private val disposables = CompositeDisposable()
 
-    private val publicationSubject = BehaviorSubject.create<Data>()
+    private val publicationSubject = BehaviorSubject.create<String>()
 
-    val publicationObservable: Observable<Data>
+    val publicationObservable: Observable<String>
         get() = publicationSubject.observeOn(AndroidSchedulers.mainThread())
 
     init {
         publicationRepository.get(page, position).subscribe({ post ->
-            val html = post.textHtml
-            if (html != null) {
-                publicationSubject.onNext(post)
-            } else {
-                // error
-            }
+            publicationSubject.onNext(processHtml(post))
         }, {
 
         }).let(disposables::add)
+    }
+
+    private fun processHtml(post: Data): String {
+        val html = post.textHtml
+        if (html != null) {
+            val styleHtml = StyleHtmlBuilder().build()
+            val titleHtml = TitleHtmlBuilder(post.title).build()
+            return StringBuilder().append(styleHtml).append(titleHtml).append(html).toString()
+        } else {
+            //err
+            return ""
+        }
     }
 
     override fun onCleared() {
@@ -36,13 +43,54 @@ class PostFragmentViewModel(position: Int, page: Int, publicationRepository: Pub
     }
 
     class Factory(
-        private val page: Int,
-        private val position: Int,
-        private val publicationRepository: PublicationRepository
+        private val page: Int, private val position: Int, private val publicationRepository: PublicationRepository
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return PostFragmentViewModel(page, position, publicationRepository) as T
         }
+    }
+}
+
+class TitleHtmlBuilder(private val title: String) {
+    fun build(): CharSequence {
+        return StringBuilder().append("<h2>").append(title).append("</h2>")
+    }
+}
+
+class StyleHtmlBuilder {
+
+    fun build(): CharSequence {
+        val builder = StringBuilder("<style>")
+        builder.append(buildImgStyle())
+        builder.append(buildTextStyle())
+        builder.append(buildTitleStyle())
+        builder.append("</style>")
+        return builder
+    }
+
+    private fun buildImgStyle(): CharSequence {
+        val builder = StringBuilder("img{")
+        builder.append("display:inline;")
+        builder.append("height:auto;")
+        builder.append("max-width:100%;")
+        builder.append("}")
+        return builder
+    }
+
+    private fun buildTextStyle(): CharSequence {
+        val builder = StringBuilder("html, body{")
+        builder.append("text-align:justify;")
+        builder.append("text-justify:auto;")
+        builder.append("font-family: 'Roboto' sans-serif;")
+        builder.append("}")
+        return builder
+    }
+
+    private fun buildTitleStyle(): CharSequence {
+        val builder = StringBuilder("h2{")
+        builder.append("text-align:center;")
+        builder.append("}")
+        return builder
     }
 }
 
