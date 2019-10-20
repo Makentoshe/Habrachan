@@ -31,7 +31,7 @@ import toothpick.ktp.delegate.inject
 
 class PostsFragment : Fragment() {
 
-    private val broadcastReceiver by inject<PostsBroadcastReceiver>()
+    private val broadcastReceiver = PostsBroadcastReceiver()
 
     private val uiFactory by inject<PostsFragmentUi>()
 
@@ -59,13 +59,18 @@ class PostsFragment : Fragment() {
         view.findViewById<View>(R.id.main_posts_toolbar_magnify).setOnClickListener {
             onMagnifyClicked()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
         broadcastReceiver.register(requireActivity()).addOnReceiveListener {
+            val adapter = PostsFragmentViewPagerAdapter(childFragmentManager)
             initViewPager(adapter, pageArg)
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStop() {
+        super.onStop()
         broadcastReceiver.unregister(requireActivity())
     }
 

@@ -8,8 +8,11 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
+import ru.terrakok.cicerone.Router
 
-class PostFragmentViewModel(position: Int, page: Int, publicationRepository: PublicationRepository) : ViewModel() {
+class PostFragmentViewModel(
+    position: Int, page: Int, publicationRepository: PublicationRepository, private val router: Router
+) : ViewModel(), PostFragmentNavigationViewModel {
 
     private val disposables = CompositeDisposable()
 
@@ -38,15 +41,22 @@ class PostFragmentViewModel(position: Int, page: Int, publicationRepository: Pub
         }
     }
 
+    override fun backToMainPostsScreen() {
+        router.exit()
+    }
+
     override fun onCleared() {
         disposables.clear()
     }
 
     class Factory(
-        private val page: Int, private val position: Int, private val publicationRepository: PublicationRepository
+        private val page: Int,
+        private val position: Int,
+        private val publicationRepository: PublicationRepository,
+        private val router: Router
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostFragmentViewModel(page, position, publicationRepository) as T
+            return PostFragmentViewModel(page, position, publicationRepository, router) as T
         }
     }
 }

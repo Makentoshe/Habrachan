@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.di.main.posts
 
 import com.makentoshe.habrachan.common.database.RequestStorage
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
+import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.common.CacheScope
 import com.makentoshe.habrachan.di.common.NetworkScope
 import com.makentoshe.habrachan.model.main.posts.PostsBroadcastReceiver
@@ -16,9 +17,6 @@ class PostsFragmentModule : Module() {
 
     init {
         bind<PostsFragmentUi>().toInstance(PostsFragmentUi())
-
-        val broadcastReceiver = PostsBroadcastReceiver()
-        bind<PostsBroadcastReceiver>().toInstance(broadcastReceiver)
     }
 
     private val requestStorage by inject<RequestStorage>()
@@ -36,7 +34,7 @@ class PostsFragmentModule : Module() {
         /** Concrete builder for a concrete fragment returns a concrete module */
         fun build(fragment: PostsFragment): PostsFragmentModule {
             val module = PostsFragmentModule()
-            val scopes = Toothpick.openScopes(CacheScope::class.java, NetworkScope::class.java)
+            val scopes = Toothpick.openScopes(ApplicationScope::class.java)
             scopes.inject(module)
             scopes.release()
             module.binding()

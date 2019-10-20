@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
@@ -18,7 +17,6 @@ import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -30,8 +28,6 @@ class PostFragment : Fragment() {
     private val viewModel by inject<PostFragmentViewModel>()
 
     private val webViewClient by inject<HabrachanWebViewClient>()
-
-    private val router by inject<Router>()
 
     private var position: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("position", value)
@@ -53,6 +49,7 @@ class PostFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
         initWebView()
 
         viewModel.publicationObservable.subscribe { html ->
@@ -62,6 +59,16 @@ class PostFragment : Fragment() {
         webViewClient.onPublicationReadyToShow {
             view.findViewById<View>(R.id.post_fragment_body).visibility = View.VISIBLE
         }
+
+        requireView().findViewById<Toolbar>(R.id.post_fragment_toolbar).setNavigationOnClickListener {
+            viewModel.backToMainPostsScreen()
+        }
+    }
+
+    private fun initToolbar() {
+        val view = requireView().findViewById<Toolbar>(R.id.post_fragment_toolbar)
+        val drawable = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
+        view.navigationIcon = drawable
     }
 
     @SuppressLint("SetJavaScriptEnabled")
