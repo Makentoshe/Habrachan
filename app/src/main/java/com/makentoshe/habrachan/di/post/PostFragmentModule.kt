@@ -5,6 +5,8 @@ import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
+import com.makentoshe.habrachan.common.repository.RawResourceRepository
+import com.makentoshe.habrachan.common.repository.Repository
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.PublicationRepository
@@ -30,7 +32,7 @@ class PostFragmentModule private constructor() : Module() {
 
     private val postsManager by inject<HabrPostsManager>()
 
-    private val client by inject<OkHttpClient>()
+    private val rawResourceRepository by inject<RawResourceRepository>()
 
     init {
         val postFragmentUi = PostFragmentUi()
@@ -42,7 +44,9 @@ class PostFragmentModule private constructor() : Module() {
 
     private fun bindViewModel(fragment: PostFragment, position: Int, page: Int) {
         val publicationRepository = PublicationRepository(postsCache, requestFactory, postsManager)
-        val factory = PostFragmentViewModel.Factory(position, page, publicationRepository, router)
+        val factory = PostFragmentViewModel.Factory(
+            position, page, publicationRepository, router, rawResourceRepository
+        )
         val viewModel = ViewModelProviders.of(fragment, factory)[PostFragmentViewModel::class.java]
 
         bind<PostFragmentViewModel>().toInstance(viewModel)

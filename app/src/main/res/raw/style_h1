@@ -1,0 +1,7 @@
+<style>
+    h1 {
+        text-align: center;
+        font-size: 150%;
+        padding: 5% 10%;
+    }
+</style>
