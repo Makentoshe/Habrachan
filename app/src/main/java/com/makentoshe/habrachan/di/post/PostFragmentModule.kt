@@ -2,11 +2,9 @@ package com.makentoshe.habrachan.di.post
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.cache.Cache
-import com.makentoshe.habrachan.common.cache.ImagesCache
 import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
-import com.makentoshe.habrachan.common.repository.InputStreamRepository
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.PublicationRepository
@@ -50,17 +48,12 @@ class PostFragmentModule private constructor() : Module() {
         bind<PostFragmentViewModel>().toInstance(viewModel)
     }
 
-    private fun bind() {
-        bind<InputStreamRepository>().toInstance(InputStreamRepository(client))
-    }
-
     class Builder(private val position: Int, private val page: Int) {
 
         fun build(fragment: PostFragment): PostFragmentModule {
             val module = PostFragmentModule()
             Toothpick.openScope(ApplicationScope::class.java).inject(module)
             module.bindViewModel(fragment, position, page)
-            module.bind()
             return module
         }
     }

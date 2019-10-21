@@ -4,13 +4,17 @@ import android.app.Application
 import com.makentoshe.habrachan.di.ApplicationModule
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.common.*
+import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Cicerone
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
+import toothpick.ktp.delegate.inject
 
 class Habrachan : Application() {
 
     private val cicerone = Cicerone.create()
+
+    private val client by inject<OkHttpClient>()
 
     override fun onCreate() {
         super.onCreate()
@@ -18,13 +22,13 @@ class Habrachan : Application() {
         injectCacheDependencies()
         injectNetworkDependencies()
         injectNavigationDependencies()
-        val scopes = Toothpick.openScopes(NavigationScope::class.java, ApplicationScope::class.java)
+        injectRepositoryDependencies()
+        val scopes = Toothpick.openScopes(RepositoryScope::class.java, ApplicationScope::class.java)
         scopes.installModules(ApplicationModule(applicationContext))
     }
 
     private fun getToothpickConfiguration(): Configuration {
         return if (BuildConfig.DEBUG) {
-            // allowing multiple root scopes
             Configuration.forDevelopment().preventMultipleRootScopes()
         } else {
             Configuration.forProduction()
@@ -38,7 +42,9 @@ class Habrachan : Application() {
 
     private fun injectNetworkDependencies() {
         val module = NetworkModule(applicationContext)
-        Toothpick.openScopes(CacheScope::class.java, NetworkScope::class.java).installModules(module)
+        val scope = Toothpick.openScopes(CacheScope::class.java, NetworkScope::class.java)
+        scope.installModules(module)
+        scope.inject(this)
     }
 
     private fun injectNavigationDependencies() {
@@ -46,5 +52,10 @@ class Habrachan : Application() {
         Toothpick.openScopes(NetworkScope::class.java, NavigationScope::class.java).installModules(module)
     }
 
+    private fun injectRepositoryDependencies() {
+        val module = RepositoryModule(applicationContext, client)
+        val scope = Toothpick.openScopes(NavigationScope::class.java, RepositoryScope::class.java)
+        scope.installModules(module)
+    }
 
 }
