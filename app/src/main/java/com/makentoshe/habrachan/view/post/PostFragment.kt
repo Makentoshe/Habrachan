@@ -57,7 +57,7 @@ class PostFragment : Fragment() {
         }.let(disposables::add)
 
         webViewClient.onPublicationReadyToShow {
-            view.findViewById<View>(R.id.post_fragment_body).visibility = View.VISIBLE
+            view.findViewById<View>(R.id.post_fragment_webview).visibility = View.VISIBLE
         }
 
         requireView().findViewById<Toolbar>(R.id.post_fragment_toolbar).setNavigationOnClickListener {
