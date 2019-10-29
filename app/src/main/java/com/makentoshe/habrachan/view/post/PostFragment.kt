@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
@@ -71,12 +72,18 @@ class PostFragment : Fragment() {
         view.navigationIcon = drawable
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
         val webview = requireView().findViewById<WebView>(R.id.post_fragment_webview)
         webview.webViewClient = webViewClient
-        webview.settings.javaScriptEnabled = true
         webview.isHorizontalScrollBarEnabled = false
+        initWebViewJavascript(webview)
+    }
+    @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
+    private fun initWebViewJavascript(webview: WebView) {
+        webview.settings.javaScriptEnabled = true
+        val javaScriptInterface = JavaScriptInterface(requireContext())
+        webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
+
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -109,3 +116,11 @@ class PostFragment : Fragment() {
     }
 }
 
+class JavaScriptInterface(private var mContext: Context) {
+
+    @android.webkit.JavascriptInterface
+    fun showToast() {
+        Toast.makeText(mContext, "Toast", Toast.LENGTH_LONG).show()
+        println("SAS ASA ANUS PSA")
+    }
+}

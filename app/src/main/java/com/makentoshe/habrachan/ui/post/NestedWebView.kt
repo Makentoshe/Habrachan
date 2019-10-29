@@ -10,10 +10,11 @@ import androidx.core.view.NestedScrollingChild
 import androidx.core.view.NestedScrollingChildHelper
 import androidx.core.view.ViewCompat
 
-class NestedWebView(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = android.R.attr.webViewStyle
+class NestedWebView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = android.R.attr.webViewStyle
 ) : WebView(context, attrs, defStyleAttr), NestedScrollingChild {
-
     private var mLastY: Int = 0
     private val mScrollOffset = IntArray(2)
     private val mScrollConsumed = IntArray(2)
@@ -29,12 +30,13 @@ class NestedWebView(
         var returnValue = false
 
         val event = MotionEvent.obtain(ev)
-        if (event.action == MotionEvent.ACTION_DOWN) {
+        val action = MotionEventCompat.getActionMasked(event)
+        if (action == MotionEvent.ACTION_DOWN) {
             mNestedOffsetY = 0
         }
         val eventY = event.y.toInt()
         event.offsetLocation(0f, mNestedOffsetY.toFloat())
-        when (event.action) {
+        when (action) {
             MotionEvent.ACTION_MOVE -> {
                 var deltaY = mLastY - eventY
                 // NestedPreScroll
