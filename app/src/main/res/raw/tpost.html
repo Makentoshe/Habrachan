@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="post.css">
+        <script type="text/javascript" src="postjs.js"></script>
         <meta charset="UTF-8">
         <title>Title</title>
     </head>
@@ -562,9 +563,9 @@
             </code>
         </pre>
         <br/>
-        <div class="spoiler">
+        <div class="spoiler" onclick="showSpoilerInWindow(this)">
             <b class="spoiler_title">Полный код тут</b>
-            <div class="spoiler_text">
+            <div class="spoiler_text" style="display: none;">
                 <pre>
                     <code class="kotlin">class CoroutineOnPageChangeListener(
                         private val coroutineContext: CoroutineContext = Dispatchers.Main

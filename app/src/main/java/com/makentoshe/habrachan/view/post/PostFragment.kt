@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
@@ -15,6 +14,7 @@ import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.post.PostFragmentModule
 import com.makentoshe.habrachan.di.post.PostFragmentScope
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
+import com.makentoshe.habrachan.model.post.JavaScriptInterface
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -113,14 +113,5 @@ class PostFragment : Fragment() {
         scopes.installModules(module)
         scopes.inject(this)
         Toothpick.closeScope(scopes)
-    }
-}
-
-class JavaScriptInterface(private var mContext: Context) {
-
-    @android.webkit.JavascriptInterface
-    fun showToast() {
-        Toast.makeText(mContext, "Toast", Toast.LENGTH_LONG).show()
-        println("SAS ASA ANUS PSA")
     }
 }
