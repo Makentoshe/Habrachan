@@ -23,12 +23,10 @@ import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class PostFragment : Fragment() {
-
     private val postFragmentUi by inject<PostFragmentUi>()
-
     private val viewModel by inject<PostFragmentViewModel>()
-
     private val webViewClient by inject<HabrachanWebViewClient>()
+    private val javaScriptInterface by inject<JavaScriptInterface>()
 
     private var position: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("position", value)
@@ -81,9 +79,7 @@ class PostFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     private fun initWebViewJavascript(webview: WebView) {
         webview.settings.javaScriptEnabled = true
-        val javaScriptInterface = JavaScriptInterface(requireContext())
         webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
-
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -106,12 +102,8 @@ class PostFragment : Fragment() {
 
     private fun injectDependencies() {
         val module = PostFragmentModule.Builder(position, page).build(this)
-        val scopes = Toothpick.openScopes(
-            ApplicationScope::class.java, PostFragmentScope::class.java
-        )
-        scopes.closeOnDestroy(this)
-        scopes.installModules(module)
-        scopes.inject(this)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostFragmentScope::class.java)
+        scopes.closeOnDestroy(this).installModules(module).inject(this)
         Toothpick.closeScope(scopes)
     }
 }

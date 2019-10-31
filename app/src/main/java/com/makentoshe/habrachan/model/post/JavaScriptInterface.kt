@@ -1,18 +1,16 @@
 package com.makentoshe.habrachan.model.post
 
-import android.content.Context
-import android.widget.Toast
+import ru.terrakok.cicerone.Router
 
-class JavaScriptInterface(private var mContext: Context) {
+class JavaScriptInterface(private val router: Router) {
 
     @android.webkit.JavascriptInterface
     fun showToast() {
-        Toast.makeText(mContext, "Toast", Toast.LENGTH_LONG).show()
         println("SAS ASA ANUS PSA")
     }
 
     @android.webkit.JavascriptInterface
     fun showSpoilerInWindow(codeHtml: String) {
-        Toast.makeText(mContext, codeHtml, Toast.LENGTH_LONG).show()
+        println(codeHtml)
     }
 }

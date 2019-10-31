@@ -1,19 +1,11 @@
 package com.makentoshe.habrachan.di.post
 
-import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.cache.Cache
-import com.makentoshe.habrachan.common.entity.Data
-import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
-import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
-import com.makentoshe.habrachan.common.repository.RawResourceRepository
-import com.makentoshe.habrachan.common.repository.Repository
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
-import com.makentoshe.habrachan.model.post.PublicationRepository
+import com.makentoshe.habrachan.model.post.JavaScriptInterface
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.view.post.PostFragment
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
-import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -22,17 +14,9 @@ import toothpick.ktp.delegate.inject
 
 annotation class PostFragmentScope
 
-class PostFragmentModule private constructor() : Module() {
-
-    private val router by inject<Router>()
-
-    private val postsCache by inject<Cache<Int, Data>>()
-
-    private val requestFactory by inject<GetPostsRequestFactory>()
-
-    private val postsManager by inject<HabrPostsManager>()
-
-    private val rawResourceRepository by inject<RawResourceRepository>()
+class PostFragmentModule private constructor(
+    position: Int, page: Int, router: Router, fragment: PostFragment
+) : Module() {
 
     init {
         val postFragmentUi = PostFragmentUi()
@@ -40,25 +24,22 @@ class PostFragmentModule private constructor() : Module() {
 
         val webViewClient = HabrachanWebViewClient()
         bind<HabrachanWebViewClient>().toInstance(webViewClient)
-    }
 
-    private fun bindViewModel(fragment: PostFragment, position: Int, page: Int) {
-        val publicationRepository = PublicationRepository(postsCache, requestFactory, postsManager)
-        val factory = PostFragmentViewModel.Factory(
-            position, page, publicationRepository, router, rawResourceRepository
-        )
-        val viewModel = ViewModelProviders.of(fragment, factory)[PostFragmentViewModel::class.java]
+        val javascriptInterface = JavaScriptInterface(router)
+        bind<JavaScriptInterface>().toInstance(javascriptInterface)
 
-        bind<PostFragmentViewModel>().toInstance(viewModel)
+        val provider = PostFragmentViewModelProvider(fragment, position, page).injects()
+        bind<PostFragmentViewModel>().toProviderInstance(provider)
     }
 
     class Builder(private val position: Int, private val page: Int) {
 
+        private val router by inject<Router>()
+
         fun build(fragment: PostFragment): PostFragmentModule {
-            val module = PostFragmentModule()
-            Toothpick.openScope(ApplicationScope::class.java).inject(module)
-            module.bindViewModel(fragment, position, page)
-            return module
+            val scope = Toothpick.openScope(ApplicationScope::class.java)
+            scope.inject(this)
+            return PostFragmentModule(position, page, router, fragment)
         }
     }
 }
