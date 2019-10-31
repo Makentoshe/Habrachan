@@ -21,7 +21,8 @@ import javax.inject.Provider
 class PostFragmentViewModelProvider(
     private val fragment: Fragment,
     private val position: Int,
-    private val page: Int
+    private val page: Int,
+    private val postId: Int
 ) : Provider<PostFragmentViewModel> {
 
     private val postsCache by inject<Cache<Int, Data>>()
@@ -37,7 +38,7 @@ class PostFragmentViewModelProvider(
 
     private fun createViewModelFactory(): ViewModelProvider.NewInstanceFactory {
         val publicationRepository = PublicationRepository(postsCache, requestFactory, postsManager)
-        return PostFragmentViewModel.Factory(position, page, publicationRepository, router, rawResourceRepository)
+        return PostFragmentViewModel.Factory(position, page, publicationRepository, router, rawResourceRepository, postId)
     }
 
     fun injects() = this.apply {

@@ -6,5 +6,5 @@ import com.makentoshe.habrachan.view.post.PostFragment
 
 class PostScreen(private val page: Int,private val position: Int) : Screen(){
     override val fragment: Fragment
-        get() = PostFragment.build(page, position)
+        get() = PostFragment.Factory().build(page, position)
 }

@@ -18,7 +18,8 @@ class PostFragmentViewModel(
     position: Int, page: Int,
     publicationRepository: Repository<Int, Single<Data>>,
     private val router: Router,
-    private val rawResourceRepository: Repository<Int, InputStream>
+    private val rawResourceRepository: Repository<Int, InputStream>,
+    private val postId: Int
 ) : ViewModel(), PostFragmentNavigationViewModel {
 
     private val disposables = CompositeDisposable()
@@ -50,10 +51,11 @@ class PostFragmentViewModel(
         private val position: Int,
         private val publicationRepository: Repository<Int, Single<Data>>,
         private val router: Router,
-        private val rawResourceRepository: Repository<Int, InputStream>
+        private val rawResourceRepository: Repository<Int, InputStream>,
+        private val postId: Int
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostFragmentViewModel(page, position, publicationRepository, router, rawResourceRepository) as T
+            return PostFragmentViewModel(page, position, publicationRepository, router, rawResourceRepository, postId) as T
         }
     }
 }

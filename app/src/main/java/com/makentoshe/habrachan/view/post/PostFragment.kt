@@ -28,6 +28,10 @@ class PostFragment : Fragment() {
     private val webViewClient by inject<HabrachanWebViewClient>()
     private val javaScriptInterface by inject<JavaScriptInterface>()
 
+    private var postId: Int
+        set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("id", value)
+        get() = arguments?.getInt("id") ?: -1
+
     private var position: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("position", value)
         get() = arguments!!.getInt("position")
@@ -93,17 +97,22 @@ class PostFragment : Fragment() {
         disposables.clear()
     }
 
-    companion object {
+    private fun injectDependencies() {
+        val module = PostFragmentModule.Builder(position, page, postId).build(this)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostFragmentScope::class.java)
+        scopes.closeOnDestroy(this).installModules(module).inject(this)
+        Toothpick.closeScope(scopes)
+    }
+
+    class Factory {
+
         fun build(page: Int, position: Int) = PostFragment().apply {
             this.page = page
             this.position = position
         }
-    }
 
-    private fun injectDependencies() {
-        val module = PostFragmentModule.Builder(position, page).build(this)
-        val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostFragmentScope::class.java)
-        scopes.closeOnDestroy(this).installModules(module).inject(this)
-        Toothpick.closeScope(scopes)
+        fun build(postId: Int) = PostFragment().apply {
+            this.postId = postId
+        }
     }
 }
