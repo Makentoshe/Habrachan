@@ -2,7 +2,8 @@ function displaymessage() {
     JSInterface.showToast();
 }
 
-function showSpoilerInPost(spoiler) {
+function onSpoilerClickedListener(spoilerTitle) {
+    var spoiler = spoilerTitle.parentNode;
     var spoilerBody = spoiler.querySelector('.spoiler_text');
 
     if (spoilerBody.style.display === "none") {
@@ -10,11 +11,4 @@ function showSpoilerInPost(spoiler) {
     } else {
         spoilerBody.style.display = "none"
     }
-}
-
-function showSpoilerInWindow(spoiler) {
-    var parent = spoiler.parentNode;
-    var spoilerBody = parent.querySelector('.spoiler_text');
-    console.log();
-    JSInterface.showSpoilerInWindow(spoilerBody.innerHTML);
 }

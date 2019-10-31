@@ -46,7 +46,7 @@ class BaseHtmlBuilder(
             spoilerTextNode.attr("style", "display: none;")
 
             val spoilerTitleNode = spoiler.select(".spoiler_title")
-            spoilerTitleNode.attr("onclick", "showSpoilerInWindow(this)")
+            spoilerTitleNode.attr("onclick", "onSpoilerClickedListener(this)")
         }
     }
 }

@@ -10,7 +10,5 @@ class JavaScriptInterface(private val router: Router) {
     }
 
     @android.webkit.JavascriptInterface
-    fun showSpoilerInWindow(codeHtml: String) {
-        println(codeHtml)
-    }
+    fun showSpoilerInWindow(codeHtml: String) = Unit
 }
