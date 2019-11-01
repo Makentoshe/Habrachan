@@ -7,7 +7,5 @@
     android:paddingStart="8dp"
     android:paddingEnd="8dp">
 
-    <include layout="@layout/main_posts_fragment_content_search_query" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 

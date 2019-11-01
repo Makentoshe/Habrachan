@@ -2,8 +2,7 @@ package com.makentoshe.habrachan.di.common
 
 import android.content.Context
 import com.makentoshe.habrachan.BuildConfig
-import com.makentoshe.habrachan.common.database.RequestStorage
-import com.makentoshe.habrachan.common.database.SharedRequestStorage
+import com.makentoshe.habrachan.common.network.manager.HabrPostManager
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import okhttp3.OkHttpClient
@@ -15,24 +14,23 @@ annotation class NetworkScope
 
 class NetworkModule(context: Context) : Module() {
 
-    private val requestStorage = SharedRequestStorage.Builder().build(context)
-
     private val factory = GetPostsRequestFactory(
         client = "85cab69095196f3.89453480",
         api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
-        token = null,
-        requestStorage = requestStorage
+        token = null
     )
 
     private val client = OkHttpClient.Builder().addLoggingInterceptor().build()
 
-    private val manager = HabrPostsManager.Builder(client).build()
+    private val manager = HabrPostsManager.Builder(client).build("text_html")
+
+    private val postManager = HabrPostManager.Factory(client).build()
 
     init {
-        bind<RequestStorage>().toInstance(requestStorage)
         bind<GetPostsRequestFactory>().toInstance(factory)
         bind<HabrPostsManager>().toInstance(manager)
         bind<OkHttpClient>().toInstance(client)
+        bind<HabrPostManager>().toInstance(postManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {

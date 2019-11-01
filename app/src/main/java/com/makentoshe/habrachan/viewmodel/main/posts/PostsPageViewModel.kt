@@ -35,12 +35,12 @@ class PostsPageViewModel(
         get() = errorSubject
 
     init {
-        val request = requestFactory.stored(position + 1)
+        val request = requestFactory.interesting(position + 1)
         requestPostsResponse(request)
     }
 
     private fun requestPostsResponse(request: GetPostsRequest) {
-        manager.getPostsWithBody(request).subscribe({
+        manager.getPosts(request).subscribe({
             postsSubject.onNext(it.data)
             it.data.forEachIndexed { index, data ->
                 postsCache.set(position * 20 + index, data)

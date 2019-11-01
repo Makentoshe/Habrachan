@@ -5,12 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.cache.Cache
 import com.makentoshe.habrachan.common.entity.Data
-import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
+import com.makentoshe.habrachan.common.network.manager.HabrPostManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
-import com.makentoshe.habrachan.common.repository.RxRepositoryDecorator
 import com.makentoshe.habrachan.di.ApplicationScope
-import com.makentoshe.habrachan.common.repository.CacheRepositoryDecorator
 import com.makentoshe.habrachan.model.post.PublicationRepository
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import ru.terrakok.cicerone.Router
@@ -26,8 +24,6 @@ class PostFragmentViewModelProvider(
 ) : Provider<PostFragmentViewModel> {
 
     private val postsCache by inject<Cache<Int, Data>>()
-    private val requestFactory by inject<GetPostsRequestFactory>()
-    private val postsManager by inject<HabrPostsManager>()
     private val rawResourceRepository by inject<RawResourceRepository>()
     private val router by inject<Router>()
 
@@ -37,7 +33,7 @@ class PostFragmentViewModelProvider(
     }
 
     private fun createViewModelFactory(): ViewModelProvider.NewInstanceFactory {
-        val publicationRepository = PublicationRepository(postsCache, requestFactory, postsManager)
+        val publicationRepository = PublicationRepository(postsCache)
         return PostFragmentViewModel.Factory(position, page, publicationRepository, router, rawResourceRepository, postId)
     }
 
