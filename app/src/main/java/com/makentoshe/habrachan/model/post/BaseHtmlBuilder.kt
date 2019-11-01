@@ -18,7 +18,7 @@ class BaseHtmlBuilder(
     private val titleNode = createTitleNode()
 
     fun build(): String {
-        body.children().first().before(javascriptNode).before(styleNode).before(titleNode)
+        body.prependChild(titleNode).prependChild(styleNode).prependChild(javascriptNode)
         setSpoilerBehaviour()
         return body.toString()
     }
