@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.common.entity
 
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class Flow(
@@ -16,4 +17,15 @@ data class Flow(
     val path: String,
     @SerializedName("url")
     val url: String
-)
+) {
+
+    fun toJson(): String {
+        return Gson().toJson(this)
+    }
+
+    companion object {
+        fun fromJson(json: String): Flow {
+            return Gson().fromJson(json, Flow::class.java)
+        }
+    }
+}

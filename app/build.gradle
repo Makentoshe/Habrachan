@@ -93,6 +93,10 @@ dependencies {
     def jsoup = "1.11.3"
     implementation "org.jsoup:jsoup:$jsoup"
 
+    def room = "1.1.1"
+    implementation "android.arch.persistence.room:runtime:$room"
+    kapt "android.arch.persistence.room:compiler:$room"
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

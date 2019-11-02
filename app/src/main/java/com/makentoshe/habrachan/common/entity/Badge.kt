@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.common.entity
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class Badge(
@@ -14,7 +15,18 @@ data class Badge(
     @SerializedName("is_removable")
     val isRemovable: Boolean,
     @SerializedName("title")
-    val title: String,
-    @SerializedName("url")
-    val url: Any
-)
+    val title: String
+//    @SerializedName("url")
+//    val url: Any
+) {
+
+    fun toJson(): String {
+        return Gson().toJson(this)
+    }
+
+    companion object {
+        fun fromJson(json: String): Badge {
+            return Gson().fromJson(json, Badge::class.java)
+        }
+    }
+}

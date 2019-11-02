@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.common.entity
 
-
+import androidx.room.Embedded
 import com.google.gson.annotations.SerializedName
 
 data class User(
@@ -8,16 +8,18 @@ data class User(
     val avatar: String,
     @SerializedName("badges")
     val badges: List<Badge>,
-    @SerializedName("common_tags")
-    val commonTags: List<Any>,
-    @SerializedName("contacts")
-    val contacts: List<Any>,
+//    @SerializedName("common_tags")
+//    val commonTags: List<Any>,
+//    @SerializedName("contacts")
+//    val contacts: List<Any>,
+    @Embedded(prefix = "counters_")
     @SerializedName("counters")
     val counters: Counters,
     @SerializedName("fullname")
-    val fullname: String,
+    val fullname: String? = null,
+    @Embedded(prefix = "geo_")
     @SerializedName("geo")
-    val geo: Geo,
+    val geo: Geo? = null,
     @SerializedName("id")
     val id: String,
     @SerializedName("is_can_vote")
@@ -41,11 +43,11 @@ data class User(
     @SerializedName("sex")
     val sex: String,
     @SerializedName("specializm")
-    val specializm: String,
+    val specializm: String? = null,
     @SerializedName("time_registered")
-    val timeRegistered: String,
-    @SerializedName("vote")
-    val vote: Int = 0,
-    @SerializedName("payment_methods")
-    val paymentMethods: List<PaymentMethod>?
+    val timeRegistered: String
+//    @SerializedName("vote")
+//    val vote: Int = 0
+//    @SerializedName("payment_methods")
+//    val paymentMethods: List<PaymentMethod>?
 )

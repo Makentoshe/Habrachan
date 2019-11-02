@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class Geo(
     @SerializedName("city")
-    val city: String,
+    val city: String? = null,
     @SerializedName("country")
-    val country: String,
+    val country: String? = null,
     @SerializedName("region")
-    val region: String
+    val region: String? = null
 )

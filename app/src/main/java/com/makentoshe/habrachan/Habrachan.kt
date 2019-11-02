@@ -36,7 +36,7 @@ class Habrachan : Application() {
     }
 
     private fun injectCacheDependencies() {
-        val module = CacheModule()
+        val module = CacheModule(applicationContext)
         Toothpick.openScope(CacheScope::class.java).installModules(module)
     }
 
