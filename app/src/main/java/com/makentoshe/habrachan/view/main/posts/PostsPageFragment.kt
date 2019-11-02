@@ -11,14 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.cache.Cache
+import com.makentoshe.habrachan.common.database.PostsDao
 import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.di.ApplicationScope
-import com.makentoshe.habrachan.di.common.CacheScope
-import com.makentoshe.habrachan.di.common.NavigationScope
-import com.makentoshe.habrachan.di.common.NetworkScope
 import com.makentoshe.habrachan.model.main.posts.PostsBroadcastReceiver
 import com.makentoshe.habrachan.model.main.posts.PostsPageRecyclerViewAdapter
 import com.makentoshe.habrachan.model.post.PostScreen
@@ -31,17 +28,13 @@ import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 
 class PostsPageFragment : Fragment() {
-
     private val router by inject<Router>()
-
     private val manager: HabrPostsManager by inject()
-
     private val requestFactory: GetPostsRequestFactory by inject()
-
-    private val postsCache: Cache<Int, Data> by inject()
+    private val postsDao by inject<PostsDao>()
 
     private val viewModel by lazy {
-        val factory = PostsPageViewModel.Factory(position, manager, requestFactory, postsCache)
+        val factory = PostsPageViewModel.Factory(position, manager, requestFactory, postsDao)
         ViewModelProviders.of(this, factory)[PostsPageViewModel::class.java]
     }
 
@@ -85,8 +78,8 @@ class PostsPageFragment : Fragment() {
         adapter.clickObservable.subscribe(::onElementClick).let(disposables::add)
     }
 
-    private fun onElementClick(position: Int) {
-        val screen = PostScreen(this.position, position)
+    private fun onElementClick(post: Data) {
+        val screen = PostScreen(post.id)
         router.navigateTo(screen)
     }
 
@@ -116,14 +109,14 @@ class PostsPageFragment : Fragment() {
         disposables.clear()
     }
 
-    companion object {
+    class Factory {
         fun build(position: Int) = PostsPageFragment().apply {
             this.position = position
         }
     }
 
     private fun injectDependencies() {
-        val scopes = Toothpick.openScope(ApplicationScope::class.java)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java)
         scopes.inject(this)
     }
 }

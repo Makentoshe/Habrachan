@@ -14,32 +14,27 @@ import toothpick.ktp.delegate.inject
 
 annotation class PostFragmentScope
 
-class PostFragmentModule private constructor(
-    position: Int, page: Int, router: Router, fragment: PostFragment, postId: Int
-) : Module() {
+class PostFragmentModule private constructor(router: Router, fragment: PostFragment, postId: Int) : Module() {
 
     init {
-        val postFragmentUi = PostFragmentUi()
-        bind<PostFragmentUi>().toInstance(postFragmentUi)
-
         val webViewClient = HabrachanWebViewClient()
         bind<HabrachanWebViewClient>().toInstance(webViewClient)
 
         val javascriptInterface = JavaScriptInterface(router)
         bind<JavaScriptInterface>().toInstance(javascriptInterface)
 
-        val provider = PostFragmentViewModelProvider(fragment, position, page, postId).injects()
+        val provider = PostFragmentViewModelProvider(fragment, postId).injects()
         bind<PostFragmentViewModel>().toProviderInstance(provider)
     }
 
-    class Builder(private val position: Int, private val page: Int, private val postId: Int) {
+    class Builder(private val postId: Int) {
 
         private val router by inject<Router>()
 
         fun build(fragment: PostFragment): PostFragmentModule {
             val scope = Toothpick.openScope(ApplicationScope::class.java)
             scope.inject(this)
-            return PostFragmentModule(position, page, router, fragment, postId)
+            return PostFragmentModule(router, fragment, postId)
         }
     }
 }

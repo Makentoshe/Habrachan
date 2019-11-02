@@ -23,7 +23,6 @@ import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class PostFragment : Fragment() {
-    private val postFragmentUi by inject<PostFragmentUi>()
     private val viewModel by inject<PostFragmentViewModel>()
     private val webViewClient by inject<HabrachanWebViewClient>()
     private val javaScriptInterface by inject<JavaScriptInterface>()
@@ -31,14 +30,6 @@ class PostFragment : Fragment() {
     private var postId: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("id", value)
         get() = arguments?.getInt("id") ?: -1
-
-    private var position: Int
-        set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("position", value)
-        get() = arguments!!.getInt("position")
-
-    private var page: Int
-        set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("page", value)
-        get() = arguments!!.getInt("page")
 
     private val disposables = CompositeDisposable()
 
@@ -48,7 +39,7 @@ class PostFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return postFragmentUi.createView(requireContext())
+        return PostFragmentUi().createView(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,18 +89,13 @@ class PostFragment : Fragment() {
     }
 
     private fun injectDependencies() {
-        val module = PostFragmentModule.Builder(position, page, postId).build(this)
+        val module = PostFragmentModule.Builder(postId).build(this)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostFragmentScope::class.java)
         scopes.closeOnDestroy(this).installModules(module).inject(this)
         Toothpick.closeScope(scopes)
     }
 
     class Factory {
-
-        fun build(page: Int, position: Int) = PostFragment().apply {
-            this.page = page
-            this.position = position
-        }
 
         fun build(postId: Int) = PostFragment().apply {
             this.postId = postId

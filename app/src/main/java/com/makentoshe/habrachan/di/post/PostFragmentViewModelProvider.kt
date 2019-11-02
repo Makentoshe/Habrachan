@@ -4,12 +4,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.cache.Cache
+import com.makentoshe.habrachan.common.database.PostsDao
 import com.makentoshe.habrachan.common.entity.Data
-import com.makentoshe.habrachan.common.network.manager.HabrPostManager
-import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
 import com.makentoshe.habrachan.di.ApplicationScope
-import com.makentoshe.habrachan.model.post.PublicationRepository
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
@@ -18,14 +16,12 @@ import javax.inject.Provider
 
 class PostFragmentViewModelProvider(
     private val fragment: Fragment,
-    private val position: Int,
-    private val page: Int,
     private val postId: Int
 ) : Provider<PostFragmentViewModel> {
 
-    private val postsCache by inject<Cache<Int, Data>>()
     private val rawResourceRepository by inject<RawResourceRepository>()
     private val router by inject<Router>()
+    private val postsDao by inject<PostsDao>()
 
     override fun get(): PostFragmentViewModel {
         val factory = createViewModelFactory()
@@ -33,8 +29,7 @@ class PostFragmentViewModelProvider(
     }
 
     private fun createViewModelFactory(): ViewModelProvider.NewInstanceFactory {
-        val publicationRepository = PublicationRepository(postsCache)
-        return PostFragmentViewModel.Factory(position, page, publicationRepository, router, rawResourceRepository, postId)
+        return PostFragmentViewModel.Factory(router, rawResourceRepository, postId, postsDao)
     }
 
     fun injects() = this.apply {

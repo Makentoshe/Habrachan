@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.fragment.app.FragmentActivity
 
+/** Broadcast receiver for posts refresh events */
 class PostsBroadcastReceiver : BroadcastReceiver() {
 
     private val listeners = ArrayList<() -> Unit>()

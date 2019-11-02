@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.viewmodel.main.posts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.cache.Cache
+import com.makentoshe.habrachan.common.database.PostsDao
 import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequest
@@ -15,7 +16,7 @@ class PostsPageViewModel(
     private val position: Int,
     private val manager: HabrPostsManager,
     requestFactory: GetPostsRequestFactory,
-    private val postsCache: Cache<Int, Data>
+    private val postsDao: PostsDao
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -41,14 +42,22 @@ class PostsPageViewModel(
 
     private fun requestPostsResponse(request: GetPostsRequest) {
         manager.getPosts(request).subscribe({
+            updateDatabase(it.data)
             postsSubject.onNext(it.data)
-            it.data.forEachIndexed { index, data ->
-                postsCache.set(position * 20 + index, data)
-            }
         }, {
-            val cachedSuccess = Array(20) { i -> postsCache.get((position + 1) + i) }.filterNotNull().toList()
+            val cachedSuccess = Array(20) { index ->
+                postsDao.getByIndex(position * 20 + index)
+            }.filterNotNull().toList()
             postsSubject.onNext(cachedSuccess)
         }).let(disposables::add)
+    }
+
+    private fun updateDatabase(posts: List<Data>) {
+        postsDao.clear()
+        posts.forEachIndexed { index, data ->
+            data.index = position * 20 + index
+            postsDao.insert(data)
+        }
     }
 
     override fun onCleared() {
@@ -59,10 +68,10 @@ class PostsPageViewModel(
         private val position: Int,
         private val manager: HabrPostsManager,
         private val factory: GetPostsRequestFactory,
-        private val postsCache: Cache<Int, Data>
+        private val postsDao: PostsDao
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostsPageViewModel(position, manager, factory, postsCache) as T
+            return PostsPageViewModel(position, manager, factory, postsDao) as T
         }
     }
 }

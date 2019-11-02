@@ -12,7 +12,7 @@ class PostsFragmentViewPagerAdapter(
 ) {
 
     override fun getItem(position: Int): Fragment {
-        return PostsPageFragment.build(position)
+        return PostsPageFragment.Factory().build(position)
     }
 
     override fun getCount() = Int.MAX_VALUE
