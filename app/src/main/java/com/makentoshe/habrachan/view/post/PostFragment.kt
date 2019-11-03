@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
@@ -48,6 +49,10 @@ class PostFragment : Fragment() {
 
         viewModel.publicationObservable.subscribe { html ->
             setPublicationHtmlText(html)
+        }.let(disposables::add)
+
+        viewModel.errorObservable.subscribe { throwable ->
+            Toast.makeText(requireContext(), throwable.toString(), Toast.LENGTH_LONG).show()
         }.let(disposables::add)
 
         webViewClient.onPublicationReadyToShow {

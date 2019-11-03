@@ -26,12 +26,19 @@ class PostFragmentViewModel(
     val publicationObservable: Observable<String>
         get() = publicationSubject.observeOn(AndroidSchedulers.mainThread())
 
+    private val errorSubject = BehaviorSubject.create<Throwable>()
+
+    val errorObservable: Observable<Throwable>
+        get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
+
     init {
         postRepository.get(postId)!!.subscribe({ post ->
             val html = BaseHtmlBuilder(post, repository).build()
             publicationSubject.onNext(html)
+            errorSubject.onComplete()
         }, {
-            it.printStackTrace()
+            errorSubject.onNext(it)
+            publicationSubject.onComplete()
         }).let(disposables::add)
     }
 
