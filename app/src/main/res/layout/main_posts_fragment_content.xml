@@ -10,11 +10,11 @@
     sothree:umanoShadowHeight="4dp"
     android:focusableInTouchMode="true">
 
-    <include layout="@layout/main_posts_fragment_content_search"/>
+    <include layout="@layout/main_posts_fragment_content_search" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/main_posts_viewpager"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:text="SAS ASA ANUS PSA"/>
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

@@ -46,8 +46,6 @@ class PostsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initPanel()
-        val adapter = PostsFragmentViewPagerAdapter(childFragmentManager)
-        initViewPager(adapter, pageArg)
         view.findViewById<View>(R.id.main_posts_toolbar_magnify).setOnClickListener {
             onMagnifyClicked()
         }
@@ -56,8 +54,6 @@ class PostsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         broadcastReceiver.register(requireActivity()).addOnReceiveListener {
-            val adapter = PostsFragmentViewPagerAdapter(childFragmentManager)
-            initViewPager(adapter, pageArg)
         }
     }
 
@@ -100,26 +96,7 @@ class PostsFragment : Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun initViewPager(adapter: PostsFragmentViewPagerAdapter, initialPage: Int) {
-        val viewpager = if (view == null) {
-            requireActivity().findViewById<ViewPager>(R.id.main_posts_viewpager)
-        } else {
-            requireView().findViewById<ViewPager>(R.id.main_posts_viewpager)
-        }
-        viewpager.adapter = adapter
-        viewpager.currentItem = initialPage
-        viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
-            override fun onPageScrollStateChanged(state: Int) = Unit
-            override fun onPageSelected(position: Int) = this@PostsFragment.onPageSelected(position)
-        })
-    }
-
-    private fun onPageSelected(position: Int) {
-        MainFlowBroadcastReceiver.sendBroadcast(requireContext(), position)
-    }
-
-    companion object {
+    class Factory {
         fun build(page: Int) = PostsFragment().apply {
             this.pageArg = page
         }
