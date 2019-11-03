@@ -23,7 +23,8 @@ class PostFragmentModule private constructor(router: Router, fragment: PostFragm
         val javascriptInterface = JavaScriptInterface(router)
         bind<JavaScriptInterface>().toInstance(javascriptInterface)
 
-        val provider = PostFragmentViewModelProvider(fragment, postId).injects()
+        val provider = PostFragmentViewModelProvider(fragment, postId)
+        Toothpick.openScope(ApplicationScope::class.java).inject(provider)
         bind<PostFragmentViewModel>().toProviderInstance(provider)
     }
 
@@ -32,8 +33,7 @@ class PostFragmentModule private constructor(router: Router, fragment: PostFragm
         private val router by inject<Router>()
 
         fun build(fragment: PostFragment): PostFragmentModule {
-            val scope = Toothpick.openScope(ApplicationScope::class.java)
-            scope.inject(this)
+            Toothpick.openScope(ApplicationScope::class.java).inject(this)
             return PostFragmentModule(router, fragment, postId)
         }
     }

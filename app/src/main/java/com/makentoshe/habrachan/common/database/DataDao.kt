@@ -23,6 +23,4 @@ interface PostsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(data: Data)
-
-//    постобработка шейдера
 }
