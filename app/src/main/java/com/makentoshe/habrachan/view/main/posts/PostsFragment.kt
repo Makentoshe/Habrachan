@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,14 +30,14 @@ import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
-class PostsFragment : Fragment() {
+class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
 
     private val router by inject<Router>()
     private val viewModel by inject<PostsViewModel>()
 
     private val disposables = CompositeDisposable()
 
-    private var page: Int
+    override var page: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("Page", value)
         get() = arguments!!.getInt("Page")
 
@@ -60,6 +61,9 @@ class PostsFragment : Fragment() {
 
         val progressbar = view.findViewById<ProgressBar>(R.id.progress_bar)
         ProgressBarController(disposables, progressbar).install(viewModel)
+
+        val messageView = view.findViewById<TextView>(R.id.error_message)
+        ErrorMessageController(this, disposables, messageView).install(viewModel)
     }
 
     private fun initSwipeRefreshLayout() {
@@ -153,12 +157,29 @@ class PostsFragment : Fragment() {
         scopes.closeOnDestroy(this).installModules(module).inject(this)
     }
 
-    class ProgressBarController(private val disposables: CompositeDisposable, private val progressbar: ProgressBar) {
+    private class ProgressBarController(
+        private val disposables: CompositeDisposable, private val progressbar: ProgressBar
+    ) {
 
         fun install(viewModel: PostsViewModel) {
             val errors = viewModel.errorObservable.map { View.GONE }
             val successes = viewModel.postsObservable.map { View.GONE }
             successes.mergeWith(errors).subscribe(progressbar::setVisibility).let(disposables::add)
+        }
+    }
+
+    private class ErrorMessageController(
+        private val holder: PostsFragmentArgumentsHolder,
+        private val disposables: CompositeDisposable,
+        private val messageView: TextView
+    ) {
+
+        fun install(viewModel: PostsViewModel) {
+            viewModel.errorObservable.subscribe {
+                if (holder.page > 1) return@subscribe
+                messageView.text = it.toString()
+                messageView.visibility = View.VISIBLE
+            }.let(disposables::add)
         }
     }
 }
