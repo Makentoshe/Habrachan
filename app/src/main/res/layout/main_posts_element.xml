@@ -4,29 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
     android:paddingTop="10dp"
     android:paddingStart="8dp"
     android:paddingEnd="8dp"
-    >
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/time_published"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/author_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title"
@@ -37,8 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/time_published"
         android:textSize="22sp"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/hubs_titles"
@@ -55,7 +52,7 @@
         android:layout_height="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/ic_equalizer"
+        app:srcCompat="@drawable/ic_equalizer"
         android:tint="@color/colorPrimaryDark"
         android:tintMode="src_atop"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +74,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginStart="16dp"
-        android:src="@drawable/ic_eye"
+        app:srcCompat="@drawable/ic_eye"
         android:tint="@color/colorPrimaryDark"
         android:tintMode="src_atop"
         app:layout_constraintBottom_toBottomOf="@+id/score_imageview"
@@ -100,7 +97,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginStart="16dp"
-        android:src="@drawable/ic_comment"
+        app:srcCompat="@drawable/ic_comment"
         android:tint="@color/colorPrimaryDark"
         android:tintMode="src_atop"
         app:layout_constraintBottom_toBottomOf="@+id/reading_count_imageview"
@@ -117,14 +114,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/comments_count_imageview"
         app:layout_constraintStart_toEndOf="@+id/comments_count_imageview"
         tools:ignore="SmallSp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_imageview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

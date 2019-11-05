@@ -30,7 +30,7 @@ class MainFlowFragmentModule(fragment: MainFlowFragment) : Module() {
     }
 
     private fun getViewModel(fragment: MainFlowFragment): MainFlowViewModel {
-        val factory = MainFlowViewModel.Factory(Cicerone.create(), page = 0)
+        val factory = MainFlowViewModel.Factory(Cicerone.create(), page = 1)
         return ViewModelProviders.of(fragment, factory)[MainFlowViewModel::class.java]
     }
 }

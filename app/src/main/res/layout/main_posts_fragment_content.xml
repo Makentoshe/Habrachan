@@ -12,9 +12,17 @@
 
     <include layout="@layout/main_posts_fragment_content_search" />
 
-    <TextView
+    <com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        sothree:srl_direction="both"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="SAS ASA ANUS PSA"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_posts_slidingpanel_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
