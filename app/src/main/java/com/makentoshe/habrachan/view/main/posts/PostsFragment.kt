@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,6 +57,9 @@ class PostsFragment : Fragment() {
         view.findViewById<View>(R.id.main_posts_toolbar_magnify).setOnClickListener {
             onMagnifyClicked()
         }
+
+        val progressbar = view.findViewById<ProgressBar>(R.id.progress_bar)
+        ProgressBarController(disposables, progressbar).install(viewModel)
     }
 
     private fun initSwipeRefreshLayout() {
@@ -74,6 +78,10 @@ class PostsFragment : Fragment() {
         val errors = viewModel.errorObservable.map { false }
         val successes = viewModel.postsObservable.map { false }
         successes.mergeWith(errors).subscribe(view::setRefreshing).let(disposables::add)
+        // show view on success
+        viewModel.postsObservable.subscribe {
+            view.visibility = View.VISIBLE
+        }.let(disposables::add)
     }
 
     private fun initRecyclerView() {
@@ -143,5 +151,14 @@ class PostsFragment : Fragment() {
         val module = PostsFragmentModule.Factory(this).build(page)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostsFragmentScope::class.java)
         scopes.closeOnDestroy(this).installModules(module).inject(this)
+    }
+
+    class ProgressBarController(private val disposables: CompositeDisposable, private val progressbar: ProgressBar) {
+
+        fun install(viewModel: PostsViewModel) {
+            val errors = viewModel.errorObservable.map { View.GONE }
+            val successes = viewModel.postsObservable.map { View.GONE }
+            successes.mergeWith(errors).subscribe(progressbar::setVisibility).let(disposables::add)
+        }
     }
 }
