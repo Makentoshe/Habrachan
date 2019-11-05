@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -51,19 +52,18 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initPanel()
         initSwipeRefreshLayout()
         initRecyclerView()
-
-        view.findViewById<View>(R.id.main_posts_toolbar_magnify).setOnClickListener {
-            onMagnifyClicked()
-        }
 
         val progressbar = view.findViewById<ProgressBar>(R.id.progress_bar)
         ProgressBarController(disposables, progressbar).install(viewModel)
 
         val messageView = view.findViewById<TextView>(R.id.error_message)
         ErrorMessageController(this, disposables, messageView).install(viewModel)
+
+        val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel)
+        val magnifyIcon = view.findViewById<View>(R.id.main_posts_toolbar_magnify)
+        SlidingPanelController(requireActivity(), slidingUpPanelLayout).install(magnifyIcon)
     }
 
     private fun initSwipeRefreshLayout() {
@@ -111,40 +111,6 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         }.let(disposables::add)
     }
 
-    private fun onMagnifyClicked() = when (getPanelState()) {
-        SlidingUpPanelLayout.PanelState.EXPANDED -> openPanel()
-        SlidingUpPanelLayout.PanelState.COLLAPSED -> {
-            closePanel()
-            closeSoftKeyboard()
-        }
-        else -> Unit
-    }
-
-    private fun initPanel() {
-        val panel = view!!.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel)
-        panel.isTouchEnabled = false
-    }
-
-    private fun getPanelState(): SlidingUpPanelLayout.PanelState {
-        return requireView().findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel).panelState
-    }
-
-    private fun openPanel() {
-        requireView().findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel).panelState =
-            SlidingUpPanelLayout.PanelState.COLLAPSED
-    }
-
-    private fun closePanel() {
-        requireView().findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel).panelState =
-            SlidingUpPanelLayout.PanelState.EXPANDED
-    }
-
-    private fun closeSoftKeyboard() {
-        val imm = requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-        val view = requireActivity().currentFocus ?: View(requireActivity())
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }
-
     class Factory {
         fun build(page: Int) = PostsFragment().apply {
             this.page = page
@@ -180,6 +146,43 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
                 messageView.text = it.toString()
                 messageView.visibility = View.VISIBLE
             }.let(disposables::add)
+        }
+    }
+
+    private class SlidingPanelController(
+        private val activity: FragmentActivity,
+        private val panel: SlidingUpPanelLayout
+    ) {
+
+        init {
+            panel.isTouchEnabled = false
+        }
+
+        fun install(triggerView: View) {
+            triggerView.setOnClickListener { onMagnifyClicked() }
+        }
+
+        private fun onMagnifyClicked() = when (panel.panelState) {
+            SlidingUpPanelLayout.PanelState.EXPANDED -> openPanel()
+            SlidingUpPanelLayout.PanelState.COLLAPSED -> {
+                closePanel()
+                closeSoftKeyboard()
+            }
+            else -> Unit
+        }
+
+        private fun openPanel() {
+            panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }
+
+        private fun closePanel() {
+            panel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+        }
+
+        private fun closeSoftKeyboard() {
+            val imm = activity.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+            val view = activity.currentFocus ?: View(activity)
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 }
