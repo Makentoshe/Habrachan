@@ -10,6 +10,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 
 class PostsViewModel(
     position: Int,
@@ -32,11 +33,21 @@ class PostsViewModel(
     val errorObservable: Observable<Throwable>
         get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
 
+    private val progressSubject = PublishSubject.create<Unit>()
+
+    val progressObservable: Observable<Unit>
+        get() = progressSubject.observeOn(AndroidSchedulers.mainThread())
+
     init {
         requestPosts(position)
     }
 
     fun requestPosts(position: Int) {
+        // indicates progress views only for first page
+        if (position <= 1) {
+            progressSubject.onNext(Unit)
+        }
+        // do stuff
         val single = postsRepository.get(position)
         if (single == null) {
             errorSubject.onNext(NullPointerException())

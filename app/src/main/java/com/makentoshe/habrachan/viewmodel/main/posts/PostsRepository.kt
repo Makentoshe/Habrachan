@@ -14,7 +14,11 @@ class PostsRepository(
 ) : Repository<Int, Single<List<Data>>> {
     override fun get(k: Int): Single<List<Data>>? {
         val request = factory.interesting(k)
-        return manager.getPosts(request).map { it.data }
+        return try {
+            manager.getPosts(request).map { it.data }
+        } catch (e: RuntimeException) {
+            Single.just(e).map { throw it }
+        }
     }
 }
 
@@ -25,23 +29,29 @@ class DaoPostsRepository(
 
     override fun get(k: Int): Single<List<Data>>? {
         return Single.just(k).observeOn(Schedulers.io()).map { page ->
-            val posts = repository.get(page)?.blockingGet()
+            val posts = pullPostsFromSource(page)
             if (posts != null) {
-                if (page <= 1) {
-                    postsDao.clear()
-                }
-                writeToDatabase(page, posts)
+                updateDatabase(page, posts)
                 return@map posts
             } else {
-                //tries to pull posts from database
-                val cached = Array(20) { postsDao.getByIndex(page * 20 + it) }.filterNotNull()
-                if (cached.isEmpty()) {
-                    throw RuntimeException()
-                } else {
-                    return@map cached
-                }
+                return@map pullPostsFromDatabase(page)
             }
         }
+    }
+
+    private fun pullPostsFromSource(page: Int): List<Data>? {
+        return try {
+            repository.get(page)?.blockingGet()
+        } catch (e: RuntimeException) {
+            null
+        }
+    }
+
+    private fun updateDatabase(page: Int, posts: List<Data>) {
+        if (page <= 1) {
+            postsDao.clear()
+        }
+        writeToDatabase(page, posts)
     }
 
     private fun writeToDatabase(page: Int, posts: List<Data>) {
@@ -54,5 +64,11 @@ class DaoPostsRepository(
         }.subscribe { _, _ ->
             disposable?.dispose()
         }
+    }
+
+    private fun pullPostsFromDatabase(page: Int): List<Data> {
+        //tries to pull posts from database
+        val cached = Array(20) { postsDao.getByIndex(page * 20 + it) }.filterNotNull()
+        if (cached.isNotEmpty()) return cached else throw RuntimeException()
     }
 }

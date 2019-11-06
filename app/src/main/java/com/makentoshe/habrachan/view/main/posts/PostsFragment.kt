@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentModule
@@ -64,6 +65,9 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel)
         val magnifyIcon = view.findViewById<View>(R.id.main_posts_toolbar_magnify)
         SlidingPanelController(requireActivity(), slidingUpPanelLayout).install(magnifyIcon)
+
+        val retryButton = view.findViewById<MaterialButton>(R.id.retry_button)
+        RetryButtonController(this, disposables, retryButton).install(viewModel)
     }
 
     private fun initSwipeRefreshLayout() {
@@ -131,6 +135,10 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             val errors = viewModel.errorObservable.map { View.GONE }
             val successes = viewModel.postsObservable.map { View.GONE }
             successes.mergeWith(errors).subscribe(progressbar::setVisibility).let(disposables::add)
+
+            viewModel.progressObservable.subscribe {
+                progressbar.visibility = View.VISIBLE
+            }.let(disposables::add)
         }
     }
 
@@ -145,6 +153,10 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
                 if (holder.page > 1) return@subscribe
                 messageView.text = it.toString()
                 messageView.visibility = View.VISIBLE
+            }.let(disposables::add)
+
+            viewModel.progressObservable.subscribe {
+                messageView.visibility = View.GONE
             }.let(disposables::add)
         }
     }
@@ -183,6 +195,28 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             val imm = activity.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
             val view = activity.currentFocus ?: View(activity)
             imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    private class RetryButtonController(
+        private val holder: PostsFragmentArgumentsHolder,
+        private val disposables: CompositeDisposable,
+        private val button: MaterialButton
+    ) {
+
+        fun install(viewModel: PostsViewModel) {
+            viewModel.progressObservable.subscribe {
+                button.visibility = View.GONE
+            }.let(disposables::add)
+
+            viewModel.errorObservable.subscribe {
+                if (holder.page > 1) return@subscribe
+                button.visibility = View.VISIBLE
+            }.let(disposables::add)
+
+            button.setOnClickListener {
+                viewModel.requestPosts(holder.page)
+            }
         }
     }
 }
