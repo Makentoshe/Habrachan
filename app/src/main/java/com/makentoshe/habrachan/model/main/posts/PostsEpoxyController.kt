@@ -48,7 +48,6 @@ class PostsEpoxyController(private val modelFactory: PostModelFactory) : EpoxyCo
     }
 
     private fun addPageDivide(index: Int, page: Int) {
-        println("Divide at position $index for page $page")
         val model = PageDividerEpoxyModel_()
         model.id(index)
         model.text(page.toString())
@@ -59,7 +58,6 @@ class PostsEpoxyController(private val modelFactory: PostModelFactory) : EpoxyCo
 class PostModelFactory(private val router: Router) {
 
     fun build(id: Int, post: Data): PostEpoxyModel {
-        println("Model at position $id")
         val model = PostEpoxyModel_()
         model.id(id)
         model.title = post.title
