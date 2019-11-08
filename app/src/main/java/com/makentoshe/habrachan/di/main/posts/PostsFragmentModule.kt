@@ -32,7 +32,7 @@ class PostsFragmentModule(fragment: PostsFragment, position: Int) : Module() {
     private fun performBindings(fragment: PostsFragment, position: Int) {
         val repository = PostsRepository(factory, manager)
         val daoPostsRepository = DaoPostsRepository(postsDao, repository)
-        val factory = PostsViewModel.Factory(position, daoPostsRepository)
+        val factory = PostsViewModel.Factory(position, daoPostsRepository, postsDao)
         val viewmodel = ViewModelProviders.of(fragment, factory)[PostsViewModel::class.java]
         bind<PostsViewModel>().toInstance(viewmodel)
     }

@@ -53,8 +53,11 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initSwipeRefreshLayout()
-        initRecyclerView()
+        val modelFactory = PostModelFactory(router)
+        val controller = PostsEpoxyController(modelFactory)
+
+        initSwipeRefreshLayout(controller)
+        initRecyclerView(controller)
 
         val progressbar = view.findViewById<ProgressBar>(R.id.progress_bar)
         ProgressBarController(disposables, progressbar).install(viewModel)
@@ -64,21 +67,25 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
 
         val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel)
         val magnifyIcon = view.findViewById<View>(R.id.main_posts_toolbar_magnify)
-        SlidingPanelController(requireActivity(), slidingUpPanelLayout).install(magnifyIcon)
+        SlidingPanelController(disposables, requireActivity(), slidingUpPanelLayout).install(viewModel, magnifyIcon)
 
         val retryButton = view.findViewById<MaterialButton>(R.id.retry_button)
         RetryButtonController(this, disposables, retryButton).install(viewModel)
     }
 
-    private fun initSwipeRefreshLayout() {
+    private fun initSwipeRefreshLayout(controller: PostsEpoxyController) {
         val view = requireView().findViewById<SwipyRefreshLayout>(R.id.swipe_refresh_layout)
         view.setDistanceToTriggerSync(150)
         view.setOnRefreshListener {
             if (it == SwipyRefreshLayoutDirection.TOP) {
+                controller.clear()
+                page = 1
+                viewModel.newRequestObserver.onNext(page)
                 return@setOnRefreshListener
             }
             if (it == SwipyRefreshLayoutDirection.BOTTOM) {
-                viewModel.requestPosts(page++)
+                page += 1
+                viewModel.requestObserver.onNext(page)
                 return@setOnRefreshListener
             }
         }
@@ -92,9 +99,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         }.let(disposables::add)
     }
 
-    private fun initRecyclerView() {
-        val modelFactory = PostModelFactory(router)
-        val controller = PostsEpoxyController(modelFactory)
+    private fun initRecyclerView(controller: PostsEpoxyController) {
         val layoutManager = LinearLayoutManager(requireContext())
         val view = requireView().findViewById<RecyclerView>(R.id.main_posts_slidingpanel_recyclerview)
         view.adapter = controller.adapter
@@ -111,7 +116,6 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
                 scroller.targetPosition = lastItem
                 layoutManager.startSmoothScroll(scroller)
             }
-            page = page.inc()
         }.let(disposables::add)
     }
 
@@ -162,6 +166,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
     }
 
     private class SlidingPanelController(
+        private val disposables: CompositeDisposable,
         private val activity: FragmentActivity,
         private val panel: SlidingUpPanelLayout
     ) {
@@ -170,8 +175,12 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             panel.isTouchEnabled = false
         }
 
-        fun install(triggerView: View) {
+        fun install(viewModel: PostsViewModel, triggerView: View) {
             triggerView.setOnClickListener { onMagnifyClicked() }
+
+            viewModel.progressObservable.subscribe {
+                panel.visibility = View.GONE
+            }.let(disposables::add)
         }
 
         private fun onMagnifyClicked() = when (panel.panelState) {
@@ -213,10 +222,6 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
                 if (holder.page > 1) return@subscribe
                 button.visibility = View.VISIBLE
             }.let(disposables::add)
-
-            button.setOnClickListener {
-                viewModel.requestPosts(holder.page)
-            }
         }
     }
 }
