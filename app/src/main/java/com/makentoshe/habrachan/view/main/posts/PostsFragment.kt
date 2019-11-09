@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.view.main.posts
 
 import android.content.Context
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentModule
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentScope
@@ -54,9 +56,11 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val controller = PostsEpoxyController(PostModelFactory(router))
-        initRecyclerView(controller)
 
-        val swipeRefresh = requireView().findViewById<SwipyRefreshLayout>(R.id.swipe_refresh_layout)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.main_posts_slidingpanel_recyclerview)
+        RecyclerViewController(disposables, controller, recyclerView, this).install(viewModel)
+
+        val swipeRefresh = view.findViewById<SwipyRefreshLayout>(R.id.swipe_refresh_layout)
         SwipeRefreshController(disposables, controller, swipeRefresh, this).install(viewModel)
 
         val progressbar = view.findViewById<ProgressBar>(R.id.progress_bar)
@@ -73,26 +77,6 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         RetryButtonController(this, disposables, retryButton).install(viewModel)
     }
 
-    private fun initRecyclerView(controller: PostsEpoxyController) {
-        val layoutManager = LinearLayoutManager(requireContext())
-        val view = requireView().findViewById<RecyclerView>(R.id.main_posts_slidingpanel_recyclerview)
-        view.adapter = controller.adapter
-        view.layoutManager = layoutManager
-
-        viewModel.postsObservable.subscribe {
-            val lastItem = controller.adapter.itemCount
-            controller.append(it)
-            controller.requestModelBuild()
-            if (page != 1) {
-                val scroller = object : LinearSmoothScroller(requireContext()) {
-                    override fun getVerticalSnapPreference() = SNAP_TO_START
-                }
-                scroller.targetPosition = lastItem
-                layoutManager.startSmoothScroll(scroller)
-            }
-        }.let(disposables::add)
-    }
-
     class Factory {
         fun build(page: Int) = PostsFragment().apply {
             this.page = page
@@ -105,7 +89,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         scopes.closeOnDestroy(this).installModules(module).inject(this)
     }
 
-    private class ProgressBarController(
+    class ProgressBarController(
         private val disposables: CompositeDisposable, private val progressbar: ProgressBar
     ) {
 
@@ -120,7 +104,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         }
     }
 
-    private class ErrorMessageController(
+    class ErrorMessageController(
         private val holder: PostsFragmentArgumentsHolder,
         private val disposables: CompositeDisposable,
         private val messageView: TextView
@@ -139,7 +123,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         }
     }
 
-    private class SlidingPanelController(
+    class SlidingPanelController(
         private val disposables: CompositeDisposable,
         private val activity: FragmentActivity,
         private val panel: SlidingUpPanelLayout
@@ -181,7 +165,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         }
     }
 
-    private class RetryButtonController(
+    class RetryButtonController(
         private val holder: PostsFragmentArgumentsHolder,
         private val disposables: CompositeDisposable,
         private val button: MaterialButton
@@ -199,7 +183,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         }
     }
 
-    private class SwipeRefreshController(
+    class SwipeRefreshController(
         private val disposables: CompositeDisposable,
         private val controller: PostsEpoxyController,
         private val view: SwipyRefreshLayout,
@@ -218,8 +202,8 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             val errors = viewModel.errorObservable.map { false }
             val successes = viewModel.postsObservable.map { false }
             successes.mergeWith(errors).subscribe(view::setRefreshing).let(disposables::add)
-            // show view on success
             viewModel.postsObservable.subscribe {
+                holder.page += 1
                 view.visibility = View.VISIBLE
             }.let(disposables::add)
         }
@@ -240,8 +224,43 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         }
 
         private fun onBotRefresh(viewModel: PostsViewModel) {
-            holder.page += 1
-            viewModel.requestObserver.onNext(holder.page)
+            viewModel.requestObserver.onNext(holder.page + 1)
+        }
+    }
+
+    class RecyclerViewController(
+        private val disposables: CompositeDisposable,
+        private val controller: PostsEpoxyController,
+        private val view: RecyclerView,
+        private val holder: PostsFragmentArgumentsHolder
+    ) {
+
+        private val layoutManager = LinearLayoutManager(view.context)
+        private val scroller = object : LinearSmoothScroller(view.context) {
+            override fun getVerticalSnapPreference() = SNAP_TO_START
+            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics) = .2f
+        }
+
+        fun install(viewModel: PostsViewModel) {
+            view.adapter = controller.adapter
+            view.layoutManager = layoutManager
+
+            viewModel.postsObservable.subscribe(::onSuccess).let(disposables::add)
+        }
+
+        private fun onSuccess(posts: List<Data>) {
+            val lastItem = controller.adapter.itemCount
+            controller.append(posts)
+            controller.requestModelBuild()
+            if (holder.page != 1) {
+                scrollToPageDivider(lastItem)
+            }
+        }
+
+        private fun scrollToPageDivider(lastItem: Int) {
+            val scroller = this.scroller
+            scroller.targetPosition = lastItem
+            layoutManager.startSmoothScroll(scroller)
         }
     }
 }
