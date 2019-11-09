@@ -93,9 +93,20 @@ dependencies {
     def jsoup = "1.11.3"
     implementation "org.jsoup:jsoup:$jsoup"
 
+    // Room
     def room = "1.1.1"
     implementation "android.arch.persistence.room:runtime:$room"
     kapt "android.arch.persistence.room:compiler:$room"
+
+    // Epoxy
+    // https://github.com/airbnb/epoxy
+    def epoxy = "3.8.0"
+    implementation "com.airbnb.android:epoxy:$epoxy"
+    kapt "com.airbnb.android:epoxy-processor:$epoxy"
+
+    // SwipyRefreshLayout
+    // https://github.com/omadahealth/SwipyRefreshLayout
+    implementation 'com.github.omadahealth:swipy:1.2.3@aar'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
@@ -103,4 +114,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+kapt {
+    correctErrorTypes = true
 }
