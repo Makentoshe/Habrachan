@@ -275,13 +275,17 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         private val ANIM_STATE_SHOWING = 2
 
         private var state = ANIM_STATE_IDLE
+        private var isStateLocked = false
 
         fun install(recyclerView: RecyclerView) {
             button.setOnClickListener {
                 recyclerView.smoothScrollToPosition(0)
                 button.hide()
             }
-            recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    isStateLocked = newState == RecyclerView.SCROLL_STATE_SETTLING
+                }
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     onScrolled(recyclerView, dy)
                 }
@@ -292,7 +296,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             if (dy > 0 || recyclerView.computeVerticalScrollOffset() <= 100) {
                 button.hide()
             }
-            if (dy < 0) {
+            if (dy < 0 && !isStateLocked) {
                 button.show()
             }
         }
