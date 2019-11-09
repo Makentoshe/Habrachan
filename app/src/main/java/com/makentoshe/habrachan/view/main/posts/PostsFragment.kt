@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.view.main.posts
 
+import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -75,6 +76,9 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
 
         val retryButton = view.findViewById<MaterialButton>(R.id.retry_button)
         RetryButtonController(this, disposables, retryButton).install(viewModel)
+
+        val topScrollButton = view.findViewById<MaterialButton>(R.id.scroll_to_top)
+        TopFloatingButtonController(topScrollButton).install(recyclerView)
     }
 
     class Factory {
@@ -261,6 +265,71 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             val scroller = this.scroller
             scroller.targetPosition = lastItem
             layoutManager.startSmoothScroll(scroller)
+        }
+    }
+
+    class TopFloatingButtonController(private val button: MaterialButton) {
+
+        private val ANIM_STATE_IDLE = 0
+        private val ANIM_STATE_HIDING = 1
+        private val ANIM_STATE_SHOWING = 2
+
+        private var state = ANIM_STATE_IDLE
+
+        fun install(recyclerView: RecyclerView) {
+            button.setOnClickListener {
+                recyclerView.smoothScrollToPosition(0)
+                button.hide()
+            }
+            recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    onScrolled(recyclerView, dy)
+                }
+            })
+        }
+
+        private fun onScrolled(recyclerView: RecyclerView, dy: Int) {
+            if (dy > 0 || recyclerView.computeVerticalScrollOffset() <= 100) {
+                button.hide()
+            }
+            if (dy < 0) {
+                button.show()
+            }
+        }
+
+        private fun MaterialButton.hide() {
+            // skip call if we already hiding
+            if (state != ANIM_STATE_IDLE) return
+            state = ANIM_STATE_HIDING
+            animate().scaleX(0f).scaleY(0f).setDuration(400)
+                .setListener(object : DefaultAnimator() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        visibility = View.GONE
+                        state = ANIM_STATE_IDLE
+                    }
+                }).start()
+        }
+
+        private fun MaterialButton.show() {
+            // skip call if we already showing
+            if (state != ANIM_STATE_IDLE) return
+            state = ANIM_STATE_SHOWING
+            visibility = View.VISIBLE
+            animate().scaleX(1f).scaleY(1f).setDuration(400)
+                .setListener(object : DefaultAnimator() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        state = ANIM_STATE_IDLE
+                    }
+                }).start()
+        }
+
+        private abstract class DefaultAnimator : Animator.AnimatorListener {
+            override fun onAnimationCancel(animation: Animator?) = Unit
+            override fun onAnimationEnd(animation: Animator?) = Unit
+            override fun onAnimationRepeat(animation: Animator?) = Unit
+            override fun onAnimationStart(animation: Animator?) = Unit
+            override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) = Unit
+            override fun onAnimationStart(animation: Animator?, isReverse: Boolean) = Unit
         }
     }
 }

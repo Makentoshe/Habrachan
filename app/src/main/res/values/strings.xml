@@ -99,4 +99,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="retry">Retry</string>
+    <string name="scroll_to_top">Scroll to top</string>
 </resources>
