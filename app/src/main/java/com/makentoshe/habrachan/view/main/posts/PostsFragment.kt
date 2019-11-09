@@ -53,11 +53,11 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val modelFactory = PostModelFactory(router)
-        val controller = PostsEpoxyController(modelFactory)
-
-        initSwipeRefreshLayout(controller)
+        val controller = PostsEpoxyController(PostModelFactory(router))
         initRecyclerView(controller)
+
+        val swipeRefresh = requireView().findViewById<SwipyRefreshLayout>(R.id.swipe_refresh_layout)
+        SwipeRefreshController(disposables, controller, swipeRefresh, this).install(viewModel)
 
         val progressbar = view.findViewById<ProgressBar>(R.id.progress_bar)
         ProgressBarController(disposables, progressbar).install(viewModel)
@@ -71,32 +71,6 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
 
         val retryButton = view.findViewById<MaterialButton>(R.id.retry_button)
         RetryButtonController(this, disposables, retryButton).install(viewModel)
-    }
-
-    private fun initSwipeRefreshLayout(controller: PostsEpoxyController) {
-        val view = requireView().findViewById<SwipyRefreshLayout>(R.id.swipe_refresh_layout)
-        view.setDistanceToTriggerSync(150)
-        view.setOnRefreshListener {
-            if (it == SwipyRefreshLayoutDirection.TOP) {
-                controller.clear()
-                page = 1
-                viewModel.newRequestObserver.onNext(page)
-                return@setOnRefreshListener
-            }
-            if (it == SwipyRefreshLayoutDirection.BOTTOM) {
-                page += 1
-                viewModel.requestObserver.onNext(page)
-                return@setOnRefreshListener
-            }
-        }
-        // disable refreshing on each event
-        val errors = viewModel.errorObservable.map { false }
-        val successes = viewModel.postsObservable.map { false }
-        successes.mergeWith(errors).subscribe(view::setRefreshing).let(disposables::add)
-        // show view on success
-        viewModel.postsObservable.subscribe {
-            view.visibility = View.VISIBLE
-        }.let(disposables::add)
     }
 
     private fun initRecyclerView(controller: PostsEpoxyController) {
@@ -222,6 +196,52 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
                 if (holder.page > 1) return@subscribe
                 button.visibility = View.VISIBLE
             }.let(disposables::add)
+        }
+    }
+
+    private class SwipeRefreshController(
+        private val disposables: CompositeDisposable,
+        private val controller: PostsEpoxyController,
+        private val view: SwipyRefreshLayout,
+        private val holder: PostsFragmentArgumentsHolder
+    ) {
+
+        init {
+            view.setDistanceToTriggerSync(150)
+        }
+
+        fun install(viewModel: PostsViewModel) {
+            view.setOnRefreshListener {
+                onRefresh(viewModel, it)
+            }
+            // disable refreshing on each event
+            val errors = viewModel.errorObservable.map { false }
+            val successes = viewModel.postsObservable.map { false }
+            successes.mergeWith(errors).subscribe(view::setRefreshing).let(disposables::add)
+            // show view on success
+            viewModel.postsObservable.subscribe {
+                view.visibility = View.VISIBLE
+            }.let(disposables::add)
+        }
+
+        private fun onRefresh(viewModel: PostsViewModel, direction: SwipyRefreshLayoutDirection) {
+            if (direction == SwipyRefreshLayoutDirection.TOP) {
+                return onTopRefresh(viewModel)
+            }
+            if (direction == SwipyRefreshLayoutDirection.BOTTOM) {
+                return onBotRefresh(viewModel)
+            }
+        }
+
+        private fun onTopRefresh(viewModel: PostsViewModel) {
+            controller.clear()
+            holder.page = 1
+            viewModel.newRequestObserver.onNext(holder.page)
+        }
+
+        private fun onBotRefresh(viewModel: PostsViewModel) {
+            holder.page += 1
+            viewModel.requestObserver.onNext(holder.page)
         }
     }
 }
