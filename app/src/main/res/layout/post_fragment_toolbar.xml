@@ -14,7 +14,7 @@
         app:collapsedTitleTextAppearance="@style/Habrachan.Light.TextAppearance.Small"
         app:contentScrim="?attr/colorPrimary"
         app:expandedTitleTextAppearance="@style/Habrachan.Light.TextAppearance.Large"
-        app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:toolbarId="@+id/post_fragment_toolbar">
 
         <androidx.appcompat.widget.Toolbar

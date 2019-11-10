@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.repository.Repository
 import com.makentoshe.habrachan.model.post.BaseHtmlBuilder
+import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,20 +17,31 @@ import java.io.InputStream
 class PostFragmentViewModel(
     private val router: Router,
     private val repository: Repository<Int, InputStream>,
-    postId: Int, postRepository: Repository<Int, Single<Data>>
+    postId: Int,
+    postRepository: Repository<Int, Single<Data>>,
+    private val habrachanWebViewClient: HabrachanWebViewClient
 ) : ViewModel(), PostFragmentNavigationViewModel {
 
     private val disposables = CompositeDisposable()
 
+    /** Emitter for publication data */
     private val publicationSubject = BehaviorSubject.create<String>()
 
+    /** Observable for publication data */
     val publicationObservable: Observable<String>
         get() = publicationSubject.observeOn(AndroidSchedulers.mainThread())
 
+    /** Error events needs to display error message */
     private val errorSubject = BehaviorSubject.create<Throwable>()
 
     val errorObservable: Observable<Throwable>
         get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
+
+    /** Success events needs to display common content */
+    private val successSubject = BehaviorSubject.create<Unit>()
+
+    val successObservable: Observable<Unit>
+        get() = successSubject
 
     init {
         postRepository.get(postId)!!.subscribe({ post ->
@@ -40,6 +52,10 @@ class PostFragmentViewModel(
             errorSubject.onNext(it)
             publicationSubject.onComplete()
         }).let(disposables::add)
+
+        habrachanWebViewClient.onPublicationReadyToShow() {
+            successSubject.onNext(Unit)
+        }
     }
 
     override fun backToMainPostsScreen() {
@@ -54,10 +70,11 @@ class PostFragmentViewModel(
         private val router: Router,
         private val repository: Repository<Int, InputStream>,
         private val postId: Int,
-        private val postRepository: Repository<Int, Single<Data>>
+        private val postRepository: Repository<Int, Single<Data>>,
+        private val habrachanWebViewClient: HabrachanWebViewClient
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostFragmentViewModel(router, repository, postId, postRepository) as T
+            return PostFragmentViewModel(router, repository, postId, postRepository, habrachanWebViewClient) as T
         }
     }
 }

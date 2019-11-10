@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.model.post.DaoPostRepository
+import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import com.makentoshe.habrachan.model.post.PostRepository
 import ru.terrakok.cicerone.Router
@@ -18,7 +19,8 @@ import javax.inject.Provider
 
 class PostFragmentViewModelProvider(
     private val fragment: Fragment,
-    private val postId: Int
+    private val postId: Int,
+    private val habrachanWebViewClient: HabrachanWebViewClient
 ) : Provider<PostFragmentViewModel> {
 
     private val rawResourceRepository by inject<RawResourceRepository>()
@@ -35,6 +37,8 @@ class PostFragmentViewModelProvider(
     private fun createViewModelFactory(): ViewModelProvider.NewInstanceFactory {
         val postRepository = PostRepository(requestFactory, manager)
         val daoPostRepository = DaoPostRepository(postsDao, postRepository)
-        return PostFragmentViewModel.Factory(router, rawResourceRepository, postId, daoPostRepository)
+        return PostFragmentViewModel.Factory(
+            router, rawResourceRepository, postId, daoPostRepository, habrachanWebViewClient
+        )
     }
 }

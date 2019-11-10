@@ -1,12 +1,14 @@
 package com.makentoshe.habrachan.view.post
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -44,53 +46,31 @@ class PostFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initToolbar()
-        initWebView()
+        val webview = view.findViewById<WebView>(R.id.post_fragment_webview)
+        WebViewController(disposables, webview, javaScriptInterface, webViewClient).install(viewModel)
 
-        viewModel.publicationObservable.subscribe { html ->
-            setPublicationHtmlText(html)
-        }.let(disposables::add)
+        val toolbar = view.findViewById<Toolbar>(R.id.post_fragment_toolbar)
+        val drawable = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
+        ToolbarController(toolbar, drawable).install(viewModel)
+
+        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar)
+        ProgressBarController(disposables, progressBar).install(viewModel)
 
         viewModel.errorObservable.subscribe { throwable ->
             Toast.makeText(requireContext(), throwable.toString(), Toast.LENGTH_LONG).show()
         }.let(disposables::add)
-
-        webViewClient.onPublicationReadyToShow {
-            view.findViewById<View>(R.id.post_fragment_webview).visibility = View.VISIBLE
-        }
-
-        requireView().findViewById<Toolbar>(R.id.post_fragment_toolbar).setNavigationOnClickListener {
-            viewModel.backToMainPostsScreen()
-        }
-    }
-
-    private fun initToolbar() {
-        val view = requireView().findViewById<Toolbar>(R.id.post_fragment_toolbar)
-        val drawable = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
-        view.navigationIcon = drawable
-    }
-
-    private fun initWebView() {
-        val webview = requireView().findViewById<WebView>(R.id.post_fragment_webview)
-        webview.webViewClient = webViewClient
-        webview.isHorizontalScrollBarEnabled = false
-        initWebViewJavascript(webview)
-    }
-    @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
-    private fun initWebViewJavascript(webview: WebView) {
-        webview.settings.javaScriptEnabled = true
-        webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun setPublicationHtmlText(html: String) {
-        val webview = requireView().findViewById<WebView>(R.id.post_fragment_webview)
-        webview.loadData(html, "text/html", "UFT-8")
     }
 
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
+    }
+
+    class Factory {
+
+        fun build(postId: Int) = PostFragment().apply {
+            this.postId = postId
+        }
     }
 
     private fun injectDependencies() {
@@ -100,10 +80,61 @@ class PostFragment : Fragment() {
         Toothpick.closeScope(scopes)
     }
 
-    class Factory {
+    class WebViewController(
+        private val disposables: CompositeDisposable,
+        private val webview: WebView,
+        private val javaScriptInterface: JavaScriptInterface,
+        private val client: WebViewClient
+    ) {
 
-        fun build(postId: Int) = PostFragment().apply {
-            this.postId = postId
+        init {
+            webview.webViewClient = client
+            webview.isHorizontalScrollBarEnabled = false
+            webview.settings.javaScriptEnabled = true
+            webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
+        }
+
+        fun install(viewModel: PostFragmentViewModel) {
+            viewModel.publicationObservable.subscribe { html ->
+                webview.loadData(html, "text/html", "UFT-8")
+            }.let(disposables::add)
+
+            viewModel.successObservable.subscribe {
+                webview.visibility = View.VISIBLE
+            }.let(disposables::add)
+
+            viewModel.errorObservable.subscribe {
+                webview.visibility = View.GONE
+            }.let(disposables::add)
+        }
+    }
+
+    class ToolbarController(
+        private val toolbar: Toolbar,
+        private val navigationDrawable: Drawable
+    ) {
+
+        init {
+            toolbar.navigationIcon = navigationDrawable
+        }
+
+        fun install(viewModel: PostFragmentViewModel) {
+            toolbar.setNavigationOnClickListener {
+                viewModel.backToMainPostsScreen()
+            }
+        }
+    }
+
+    class ProgressBarController(
+        private val disposables: CompositeDisposable,
+        private val progressBar: ProgressBar
+    ) {
+        fun install(viewModel: PostFragmentViewModel) {
+            val success = viewModel.successObservable.map { Unit }
+            val error = viewModel.errorObservable.map { Unit }
+            success.mergeWith(error).subscribe {
+                progressBar.visibility = View.GONE
+            }.let(disposables::add)
         }
     }
 }

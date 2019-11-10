@@ -23,7 +23,7 @@ class PostFragmentModule private constructor(router: Router, fragment: PostFragm
         val javascriptInterface = JavaScriptInterface(router)
         bind<JavaScriptInterface>().toInstance(javascriptInterface)
 
-        val provider = PostFragmentViewModelProvider(fragment, postId)
+        val provider = PostFragmentViewModelProvider(fragment, postId, webViewClient)
         Toothpick.openScope(ApplicationScope::class.java).inject(provider)
         bind<PostFragmentViewModel>().toProviderInstance(provider)
     }
