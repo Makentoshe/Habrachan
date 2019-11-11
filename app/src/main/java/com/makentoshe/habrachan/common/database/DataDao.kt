@@ -4,7 +4,7 @@ import androidx.room.*
 import com.makentoshe.habrachan.common.entity.Data
 
 @Dao
-interface PostsDao {
+interface DataDao {
 
     @Query("SELECT * FROM data")
     fun getAll(): List<Data>

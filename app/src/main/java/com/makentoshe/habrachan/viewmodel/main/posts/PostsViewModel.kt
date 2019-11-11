@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.viewmodel.main.posts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.common.database.PostsDao
+import com.makentoshe.habrachan.common.database.DataDao
 import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.repository.Repository
 import io.reactivex.Observable
@@ -17,7 +17,7 @@ import io.reactivex.subjects.PublishSubject
 class PostsViewModel(
     position: Int,
     private val postsRepository: Repository<Int, Single<List<Data>>>,
-    private val postsDao: PostsDao
+    private val postsDao: DataDao
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -66,6 +66,7 @@ class PostsViewModel(
         }.let(disposables::add)
 
         newRequestSubject.observeOn(Schedulers.io()).subscribe {
+            progressSubject.onNext(Unit)
             postsDao.clear()
             requestSubject.onNext(it)
         }.let(disposables::add)
@@ -80,7 +81,7 @@ class PostsViewModel(
     class Factory(
         private val position: Int,
         private val repository: Repository<Int, Single<List<Data>>>,
-        private val postsDao: PostsDao
+        private val postsDao: DataDao
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return PostsViewModel(position, repository, postsDao) as T

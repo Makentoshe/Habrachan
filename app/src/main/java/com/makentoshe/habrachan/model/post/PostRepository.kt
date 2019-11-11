@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.model.post
 
-import com.makentoshe.habrachan.common.database.PostsDao
+import com.makentoshe.habrachan.common.database.DataDao
 import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.network.manager.HabrPostManager
 import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
@@ -23,7 +23,7 @@ class PostRepository(
  * If value does not exists by key, it uses [repository] as main source.
  */
 class DaoPostRepository(
-    private val postsDao: PostsDao,
+    private val postsDao: DataDao,
     private val repository: Repository<Int, Single<Data>>
 ): Repository<Int, Single<Data>> {
     override fun get(k: Int): Single<Data>? {

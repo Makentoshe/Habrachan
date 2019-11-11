@@ -3,17 +3,15 @@ package com.makentoshe.habrachan.di.post
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.database.PostsDao
+import com.makentoshe.habrachan.common.database.DataDao
 import com.makentoshe.habrachan.common.network.manager.HabrPostManager
 import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
-import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.model.post.DaoPostRepository
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import com.makentoshe.habrachan.model.post.PostRepository
 import ru.terrakok.cicerone.Router
-import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import javax.inject.Provider
 
@@ -25,7 +23,7 @@ class PostFragmentViewModelProvider(
 
     private val rawResourceRepository by inject<RawResourceRepository>()
     private val router by inject<Router>()
-    private val postsDao by inject<PostsDao>()
+    private val postsDao by inject<DataDao>()
     private val requestFactory by inject<GetPostRequestFactory>()
     private val manager by inject<HabrPostManager>()
 

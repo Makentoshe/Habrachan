@@ -139,10 +139,6 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
 
         fun install(viewModel: PostsViewModel, triggerView: View) {
             triggerView.setOnClickListener { onMagnifyClicked() }
-
-            viewModel.progressObservable.subscribe {
-                panel.visibility = View.GONE
-            }.let(disposables::add)
         }
 
         private fun onMagnifyClicked() = when (panel.panelState) {
@@ -176,6 +172,10 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
     ) {
 
         fun install(viewModel: PostsViewModel) {
+            viewModel.postsObservable.subscribe {
+                button.visibility = View.GONE
+            }.let(disposables::add)
+
             viewModel.progressObservable.subscribe {
                 button.visibility = View.GONE
             }.let(disposables::add)
@@ -184,6 +184,10 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
                 if (holder.page > 1) return@subscribe
                 button.visibility = View.VISIBLE
             }.let(disposables::add)
+
+            button.setOnClickListener {
+                viewModel.newRequestObserver.onNext(1)
+            }
         }
     }
 
@@ -202,13 +206,15 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             view.setOnRefreshListener {
                 onRefresh(viewModel, it)
             }
-            // disable refreshing on each event
-            val errors = viewModel.errorObservable.map { false }
-            val successes = viewModel.postsObservable.map { false }
-            successes.mergeWith(errors).subscribe(view::setRefreshing).let(disposables::add)
+
+            viewModel.errorObservable.subscribe {
+                view.isRefreshing = false
+            }.let(disposables::add)
+
             viewModel.postsObservable.subscribe {
                 holder.page += 1
                 view.visibility = View.VISIBLE
+                view.isRefreshing = false
             }.let(disposables::add)
         }
 
@@ -287,7 +293,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
                     isStateLocked = newState == RecyclerView.SCROLL_STATE_SETTLING
                 }
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    onScrolled(recyclerView, dy)
+//                    onScrolled(recyclerView, dy)
                 }
             })
         }

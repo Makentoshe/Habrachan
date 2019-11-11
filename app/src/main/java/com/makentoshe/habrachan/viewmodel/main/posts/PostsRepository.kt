@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.viewmodel.main.posts
 
-import com.makentoshe.habrachan.common.database.PostsDao
+import com.makentoshe.habrachan.common.database.DataDao
 import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
@@ -23,7 +23,7 @@ class PostsRepository(
 }
 
 class DaoPostsRepository(
-    private val postsDao: PostsDao,
+    private val postsDao: DataDao,
     private val repository: Repository<Int, Single<List<Data>>>
 ) : Repository<Int, Single<List<Data>>> {
 
