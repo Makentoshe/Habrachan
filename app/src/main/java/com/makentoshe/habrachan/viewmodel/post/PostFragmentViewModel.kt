@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.repository.Repository
-import com.makentoshe.habrachan.model.post.BaseHtmlBuilder
-import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
+import com.makentoshe.habrachan.model.post.*
+import com.makentoshe.habrachan.model.post.html.*
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -45,7 +45,7 @@ class PostFragmentViewModel(
 
     init {
         postRepository.get(postId)!!.subscribe({ post ->
-            val html = BaseHtmlBuilder(post, repository).build()
+            val html = createHtml(post)
             publicationSubject.onNext(html)
             errorSubject.onComplete()
         }, {
@@ -56,6 +56,15 @@ class PostFragmentViewModel(
         habrachanWebViewClient.onPublicationReadyToShow() {
             successSubject.onNext(Unit)
         }
+    }
+
+    private fun createHtml(post: Data): String {
+        val builder = HtmlBuilder(post)
+        builder.addAddon(DisplayScriptAddon(repository))
+        builder.addAddon(StyleAddon(repository))
+        builder.addAddon(TitleAddon(post))
+        builder.addAddon(SpoilerAddon())
+        return builder.build()
     }
 
     override fun backToMainPostsScreen() {
