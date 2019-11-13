@@ -12,14 +12,7 @@ class SpoilerAddon: HtmlBuilder.Addon {
     }
 
     private fun processSpoiler(spoiler: Element) {
-        setSpoilerTextStyle(spoiler)
         addOnSpoilerTitleClickListener(spoiler)
-    }
-
-    private fun setSpoilerTextStyle(spoiler: Element) {
-        val spoilerTextNode = spoiler.select(".spoiler_text")
-        val style = "display: none; "
-        spoilerTextNode.attr("style", style)
     }
 
     private fun addOnSpoilerTitleClickListener(spoiler: Element) {

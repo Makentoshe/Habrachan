@@ -56,3 +56,10 @@ a:visited {
     color: #548eaa;
     border-bottom: dashed;
 }
+
+.spoiler_text {
+    display: none;
+    padding-left: 16px;
+    margin-top: 16px;
+    border-left: thick solid #9cc2ce;
+}

@@ -563,9 +563,9 @@
             </code>
         </pre>
         <br/>
-        <div class="spoiler" onclick="showSpoilerInWindow(this)">
-            <b class="spoiler_title">Полный код тут</b>
-            <div class="spoiler_text" style="display: none;">
+        <div class="spoiler">
+            <b class="spoiler_title"  onclick="onSpoilerClickedListener(this)">Полный код тут</b>
+            <div class="spoiler_text" style="display: none; padding-left: 24px">
                 <pre>
                     <code class="kotlin">class CoroutineOnPageChangeListener(
                         private val coroutineContext: CoroutineContext = Dispatchers.Main
