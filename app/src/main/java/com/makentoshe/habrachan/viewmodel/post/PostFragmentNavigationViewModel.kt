@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.viewmodel.post
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.makentoshe.habrachan.model.post.images.PostImagesScreen
 import ru.terrakok.cicerone.Router
-import java.util.*
 
 class PostFragmentNavigationViewModel(private val router: Router): ViewModel() {
 
@@ -12,8 +12,7 @@ class PostFragmentNavigationViewModel(private val router: Router): ViewModel() {
     }
 
     fun navigateToImagesScreen(index : Int, sources: Array<String>) {
-        println(index)
-        println(Arrays.toString(sources))
+        router.navigateTo(PostImagesScreen(index, sources))
     }
 
     class Factory(
