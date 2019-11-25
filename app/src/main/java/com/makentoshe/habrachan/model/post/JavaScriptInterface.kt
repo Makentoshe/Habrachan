@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.model.post
 
-import ru.terrakok.cicerone.Router
+import android.content.Context
 
-class JavaScriptInterface(private val router: Router) {
+class JavaScriptInterface(private val context: Context) {
 
     @android.webkit.JavascriptInterface
     fun showToast() {
@@ -10,5 +10,8 @@ class JavaScriptInterface(private val router: Router) {
     }
 
     @android.webkit.JavascriptInterface
-    fun showSpoilerInWindow(codeHtml: String) = Unit
+    fun onImageClickedListener(imageSource: String, imageSourcesString: String) {
+        val imageSources = imageSourcesString.trim().split(" ")
+        PostBroadcastReceiver.sendImageClickedBroadcast(context, imageSource, imageSources)
+    }
 }

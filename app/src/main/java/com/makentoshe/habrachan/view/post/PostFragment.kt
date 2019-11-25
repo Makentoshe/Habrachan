@@ -18,7 +18,9 @@ import com.makentoshe.habrachan.di.post.PostFragmentModule
 import com.makentoshe.habrachan.di.post.PostFragmentScope
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.JavaScriptInterface
+import com.makentoshe.habrachan.model.post.PostBroadcastReceiver
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
+import com.makentoshe.habrachan.viewmodel.post.PostFragmentNavigationViewModel
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.Toothpick
@@ -26,9 +28,13 @@ import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class PostFragment : Fragment() {
+
+    private val navigationViewModel by inject<PostFragmentNavigationViewModel>()
+
     private val viewModel by inject<PostFragmentViewModel>()
     private val webViewClient by inject<HabrachanWebViewClient>()
     private val javaScriptInterface by inject<JavaScriptInterface>()
+    private val broadcastReceiver by inject<PostBroadcastReceiver>()
 
     private var postId: Int
         set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("id", value)
@@ -51,14 +57,26 @@ class PostFragment : Fragment() {
 
         val toolbar = view.findViewById<Toolbar>(R.id.post_fragment_toolbar)
         val drawable = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
-        ToolbarController(toolbar, drawable).install(viewModel)
+        ToolbarController(toolbar, drawable).install(navigationViewModel)
 
         val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar)
         ProgressBarController(disposables, progressBar).install(viewModel)
 
+        PostBroadcastReceiverController(broadcastReceiver).install(navigationViewModel)
+
         viewModel.errorObservable.subscribe { throwable ->
             Toast.makeText(requireContext(), throwable.toString(), Toast.LENGTH_LONG).show()
         }.let(disposables::add)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        broadcastReceiver.registerReceiver(requireActivity())
+    }
+
+    override fun onStop() {
+        super.onStop()
+        requireActivity().unregisterReceiver(broadcastReceiver)
     }
 
     override fun onDestroy() {
@@ -118,7 +136,7 @@ class PostFragment : Fragment() {
             toolbar.navigationIcon = navigationDrawable
         }
 
-        fun install(viewModel: PostFragmentViewModel) {
+        fun install(viewModel: PostFragmentNavigationViewModel) {
             toolbar.setNavigationOnClickListener {
                 viewModel.backToMainPostsScreen()
             }
@@ -135,6 +153,17 @@ class PostFragment : Fragment() {
             success.mergeWith(error).subscribe {
                 progressBar.visibility = View.GONE
             }.let(disposables::add)
+        }
+    }
+
+    class PostBroadcastReceiverController(
+        private val broadcastReceiver: PostBroadcastReceiver
+    ) {
+        fun install(viewModel: PostFragmentNavigationViewModel) {
+            broadcastReceiver.addOnImageClickedListener { source, sources ->
+                val index = sources.indexOf(source)
+                viewModel.navigateToImagesScreen(index, sources)
+            }
         }
     }
 }

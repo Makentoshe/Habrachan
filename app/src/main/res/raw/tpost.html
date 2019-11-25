@@ -1,62 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" href="post.css">
-        <script type="text/javascript" src="postjs.js"></script>
+        <link
+                rel="stylesheet"
+                href="post.css">
+        <script
+                type="text/javascript"
+                src="postjs.js"></script>
         <meta charset="UTF-8">
         <title>Title</title>
     </head>
     <body>
         <p>
-            <img src="https://cdn-images-1.medium.com/max/1500/1*TYtiKJzWtdHZhq9TdIEICA.png" alt="image"/>
+            <img
+                    src="https://cdn-images-1.medium.com/max/1500/1*TYtiKJzWtdHZhq9TdIEICA.png"
+                    alt="image"
+                    onclick="onImageClickedListener(this)" />
         </p>
-        <br/>
+        <br />
         <p>Примерно год назад я начал использовать Kotlin в своих Android проектах. Мне хотелось попробовать что-то
             новое, что было бы интересно изучать. Тогда я и наткнулся на<a href="https://github.com/Kotlin/anko">
                 Anko</a>. К тому времени писать UI на xml порядком осточертело. Мне всегда нравилось писать интерфейс
             руками, не прибегая к WYSIWYG и xml-разметке, используемой в Android Studio. Единственный минус заключается
-            в том, что для проверки любого изменения придется перезапускать приложение. Можно использовать<a
-                    href="https://plugins.jetbrains.com/plugin/7734-anko-support">плагин</a>, который показывает как
+            в том, что для проверки любого изменения придется перезапускать приложение. Можно использовать
+            <a href="https://plugins.jetbrains.com/plugin/7734-anko-support">плагин</a>, который показывает как
             будет выглядеть ui не запуская приложения, но мне он показался довольно странным. Так же у него есть крутая
             возможность конвертирования xml в Anko Layouts DSL.
         </p>
-        <br/>
+        <br />
         <p>Самый большой недостаток библиотеки — практически полное отсутствие документации. Чтобы разобраться, как ее
             правильно использовать, приходилось часто заглядывать в исходники. В этой статье будет подробно разобрано
             создание приложения используя Anko Layouts и Anko Coroutines.
         </p>
         <a name="habracut"></a>
-        <br/>
+        <br />
         <p>Сама библиотека Anko разделяется на 4 независимые части:</p>
-        <br/>
+        <br />
         <ul>
             <li>Anko Layouts — построение UI.</li>
             <li>Anko Commons — полезные инструменты и функции.</li>
             <li>Anko SQLite — работа с базой данных SQLite.</li>
             <li>Anko Coroutines — полезные инструменты для работы с корутинами.</li>
         </ul>
-        <br/>
+        <br />
         <p>Для добавления библиотеки в проект достаточно добавить одну строчку в зависимости проекта:</p>
-        <br/>
+        <br />
         <p>
             <code>implementation &quot;org.jetbrains.anko:anko:$anko_version&quot;</code>
         </p>
-        <br/>
+        <br />
         <p>где
             <code>anko_version</code>
             — текущая версия библиотеки, прописанная в build.gradle файле на project уровне:
         </p>
-        <br/>
+        <br />
         <p>
             <code>ext.anko_version='0.10.8'</code>
         </p>
-        <br/>
+        <br />
         <h2 id="anko-layouts">Anko Layouts</h2>
-        <br/>
+        <br />
         <p>Anko Layouts позволяет разрабатывать UI Android приложения более эффективно, чем это было с использованием
             Java.
         </p>
-        <br/>
+        <br />
         <p>Основным игроком на поле у нас является интерфейс
             <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L131">
                 <code>AnkoComponent&lt;T&gt;</code>
@@ -72,23 +79,23 @@
             является оберткой над<a href="https://developer.android.com/reference/android/view/ViewManager&quot;">
                 ViewManager</a>. Подробнее о нем будет позже.
         </p>
-        <br/>
+        <br />
         <p>Немного разобравшись с тем, как устроен
             <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L131">
                 <code>AnkoComponent&lt;T&gt;</code>
             </a>
             , попробуем создать простенький UI в классе нашей Activity. Стоит уточнить, что вот такое &quot;прямое&quot;
-            написание UI возможно только в Activity, так как для нее написана отдельная extension функция<a
-                    href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/Custom.kt#L43">
-                ankoView</a>, в которой вызывается метод<a
-                    href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/Internals.kt#L62">
+            написание UI возможно только в Activity, так как для нее написана отдельная extension функция
+            <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/Custom.kt#L43">
+                ankoView</a>, в которой вызывается метод
+            <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/Internals.kt#L62">
                 addView</a>, и уже в самом методе создается
             <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L86">
                 <code>AnkoContextImpl&lt;T&gt;</code>
             </a>
             с параметром<code>setContentView = true</code>.
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">class AppActivity : AppCompatActivity() {
                 override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,11 +110,11 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Очевидно, что для чего-то большего, чем один TextView, метод onCreate быстро превратится в подобие свалки.
             Попробуем отделить класс Activity от UI. Для этого создадим еще один класс, в котором он будет описываться.
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">class AppActivityUi: AnkoComponent&lt;AppActivity&gt; {
                 override fun createView(ui: AnkoContext&lt;AppActivity&gt;): View = with(ui) {
@@ -122,21 +129,21 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Теперь, для того, что бы передать нашей Activity наш UI,
             <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L135">
                 можно использовать
             </a>
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">AppActivityUi().setContentView(this)</code>
         </pre>
-        <br/>
+        <br />
         <p>Хорошо, но как быть, если мы хотим создать UI для фрагмента? Для этого можно использовать метод createView
             напрямую, вызывая его из onCreateView метода фрагмента. Выглядит это следующим образом:
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">class AppFragment : Fragment() {
 
@@ -147,7 +154,7 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Как уже было сказано —
             <a href="https://github.com/Kotlin/anko/blob/master/anko/library/static/commons/src/main/java/AnkoContext.kt">
                 <code>AnkoContext&lt;T&gt;</code>
@@ -159,34 +166,34 @@
             </a>
             . Разберем их поподробнее.
         </p>
-        <br/>
+        <br />
         <h3 id="create">create</h3>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">fun &lt;T&gt; create(ctx: Context, owner: T, setContentView: Boolean = false):
                 AnkoContext&lt;T&gt;
             </code>
         </pre>
-        <br/>
+        <br />
         <p>и его брат-близнец</p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">fun create(ctx: Context, setContentView: Boolean = false): AnkoContext&lt;Context&gt;
             </code>
         </pre>
-        <br/>
+        <br />
         <p>возвращают
             <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L86">
                 <code>AnkoContextImpl&lt;T&gt;</code>
             </a>
             .
         </p>
-        <br/>
+        <br />
         <p>Методы используются во всех стандартных случаях, как, например, в предыдущих примерах с Activity и Fragment.
             Самым интересным здесь являются параметры owner и setContentView. Первый позволяет передать в метод
             createView instance конкретного Fragment'a, Activity или чего-либо еще.
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">MyComponent().createView(AnkoContext.create(context, myVew))
 
@@ -198,32 +205,32 @@
                 }
             </code>
         </pre>
-        <br/>
-        <p>Второй параметр — setContentView — автоматически попробует добавить полученный view, если Context<a
-                href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L110">
-            является экземпляром Activity или ContextWrapper</a>. Если у него это не получится — он выкинет
+        <br />
+        <p>Второй параметр — setContentView — автоматически попробует добавить полученный view, если Context
+            <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L110">
+                является экземпляром Activity или ContextWrapper</a>. Если у него это не получится — он выкинет
             IllegalStateException.
         </p>
-        <br/>
+        <br />
         <h3 id="createdelegate">createDelegate</h3>
-        <br/>
+        <br />
         <p>Этот метод может быть очень полезен, однако в
             <a href="https://github.com/Kotlin/anko/wiki/Anko-Layouts">официальной документации на гихабе</a>
             о нем нигде не написано. Наткнулся я на него в исходниках, когда решал проблему раздутия UI классов:
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">fun &lt;T: ViewGroup&gt; createDelegate(owner: T): AnkoContext&lt;T&gt; =
                 DelegatingAnkoContext(owner)
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Он позволяет добавить результат createView компонента в owner.</p>
-        <br/>
+        <br />
         <p>Рассмотрим его использование на примере. Допустим, у нас есть большой класс, описывающий один из экранов
             приложения — AppFragmentUi.
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">verticalLayout {
                 relativeLayout {
@@ -237,11 +244,11 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Логически его можно разделить на две части — на тулбар и контент, AppFragmentUiToolbar и AppFragmentUiContent
             соответственно. Тогда наш основной класс AppFragmentUi станет гораздо проще:
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">class AppFragmentUi: AnkoComponent&lt;AppFragment&gt; {
 
@@ -263,54 +270,53 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Обратите внимание, что в функцию
             <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/with.html">
                 <code>with</code>
             </a>
             в качестве объекта передается не ui, a ui.owner.
-            <br/>
+            <br />
             Таким образом у нас выполняется следующий алгоритм:
         </p>
-        <br/>
+        <br />
         <ol>
             <li>Создается инстанс компонента.</li>
             <li>Метод createView создает View который будет добавлен.</li>
             <li>Полученный View добавляется в owner.</li>
         </ol>
-        <br/>
+        <br />
         <p>Более приближенный аналог:
             <code>this.addView(AppFragmentUiToolbar().createView(...))</code>
-            <br/>
+            <br />
             Как можно заметить, вариант с createDelegate более приятен для чтения.
         </p>
-        <br/>
+        <br />
         <h3 id="createreusable">createReusable</h3>
-        <br/>
+        <br />
         <p>Похоже на стандартный AnkoContext.create, но с небольшим дополнением — корневым view считается самый
             последний:
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">class MyComponent: AnkoComponent&lt;MyObject&gt; {
                 override fun createView(ui: AnkoContext&lt;MyObject&gt;): View = with(ui) {
                 textView(&quot;Some text&quot;)
                 // в этом моменте не будет выкинут IllegalStateException: View is already set
-                // На экране будет показан &quot;Another text&quot;
-                textView(&quot;Another text&quot;)
+                // На экране будет показан &quot;Another text&quot; textView(&quot;Another text&quot;)
                 }
                 }
             </code>
         </pre>
-        <br/>
-        <p>В стандартной реализации, если корневой view установлен —<a
-                href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L100">
-            попытка установить второй view параллельно вызовет exception</a>.
+        <br />
+        <p>В стандартной реализации, если корневой view установлен —
+            <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L100">
+                попытка установить второй view параллельно вызовет exception</a>.
         </p>
-        <br/>
-        <p>Метод createReusable возвращает класс<a
-                href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L78">
-            ReusableAnkoContext</a>, который наследуется от
+        <br />
+        <p>Метод createReusable возвращает класс
+            <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L78">
+                ReusableAnkoContext</a>, который наследуется от
             <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/AnkoContext.kt#L86">
                 AnkoContextImpl
             </a>
@@ -320,13 +326,13 @@
             </a>
             .
         </p>
-        <br/>
+        <br />
         <h3 id="customview">CustomView</h3>
-        <br/>
+        <br />
         <p>К счастью, Anko Layouts не ограничивается лишь этим функционалом. Если нам нужно показать собственный
             CustomView, нам не придется писать
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">verticalLayout {
                 val view = CustomView(context)
@@ -335,16 +341,16 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Для этого можно добавлять свою обертку, которая будет делать тоже самое.</p>
-        <br/>
+        <br />
         <p>Основным компонентов здесь выступает extension метод
             <a href="https://github.com/Kotlin/anko/blob/master/anko/library/static/commons/src/main/java/Custom.kt">
                 <code>&lt;T: View&gt;ankoView(factory: (Context) -&gt; T, theme: Int, init: T.() -&gt; Unit)</code>
             </a>
             от ViewManager, Context или Activity.
         </p>
-        <br/>
+        <br />
         <ul>
             <li>factory — функция, на вход которой передаётся Context и возвращается View. По сути является фабрикой, в
                 которой происходит создание View.
@@ -352,9 +358,9 @@
             <li>theme — ресурс стиля, который будет применен для текущей view.</li>
             <li>init — функция, в которой для созданной View будут устанавливаться необходимые параметры.</li>
         </ul>
-        <br/>
+        <br />
         <p>Добавим свою реализацию для нашего CustomView</p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">inline fun ViewManager.customView(theme: Int = 0, init: (CustomView).() -&gt; Unit):
                 CustomView {
@@ -362,9 +368,9 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Теперь наш CustomView создается очень просто:</p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">customView {
                 id = R.id.customview
@@ -372,9 +378,9 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Можно использовать lparams для применения LayoutParams к View.</p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">textView(&quot;text&quot;) {
                 textSize = 12f
@@ -383,7 +389,7 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Стоит заметить, что не ко всем View это применимо — все lparams методы как правило объявляются в обертках.
             Например
             <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/generated/sdk28/src/main/java/Layouts.kt#L1140">
@@ -392,22 +398,20 @@
             — обертка над<a href="https://developer.android.com/guide/topics/ui/layout/relative">RelativeLayout</a>. И
             так для каждого.
         </p>
-        <br/>
+        <br />
         <p>К счастью, для Android Support Library написано несколько оберток, поэтому можно только подключить
             зависимости в gradle файле.
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="plaintext">// Appcompat-v7 (Anko Layouts)
-                implementation &quot;org.jetbrains.anko:anko-appcompat-v7:$anko_version&quot;
-                implementation &quot;org.jetbrains.anko:anko-coroutines:$anko_version&quot;
+                implementation &quot;org.jetbrains.anko:anko-appcompat-v7:$anko_version&quot; implementation &quot;org.jetbrains.anko:anko-coroutines:$anko_version&quot;
 
                 // CardView-v7
                 implementation &quot;org.jetbrains.anko:anko-cardview-v7:$anko_version&quot;
 
                 // Design
-                implementation &quot;org.jetbrains.anko:anko-design:$anko_version&quot;
-                implementation &quot;org.jetbrains.anko:anko-design-coroutines:$anko_version&quot;
+                implementation &quot;org.jetbrains.anko:anko-design:$anko_version&quot; implementation &quot;org.jetbrains.anko:anko-design-coroutines:$anko_version&quot;
 
                 // GridLayout-v7
                 implementation &quot;org.jetbrains.anko:anko-gridlayout-v7:$anko_version&quot;
@@ -416,8 +420,7 @@
                 implementation &quot;org.jetbrains.anko:anko-percent:$anko_version&quot;
 
                 // RecyclerView-v7
-                implementation &quot;org.jetbrains.anko:anko-recyclerview-v7:$anko_version&quot;
-                implementation &quot;org.jetbrains.anko:anko-recyclerview-v7-coroutines:$anko_version&quot;
+                implementation &quot;org.jetbrains.anko:anko-recyclerview-v7:$anko_version&quot; implementation &quot;org.jetbrains.anko:anko-recyclerview-v7-coroutines:$anko_version&quot;
 
                 // Support-v4 (Anko Layouts)
                 implementation &quot;org.jetbrains.anko:anko-support-v4:$anko_version&quot;
@@ -426,11 +429,11 @@
                 implementation &quot;org.jetbrains.anko:anko-constraint-layout:$anko_version&quot;
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Помимо всего прочего, библиотека позволяет более удобную имплементацию различных listener'ов. Небольшой
             пример из репозитория:
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) = Unit
@@ -439,22 +442,21 @@
                 })
             </code>
         </pre>
-        <br/>
+        <br />
         <p>и теперь используя Anko</p>
-        <br/>
+        <br />
         <pre>
             <code class="plaintext">seekBar {
                 onSeekBarChangeListener {
-                onProgressChanged { seekBar, progress, fromUser -&gt;
-                // do something
+                onProgressChanged { seekBar, progress, fromUser -&gt; // do something
                 }
                 }
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Также некоторые listener'ы поддерживают корутины:</p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">verticalLayout{
                 val anyCoroutineContext = GlobalScope.coroutineContext
@@ -464,9 +466,9 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <h2 id="anko-coroutines">Anko Coroutines</h2>
-        <br/>
+        <br />
         <p>Для безопасной передачи чувствительных к утечкам памяти объектов используется метод<code>asReference</code>.
             Он базируется над
             <a href="https://developer.android.com/reference/java/lang/ref/WeakReference">WeakReference</a>
@@ -474,7 +476,7 @@
             <a href="https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/generated/coroutines/src/main/java/weakReferenceSupport.kt#L24">
                 Ref.
             </a>
-            <br/>
+            <br />
         <pre>
             <code class="kotlin">verticalLayout{
                 val activity = ui.owner
@@ -485,18 +487,18 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Допустим, требуется в стандартный
             <a href="https://developer.android.com/reference/android/support/v4/view/ViewPager.OnPageChangeListener">
                 ViewPager.OnPageChangeListener
             </a>
             добавить поддержку корутин. Сделаем его таким же крутым, как и пример с seekbar'ом.
-            <br/>
-            Во-первых, создаем отдельный класс и наследуемся от<a
-                    href="https://developer.android.com/reference/android/support/v4/view/ViewPager.OnPageChangeListener">
+            <br />
+            Во-первых, создаем отдельный класс и наследуемся от
+            <a href="https://developer.android.com/reference/android/support/v4/view/ViewPager.OnPageChangeListener">
                 ViewPager.OnPageChangeListener</a>.
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">class CoroutineOnPageChangeListener(
                 private val coroutineContext: CoroutineContext = Dispatchers.Main
@@ -505,30 +507,30 @@
                 }
             </code>
         </pre>
-        <br/>
-        <p>В переменных будем хранить лямбды, которые будут вызываться<a
-                href="https://developer.android.com/reference/android/support/v4/view/ViewPager.OnPageChangeListener">
-            ViewPager.OnPageChangeListener</a>.
+        <br />
+        <p>В переменных будем хранить лямбды, которые будут вызываться
+            <a href="https://developer.android.com/reference/android/support/v4/view/ViewPager.OnPageChangeListener">
+                ViewPager.OnPageChangeListener</a>.
         </p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">private var onPageScrollStateChanged: ((Int, CoroutineContext) -&gt; Unit)? = null
                 private var onPageScrolled: ((Int, Float, Int, CoroutineContext) -&gt; Unit)? = null
                 private var onPageSelected: ((Int, CoroutineContext) -&gt; Unit)? = null
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Реализуем инициализацию для одной из этих переменных (остальные делаются аналогично)</p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">fun onPageScrollStateChanged(action: ((Int, CoroutineContext) -&gt; Unit)?) {
                 onPageScrollStateChanged = action
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>И в конце имплементируем функцию с таким же названием.</p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">override fun onPageScrollStateChanged(state: Int) {
                 GlobalScope.launch(coroutineContext) {
@@ -537,9 +539,9 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>Осталось добавить extension функцию, чтобы это все работало</p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">fun ViewPager.onPageChangeListenerCoroutines(init: CoroutineOnPageChangerListener.() -&gt;
                 Unit) {
@@ -549,23 +551,28 @@
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <p>И вставляем всё это дело под ViewPager</p>
-        <br/>
+        <br />
         <pre>
             <code class="kotlin">viewPager {
                 onPageChangeListenerCoroutines {
-                onPageScrolled { position, offset, pixels, coroutineContext -&gt;
-                // делаем что-нибудь полезное в корутине.
+                onPageScrolled { position, offset, pixels, coroutineContext -&gt; // делаем что-нибудь полезное в
+                корутине.
                 }
                 }
                 }
             </code>
         </pre>
-        <br/>
+        <br />
         <div class="spoiler">
-            <b class="spoiler_title"  onclick="onSpoilerClickedListener(this)">Полный код тут</b>
-            <div class="spoiler_text" style="display: none; padding-left: 24px">
+            <b
+                    class="spoiler_title"
+                    onclick="onSpoilerClickedListener(this)">Полный код тут
+            </b>
+            <div
+                    class="spoiler_text"
+                    style="display: none; padding-left: 24px">
                 <pre>
                     <code class="kotlin">class CoroutineOnPageChangeListener(
                         private val coroutineContext: CoroutineContext = Dispatchers.Main
@@ -616,10 +623,10 @@
                 </pre>
             </div>
         </div>
-        <br/>
-        <p>Так же в библиотеке Anko Layouts есть множество полезных методов, таких как переводы в<a
-                href="https://github.com/Kotlin/anko/blob/master/anko/library/static/commons/src/main/java/Dimensions.kt">
-            различные метрики</a>.
+        <br />
+        <p>Так же в библиотеке Anko Layouts есть множество полезных методов, таких как переводы в
+            <a href="https://github.com/Kotlin/anko/blob/master/anko/library/static/commons/src/main/java/Dimensions.kt">
+                различные метрики</a>.
         </p>
         </p>
     </body>

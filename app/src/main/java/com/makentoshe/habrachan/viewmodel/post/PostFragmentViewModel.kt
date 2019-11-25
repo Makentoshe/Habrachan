@@ -4,23 +4,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.entity.Data
 import com.makentoshe.habrachan.common.repository.Repository
-import com.makentoshe.habrachan.model.post.*
+import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.html.*
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
-import ru.terrakok.cicerone.Router
 import java.io.InputStream
 
 class PostFragmentViewModel(
-    private val router: Router,
     private val repository: Repository<Int, InputStream>,
     postId: Int,
     postRepository: Repository<Int, Single<Data>>,
-    private val habrachanWebViewClient: HabrachanWebViewClient
-) : ViewModel(), PostFragmentNavigationViewModel {
+    habrachanWebViewClient: HabrachanWebViewClient
+) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
@@ -64,11 +62,8 @@ class PostFragmentViewModel(
         builder.addAddon(StyleAddon(repository))
         builder.addAddon(TitleAddon(post))
         builder.addAddon(SpoilerAddon())
+        builder.addAddon(ImageAddon())
         return builder.build()
-    }
-
-    override fun backToMainPostsScreen() {
-        router.exit()
     }
 
     override fun onCleared() {
@@ -76,14 +71,13 @@ class PostFragmentViewModel(
     }
 
     class Factory(
-        private val router: Router,
         private val repository: Repository<Int, InputStream>,
         private val postId: Int,
         private val postRepository: Repository<Int, Single<Data>>,
         private val habrachanWebViewClient: HabrachanWebViewClient
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostFragmentViewModel(router, repository, postId, postRepository, habrachanWebViewClient) as T
+            return PostFragmentViewModel(repository, postId, postRepository, habrachanWebViewClient) as T
         }
     }
 }

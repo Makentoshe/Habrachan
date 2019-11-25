@@ -12,3 +12,8 @@ function onSpoilerClickedListener(spoilerTitle) {
         spoilerBody.style.display = "none"
     }
 }
+
+function onImageClickedListener(image, sources) {
+    var imageSource = image.src;
+    JSInterface.onImageClickedListener(imageSource, sources);
+}

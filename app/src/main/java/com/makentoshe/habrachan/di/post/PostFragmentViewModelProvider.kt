@@ -11,6 +11,7 @@ import com.makentoshe.habrachan.model.post.DaoPostRepository
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import com.makentoshe.habrachan.model.post.PostRepository
+import com.makentoshe.habrachan.viewmodel.post.PostFragmentNavigationViewModel
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 import javax.inject.Provider
@@ -22,7 +23,6 @@ class PostFragmentViewModelProvider(
 ) : Provider<PostFragmentViewModel> {
 
     private val rawResourceRepository by inject<RawResourceRepository>()
-    private val router by inject<Router>()
     private val postsDao by inject<DataDao>()
     private val requestFactory by inject<GetPostRequestFactory>()
     private val manager by inject<HabrPostManager>()
@@ -36,7 +36,23 @@ class PostFragmentViewModelProvider(
         val postRepository = PostRepository(requestFactory, manager)
         val daoPostRepository = DaoPostRepository(postsDao, postRepository)
         return PostFragmentViewModel.Factory(
-            router, rawResourceRepository, postId, daoPostRepository, habrachanWebViewClient
+            rawResourceRepository, postId, daoPostRepository, habrachanWebViewClient
         )
+    }
+}
+
+class PostFragmentNavigationViewModelProvider(
+    private val fragment: Fragment
+): Provider<PostFragmentNavigationViewModel> {
+
+    private val router by inject<Router>()
+
+    override fun get(): PostFragmentNavigationViewModel {
+        val factory = createViewModelFactory()
+        return ViewModelProviders.of(fragment, factory)[PostFragmentNavigationViewModel::class.java]
+    }
+
+    private fun createViewModelFactory(): ViewModelProvider.NewInstanceFactory {
+        return PostFragmentNavigationViewModel.Factory(router)
     }
 }
