@@ -8,15 +8,23 @@ class ImageAddon : HtmlBuilder.Addon {
         val sources = extractSources(body)
         val images = body.select("img")
         images.forEach { image ->
-            processImage(image, sources)
+            fixUnclosedImgTag(image)
+            addClickListener(image, sources)
         }
     }
 
-    private fun processImage(image: Element, sources: String) {
+    private fun addClickListener(image: Element, sources: String) {
         image.attr("onclick", "onImageClickedListener(this, \"$sources\")")
     }
 
-    private fun extractSources(body: Element): String{
+    private fun extractSources(body: Element): String {
         return body.select("img").joinToString(" ") { it.attr("src") }
+    }
+
+    private fun fixUnclosedImgTag(image: Element) {
+        val parent = image.parent()
+        if (parent.`is`("a")) {
+            parent.replaceWith(image)
+        }
     }
 }
