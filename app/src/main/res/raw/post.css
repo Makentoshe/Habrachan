@@ -63,3 +63,9 @@ a:visited {
     margin-top: 16px;
     border-left: thick solid #9cc2ce;
 }
+
+table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
