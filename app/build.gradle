@@ -108,6 +108,10 @@ dependencies {
     // https://github.com/omadahealth/SwipyRefreshLayout
     implementation 'com.github.omadahealth:swipy:1.2.3@aar'
 
+    // Subsampling scale image view
+    // https://github.com/davemorrissey/subsampling-scale-image-view
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

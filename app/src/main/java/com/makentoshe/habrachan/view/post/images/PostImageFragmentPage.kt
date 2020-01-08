@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.davemorrissey.labs.subscaleview.ImageSource
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.post.images.PostImageFragmentPageModule
@@ -39,10 +42,20 @@ class PostImageFragmentPage : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val progressbar = view.findViewById<ProgressBar>(R.id.post_image_fragment_progressbar)
+        val imageView = view.findViewById<SubsamplingScaleImageView>(R.id.post_image_fragment_imageview)
+        imageView.maxScale = 10f
 
-//        viewModel.bitmapObserver.subscribe {
-//            view.findViewById<ImageView>(R.id.post_image_fragment_imageview).setImageBitmap(it)
-//        }.let(disposables::add)
+        viewModel.successObserver.subscribe {
+            imageView.setImage(ImageSource.bitmap(it))
+            imageView.visibility = View.VISIBLE
+            progressbar.visibility = View.GONE
+        }.let(disposables::add)
+
+        viewModel.errorObserver.subscribe {
+            it.printStackTrace()
+            progressbar.visibility = View.GONE
+        }.let(disposables::add)
     }
 
     override fun onDestroy() {
