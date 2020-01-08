@@ -2,7 +2,6 @@ package com.makentoshe.habrachan.viewmodel.post
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.model.post.images.PostImagesScreen
 import ru.terrakok.cicerone.Router
 
 /* Performs a navigations for PostFragment */
