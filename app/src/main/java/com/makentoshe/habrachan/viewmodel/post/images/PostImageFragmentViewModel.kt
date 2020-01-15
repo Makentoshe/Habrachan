@@ -11,6 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 
 /* ViewModel for downloading image in view mode for PostImageFragmentPage */
 class PostImageFragmentViewModel(
@@ -27,13 +28,26 @@ class PostImageFragmentViewModel(
     val errorObserver: Observable<Throwable>
         get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
 
+    private val progressSubject = PublishSubject.create<Unit>()
+    val progressObserver: Observable<Unit>
+        get() = progressSubject.observeOn(AndroidSchedulers.mainThread())
+
     init {
-        println(imageSource)
         Single.just(imageSource).observeOn(Schedulers.io())
             .map(repository::get)
             .map(BitmapFactory::decodeStream)
-            .subscribe(successSubject::onNext, errorSubject::onNext)
+            .subscribe(::onSuccess, ::onError)
             .let(disposables::add)
+    }
+
+    private fun onSuccess(bitmap: Bitmap) {
+        errorSubject.onComplete()
+        progressSubject.onComplete()
+        successSubject.onNext(bitmap)
+    }
+
+    private fun onError(throwable: Throwable) {
+        errorSubject.onError(throwable)
     }
 
     override fun onCleared() {

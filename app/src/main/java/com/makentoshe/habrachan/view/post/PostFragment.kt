@@ -62,7 +62,10 @@ class PostFragment : Fragment() {
         val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar)
         ProgressBarController(disposables, progressBar).install(viewModel)
 
-        PostBroadcastReceiverController(broadcastReceiver).install(navigationViewModel)
+        broadcastReceiver.addOnImageClickedListener { source, sources ->
+            val index = sources.indexOf(source)
+            navigationViewModel.navigateToImagesScreen(index, sources)
+        }
 
         viewModel.errorObservable.subscribe { throwable ->
             Toast.makeText(requireContext(), throwable.toString(), Toast.LENGTH_LONG).show()
@@ -153,17 +156,6 @@ class PostFragment : Fragment() {
             success.mergeWith(error).subscribe {
                 progressBar.visibility = View.GONE
             }.let(disposables::add)
-        }
-    }
-
-    class PostBroadcastReceiverController(
-        private val broadcastReceiver: PostBroadcastReceiver
-    ) {
-        fun install(viewModel: PostFragmentNavigationViewModel) {
-            broadcastReceiver.addOnImageClickedListener { source, sources ->
-                val index = sources.indexOf(source)
-                viewModel.navigateToImagesScreen(index, sources)
-            }
         }
     }
 }

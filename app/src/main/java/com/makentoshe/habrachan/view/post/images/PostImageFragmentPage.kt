@@ -5,24 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.post.images.PostImageFragmentPageModule
 import com.makentoshe.habrachan.di.post.images.PostImageFragmentPageScope
+import com.makentoshe.habrachan.model.post.PostScreen
 import com.makentoshe.habrachan.ui.post.images.PostImageFragmentPageUi
 import com.makentoshe.habrachan.viewmodel.post.images.PostImageFragmentViewModel
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.reactivex.disposables.CompositeDisposable
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
-import kotlin.random.Random
 
 /* Single page for resource detail view such as images or svg files */
 class PostImageFragmentPage : Fragment() {
@@ -31,6 +31,9 @@ class PostImageFragmentPage : Fragment() {
     val arguments = Arguments(this)
 
     private val viewModel by inject<PostImageFragmentViewModel>()
+
+    /** Creates in [PostImageFragmentPageModule] and injects during onAttach lifecycle event */
+    private val navigator by inject<Navigator>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -42,6 +45,8 @@ class PostImageFragmentPage : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val panelView = view.findViewById<SlidingUpPanelLayout>(R.id.post_image_fragment_panel)
+        val textview = view.findViewById<TextView>(R.id.post_image_fragment_textview)
         val progressbar = view.findViewById<ProgressBar>(R.id.post_image_fragment_progressbar)
         val imageView = view.findViewById<SubsamplingScaleImageView>(R.id.post_image_fragment_imageview)
         imageView.maxScale = 10f
@@ -55,7 +60,15 @@ class PostImageFragmentPage : Fragment() {
         viewModel.errorObserver.subscribe {
             it.printStackTrace()
             progressbar.visibility = View.GONE
+            textview.text = it.toString()
+            textview.visibility = View.VISIBLE
         }.let(disposables::add)
+
+        // panel sliding control
+        imageView.setOnStateChangedListener(SubsamplingImageStateListener(panelView, imageView))
+
+        // panel display on slide event
+        panelView.addPanelSlideListener(PanelSlideListener(navigator, panelView))
     }
 
     override fun onDestroy() {
@@ -65,16 +78,16 @@ class PostImageFragmentPage : Fragment() {
 
     private fun injectDependencies() {
         val module = PostImageFragmentPageModule.Factory().build(this)
-        val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostImageFragmentPageScope::class.java, arguments.source)
+        val scopes =
+            Toothpick.openScopes(ApplicationScope::class.java, PostImageFragmentPageScope::class.java, arguments.source)
         scopes.closeOnDestroy(this).installModules(module).inject(this)
         Toothpick.closeScope(scopes)
     }
 
     class Factory {
-        fun build(position: Int, source: String): PostImageFragmentPage {
+        fun build(source: String): PostImageFragmentPage {
             val fragment = PostImageFragmentPage()
             fragment.arguments.source = source
-            fragment.arguments.position = position
             return fragment
         }
     }
@@ -91,13 +104,46 @@ class PostImageFragmentPage : Fragment() {
             get() = fragmentArguments.getString(SOURCE) ?: ""
             set(value) = fragmentArguments.putString(SOURCE, value)
 
-        var position: Int
-            get() = fragmentArguments.getInt(POSITION, 0)
-            set(value) = fragmentArguments.putInt(POSITION, value)
-
         companion object {
             private const val SOURCE = "Source"
-            private const val POSITION = "Position"
         }
+    }
+
+    private class SubsamplingImageStateListener(
+        private val panelView: SlidingUpPanelLayout,
+        private val imageView: SubsamplingScaleImageView
+    ) : SubsamplingScaleImageView.DefaultOnStateChangedListener() {
+        override fun onScaleChanged(newScale: Float, origin: Int) {
+            panelView.isEnabled = imageView.minScale == newScale
+            println("$newScale\t${imageView.minScale}")
+        }
+    }
+
+    private class PanelSlideListener(
+        private val navigator: Navigator,
+        private val panelView: View
+    ) : SlidingUpPanelLayout.PanelSlideListener {
+
+        override fun onPanelSlide(panel: View, slideOffset: Float) {
+            panelView.alpha = 1 - (1 - slideOffset) * 2
+        }
+
+        override fun onPanelStateChanged(
+            panel: View, previousState: SlidingUpPanelLayout.PanelState, newState: SlidingUpPanelLayout.PanelState
+        ) {
+            if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                navigator.back()
+            }
+        }
+    }
+
+    /** For navigations from [PostImageFragmentPage] */
+    class Navigator(private val router: Router) {
+        /**
+         * Using [Router.backTo] because default [Router.exit] also closes [PostScreen]
+         * and returns to [MainFlowScreen]. No matter what arguments we pass to [PostScreen]:
+         * it will be found in backstack and displayed without problems
+         */
+        fun back() = router.backTo(PostScreen(-1))
     }
 }

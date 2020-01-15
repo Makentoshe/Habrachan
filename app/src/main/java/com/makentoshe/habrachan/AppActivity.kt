@@ -25,8 +25,8 @@ class AppActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
-//            val screen = MainFlowScreen()
-            val screen = PostImageScreen(0, arrayOf("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg"))
+            val screen = MainFlowScreen()
+//            val screen = PostImageScreen("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg")
             router.newRootScreen(screen)
         }
     }
