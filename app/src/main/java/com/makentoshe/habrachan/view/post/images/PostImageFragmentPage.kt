@@ -19,6 +19,8 @@ import com.makentoshe.habrachan.ui.post.images.PostImageFragmentPageUi
 import com.makentoshe.habrachan.viewmodel.post.images.PostImageFragmentViewModel
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.reactivex.disposables.CompositeDisposable
+import pl.droidsonroids.gif.GifDrawable
+import pl.droidsonroids.gif.GifImageView
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
@@ -48,10 +50,11 @@ class PostImageFragmentPage : Fragment() {
         val panelView = view.findViewById<SlidingUpPanelLayout>(R.id.post_image_fragment_panel)
         val textview = view.findViewById<TextView>(R.id.post_image_fragment_textview)
         val progressbar = view.findViewById<ProgressBar>(R.id.post_image_fragment_progressbar)
+        val gifView = view.findViewById<GifImageView>(R.id.post_image_fragment_gifview)
         val imageView = view.findViewById<SubsamplingScaleImageView>(R.id.post_image_fragment_imageview)
         imageView.maxScale = 10f
 
-        viewModel.successObserver.subscribe {
+        viewModel.bitmapObserver.subscribe {
             imageView.setImage(ImageSource.bitmap(it))
             imageView.visibility = View.VISIBLE
             progressbar.visibility = View.GONE
@@ -62,6 +65,13 @@ class PostImageFragmentPage : Fragment() {
             progressbar.visibility = View.GONE
             textview.text = it.toString()
             textview.visibility = View.VISIBLE
+        }.let(disposables::add)
+
+        viewModel.gifDrawableObserver.subscribe { gifDrawable ->
+            gifView.setImageDrawable(gifDrawable)
+            gifView.visibility = View.VISIBLE
+            progressbar.visibility = View.GONE
+            gifDrawable.start()
         }.let(disposables::add)
 
         // panel sliding control
@@ -109,6 +119,16 @@ class PostImageFragmentPage : Fragment() {
         }
     }
 
+    /** For navigations from [PostImageFragmentPage] */
+    class Navigator(private val router: Router) {
+        /**
+         * Using [Router.backTo] because default [Router.exit] also closes [PostScreen]
+         * and returns to [MainFlowScreen]. No matter what arguments we pass to [PostScreen]:
+         * it will be found in backstack and displayed without problems
+         */
+        fun back() = router.backTo(PostScreen(-1))
+    }
+
     private class SubsamplingImageStateListener(
         private val panelView: SlidingUpPanelLayout,
         private val imageView: SubsamplingScaleImageView
@@ -137,13 +157,4 @@ class PostImageFragmentPage : Fragment() {
         }
     }
 
-    /** For navigations from [PostImageFragmentPage] */
-    class Navigator(private val router: Router) {
-        /**
-         * Using [Router.backTo] because default [Router.exit] also closes [PostScreen]
-         * and returns to [MainFlowScreen]. No matter what arguments we pass to [PostScreen]:
-         * it will be found in backstack and displayed without problems
-         */
-        fun back() = router.backTo(PostScreen(-1))
-    }
 }

@@ -12,17 +12,24 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import pl.droidsonroids.gif.GifDrawable
+import java.io.File
+import java.util.*
 
-/* ViewModel for downloading image in view mode for PostImageFragmentPage */
+/* ViewModel for downloading image or gif animation for view mode in PostImageFragmentPage */
 class PostImageFragmentViewModel(
     private val repository: InputStreamRepository, private val imageSource: String
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
-    private val successSubject = BehaviorSubject.create<Bitmap>()
-    val successObserver: Observable<Bitmap>
-        get() = successSubject.observeOn(AndroidSchedulers.mainThread())
+    private val bitmapSubject = BehaviorSubject.create<Bitmap>()
+    val bitmapObserver: Observable<Bitmap>
+        get() = bitmapSubject.observeOn(AndroidSchedulers.mainThread())
+
+    private val gifDrawableSubject = BehaviorSubject.create<GifDrawable>()
+    val gifDrawableObserver: Observable<GifDrawable>
+        get() = gifDrawableSubject.observeOn(AndroidSchedulers.mainThread())
 
     private val errorSubject = BehaviorSubject.create<Throwable>()
     val errorObserver: Observable<Throwable>
@@ -33,17 +40,37 @@ class PostImageFragmentViewModel(
         get() = progressSubject.observeOn(AndroidSchedulers.mainThread())
 
     init {
-        Single.just(imageSource).observeOn(Schedulers.io())
-            .map(repository::get)
-            .map(BitmapFactory::decodeStream)
-            .subscribe(::onSuccess, ::onError)
-            .let(disposables::add)
+        if (File(imageSource).extension.toLowerCase(Locale.ENGLISH) == "gif") gifDrawable() else bitmap()
     }
 
-    private fun onSuccess(bitmap: Bitmap) {
+    /** Downloads a bitmap image */
+    private fun bitmap() = Single.just(imageSource).observeOn(Schedulers.io())
+        .map(repository::get)
+        .map(BitmapFactory::decodeStream)
+        .subscribe(::onBitmapSuccess, ::onError)
+        .let(disposables::add)
+
+    private fun onBitmapSuccess(bitmap: Bitmap) {
         errorSubject.onComplete()
         progressSubject.onComplete()
-        successSubject.onNext(bitmap)
+        gifDrawableSubject.onComplete()
+        bitmapSubject.onNext(bitmap)
+        bitmapSubject.onComplete()
+    }
+
+    /** Downloads a gif drawable */
+    private fun gifDrawable() = Single.just(imageSource).observeOn(Schedulers.io())
+        .map(repository::get)
+        .map { GifDrawable(it.readBytes()) }
+        .subscribe(::onGifDrawableSuccess, ::onError)
+        .let(disposables::add)
+
+    private fun onGifDrawableSuccess(gifDrawable: GifDrawable) {
+        errorSubject.onComplete()
+        progressSubject.onComplete()
+        bitmapSubject.onComplete()
+        gifDrawableSubject.onNext(gifDrawable)
+        gifDrawableSubject.onComplete()
     }
 
     private fun onError(throwable: Throwable) {
