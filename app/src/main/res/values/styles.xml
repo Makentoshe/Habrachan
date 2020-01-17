@@ -7,8 +7,8 @@
     </style>
 
     <style name="Habrachan.Light" parent="Habrachan">
-        <item name="main_flow_toolbar_style">@style/Habrachan.Light.Toolbar</item>
-        <item name="android:colorBackground">@android:color/white</item>
+        <item name="habrachanToolbar">@style/Habrachan.Light.Toolbar</item>
+        <item name="habrachanBottomBar">@style/Habrachan.Light.BottomBar</item>
     </style>
 
     <style name="Habrachan.Light.Toolbar" parent="Habrachan.Light">
@@ -17,6 +17,12 @@
         <item name="android:textAppearance">@style/Habrachan.Light.TextAppearance</item>
         <item name="android:tint">@android:color/white</item>
         <item name="android:tintMode">src_atop</item>
+    </style>
+
+    <style name="Habrachan.Light.BottomBar" parent="Habrachan.Light.Toolbar">
+        <item name="itemIconTint">@android:color/white</item>
+        <item name="itemTextColor">@android:color/white</item>
+        <item name="itemRippleColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="Habrachan.Light.TextAppearance" parent="TextAppearance.AppCompat">
