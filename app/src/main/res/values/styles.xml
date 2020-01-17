@@ -8,6 +8,7 @@
 
     <style name="Habrachan.Light" parent="Habrachan">
         <item name="main_flow_toolbar_style">@style/Habrachan.Light.Toolbar</item>
+        <item name="android:colorBackground">@android:color/white</item>
     </style>
 
     <style name="Habrachan.Light.Toolbar" parent="Habrachan.Light">
