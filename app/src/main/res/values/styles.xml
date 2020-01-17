@@ -7,7 +7,6 @@
     </style>
 
     <style name="Habrachan.Light" parent="Habrachan">
-        <item name="colorsas">@color/colorPrimary</item>
         <item name="main_flow_toolbar_style">@style/Habrachan.Light.Toolbar</item>
     </style>
 
