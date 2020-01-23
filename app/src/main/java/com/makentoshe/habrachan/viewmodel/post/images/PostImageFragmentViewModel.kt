@@ -74,7 +74,7 @@ class PostImageFragmentViewModel(
     }
 
     private fun onError(throwable: Throwable) {
-        errorSubject.onError(throwable)
+        errorSubject.onNext(throwable)
     }
 
     override fun onCleared() {
