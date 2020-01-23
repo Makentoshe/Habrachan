@@ -40,6 +40,11 @@ class PostImageFragmentViewModel(
         get() = progressSubject.observeOn(AndroidSchedulers.mainThread())
 
     init {
+        startLoad()
+    }
+
+    fun startLoad() {
+        progressSubject.onNext(Unit)
         if (File(imageSource).extension.toLowerCase(Locale.ENGLISH) == "gif") gifDrawable() else bitmap()
     }
 

@@ -1,10 +1,12 @@
 package com.makentoshe.habrachan.view.post.images
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -19,6 +21,7 @@ import com.makentoshe.habrachan.ui.post.images.PostImageFragmentPageUi
 import com.makentoshe.habrachan.viewmodel.post.images.PostImageFragmentViewModel
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 import ru.terrakok.cicerone.Router
@@ -47,38 +50,20 @@ class PostImageFragmentPage : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val panelView = view.findViewById<SlidingUpPanelLayout>(R.id.post_image_fragment_panel)
-        val textview = view.findViewById<TextView>(R.id.post_image_fragment_textview)
-        val progressbar = view.findViewById<ProgressBar>(R.id.post_image_fragment_progressbar)
-        val gifView = view.findViewById<GifImageView>(R.id.post_image_fragment_gifview)
-        val imageView = view.findViewById<SubsamplingScaleImageView>(R.id.post_image_fragment_imageview)
-        imageView.maxScale = 10f
+        val views = CreatedViews(view)
 
-        viewModel.bitmapObserver.subscribe {
-            imageView.setImage(ImageSource.bitmap(it))
-            imageView.visibility = View.VISIBLE
-            progressbar.visibility = View.GONE
-        }.let(disposables::add)
-
-        viewModel.errorObserver.subscribe {
-            it.printStackTrace()
-            progressbar.visibility = View.GONE
-            textview.text = it.toString()
-            textview.visibility = View.VISIBLE
-        }.let(disposables::add)
-
-        viewModel.gifDrawableObserver.subscribe { gifDrawable ->
-            gifView.setImageDrawable(gifDrawable)
-            gifView.visibility = View.VISIBLE
-            progressbar.visibility = View.GONE
-            gifDrawable.start()
-        }.let(disposables::add)
-
+        viewModel.bitmapObserver.subscribe(OnBitmapSuccess(views)).let(disposables::add)
+        viewModel.errorObserver.subscribe(OnError(views)).let(disposables::add)
+        viewModel.gifDrawableObserver.subscribe(OnGifDrawableSuccess(views)).let(disposables::add)
+        viewModel.progressObserver.subscribe(OnProgress(views)).let(disposables::add)
         // panel sliding control
-        imageView.setOnStateChangedListener(SubsamplingImageStateListener(panelView, imageView))
-
-        // panel display on slide event
-        panelView.addPanelSlideListener(PanelSlideListener(navigator, panelView))
+        views.imageView.setOnStateChangedListener(SubsamplingImageStateListener(views))
+        // panel alpha display on slide event
+        views.panelView.addPanelSlideListener(PanelSlideListener(navigator, views))
+        // retries download
+        views.retryButton.setOnClickListener(RetryOnClickListener(viewModel))
+        // avoid panel collapse on views click
+        views.messageView.setOnClickListener {}
     }
 
     override fun onDestroy() {
@@ -130,22 +115,19 @@ class PostImageFragmentPage : Fragment() {
     }
 
     private class SubsamplingImageStateListener(
-        private val panelView: SlidingUpPanelLayout,
-        private val imageView: SubsamplingScaleImageView
+        private val views: CreatedViews
     ) : SubsamplingScaleImageView.DefaultOnStateChangedListener() {
         override fun onScaleChanged(newScale: Float, origin: Int) {
-            panelView.isEnabled = imageView.minScale == newScale
-            println("$newScale\t${imageView.minScale}")
+            views.panelView.isEnabled = views.imageView.minScale == newScale
         }
     }
 
     private class PanelSlideListener(
-        private val navigator: Navigator,
-        private val panelView: View
+        private val navigator: Navigator, private val views: CreatedViews
     ) : SlidingUpPanelLayout.PanelSlideListener {
 
         override fun onPanelSlide(panel: View, slideOffset: Float) {
-            panelView.alpha = 1 - (1 - slideOffset) * 2
+            views.panelView.alpha = 1 - (1 - slideOffset) * 2
         }
 
         override fun onPanelStateChanged(
@@ -154,6 +136,63 @@ class PostImageFragmentPage : Fragment() {
             if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
                 navigator.back()
             }
+        }
+    }
+
+    private class RetryOnClickListener(
+        private val viewModel: PostImageFragmentViewModel
+    ) : View.OnClickListener {
+        override fun onClick(v: View) {
+            viewModel.startLoad()
+        }
+    }
+
+    private class CreatedViews(view: View) {
+        val panelView = view.findViewById<SlidingUpPanelLayout>(R.id.post_image_fragment_panel)!!
+        val messageView = view.findViewById<TextView>(R.id.post_image_fragment_textview)!!
+        val retryButton = view.findViewById<Button>(R.id.post_image_fragment_retrybutton)!!
+        val progressbar = view.findViewById<ProgressBar>(R.id.post_image_fragment_progressbar)!!
+        val gifView = view.findViewById<GifImageView>(R.id.post_image_fragment_gifview)!!
+        val imageView = view.findViewById<SubsamplingScaleImageView>(R.id.post_image_fragment_imageview)!!
+
+        init {
+            imageView.maxScale = 10f
+        }
+    }
+
+    private class OnProgress(private val views: CreatedViews) : Consumer<Unit> {
+        override fun accept(t: Unit) {
+            views.messageView.visibility = View.GONE
+            views.progressbar.visibility = View.VISIBLE
+            views.retryButton.visibility = View.GONE
+        }
+    }
+
+    private class OnError(private val views: CreatedViews) : Consumer<Throwable> {
+        override fun accept(it: Throwable) {
+            views.progressbar.visibility = View.GONE
+            views.messageView.text = it.toString()
+            views.messageView.visibility = View.VISIBLE
+            views.retryButton.visibility = View.VISIBLE
+        }
+    }
+
+    private class OnBitmapSuccess(private val views: CreatedViews) : Consumer<Bitmap> {
+        override fun accept(it: Bitmap) {
+            views.imageView.setImage(ImageSource.bitmap(it))
+            views.imageView.visibility = View.VISIBLE
+            views.progressbar.visibility = View.GONE
+            views.retryButton.visibility = View.GONE
+        }
+    }
+
+    private class OnGifDrawableSuccess(private val views: CreatedViews): Consumer<GifDrawable> {
+        override fun accept(it: GifDrawable) {
+            views.gifView.setImageDrawable(it)
+            views.gifView.visibility = View.VISIBLE
+            views.progressbar.visibility = View.GONE
+            views.retryButton.visibility = View.GONE
+            it.start()
         }
     }
 
