@@ -111,7 +111,7 @@ class PostImageFragmentPage : Fragment() {
          * and returns to [MainFlowScreen]. No matter what arguments we pass to [PostScreen]:
          * it will be found in backstack and displayed without problems
          */
-        fun back() = router.backTo(PostScreen(-1))
+        fun back() = router.exit()
     }
 
     private class SubsamplingImageStateListener(
@@ -124,16 +124,14 @@ class PostImageFragmentPage : Fragment() {
 
     private class PanelSlideListener(
         private val navigator: Navigator, private val views: CreatedViews
-    ) : SlidingUpPanelLayout.PanelSlideListener {
+    ) : SlidingUpPanelLayout.SimplePanelSlideListener() {
+
+        private var lock = false
 
         override fun onPanelSlide(panel: View, slideOffset: Float) {
             views.panelView.alpha = 1 - (1 - slideOffset) * 2
-        }
-
-        override fun onPanelStateChanged(
-            panel: View, previousState: SlidingUpPanelLayout.PanelState, newState: SlidingUpPanelLayout.PanelState
-        ) {
-            if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+            if (slideOffset <= 0.2 && !lock) {
+                lock = true
                 navigator.back()
             }
         }
