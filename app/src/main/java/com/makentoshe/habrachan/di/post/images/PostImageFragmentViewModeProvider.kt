@@ -9,14 +9,13 @@ import javax.inject.Provider
 
 /* Provides a ViewModel class for PostImageFragmentPage */
 class PostImageFragmentViewModeProvider(
-    private val fragment: PostImageFragmentPage,
-    private val tag: String
+    private val fragment: PostImageFragmentPage
 ) : Provider<PostImageFragmentViewModel> {
 
     private val repository by inject<InputStreamRepository>()
 
     override fun get(): PostImageFragmentViewModel {
         val factory = PostImageFragmentViewModel.Factory(fragment.arguments.source, repository)
-        return ViewModelProviders.of(fragment, factory).get(tag, PostImageFragmentViewModel::class.java)
+        return ViewModelProviders.of(fragment, factory).get(PostImageFragmentViewModel::class.java)
     }
 }

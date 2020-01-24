@@ -60,7 +60,6 @@ class PostImageFragmentViewModel(
         progressSubject.onComplete()
         gifDrawableSubject.onComplete()
         bitmapSubject.onNext(bitmap)
-        bitmapSubject.onComplete()
     }
 
     /** Downloads a gif drawable */
@@ -75,7 +74,6 @@ class PostImageFragmentViewModel(
         progressSubject.onComplete()
         bitmapSubject.onComplete()
         gifDrawableSubject.onNext(gifDrawable)
-        gifDrawableSubject.onComplete()
     }
 
     private fun onError(throwable: Throwable) {

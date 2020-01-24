@@ -73,8 +73,9 @@ class PostImageFragmentPage : Fragment() {
 
     private fun injectDependencies() {
         val module = PostImageFragmentPageModule.Factory().build(this)
-        val scopes =
-            Toothpick.openScopes(ApplicationScope::class.java, PostImageFragmentPageScope::class.java, arguments.source)
+        val scopes = Toothpick.openScopes(
+            ApplicationScope::class.java, PostImageFragmentPageScope::class.java
+        )
         scopes.closeOnDestroy(this).installModules(module).inject(this)
         Toothpick.closeScope(scopes)
     }
@@ -122,6 +123,7 @@ class PostImageFragmentPage : Fragment() {
         }
     }
 
+    // TODO fix urls after rotation
     private class PanelSlideListener(
         private val navigator: Navigator, private val views: CreatedViews
     ) : SlidingUpPanelLayout.SimplePanelSlideListener() {
