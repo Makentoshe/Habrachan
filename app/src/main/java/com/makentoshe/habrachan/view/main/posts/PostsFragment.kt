@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.Data
+import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentModule
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentScope
@@ -258,7 +258,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             viewModel.postsObservable.subscribe(::onSuccess).let(disposables::add)
         }
 
-        private fun onSuccess(posts: List<Data>) {
+        private fun onSuccess(posts: List<Article>) {
             val lastItem = controller.adapter.itemCount
             controller.append(posts)
             controller.requestModelBuild()

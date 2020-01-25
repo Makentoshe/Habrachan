@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.di.main.posts
 
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.database.DataDao
+import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.di.ApplicationScope
@@ -18,7 +18,7 @@ class PostsFragmentModule(fragment: PostsFragment, position: Int) : Module() {
 
     private val manager by inject<HabrPostsManager>()
     private val factory by inject<GetPostsRequestFactory>()
-    private val postsDao by inject<DataDao>()
+    private val postsDao by inject<ArticleDao>()
 
     init {
         performInjections()

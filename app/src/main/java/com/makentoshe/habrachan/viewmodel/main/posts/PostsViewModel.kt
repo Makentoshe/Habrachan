@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.viewmodel.main.posts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.common.database.DataDao
-import com.makentoshe.habrachan.common.entity.Data
+import com.makentoshe.habrachan.common.database.ArticleDao
+import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.repository.Repository
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -16,17 +16,17 @@ import io.reactivex.subjects.PublishSubject
 
 class PostsViewModel(
     position: Int,
-    private val postsRepository: Repository<Int, Single<List<Data>>>,
-    private val postsDao: DataDao
+    private val postsRepository: Repository<Int, Single<List<Article>>>,
+    private val postsDao: ArticleDao
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
     /** Emitter for successful network request events */
-    private val postsSubject = BehaviorSubject.create<List<Data>>()
+    private val postsSubject = BehaviorSubject.create<List<Article>>()
 
     /** Observable for successful network request events */
-    val postsObservable: Observable<List<Data>>
+    val postsObservable: Observable<List<Article>>
         get() = postsSubject.observeOn(AndroidSchedulers.mainThread())
 
     /** Emitter for unsuccessful network request events */
@@ -80,8 +80,8 @@ class PostsViewModel(
 
     class Factory(
         private val position: Int,
-        private val repository: Repository<Int, Single<List<Data>>>,
-        private val postsDao: DataDao
+        private val repository: Repository<Int, Single<List<Article>>>,
+        private val postsDao: ArticleDao
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return PostsViewModel(position, repository, postsDao) as T

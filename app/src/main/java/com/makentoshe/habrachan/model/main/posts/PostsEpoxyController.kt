@@ -2,15 +2,15 @@ package com.makentoshe.habrachan.model.main.posts
 
 import android.view.View
 import com.airbnb.epoxy.EpoxyController
-import com.makentoshe.habrachan.common.entity.Data
+import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.post.PostScreen
 import ru.terrakok.cicerone.Router
 
 class PostsEpoxyController(private val modelFactory: PostModelFactory) : EpoxyController() {
 
-    private val posts = ArrayList<Data>()
+    private val posts = ArrayList<Article>()
 
-    fun append(posts: List<Data>) {
+    fun append(posts: List<Article>) {
         this.posts.addAll(posts)
     }
 
@@ -29,7 +29,7 @@ class PostsEpoxyController(private val modelFactory: PostModelFactory) : EpoxyCo
         }
     }
 
-    private fun addPage(start: Int, posts: List<Data>) {
+    private fun addPage(start: Int, posts: List<Article>) {
         var position = 0
         val end = start + posts.size * 2
         for (index in start until end step 2) {
@@ -57,7 +57,7 @@ class PostsEpoxyController(private val modelFactory: PostModelFactory) : EpoxyCo
 
 class PostModelFactory(private val router: Router) {
 
-    fun build(id: Int, post: Data): PostEpoxyModel {
+    fun build(id: Int, post: Article): PostEpoxyModel {
         val model = PostEpoxyModel_()
         model.id(id)
         model.title = post.title

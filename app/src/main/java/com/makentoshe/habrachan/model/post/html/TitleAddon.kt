@@ -1,9 +1,9 @@
 package com.makentoshe.habrachan.model.post.html
 
-import com.makentoshe.habrachan.common.entity.Data
+import com.makentoshe.habrachan.common.entity.Article
 import org.jsoup.nodes.Element
 
-class TitleAddon(private val post: Data): HtmlBuilder.Addon {
+class TitleAddon(private val post: Article): HtmlBuilder.Addon {
 
     override fun accept(body: Element) {
         val titleNode = createTitleNode()

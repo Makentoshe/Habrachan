@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.viewmodel.main.posts
 
-import com.makentoshe.habrachan.common.database.DataDao
-import com.makentoshe.habrachan.common.entity.Data
+import com.makentoshe.habrachan.common.database.ArticleDao
+import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.common.repository.Repository
@@ -11,8 +11,8 @@ import io.reactivex.schedulers.Schedulers
 
 class PostsRepository(
     private val factory: GetPostsRequestFactory, private val manager: HabrPostsManager
-) : Repository<Int, Single<List<Data>>> {
-    override fun get(k: Int): Single<List<Data>>? {
+) : Repository<Int, Single<List<Article>>> {
+    override fun get(k: Int): Single<List<Article>>? {
         val request = factory.interesting(k)
         return try {
             manager.getPosts(request).map { it.data }
@@ -23,11 +23,11 @@ class PostsRepository(
 }
 
 class DaoPostsRepository(
-    private val postsDao: DataDao,
-    private val repository: Repository<Int, Single<List<Data>>>
-) : Repository<Int, Single<List<Data>>> {
+    private val postsDao: ArticleDao,
+    private val repository: Repository<Int, Single<List<Article>>>
+) : Repository<Int, Single<List<Article>>> {
 
-    override fun get(k: Int): Single<List<Data>>? {
+    override fun get(k: Int): Single<List<Article>>? {
         return Single.just(k).observeOn(Schedulers.io()).map { page ->
             val posts = pullPostsFromSource(page)
             if (posts != null) {
@@ -39,7 +39,7 @@ class DaoPostsRepository(
         }
     }
 
-    private fun pullPostsFromSource(page: Int): List<Data>? {
+    private fun pullPostsFromSource(page: Int): List<Article>? {
         return try {
             repository.get(page)?.blockingGet()
         } catch (e: RuntimeException) {
@@ -47,14 +47,14 @@ class DaoPostsRepository(
         }
     }
 
-    private fun updateDatabase(page: Int, posts: List<Data>) {
+    private fun updateDatabase(page: Int, posts: List<Article>) {
         if (page <= 1) {
             postsDao.clear()
         }
         writeToDatabase(page, posts)
     }
 
-    private fun writeToDatabase(page: Int, posts: List<Data>) {
+    private fun writeToDatabase(page: Int, posts: List<Article>) {
         var disposable: Disposable? = null
         disposable = Single.just(Unit).observeOn(Schedulers.io()).map {
             posts.forEachIndexed { index, post ->
@@ -66,7 +66,7 @@ class DaoPostsRepository(
         }
     }
 
-    private fun pullPostsFromDatabase(page: Int): List<Data> {
+    private fun pullPostsFromDatabase(page: Int): List<Article> {
         //tries to pull posts from database
         val cached = Array(20) { postsDao.getByIndex(page * 20 + it) }.filterNotNull()
         if (cached.isNotEmpty()) return cached else throw RuntimeException()
