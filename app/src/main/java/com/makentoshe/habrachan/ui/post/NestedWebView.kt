@@ -17,7 +17,6 @@ class NestedWebView @JvmOverloads constructor(
     private var mLastY: Int = 0
     private val mScrollOffset = IntArray(2)
     private val mScrollConsumed = IntArray(2)
-    private var mNestedOffsetY: Int = 0
     private val mChildHelper = NestedScrollingChildHelper(this)
 
     init {
@@ -27,31 +26,19 @@ class NestedWebView @JvmOverloads constructor(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent): Boolean {
         var returnValue = false
-
         val event = MotionEvent.obtain(ev)
         val action = event.actionMasked
-        if (action == MotionEvent.ACTION_DOWN) {
-            mNestedOffsetY = 0
-        }
         val eventY = event.y.toInt()
-        event.offsetLocation(0f, 0f)
+
         when (action) {
             MotionEvent.ACTION_MOVE -> {
-                var deltaY = mLastY - eventY
-                // NestedPreScroll
-                if (dispatchNestedPreScroll(0, deltaY, mScrollConsumed, mScrollOffset)) {
-                    deltaY -= mScrollConsumed[1]
-                    mLastY = eventY - mScrollOffset[1]
-                    event.offsetLocation(0f, (-mScrollOffset[1]).toFloat())
-                    mNestedOffsetY += mScrollOffset[1]
-                }
                 returnValue = super.onTouchEvent(event)
+                val deltaY = mLastY - eventY
+                val dispatchNestedPreScroll = dispatchNestedPreScroll(0, deltaY, mScrollConsumed, mScrollOffset)
+                val dispatchNestedScroll = dispatchNestedScroll(0, mScrollOffset[1], 0, deltaY, mScrollOffset)
 
-                // NestedScroll
-                if (dispatchNestedScroll(0, mScrollOffset[1], 0, deltaY, mScrollOffset)) {
-                    event.offsetLocation(0f, mScrollOffset[1].toFloat())
-                    mNestedOffsetY += mScrollOffset[1]
-                    mLastY -= mScrollOffset[1]
+                if (dispatchNestedScroll && dispatchNestedPreScroll) {
+                    returnValue = false
                 }
             }
             MotionEvent.ACTION_DOWN -> {
