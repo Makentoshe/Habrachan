@@ -5,7 +5,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.webkit.WebView
-import androidx.core.view.MotionEventCompat
 import androidx.core.view.NestedScrollingChild
 import androidx.core.view.NestedScrollingChildHelper
 import androidx.core.view.ViewCompat
@@ -30,12 +29,12 @@ class NestedWebView @JvmOverloads constructor(
         var returnValue = false
 
         val event = MotionEvent.obtain(ev)
-        val action = MotionEventCompat.getActionMasked(event)
+        val action = event.actionMasked
         if (action == MotionEvent.ACTION_DOWN) {
             mNestedOffsetY = 0
         }
         val eventY = event.y.toInt()
-        event.offsetLocation(0f, mNestedOffsetY.toFloat())
+        event.offsetLocation(0f, 0f)
         when (action) {
             MotionEvent.ACTION_MOVE -> {
                 var deltaY = mLastY - eventY
