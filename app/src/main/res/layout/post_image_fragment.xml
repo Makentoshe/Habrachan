@@ -53,6 +53,7 @@
 
         <TextView
             android:gravity="center"
+            android:textColor="@android:color/white"
             android:id="@+id/post_image_fragment_textview"
             android:visibility="gone"
             android:layout_width="wrap_content"
@@ -62,6 +63,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/post_image_fragment_retrybutton"
+            android:gravity="center"
+            android:text="@string/retry"
+            app:strokeWidth="1dp"
+            android:visibility="gone"
+            app:rippleColor="@android:color/transparent"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            app:strokeColor="@android:color/white"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/post_image_fragment_textview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

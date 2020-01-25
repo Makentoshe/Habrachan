@@ -40,6 +40,11 @@ class PostImageFragmentViewModel(
         get() = progressSubject.observeOn(AndroidSchedulers.mainThread())
 
     init {
+        startLoad()
+    }
+
+    fun startLoad() {
+        progressSubject.onNext(Unit)
         if (File(imageSource).extension.toLowerCase(Locale.ENGLISH) == "gif") gifDrawable() else bitmap()
     }
 
@@ -55,7 +60,6 @@ class PostImageFragmentViewModel(
         progressSubject.onComplete()
         gifDrawableSubject.onComplete()
         bitmapSubject.onNext(bitmap)
-        bitmapSubject.onComplete()
     }
 
     /** Downloads a gif drawable */
@@ -70,11 +74,10 @@ class PostImageFragmentViewModel(
         progressSubject.onComplete()
         bitmapSubject.onComplete()
         gifDrawableSubject.onNext(gifDrawable)
-        gifDrawableSubject.onComplete()
     }
 
     private fun onError(throwable: Throwable) {
-        errorSubject.onError(throwable)
+        errorSubject.onNext(throwable)
     }
 
     override fun onCleared() {

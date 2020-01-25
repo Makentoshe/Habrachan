@@ -18,13 +18,10 @@
         android:id="@+id/main_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        style="@style/Habrachan.Light.Toolbar"
+        style="?attr/habrachanBottomBar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/main_navigation"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
-        app:itemRippleColor="@color/colorPrimaryDark"/>
+        app:menu="@menu/main_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

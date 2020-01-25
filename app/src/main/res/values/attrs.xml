@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <attr name="colorsas" format="reference" />
-    <declare-styleable name="main_flow_fragment">
-        <attr name="main_flow_toolbar_style" format="reference" />
-    </declare-styleable>
+    <attr name="habrachanToolbar" format="reference"/>
+    <attr name="habrachanBottomBar" format="reference" />
 </resources>
