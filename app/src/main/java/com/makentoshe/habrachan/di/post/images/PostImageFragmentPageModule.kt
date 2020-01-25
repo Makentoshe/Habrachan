@@ -22,6 +22,7 @@ class PostImageFragmentPageModule private constructor(fragment: PostImageFragmen
         bind<PostImageFragmentPage.Navigator>().toInstance(navigator)
 
         val viewModelProvider = PostImageFragmentViewModeProvider(fragment)
+
         Toothpick.openScope(ApplicationScope::class.java).inject(viewModelProvider)
         bind<PostImageFragmentViewModel>().toProviderInstance(viewModelProvider)
     }

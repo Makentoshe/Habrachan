@@ -51,7 +51,7 @@ class PostImageFragmentPage : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val views = CreatedViews(view)
-
+      
         viewModel.bitmapObserver.subscribe(OnBitmapSuccess(views)).let(disposables::add)
         viewModel.errorObserver.subscribe(OnError(views)).let(disposables::add)
         viewModel.gifDrawableObserver.subscribe(OnGifDrawableSuccess(views)).let(disposables::add)
@@ -112,6 +112,7 @@ class PostImageFragmentPage : Fragment() {
          * and returns to [MainFlowScreen]. No matter what arguments we pass to [PostScreen]:
          * it will be found in backstack and displayed without problems
          */
+
         fun back() = router.exit()
     }
 
@@ -195,5 +196,4 @@ class PostImageFragmentPage : Fragment() {
             it.start()
         }
     }
-
 }
