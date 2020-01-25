@@ -16,18 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/scroll_to_top"
-            android:visibility="gone"
-            style="@style/Widget.MaterialComponents.Button"
-            android:text="@string/scroll_to_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            sothree:layout_constraintEnd_toEndOf="parent"
-            sothree:layout_constraintStart_toStartOf="parent"
-            sothree:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:visibility="gone"
             android:id="@+id/error_message"

@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.view.main.posts
 
-import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -35,16 +34,13 @@ import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
-class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
+class PostsFragment : Fragment() {
 
     private val router by inject<Router>()
     private val viewModel by inject<PostsViewModel>()
 
     private val disposables = CompositeDisposable()
-
-    override var page: Int
-        set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("Page", value)
-        get() = arguments!!.getInt("Page")
+    val arguments = Arguments(this)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,36 +55,51 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         val controller = PostsEpoxyController(PostModelFactory(router))
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.main_posts_slidingpanel_recyclerview)
-        RecyclerViewController(disposables, controller, recyclerView, this).install(viewModel)
+        RecyclerViewController(disposables, controller, recyclerView, arguments).install(viewModel)
 
         val swipeRefresh = view.findViewById<SwipyRefreshLayout>(R.id.swipe_refresh_layout)
-        SwipeRefreshController(disposables, controller, swipeRefresh, this).install(viewModel)
+        SwipeRefreshController(disposables, controller, swipeRefresh, arguments).install(viewModel)
 
         val progressbar = view.findViewById<ProgressBar>(R.id.progress_bar)
         ProgressBarController(disposables, progressbar).install(viewModel)
 
         val messageView = view.findViewById<TextView>(R.id.error_message)
-        ErrorMessageController(this, disposables, messageView).install(viewModel)
+        ErrorMessageController(arguments, disposables, messageView).install(viewModel)
 
         val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel)
         val magnifyIcon = view.findViewById<View>(R.id.main_posts_toolbar_magnify)
         SlidingPanelController(disposables, requireActivity(), slidingUpPanelLayout).install(viewModel, magnifyIcon)
 
         val retryButton = view.findViewById<MaterialButton>(R.id.retry_button)
-        RetryButtonController(this, disposables, retryButton).install(viewModel)
-
-        val topScrollButton = view.findViewById<MaterialButton>(R.id.scroll_to_top)
-        TopFloatingButtonController(topScrollButton).install(recyclerView)
+        RetryButtonController(arguments, disposables, retryButton).install(viewModel)
     }
 
     class Factory {
         fun build(page: Int) = PostsFragment().apply {
-            this.page = page
+            arguments.page = page
         }
     }
 
+    class Arguments(fragment: PostsFragment) {
+
+        init {
+            (fragment as Fragment).arguments = Bundle()
+        }
+
+        private val fragmentArguments = fragment.requireArguments()
+
+        var page: Int
+            get() = fragmentArguments.getInt(PAGE)
+            set(value) = fragmentArguments.putInt(PAGE, value)
+
+        companion object {
+            private const val PAGE = "Page"
+        }
+
+    }
+
     private fun injectDependencies() {
-        val module = PostsFragmentModule.Factory(this).build(page)
+        val module = PostsFragmentModule.Factory(this).build(arguments.page)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostsFragmentScope::class.java)
         scopes.closeOnDestroy(this).installModules(module).inject(this)
     }
@@ -109,14 +120,14 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
     }
 
     class ErrorMessageController(
-        private val holder: PostsFragmentArgumentsHolder,
+        private val arguments: Arguments,
         private val disposables: CompositeDisposable,
         private val messageView: TextView
     ) {
 
         fun install(viewModel: PostsViewModel) {
             viewModel.errorObservable.subscribe {
-                if (holder.page > 1) return@subscribe
+                if (arguments.page > 1) return@subscribe
                 messageView.text = it.toString()
                 messageView.visibility = View.VISIBLE
             }.let(disposables::add)
@@ -166,7 +177,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
     }
 
     class RetryButtonController(
-        private val holder: PostsFragmentArgumentsHolder,
+        private val arguments: PostsFragment.Arguments,
         private val disposables: CompositeDisposable,
         private val button: MaterialButton
     ) {
@@ -181,7 +192,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             }.let(disposables::add)
 
             viewModel.errorObservable.subscribe {
-                if (holder.page > 1) return@subscribe
+                if (arguments.page > 1) return@subscribe
                 button.visibility = View.VISIBLE
             }.let(disposables::add)
 
@@ -195,7 +206,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         private val disposables: CompositeDisposable,
         private val controller: PostsEpoxyController,
         private val view: SwipyRefreshLayout,
-        private val holder: PostsFragmentArgumentsHolder
+        private val arguments: PostsFragment.Arguments
     ) {
 
         init {
@@ -212,7 +223,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             }.let(disposables::add)
 
             viewModel.postsObservable.subscribe {
-                holder.page += 1
+                arguments.page += 1
                 view.visibility = View.VISIBLE
                 view.isRefreshing = false
             }.let(disposables::add)
@@ -229,12 +240,12 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
 
         private fun onTopRefresh(viewModel: PostsViewModel) {
             controller.clear()
-            holder.page = 1
-            viewModel.newRequestObserver.onNext(holder.page)
+            arguments.page = 1
+            viewModel.newRequestObserver.onNext(arguments.page)
         }
 
         private fun onBotRefresh(viewModel: PostsViewModel) {
-            viewModel.requestObserver.onNext(holder.page + 1)
+            viewModel.requestObserver.onNext(arguments.page + 1)
         }
     }
 
@@ -242,7 +253,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
         private val disposables: CompositeDisposable,
         private val controller: PostsEpoxyController,
         private val view: RecyclerView,
-        private val holder: PostsFragmentArgumentsHolder
+        private val arguments: PostsFragment.Arguments
     ) {
 
         private val layoutManager = LinearLayoutManager(view.context)
@@ -262,7 +273,7 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             val lastItem = controller.adapter.itemCount
             controller.append(posts)
             controller.requestModelBuild()
-            if (holder.page != 1) {
+            if (arguments.page != 1) {
                 scrollToPageDivider(lastItem)
             }
         }
@@ -271,75 +282,6 @@ class PostsFragment : Fragment(), PostsFragmentArgumentsHolder {
             val scroller = this.scroller
             scroller.targetPosition = lastItem
             layoutManager.startSmoothScroll(scroller)
-        }
-    }
-
-    class TopFloatingButtonController(private val button: MaterialButton) {
-
-        private val ANIM_STATE_IDLE = 0
-        private val ANIM_STATE_HIDING = 1
-        private val ANIM_STATE_SHOWING = 2
-
-        private var state = ANIM_STATE_IDLE
-        private var isStateLocked = false
-
-        fun install(recyclerView: RecyclerView) {
-            button.setOnClickListener {
-                recyclerView.smoothScrollToPosition(0)
-                button.hide()
-            }
-            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    isStateLocked = newState == RecyclerView.SCROLL_STATE_SETTLING
-                }
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                    onScrolled(recyclerView, dy)
-                }
-            })
-        }
-
-        private fun onScrolled(recyclerView: RecyclerView, dy: Int) {
-            if (dy > 0 || recyclerView.computeVerticalScrollOffset() <= 100) {
-                button.hide()
-            }
-            if (dy < 0 && !isStateLocked) {
-                button.show()
-            }
-        }
-
-        private fun MaterialButton.hide() {
-            // skip call if we already hiding
-            if (state != ANIM_STATE_IDLE) return
-            state = ANIM_STATE_HIDING
-            animate().scaleX(0f).scaleY(0f).setDuration(400)
-                .setListener(object : DefaultAnimator() {
-                    override fun onAnimationEnd(animation: Animator?) {
-                        visibility = View.GONE
-                        state = ANIM_STATE_IDLE
-                    }
-                }).start()
-        }
-
-        private fun MaterialButton.show() {
-            // skip call if we already showing
-            if (state != ANIM_STATE_IDLE) return
-            state = ANIM_STATE_SHOWING
-            visibility = View.VISIBLE
-            animate().scaleX(1f).scaleY(1f).setDuration(400)
-                .setListener(object : DefaultAnimator() {
-                    override fun onAnimationEnd(animation: Animator?) {
-                        state = ANIM_STATE_IDLE
-                    }
-                }).start()
-        }
-
-        private abstract class DefaultAnimator : Animator.AnimatorListener {
-            override fun onAnimationCancel(animation: Animator?) = Unit
-            override fun onAnimationEnd(animation: Animator?) = Unit
-            override fun onAnimationRepeat(animation: Animator?) = Unit
-            override fun onAnimationStart(animation: Animator?) = Unit
-            override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) = Unit
-            override fun onAnimationStart(animation: Animator?, isReverse: Boolean) = Unit
         }
     }
 }
