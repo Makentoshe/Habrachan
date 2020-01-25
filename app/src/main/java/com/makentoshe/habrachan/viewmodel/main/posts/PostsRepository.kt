@@ -6,7 +6,6 @@ import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.common.repository.Repository
 import io.reactivex.Single
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class PostsRepository(
@@ -23,23 +22,23 @@ class PostsRepository(
 }
 
 class DaoPostsRepository(
-    private val postsDao: ArticleDao,
+    private val articleDao: ArticleDao,
     private val repository: Repository<Int, Single<List<Article>>>
 ) : Repository<Int, Single<List<Article>>> {
 
     override fun get(k: Int): Single<List<Article>>? {
         return Single.just(k).observeOn(Schedulers.io()).map { page ->
-            val posts = pullPostsFromSource(page)
+            val posts = pullArticlesFromSource(page)
             if (posts != null) {
                 updateDatabase(page, posts)
                 return@map posts
             } else {
-                return@map pullPostsFromDatabase(page)
+                return@map pullArticlesFromDatabase(page)
             }
         }
     }
 
-    private fun pullPostsFromSource(page: Int): List<Article>? {
+    private fun pullArticlesFromSource(page: Int): List<Article>? {
         return try {
             repository.get(page)?.blockingGet()
         } catch (e: RuntimeException) {
@@ -49,26 +48,21 @@ class DaoPostsRepository(
 
     private fun updateDatabase(page: Int, posts: List<Article>) {
         if (page <= 1) {
-            postsDao.clear()
+            articleDao.clear()
         }
         writeToDatabase(page, posts)
     }
 
-    private fun writeToDatabase(page: Int, posts: List<Article>) {
-        var disposable: Disposable? = null
-        disposable = Single.just(Unit).observeOn(Schedulers.io()).map {
-            posts.forEachIndexed { index, post ->
-                post.index = page * 20 + index
-                postsDao.insert(post)
-            }
-        }.subscribe { _, _ ->
-            disposable?.dispose()
+    private fun writeToDatabase(page: Int, articles: List<Article>) {
+        articles.forEachIndexed { index, post ->
+            post.index = page * 20 + index
+            articleDao.insert(post)
         }
     }
 
-    private fun pullPostsFromDatabase(page: Int): List<Article> {
+    private fun pullArticlesFromDatabase(page: Int): List<Article> {
         //tries to pull posts from database
-        val cached = Array(20) { postsDao.getByIndex(page * 20 + it) }.filterNotNull()
+        val cached = Array(20) { articleDao.getByIndex(page * 20 + it) }.filterNotNull()
         if (cached.isNotEmpty()) return cached else throw RuntimeException()
     }
 }
