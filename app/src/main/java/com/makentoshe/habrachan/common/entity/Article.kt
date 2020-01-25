@@ -77,7 +77,7 @@ data class Article(
     @SerializedName("text_cut")
     val textCut: String,
     @SerializedName("time_interesting")
-    val timeInteresting: String,
+    val timeInteresting: String? = null,
     @SerializedName("time_published")
     val timePublished: String,
     @SerializedName("title")

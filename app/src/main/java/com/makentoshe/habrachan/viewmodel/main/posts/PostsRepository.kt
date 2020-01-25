@@ -12,7 +12,7 @@ class PostsRepository(
     private val factory: GetPostsRequestFactory, private val manager: HabrPostsManager
 ) : Repository<Int, Single<List<Article>>> {
     override fun get(k: Int): Single<List<Article>>? {
-        val request = factory.interesting(k)
+        val request = factory.all(k)
         return try {
             manager.getPosts(request).map { it.data }
         } catch (e: RuntimeException) {
