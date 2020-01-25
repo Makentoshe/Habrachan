@@ -1,35 +1,44 @@
 package com.makentoshe.habrachan.common.entity
 
-
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class Article(
+    @PrimaryKey
+    @SerializedName("id")
+    val id: Int,
+
+    // value for better storing in database
+    // should not used directly
+    var index: Int? = null,
+
+    @Embedded(prefix = "user_")
     @SerializedName("author")
     val author: User,
     @SerializedName("comments_count")
-    val commentsCount: String,
+    val commentsCount: Int,
     @SerializedName("comments_new")
-    val commentsNew: Any,
+    val commentsNew: Int,
     @SerializedName("favorites_count")
-    val favoritesCount: String,
+    val favoritesCount: Int,
     @SerializedName("flows")
-    val flows: List<Flow>,
+    val flows: List<Flow> = listOf(),
     @SerializedName("full_url")
     val fullUrl: String,
     @SerializedName("has_polls")
     val hasPolls: Boolean,
     @SerializedName("hubs")
-    val hubs: List<Hub>,
-    @SerializedName("id")
-    val id: String,
-    @SerializedName("images")
-    val images: List<Any>,
+    val hubs: List<Hub> = listOf(),
     @SerializedName("is_can_vote")
     val isCanVote: Boolean,
     @SerializedName("is_comments_hide")
-    val isCommentsHide: String,
+    val isCommentsHide: Int,
     @SerializedName("is_corporative")
-    val isCorporative: String,
+    val isCorporative: Int,
     @SerializedName("is_favorite")
     val isFavorite: Boolean,
     @SerializedName("is_habred")
@@ -42,24 +51,27 @@ data class Article(
     val isTutorial: Boolean,
     @SerializedName("lang")
     val lang: String,
+    @Embedded(prefix = "metadata_")
     @SerializedName("metadata")
-    val metadata: Metadata,
+    val metadata: Metadata? = null,
     @SerializedName("path")
     val path: String,
     @SerializedName("post_type")
-    val postType: String,
+    val postType: Int,
     @SerializedName("post_type_str")
     val postTypeStr: String,
     @SerializedName("preview_html")
     val previewHtml: String,
+    @SerializedName("text_html")
+    val textHtml: String? = null,
     @SerializedName("reading_count")
     val readingCount: Int,
     @SerializedName("score")
-    val score: String,
+    val score: Int,
     @SerializedName("source_author")
-    val sourceAuthor: String,
+    val sourceAuthor: String? = null,
     @SerializedName("source_link")
-    val sourceLink: String,
+    val sourceLink: String? = null,
     @SerializedName("tags_string")
     val tagsString: String,
     @SerializedName("text_cut")
@@ -72,8 +84,11 @@ data class Article(
     val title: String,
     @SerializedName("url")
     val url: String,
-    @SerializedName("vote")
-    val vote: Any,
+//    @Ignore
+//    @SerializedName("vote")
+//    val vote: Any? = null,
     @SerializedName("votes_count")
-    val votesCount: String
+    val votesCount: Int,
+    @SerializedName("is_can_comment")
+    val isCanComment: Boolean? = null
 )

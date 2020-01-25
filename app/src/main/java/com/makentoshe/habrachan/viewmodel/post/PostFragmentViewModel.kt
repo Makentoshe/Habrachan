@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.viewmodel.post
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.common.entity.Data
+import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.repository.Repository
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.html.*
@@ -16,7 +16,7 @@ import java.io.InputStream
 class PostFragmentViewModel(
     private val repository: Repository<Int, InputStream>,
     postId: Int,
-    postRepository: Repository<Int, Single<Data>>,
+    postRepository: Repository<Int, Single<Article>>,
     habrachanWebViewClient: HabrachanWebViewClient
 ) : ViewModel() {
 
@@ -56,7 +56,7 @@ class PostFragmentViewModel(
         }
     }
 
-    private fun createHtml(post: Data): String {
+    private fun createHtml(post: Article): String {
         val builder = HtmlBuilder(post)
         builder.addAddon(DisplayScriptAddon(repository))
         builder.addAddon(StyleAddon(repository))
@@ -73,7 +73,7 @@ class PostFragmentViewModel(
     class Factory(
         private val repository: Repository<Int, InputStream>,
         private val postId: Int,
-        private val postRepository: Repository<Int, Single<Data>>,
+        private val postRepository: Repository<Int, Single<Article>>,
         private val habrachanWebViewClient: HabrachanWebViewClient
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

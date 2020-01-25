@@ -3,11 +3,11 @@ package com.makentoshe.habrachan.common.entity.posts
 
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.common.entity.Data
+import com.makentoshe.habrachan.common.entity.Article
 
 data class PostsResponse(
     @SerializedName("data")
-    val data: List<Data>,
+    val data: List<Article>,
     @SerializedName("next_page")
     val nextPage: NextPage,
     @SerializedName("pages")

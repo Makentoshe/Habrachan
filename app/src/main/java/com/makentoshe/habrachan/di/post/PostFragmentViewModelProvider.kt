@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.di.post
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.database.DataDao
+import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.network.manager.HabrPostManager
 import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
@@ -22,7 +22,7 @@ class PostFragmentViewModelProvider(
 ) : Provider<PostFragmentViewModel> {
 
     private val rawResourceRepository by inject<RawResourceRepository>()
-    private val postsDao by inject<DataDao>()
+    private val postsDao by inject<ArticleDao>()
     private val requestFactory by inject<GetPostRequestFactory>()
     private val manager by inject<HabrPostManager>()
 
