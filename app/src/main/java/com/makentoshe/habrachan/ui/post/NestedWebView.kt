@@ -34,7 +34,7 @@ class NestedWebView @JvmOverloads constructor(
             mNestedOffsetY = 0
         }
         val eventY = event.y.toInt()
-        event.offsetLocation(0f, mNestedOffsetY.toFloat())
+        event.offsetLocation(0f, 0f)
         when (action) {
             MotionEvent.ACTION_MOVE -> {
                 var deltaY = mLastY - eventY
