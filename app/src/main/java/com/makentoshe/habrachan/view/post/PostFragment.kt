@@ -12,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.post.PostFragmentModule
@@ -19,6 +20,7 @@ import com.makentoshe.habrachan.di.post.PostFragmentScope
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.JavaScriptInterface
 import com.makentoshe.habrachan.model.post.PostBroadcastReceiver
+import com.makentoshe.habrachan.ui.post.BottomBarUi
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentNavigationViewModel
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
@@ -70,6 +72,9 @@ class PostFragment : Fragment() {
         viewModel.errorObservable.subscribe { throwable ->
             Toast.makeText(requireContext(), throwable.toString(), Toast.LENGTH_LONG).show()
         }.let(disposables::add)
+
+        val bottomBar = view.findViewById<BottomAppBar>(R.id.post_fragment_bottombar)
+        bottomBar.addView(BottomBarUi(view).createView(requireContext()))
     }
 
     override fun onStart() {
