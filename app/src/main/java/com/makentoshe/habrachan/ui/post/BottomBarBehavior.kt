@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.ui.main.posts
+package com.makentoshe.habrachan.ui.post
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -18,7 +18,8 @@ class BottomBarBehavior(
 ) : CoordinatorLayout.Behavior<BottomAppBar>(context, attrs) {
 
     private var height = 0
-    private var currentState = STATE_SCROLLED_UP
+    private var currentState =
+        STATE_SCROLLED_UP
     private var additionalHiddenOffsetY = 0
     private var currentAnimator: ViewPropertyAnimator? = null
 
@@ -90,7 +91,8 @@ class BottomBarBehavior(
             currentAnimator!!.cancel()
             child.clearAnimation()
         }
-        currentState = STATE_SCROLLED_DOWN
+        currentState =
+            STATE_SCROLLED_DOWN
         animateChildTo(
             child,
             height + additionalHiddenOffsetY,

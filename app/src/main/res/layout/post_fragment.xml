@@ -24,7 +24,7 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/post_fragment_bottombar"
             app:hideOnScroll="true"
-            app:layout_behavior=".ui.main.posts.BottomBarBehavior"
+            app:layout_behavior=".ui.post.BottomBarBehavior"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom" />
