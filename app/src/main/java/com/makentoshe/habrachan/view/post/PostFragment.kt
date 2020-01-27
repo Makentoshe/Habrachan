@@ -17,12 +17,14 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.post.PostFragmentModule
 import com.makentoshe.habrachan.di.post.PostFragmentScope
+import com.makentoshe.habrachan.model.post.CommentsScreen
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.JavaScriptInterface
 import com.makentoshe.habrachan.model.post.PostBroadcastReceiver
 import com.makentoshe.habrachan.model.post.images.PostImageScreen
 import com.makentoshe.habrachan.ui.post.BottomBarUi
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
+import com.makentoshe.habrachan.view.post.comments.CommentsFragment
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router
@@ -97,7 +99,7 @@ class PostFragment : Fragment() {
         // show article's comments
         views.commentsGroup.referencedIds.forEach {
             view.findViewById<View>(it).setOnClickListener {
-                navigator.toArticleCommentsScreen()
+                navigator.toArticleCommentsScreen(arguments.articleId)
             }
         }
     }
@@ -135,8 +137,8 @@ class PostFragment : Fragment() {
             router.navigateTo(PostImageScreen(resource))
         }
 
-        fun toArticleCommentsScreen() {
-            // TODO
+        fun toArticleCommentsScreen(articleId: Int) {
+            router.navigateTo(CommentsScreen(articleId))
         }
     }
 
