@@ -7,9 +7,11 @@ import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.network.manager.HabrPostManager
 import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
+import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.model.post.DaoPostRepository
 import com.makentoshe.habrachan.model.post.PostRepository
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
+import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import javax.inject.Provider
 
@@ -23,6 +25,10 @@ class PostFragmentViewModelProvider(
     private val postsDao by inject<ArticleDao>()
     private val requestFactory by inject<GetPostRequestFactory>()
     private val manager by inject<HabrPostManager>()
+
+    init {
+        Toothpick.openScope(ApplicationScope::class.java).inject(this)
+    }
 
     override fun get(): PostFragmentViewModel {
         val factory = createViewModelFactory()

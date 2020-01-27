@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.viewmodel.post
+package com.makentoshe.habrachan.model.post
 
 import io.reactivex.disposables.CompositeDisposable
 

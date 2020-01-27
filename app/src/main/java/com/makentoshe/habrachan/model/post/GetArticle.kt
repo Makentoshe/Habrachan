@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.viewmodel.post
+package com.makentoshe.habrachan.model.post
 
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.repository.Repository

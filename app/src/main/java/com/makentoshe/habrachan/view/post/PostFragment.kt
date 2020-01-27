@@ -19,28 +19,25 @@ import com.makentoshe.habrachan.di.post.PostFragmentScope
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.JavaScriptInterface
 import com.makentoshe.habrachan.model.post.PostBroadcastReceiver
+import com.makentoshe.habrachan.model.post.images.PostImageScreen
 import com.makentoshe.habrachan.ui.post.BottomBarUi
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
-import com.makentoshe.habrachan.viewmodel.post.PostFragmentNavigationViewModel
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class PostFragment : Fragment() {
 
-    private val navigationViewModel by inject<PostFragmentNavigationViewModel>()
-
+    private val navigator by inject<PostFragment.Navigator>()
     private val viewModel by inject<PostFragmentViewModel>()
     private val webViewClient by inject<HabrachanWebViewClient>()
     private val javaScriptInterface by inject<JavaScriptInterface>()
     private val broadcastReceiver by inject<PostBroadcastReceiver>()
 
-    private var postId: Int
-        set(value) = (arguments ?: Bundle().also { arguments = it }).putInt("id", value)
-        get() = arguments?.getInt("id") ?: -1
-
+    private val arguments = Arguments(this)
     private val disposables = CompositeDisposable()
 
     override fun onAttach(context: Context) {
@@ -103,12 +100,11 @@ class PostFragment : Fragment() {
         }
 
         toolbar.setNavigationOnClickListener {
-            navigationViewModel.backToMainPostsScreen()
+            navigator.back()
         }
 
         broadcastReceiver.addOnImageClickedListener { source, sources ->
-            val index = sources.indexOf(source)
-            navigationViewModel.navigateToImagesScreen(index, sources)
+            navigator.toArticleResourceScreen(source)
         }
     }
 
@@ -129,12 +125,42 @@ class PostFragment : Fragment() {
 
     class Factory {
         fun build(postId: Int) = PostFragment().apply {
-            this.postId = postId
+            arguments.articleId = postId
+        }
+    }
+
+    class Navigator(private val router: Router) {
+
+        /** Returns to MainScreen */
+        fun back() {
+            router.exit()
+        }
+
+        /** Navigates to [PostImageScreen] */
+        fun toArticleResourceScreen(resource: String) {
+            router.navigateTo(PostImageScreen(resource))
+        }
+    }
+
+    class Arguments(fragment: PostFragment) {
+
+        init {
+            (fragment as Fragment).arguments = Bundle()
+        }
+
+        private val fragmentArguments = fragment.requireArguments()
+
+        var articleId: Int
+            set(value) = fragmentArguments.putInt(ID, value)
+            get() = fragmentArguments.getInt(ID) ?: -1
+
+        companion object {
+            private const val ID = "Id"
         }
     }
 
     private fun injectDependencies() {
-        val module = PostFragmentModule.Builder(postId).build(this)
+        val module = PostFragmentModule.Builder(arguments.articleId).build(this)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostFragmentScope::class.java)
         scopes.closeOnDestroy(this).installModules(module).inject(this)
         Toothpick.closeScope(scopes)

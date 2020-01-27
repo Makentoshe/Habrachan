@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.repository.Repository
+import com.makentoshe.habrachan.model.post.GetArticle
+import com.makentoshe.habrachan.model.post.VoteArticle
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import java.io.InputStream
