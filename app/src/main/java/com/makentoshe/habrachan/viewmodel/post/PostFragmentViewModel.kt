@@ -16,10 +16,10 @@ class PostFragmentViewModel(
 
     private val disposables = CompositeDisposable()
     val voteArticle = VoteArticle(disposables, postId)
-    val getArticle = GetArticle(disposables, repository, postRepository)
+    val getArticle = GetArticle(disposables, repository, postRepository, postId)
 
     init {
-        getArticle.requestArticle(postId)
+        getArticle.requestArticle()
     }
 
     override fun onCleared() {

@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Button
 import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -52,7 +53,6 @@ class PostFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar)
         val webview = view.findViewById<WebView>(R.id.post_fragment_webview).apply {
             webViewClient = this@PostFragment.webViewClient
             isHorizontalScrollBarEnabled = false
@@ -62,9 +62,45 @@ class PostFragment : Fragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.post_fragment_toolbar).apply {
             navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
         }
-        val bottomBar = view.findViewById<BottomAppBar>(R.id.post_fragment_bottombar)
+        val bottomBar = view.findViewById<BottomAppBar>(R.id.post_fragment_bottombar).apply {
+            addView(BottomBarUi(view).createView(requireContext()))
+        }
+        val progressBar = view.findViewById<ProgressBar>(R.id.post_fragment_progressbar)
+        val retryButton = view.findViewById<Button>(R.id.post_fragment_retrybutton)
+        val messageView = view.findViewById<TextView>(R.id.post_fragment_messageview)
 
-        bottomBar.addView(BottomBarUi(view).createView(requireContext()))
+        // ready to display
+        viewModel.getArticle.articleObservable.subscribe { html ->
+            webview.loadData(html, "text/html", "UFT-8")
+        }.let(disposables::add)
+
+        // success
+        webViewClient.onPublicationReadyToShow {
+            webview.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+        }
+        // error
+        viewModel.getArticle.errorObservable.subscribe { throwable ->
+            webview.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            retryButton.visibility = View.VISIBLE
+            messageView.visibility = View.VISIBLE
+            messageView.text = throwable.toString()
+        }.let(disposables::add)
+
+        retryButton.setOnClickListener {
+            progressBar.visibility = View.VISIBLE
+            retryButton.visibility = View.GONE
+            messageView.visibility = View.GONE
+            viewModel.getArticle.requestArticle()
+        }
+
+        bottomBar.findViewById<View>(R.id.post_fragment_bottombar_voteup).setOnClickListener {
+            viewModel.voteArticle.voteUp()
+        }
+        bottomBar.findViewById<View>(R.id.post_fragment_bottombar_votedown).setOnClickListener {
+            viewModel.voteArticle.voteDown()
+        }
 
         toolbar.setNavigationOnClickListener {
             navigationViewModel.backToMainPostsScreen()
@@ -73,28 +109,6 @@ class PostFragment : Fragment() {
         broadcastReceiver.addOnImageClickedListener { source, sources ->
             val index = sources.indexOf(source)
             navigationViewModel.navigateToImagesScreen(index, sources)
-        }
-
-        viewModel.getArticle.articleObservable.subscribe { html ->
-            webview.loadData(html, "text/html", "UFT-8")
-        }.let(disposables::add)
-
-        webViewClient.onPublicationReadyToShow {
-            webview.visibility = View.VISIBLE
-            progressBar.visibility = View.GONE
-        }
-
-        viewModel.getArticle.errorObservable.subscribe { throwable ->
-            Toast.makeText(requireContext(), throwable.toString(), Toast.LENGTH_LONG).show()
-            webview.visibility = View.GONE
-            progressBar.visibility = View.GONE
-        }.let(disposables::add)
-
-        bottomBar.findViewById<View>(R.id.post_fragment_bottombar_voteup).setOnClickListener {
-            viewModel.voteArticle.voteUp()
-        }
-        bottomBar.findViewById<View>(R.id.post_fragment_bottombar_votedown).setOnClickListener {
-            viewModel.voteArticle.voteDown()
         }
     }
 

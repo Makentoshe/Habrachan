@@ -13,7 +13,8 @@ import java.io.InputStream
 class GetArticle(
     private val disposables: CompositeDisposable,
     private val resourceRepository: Repository<Int, InputStream>,
-    private val articleRepository: Repository<Int, Single<Article>>
+    private val articleRepository: Repository<Int, Single<Article>>,
+    private val articleId: Int
 ) {
 
     /** Emitter for publication data */
@@ -29,7 +30,7 @@ class GetArticle(
     val errorObservable: Observable<Throwable>
         get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
 
-    fun requestArticle(articleId: Int) {
+    fun requestArticle() {
         articleRepository.get(articleId)!!.subscribe(::onSuccess, ::onError).let(disposables::add)
     }
 
