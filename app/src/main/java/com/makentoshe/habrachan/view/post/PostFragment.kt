@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.makentoshe.habrachan.R
@@ -50,61 +51,54 @@ class PostFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val webview = view.findViewById<WebView>(R.id.post_fragment_webview).apply {
-            webViewClient = this@PostFragment.webViewClient
-            isHorizontalScrollBarEnabled = false
-            settings.javaScriptEnabled = true
-            addJavascriptInterface(javaScriptInterface, "JSInterface")
-        }
-        val toolbar = view.findViewById<Toolbar>(R.id.post_fragment_toolbar).apply {
-            navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
-        }
-        val bottomBar = view.findViewById<BottomAppBar>(R.id.post_fragment_bottombar).apply {
-            addView(BottomBarUi(view).createView(requireContext()))
-        }
-        val progressBar = view.findViewById<ProgressBar>(R.id.post_fragment_progressbar)
-        val retryButton = view.findViewById<Button>(R.id.post_fragment_retrybutton)
-        val messageView = view.findViewById<TextView>(R.id.post_fragment_messageview)
+        val views = PostFragmentViews(view, this)
 
         // ready to display
         viewModel.getArticle.articleObservable.subscribe { html ->
-            webview.loadData(html, "text/html", "UFT-8")
+            views.webview.loadData(html, "text/html", "UFT-8")
         }.let(disposables::add)
 
         // success
         webViewClient.onPublicationReadyToShow {
-            webview.visibility = View.VISIBLE
-            progressBar.visibility = View.GONE
+            views.webview.visibility = View.VISIBLE
+            views.progressBar.visibility = View.GONE
         }
         // error
         viewModel.getArticle.errorObservable.subscribe { throwable ->
-            webview.visibility = View.GONE
-            progressBar.visibility = View.GONE
-            retryButton.visibility = View.VISIBLE
-            messageView.visibility = View.VISIBLE
-            messageView.text = throwable.toString()
+            views.webview.visibility = View.GONE
+            views.progressBar.visibility = View.GONE
+            views.retryButton.visibility = View.VISIBLE
+            views.messageView.visibility = View.VISIBLE
+            views.messageView.text = throwable.toString()
         }.let(disposables::add)
-
-        retryButton.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
-            retryButton.visibility = View.GONE
-            messageView.visibility = View.GONE
+        // retry to receive an article
+        views.retryButton.setOnClickListener {
+            views.retryButton.visibility = View.GONE
+            views.progressBar.visibility = View.VISIBLE
+            views.messageView.visibility = View.GONE
             viewModel.getArticle.requestArticle()
         }
-
-        bottomBar.findViewById<View>(R.id.post_fragment_bottombar_voteup).setOnClickListener {
+        // vote article up
+        views.bottomBar.findViewById<View>(R.id.post_fragment_bottombar_voteup).setOnClickListener {
             viewModel.voteArticle.voteUp()
         }
-        bottomBar.findViewById<View>(R.id.post_fragment_bottombar_votedown).setOnClickListener {
+        // vote article down
+        views.bottomBar.findViewById<View>(R.id.post_fragment_bottombar_votedown).setOnClickListener {
             viewModel.voteArticle.voteDown()
         }
-
-        toolbar.setNavigationOnClickListener {
+        // return to previous screen
+        views.toolbar.setNavigationOnClickListener {
             navigator.back()
         }
-
+        // show article's image
         broadcastReceiver.addOnImageClickedListener { source, sources ->
             navigator.toArticleResourceScreen(source)
+        }
+        // show article's comments
+        views.commentsGroup.referencedIds.forEach {
+            view.findViewById<View>(it).setOnClickListener {
+                navigator.toArticleCommentsScreen()
+            }
         }
     }
 
@@ -140,6 +134,10 @@ class PostFragment : Fragment() {
         fun toArticleResourceScreen(resource: String) {
             router.navigateTo(PostImageScreen(resource))
         }
+
+        fun toArticleCommentsScreen() {
+            // TODO
+        }
     }
 
     class Arguments(fragment: PostFragment) {
@@ -164,6 +162,29 @@ class PostFragment : Fragment() {
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostFragmentScope::class.java)
         scopes.closeOnDestroy(this).installModules(module).inject(this)
         Toothpick.closeScope(scopes)
+    }
+
+    private class PostFragmentViews(view: View, fragment: PostFragment) {
+
+        val webview = view.findViewById<WebView>(R.id.post_fragment_webview).apply {
+            webViewClient = fragment.webViewClient
+            isHorizontalScrollBarEnabled = false
+            settings.javaScriptEnabled = true
+            addJavascriptInterface(fragment.javaScriptInterface, "JSInterface")
+        }
+
+        val toolbar = view.findViewById<Toolbar>(R.id.post_fragment_toolbar).apply {
+            navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, fragment.requireContext().theme)
+        }
+
+        val bottomBar = view.findViewById<BottomAppBar>(R.id.post_fragment_bottombar).apply {
+            addView(BottomBarUi(view).createView(fragment.requireContext()))
+        }
+
+        val progressBar = view.findViewById<ProgressBar>(R.id.post_fragment_progressbar)
+        val retryButton = view.findViewById<Button>(R.id.post_fragment_retrybutton)
+        val messageView = view.findViewById<TextView>(R.id.post_fragment_messageview)
+        val commentsGroup = view.findViewById<Group>(R.id.post_fragment_bottombar_comments)
     }
 
 }
