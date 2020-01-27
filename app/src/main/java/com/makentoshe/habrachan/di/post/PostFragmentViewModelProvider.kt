@@ -7,24 +7,28 @@ import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.network.manager.HabrPostManager
 import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
+import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.model.post.DaoPostRepository
-import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.PostRepository
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
+import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import javax.inject.Provider
 
 /* Provides PostFragmentViewModel for PostFragment*/
 class PostFragmentViewModelProvider(
     private val fragment: Fragment,
-    private val postId: Int,
-    private val habrachanWebViewClient: HabrachanWebViewClient
+    private val postId: Int
 ) : Provider<PostFragmentViewModel> {
 
     private val rawResourceRepository by inject<RawResourceRepository>()
     private val postsDao by inject<ArticleDao>()
     private val requestFactory by inject<GetPostRequestFactory>()
     private val manager by inject<HabrPostManager>()
+
+    init {
+        Toothpick.openScope(ApplicationScope::class.java).inject(this)
+    }
 
     override fun get(): PostFragmentViewModel {
         val factory = createViewModelFactory()
@@ -34,8 +38,6 @@ class PostFragmentViewModelProvider(
     private fun createViewModelFactory(): ViewModelProvider.NewInstanceFactory {
         val postRepository = PostRepository(requestFactory, manager)
         val daoPostRepository = DaoPostRepository(postsDao, postRepository)
-        return PostFragmentViewModel.Factory(
-            rawResourceRepository, postId, daoPostRepository, habrachanWebViewClient
-        )
+        return PostFragmentViewModel.Factory(rawResourceRepository, daoPostRepository, postId)
     }
 }

@@ -7,29 +7,64 @@
     android:layout_height="match_parent">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        sothree:layout_editor_absoluteX="0dp"
+        sothree:layout_editor_absoluteY="-193dp">
 
         <include layout="@layout/post_fragment_toolbar" />
 
         <com.makentoshe.habrachan.ui.post.NestedWebView
-            android:visibility="gone"
-            android:scrollbarStyle="outsideOverlay"
-            android:scrollbars="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:id="@+id/post_fragment_webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical"
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/post_fragment_bottombar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="-16dp"
+            app:hideOnScroll="true"
+            app:layout_behavior=".ui.post.BottomBarBehavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/post_fragment_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        sothree:layout_constraintBottom_toBottomOf="parent"
-        sothree:layout_constraintEnd_toEndOf="parent"
-        sothree:layout_constraintStart_toStartOf="parent"
-        sothree:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_fragment_messageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/post_fragment_retrybutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:text="@string/retry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/post_fragment_messageview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

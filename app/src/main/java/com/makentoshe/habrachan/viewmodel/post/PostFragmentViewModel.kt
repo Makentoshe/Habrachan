@@ -4,66 +4,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.repository.Repository
-import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
-import com.makentoshe.habrachan.model.post.html.*
-import io.reactivex.Observable
+import com.makentoshe.habrachan.model.post.GetArticle
+import com.makentoshe.habrachan.model.post.VoteArticle
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.BehaviorSubject
 import java.io.InputStream
 
 class PostFragmentViewModel(
-    private val repository: Repository<Int, InputStream>,
-    postId: Int,
+    repository: Repository<Int, InputStream>,
     postRepository: Repository<Int, Single<Article>>,
-    habrachanWebViewClient: HabrachanWebViewClient
+    postId: Int
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
-
-    /** Emitter for publication data */
-    private val publicationSubject = BehaviorSubject.create<String>()
-
-    /** Observable for publication data */
-    val publicationObservable: Observable<String>
-        get() = publicationSubject.observeOn(AndroidSchedulers.mainThread())
-
-    /** Error events needs to display error message */
-    private val errorSubject = BehaviorSubject.create<Throwable>()
-
-    val errorObservable: Observable<Throwable>
-        get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
-
-    /** Success events needs to display common content */
-    private val successSubject = BehaviorSubject.create<Unit>()
-
-    val successObservable: Observable<Unit>
-        get() = successSubject
+    val voteArticle = VoteArticle(disposables, postId)
+    val getArticle = GetArticle(disposables, repository, postRepository, postId)
 
     init {
-        postRepository.get(postId)!!.subscribe({ post ->
-            val html = createHtml(post)
-            publicationSubject.onNext(html)
-            errorSubject.onComplete()
-        }, {
-            errorSubject.onNext(it)
-            publicationSubject.onComplete()
-        }).let(disposables::add)
-
-        habrachanWebViewClient.onPublicationReadyToShow() {
-            successSubject.onNext(Unit)
-        }
-    }
-
-    private fun createHtml(post: Article): String {
-        val builder = HtmlBuilder(post)
-        builder.addAddon(DisplayScriptAddon(repository))
-        builder.addAddon(StyleAddon(repository))
-        builder.addAddon(TitleAddon(post))
-        builder.addAddon(SpoilerAddon())
-        builder.addAddon(ImageAddon())
-        return builder.build()
+        getArticle.requestArticle()
     }
 
     override fun onCleared() {
@@ -72,12 +30,11 @@ class PostFragmentViewModel(
 
     class Factory(
         private val repository: Repository<Int, InputStream>,
-        private val postId: Int,
         private val postRepository: Repository<Int, Single<Article>>,
-        private val habrachanWebViewClient: HabrachanWebViewClient
+        private val postId: Int
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostFragmentViewModel(repository, postId, postRepository, habrachanWebViewClient) as T
+            return PostFragmentViewModel(repository, postRepository, postId) as T
         }
     }
 }
