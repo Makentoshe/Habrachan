@@ -24,7 +24,7 @@ class PostFragmentModule private constructor(fragment: PostFragment, postId: Int
 
         bind<PostBroadcastReceiver>().toClass(PostBroadcastReceiver::class).singleton()
 
-        val provider = PostFragmentViewModelProvider(fragment, postId, webViewClient)
+        val provider = PostFragmentViewModelProvider(fragment, postId)
         Toothpick.openScope(ApplicationScope::class.java).inject(provider)
         bind<PostFragmentViewModel>().toProviderInstance(provider)
 
