@@ -11,7 +11,6 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.ApplicationScope
 import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
-import com.makentoshe.habrachan.model.main.MainFlowBroadcastReceiver
 import com.makentoshe.habrachan.model.main.account.AccountScreen
 import com.makentoshe.habrachan.model.main.menu.MenuScreen
 import com.makentoshe.habrachan.model.main.posts.PostsScreen
@@ -24,17 +23,12 @@ import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class MainFlowFragment : Fragment() {
 
-    private val broadcastReceiver by inject<MainFlowBroadcastReceiver>()
     private val arguments = Arguments(this)
     private val navigator by inject<MainFlowFragment.Navigator>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         injectDependencies()
-
-        broadcastReceiver.addOnReceiveListener { page ->
-            arguments.page = page
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,11 +63,6 @@ class MainFlowFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         navigator.release()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        requireActivity().unregisterReceiver(broadcastReceiver)
     }
 
     private fun injectDependencies() {
