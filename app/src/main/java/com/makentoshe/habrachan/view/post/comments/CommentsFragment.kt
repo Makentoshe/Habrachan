@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.ui.post.comments.CommentsFragmentUi
 import java.lang.IllegalStateException
 
@@ -18,7 +19,8 @@ class CommentsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (view as TextView).text = arguments.articleId.toString()
+        val textview = view.findViewById<TextView>(R.id.sas)
+        textview.text = arguments.articleId.toString()
 
     }
 
