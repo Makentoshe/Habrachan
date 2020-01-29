@@ -1,5 +1,7 @@
 package com.makentoshe.habrachan
 
+import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
+import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.common.repository.InputStreamRepository
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
