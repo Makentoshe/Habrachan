@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.model.post.comment
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.text.*
 import android.util.Base64
@@ -45,7 +46,20 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
     override fun bind(holder: ViewHolder) {
         holder.messageView?.text = spannedFactory?.build(message)
         holder.authorView?.text = author
-        holder.scoreView?.text = score.toString()
+        holder.scoreView?.text = when {
+            score > 0 -> {
+                holder.scoreView?.setTextColor(Color.GREEN)
+                "+$score"
+            }
+            score < 0 -> {
+                holder.scoreView?.setTextColor(Color.RED)
+                score.toString()
+            }
+            else -> {
+                holder.scoreView?.setTextColor(Color.DKGRAY)
+                score.toString()
+            }
+        }
         holder.timePublishedView?.text = timePublished
         setCommentLevel(holder)
     }
