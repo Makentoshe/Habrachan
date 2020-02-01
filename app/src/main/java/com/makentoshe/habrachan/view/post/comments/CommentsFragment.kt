@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.common.html.SpannedFactory
 import com.makentoshe.habrachan.model.post.comment.ArticleCommentEpoxyModel
 import com.makentoshe.habrachan.model.post.comment.ArticleCommentsEpoxyController
 import com.makentoshe.habrachan.ui.post.comments.CommentsFragmentUi
@@ -23,6 +24,7 @@ class CommentsFragment : Fragment() {
     val arguments = Arguments(this)
     private val disposables = CompositeDisposable()
     private val viewModel by inject<CommentsFragmentViewModel>()
+    private val spannedFactory by inject<SpannedFactory>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentsFragmentUi().createView(requireContext())
@@ -30,10 +32,7 @@ class CommentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val recyclerview = view.findViewById<RecyclerView>(R.id.article_comments_recyclerview)
-        val epoxyController =
-            ArticleCommentsEpoxyController(
-                ArticleCommentEpoxyModel.Factory()
-            )
+        val epoxyController = ArticleCommentsEpoxyController(ArticleCommentEpoxyModel.Factory(spannedFactory))
         epoxyController.setContext(requireContext())
 
         viewModel.successObservable.subscribe {

@@ -2,9 +2,7 @@ package com.makentoshe.habrachan.model.post.comment
 
 import android.content.Context
 import android.os.Build
-import android.text.Html
-import android.text.Spannable
-import android.text.Spanned
+import android.text.*
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +18,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.common.html.SpannedFactory
 import java.nio.charset.Charset
 
 @EpoxyModelClass(layout = R.layout.comments_fragment_comment)
@@ -41,8 +40,10 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
 
     var context: Context? = null
 
+    var spannedFactory: SpannedFactory? = null
+
     override fun bind(holder: ViewHolder) {
-        holder.messageView?.text = message
+        holder.messageView?.text = spannedFactory?.build(message)
         holder.authorView?.text = author
         holder.scoreView?.text = score.toString()
         holder.timePublishedView?.text = timePublished
@@ -55,9 +56,6 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
             LayoutInflater.from(context).inflate(
                 R.layout.comments_fragment_comment_vertical, viewHolder.verticalView, true
             )
-        }
-        if (level != 0) viewHolder.rootView?.updateLayoutParams<RecyclerView.LayoutParams> {
-            topMargin = 0
         }
     }
 
@@ -82,16 +80,18 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
         }
     }
 
-    class Factory {
+    class Factory(private val spannedFactory: SpannedFactory) {
         fun build(comment: Comment, context: Context): ArticleCommentEpoxyModel {
-            val model = ArticleCommentEpoxyModel_()
-            model.id(comment.id)
+            val model = ArticleCommentEpoxyModel_().id(comment.id)
+
             model.message = comment.message
             model.level = comment.level
-            model.context = context
             model.author = comment.author.login
             model.timePublished = comment.timePublished
             model.score = comment.score
+
+            model.context = context
+            model.spannedFactory = spannedFactory
             return model
         }
     }
