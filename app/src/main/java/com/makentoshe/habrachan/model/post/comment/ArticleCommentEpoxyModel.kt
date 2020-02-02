@@ -59,7 +59,8 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
 
     private fun setCommentLevel(viewHolder: ViewHolder) {
         viewHolder.verticalView?.removeAllViews()
-        (0 until level).forEach { level ->
+        val count = if (level < 10) level else 10
+        repeat(count) {
             LayoutInflater.from(viewHolder.rootView?.context).inflate(
                 R.layout.comments_fragment_comment_vertical, viewHolder.verticalView, true
             )

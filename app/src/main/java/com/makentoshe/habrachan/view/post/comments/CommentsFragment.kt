@@ -37,11 +37,6 @@ class CommentsFragment : Fragment() {
         viewModel.successObservable.subscribe {
             epoxyController.setComments(parseComments(it.data))
             recyclerview.adapter = epoxyController.adapter
-
-//            val maxLevel = it.data.reduce { acc, comment -> if (acc.level < comment.level) comment else acc }.level
-//            val step = (recyclerview.width / 3) / maxLevel
-//            epoxyController.setStep(step)
-
             epoxyController.requestModelBuild()
         }.let(disposables::add)
 
