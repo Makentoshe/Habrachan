@@ -31,7 +31,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
     var level: Int = 0
 
     var spannedFactory: SpannedFactory? = null
-    var clickListenerFactory: OnCommentClickListenerFactory? = null
+    var gestureDetectorFactory: OnCommentGestureDetectorFactory? = null
     var comment: Comment? = null
 
     override fun bind(holder: ViewHolder) {
@@ -44,8 +44,12 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
     }
 
     private fun setOnClickListener(holder: ViewHolder) {
-        val longClickListener = clickListenerFactory?.buildLongClickListener(comment ?: return)
-        holder.rootView?.setOnLongClickListener(longClickListener)
+        val gestureDetector = gestureDetectorFactory?.build(holder.rootView ?: return, comment ?: return)
+        holder.rootView?.setOnTouchListener { _, event ->
+            gestureDetector?.onTouchEvent(event) ?: return@setOnTouchListener false
+        }
+        // add for ripple effect
+        holder.rootView?.setOnLongClickListener { true }
     }
 
     private fun setScore(holder: ViewHolder) {
@@ -97,7 +101,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
 
     class Factory(
         private val spannedFactory: SpannedFactory,
-        private val clickListenerFactory: OnCommentClickListenerFactory
+        private val gestureDetectorFactory: OnCommentGestureDetectorFactory
     ) {
         fun build(comment: Comment): ArticleCommentEpoxyModel {
             val model = ArticleCommentEpoxyModel_().id(comment.id)
@@ -108,7 +112,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
             model.timePublished = comment.timePublished
             model.score = comment.score
 
-            model.clickListenerFactory = clickListenerFactory
+            model.gestureDetectorFactory = gestureDetectorFactory
             model.spannedFactory = spannedFactory
             model.comment = comment
             return model

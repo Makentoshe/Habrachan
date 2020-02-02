@@ -13,7 +13,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.model.post.comment.ArticleCommentEpoxyModel
 import com.makentoshe.habrachan.model.post.comment.ArticleCommentsEpoxyController
-import com.makentoshe.habrachan.model.post.comment.OnCommentClickListenerFactory
+import com.makentoshe.habrachan.model.post.comment.OnCommentGestureDetectorFactory
 import com.makentoshe.habrachan.model.post.comment.SpannedFactory
 import com.makentoshe.habrachan.ui.post.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.comments.CommentsFragmentViewModel
@@ -26,7 +26,7 @@ class CommentsFragment : Fragment() {
     private val disposables = CompositeDisposable()
     private val viewModel by inject<CommentsFragmentViewModel>()
     private val spannedFactory by inject<SpannedFactory>()
-    private val commentClickListerFactory by inject<OnCommentClickListenerFactory>()
+    private val commentClickListerFactory by inject<OnCommentGestureDetectorFactory>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentsFragmentUi().createView(requireContext())
