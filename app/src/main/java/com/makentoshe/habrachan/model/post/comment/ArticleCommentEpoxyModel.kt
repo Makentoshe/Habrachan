@@ -31,10 +31,24 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
     var level: Int = 0
 
     var spannedFactory: SpannedFactory? = null
+    var clickListenerFactory: OnCommentClickListenerFactory? = null
+    var comment: Comment? = null
 
     override fun bind(holder: ViewHolder) {
         holder.messageView?.text = spannedFactory?.build(message)
         holder.authorView?.text = author
+        holder.timePublishedView?.text = timePublished
+        setCommentLevel(holder)
+        setScore(holder)
+        setOnClickListener(holder)
+    }
+
+    private fun setOnClickListener(holder: ViewHolder) {
+        val longClickListener = clickListenerFactory?.buildLongClickListener(comment ?: return)
+        holder.rootView?.setOnLongClickListener(longClickListener)
+    }
+
+    private fun setScore(holder: ViewHolder) {
         holder.scoreView?.text = when {
             score > 0 -> {
                 holder.scoreView?.setTextColor(Color.GREEN)
@@ -49,13 +63,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
                 score.toString()
             }
         }
-        holder.timePublishedView?.text = timePublished
-        setCommentLevel(holder)
-        holder.rootView?.setOnClickListener {
-
-        }
     }
-
 
     private fun setCommentLevel(viewHolder: ViewHolder) {
         viewHolder.verticalView?.removeAllViews()
@@ -87,7 +95,10 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
         }
     }
 
-    class Factory(private val spannedFactory: SpannedFactory) {
+    class Factory(
+        private val spannedFactory: SpannedFactory,
+        private val clickListenerFactory: OnCommentClickListenerFactory
+    ) {
         fun build(comment: Comment): ArticleCommentEpoxyModel {
             val model = ArticleCommentEpoxyModel_().id(comment.id)
 
@@ -97,7 +108,9 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
             model.timePublished = comment.timePublished
             model.score = comment.score
 
+            model.clickListenerFactory = clickListenerFactory
             model.spannedFactory = spannedFactory
+            model.comment = comment
             return model
         }
     }
