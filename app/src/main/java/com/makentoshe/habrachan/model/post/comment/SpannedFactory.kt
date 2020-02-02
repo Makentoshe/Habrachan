@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.html
+package com.makentoshe.habrachan.model.post.comment
 
 import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable

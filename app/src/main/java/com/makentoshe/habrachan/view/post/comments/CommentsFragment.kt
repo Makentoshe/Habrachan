@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.view.post.comments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.SparseArray
 import android.view.LayoutInflater
@@ -11,13 +12,18 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.common.html.SpannedFactory
+import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.di.post.comments.CommentsFragmentModule
+import com.makentoshe.habrachan.di.post.comments.CommentsFragmentScope
+import com.makentoshe.habrachan.model.post.comment.SpannedFactory
 import com.makentoshe.habrachan.model.post.comment.ArticleCommentEpoxyModel
 import com.makentoshe.habrachan.model.post.comment.ArticleCommentsEpoxyController
 import com.makentoshe.habrachan.ui.post.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.comments.CommentsFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
+import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
+import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class CommentsFragment : Fragment() {
 
@@ -26,6 +32,13 @@ class CommentsFragment : Fragment() {
     private val viewModel by inject<CommentsFragmentViewModel>()
     private val spannedFactory by inject<SpannedFactory>()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val module = CommentsFragmentModule.Factory().build(this)
+        val scope = Toothpick.openScopes(ApplicationScope::class.java, CommentsFragmentScope::class.java)
+        scope.closeOnDestroy(this).installModules(module).inject(this)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentsFragmentUi().createView(requireContext())
     }
@@ -33,7 +46,6 @@ class CommentsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val recyclerview = view.findViewById<RecyclerView>(R.id.article_comments_recyclerview)
         val epoxyController = ArticleCommentsEpoxyController(ArticleCommentEpoxyModel.Factory(spannedFactory))
-        epoxyController.setContext(requireContext())
 
         viewModel.successObservable.subscribe {
             epoxyController.setComments(parseComments(it.data))
