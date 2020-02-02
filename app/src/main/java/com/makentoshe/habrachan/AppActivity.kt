@@ -20,10 +20,8 @@ class AppActivity : AppCompatActivity() {
     private val router by inject<Router>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportFragmentManager.registerFragmentLifecycleCallbacks(InjectingFragmentLifecycleCallback(), true)
         if (savedInstanceState == null) {
 //            val screen = MainFlowScreen()
             val screen = CommentsScreen(485990)
@@ -42,9 +40,4 @@ class AppActivity : AppCompatActivity() {
         super.onPause()
         navigatorHolder.removeNavigator()
     }
-
-    private fun injectDependencies() {
-        Toothpick.openScopes(NavigationScope::class.java).inject(this)
-    }
-
 }

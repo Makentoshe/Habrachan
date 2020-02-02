@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.di.post
 
-import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.JavaScriptInterface
 import com.makentoshe.habrachan.model.post.PostBroadcastReceiver

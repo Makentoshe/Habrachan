@@ -7,7 +7,7 @@ import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.network.manager.HabrPostManager
 import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
-import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.post.DaoPostRepository
 import com.makentoshe.habrachan.model.post.PostRepository
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel

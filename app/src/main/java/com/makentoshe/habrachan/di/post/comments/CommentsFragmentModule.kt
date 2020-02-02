@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.common.repository.InputStreamRepository
-import com.makentoshe.habrachan.di.ApplicationScope
-import com.makentoshe.habrachan.di.common.RepositoryScope
+import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.post.comment.SpannedFactory
 import com.makentoshe.habrachan.view.post.comments.CommentsFragment
 import com.makentoshe.habrachan.viewmodel.post.comments.CommentsFragmentViewModel

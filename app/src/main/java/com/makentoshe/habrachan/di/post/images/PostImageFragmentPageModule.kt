@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.di.post.images
 
-import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.post.images.PostImageFragmentPage
 import com.makentoshe.habrachan.viewmodel.post.images.PostImageFragmentViewModel
 import ru.terrakok.cicerone.Router

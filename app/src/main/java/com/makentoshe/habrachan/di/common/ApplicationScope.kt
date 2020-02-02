@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.di
+package com.makentoshe.habrachan.di.common
 
 import android.content.Context
 import com.makentoshe.habrachan.model.post.comment.SpannedFactory

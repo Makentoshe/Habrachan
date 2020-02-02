@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
-import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.main.posts.PostsFragment
 import com.makentoshe.habrachan.viewmodel.main.posts.DaoPostsRepository
 import com.makentoshe.habrachan.viewmodel.main.posts.PostsViewModel
