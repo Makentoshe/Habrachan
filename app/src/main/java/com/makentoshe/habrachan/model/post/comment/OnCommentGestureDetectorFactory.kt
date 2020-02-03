@@ -28,14 +28,26 @@ class OnCommentGestureDetectorFactory {
         menu.isOutsideTouchable = true
         menu.contentView = LayoutInflater.from(context).inflate(R.layout.comments_fragment_comment_popup, null, false)
         menu.contentView.findViewById<View>(R.id.comments_fragment_comment_popup_reply).setOnClickListener {
-            println("Start reply")
+            onReplyClick(comment)
         }
         menu.contentView.findViewById<View>(R.id.comments_fragment_comment_popup_voteup).setOnClickListener {
-            println("Vote up")
+            onVoteUp(comment)
         }
         menu.contentView.findViewById<View>(R.id.comments_fragment_comment_popup_votedown).setOnClickListener {
-            println("Vote down")
+            onVoteDown(comment)
         }
         return menu
+    }
+
+    private fun onReplyClick(comment: Comment) {
+        println("Start reply")
+    }
+
+    private fun onVoteUp(comment: Comment) {
+        println("Vote up")
+    }
+
+    private fun onVoteDown(comment: Comment) {
+        println("Vote down")
     }
 }
