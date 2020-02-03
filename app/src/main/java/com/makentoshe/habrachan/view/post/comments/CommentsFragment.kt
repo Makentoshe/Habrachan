@@ -5,6 +5,8 @@ import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.util.containsKey
 import androidx.core.util.set
 import androidx.fragment.app.Fragment
@@ -33,6 +35,9 @@ class CommentsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val retrybutton = view.findViewById<View>(R.id.article_comments_retrybutton)
+        val messageview = view.findViewById<TextView>(R.id.article_comments_messageview)
+        val progressbar = view.findViewById<ProgressBar>(R.id.article_comments_progressbar)
         val recyclerview = view.findViewById<RecyclerView>(R.id.article_comments_recyclerview)
         val factory = ArticleCommentEpoxyModel.Factory(spannedFactory, commentClickListerFactory)
         val epoxyController = ArticleCommentsEpoxyController(factory)
@@ -41,11 +46,27 @@ class CommentsFragment : Fragment() {
             epoxyController.setComments(parseComments(it.data))
             recyclerview.adapter = epoxyController.adapter
             epoxyController.requestModelBuild()
+            recyclerview.visibility = View.VISIBLE
+            progressbar.visibility = View.GONE
         }.let(disposables::add)
 
         viewModel.errorObservable.subscribe {
-            println(it)
+            messageview.text = it.toString()
+            messageview.visibility = View.VISIBLE
+            retrybutton.visibility = View.VISIBLE
+            progressbar.visibility = View.GONE
         }.let(disposables::add)
+
+        viewModel.progressObservable.subscribe {
+            messageview.visibility = View.GONE
+            recyclerview.visibility = View.GONE
+            retrybutton.visibility = View.GONE
+            progressbar.visibility = View.VISIBLE
+        }.let(disposables::add)
+
+        retrybutton.setOnClickListener {
+            viewModel.progressSubject.onNext(Unit)
+        }
     }
 
     override fun onDestroy() {

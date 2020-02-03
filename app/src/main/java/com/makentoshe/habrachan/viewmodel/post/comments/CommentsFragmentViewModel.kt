@@ -26,15 +26,19 @@ class CommentsFragmentViewModel(
     val errorObservable: Observable<Throwable>
         get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
 
-    private val progressSubject = BehaviorSubject.create<Unit>()
+    val progressSubject = BehaviorSubject.create<Unit>()
     val progressObservable: Observable<Unit>
         get() = progressSubject.observeOn(AndroidSchedulers.mainThread())
 
     init {
-        requestComments()
+        progressObservable.subscribe {
+            requestComments()
+        }.let(disposables::add)
+
+        progressSubject.onNext(Unit)
     }
 
-    fun requestComments() {
+    private fun requestComments() {
         val request = commentsRequestFactory.build(articleId)
         commentsManager.getComments(request).subscribe(::onSuccess, ::onError).let(disposables::add)
     }
