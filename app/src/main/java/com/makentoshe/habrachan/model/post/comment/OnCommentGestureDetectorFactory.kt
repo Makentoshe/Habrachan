@@ -37,7 +37,7 @@ class OnCommentGestureDetectorFactory {
         menu.contentView.findViewById<View>(R.id.comments_fragment_comment_popup_votedown).setOnClickListener {
             onVoteDown(comment)
         }
-        menu.animationStyle = R.style.Habrachan_Light_Popup
+        menu.animationStyle = R.style.Default_Popup_Style
         return menu
     }
 

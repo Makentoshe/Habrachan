@@ -1,5 +1,11 @@
 <resources>
 
+    <!-- Default theme used for displaying popup windows and does not relates to any theme -->
+    <style name="Default.Popup.Style" parent="Habrachan">
+        <item name="android:windowEnterAnimation">@anim/popup_window_enlarge</item>
+        <item name="android:windowExitAnimation">@anim/popup_window_shrink</item>
+    </style>
+
     <style name="Habrachan" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">#ff9cc2ce</item>
         <item name="colorAccent">#ff9cc2ce</item>
@@ -9,6 +15,7 @@
     <style name="Habrachan.Light" parent="Habrachan">
         <item name="habrachanToolbar">@style/Habrachan.Light.Toolbar</item>
         <item name="habrachanBottomBar">@style/Habrachan.Light.BottomBar</item>
+        <item name="habrachanPopup">@style/Habrachan.Light.Popup</item>
     </style>
 
     <style name="Habrachan.Light.Toolbar" parent="Habrachan.Light">
@@ -43,7 +50,5 @@
         <item name="android:tintMode">src_atop</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:windowEnterAnimation">@anim/popup_window_enlarge</item>
-        <item name="android:windowExitAnimation">@anim/popup_window_shrink</item>
     </style>
 </resources>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:theme="@style/Habrachan.Light.Popup"
+    style="?attr/habrachanPopup"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +21,7 @@
 
         <ImageView
             android:id="@+id/comments_fragment_comment_popup_reply_image"
-            style="@style/Habrachan.Light.Popup"
+            style="?attr/habrachanPopup"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_reply"
@@ -34,7 +34,7 @@
 
         <TextView
             android:id="@+id/comments_fragment_comment_popup_reply_text"
-            style="@style/Habrachan.Light.Popup"
+            style="?attr/habrachanPopup"
             android:paddingStart="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:theme="@style/Habrachan.Light.Popup"
+        style="?attr/habrachanPopup"
         android:id="@+id/comments_fragment_comment_popup_voteup"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -72,7 +72,7 @@
 
         <ImageView
             android:id="@+id/comments_fragment_comment_popup_voteup_image"
-            style="@style/Habrachan.Light.Popup"
+            style="?attr/habrachanPopup"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
@@ -94,7 +94,7 @@
 
     <FrameLayout
         android:id="@+id/comments_fragment_comment_popup_votedown"
-        style="@style/Habrachan.Light.Popup"
+        style="?attr/habrachanPopup"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="?android:attr/selectableItemBackground"
@@ -106,7 +106,7 @@
 
         <ImageView
             android:id="@+id/comments_fragment_comment_popup_votedown_image"
-            style="@style/Habrachan.Light.Popup"
+            style="?attr/habrachanPopup"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:rotation="-90"
