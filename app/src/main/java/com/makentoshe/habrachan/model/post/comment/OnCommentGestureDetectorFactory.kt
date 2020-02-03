@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.model.post.comment
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.*
 import android.widget.PopupWindow
 import com.makentoshe.habrachan.R
@@ -40,6 +41,8 @@ class OnCommentGestureDetectorFactory {
             menu.dismiss()
         }
         menu.animationStyle = R.style.Default_Popup_Style
+        // elevation="8dp"
+        menu.elevation = (8 * Resources.getSystem().displayMetrics.density)
         // removes black border
         menu.setBackgroundDrawable(null)
         return menu
