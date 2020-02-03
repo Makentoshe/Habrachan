@@ -29,12 +29,15 @@ class OnCommentGestureDetectorFactory {
         menu.contentView = LayoutInflater.from(context).inflate(R.layout.comments_fragment_comment_popup, null, false)
         menu.contentView.findViewById<View>(R.id.comments_fragment_comment_popup_reply).setOnClickListener {
             onReplyClick(comment)
+            menu.dismiss()
         }
         menu.contentView.findViewById<View>(R.id.comments_fragment_comment_popup_voteup).setOnClickListener {
             onVoteUp(comment)
+            menu.dismiss()
         }
         menu.contentView.findViewById<View>(R.id.comments_fragment_comment_popup_votedown).setOnClickListener {
             onVoteDown(comment)
+            menu.dismiss()
         }
         menu.animationStyle = R.style.Default_Popup_Style
         // removes black border
