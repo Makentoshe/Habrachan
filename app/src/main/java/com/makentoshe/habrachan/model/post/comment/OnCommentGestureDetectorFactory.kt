@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.model.post.comment
 
 import android.content.Context
+import android.graphics.Color
 import android.view.*
 import android.widget.PopupWindow
 import com.makentoshe.habrachan.R
@@ -36,6 +37,7 @@ class OnCommentGestureDetectorFactory {
         menu.contentView.findViewById<View>(R.id.comments_fragment_comment_popup_votedown).setOnClickListener {
             onVoteDown(comment)
         }
+        menu.animationStyle = R.style.Habrachan_Light_Popup
         return menu
     }
 
