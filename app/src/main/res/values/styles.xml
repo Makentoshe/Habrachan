@@ -10,6 +10,7 @@
         <item name="colorPrimary">#ff9cc2ce</item>
         <item name="colorAccent">#ff9cc2ce</item>
         <item name="colorPrimaryDark">#ff728e96</item>
+        <item name="android:background">@android:color/white</item>
     </style>
 
     <style name="Habrachan.Light" parent="Habrachan">

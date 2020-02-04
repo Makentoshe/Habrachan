@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.common.navigation.Navigator
 import com.makentoshe.habrachan.di.InjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.di.common.NavigationScope
+import com.makentoshe.habrachan.model.main.MainFlowScreen
 import com.makentoshe.habrachan.model.post.CommentsScreen
+import com.makentoshe.habrachan.model.post.PostScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
@@ -24,8 +26,8 @@ class AppActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
 //            val screen = MainFlowScreen()
-            val screen = CommentsScreen(485990)
-//            val screen = PostScreen(397271)
+//            val screen = CommentsScreen(485990)
+            val screen = PostScreen(397271)
 //            val screen = PostImageScreen("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg")
             router.newRootScreen(screen)
         }
