@@ -74,6 +74,11 @@ class PostsFragment : Fragment() {
         RetryButtonController(arguments, disposables, retryButton).install(viewModel)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
+    }
+
     class Factory {
         fun build(page: Int) = PostsFragment().apply {
             arguments.page = page

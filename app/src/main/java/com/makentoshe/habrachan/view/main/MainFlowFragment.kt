@@ -11,69 +11,109 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
-import com.makentoshe.habrachan.model.main.MainFlowBroadcastReceiver
+import com.makentoshe.habrachan.model.main.account.AccountScreen
+import com.makentoshe.habrachan.model.main.menu.MenuScreen
+import com.makentoshe.habrachan.model.main.posts.PostsScreen
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
-import com.makentoshe.habrachan.viewmodel.main.MainFlowViewModel
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class MainFlowFragment : Fragment() {
 
-    private val uiFactory by inject<MainFlowFragmentUi>()
-
-    private val presenter by inject<MainFlowPresenter>()
-
-    private val broadcastReceiver by inject<MainFlowBroadcastReceiver>()
-
-    private val viewModel by inject<MainFlowViewModel>()
+    private val arguments = Arguments(this)
+    private val navigator by inject<MainFlowFragment.Navigator>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val module = MainFlowFragmentModule(this)
-        Toothpick.openScopes(ApplicationScope::class.java, MainFlowFragmentScope::class.java)
-            .installModules(module).closeOnDestroy(this).inject(this)
-        broadcastReceiver.addOnReceiveListener { page ->
-            viewModel.page = page
-        }
+        injectDependencies()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
-            presenter.setDefaultScreen()
+            navigator.toArticlesScreen(page = 1)
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return uiFactory.createView(requireContext())
+        return MainFlowFragmentUi().createView(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val navigation = view.findViewById<BottomNavigationView>(R.id.main_bottom_navigation)
         navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.action_account -> presenter.onAccountClicked()
-                R.id.action_posts -> presenter.onPostsClicked()
-                R.id.action_menu -> presenter.onMenuClicked()
-                else -> false
+                R.id.action_account -> navigator.toAccountScreen()
+                R.id.action_posts -> navigator.toArticlesScreen(arguments.page)
+                R.id.action_menu -> navigator.toMenuScreen()
+                else -> return@setOnNavigationItemSelectedListener false
             }
+            return@setOnNavigationItemSelectedListener true
         }
     }
 
     override fun onStart() {
         super.onStart()
-        presenter.initNavigator()
+        navigator.init()
     }
 
     override fun onStop() {
         super.onStop()
-        presenter.releaseNavigator()
+        navigator.release()
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        requireActivity().unregisterReceiver(broadcastReceiver)
+    private fun injectDependencies() {
+        val module = MainFlowFragmentModule(this)
+        val scope = Toothpick.openScopes(ApplicationScope::class.java, MainFlowFragmentScope::class.java)
+        scope.installModules(module).closeOnDestroy(this).inject(this)
+    }
+
+    class Navigator(
+        private val router: Router,
+        private val navigatorHolder: NavigatorHolder,
+        private val navigator: com.makentoshe.habrachan.common.navigation.Navigator
+    ) {
+
+        fun init() {
+            navigatorHolder.setNavigator(navigator)
+        }
+
+        fun toAccountScreen() {
+            router.replaceScreen(AccountScreen())
+        }
+
+        fun toArticlesScreen(page: Int) {
+            router.replaceScreen(PostsScreen(page))
+        }
+
+        fun toMenuScreen() {
+            router.replaceScreen(MenuScreen())
+        }
+
+        fun release() {
+            navigatorHolder.removeNavigator()
+        }
+    }
+
+    class Arguments(fragment: MainFlowFragment) {
+
+        init {
+            (fragment as Fragment).arguments = Bundle()
+        }
+
+        private val fragmentArguments = fragment.requireArguments()
+
+        var page: Int
+            get() = fragmentArguments.getInt(PAGE, 1)
+            set(value) = fragmentArguments.putInt(PAGE, value)
+
+        companion object {
+            private const val PAGE = "Page"
+        }
+
     }
 }
 

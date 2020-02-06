@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.di.InjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.di.common.NavigationScope
 import com.makentoshe.habrachan.model.main.MainFlowScreen
 import com.makentoshe.habrachan.model.post.CommentsScreen
+import com.makentoshe.habrachan.model.main.posts.PostsScreen
 import com.makentoshe.habrachan.model.post.PostScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
