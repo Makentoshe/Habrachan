@@ -18,10 +18,10 @@ class GetArticle(
 ) {
 
     /** Emitter for publication data */
-    private val articleSubject = BehaviorSubject.create<String>()
+    private val articleSubject = BehaviorSubject.create<Article>()
 
     /** Observable for publication data */
-    val articleObservable: Observable<String>
+    val articleObservable: Observable<Article>
         get() = articleSubject.observeOn(AndroidSchedulers.mainThread())
 
     /** Error events needs to display error message */
@@ -35,22 +35,11 @@ class GetArticle(
     }
 
     private fun onSuccess(article: Article) {
-        val html = article.buildHtml()
-        articleSubject.onNext(html)
+        articleSubject.onNext(article)
         errorSubject.onComplete()
     }
 
     private fun onError(throwable: Throwable) {
         errorSubject.onNext(throwable)
-    }
-
-    private fun Article.buildHtml(): String {
-        val builder = HtmlBuilder(this)
-        builder.addAddon(DisplayScriptAddon(resourceRepository))
-        builder.addAddon(StyleAddon(resourceRepository))
-        builder.addAddon(TitleAddon(this))
-        builder.addAddon(SpoilerAddon())
-        builder.addAddon(ImageAddon())
-        return builder.build()
     }
 }

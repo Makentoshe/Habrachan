@@ -1,53 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="?attr/habrachanBottomBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Group
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/post_fragment_bottombar_vote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="post_fragment_bottombar_voteup,post_fragment_bottombar_votedown,post_fragment_bottombar_voteview" />
-
-    <ImageView
-        android:id="@+id/post_fragment_bottombar_voteup"
-        style="?attr/habrachanBottomBar"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="4dp"
-        android:rotation="90"
-        android:src="@drawable/ic_arrow_long"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/post_fragment_bottombar_voteview"
         style="?attr/habrachanBottomBar"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="+1228"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/post_fragment_bottombar_voteup"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/post_fragment_bottombar_reading_count"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/post_fragment_bottombar_votedown"
-        style="?attr/habrachanBottomBar"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="4dp"
-        android:rotation="-90"
-        android:src="@drawable/ic_arrow_long"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/post_fragment_bottombar_voteview"
-        app:layout_constraintTop_toTopOf="parent" />
+        <FrameLayout
+            android:id="@+id/post_fragment_bottombar_voteup"
+            style="?attr/habrachanBottomBar"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                style="?attr/habrachanBottomBar"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:rotation="90"
+                android:src="@drawable/ic_arrow_long" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/post_fragment_bottombar_voteview"
+            style="?attr/habrachanBottomBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minWidth="36dp"
+            android:text="+12"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/post_fragment_bottombar_voteup"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/post_fragment_bottombar_votedown"
+            style="?attr/habrachanBottomBar"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/post_fragment_bottombar_voteview"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                style="?attr/habrachanBottomBar"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:rotation="-90"
+                android:src="@drawable/ic_arrow_long"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/post_fragment_bottombar_voteview"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/post_fragment_bottombar_reading_count"
@@ -89,34 +112,46 @@
             app:layout_constraintVertical_chainStyle="packed" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.Group
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/post_fragment_bottombar_comments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="post_fragment_bottombar_comments_count_textview,post_fragment_bottombar_comments_imageview" />
-
-    <TextView
-        android:id="@+id/post_fragment_bottombar_comments_count_textview"
         style="?attr/habrachanBottomBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:text="12345"
-        android:textStyle="bold"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/post_fragment_bottombar_reading_count"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/post_fragment_bottombar_comments_imageview"
-        style="?attr/habrachanBottomBar"
-        android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginEnd="4dp"
-        android:src="@drawable/ic_comment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/post_fragment_bottombar_comments_count_textview"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/post_fragment_bottombar_comments_count_textview"
+            style="?attr/habrachanBottomBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:gravity="left"
+            android:minWidth="36dp"
+            android:text="12345"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/post_fragment_bottombar_comments_imageview"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/post_fragment_bottombar_comments_imageview"
+            style="?attr/habrachanBottomBar"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_comment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/post_fragment_bottombar_comments_count_textview"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
