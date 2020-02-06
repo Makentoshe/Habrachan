@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentModule
 import com.makentoshe.habrachan.di.main.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.main.posts.PostModelFactory

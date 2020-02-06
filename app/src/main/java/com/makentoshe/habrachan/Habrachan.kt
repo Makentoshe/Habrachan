@@ -1,8 +1,10 @@
 package com.makentoshe.habrachan
 
 import android.app.Application
-import com.makentoshe.habrachan.di.ApplicationModule
-import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.di.common.ApplicationModule
+import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.di.InjectingFragmentLifecycleCallback
+import com.makentoshe.habrachan.di.InjectionActivityLifecycleCallback
 import com.makentoshe.habrachan.di.common.*
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Cicerone
@@ -25,6 +27,9 @@ class Habrachan : Application() {
         injectRepositoryDependencies()
         val scopes = Toothpick.openScopes(RepositoryScope::class.java, ApplicationScope::class.java)
         scopes.installModules(ApplicationModule(applicationContext))
+
+        val injectingFragmentLifecycleCallback = InjectingFragmentLifecycleCallback()
+        registerActivityLifecycleCallbacks(InjectionActivityLifecycleCallback(injectingFragmentLifecycleCallback))
     }
 
     private fun getToothpickConfiguration(): Configuration {

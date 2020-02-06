@@ -10,16 +10,19 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.repository.RawResourceRepository
+import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.post.PostFragmentModule
 import com.makentoshe.habrachan.di.post.PostFragmentScope
+import com.makentoshe.habrachan.model.post.CommentsScreen
 import com.makentoshe.habrachan.model.post.HabrachanWebViewClient
 import com.makentoshe.habrachan.model.post.JavaScriptInterface
 import com.makentoshe.habrachan.model.post.PostBroadcastReceiver
+import com.makentoshe.habrachan.model.post.html.*
 import com.makentoshe.habrachan.model.post.images.PostImageScreen
 import com.makentoshe.habrachan.ui.post.BottomBarUi
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
@@ -52,12 +55,17 @@ class PostFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val views = PostFragmentViews(view, this)
-
         // ready to display
-        viewModel.getArticle.articleObservable.subscribe { html ->
-            views.webview.loadData(html, "text/html", "UFT-8")
+        viewModel.getArticle.articleObservable.subscribe { article ->
+            views.webview.loadData(article.buildHtml(), "text/html", "UFT-8")
+            views.commentsCount.text = article.commentsCount.toString()
+            views.readingCount.text = article.readingCount.toString()
+            views.scoreView.text = if (article.score > 0) {
+                "+".plus(article.score.toString())
+            } else {
+                article.score.toString()
+            }
         }.let(disposables::add)
-
         // success
         webViewClient.onPublicationReadyToShow {
             views.webview.visibility = View.VISIBLE
@@ -95,11 +103,20 @@ class PostFragment : Fragment() {
             navigator.toArticleResourceScreen(source)
         }
         // show article's comments
-        views.commentsGroup.referencedIds.forEach {
-            view.findViewById<View>(it).setOnClickListener {
-                navigator.toArticleCommentsScreen()
-            }
+        views.commentsGroup.setOnClickListener {
+            navigator.toArticleCommentsScreen(arguments.articleId)
         }
+    }
+
+    private fun Article.buildHtml(): String {
+        val resourceRepository = RawResourceRepository(resources)
+        val builder = HtmlBuilder(this)
+        builder.addAddon(DisplayScriptAddon(resourceRepository))
+        builder.addAddon(StyleAddon(resourceRepository))
+        builder.addAddon(TitleAddon(this))
+        builder.addAddon(SpoilerAddon())
+        builder.addAddon(ImageAddon())
+        return builder.build()
     }
 
     override fun onStart() {
@@ -135,8 +152,8 @@ class PostFragment : Fragment() {
             router.navigateTo(PostImageScreen(resource))
         }
 
-        fun toArticleCommentsScreen() {
-            // TODO
+        fun toArticleCommentsScreen(articleId: Int) {
+            router.navigateTo(CommentsScreen(articleId))
         }
     }
 
@@ -184,7 +201,10 @@ class PostFragment : Fragment() {
         val progressBar = view.findViewById<ProgressBar>(R.id.post_fragment_progressbar)
         val retryButton = view.findViewById<Button>(R.id.post_fragment_retrybutton)
         val messageView = view.findViewById<TextView>(R.id.post_fragment_messageview)
-        val commentsGroup = view.findViewById<Group>(R.id.post_fragment_bottombar_comments)
+        val commentsGroup = view.findViewById<View>(R.id.post_fragment_bottombar_comments)
+        val commentsCount = view.findViewById<TextView>(R.id.post_fragment_bottombar_comments_count_textview)
+        val readingCount = view.findViewById<TextView>(R.id.post_fragment_bottombar_reading_count_textview)
+        val scoreView = view.findViewById<TextView>(R.id.post_fragment_bottombar_voteview)
     }
 
 }

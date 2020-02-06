@@ -5,20 +5,17 @@
     android:layout_height="?attr/actionBarSize">
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
-        android:id="@+id/post_fragment_collapsingtoolbar"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
-        app:collapsedTitleTextAppearance="@style/Habrachan.Light.TextAppearance.Small"
         app:contentScrim="?attr/colorPrimary"
-        app:expandedTitleTextAppearance="@style/Habrachan.Light.TextAppearance.Large"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:toolbarId="@+id/post_fragment_toolbar">
+        app:toolbarId="@+id/comments_fragment_toolbar">
 
         <androidx.appcompat.widget.Toolbar
             style="?attr/habrachanToolbar"
-            android:id="@+id/post_fragment_toolbar"
+            android:id="@+id/comments_fragment_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="pin" />

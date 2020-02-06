@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.di.ApplicationScope
+import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.post.images.PostImageFragmentPageModule
 import com.makentoshe.habrachan.di.post.images.PostImageFragmentPageScope
 import com.makentoshe.habrachan.model.post.PostScreen
