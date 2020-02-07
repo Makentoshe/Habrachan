@@ -10,13 +10,13 @@
         <item name="colorPrimary">#ff9cc2ce</item>
         <item name="colorAccent">#ff9cc2ce</item>
         <item name="colorPrimaryDark">#ff728e96</item>
-        <item name="android:background">@android:color/white</item>
     </style>
 
     <style name="Habrachan.Light" parent="Habrachan">
         <item name="habrachanToolbar">@style/Habrachan.Light.Toolbar</item>
         <item name="habrachanBottomBar">@style/Habrachan.Light.BottomBar</item>
         <item name="habrachanPopup">@style/Habrachan.Light.Popup</item>
+        <item name="habrachanDefault">@style/Habrachan.Light.Default</item>
     </style>
 
     <style name="Habrachan.Light.Toolbar" parent="Habrachan.Light">
@@ -51,5 +51,9 @@
         <item name="android:tintMode">src_atop</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Habrachan.Light.Default" parent="Habrachan.Light">
+        <item name="android:background">@android:color/white</item>
     </style>
 </resources>
