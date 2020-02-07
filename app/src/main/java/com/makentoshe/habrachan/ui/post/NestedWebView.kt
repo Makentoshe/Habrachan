@@ -14,9 +14,7 @@ class NestedWebView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = android.R.attr.webViewStyle
 ) : WebView(context, attrs, defStyleAttr), NestedScrollingChild {
-    private var mLastY: Int = 0
-    private val mScrollOffset = IntArray(2)
-    private val mScrollConsumed = IntArray(2)
+    private var startY: Int = 0
     private val mChildHelper = NestedScrollingChildHelper(this)
 
     init {
@@ -33,17 +31,17 @@ class NestedWebView @JvmOverloads constructor(
         when (action) {
             MotionEvent.ACTION_MOVE -> {
                 returnValue = super.onTouchEvent(event)
-                val deltaY = mLastY - eventY
-                val dispatchNestedPreScroll = dispatchNestedPreScroll(0, deltaY, mScrollConsumed, mScrollOffset)
-                val dispatchNestedScroll = dispatchNestedScroll(0, mScrollOffset[1], 0, deltaY, mScrollOffset)
+                val deltaY = startY - eventY
+                val dispatchNestedPreScroll = dispatchNestedPreScroll(0, deltaY, null, null)
 
-                if (dispatchNestedScroll && dispatchNestedPreScroll) {
-                    returnValue = false
+                if (dispatchNestedPreScroll) {
+                    dispatchNestedScroll(0, -deltaY, 0, 0, null)
+                    returnValue = true
                 }
             }
             MotionEvent.ACTION_DOWN -> {
                 returnValue = super.onTouchEvent(event)
-                mLastY = eventY
+                startY = eventY
                 // start NestedScroll
                 startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL)
             }
@@ -54,6 +52,11 @@ class NestedWebView @JvmOverloads constructor(
             }
         }
         return returnValue
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val dispatch = super.dispatchTouchEvent(ev)
+        return dispatch
     }
 
     // Nested Scroll implements
