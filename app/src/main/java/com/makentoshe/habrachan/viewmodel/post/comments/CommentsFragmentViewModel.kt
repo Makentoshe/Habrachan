@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.viewmodel.post.comments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.entity.comment.CommentsResponse
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
@@ -43,8 +44,13 @@ class CommentsFragmentViewModel(
         commentsManager.getComments(request).subscribe(::onSuccess, ::onError).let(disposables::add)
     }
 
+    /**
+     * Update article id to [Comment] entity for storing it in a database.
+     * It uses copy because the [Comment.articleId] variable defined as val.
+     * */
     private fun onSuccess(response: CommentsResponse) {
-        successSubject.onNext(response)
+        val data = response.data.map { it.copy(articleId = articleId) }
+        successSubject.onNext(response.copy(data = data))
         errorSubject.onComplete()
         progressSubject.onComplete()
     }
