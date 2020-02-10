@@ -14,4 +14,7 @@ interface CommentDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(comment: Comment)
+
+    @Query("DELETE FROM comment")
+    fun clear()
 }
