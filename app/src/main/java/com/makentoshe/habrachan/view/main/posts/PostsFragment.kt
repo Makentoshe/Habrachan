@@ -115,7 +115,7 @@ class PostsFragment : Fragment() {
 
         fun install(viewModel: PostsViewModel) {
             val errors = viewModel.errorObservable.map { View.GONE }
-            val successes = viewModel.postsObservable.map { View.GONE }
+            val successes = viewModel.articleObservable.map { View.GONE }
             successes.mergeWith(errors).subscribe(progressbar::setVisibility).let(disposables::add)
 
             viewModel.progressObservable.subscribe {
@@ -188,7 +188,7 @@ class PostsFragment : Fragment() {
     ) {
 
         fun install(viewModel: PostsViewModel) {
-            viewModel.postsObservable.subscribe {
+            viewModel.articleObservable.subscribe {
                 button.visibility = View.GONE
             }.let(disposables::add)
 
@@ -202,7 +202,7 @@ class PostsFragment : Fragment() {
             }.let(disposables::add)
 
             button.setOnClickListener {
-                viewModel.newRequestObserver.onNext(1)
+                viewModel.newRequestObserver.onNext(Unit)
             }
         }
     }
@@ -227,7 +227,7 @@ class PostsFragment : Fragment() {
                 view.isRefreshing = false
             }.let(disposables::add)
 
-            viewModel.postsObservable.subscribe {
+            viewModel.articleObservable.subscribe {
                 arguments.page += 1
                 view.visibility = View.VISIBLE
                 view.isRefreshing = false
@@ -246,11 +246,11 @@ class PostsFragment : Fragment() {
         private fun onTopRefresh(viewModel: PostsViewModel) {
             controller.clear()
             arguments.page = 1
-            viewModel.newRequestObserver.onNext(arguments.page)
+            viewModel.newRequestObserver.onNext(Unit)
         }
 
         private fun onBotRefresh(viewModel: PostsViewModel) {
-            viewModel.requestObserver.onNext(arguments.page + 1)
+            viewModel.pageRequestObserver.onNext(arguments.page + 1)
         }
     }
 
@@ -271,7 +271,7 @@ class PostsFragment : Fragment() {
             view.adapter = controller.adapter
             view.layoutManager = layoutManager
 
-            viewModel.postsObservable.subscribe(::onSuccess).let(disposables::add)
+            viewModel.articleObservable.subscribe(::onSuccess).let(disposables::add)
         }
 
         private fun onSuccess(posts: List<Article>) {

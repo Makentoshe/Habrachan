@@ -4,10 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.common.repository.Repository
+import com.makentoshe.habrachan.model.main.posts.ArticleRepository
 import io.reactivex.Observable
 import io.reactivex.Observer
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -15,19 +14,18 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
 class PostsViewModel(
-    position: Int,
-    private val postsRepository: Repository<Int, Single<List<Article>>>,
-    private val postsDao: ArticleDao
+    private val articleRepository: ArticleRepository,
+    private val articleDao: ArticleDao
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
     /** Emitter for successful network request events */
-    private val postsSubject = BehaviorSubject.create<List<Article>>()
+    private val articleSubject = BehaviorSubject.create<List<Article>>()
 
     /** Observable for successful network request events */
-    val postsObservable: Observable<List<Article>>
-        get() = postsSubject.observeOn(AndroidSchedulers.mainThread())
+    val articleObservable: Observable<List<Article>>
+        get() = articleSubject.observeOn(AndroidSchedulers.mainThread())
 
     /** Emitter for unsuccessful network request events */
     private val errorSubject = BehaviorSubject.create<Throwable>()
@@ -44,34 +42,47 @@ class PostsViewModel(
         get() = progressSubject.observeOn(AndroidSchedulers.mainThread())
 
     /** Subject for requesting */
-    private val requestSubject = PublishSubject.create<Int>()
+    private val pageRequestSubject = PublishSubject.create<Int>()
 
-    val requestObserver: Observer<Int>
-        get() = requestSubject
+    val pageRequestObserver: Observer<Int>
+        get() = pageRequestSubject
 
     /** Subject for requesting with database cleaning */
-    private val newRequestSubject = PublishSubject.create<Int>()
+    private val newRequestSubject = PublishSubject.create<Unit>()
 
-    val newRequestObserver: Observer<Int>
+    val newRequestObserver: Observer<Unit>
         get() = newRequestSubject
 
     init {
-        requestSubject.observeOn(Schedulers.io()).subscribe {
-            val single = postsRepository.get(it)
-            if (single == null) {
-                errorSubject.onNext(NullPointerException())
-            } else {
-                single.subscribe(postsSubject::onNext, errorSubject::onNext).let(disposables::add)
-            }
-        }.let(disposables::add)
+        pageRequestSubject.observeOn(Schedulers.io()).subscribe(::onArticleRequest).let(disposables::add)
 
         newRequestSubject.observeOn(Schedulers.io()).subscribe {
             progressSubject.onNext(Unit)
-            postsDao.clear()
-            requestSubject.onNext(it)
+            pageRequestSubject.onNext(1)
         }.let(disposables::add)
 
-        requestSubject.onNext(position)
+        newRequestSubject.onNext(Unit)
+    }
+
+    private fun onArticleRequest(page: Int) {
+        var shouldClearCache = true
+        articleRepository.requestAll(page).onErrorReturn {
+            shouldClearCache = false
+            val cached = Array(20) { articleDao.getByIndex(page * 20 + it) }.filterNotNull()
+            return@onErrorReturn if (cached.isNotEmpty()) cached else emptyList()
+        }.subscribe({ articles ->
+            if (page == 1 && shouldClearCache) {
+                articleDao.clear()
+            }
+            onSuccess(page, articles)
+        }, errorSubject::onError).let(disposables::add)
+    }
+
+    private fun onSuccess(page: Int, articles: List<Article>) {
+        articleSubject.onNext(articles)
+        articles.forEachIndexed { index, article ->
+            articleDao.insert(article.copy(index = page * 20 + index))
+        }
     }
 
     override fun onCleared() {
@@ -79,12 +90,11 @@ class PostsViewModel(
     }
 
     class Factory(
-        private val position: Int,
-        private val repository: Repository<Int, Single<List<Article>>>,
+        private val articleRepository: ArticleRepository,
         private val postsDao: ArticleDao
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostsViewModel(position, repository, postsDao) as T
+            return PostsViewModel(articleRepository, postsDao) as T
         }
     }
 }
