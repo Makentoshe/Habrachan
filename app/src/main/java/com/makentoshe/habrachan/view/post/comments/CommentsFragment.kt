@@ -42,8 +42,8 @@ class CommentsFragment : Fragment() {
         val factory = ArticleCommentEpoxyModel.Factory(spannedFactory, commentClickListerFactory)
         val epoxyController = ArticleCommentsEpoxyController(factory)
 
-        viewModel.successObservable.subscribe {
-            epoxyController.setComments(parseComments(it.data))
+        viewModel.successObservable.subscribe { commentMap ->
+            epoxyController.setComments(commentMap)
             recyclerview.adapter = epoxyController.adapter
             epoxyController.requestModelBuild()
             recyclerview.visibility = View.VISIBLE
@@ -72,17 +72,6 @@ class CommentsFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
-    }
-
-    private fun parseComments(comments: List<Comment>): SparseArray<ArrayList<Comment>> {
-        val map = SparseArray<ArrayList<Comment>>()
-        comments.forEach { comment ->
-            if (!map.containsKey(comment.thread)) {
-                map[comment.thread] = ArrayList()
-            }
-            map[comment.thread]?.add(comment)
-        }
-        return map
     }
 
     class Factory {

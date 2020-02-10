@@ -2,8 +2,9 @@ package com.makentoshe.habrachan.di.common
 
 import android.content.Context
 import androidx.room.Room
-import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ArticleDao
+import com.makentoshe.habrachan.common.database.CommentDao
+import com.makentoshe.habrachan.common.database.HabrDatabase
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 
@@ -15,6 +16,7 @@ class CacheModule(context: Context) : Module() {
 
     init {
         bind<ArticleDao>().toInstance(database.articles())
+        bind<CommentDao>().toInstance(database.comments())
     }
 }
 
