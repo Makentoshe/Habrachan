@@ -71,7 +71,7 @@ class PostsViewModel(
             requestSubject.onNext(it)
         }.let(disposables::add)
 
-        requestSubject.onNext(position)
+        newRequestSubject.onNext(position)
     }
 
     override fun onCleared() {

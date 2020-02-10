@@ -30,7 +30,7 @@ class DaoPostsRepository(
         return Single.just(k).observeOn(Schedulers.io()).map { page ->
             val posts = pullArticlesFromSource(page)
             if (posts != null) {
-                updateDatabase(page, posts)
+                writeToDatabase(page, posts)
                 return@map posts
             } else {
                 return@map pullArticlesFromDatabase(page)
@@ -44,13 +44,6 @@ class DaoPostsRepository(
         } catch (e: RuntimeException) {
             null
         }
-    }
-
-    private fun updateDatabase(page: Int, posts: List<Article>) {
-        if (page <= 1) {
-            articleDao.clear()
-        }
-        writeToDatabase(page, posts)
     }
 
     private fun writeToDatabase(page: Int, articles: List<Article>) {
