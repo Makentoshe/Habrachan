@@ -40,7 +40,13 @@ class CommentsFragmentViewModel(
     init {
         progressObservable.subscribe {
             val repository = CommentRepository(commentsManager, commentsRequestFactory)
-            repository.get(articleId).subscribe(::onSuccess, ::onError).let(disposables::add)
+            repository.get(articleId).map { response ->
+                response.data.map { comment ->
+                    comment.copy(articleId = articleId).also(commentDao::insert)
+                }.toSparseArray()
+            }.onErrorReturn {
+                commentDao.getByArticleId(articleId).toSparseArray()
+            }.subscribe(::onSuccess, ::onError).let(disposables::add)
         }.let(disposables::add)
 
         progressSubject.onNext(Unit)
@@ -50,20 +56,22 @@ class CommentsFragmentViewModel(
      * Update article id to [Comment] entity for storing it in a database.
      * It uses copy because the [Comment.articleId] variable defined as val.
      * */
-    private fun onSuccess(commentsResponse: CommentsResponse) {
-        // parse response and add comments to cache
+    private fun onSuccess(comments: SparseArray<ArrayList<Comment>>) {
+        successSubject.onNext(comments)
+        errorSubject.onComplete()
+        progressSubject.onComplete()
+    }
+
+    private fun List<Comment>.toSparseArray(): SparseArray<ArrayList<Comment>> {
         val commentMap = SparseArray<ArrayList<Comment>>()
-        commentsResponse.data.forEach { comment ->
+        forEach { comment ->
             if (!commentMap.containsKey(comment.thread)) {
                 commentMap[comment.thread] = ArrayList()
             }
-            commentMap[comment.thread]?.add(comment.copy(articleId = articleId))
-            commentDao.insert(comment)
+            commentMap[comment.thread]?.add(comment)
+            commentDao.insert(comment.copy(articleId = articleId))
         }
-
-        successSubject.onNext(commentMap)
-        errorSubject.onComplete()
-        progressSubject.onComplete()
+        return commentMap
     }
 
     private fun onError(throwable: Throwable) {

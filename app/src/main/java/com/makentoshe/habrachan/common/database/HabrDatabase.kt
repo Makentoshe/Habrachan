@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.comment.Comment
 
-@Database(entities = [Article::class, Comment::class], version = 2)
+@Database(entities = [Article::class, Comment::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class HabrDatabase : RoomDatabase() {
 
