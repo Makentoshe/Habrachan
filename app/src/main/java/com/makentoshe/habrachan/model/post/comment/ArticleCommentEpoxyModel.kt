@@ -28,11 +28,13 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
     @EpoxyAttribute
     var timePublished = ""
 
+    @EpoxyAttribute
+    var avatarUrl: String = ""
+
     var level: Int = 0
 
     var spannedFactory: SpannedFactory? = null
-    var gestureDetectorFactory: OnCommentGestureDetectorFactory? = null
-    var comment: Comment? = null
+    var gestureDetectorBuilder: OnCommentGestureDetectorBuilder? = null
 
     override fun bind(holder: ViewHolder) {
         holder.messageView?.text = spannedFactory?.build(message)
@@ -41,12 +43,14 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
         setCommentLevel(holder)
         setScore(holder)
         setOnClickListener(holder)
+        requestAuthorAvatar(holder)
     }
 
     private fun setOnClickListener(holder: ViewHolder) {
-        val gestureDetector = gestureDetectorFactory?.build(holder.rootView ?: return, comment ?: return)
+        gestureDetectorBuilder!!.view = holder.rootView
+        val gestureDetector = gestureDetectorBuilder!!.build()
         holder.rootView?.setOnTouchListener { _, event ->
-            gestureDetector?.onTouchEvent(event) ?: return@setOnTouchListener false
+            gestureDetector.onTouchEvent(event)
         }
         // add for ripple effect
         holder.rootView?.setOnLongClickListener { true }
@@ -79,6 +83,10 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
         }
     }
 
+    private fun requestAuthorAvatar(viewHolder: ViewHolder) {
+
+    }
+
     class ViewHolder : EpoxyHolder() {
         var messageView: TextView? = null
         var authorView: TextView? = null
@@ -101,7 +109,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
 
     class Factory(
         private val spannedFactory: SpannedFactory,
-        private val gestureDetectorFactory: OnCommentGestureDetectorFactory
+        private val gestureDetectorBuilder: OnCommentGestureDetectorBuilder
     ) {
         fun build(comment: Comment): ArticleCommentEpoxyModel {
             val model = ArticleCommentEpoxyModel_().id(comment.id)
@@ -111,10 +119,10 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
             model.author = comment.author.login
             model.timePublished = comment.timePublished
             model.score = comment.score
+            model.avatarUrl = comment.avatar
 
-            model.gestureDetectorFactory = gestureDetectorFactory
+            model.gestureDetectorBuilder = gestureDetectorBuilder.also { it.comment = comment }
             model.spannedFactory = spannedFactory
-            model.comment = comment
             return model
         }
     }

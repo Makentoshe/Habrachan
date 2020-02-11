@@ -1,21 +1,17 @@
 package com.makentoshe.habrachan.view.post.comments
 
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.util.containsKey
-import androidx.core.util.set
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.model.post.comment.ArticleCommentEpoxyModel
 import com.makentoshe.habrachan.model.post.comment.ArticleCommentsEpoxyController
-import com.makentoshe.habrachan.model.post.comment.OnCommentGestureDetectorFactory
+import com.makentoshe.habrachan.model.post.comment.OnCommentGestureDetectorBuilder
 import com.makentoshe.habrachan.model.post.comment.SpannedFactory
 import com.makentoshe.habrachan.ui.post.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.comments.CommentsFragmentViewModel
@@ -28,7 +24,7 @@ class CommentsFragment : Fragment() {
     private val disposables = CompositeDisposable()
     private val viewModel by inject<CommentsFragmentViewModel>()
     private val spannedFactory by inject<SpannedFactory>()
-    private val commentClickListerFactory by inject<OnCommentGestureDetectorFactory>()
+    private val commentClickListerFactory by inject<OnCommentGestureDetectorBuilder>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentsFragmentUi().createView(requireContext())

@@ -7,9 +7,12 @@ import android.widget.PopupWindow
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 
-class OnCommentGestureDetectorFactory {
+class OnCommentGestureDetectorBuilder {
 
-    fun build(view: View, comment: Comment): GestureDetector {
+    var comment: Comment? = null
+    var view: View? = null
+
+    private fun build(view: View, comment: Comment): GestureDetector {
         val listener = object : GestureDetector.OnGestureListener {
             override fun onShowPress(e: MotionEvent?) = Unit
             override fun onSingleTapUp(e: MotionEvent?) = false
@@ -22,6 +25,10 @@ class OnCommentGestureDetectorFactory {
             }
         }
         return GestureDetector(view.context, listener)
+    }
+
+    fun build(): GestureDetector{
+        return build(view!!, comment!!)
     }
 
     private fun createPopup(context: Context, comment: Comment): PopupWindow {
