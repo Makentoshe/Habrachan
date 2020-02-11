@@ -1,10 +1,16 @@
 package com.makentoshe.habrachan.viewmodel.post.comments
 
+import android.util.SparseArray
+import androidx.core.util.containsKey
+import androidx.core.util.set
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.makentoshe.habrachan.common.database.CommentDao
+import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.entity.comment.CommentsResponse
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
+import com.makentoshe.habrachan.model.post.comment.CommentRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -13,13 +19,14 @@ import io.reactivex.subjects.BehaviorSubject
 class CommentsFragmentViewModel(
     private val articleId: Int,
     private val commentsManager: HabrCommentsManager,
-    private val commentsRequestFactory: GetCommentsRequest.Factory
+    private val commentsRequestFactory: GetCommentsRequest.Factory,
+    private val commentDao: CommentDao
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
-    private val successSubject = BehaviorSubject.create<CommentsResponse>()
-    val successObservable: Observable<CommentsResponse>
+    private val successSubject = BehaviorSubject.create<SparseArray<ArrayList<Comment>>>()
+    val successObservable: Observable<SparseArray<ArrayList<Comment>>>
         get() = successSubject.observeOn(AndroidSchedulers.mainThread())
 
     private val errorSubject = BehaviorSubject.create<Throwable>()
@@ -32,21 +39,39 @@ class CommentsFragmentViewModel(
 
     init {
         progressObservable.subscribe {
-            requestComments()
+            val repository = CommentRepository(commentsManager, commentsRequestFactory)
+            repository.get(articleId).map { response ->
+                response.data.map { comment ->
+                    comment.copy(articleId = articleId).also(commentDao::insert)
+                }.toSparseArray()
+            }.onErrorReturn {
+                commentDao.getByArticleId(articleId).toSparseArray()
+            }.subscribe(::onSuccess, ::onError).let(disposables::add)
         }.let(disposables::add)
 
         progressSubject.onNext(Unit)
     }
 
-    private fun requestComments() {
-        val request = commentsRequestFactory.build(articleId)
-        commentsManager.getComments(request).subscribe(::onSuccess, ::onError).let(disposables::add)
-    }
-
-    private fun onSuccess(response: CommentsResponse) {
-        successSubject.onNext(response)
+    /**
+     * Update article id to [Comment] entity for storing it in a database.
+     * It uses copy because the [Comment.articleId] variable defined as val.
+     * */
+    private fun onSuccess(comments: SparseArray<ArrayList<Comment>>) {
+        successSubject.onNext(comments)
         errorSubject.onComplete()
         progressSubject.onComplete()
+    }
+
+    private fun List<Comment>.toSparseArray(): SparseArray<ArrayList<Comment>> {
+        val commentMap = SparseArray<ArrayList<Comment>>()
+        forEach { comment ->
+            if (!commentMap.containsKey(comment.thread)) {
+                commentMap[comment.thread] = ArrayList()
+            }
+            commentMap[comment.thread]?.add(comment)
+            commentDao.insert(comment.copy(articleId = articleId))
+        }
+        return commentMap
     }
 
     private fun onError(throwable: Throwable) {
@@ -60,10 +85,11 @@ class CommentsFragmentViewModel(
     class Factory(
         private val articleId: Int,
         private val commentsManager: HabrCommentsManager,
-        private val commentsRequestFactory: GetCommentsRequest.Factory
+        private val commentsRequestFactory: GetCommentsRequest.Factory,
+        private val commentDao: CommentDao
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return CommentsFragmentViewModel(articleId, commentsManager, commentsRequestFactory) as T
+            return CommentsFragmentViewModel(articleId, commentsManager, commentsRequestFactory, commentDao) as T
         }
     }
 }

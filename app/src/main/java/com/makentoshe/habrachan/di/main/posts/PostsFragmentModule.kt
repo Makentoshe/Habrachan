@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.di.main.posts
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.ArticleDao
+import com.makentoshe.habrachan.common.database.CommentDao
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
 import com.makentoshe.habrachan.di.common.ApplicationScope
@@ -17,21 +18,13 @@ class PostsFragmentModule(fragment: PostsFragment) : Module() {
 
     private val manager by inject<HabrPostsManager>()
     private val factory by inject<GetPostsRequestFactory>()
-    private val postsDao by inject<ArticleDao>()
+    private val articleDao by inject<ArticleDao>()
+    private val commentDao by inject<CommentDao>()
 
     init {
-        performInjections()
-        performBindings(fragment)
-    }
-
-    private fun performInjections() {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
-    }
-
-    private fun performBindings(fragment: PostsFragment) {
-        val repository =
-            ArticleRepository(factory, manager)
-        val factory = PostsViewModel.Factory(repository, postsDao)
+        val repository = ArticleRepository(factory, manager)
+        val factory = PostsViewModel.Factory(repository, articleDao, commentDao)
         val viewmodel = ViewModelProviders.of(fragment, factory)[PostsViewModel::class.java]
         bind<PostsViewModel>().toInstance(viewmodel)
     }
