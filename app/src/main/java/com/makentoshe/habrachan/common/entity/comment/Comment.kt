@@ -1,14 +1,22 @@
 package com.makentoshe.habrachan.common.entity.comment
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class Comment(
-    @SerializedName("author")
-    val author: CommentAuthor,
-    @SerializedName("avatar")
-    val avatar: String,
+    @PrimaryKey
     @SerializedName("id")
     val id: Int,
+
+    @Embedded(prefix = "author_")
+    @SerializedName("author")
+    val author: CommentAuthor,
+
+    @SerializedName("avatar")
+    val avatar: String,
     @SerializedName("isAuthor")
     val isAuthor: Boolean,
     @SerializedName("is_can_vote")
@@ -26,9 +34,13 @@ data class Comment(
     @SerializedName("thread")
     val thread: Int,
     @SerializedName("time_changed")
-    val timeChanged: String,
+    val timeChanged: String?,
     @SerializedName("time_published")
     val timePublished: String,
-    @SerializedName("vote")
-    val vote: Any
+
+//    @Embedded(prefix = "any_")
+//    @SerializedName("vote")
+//    val vote: Any?,
+
+    val articleId: Int
 )
