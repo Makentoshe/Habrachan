@@ -35,6 +35,7 @@ class CommentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val retrybutton = view.findViewById<View>(R.id.article_comments_retrybutton)
+        val firstCommentButton = view.findViewById<View>(R.id.article_comments_firstbutton)
         val messageview = view.findViewById<TextView>(R.id.article_comments_messageview)
         val progressbar = view.findViewById<ProgressBar>(R.id.article_comments_progressbar)
         val recyclerview = view.findViewById<RecyclerView>(R.id.article_comments_recyclerview)
@@ -46,10 +47,16 @@ class CommentsFragment : Fragment() {
         val epoxyController = ArticleCommentsEpoxyController(factory)
 
         viewModel.successObservable.subscribe { commentMap ->
-            epoxyController.setComments(commentMap)
-            recyclerview.adapter = epoxyController.adapter
-            epoxyController.requestModelBuild()
-            recyclerview.visibility = View.VISIBLE
+            if (commentMap.size() == 0) {
+                messageview.setText(R.string.no_comments)
+                messageview.visibility = View.VISIBLE
+                firstCommentButton.visibility = View.VISIBLE
+            } else {
+                epoxyController.setComments(commentMap)
+                recyclerview.adapter = epoxyController.adapter
+                epoxyController.requestModelBuild()
+                recyclerview.visibility = View.VISIBLE
+            }
             progressbar.visibility = View.GONE
         }.let(disposables::add)
 

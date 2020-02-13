@@ -59,4 +59,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/article_comments_messageview" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/article_comments_firstbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:text="@string/be_the_first"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/article_comments_messageview" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

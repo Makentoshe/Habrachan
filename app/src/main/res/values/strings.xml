@@ -12,4 +12,6 @@
     <string name="retry">Retry</string>
     <string name="scroll_to_top">Scroll to top</string>
     <string name="reply">Reply</string>
+    <string name="be_the_first">Be the first one</string>
+    <string name="no_comments">There are no comments\nfor this publication at now</string>
 </resources>
