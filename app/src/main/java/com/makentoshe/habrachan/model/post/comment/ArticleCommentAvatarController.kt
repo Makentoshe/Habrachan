@@ -27,19 +27,20 @@ class ArticleCommentAvatarController(
 
     fun toAvatarView(viewHolder: ArticleCommentEpoxyModel.ViewHolder) {
         viewHolder.avatarView?.setImageDrawable(null)
-        val cachedAvatar = avatarDao.get(File(url).name)
-        if (cachedAvatar != null) {
-            return setAvatarBitmap(viewHolder, cachedAvatar)
-        }
         val context = viewHolder.rootView?.context
-        repository.get(url).timeout(30, TimeUnit.SECONDS)
+
+        if (File(url).name == "stub-user-middle.gif") {
+            val avatarStub = context?.resources?.getDrawable(R.drawable.ic_account_stub, context.theme)?.toBitmap()
+            if (avatarStub != null) {
+                return setAvatarBitmap(viewHolder, avatarStub)
+            }
+        }
+
+        repository.get(url)//.timeout(30, TimeUnit.SECONDS)
             .map { BitmapController(it).roundCornersPx(context!!, 10) }
-            .onErrorReturn {
-                context?.resources?.getDrawable(R.drawable.ic_account, context.theme)?.toBitmap()
-            }.observeOn(AndroidSchedulers.mainThread()).subscribe({ bitmap ->
-                avatarDao.insert(File(url).name, bitmap)
+            .observeOn(AndroidSchedulers.mainThread()).subscribe({ bitmap ->
                 setAvatarBitmap(viewHolder, bitmap)
-            }, {
+            }, { throwable ->
                 viewHolder.progressView?.visibility = View.GONE
                 viewHolder.avatarView?.visibility = View.INVISIBLE
             }).let(disposables::add)
