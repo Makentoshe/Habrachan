@@ -78,7 +78,6 @@ class PostsViewModel(
             if (page == 1 && shouldClearCache) {
                 articleDao.clear()
                 commentDao.clear()
-                val list = avatarDao.getAll()
                 avatarDao.clear()
             }
             onSuccess(page, articles)
