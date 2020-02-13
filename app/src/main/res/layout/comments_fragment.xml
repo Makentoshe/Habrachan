@@ -64,6 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:visibility="gone"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:text="@string/be_the_first"
         app:layout_constraintStart_toStartOf="parent"
