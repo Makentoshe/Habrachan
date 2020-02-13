@@ -111,9 +111,9 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
     class Factory(
         private val spannedFactory: SpannedFactory,
         private val gestureDetectorBuilder: OnCommentGestureDetectorBuilder,
-        private val avatarRepository: ArticleCommentAvatarRepository
+        private val avatarController: ArticleCommentAvatarController
     ) {
-        fun build(comment: Comment, disposables: CompositeDisposable): ArticleCommentEpoxyModel {
+        fun build(comment: Comment): ArticleCommentEpoxyModel {
             val model = ArticleCommentEpoxyModel_().id(comment.id)
 
             model.message = comment.message
@@ -125,7 +125,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
 
             model.gestureDetectorBuilder = gestureDetectorBuilder.also { it.comment = comment }
             model.spannedFactory = spannedFactory
-            model.avatarController = ArticleCommentAvatarController(avatarRepository, disposables)
+            model.avatarController = avatarController
             return model
         }
     }

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.model.post.comment.*
 import com.makentoshe.habrachan.ui.post.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.comments.CommentsFragmentViewModel
@@ -23,6 +24,7 @@ class CommentsFragment : Fragment() {
     private val spannedFactory by inject<SpannedFactory>()
     private val commentClickListerFactory by inject<OnCommentGestureDetectorBuilder>()
     private val commentAvatarRepository by inject<ArticleCommentAvatarRepository>()
+    private val avatarDao by inject<AvatarDao>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentsFragmentUi().createView(requireContext())
@@ -34,8 +36,9 @@ class CommentsFragment : Fragment() {
         val progressbar = view.findViewById<ProgressBar>(R.id.article_comments_progressbar)
         val recyclerview = view.findViewById<RecyclerView>(R.id.article_comments_recyclerview)
 
-        val factory = ArticleCommentEpoxyModel.Factory(spannedFactory, commentClickListerFactory, commentAvatarRepository)
-        val epoxyController = ArticleCommentsEpoxyController(factory, disposables)
+        val avatarController = ArticleCommentAvatarController(commentAvatarRepository, disposables, avatarDao)
+        val factory = ArticleCommentEpoxyModel.Factory(spannedFactory, commentClickListerFactory, avatarController)
+        val epoxyController = ArticleCommentsEpoxyController(factory)
 
         viewModel.successObservable.subscribe { commentMap ->
             epoxyController.setComments(commentMap)
