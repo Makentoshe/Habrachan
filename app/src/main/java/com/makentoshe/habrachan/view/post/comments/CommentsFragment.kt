@@ -36,7 +36,7 @@ class CommentsFragment : Fragment() {
         val progressbar = view.findViewById<ProgressBar>(R.id.article_comments_progressbar)
         val recyclerview = view.findViewById<RecyclerView>(R.id.article_comments_recyclerview)
 
-        val avatarController = ArticleCommentAvatarController(commentAvatarRepository, disposables, avatarDao)
+        val avatarController = ArticleCommentAvatarController.Factory(commentAvatarRepository, disposables, avatarDao)
         val factory = ArticleCommentEpoxyModel.Factory(spannedFactory, commentClickListerFactory, avatarController)
         val epoxyController = ArticleCommentsEpoxyController(factory)
 

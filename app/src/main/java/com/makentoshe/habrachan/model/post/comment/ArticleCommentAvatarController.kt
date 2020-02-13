@@ -10,7 +10,6 @@ import io.reactivex.disposables.CompositeDisposable
 import java.io.File
 import java.net.MalformedURLException
 import java.net.URL
-import java.util.concurrent.TimeUnit
 
 class ArticleCommentAvatarController(
     private val repository: ArticleCommentAvatarRepository,
@@ -20,25 +19,27 @@ class ArticleCommentAvatarController(
 
     private var url: String = ""
 
-    fun requestAvatar(url: String): ArticleCommentAvatarController {
+    private fun requestAvatar(url: String) {
         this.url = fixUrl(url)
-        return this
     }
 
     fun toAvatarView(viewHolder: ArticleCommentEpoxyModel.ViewHolder) {
         viewHolder.avatarView?.setImageDrawable(null)
-        val context = viewHolder.rootView?.context
+        val context = viewHolder.rootView?.context!!
 
         if (File(url).name == "stub-user-middle.gif") {
-            val avatarStub = context?.resources?.getDrawable(R.drawable.ic_account_stub, context.theme)?.toBitmap()
-            if (avatarStub != null) {
-                return setAvatarBitmap(viewHolder, avatarStub)
-            }
+            val avatarStub = context.resources.getDrawable(R.drawable.ic_account_stub, context.theme)!!.toBitmap()
+            return setAvatarBitmap(viewHolder, avatarStub)
         }
 
-        repository.get(url)//.timeout(30, TimeUnit.SECONDS)
-            .map { BitmapController(it).roundCornersPx(context!!, 10) }
+        val cached = avatarDao.get(url)
+        if (cached != null) {
+            return setAvatarBitmap(viewHolder, cached)
+        }
+
+        repository.get(url).map { BitmapController(it).roundCornersPx(context, 10) }
             .observeOn(AndroidSchedulers.mainThread()).subscribe({ bitmap ->
+                avatarDao.insert(url, bitmap)
                 setAvatarBitmap(viewHolder, bitmap)
             }, { throwable ->
                 viewHolder.progressView?.visibility = View.GONE
@@ -47,9 +48,9 @@ class ArticleCommentAvatarController(
     }
 
     private fun setAvatarBitmap(viewHolder: ArticleCommentEpoxyModel.ViewHolder, bitmap: Bitmap) {
-        viewHolder.avatarView?.setImageBitmap(bitmap)
-        viewHolder.progressView?.visibility = View.GONE
-        viewHolder.avatarView?.visibility = View.VISIBLE
+        viewHolder.avatarView!!.setImageBitmap(bitmap)
+        viewHolder.progressView!!.visibility = View.GONE
+        viewHolder.avatarView!!.visibility = View.VISIBLE
     }
 
     private fun fixUrl(url: String): String {
@@ -57,6 +58,16 @@ class ArticleCommentAvatarController(
             return URL(url).toString()
         } catch (e: MalformedURLException) {
             "https:".plus(url)
+        }
+    }
+
+    class Factory(
+        private val repository: ArticleCommentAvatarRepository,
+        private val disposables: CompositeDisposable,
+        private val avatarDao: AvatarDao
+    ) {
+        fun build(url: String) = ArticleCommentAvatarController(repository, disposables, avatarDao).also {
+            it.requestAvatar(url)
         }
     }
 }

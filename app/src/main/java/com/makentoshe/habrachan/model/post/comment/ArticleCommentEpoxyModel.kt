@@ -43,7 +43,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
         holder.messageView?.text = spannedFactory?.build(message)
         holder.authorView?.text = author
         holder.timePublishedView?.text = timePublished
-        avatarController?.requestAvatar(avatarUrl)?.toAvatarView(holder)
+        avatarController?.toAvatarView(holder)
         setCommentLevel(holder)
         setScore(holder)
         setOnClickListener(holder)
@@ -111,7 +111,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
     class Factory(
         private val spannedFactory: SpannedFactory,
         private val gestureDetectorBuilder: OnCommentGestureDetectorBuilder,
-        private val avatarController: ArticleCommentAvatarController
+        private val avatarControllerFactory: ArticleCommentAvatarController.Factory
     ) {
         fun build(comment: Comment): ArticleCommentEpoxyModel {
             val model = ArticleCommentEpoxyModel_().id(comment.id)
@@ -121,11 +121,10 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
             model.author = comment.author.login
             model.timePublished = comment.timePublished
             model.score = comment.score
-            model.avatarUrl = comment.avatar
 
             model.gestureDetectorBuilder = gestureDetectorBuilder.also { it.comment = comment }
             model.spannedFactory = spannedFactory
-            model.avatarController = avatarController
+            model.avatarController = avatarControllerFactory.build(comment.avatar)
             return model
         }
     }

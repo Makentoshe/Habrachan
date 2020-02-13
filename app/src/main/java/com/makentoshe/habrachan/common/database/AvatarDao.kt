@@ -11,13 +11,19 @@ class AvatarDao(context: Context) {
     private val avatarsDirectory = File(context.cacheDir, "avatars").also { it.mkdirs() }
 
     fun insert(key: String, bitmap: Bitmap) {
-        val outputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream)
-        File(avatarsDirectory, key).writeBytes(outputStream.toByteArray())
+        val normalizedKey = normalizeKey(key)
+        val outputStream = ByteArrayOutputStream().also {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, it)
+        }
+        val file = File(avatarsDirectory, normalizedKey)
+        file.parentFile.mkdirs()
+        file.createNewFile()
+        file.writeBytes(outputStream.toByteArray())
     }
 
     fun get(key: String): Bitmap? {
-        val file = File(avatarsDirectory, key)
+        val normalizedKey = normalizeKey(key)
+        val file = File(avatarsDirectory, normalizedKey)
         if (!file.exists()) return null
         val bytes = file.readBytes()
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
@@ -30,6 +36,11 @@ class AvatarDao(context: Context) {
     fun clear() {
         avatarsDirectory.deleteRecursively()
         avatarsDirectory.mkdirs()
+    }
+
+    private fun normalizeKey(key: String): String {
+        val filepath = key.split("avatars")
+        return if (filepath.size > 1) filepath[1] else File(key).name
     }
 
 }
