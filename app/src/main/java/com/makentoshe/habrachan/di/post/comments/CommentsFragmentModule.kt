@@ -11,6 +11,7 @@ import com.makentoshe.habrachan.model.post.comment.OnCommentGestureDetectorBuild
 import com.makentoshe.habrachan.model.post.comment.SpannedFactory
 import com.makentoshe.habrachan.view.post.comments.CommentsFragment
 import com.makentoshe.habrachan.viewmodel.post.comments.CommentsFragmentViewModel
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -22,6 +23,7 @@ annotation class CommentsFragmentScope
 class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
     private val inputStreamRepository by inject<InputStreamRepository>()
+    private val router by inject<Router>()
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
@@ -37,6 +39,8 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
         val articleCommentAvatarRepository = ArticleCommentAvatarRepository(inputStreamRepository)
         bind<ArticleCommentAvatarRepository>().toInstance(articleCommentAvatarRepository)
+
+        bind<CommentsFragment.Navigator>().toInstance(CommentsFragment.Navigator(router))
     }
 
     class Factory {
