@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
@@ -12,6 +13,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import io.reactivex.disposables.CompositeDisposable
 
 @EpoxyModelClass(layout = R.layout.comments_fragment_comment)
 abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpoxyModel.ViewHolder>() {
@@ -35,15 +37,16 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
 
     var spannedFactory: SpannedFactory? = null
     var gestureDetectorBuilder: OnCommentGestureDetectorBuilder? = null
+    var avatarController: ArticleCommentAvatarController? = null
 
     override fun bind(holder: ViewHolder) {
         holder.messageView?.text = spannedFactory?.build(message)
         holder.authorView?.text = author
         holder.timePublishedView?.text = timePublished
+        avatarController?.requestAvatar(avatarUrl)?.toAvatarView(holder)
         setCommentLevel(holder)
         setScore(holder)
         setOnClickListener(holder)
-        requestAuthorAvatar(holder)
     }
 
     private fun setOnClickListener(holder: ViewHolder) {
@@ -83,10 +86,6 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
         }
     }
 
-    private fun requestAuthorAvatar(viewHolder: ViewHolder) {
-
-    }
-
     class ViewHolder : EpoxyHolder() {
         var messageView: TextView? = null
         var authorView: TextView? = null
@@ -95,6 +94,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
         var avatarView: ImageView? = null
         var rootView: View? = null
         var verticalView: LinearLayout? = null
+        var progressView: ProgressBar? = null
 
         override fun bindView(itemView: View) {
             messageView = itemView.findViewById(R.id.comments_fragment_comment_message)
@@ -103,15 +103,17 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
             scoreView = itemView.findViewById(R.id.comments_fragment_comment_score)
             avatarView = itemView.findViewById(R.id.comments_fragment_comment_avatar)
             verticalView = itemView.findViewById(R.id.comments_fragment_comment_verticalcontainer)
+            progressView = itemView.findViewById(R.id.comments_fragment_comment_progressbar)
             rootView = itemView
         }
     }
 
     class Factory(
         private val spannedFactory: SpannedFactory,
-        private val gestureDetectorBuilder: OnCommentGestureDetectorBuilder
+        private val gestureDetectorBuilder: OnCommentGestureDetectorBuilder,
+        private val avatarRepository: ArticleCommentAvatarRepository
     ) {
-        fun build(comment: Comment): ArticleCommentEpoxyModel {
+        fun build(comment: Comment, disposables: CompositeDisposable): ArticleCommentEpoxyModel {
             val model = ArticleCommentEpoxyModel_().id(comment.id)
 
             model.message = comment.message
@@ -123,6 +125,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
 
             model.gestureDetectorBuilder = gestureDetectorBuilder.also { it.comment = comment }
             model.spannedFactory = spannedFactory
+            model.avatarController = ArticleCommentAvatarController(avatarRepository, disposables)
             return model
         }
     }

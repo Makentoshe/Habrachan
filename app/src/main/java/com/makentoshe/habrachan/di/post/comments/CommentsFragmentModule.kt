@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.common.repository.InputStreamRepository
 import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.model.post.comment.ArticleCommentAvatarRepository
 import com.makentoshe.habrachan.model.post.comment.OnCommentGestureDetectorBuilder
 import com.makentoshe.habrachan.model.post.comment.SpannedFactory
 import com.makentoshe.habrachan.view.post.comments.CommentsFragment
@@ -33,6 +34,9 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
         val onCommentClickListenerFactory = OnCommentGestureDetectorBuilder()
         bind<OnCommentGestureDetectorBuilder>().toInstance(onCommentClickListenerFactory)
+
+        val articleCommentAvatarRepository = ArticleCommentAvatarRepository(inputStreamRepository)
+        bind<ArticleCommentAvatarRepository>().toInstance(articleCommentAvatarRepository)
     }
 
     class Factory {
