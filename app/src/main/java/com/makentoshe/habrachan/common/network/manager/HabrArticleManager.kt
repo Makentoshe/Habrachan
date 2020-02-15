@@ -42,7 +42,7 @@ interface HabrArticleManager {
 
                 override fun getPost(request: GetArticleRequest): Single<PostResponse> {
                     return api.getPost(
-                        request.client, request.token, request.api, request.id, null, null, null
+                        request.client, request.token, request.api, request.id, include, null, null
                     )
                 }
             }
