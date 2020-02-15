@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.viewmodel.main.posts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.ArticleDao
+import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.common.database.CommentDao
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.main.posts.ArticleRepository
@@ -17,7 +18,8 @@ import io.reactivex.subjects.PublishSubject
 class PostsViewModel(
     private val articleRepository: ArticleRepository,
     private val articleDao: ArticleDao,
-    private val commentDao: CommentDao
+    private val commentDao: CommentDao,
+    private val avatarDao: AvatarDao
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -76,6 +78,7 @@ class PostsViewModel(
             if (page == 1 && shouldClearCache) {
                 articleDao.clear()
                 commentDao.clear()
+                avatarDao.clear()
             }
             onSuccess(page, articles)
         }, errorSubject::onError).let(disposables::add)
@@ -95,10 +98,11 @@ class PostsViewModel(
     class Factory(
         private val articleRepository: ArticleRepository,
         private val postsDao: ArticleDao,
-        private val commentDao: CommentDao
+        private val commentDao: CommentDao,
+        private val avatarDao: AvatarDao
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostsViewModel(articleRepository, postsDao, commentDao) as T
+            return PostsViewModel(articleRepository, postsDao, commentDao, avatarDao) as T
         }
     }
 }

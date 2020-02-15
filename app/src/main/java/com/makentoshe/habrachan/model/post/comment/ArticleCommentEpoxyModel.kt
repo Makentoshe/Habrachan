@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
@@ -12,6 +13,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import io.reactivex.disposables.CompositeDisposable
 
 @EpoxyModelClass(layout = R.layout.comments_fragment_comment)
 abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpoxyModel.ViewHolder>() {
@@ -28,25 +30,30 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
     @EpoxyAttribute
     var timePublished = ""
 
+    @EpoxyAttribute
+    var avatarUrl: String = ""
+
     var level: Int = 0
 
     var spannedFactory: SpannedFactory? = null
-    var gestureDetectorFactory: OnCommentGestureDetectorFactory? = null
-    var comment: Comment? = null
+    var gestureDetectorBuilder: OnCommentGestureDetectorBuilder? = null
+    var avatarController: ArticleCommentAvatarController? = null
 
     override fun bind(holder: ViewHolder) {
         holder.messageView?.text = spannedFactory?.build(message)
         holder.authorView?.text = author
         holder.timePublishedView?.text = timePublished
+        avatarController?.toAvatarView(holder)
         setCommentLevel(holder)
         setScore(holder)
         setOnClickListener(holder)
     }
 
     private fun setOnClickListener(holder: ViewHolder) {
-        val gestureDetector = gestureDetectorFactory?.build(holder.rootView ?: return, comment ?: return)
+        gestureDetectorBuilder!!.view = holder.rootView
+        val gestureDetector = gestureDetectorBuilder!!.build()
         holder.rootView?.setOnTouchListener { _, event ->
-            gestureDetector?.onTouchEvent(event) ?: return@setOnTouchListener false
+            gestureDetector.onTouchEvent(event)
         }
         // add for ripple effect
         holder.rootView?.setOnLongClickListener { true }
@@ -87,6 +94,7 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
         var avatarView: ImageView? = null
         var rootView: View? = null
         var verticalView: LinearLayout? = null
+        var progressView: ProgressBar? = null
 
         override fun bindView(itemView: View) {
             messageView = itemView.findViewById(R.id.comments_fragment_comment_message)
@@ -95,13 +103,15 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
             scoreView = itemView.findViewById(R.id.comments_fragment_comment_score)
             avatarView = itemView.findViewById(R.id.comments_fragment_comment_avatar)
             verticalView = itemView.findViewById(R.id.comments_fragment_comment_verticalcontainer)
+            progressView = itemView.findViewById(R.id.comments_fragment_comment_progressbar)
             rootView = itemView
         }
     }
 
     class Factory(
         private val spannedFactory: SpannedFactory,
-        private val gestureDetectorFactory: OnCommentGestureDetectorFactory
+        private val gestureDetectorBuilder: OnCommentGestureDetectorBuilder,
+        private val avatarControllerFactory: ArticleCommentAvatarController.Factory
     ) {
         fun build(comment: Comment): ArticleCommentEpoxyModel {
             val model = ArticleCommentEpoxyModel_().id(comment.id)
@@ -112,9 +122,9 @@ abstract class ArticleCommentEpoxyModel : EpoxyModelWithHolder<ArticleCommentEpo
             model.timePublished = comment.timePublished
             model.score = comment.score
 
-            model.gestureDetectorFactory = gestureDetectorFactory
+            model.gestureDetectorBuilder = gestureDetectorBuilder.also { it.comment = comment }
             model.spannedFactory = spannedFactory
-            model.comment = comment
+            model.avatarController = avatarControllerFactory.build(comment.avatar)
             return model
         }
     }

@@ -6,6 +6,7 @@
     android:paddingStart="8dp"
     android:paddingEnd="8dp"
     android:background="?android:attr/selectableItemBackground"
+    android:foreground="?android:attr/selectableItemBackground"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -18,15 +19,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:layout_marginTop="8dp"
         android:id="@+id/comments_fragment_comment_avatar"
+        android:visibility="invisible"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/comments_fragment_comment_timepublished"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toEndOf="@id/comments_fragment_comment_verticalcontainer"
         app:layout_constraintTop_toTopOf="@id/comments_fragment_comment_author"
-        tools:src="@drawable/ic_account" />
+        />
+
+    <ProgressBar
+        android:id="@+id/comments_fragment_comment_progressbar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/comments_fragment_comment_avatar"
+        app:layout_constraintEnd_toEndOf="@+id/comments_fragment_comment_avatar"
+        app:layout_constraintStart_toStartOf="@id/comments_fragment_comment_avatar"
+        app:layout_constraintTop_toTopOf="@id/comments_fragment_comment_avatar" />
 
     <TextView
         android:layout_marginTop="8dp"

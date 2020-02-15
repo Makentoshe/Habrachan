@@ -11,11 +11,11 @@
         android:minHeight="?attr/actionBarSize"
         app:contentScrim="?attr/colorPrimary"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:toolbarId="@+id/comments_fragment_toolbar">
+        app:toolbarId="@+id/article_comments_toolbar">
 
         <androidx.appcompat.widget.Toolbar
             style="?attr/habrachanToolbar"
-            android:id="@+id/comments_fragment_toolbar"
+            android:id="@+id/article_comments_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="pin" />

@@ -6,6 +6,8 @@ import com.makentoshe.habrachan.common.repository.InputStreamRepository
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.net.MalformedURLException
+import java.net.URL
 
 /**
  * Example local unit test, which will execute on the development machine (host).
