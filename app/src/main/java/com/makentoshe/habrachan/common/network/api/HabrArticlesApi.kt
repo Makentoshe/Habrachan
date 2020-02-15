@@ -8,7 +8,7 @@ import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface HabrPostsApi {
+interface HabrArticlesApi {
 
     @GET("https://habr.com/api/v1/{type1}/{type2}")
     fun getPosts(

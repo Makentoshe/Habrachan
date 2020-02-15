@@ -3,10 +3,10 @@ package com.makentoshe.habrachan.di.common
 import android.content.Context
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
-import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
+import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
-import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
-import com.makentoshe.habrachan.common.network.request.GetPostsRequestFactory
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.config.Module
@@ -18,20 +18,19 @@ class NetworkModule(context: Context) : Module() {
 
     private val client = OkHttpClient.Builder().addLoggingInterceptor().build()
 
-    private val factory = GetPostsRequestFactory(
+    private val factory = GetArticlesRequest.Builder(
         client = "85cab69095196f3.89453480",
         api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
         token = null
     )
 
-    private val manager = HabrPostsManager.Builder(client).build("text_html")
+    private val manager = HabrArticleManager.Builder(client).build("text_html")
 
-    private val postFactory = GetPostRequestFactory(
+    private val postFactory = GetArticleRequest.Builder(
         client = "85cab69095196f3.89453480",
         api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
         token = null
     )
-
 
     private val commentsManager = HabrCommentsManager.Factory(client).build()
     private val getCommentsRequestFactory = GetCommentsRequest.Factory(
@@ -41,9 +40,9 @@ class NetworkModule(context: Context) : Module() {
     )
 
     init {
-        bind<GetPostsRequestFactory>().toInstance(factory)
-        bind<GetPostRequestFactory>().toInstance(postFactory)
-        bind<HabrPostsManager>().toInstance(manager)
+        bind<GetArticlesRequest.Builder>().toInstance(factory)
+        bind<GetArticleRequest.Builder>().toInstance(postFactory)
+        bind<HabrArticleManager>().toInstance(manager)
         bind<OkHttpClient>().toInstance(client)
 
         bind<GetCommentsRequest.Factory>().toInstance(getCommentsRequestFactory)
@@ -53,7 +52,7 @@ class NetworkModule(context: Context) : Module() {
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
         if (BuildConfig.DEBUG) {
             val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.HEADERS
+            logging.level = HttpLoggingInterceptor.Level.BASIC
             addInterceptor(logging)
         }
         return this
