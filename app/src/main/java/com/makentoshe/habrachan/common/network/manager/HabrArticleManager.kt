@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.common.network.api.HabrPostsApi
 import com.makentoshe.habrachan.common.network.converter.PostConverterFactory
 import com.makentoshe.habrachan.common.network.converter.PostsConverterFactory
 import com.makentoshe.habrachan.common.network.request.GetPostRequest
-import com.makentoshe.habrachan.common.network.request.GetPostsRequest
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -15,7 +15,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 interface HabrPostsManager {
 
-    fun getPosts(request: GetPostsRequest): Single<PostsResponse>
+    fun getPosts(request: GetArticlesRequest): Single<PostsResponse>
 
     fun getPost(request: GetPostRequest): Single<PostResponse>
 
@@ -33,7 +33,7 @@ interface HabrPostsManager {
             val retrofit = getRetrofit()
             val api = retrofit.create(HabrPostsApi::class.java)
             return object: HabrPostsManager {
-                override fun getPosts(request: GetPostsRequest): Single<PostsResponse> {
+                override fun getPosts(request: GetArticlesRequest): Single<PostsResponse> {
                     return api.getPosts(
                         request.client, request.token, request.api, request.path1, request.path2, request.page, include
                     )
