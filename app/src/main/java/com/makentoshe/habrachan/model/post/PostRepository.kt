@@ -2,14 +2,14 @@ package com.makentoshe.habrachan.model.post
 
 import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.common.network.manager.HabrPostManager
+import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
 import com.makentoshe.habrachan.common.repository.Repository
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
 class PostRepository(
-    private val factory: GetPostRequestFactory, private val manager: HabrPostManager
+    private val factory: GetPostRequestFactory, private val manager: HabrPostsManager
 ): Repository<Int, Single<Article>> {
 
     override fun get(k: Int): Single<Article> {

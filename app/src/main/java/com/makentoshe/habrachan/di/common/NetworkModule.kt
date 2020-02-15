@@ -3,7 +3,6 @@ package com.makentoshe.habrachan.di.common
 import android.content.Context
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
-import com.makentoshe.habrachan.common.network.manager.HabrPostManager
 import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
@@ -27,8 +26,6 @@ class NetworkModule(context: Context) : Module() {
 
     private val manager = HabrPostsManager.Builder(client).build("text_html")
 
-    private val postManager = HabrPostManager.Factory(client).build()
-
     private val postFactory = GetPostRequestFactory(
         client = "85cab69095196f3.89453480",
         api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
@@ -48,7 +45,6 @@ class NetworkModule(context: Context) : Module() {
         bind<GetPostRequestFactory>().toInstance(postFactory)
         bind<HabrPostsManager>().toInstance(manager)
         bind<OkHttpClient>().toInstance(client)
-        bind<HabrPostManager>().toInstance(postManager)
 
         bind<GetCommentsRequest.Factory>().toInstance(getCommentsRequestFactory)
         bind<HabrCommentsManager>().toInstance(commentsManager)
