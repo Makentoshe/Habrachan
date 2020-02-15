@@ -42,6 +42,9 @@ class CommentsFragment : Fragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.article_comments_toolbar)
         toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
 
+        // disable touch events for background fragments
+        view.setOnClickListener {  }
+
         val avatarController = ArticleCommentAvatarController.Factory(commentAvatarRepository, disposables, avatarDao)
         val factory = ArticleCommentEpoxyModel.Factory(spannedFactory, commentClickListerFactory, avatarController)
         val epoxyController = ArticleCommentsEpoxyController(factory)
