@@ -15,4 +15,7 @@
     <string name="be_the_first">Be the first one</string>
     <string name="no_comments">There are no comments\nfor this publication at now</string>
     <string name="Authorization">Authorization</string>
+    <string name="sign_in">Sign in</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
 </resources>

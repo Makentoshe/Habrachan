@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.di.main.account.AccountFlowFragmentScope
 import com.makentoshe.habrachan.di.post.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.post.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
+import com.makentoshe.habrachan.view.main.account.login.LoginFragment
 import com.makentoshe.habrachan.view.post.comments.CommentsFragment
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -20,6 +21,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         when (f) {
             is CommentsFragment -> injectCommentsFragment(f)
             is AccountFlowFragment -> injectAccountFlowFragment(f)
+            is LoginFragment -> injectLoginFragment(f)
         }
     }
 
@@ -33,5 +35,9 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         val module = AccountFlowFragmentModule(fragment)
         val scope = Toothpick.openScopes(ApplicationScope::class.java, AccountFlowFragmentScope::class.java)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
+    }
+
+    private fun injectLoginFragment(fragment: LoginFragment) {
+
     }
 }

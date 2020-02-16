@@ -13,13 +13,15 @@ interface SessionDao {
     @Query("SELECT * FROM usersession LIMIT 1")
     fun get(): UserSession?
 
+    /** Replace the [UserSession] instance by the new one passed from arguments */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(userSession: UserSession)
 
+    /** Remove all rows from the database */
     @Query("DELETE FROM usersession")
     fun clear()
 
-    /** Returns first and single row in the database - the current [UserSession] */
+    /** Returns all rows in the database. There must be only one [UserSession] instance */
     @Query("SELECT * FROM usersession")
     fun getAll(): List<UserSession>
 }

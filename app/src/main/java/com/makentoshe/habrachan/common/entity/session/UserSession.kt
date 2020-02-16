@@ -9,4 +9,8 @@ data class UserSession(
     val clientKey: String,
     val apiKey: String,
     val tokenKey: String? = null
-)
+) {
+    /** Returns true if user already logged in */
+    val isLogin: Boolean
+        get() = tokenKey != null
+}
