@@ -2,9 +2,9 @@ package com.makentoshe.habrachan.model.main.account
 
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.navigation.Screen
-import com.makentoshe.habrachan.view.main.account.AccountFragment
+import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
 
-class AccountScreen : Screen() {
+class AccountFlowScreen : Screen() {
     override val fragment: Fragment
-        get() = AccountFragment.Factory().build()
+        get() = AccountFlowFragment.Factory().build()
 }

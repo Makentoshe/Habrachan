@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import com.makentoshe.habrachan.R
 
-class AccountFragmentUi {
+class AccountFlowFragmentUi {
     fun create(context: Context): View {
-        return LayoutInflater.from(context).inflate(R.layout.account_fragment, null, false)
+        return LayoutInflater.from(context).inflate(R.layout.account_flow_fragment, null, false)
     }
 }
