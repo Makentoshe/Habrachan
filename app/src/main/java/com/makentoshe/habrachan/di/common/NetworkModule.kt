@@ -2,7 +2,6 @@ package com.makentoshe.habrachan.di.common
 
 import android.content.Context
 import com.makentoshe.habrachan.BuildConfig
-import com.makentoshe.habrachan.common.database.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.LoginManager
@@ -16,8 +15,6 @@ import toothpick.ktp.binding.bind
 annotation class NetworkScope
 
 class NetworkModule(context: Context) : Module() {
-
-    private val sessionDatabase = SessionDatabase(context)
 
     private val client = OkHttpClient.Builder().addLoggingInterceptor().build()
 
@@ -40,7 +37,6 @@ class NetworkModule(context: Context) : Module() {
 
     init {
         bind<OkHttpClient>().toInstance(client)
-        bind<SessionDatabase>().toInstance(sessionDatabase)
 
         bind<GetArticlesRequest.Builder>().toInstance(factory)
         bind<GetArticleRequest.Builder>().toInstance(postFactory)
