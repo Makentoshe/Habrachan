@@ -6,11 +6,10 @@ import androidx.core.util.set
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.CommentDao
+import com.makentoshe.habrachan.common.database.SessionDatabase
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.common.entity.comment.CommentsResponse
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
-import com.makentoshe.habrachan.model.post.comment.CommentRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -19,8 +18,8 @@ import io.reactivex.subjects.BehaviorSubject
 class CommentsFragmentViewModel(
     private val articleId: Int,
     private val commentsManager: HabrCommentsManager,
-    private val commentsRequestFactory: GetCommentsRequest.Factory,
-    private val commentDao: CommentDao
+    private val commentDao: CommentDao,
+    private val sessionDatabase: SessionDatabase
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -39,8 +38,8 @@ class CommentsFragmentViewModel(
 
     init {
         progressObservable.subscribe {
-            val repository = CommentRepository(commentsManager, commentsRequestFactory)
-            repository.get(articleId).map { response ->
+            val factory = GetCommentsRequest.Factory(sessionDatabase.client, sessionDatabase.api, sessionDatabase.token)
+            commentsManager.getComments(factory.build(articleId)).map { response ->
                 response.data.map { comment ->
                     comment.copy(articleId = articleId).also(commentDao::insert)
                 }.toSparseArray()
@@ -85,11 +84,11 @@ class CommentsFragmentViewModel(
     class Factory(
         private val articleId: Int,
         private val commentsManager: HabrCommentsManager,
-        private val commentsRequestFactory: GetCommentsRequest.Factory,
-        private val commentDao: CommentDao
+        private val commentDao: CommentDao,
+        private val sessionDatabase: SessionDatabase
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return CommentsFragmentViewModel(articleId, commentsManager, commentsRequestFactory, commentDao) as T
+            return CommentsFragmentViewModel(articleId, commentsManager, commentDao, sessionDatabase) as T
         }
     }
 }
