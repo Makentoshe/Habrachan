@@ -6,11 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.makentoshe.habrachan.ui.main.account.AccountFragmentUi
 
 class AccountFragment : Fragment() {
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return TextView(requireContext()).apply {
-            text = "Account fragment"
+        return AccountFragmentUi().create(requireContext())
+    }
+
+    class Factory {
+        fun build(): AccountFragment {
+            val fragment = AccountFragment()
+            return fragment
         }
     }
 }

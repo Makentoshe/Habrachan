@@ -14,4 +14,5 @@
     <string name="reply">Reply</string>
     <string name="be_the_first">Be the first one</string>
     <string name="no_comments">There are no comments\nfor this publication at now</string>
+    <string name="Authorization">Authorization</string>
 </resources>

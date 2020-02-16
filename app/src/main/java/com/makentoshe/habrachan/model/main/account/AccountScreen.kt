@@ -6,5 +6,5 @@ import com.makentoshe.habrachan.view.main.account.AccountFragment
 
 class AccountScreen : Screen() {
     override val fragment: Fragment
-        get() = AccountFragment()
+        get() = AccountFragment.Factory().build()
 }
