@@ -18,4 +18,5 @@
     <string name="sign_in">Sign in</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
+    <string name="cant_sign_in">Can\'t sign in</string>
 </resources>
