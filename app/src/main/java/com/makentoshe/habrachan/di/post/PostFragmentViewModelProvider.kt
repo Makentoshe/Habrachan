@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.ArticleDao
-import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
-import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
+import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.post.DaoPostRepository
@@ -23,8 +23,8 @@ class PostFragmentViewModelProvider(
 
     private val rawResourceRepository by inject<RawResourceRepository>()
     private val postsDao by inject<ArticleDao>()
-    private val requestFactory by inject<GetPostRequestFactory>()
-    private val manager by inject<HabrPostsManager>()
+    private val requestFactory by inject<GetArticleRequest.Builder>()
+    private val manager by inject<HabrArticleManager>()
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)

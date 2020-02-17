@@ -2,15 +2,15 @@ package com.makentoshe.habrachan.model.post
 
 import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.common.network.manager.HabrPostsManager
-import com.makentoshe.habrachan.common.network.request.GetPostRequestFactory
+import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.repository.Repository
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
 class PostRepository(
-    private val factory: GetPostRequestFactory, private val manager: HabrPostsManager
-): Repository<Int, Single<Article>> {
+    private val factory: GetArticleRequest.Builder, private val manager: HabrArticleManager
+) : Repository<Int, Single<Article>> {
 
     override fun get(k: Int): Single<Article> {
         val request = factory.single(k)
@@ -25,7 +25,7 @@ class PostRepository(
 class DaoPostRepository(
     private val postsDao: ArticleDao,
     private val repository: Repository<Int, Single<Article>>
-): Repository<Int, Single<Article>> {
+) : Repository<Int, Single<Article>> {
     override fun get(k: Int): Single<Article>? {
         return Single.just(k).observeOn(Schedulers.io()).map {
             val data = postsDao.getById(it)
