@@ -9,9 +9,14 @@ import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.model.main.account.login.LoginData
 import com.makentoshe.habrachan.ui.main.account.login.LoginFragmentUi
+import com.makentoshe.habrachan.viewmodel.main.account.login.LoginViewModel
+import toothpick.ktp.delegate.inject
 
 class LoginFragment : Fragment() {
+
+    private val viewModel by inject<LoginViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LoginFragmentUi().createView(requireContext())
@@ -28,6 +33,11 @@ class LoginFragment : Fragment() {
 
         passwordView.addTextChangedListener {
             signInView.isEnabled = !it.isNullOrEmpty() && !passwordView.text.isNullOrEmpty()
+        }
+
+        signInView.setOnClickListener {
+            val loginData = LoginData(emailView.text.toString(), passwordView.text.toString())
+            viewModel.signInObserver.onNext(loginData)
         }
     }
 

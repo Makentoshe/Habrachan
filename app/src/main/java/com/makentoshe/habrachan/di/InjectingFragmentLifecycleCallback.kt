@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.account.AccountFlowFragmentModule
 import com.makentoshe.habrachan.di.main.account.AccountFlowFragmentScope
+import com.makentoshe.habrachan.di.main.account.login.LoginFragmentModule
+import com.makentoshe.habrachan.di.main.account.login.LoginFragmentScope
 import com.makentoshe.habrachan.di.post.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.post.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
@@ -38,6 +40,8 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     }
 
     private fun injectLoginFragment(fragment: LoginFragment) {
-
+        val module = LoginFragmentModule(fragment)
+        val scope = Toothpick.openScopes(ApplicationScope::class.java, LoginFragmentScope::class.java)
+        scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 }
