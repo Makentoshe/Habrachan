@@ -12,9 +12,12 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.model.main.account.login.LoginData
 import com.makentoshe.habrachan.ui.main.account.login.LoginFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.account.login.LoginViewModel
+import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
 class LoginFragment : Fragment() {
+
+    private val disposables = CompositeDisposable()
 
     private val viewModel by inject<LoginViewModel>()
 
@@ -39,6 +42,17 @@ class LoginFragment : Fragment() {
             val loginData = LoginData(emailView.text.toString(), passwordView.text.toString())
             viewModel.signInObserver.onNext(loginData)
         }
+
+        viewModel.loginObservable.subscribe({ session ->
+            println("ASA")
+        }, { throwable ->
+            println("SAS")
+        }).let(disposables::add)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 
     class Factory {
