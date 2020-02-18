@@ -58,8 +58,7 @@ class LoginFragment : Fragment() {
         }.let(disposables::add)
 
         viewModel.loginObservable.subscribe {
-            navigator.toUserScreen()
-            Toast.makeText(requireContext(), it.tokenKey, Toast.LENGTH_SHORT).show()
+            navigator.toUserScreen(it.tokenKey!!)
         }.let(disposables::add)
     }
 

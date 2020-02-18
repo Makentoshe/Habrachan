@@ -41,7 +41,7 @@ class LoginViewModel(
             loginManager.login(request).subscribe({ response ->
                 val newSession = session.copy(tokenKey = response.accessToken)
                 loginSubject.onNext(newSession)
-//              sessionDao.insert(newSession)
+              sessionDao.insert(newSession)
             }, { throwable ->
                 errorSubject.onNext(throwable)
             }).let(disposables::add)

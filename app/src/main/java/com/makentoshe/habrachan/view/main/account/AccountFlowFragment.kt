@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.model.main.account.login.LoginScreen
+import com.makentoshe.habrachan.model.main.account.user.UserScreen
 import com.makentoshe.habrachan.ui.main.account.AccountFlowFragmentUi
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -32,7 +33,8 @@ class AccountFlowFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (sessionDao.get()!!.isLogin) navigator.toUserScreen() else navigator.toLoginScreen()
+        val session = sessionDao.get()
+        if (session?.tokenKey != null) navigator.toUserScreen(session.tokenKey) else navigator.toLoginScreen()
     }
 
     class Factory {
@@ -49,9 +51,9 @@ class AccountFlowFragment : Fragment() {
             navigatorHolder.setNavigator(navigator)
         }
 
-        fun back() = router.exit()
-
-        fun toUserScreen() = Unit
+        fun toUserScreen(token: String) {
+            router.replaceScreen(UserScreen(token))
+        }
 
         fun toLoginScreen() {
             router.replaceScreen(LoginScreen())
