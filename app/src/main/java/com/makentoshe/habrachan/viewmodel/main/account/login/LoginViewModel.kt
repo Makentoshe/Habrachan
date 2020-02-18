@@ -30,19 +30,21 @@ class LoginViewModel(
     val loginObservable: Observable<UserSession>
         get() = loginSubject.observeOn(AndroidSchedulers.mainThread())
 
+    private val errorSubject = BehaviorSubject.create<Throwable>()
+    val errorObservable: Observable<Throwable>
+        get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
+
     init {
         signInSubject.observeOn(Schedulers.io()).subscribe {
             val session = sessionDao.get()!!
             val request = LoginRequest.Builder(session.clientKey, session.apiKey).build(it.email, it.password)
-            loginManager.login(request).subscribe(
-                { response ->
-                    val newSession = session.copy(tokenKey = response.accessToken)
-                    loginSubject.onNext(newSession)
-//                    sessionDao.insert(newSession)
-                }, { throwable ->
-                    loginSubject.onError(throwable)
-                }
-            ).let(disposables::add)
+            loginManager.login(request).subscribe({ response ->
+                val newSession = session.copy(tokenKey = response.accessToken)
+                loginSubject.onNext(newSession)
+//              sessionDao.insert(newSession)
+            }, { throwable ->
+                errorSubject.onNext(throwable)
+            }).let(disposables::add)
         }.let(disposables::add)
     }
 

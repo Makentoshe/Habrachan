@@ -19,20 +19,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_fragment_password" />
 
-<!--    <com.google.android.material.button.MaterialButton-->
-<!--        android:id="@+id/login_fragment_cant_sign_in_button"-->
-<!--        style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="64dp"-->
-<!--        android:layout_marginEnd="64dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:text="@string/cant_sign_in"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
+    <!--    <com.google.android.material.button.MaterialButton-->
+    <!--        android:id="@+id/login_fragment_cant_sign_in_button"-->
+    <!--        style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="64dp"-->
+    <!--        android:layout_marginEnd="64dp"-->
+    <!--        android:layout_marginBottom="16dp"-->
+    <!--        android:text="@string/cant_sign_in"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <EditText
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_fragment_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        app:errorTextColor="@android:color/holo_red_light"
+        android:hint="@string/email"
+        android:selectAllOnFocus="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_fragment_email_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/login_fragment_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -40,27 +64,21 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/password"
+        app:errorTextColor="@android:color/holo_red_light"
         android:imeActionLabel="@string/sign_in"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
         android:selectAllOnFocus="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_fragment_email" />
+        app:layout_constraintTop_toBottomOf="@+id/login_fragment_email">
 
-    <EditText
-        android:id="@+id/login_fragment_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_fragment_password_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword" />
 
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

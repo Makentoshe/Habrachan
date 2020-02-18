@@ -19,4 +19,5 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="cant_sign_in">Can\'t sign in</string>
+    <string name="invalid_email_or_password">Invalid email or password</string>
 </resources>
