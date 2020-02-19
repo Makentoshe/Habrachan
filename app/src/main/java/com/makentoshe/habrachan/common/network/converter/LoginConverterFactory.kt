@@ -7,7 +7,7 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import java.lang.reflect.Type
 
-class LoginConverterFactory: Converter.Factory() {
+class LoginConverterFactory : Converter.Factory() {
 
     private val converter = Converter<ResponseBody, LoginResponse> {
         Gson().fromJson(it.string(), LoginResponse::class.java)

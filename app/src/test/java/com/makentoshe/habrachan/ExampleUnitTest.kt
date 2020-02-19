@@ -1,8 +1,11 @@
 package com.makentoshe.habrachan
 
 import com.makentoshe.habrachan.common.network.manager.LoginManager
+import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.request.LoginRequest
+import com.makentoshe.habrachan.common.network.request.MeRequest
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
