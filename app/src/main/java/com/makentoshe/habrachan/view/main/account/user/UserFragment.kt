@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
+import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
+import toothpick.ktp.delegate.inject
 
 class UserFragment : Fragment() {
 
     val arguments = Arguments(this)
+
+    private val viewModel by inject<UserViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return UserFragmentUi().create(requireContext())
