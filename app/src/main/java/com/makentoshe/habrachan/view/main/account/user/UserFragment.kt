@@ -8,11 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
+import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
 class UserFragment : Fragment() {
 
-    val arguments = Arguments(this)
+    private val disposables = CompositeDisposable()
 
     private val viewModel by inject<UserViewModel>()
 
@@ -21,32 +22,25 @@ class UserFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Toast.makeText(requireContext(), arguments.token, Toast.LENGTH_LONG).show()
+        viewModel.successObservable.subscribe {
+            Toast.makeText(requireContext(), it.fullname, Toast.LENGTH_LONG).show()
+        }.let(disposables::add)
+
+        viewModel.errorObservable.subscribe {
+            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
+        }.let(disposables::add)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 
     class Factory {
 
-        fun build(token: String) : UserFragment {
-            val fragment = UserFragment()
-            fragment.arguments.token = token
-            return fragment
+        fun build(): UserFragment {
+            return UserFragment()
         }
     }
 
-    class Arguments(fragment: UserFragment) {
-
-        init {
-            (fragment as Fragment).arguments = Bundle()
-        }
-
-        private val fragmentArguments = fragment.requireArguments()
-
-        var token: String
-            get() = fragmentArguments.getString(TOKEN)!!
-            set(value) = fragmentArguments.putString(TOKEN, value)
-
-        companion object {
-            private const val TOKEN = "Token"
-        }
-    }
 }

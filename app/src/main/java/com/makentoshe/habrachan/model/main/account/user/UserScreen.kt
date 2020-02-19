@@ -6,5 +6,5 @@ import com.makentoshe.habrachan.view.main.account.user.UserFragment
 
 class UserScreen(private val token: String) : Screen() {
     override val fragment: Fragment
-        get() = UserFragment.Factory().build(token)
+        get() = UserFragment.Factory().build()
 }

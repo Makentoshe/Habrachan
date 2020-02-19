@@ -5,6 +5,7 @@ import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.LoginManager
+import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import okhttp3.OkHttpClient
@@ -34,6 +35,7 @@ class NetworkModule(context: Context) : Module() {
 
     private val commentsManager = HabrCommentsManager.Factory(client).build()
     private val loginManager = LoginManager.Builder(client).build()
+    private val usersManager = UsersManager.Builder(client).build()
 
     init {
         bind<OkHttpClient>().toInstance(client)
@@ -44,6 +46,7 @@ class NetworkModule(context: Context) : Module() {
         bind<HabrArticleManager>().toInstance(manager)
         bind<HabrCommentsManager>().toInstance(commentsManager)
         bind<LoginManager>().toInstance(loginManager)
+        bind<UsersManager>().toInstance(usersManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
