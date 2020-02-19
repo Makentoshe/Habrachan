@@ -4,6 +4,7 @@ import com.makentoshe.habrachan.common.entity.user.UserResponse
 import com.makentoshe.habrachan.common.network.api.UsersApi
 import com.makentoshe.habrachan.common.network.converter.UsersConverterFactory
 import com.makentoshe.habrachan.common.network.request.MeRequest
+import com.makentoshe.habrachan.common.network.request.UserRequest
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -12,7 +13,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 interface UsersManager {
 
-    fun getMe(request: MeRequest) : Single<UserResponse>
+    fun getMe(request: MeRequest): Single<UserResponse>
+
+    fun getUser(request: UserRequest): Single<UserResponse>
 
     class Builder(private val client: OkHttpClient) {
 
@@ -26,8 +29,13 @@ interface UsersManager {
         fun build(): UsersManager {
             val api = getRetrofit().create(UsersApi::class.java)
             return object : UsersManager {
+
                 override fun getMe(request: MeRequest): Single<UserResponse> {
                     return api.getMe(request.clientKey, request.tokenKey)
+                }
+
+                override fun getUser(request: UserRequest): Single<UserResponse> {
+                    return api.getUser(request.clientKey, request.apiKey, request.tokenKey, request.name)
                 }
             }
         }

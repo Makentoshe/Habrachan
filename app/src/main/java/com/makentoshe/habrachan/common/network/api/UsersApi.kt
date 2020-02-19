@@ -17,8 +17,8 @@ interface UsersApi {
     @GET("/api/v1/users/{name}")
     fun getUser(
         @Header("client") clientKey: String,
-        @Header("token") token: String?,
         @Header("api") api: String,
+        @Header("token") token: String?,
         @Path("name") name: String
     ): Single<UserResponse>
 
