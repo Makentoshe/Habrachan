@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -30,7 +31,7 @@
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -101,6 +102,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:id="@+id/user_fragment_fullname"
                         app:boxStrokeWidth="0px"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -112,7 +114,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/user_fragment_avatar">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/user_fragment_fullname"
+                            android:id="@+id/user_fragment_fullname_text"
                             android:inputType="none"
                             android:focusable="false"
                             android:paddingTop="8dp"
@@ -123,6 +125,21 @@
                             android:layout_height="match_parent" />
 
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/user_fragment_specializm"
+                        style="?attr/habrachanDefault"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:paddingStart="12dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/user_fragment_fullname"
+                        app:layout_constraintTop_toBottomOf="@id/user_fragment_fullname"
+                        tools:ignore="RtlSymmetry" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -142,8 +159,8 @@
 
             <include
                 layout="@layout/user_fragment_profile"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </androidx.core.widget.NestedScrollView>
 

@@ -26,15 +26,16 @@ class UserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val toolbarView = view.findViewById<Toolbar>(R.id.user_fragment_toolbar)
-        val fullNameView = view.findViewById<TextView>(R.id.user_fragment_fullname)
+        val fullNameView = view.findViewById<TextView>(R.id.user_fragment_fullname_text)
         val karmaView = view.findViewById<TextView>(R.id.user_fragment_karma_value)
         val ratingView = view.findViewById<TextView>(R.id.user_fragment_rating_value)
-
+        val specializmView = view.findViewById<TextView>(R.id.user_fragment_specializm)
         viewModel.successObservable.subscribe {
             toolbarView.title = it.login
             fullNameView.text = it.fullname
             karmaView.text = it.score.toString()
             ratingView.text = it.rating.toString()
+            specializmView.text = it.specializm
         }.let(disposables::add)
 
         viewModel.errorObservable.subscribe {
