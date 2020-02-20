@@ -5,6 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/login_fragment_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        style="?attr/habrachanToolbar"
+        app:titleTextColor="@android:color/white"
+        app:title="@string/Authorization"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_fragment_loginbutton"
         android:layout_width="0dp"
@@ -19,20 +30,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_fragment_password" />
 
-    <!--    <com.google.android.material.button.MaterialButton-->
-    <!--        android:id="@+id/login_fragment_cant_sign_in_button"-->
-    <!--        style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="64dp"-->
-    <!--        android:layout_marginEnd="64dp"-->
-    <!--        android:layout_marginBottom="16dp"-->
-    <!--        android:text="@string/cant_sign_in"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/login_fragment_email"
         android:layout_width="0dp"
@@ -46,7 +43,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/login_fragment_toolbar">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_fragment_email_edittext"

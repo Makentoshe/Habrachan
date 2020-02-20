@@ -27,4 +27,7 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     </string>
     <string name="badges">Bages</string>
     <string name="registered">Registered</string>
+    <string name="karma">Karma</string>
+    <string name="rating">Rating</string>
+    <string name="full_name">Full name</string>
 </resources>

@@ -4,12 +4,27 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        style="?attr/habrachanToolbar"
+        android:id="@+id/user_fragment_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        app:navigationIcon="@drawable/ic_arrow_back"
+        android:elevation="4dp"
+        app:titleTextColor="@android:color/white"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:title="Makentoshe" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        app:layout_constraintTop_toBottomOf="@id/user_fragment_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
+            style="?attr/habrachanDefault"
             android:fitsSystemWindows="true"
             android:layout_height="wrap_content">
 
@@ -21,18 +36,103 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    app:layout_collapseMode="pin"
-                    android:background="@android:color/holo_purple"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/user_fragment_avatar"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:foregroundGravity="center"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/ic_account_stub"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/user_fragment_karma_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="1245"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toTopOf="@+id/user_fragment_karma"
+                        app:layout_constraintEnd_toEndOf="@+id/user_fragment_karma"
+                        app:layout_constraintStart_toStartOf="@+id/user_fragment_karma" />
+
+                    <TextView
+                        android:id="@+id/user_fragment_karma"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center"
+                        android:text="@string/karma"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/user_fragment_avatar"
+                        app:layout_constraintEnd_toStartOf="@+id/user_fragment_rating"
+                        app:layout_constraintStart_toEndOf="@+id/user_fragment_avatar" />
+
+                    <TextView
+                        android:id="@+id/user_fragment_rating_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="543265"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toTopOf="@+id/user_fragment_rating"
+                        app:layout_constraintEnd_toEndOf="@+id/user_fragment_rating"
+                        app:layout_constraintStart_toStartOf="@+id/user_fragment_rating" />
+
+                    <TextView
+                        android:id="@+id/user_fragment_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center"
+                        android:text="@string/rating"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/user_fragment_avatar"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/user_fragment_karma" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeWidth="0px"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
+                        app:hintTextColor="@android:color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/user_fragment_avatar">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:paddingTop="8dp"
+                            android:hint="@string/full_name"
+                            style="?attr/habrachanDefault"
+                            android:textSize="24sp"
+                            android:text="Моксончег гечноскоМ"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/holo_red_light"
-                />
+                android:background="@android:color/holo_red_light" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
