@@ -43,7 +43,7 @@ class CommentsFragment : Fragment() {
         toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
 
         // disable touch events for background fragments
-        view.setOnClickListener {  }
+        view.setOnClickListener { }
 
         val avatarController = ArticleCommentAvatarController.Factory(commentAvatarRepository, disposables, avatarDao)
         val factory = ArticleCommentEpoxyModel.Factory(spannedFactory, commentClickListerFactory, avatarController)
@@ -99,16 +99,17 @@ class CommentsFragment : Fragment() {
         }
     }
 
-    class Arguments(fragment: CommentsFragment) {
+    class Arguments(private val commentsFragment: CommentsFragment) {
+
         init {
-            try {
-                fragment.requireArguments()
-            } catch (ise: IllegalStateException) {
-                (fragment as Fragment).arguments = Bundle()
+            val fragment = commentsFragment as Fragment
+            if (fragment.arguments == null) {
+                fragment.arguments = Bundle()
             }
         }
 
-        private val fragmentArguments = fragment.requireArguments()
+        private val fragmentArguments: Bundle
+            get() = commentsFragment.requireArguments()
 
         var articleId: Int
             set(value) = fragmentArguments.putInt(ID, value)

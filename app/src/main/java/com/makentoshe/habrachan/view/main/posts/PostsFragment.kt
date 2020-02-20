@@ -85,13 +85,17 @@ class PostsFragment : Fragment() {
         }
     }
 
-    class Arguments(fragment: PostsFragment) {
+    class Arguments(private val postsFragment: PostsFragment) {
 
         init {
-            (fragment as Fragment).arguments = Bundle()
+            val fragment = postsFragment as Fragment
+            if (fragment.arguments == null) {
+                fragment.arguments = Bundle()
+            }
         }
 
-        private val fragmentArguments = fragment.requireArguments()
+        private val fragmentArguments: Bundle
+            get() = postsFragment.requireArguments()
 
         var page: Int
             get() = fragmentArguments.getInt(PAGE)
