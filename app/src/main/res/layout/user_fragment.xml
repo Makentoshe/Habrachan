@@ -14,8 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:title="Makentoshe" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         app:layout_constraintTop_toBottomOf="@id/user_fragment_toolbar"
@@ -113,13 +112,13 @@
                         app:layout_constraintTop_toBottomOf="@+id/user_fragment_avatar">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/user_fragment_fullname"
                             android:inputType="none"
                             android:focusable="false"
                             android:paddingTop="8dp"
                             android:hint="@string/full_name"
                             style="?attr/habrachanDefault"
                             android:textSize="24sp"
-                            android:text="Моксончег гечноскоМ"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
 

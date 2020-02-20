@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -22,8 +25,16 @@ class UserFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val toolbarView = view.findViewById<Toolbar>(R.id.user_fragment_toolbar)
+        val fullNameView = view.findViewById<TextView>(R.id.user_fragment_fullname)
+        val karmaView = view.findViewById<TextView>(R.id.user_fragment_karma_value)
+        val ratingView = view.findViewById<TextView>(R.id.user_fragment_rating_value)
+
         viewModel.successObservable.subscribe {
-            Toast.makeText(requireContext(), it.fullname, Toast.LENGTH_LONG).show()
+            toolbarView.title = it.login
+            fullNameView.text = it.fullname
+            karmaView.text = it.score.toString()
+            ratingView.text = it.rating.toString()
         }.let(disposables::add)
 
         viewModel.errorObservable.subscribe {

@@ -35,22 +35,26 @@ class UserViewModel(
 
     private val errorSubject = BehaviorSubject.create<Throwable>()
     val errorObservable: Observable<Throwable>
-        get() = errorSubject.observeOn(Schedulers.io())
+        get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
 
     init {
-        meSubject.observeOn(Schedulers.io()).subscribe({
+        meSubject.observeOn(Schedulers.io()).map {
             val session = sessionDao.get()!!
             val request = MeRequest(session.clientKey, session.tokenKey!!)
-            val response = usersManager.getMe(request).blockingGet()
-            sessionDao.insert(session.copy(me = response.user))
-            successSubject.onNext(response.user)
+            return@map usersManager.getMe(request).blockingGet().user.also {
+                sessionDao.insert(session.copy(me = it))
+            }
+        }.onErrorReturn {
+            sessionDao.get()!!.me!!
+        }.subscribe({ user ->
+            successSubject.onNext(user)
             errorSubject.onComplete()
         }, { throwable ->
             errorSubject.onNext(throwable)
         }).let(disposables::add)
 
         // request me
-//        meSubject.onNext(Unit)
+        meSubject.onNext(Unit)
     }
 
     override fun onCleared() {
