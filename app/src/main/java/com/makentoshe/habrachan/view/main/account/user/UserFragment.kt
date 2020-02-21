@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.google.android.material.chip.ChipGroup
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
@@ -30,6 +31,7 @@ class UserFragment : Fragment() {
         val karmaView = view.findViewById<TextView>(R.id.user_fragment_karma_value)
         val ratingView = view.findViewById<TextView>(R.id.user_fragment_rating_value)
         val specializmView = view.findViewById<TextView>(R.id.user_fragment_specializm)
+
         viewModel.successObservable.subscribe {
             toolbarView.title = it.login
             fullNameView.text = it.fullname

@@ -30,4 +30,6 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="karma">Karma</string>
     <string name="rating">Rating</string>
     <string name="full_name">Full name</string>
+    <string name="profile">Profile</string>
+    <string name="articles">Articles</string>
 </resources>
