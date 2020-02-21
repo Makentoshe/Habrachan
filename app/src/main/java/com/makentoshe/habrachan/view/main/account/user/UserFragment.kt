@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.google.android.material.chip.ChipGroup
+import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
@@ -31,6 +31,8 @@ class UserFragment : Fragment() {
         val karmaView = view.findViewById<TextView>(R.id.user_fragment_karma_value)
         val ratingView = view.findViewById<TextView>(R.id.user_fragment_rating_value)
         val specializmView = view.findViewById<TextView>(R.id.user_fragment_specializm)
+        val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_progress)
+        val bodyView = view.findViewById<View>(R.id.user_fragment_body)
 
         viewModel.successObservable.subscribe {
             toolbarView.title = it.login
@@ -38,10 +40,14 @@ class UserFragment : Fragment() {
             karmaView.text = it.score.toString()
             ratingView.text = it.rating.toString()
             specializmView.text = it.specializm
+
+            bodyView.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
         }.let(disposables::add)
 
         viewModel.errorObservable.subscribe {
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
+            val decorView = activity?.window?.decorView ?: return@subscribe
+            Snackbar.make(decorView, it.localizedMessage, Snackbar.LENGTH_LONG).show()
         }.let(disposables::add)
     }
 

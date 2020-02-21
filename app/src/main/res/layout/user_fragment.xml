@@ -9,7 +9,6 @@
         style="?attr/habrachanToolbar"
         android:id="@+id/user_fragment_toolbar"
         android:layout_width="match_parent"
-        app:navigationIcon="@drawable/ic_arrow_back"
         android:elevation="4dp"
         app:titleTextColor="@android:color/white"
         android:layout_height="?attr/actionBarSize"
@@ -18,6 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/user_fragment_body"
         app:layout_constraintTop_toBottomOf="@id/user_fragment_toolbar"
         android:layout_width="match_parent"
         android:layout_height="0dp">
@@ -57,7 +57,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:text="1245"
                         android:textSize="24sp"
                         app:layout_constraintBottom_toTopOf="@+id/user_fragment_karma"
                         app:layout_constraintEnd_toEndOf="@+id/user_fragment_karma"
@@ -82,7 +81,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:text="543265"
                         android:textSize="24sp"
                         app:layout_constraintBottom_toTopOf="@+id/user_fragment_rating"
                         app:layout_constraintEnd_toEndOf="@+id/user_fragment_rating"
@@ -116,11 +114,11 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/user_fragment_fullname_text"
+                            style="?attr/habrachanDefault"
                             android:inputType="none"
                             android:focusable="false"
                             android:paddingTop="8dp"
                             android:hint="@string/full_name"
-                            style="?attr/habrachanDefault"
                             android:textSize="24sp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
@@ -147,13 +145,34 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <com.google.android.material.tabs.TabLayout
+                android:visibility="gone"
                 android:id="@+id/user_fragment_tab"
                 android:layout_width="match_parent"
+                app:tabMode="scrollable"
+                app:tabGravity="center"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/user_fragment_tab_profile"
                     android:text="@string/profile"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/user_fragment_tab_articles"
+                    android:text="@string/articles"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/user_fragment_tab_comments"
+                    android:text="@string/comments"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/user_fragment_tab_bookmarks"
+                    android:text="@string/bookmarks"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content" />
 
@@ -167,12 +186,21 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <FrameLayout
-                android:id="@+id/user_fragmnet_container"
+                android:id="@+id/user_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <ProgressBar
+        android:id="@+id/user_fragment_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/user_fragment_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

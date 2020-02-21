@@ -32,4 +32,6 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="full_name">Full name</string>
     <string name="profile">Profile</string>
     <string name="articles">Articles</string>
+    <string name="comments">Comments</string>
+    <string name="bookmarks">Bookmarks</string>
 </resources>
