@@ -24,7 +24,8 @@ class AppActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
 //            val screen = MainFlowScreen()
-            val screen = UserScreen(UserAccount.User("missingdays"))
+//            val screen = UserScreen(UserAccount.User("missingdays"))
+            val screen = UserScreen(UserAccount.Me)
 //            val screen = AccountFlowScreen()
 //            val screen = CommentsScreen(485990)
 //            val screen = PostScreen(397271)
