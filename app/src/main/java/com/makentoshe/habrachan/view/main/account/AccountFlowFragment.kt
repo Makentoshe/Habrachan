@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.model.main.account.login.LoginScreen
+import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import com.makentoshe.habrachan.model.main.account.user.UserScreen
 import com.makentoshe.habrachan.ui.main.account.AccountFlowFragmentUi
 import ru.terrakok.cicerone.NavigatorHolder
@@ -52,7 +53,7 @@ class AccountFlowFragment : Fragment() {
         }
 
         fun toUserScreen() {
-            router.replaceScreen(UserScreen(null))
+            router.replaceScreen(UserScreen(UserAccount.Me))
         }
 
         fun toLoginScreen() {

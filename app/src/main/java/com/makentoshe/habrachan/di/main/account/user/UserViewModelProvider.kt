@@ -20,7 +20,7 @@ class UserViewModelProvider(private val fragment: UserFragment) : Provider<UserV
     }
 
     override fun get(): UserViewModel {
-        val factory = UserViewModel.Factory(usersManager, sessionDao, fragment.arguments.userName)
+        val factory = UserViewModel.Factory(usersManager, sessionDao, fragment.arguments.userAccount)
         return ViewModelProviders.of(fragment, factory)[UserViewModel::class.java]
     }
 }

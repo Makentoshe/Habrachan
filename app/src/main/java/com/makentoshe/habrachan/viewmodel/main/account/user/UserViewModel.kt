@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.request.MeRequest
 import com.makentoshe.habrachan.common.network.request.UserRequest
+import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -67,14 +68,13 @@ class UserViewModel(
     class Factory(
         private val usersManager: UsersManager,
         private val sessionDao: SessionDao,
-        private val userName: String?
+        private val userAccount: UserAccount
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return UserViewModel(usersManager, sessionDao).also { userViewModel ->
-                if (userName != null) {
-                    userViewModel.userSubject.onNext(userName)
-                } else {
-                    userViewModel.meSubject.onNext(Unit)
+                when (userAccount) {
+                    is UserAccount.Me -> userViewModel.meSubject.onNext(Unit)
+                    is UserAccount.User -> userViewModel.userSubject.onNext(userAccount.userName)
                 }
             } as T
         }
