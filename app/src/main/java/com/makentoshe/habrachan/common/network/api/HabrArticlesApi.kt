@@ -1,12 +1,10 @@
 package com.makentoshe.habrachan.common.network.api
 
+import com.makentoshe.habrachan.common.entity.article.VoteUpArticleResponse
 import com.makentoshe.habrachan.common.entity.post.PostResponse
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface HabrArticlesApi {
 
@@ -22,7 +20,7 @@ interface HabrArticlesApi {
         @Query("get_article") getArticle: Boolean? = null,
         @Query("exclude") exclude: String? = null,
         @Query("sort") sort: String? = null
-    ):Single<PostsResponse>
+    ): Single<PostsResponse>
 
     @GET("https://habr.com/api/v1/post/{id}")
     fun getPost(
@@ -35,4 +33,10 @@ interface HabrArticlesApi {
         @Query("exclude") exclude: String?
     ): Single<PostResponse>
 
+    @PUT("https://habr.com/api/v1/post/{id}/vote?vote=1")
+    fun voteUp(
+        @Header("client") clientKey: String,
+        @Header("token") token: String,
+        @Path("id") id: Int
+    ): Single<VoteUpArticleResponse>
 }
