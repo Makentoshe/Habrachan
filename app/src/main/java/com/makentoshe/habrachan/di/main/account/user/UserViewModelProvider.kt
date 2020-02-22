@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import com.makentoshe.habrachan.view.main.account.user.UserFragment
+import com.makentoshe.habrachan.viewmodel.main.account.user.CustomUserViewModel
+import com.makentoshe.habrachan.viewmodel.main.account.user.MeUserViewModel
 import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
@@ -19,8 +22,18 @@ class UserViewModelProvider(private val fragment: UserFragment) : Provider<UserV
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
     }
 
-    override fun get(): UserViewModel {
-        val factory = UserViewModel.Factory(usersManager, sessionDao, fragment.arguments.userAccount)
-        return ViewModelProviders.of(fragment, factory)[UserViewModel::class.java]
+    override fun get() = when (val userAccount = fragment.arguments.userAccount) {
+        is UserAccount.User -> getCustomUserViewModel(userAccount)
+        is UserAccount.Me -> getMeUserViewModel()
+    }
+
+    private fun getMeUserViewModel(): MeUserViewModel {
+        val factory = MeUserViewModel.Factory(usersManager, sessionDao)
+        return ViewModelProviders.of(fragment, factory)[MeUserViewModel::class.java]
+    }
+
+    private fun getCustomUserViewModel(user: UserAccount.User): CustomUserViewModel {
+        val factory = CustomUserViewModel.Factory(usersManager, sessionDao, user)
+        return ViewModelProviders.of(fragment, factory)[CustomUserViewModel::class.java]
     }
 }
