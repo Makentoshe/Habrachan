@@ -34,7 +34,7 @@ class AccountFlowFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val session = sessionDao.get()
-        if (session?.tokenKey != null) navigator.toUserScreen(session.tokenKey) else navigator.toLoginScreen()
+        if (session?.tokenKey != null) navigator.toUserScreen() else navigator.toLoginScreen()
     }
 
     class Factory {
@@ -51,8 +51,8 @@ class AccountFlowFragment : Fragment() {
             navigatorHolder.setNavigator(navigator)
         }
 
-        fun toUserScreen(token: String) {
-            router.replaceScreen(UserScreen(token))
+        fun toUserScreen() {
+            router.replaceScreen(UserScreen(null))
         }
 
         fun toLoginScreen() {

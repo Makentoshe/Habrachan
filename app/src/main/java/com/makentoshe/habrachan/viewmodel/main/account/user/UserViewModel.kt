@@ -6,8 +6,8 @@ import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.request.MeRequest
+import com.makentoshe.habrachan.common.network.request.UserRequest
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -22,12 +22,7 @@ class UserViewModel(
     private val disposables = CompositeDisposable()
 
     private val meSubject = PublishSubject.create<Unit>()
-    val meObserver: Observer<Unit>
-        get() = meSubject
-
     private val userSubject = PublishSubject.create<String>()
-    val userObserver: Observer<String>
-        get() = userSubject
 
     private val successSubject = BehaviorSubject.create<User>()
     val successObservable: Observable<User>
@@ -53,8 +48,16 @@ class UserViewModel(
             errorSubject.onNext(throwable)
         }).let(disposables::add)
 
-        // request me
-        meSubject.onNext(Unit)
+        userSubject.observeOn(Schedulers.io()).map { username ->
+            val session = sessionDao.get()!!
+            val request = UserRequest(session.clientKey, session.apiKey, session.tokenKey, username)
+            usersManager.getUser(request).blockingGet().user
+        }.subscribe({ user ->
+            successSubject.onNext(user)
+            errorSubject.onComplete()
+        }, { throwable ->
+            errorSubject.onNext(throwable)
+        }).let(disposables::add)
     }
 
     override fun onCleared() {
@@ -63,10 +66,17 @@ class UserViewModel(
 
     class Factory(
         private val usersManager: UsersManager,
-        private val sessionDao: SessionDao
+        private val sessionDao: SessionDao,
+        private val userName: String?
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return UserViewModel(usersManager, sessionDao) as T
+            return UserViewModel(usersManager, sessionDao).also { userViewModel ->
+                if (userName != null) {
+                    userViewModel.userSubject.onNext(userName)
+                } else {
+                    userViewModel.meSubject.onNext(Unit)
+                }
+            } as T
         }
     }
 }

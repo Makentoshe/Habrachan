@@ -58,7 +58,7 @@ class LoginFragment : Fragment() {
         }.let(disposables::add)
 
         viewModel.loginObservable.subscribe {
-            navigator.toUserScreen(it.tokenKey!!)
+            navigator.toUserScreen()
         }.let(disposables::add)
     }
 

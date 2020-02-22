@@ -145,7 +145,6 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <com.google.android.material.tabs.TabLayout
-                android:visibility="gone"
                 android:id="@+id/user_fragment_tab"
                 android:layout_width="match_parent"
                 app:tabMode="scrollable"

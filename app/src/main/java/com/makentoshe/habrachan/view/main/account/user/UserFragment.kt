@@ -18,7 +18,7 @@ import toothpick.ktp.delegate.inject
 class UserFragment : Fragment() {
 
     private val disposables = CompositeDisposable()
-
+    internal val arguments = Arguments(this)
     private val viewModel by inject<UserViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,7 +47,7 @@ class UserFragment : Fragment() {
 
         viewModel.errorObservable.subscribe {
             val decorView = activity?.window?.decorView ?: return@subscribe
-            Snackbar.make(decorView, it.localizedMessage, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(decorView, it.toString(), Snackbar.LENGTH_LONG).show()
         }.let(disposables::add)
     }
 
@@ -61,6 +61,34 @@ class UserFragment : Fragment() {
         fun build(): UserFragment {
             return UserFragment()
         }
+
+        fun build(userName: String) : UserFragment {
+            return build().also { fragment ->
+                fragment.arguments.userName = userName
+            }
+        }
+    }
+
+    class Arguments(private val userFragment: UserFragment) {
+
+        init {
+            val fragment = userFragment as Fragment
+            if (fragment.arguments == null) {
+                fragment.arguments = Bundle()
+            }
+        }
+
+        private val fragmentArguments: Bundle
+            get() = userFragment.requireArguments()
+
+        var userName: String?
+            get() = fragmentArguments.getString(USERNAME, null)
+            set(value) = fragmentArguments.putString(USERNAME, value)
+
+        companion object {
+            private const val USERNAME = "UserName"
+        }
+
     }
 
 }
