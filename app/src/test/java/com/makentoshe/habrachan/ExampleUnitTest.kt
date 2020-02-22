@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.common.network.request.LoginRequest
-import com.makentoshe.habrachan.common.network.request.VoteUpArticleRequest
+import com.makentoshe.habrachan.common.network.request.VoteArticleRequest
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -43,8 +43,17 @@ class ExampleUnitTest {
     fun voteUpArticleTest() {
         val articleId = 489532
         val manager = HabrArticleManager.Builder(OkHttpClient()).build()
-        val request = VoteUpArticleRequest(session.clientKey, session.tokenKey!!, articleId)
+        val request = VoteArticleRequest(session.clientKey, session.tokenKey!!, articleId)
         val response = manager.voteUp(request).blockingGet()
+        println(response)
+    }
+
+    @Test
+    fun voteDownArticleTest() {
+        val articleId = 489440
+        val manager = HabrArticleManager.Builder(OkHttpClient()).build()
+        val request = VoteArticleRequest(session.clientKey, session.tokenKey!!, articleId)
+        val response = manager.voteDown(request).blockingGet()
         println(response)
     }
 }

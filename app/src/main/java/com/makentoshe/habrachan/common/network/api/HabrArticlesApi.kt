@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.common.network.api
 
-import com.makentoshe.habrachan.common.entity.article.VoteUpArticleResponse
+import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.entity.post.PostResponse
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import io.reactivex.Single
@@ -38,5 +38,12 @@ interface HabrArticlesApi {
         @Header("client") clientKey: String,
         @Header("token") token: String,
         @Path("id") id: Int
-    ): Single<VoteUpArticleResponse>
+    ): Single<VoteArticleResponse>
+
+    @PUT("https://habr.com/api/v1/post/{id}/vote?vote=-1")
+    fun voteDown(
+        @Header("client") clientKey: String,
+        @Header("token") token: String,
+        @Path("id") id: Int
+    ): Single<VoteArticleResponse>
 }

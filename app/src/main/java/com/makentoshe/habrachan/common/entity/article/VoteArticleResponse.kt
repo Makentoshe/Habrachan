@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.common.entity.article
 
 import com.google.gson.annotations.SerializedName
 
-data class VoteUpArticleResponse(
+data class VoteArticleResponse(
     @SerializedName("ok")
     val ok: Boolean,
     @SerializedName("score")
