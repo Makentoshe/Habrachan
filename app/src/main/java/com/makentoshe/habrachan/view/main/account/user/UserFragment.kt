@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -34,6 +35,7 @@ class UserFragment : Fragment() {
         val specializmView = view.findViewById<TextView>(R.id.user_fragment_specializm)
         val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_progress)
         val bodyView = view.findViewById<View>(R.id.user_fragment_body)
+        val avatarView = view.findViewById<ImageView>(R.id.user_fragment_avatar)
 
         viewModel.successObservable.subscribe {
             toolbarView.title = it.login
@@ -50,6 +52,12 @@ class UserFragment : Fragment() {
             val decorView = activity?.window?.decorView ?: return@subscribe
             Snackbar.make(decorView, it.toString(), Snackbar.LENGTH_LONG).show()
         }.let(disposables::add)
+
+        viewModel.avatarObservable.subscribe({
+            avatarView.setImageBitmap(it)
+        }, { throwable ->
+
+        }).let(disposables::add)
     }
 
     override fun onDestroy() {
