@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.viewmodel.main.account.user
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.AvatarDao
@@ -14,8 +15,9 @@ class CustomUserViewModel(
     private val sessionDao: SessionDao,
     private val user: UserAccount.User,
     private val repository: InputStreamRepository,
-    private val avatarDao: AvatarDao
-) : UserViewModel(repository, avatarDao) {
+    private val avatarDao: AvatarDao,
+    private val application: Application
+) : UserViewModel(repository, avatarDao, application) {
 
     init {
         val session = sessionDao.get()!!
@@ -33,10 +35,11 @@ class CustomUserViewModel(
         private val sessionDao: SessionDao,
         private val user: UserAccount.User,
         private val repository: InputStreamRepository,
-        private val avatarDao: AvatarDao
+        private val avatarDao: AvatarDao,
+        private val application: Application
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return CustomUserViewModel(usersManager, sessionDao, user, repository, avatarDao) as T
+            return CustomUserViewModel(usersManager, sessionDao, user, repository, avatarDao, application) as T
         }
     }
 }

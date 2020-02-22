@@ -1,12 +1,13 @@
 package com.makentoshe.habrachan.viewmodel.main.account.user
 
+import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModel
 import com.makentoshe.habrachan.common.database.AvatarDao
-import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.repository.InputStreamRepository
+import com.makentoshe.habrachan.model.post.comment.BitmapController
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -14,7 +15,8 @@ import io.reactivex.subjects.BehaviorSubject
 
 abstract class UserViewModel(
     private val repository: InputStreamRepository,
-    private val avatarDao: AvatarDao
+    private val avatarDao: AvatarDao,
+    private val application: Application
 ) : ViewModel() {
 
     protected val disposables = CompositeDisposable()
@@ -33,9 +35,11 @@ abstract class UserViewModel(
 
     init {
         successSubject.map { user ->
-            BitmapFactory.decodeStream(repository.get(user.avatar)).also {
-                avatarDao.insert(user.avatar, it)
-            }
+            val bitmap = avatarDao.get(user.avatar) ?: BitmapFactory.decodeStream(repository.get(user.avatar))
+            avatarDao.insert(user.avatar, bitmap)
+            return@map bitmap
+        }.map { bitmap ->
+            BitmapController(bitmap).roundCornersPx(application, 10)
         }.safeSubscribe(avatarSubject)
     }
 

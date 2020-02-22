@@ -32,12 +32,16 @@ class UserViewModelProvider(private val fragment: UserFragment) : Provider<UserV
     }
 
     private fun getMeUserViewModel(): MeUserViewModel {
-        val factory = MeUserViewModel.Factory(usersManager, sessionDao, repository, avatarDao)
+        val factory = MeUserViewModel.Factory(
+            usersManager, sessionDao, repository, avatarDao, fragment.requireActivity().application
+        )
         return ViewModelProviders.of(fragment, factory)[MeUserViewModel::class.java]
     }
 
     private fun getCustomUserViewModel(user: UserAccount.User): CustomUserViewModel {
-        val factory = CustomUserViewModel.Factory(usersManager, sessionDao, user, repository, avatarDao)
+        val factory = CustomUserViewModel.Factory(
+            usersManager, sessionDao, user, repository, avatarDao, fragment.requireActivity().application
+        )
         return ViewModelProviders.of(fragment, factory)[CustomUserViewModel::class.java]
     }
 }

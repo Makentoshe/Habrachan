@@ -34,7 +34,6 @@ class UserFragment : Fragment() {
         val ratingView = view.findViewById<TextView>(R.id.user_fragment_rating_value)
         val specializmView = view.findViewById<TextView>(R.id.user_fragment_specializm)
         val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_progress)
-        val bodyView = view.findViewById<View>(R.id.user_fragment_body)
         val avatarView = view.findViewById<ImageView>(R.id.user_fragment_avatar)
 
         viewModel.successObservable.subscribe {
@@ -44,7 +43,6 @@ class UserFragment : Fragment() {
             ratingView.text = it.rating.toString()
             specializmView.text = it.specializm
 
-            bodyView.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
         }.let(disposables::add)
 
@@ -53,11 +51,11 @@ class UserFragment : Fragment() {
             Snackbar.make(decorView, it.toString(), Snackbar.LENGTH_LONG).show()
         }.let(disposables::add)
 
-        viewModel.avatarObservable.subscribe({
+        viewModel.avatarObservable.doOnEach {
+            avatarView.visibility = View.VISIBLE
+        }.subscribe {
             avatarView.setImageBitmap(it)
-        }, { throwable ->
-
-        }).let(disposables::add)
+        }.let(disposables::add)
     }
 
     override fun onDestroy() {
