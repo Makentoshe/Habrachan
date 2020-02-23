@@ -43,7 +43,7 @@ class ExampleUnitTest {
     fun voteUpArticleTest() {
         val articleId = 489596
         val manager = HabrArticleManager.Builder(OkHttpClient()).build()
-        val request = VoteArticleRequest(session.clientKey, session.tokenKey!!, articleId)
+        val request = VoteArticleRequest(session.clientKey, session.tokenKey, articleId)
         val response = manager.voteUp(request).blockingGet()
         println(response)
     }
@@ -52,7 +52,7 @@ class ExampleUnitTest {
     fun voteDownArticleTest() {
         val articleId = 489440
         val manager = HabrArticleManager.Builder(OkHttpClient()).build()
-        val request = VoteArticleRequest(session.clientKey, session.tokenKey!!, articleId)
+        val request = VoteArticleRequest(session.clientKey, session.tokenKey, articleId)
         val response = manager.voteDown(request).blockingGet()
         println(response)
     }

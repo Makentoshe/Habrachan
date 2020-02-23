@@ -27,6 +27,7 @@ import com.makentoshe.habrachan.model.post.images.PostImageScreen
 import com.makentoshe.habrachan.ui.post.BottomBarUi
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
+import com.makentoshe.habrachan.viewmodel.post.VoteArticleViewModel
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
@@ -40,6 +41,8 @@ class PostFragment : Fragment() {
     private val webViewClient by inject<HabrachanWebViewClient>()
     private val javaScriptInterface by inject<JavaScriptInterface>()
     private val broadcastReceiver by inject<PostBroadcastReceiver>()
+
+    private val voteArticleViewModel by inject<VoteArticleViewModel>()
 
     private val arguments = Arguments(this)
     private val disposables = CompositeDisposable()
@@ -88,11 +91,11 @@ class PostFragment : Fragment() {
         }
         // vote article up
         views.bottomBar.findViewById<View>(R.id.post_fragment_bottombar_voteup).setOnClickListener {
-            viewModel.voteArticle.voteUp()
+            voteArticleViewModel.voteUp(arguments.articleId)
         }
         // vote article down
         views.bottomBar.findViewById<View>(R.id.post_fragment_bottombar_votedown).setOnClickListener {
-            viewModel.voteArticle.voteDown()
+            //            viewModel.voteArticle.voteDown()
         }
         // return to previous screen
         views.toolbar.setNavigationOnClickListener {
@@ -106,6 +109,10 @@ class PostFragment : Fragment() {
         views.commentsGroup.setOnClickListener {
             navigator.toArticleCommentsScreen(arguments.articleId)
         }
+
+        voteArticleViewModel.voteArticleObservable.subscribe {
+            println(it)
+        }.let(disposables::add)
     }
 
     private fun Article.buildHtml(): String {
