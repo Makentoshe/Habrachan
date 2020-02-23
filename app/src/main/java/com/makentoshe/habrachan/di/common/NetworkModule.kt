@@ -17,6 +17,8 @@ annotation class NetworkScope
 
 class NetworkModule(context: Context) : Module() {
 
+    private val sessionDatabase = SessionDatabase(context)
+
     private val client = OkHttpClient.Builder().addLoggingInterceptor().build()
 
     private val factory = GetArticlesRequest.Builder(
@@ -39,6 +41,10 @@ class NetworkModule(context: Context) : Module() {
 
     init {
         bind<OkHttpClient>().toInstance(client)
+        bind<SessionDatabase>().toInstance(sessionDatabase)
+
+        bind<GetArticlesRequest.Builder>().toInstance(factory)
+        bind<GetArticleRequest.Builder>().toInstance(postFactory)
 
         bind<GetArticlesRequest.Builder>().toInstance(factory)
         bind<GetArticleRequest.Builder>().toInstance(postFactory)
