@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import com.makentoshe.habrachan.common.network.api.HabrArticlesApi
 import com.makentoshe.habrachan.common.network.converter.PostConverterFactory
 import com.makentoshe.habrachan.common.network.converter.PostsConverterFactory
-import com.makentoshe.habrachan.common.network.converter.VoteUpArticleConverterFactory
+import com.makentoshe.habrachan.common.network.converter.VoteUpArticleConverter
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.common.network.request.VoteArticleRequest
@@ -34,13 +34,12 @@ interface HabrArticleManager {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(PostsConverterFactory())
             .addConverterFactory(PostConverterFactory())
-            .addConverterFactory(VoteUpArticleConverterFactory())
             .build()
 
         fun build(include: String? = null): HabrArticleManager {
             val retrofit = getRetrofit()
             val api = retrofit.create(HabrArticlesApi::class.java)
-            return object: HabrArticleManager {
+            return object : HabrArticleManager {
 
                 override fun getPosts(request: GetArticlesRequest): Single<PostsResponse> {
                     return api.getPosts(
@@ -55,11 +54,27 @@ interface HabrArticleManager {
                 }
 
                 override fun voteUp(request: VoteArticleRequest): Single<VoteArticleResponse> {
-                    return api.voteUp(request.clientKey, request.tokenKey, request.articleId)
+                    return Single.just(request).observeOn(Schedulers.io()).map { request ->
+                        api.voteUp(request.clientKey, request.tokenKey, request.articleId).execute()
+                    }.map { response ->
+                        if (response.isSuccessful) {
+                            VoteUpArticleConverter().convertBody(response.body()!!)
+                        } else {
+                            VoteUpArticleConverter().convertError(response.errorBody()!!)
+                        }
+                    }
                 }
 
                 override fun voteDown(request: VoteArticleRequest): Single<VoteArticleResponse> {
-                    return api.voteDown(request.clientKey, request.tokenKey, request.articleId)
+                    return Single.just(request).observeOn(Schedulers.io()).map { request ->
+                        api.voteDown(request.clientKey, request.tokenKey, request.articleId).execute()
+                    }.map { response ->
+                        if (response.isSuccessful) {
+                            VoteUpArticleConverter().convertBody(response.body()!!)
+                        } else {
+                            VoteUpArticleConverter().convertError(response.errorBody()!!)
+                        }
+                    }
                 }
             }
         }

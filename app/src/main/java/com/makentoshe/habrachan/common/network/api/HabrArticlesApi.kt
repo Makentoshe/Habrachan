@@ -1,9 +1,10 @@
 package com.makentoshe.habrachan.common.network.api
 
-import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.entity.post.PostResponse
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import io.reactivex.Single
+import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface HabrArticlesApi {
@@ -33,17 +34,17 @@ interface HabrArticlesApi {
         @Query("exclude") exclude: String?
     ): Single<PostResponse>
 
-    @PUT("https://habr.com/api/v1/post/{id}/vote?vote=1")
-    fun voteUp(
-        @Header("client") clientKey: String,
-        @Header("token") token: String,
-        @Path("id") id: Int
-    ): Single<VoteArticleResponse>
-
     @PUT("https://habr.com/api/v1/post/{id}/vote?vote=-1")
     fun voteDown(
         @Header("client") clientKey: String,
         @Header("token") token: String,
         @Path("id") id: Int
-    ): Single<VoteArticleResponse>
+    ): Call<ResponseBody>
+
+    @PUT("https://habr.com/api/v1/post/{id}/vote?vote=1")
+    fun voteUp(
+        @Header("client") clientKey: String,
+        @Header("token") token: String,
+        @Path("id") id: Int
+    ): Call<ResponseBody>
 }

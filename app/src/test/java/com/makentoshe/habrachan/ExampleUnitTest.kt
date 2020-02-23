@@ -41,7 +41,7 @@ class ExampleUnitTest {
 
     @Test
     fun voteUpArticleTest() {
-        val articleId = 489532
+        val articleId = 489596
         val manager = HabrArticleManager.Builder(OkHttpClient()).build()
         val request = VoteArticleRequest(session.clientKey, session.tokenKey!!, articleId)
         val response = manager.voteUp(request).blockingGet()
