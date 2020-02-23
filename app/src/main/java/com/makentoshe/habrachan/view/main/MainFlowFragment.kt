@@ -11,7 +11,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
-import com.makentoshe.habrachan.model.main.account.AccountScreen
+import com.makentoshe.habrachan.model.main.account.AccountFlowScreen
 import com.makentoshe.habrachan.model.main.menu.MenuScreen
 import com.makentoshe.habrachan.model.main.posts.PostsScreen
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
@@ -82,7 +82,7 @@ class MainFlowFragment : Fragment() {
         }
 
         fun toAccountScreen() {
-            router.replaceScreen(AccountScreen())
+            router.replaceScreen(AccountFlowScreen())
         }
 
         fun toArticlesScreen(page: Int) {

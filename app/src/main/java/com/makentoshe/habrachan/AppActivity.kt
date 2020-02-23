@@ -3,15 +3,12 @@ package com.makentoshe.habrachan
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.common.navigation.Navigator
-import com.makentoshe.habrachan.di.InjectingFragmentLifecycleCallback
-import com.makentoshe.habrachan.di.common.NavigationScope
 import com.makentoshe.habrachan.model.main.MainFlowScreen
-import com.makentoshe.habrachan.model.post.CommentsScreen
-import com.makentoshe.habrachan.model.main.posts.PostsScreen
-import com.makentoshe.habrachan.model.post.PostScreen
+import com.makentoshe.habrachan.model.main.account.AccountFlowScreen
+import com.makentoshe.habrachan.model.main.account.user.UserAccount
+import com.makentoshe.habrachan.model.main.account.user.UserScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
-import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 
 class AppActivity : AppCompatActivity() {
@@ -26,7 +23,10 @@ class AppActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
-            val screen = MainFlowScreen()
+//            val screen = MainFlowScreen()
+//            val screen = UserScreen(UserAccount.User("missingdays"))
+            val screen = UserScreen(UserAccount.Me)
+//            val screen = AccountFlowScreen()
 //            val screen = CommentsScreen(485990)
 //            val screen = PostScreen(397271)
 //            val screen = PostImageScreen("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg")

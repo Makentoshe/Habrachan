@@ -2,10 +2,10 @@ package com.makentoshe.habrachan.di.common
 
 import android.content.Context
 import com.makentoshe.habrachan.BuildConfig
-import com.makentoshe.habrachan.common.database.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.LoginManager
+import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import okhttp3.OkHttpClient
@@ -37,6 +37,7 @@ class NetworkModule(context: Context) : Module() {
 
     private val commentsManager = HabrCommentsManager.Factory(client).build()
     private val loginManager = LoginManager.Builder(client).build()
+    private val usersManager = UsersManager.Builder(client).build()
 
     init {
         bind<OkHttpClient>().toInstance(client)
@@ -45,15 +46,19 @@ class NetworkModule(context: Context) : Module() {
         bind<GetArticlesRequest.Builder>().toInstance(factory)
         bind<GetArticleRequest.Builder>().toInstance(postFactory)
 
+        bind<GetArticlesRequest.Builder>().toInstance(factory)
+        bind<GetArticleRequest.Builder>().toInstance(postFactory)
+
         bind<HabrArticleManager>().toInstance(manager)
         bind<HabrCommentsManager>().toInstance(commentsManager)
         bind<LoginManager>().toInstance(loginManager)
+        bind<UsersManager>().toInstance(usersManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
         if (BuildConfig.DEBUG) {
             val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.BASIC
+            logging.level = HttpLoggingInterceptor.Level.BODY
             addInterceptor(logging)
         }
         return this

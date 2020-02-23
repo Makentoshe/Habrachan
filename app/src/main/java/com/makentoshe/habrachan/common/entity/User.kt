@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.common.entity
 
 import androidx.room.Embedded
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class User(
@@ -50,4 +51,14 @@ data class User(
 //    val vote: Int = 0
 //    @SerializedName("payment_methods")
 //    val paymentMethods: List<PaymentMethod>?
-)
+) {
+    fun toJson(): String? {
+        return Gson().toJson(this)
+    }
+
+    companion object {
+        fun fromJson(json: String): User {
+            return Gson().fromJson(json, User::class.java)
+        }
+    }
+}

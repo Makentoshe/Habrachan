@@ -6,7 +6,7 @@ import androidx.core.util.set
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.CommentDao
-import com.makentoshe.habrachan.common.database.SessionDatabase
+import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
@@ -19,7 +19,7 @@ class CommentsFragmentViewModel(
     private val articleId: Int,
     private val commentsManager: HabrCommentsManager,
     private val commentDao: CommentDao,
-    private val sessionDatabase: SessionDatabase
+    private val sessionDao: SessionDao
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -38,7 +38,8 @@ class CommentsFragmentViewModel(
 
     init {
         progressObservable.subscribe {
-            val factory = GetCommentsRequest.Factory(sessionDatabase.client, sessionDatabase.api, sessionDatabase.token)
+            val session = sessionDao.get()!!
+            val factory = GetCommentsRequest.Factory(session.clientKey, session.apiKey, session.tokenKey)
             commentsManager.getComments(factory.build(articleId)).map { response ->
                 response.data.map { comment ->
                     comment.copy(articleId = articleId).also(commentDao::insert)
@@ -85,10 +86,10 @@ class CommentsFragmentViewModel(
         private val articleId: Int,
         private val commentsManager: HabrCommentsManager,
         private val commentDao: CommentDao,
-        private val sessionDatabase: SessionDatabase
+        private val sessionDao: SessionDao
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return CommentsFragmentViewModel(articleId, commentsManager, commentDao, sessionDatabase) as T
+            return CommentsFragmentViewModel(articleId, commentsManager, commentDao, sessionDao) as T
         }
     }
 }

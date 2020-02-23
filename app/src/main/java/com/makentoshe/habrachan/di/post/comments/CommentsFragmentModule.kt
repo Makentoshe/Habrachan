@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.di.post.comments
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.CommentDao
-import com.makentoshe.habrachan.common.database.SessionDatabase
+import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.repository.InputStreamRepository
 import com.makentoshe.habrachan.di.common.ApplicationScope
@@ -55,7 +55,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
         private val commentsManager by inject<HabrCommentsManager>()
         private val commentDao by inject<CommentDao>()
-        private val sessionDatabase by inject<SessionDatabase>()
+        private val sessionDao by inject<SessionDao>()
 
         init {
             Toothpick.openScope(ApplicationScope::class.java).inject(this)
@@ -63,7 +63,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
         override fun get(): CommentsFragmentViewModel {
             val factory = CommentsFragmentViewModel.Factory(
-                fragment.arguments.articleId, commentsManager, commentDao, sessionDatabase
+                fragment.arguments.articleId, commentsManager, commentDao, sessionDao
             )
             return ViewModelProviders.of(fragment, factory)[CommentsFragmentViewModel::class.java]
         }
