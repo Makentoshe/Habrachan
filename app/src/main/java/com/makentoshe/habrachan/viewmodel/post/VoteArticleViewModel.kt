@@ -18,8 +18,7 @@ class VoteArticleViewModel(
 
     private val disposables = CompositeDisposable()
 
-    private val voteArticleSubject =
-        PublishSubject.create<VoteArticleResponse>()
+    private val voteArticleSubject = PublishSubject.create<VoteArticleResponse>()
     val voteArticleObservable: Observable<VoteArticleResponse>
         get() = voteArticleSubject.observeOn(AndroidSchedulers.mainThread())
 
@@ -29,12 +28,16 @@ class VoteArticleViewModel(
 
     fun voteUp(articleId: Int) {
         val session = sessionDao.get()!!
-        val request = VoteArticleRequest(
-            session.clientKey,
-            session.tokenKey,
-            articleId
-        )
+        val request = VoteArticleRequest(session.clientKey, session.tokenKey, articleId)
         articleManager.voteUp(request).subscribe(
+            voteArticleSubject::onNext, voteArticleErrorSubject::onNext
+        ).let(disposables::add)
+    }
+
+    fun voteDown(articleId: Int) {
+        val session = sessionDao.get()!!
+        val request = VoteArticleRequest(session.clientKey, session.tokenKey, articleId)
+        articleManager.voteDown(request).subscribe(
             voteArticleSubject::onNext, voteArticleErrorSubject::onNext
         ).let(disposables::add)
     }
@@ -46,10 +49,7 @@ class VoteArticleViewModel(
         private val articleManager: HabrArticleManager
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return VoteArticleViewModel(
-                sessionDao,
-                articleManager
-            ) as T
+            return VoteArticleViewModel(sessionDao, articleManager) as T
         }
     }
 }

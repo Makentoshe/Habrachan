@@ -97,7 +97,7 @@ class PostFragment : Fragment() {
         }
         // vote article down
         views.bottomBar.findViewById<View>(R.id.post_fragment_bottombar_votedown).setOnClickListener {
-            //            viewModel.voteArticle.voteDown()
+            voteArticleViewModel.voteDown(arguments.articleId)
         }
         // return to previous screen
         views.toolbar.setNavigationOnClickListener {
@@ -118,7 +118,7 @@ class PostFragment : Fragment() {
                     showErrorSnackbar(response.additional.joinToString(". "))
                 }
                 is VoteArticleResponse.Success -> {
-                    println("SAS")
+                    views.scoreView.text = response.score.toString()
                 }
             }
             println(response)
