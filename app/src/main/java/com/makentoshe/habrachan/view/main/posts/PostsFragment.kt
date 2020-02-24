@@ -254,7 +254,7 @@ class PostsFragment : Fragment() {
         }
 
         private fun onBotRefresh(viewModel: PostsViewModel) {
-            viewModel.pageRequestObserver.onNext(arguments.page + 1)
+            viewModel.pageRequestObserver.onNext(arguments.page)
         }
     }
 
