@@ -12,8 +12,10 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.post.PostFragmentModule
@@ -110,9 +112,25 @@ class PostFragment : Fragment() {
             navigator.toArticleCommentsScreen(arguments.articleId)
         }
 
-        voteArticleViewModel.voteArticleObservable.subscribe {
-            println(it)
+        voteArticleViewModel.voteArticleObservable.subscribe { response ->
+            when (response) {
+                is VoteArticleResponse.Error -> {
+                    showErrorSnackbar(response.additional.joinToString(". "))
+                }
+                is VoteArticleResponse.Success -> {
+                    println("SAS")
+                }
+            }
+            println(response)
         }.let(disposables::add)
+    }
+
+    private fun showErrorSnackbar(message: String) {
+        val snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction(R.string.got_it) {
+            snackbar.dismiss()
+        }
+        snackbar.show()
     }
 
     private fun Article.buildHtml(): String {
