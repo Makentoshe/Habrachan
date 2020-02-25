@@ -23,6 +23,19 @@ interface HabrArticlesApi {
         @Query("sort") sort: String? = null
     ): Single<PostsResponse>
 
+    @GET("https://habr.com/api/v1/{spec}")
+    fun getArticles(
+        @Header("client") clientKey: String,
+        @Header("apiKey") apiKey: String,
+        @Header("token") token: String?,
+        @Path("spec") spec: String,
+        @Query("page") page: Int,
+        @Query("include") include: String? = "text_html",
+//        @Query("get_article") getArticle: Boolean? = null,
+//        @Query("exclude") exclude: String? = null,
+        @Query("sort") sort: String? = null
+    ): Call<ResponseBody>
+
     @GET("https://habr.com/api/v1/post/{id}")
     fun getPost(
         @Header("client") clientKey: String,
@@ -40,9 +53,9 @@ interface HabrArticlesApi {
         @Header("apiKey") apiKey: String,
         @Header("token") token: String?,
         @Path("id") id: Int,
-        @Query("include") include: String? = "text_html",
-        @Query("get_article") getArticle: Boolean? = null,
-        @Query("exclude") exclude: String? = null
+        @Query("include") include: String? = "text_html"
+//        @Query("get_article") getArticle: Boolean? = null,
+//        @Query("exclude") exclude: String? = null
     ): Call<ResponseBody>
 
     @PUT("https://habr.com/api/v1/post/{id}/vote?vote=-1")

@@ -3,6 +3,7 @@ package com.makentoshe.habrachan
 import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.common.network.request.VoteArticleRequest
 import okhttp3.OkHttpClient
 import org.junit.Ignore
@@ -49,6 +50,16 @@ class ExampleUnitTest {
         val manager = HabrArticleManager.Builder(OkHttpClient()).build()
         val request = GetArticleRequest(session.clientKey, session.tokenKey, session.apiKey, articleId)
         val response = manager.getPost(request).blockingGet()
+        println(response)
+    }
+
+    @Test
+    @Ignore
+    fun getAllArticlesTest() {
+        val requestFactory = GetArticlesRequest2.Factory(session.clientKey, session.apiKey, session.tokenKey)
+        val manager = HabrArticleManager.Builder(OkHttpClient()).build()
+        val request = requestFactory.all(1)
+        val response = manager.getArticles(request).blockingGet()
         println(response)
     }
 }

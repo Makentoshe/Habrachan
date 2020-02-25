@@ -2,15 +2,14 @@ package com.makentoshe.habrachan.common.network.manager
 
 import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
+import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
 import com.makentoshe.habrachan.common.entity.post.PostResponse
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import com.makentoshe.habrachan.common.network.api.HabrArticlesApi
-import com.makentoshe.habrachan.common.network.converter.ArticleConverter
-import com.makentoshe.habrachan.common.network.converter.PostConverterFactory
-import com.makentoshe.habrachan.common.network.converter.PostsConverterFactory
-import com.makentoshe.habrachan.common.network.converter.VoteUpArticleConverter
+import com.makentoshe.habrachan.common.network.converter.*
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.common.network.request.VoteArticleRequest
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -21,6 +20,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 interface HabrArticleManager {
 
     fun getPosts(request: GetArticlesRequest): Single<PostsResponse>
+
+    fun getArticles(request: GetArticlesRequest2) : Single<ArticlesResponse>
 
     fun getPost(request: GetArticleRequest): Single<PostResponse>
 
@@ -49,6 +50,18 @@ interface HabrArticleManager {
                     return api.getPosts(
                         request.client, request.token, request.api, request.path1, request.path2, request.page, include
                     )
+                }
+
+                override fun getArticles(request: GetArticlesRequest2): Single<ArticlesResponse> {
+                    return Single.just(request).observeOn(Schedulers.io()).map { request ->
+                        api.getArticles(request.client, request.api, request.token, request.spec, request.page).execute()
+                    }.map { response ->
+                        if (response.isSuccessful) {
+                            ArticlesConverter().convertBody(response.body()!!)
+                        } else {
+                            ArticlesConverter().convertBody(response.errorBody()!!)
+                        }
+                    }.cast(ArticlesResponse::class.java)
                 }
 
                 override fun getPost(request: GetArticleRequest): Single<PostResponse> {
