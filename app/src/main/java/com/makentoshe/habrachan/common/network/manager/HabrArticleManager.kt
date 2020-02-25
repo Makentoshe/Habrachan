@@ -1,9 +1,11 @@
 package com.makentoshe.habrachan.common.network.manager
 
 import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
+import com.makentoshe.habrachan.common.entity.post.ArticleResponse
 import com.makentoshe.habrachan.common.entity.post.PostResponse
 import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 import com.makentoshe.habrachan.common.network.api.HabrArticlesApi
+import com.makentoshe.habrachan.common.network.converter.ArticleConverter
 import com.makentoshe.habrachan.common.network.converter.PostConverterFactory
 import com.makentoshe.habrachan.common.network.converter.PostsConverterFactory
 import com.makentoshe.habrachan.common.network.converter.VoteUpArticleConverter
@@ -21,6 +23,8 @@ interface HabrArticleManager {
     fun getPosts(request: GetArticlesRequest): Single<PostsResponse>
 
     fun getPost(request: GetArticleRequest): Single<PostResponse>
+
+    fun getArticle(request: GetArticleRequest): Single<ArticleResponse>
 
     fun voteUp(request: VoteArticleRequest): Single<VoteArticleResponse>
 
@@ -51,6 +55,18 @@ interface HabrArticleManager {
                     return api.getPost(
                         request.client, request.token, request.api, request.id, include, null, null
                     )
+                }
+
+                override fun getArticle(request: GetArticleRequest): Single<ArticleResponse> {
+                    return Single.just(request).observeOn(Schedulers.io()).map { request ->
+                        api.getArticle(request.client, request.api, request.token, request.id).execute()
+                    }.map { response ->
+                        if (response.isSuccessful) {
+                            ArticleConverter().convertBody(response.body()!!)
+                        } else {
+                            ArticleConverter().convertError(response.errorBody()!!)
+                        }
+                    }
                 }
 
                 override fun voteUp(request: VoteArticleRequest): Single<VoteArticleResponse> {
