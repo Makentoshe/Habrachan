@@ -11,7 +11,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +23,7 @@ import com.makentoshe.habrachan.di.main.posts.PostsFragmentScope
 import com.makentoshe.habrachan.model.main.posts.PostModelFactory
 import com.makentoshe.habrachan.model.main.posts.PostsEpoxyController
 import com.makentoshe.habrachan.ui.main.posts.PostsFragmentUi
+import com.makentoshe.habrachan.viewmodel.main.posts.ArticlesViewModel
 import com.makentoshe.habrachan.viewmodel.main.posts.PostsViewModel
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
@@ -39,6 +39,8 @@ class PostsFragment : Fragment() {
     private val router by inject<Router>()
     private val viewModel by inject<PostsViewModel>()
 
+    private val articlesViewModel by inject<ArticlesViewModel>()
+
     private val disposables = CompositeDisposable()
     val arguments = Arguments(this)
 
@@ -53,25 +55,97 @@ class PostsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val controller = PostsEpoxyController(PostModelFactory(router))
-
-        val recyclerView = view.findViewById<RecyclerView>(R.id.main_posts_slidingpanel_recyclerview)
-        RecyclerViewController(disposables, controller, recyclerView, arguments).install(viewModel)
-
-        val swipeRefresh = view.findViewById<SwipyRefreshLayout>(R.id.swipe_refresh_layout)
-        SwipeRefreshController(disposables, controller, swipeRefresh, arguments).install(viewModel)
-
         val progressbar = view.findViewById<ProgressBar>(R.id.progress_bar)
-        ProgressBarController(disposables, progressbar).install(viewModel)
-
         val messageView = view.findViewById<TextView>(R.id.error_message)
-        ErrorMessageController(arguments, disposables, messageView).install(viewModel)
-
-        val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel)
-        val magnifyIcon = view.findViewById<View>(R.id.main_posts_toolbar_magnify)
-        SlidingPanelController(disposables, requireActivity(), slidingUpPanelLayout).install(viewModel, magnifyIcon)
 
         val retryButton = view.findViewById<MaterialButton>(R.id.retry_button)
-        RetryButtonController(arguments, disposables, retryButton).install(viewModel)
+        retryButton.setOnClickListener {
+            viewModel.newRequestObserver.onNext(Unit)
+        }
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.main_posts_slidingpanel_recyclerview)
+        recyclerView.adapter = controller.adapter
+
+        val swipeRefresh = view.findViewById<SwipyRefreshLayout>(R.id.swipe_refresh_layout)
+        swipeRefresh.onViewCreated(controller)
+
+        val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.main_posts_slidingpanel)
+        slidingUpPanelLayout.onViewCreated(view)
+
+
+        viewModel.articleObservable.subscribe { articles ->
+            retryButton.visibility = View.GONE
+            progressbar.visibility = View.GONE
+            swipeRefresh.visibility = View.VISIBLE
+            swipeRefresh.isRefreshing = false
+
+            val lastItem = controller.adapter.itemCount
+            controller.append(articles)
+            controller.requestModelBuild()
+            if (arguments.page != 1) {
+                val scroller = object : LinearSmoothScroller(view.context) {
+                    override fun getVerticalSnapPreference() = SNAP_TO_START
+                    override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics) = .2f
+                }
+                scroller.targetPosition = lastItem
+                recyclerView.layoutManager?.startSmoothScroll(scroller)
+            }
+            arguments.page += 1
+        }.let(disposables::add)
+
+        viewModel.progressObservable.subscribe {
+            retryButton.visibility = View.GONE
+            progressbar.visibility = View.VISIBLE
+            messageView.visibility = View.GONE
+            recyclerView.visibility = View.GONE
+        }.let(disposables::add)
+
+        viewModel.errorObservable.subscribe {
+            progressbar.visibility = View.GONE
+            swipeRefresh.isRefreshing = false
+            if (arguments.page > 1) return@subscribe
+            retryButton.visibility = View.VISIBLE
+            messageView.text = it.toString()
+            messageView.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+        }.let(disposables::add)
+    }
+
+    private fun SlidingUpPanelLayout.onViewCreated(view: View) {
+        isTouchEnabled = false
+        val magnifyIcon = view.findViewById<View>(R.id.main_posts_toolbar_magnify)
+        magnifyIcon.setOnClickListener {
+            when (panelState) {
+                SlidingUpPanelLayout.PanelState.EXPANDED -> {
+                    panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+                }
+                SlidingUpPanelLayout.PanelState.COLLAPSED -> {
+                    panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+                    closeSoftKeyboard()
+                }
+                else -> Unit
+            }
+        }
+    }
+
+    private fun SwipyRefreshLayout.onViewCreated(controller: PostsEpoxyController) {
+        setDistanceToTriggerSync(150)
+        setOnRefreshListener { direction ->
+            if (direction == SwipyRefreshLayoutDirection.TOP) {
+                controller.clear()
+                arguments.page = 1
+                viewModel.newRequestObserver.onNext(Unit)
+            }
+            if (direction == SwipyRefreshLayoutDirection.BOTTOM) {
+                viewModel.pageRequestObserver.onNext(arguments.page + 1)
+            }
+        }
+    }
+
+    private fun closeSoftKeyboard() {
+        val imm = requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = requireActivity().currentFocus ?: View(activity)
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onDestroy() {
@@ -107,186 +181,5 @@ class PostsFragment : Fragment() {
         val module = PostsFragmentModule.Factory(this).build(arguments.page)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, PostsFragmentScope::class.java)
         scopes.closeOnDestroy(this).installModules(module).inject(this)
-    }
-
-    class ProgressBarController(
-        private val disposables: CompositeDisposable, private val progressbar: ProgressBar
-    ) {
-
-        fun install(viewModel: PostsViewModel) {
-            val errors = viewModel.errorObservable.map { View.GONE }
-            val successes = viewModel.articleObservable.map { View.GONE }
-            successes.mergeWith(errors).subscribe(progressbar::setVisibility).let(disposables::add)
-
-            viewModel.progressObservable.subscribe {
-                progressbar.visibility = View.VISIBLE
-            }.let(disposables::add)
-        }
-    }
-
-    class ErrorMessageController(
-        private val arguments: Arguments,
-        private val disposables: CompositeDisposable,
-        private val messageView: TextView
-    ) {
-
-        fun install(viewModel: PostsViewModel) {
-            viewModel.errorObservable.subscribe {
-                if (arguments.page > 1) return@subscribe
-                messageView.text = it.toString()
-                messageView.visibility = View.VISIBLE
-            }.let(disposables::add)
-
-            viewModel.progressObservable.subscribe {
-                messageView.visibility = View.GONE
-            }.let(disposables::add)
-        }
-    }
-
-    class SlidingPanelController(
-        private val disposables: CompositeDisposable,
-        private val activity: FragmentActivity,
-        private val panel: SlidingUpPanelLayout
-    ) {
-
-        init {
-            panel.isTouchEnabled = false
-        }
-
-        fun install(viewModel: PostsViewModel, triggerView: View) {
-            triggerView.setOnClickListener { onMagnifyClicked() }
-        }
-
-        private fun onMagnifyClicked() = when (panel.panelState) {
-            SlidingUpPanelLayout.PanelState.EXPANDED -> openPanel()
-            SlidingUpPanelLayout.PanelState.COLLAPSED -> {
-                closePanel()
-                closeSoftKeyboard()
-            }
-            else -> Unit
-        }
-
-        private fun openPanel() {
-            panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-        }
-
-        private fun closePanel() {
-            panel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-        }
-
-        private fun closeSoftKeyboard() {
-            val imm = activity.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-            val view = activity.currentFocus ?: View(activity)
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-    }
-
-    class RetryButtonController(
-        private val arguments: PostsFragment.Arguments,
-        private val disposables: CompositeDisposable,
-        private val button: MaterialButton
-    ) {
-
-        fun install(viewModel: PostsViewModel) {
-            viewModel.articleObservable.subscribe {
-                button.visibility = View.GONE
-            }.let(disposables::add)
-
-            viewModel.progressObservable.subscribe {
-                button.visibility = View.GONE
-            }.let(disposables::add)
-
-            viewModel.errorObservable.subscribe {
-                if (arguments.page > 1) return@subscribe
-                button.visibility = View.VISIBLE
-            }.let(disposables::add)
-
-            button.setOnClickListener {
-                viewModel.newRequestObserver.onNext(Unit)
-            }
-        }
-    }
-
-    class SwipeRefreshController(
-        private val disposables: CompositeDisposable,
-        private val controller: PostsEpoxyController,
-        private val view: SwipyRefreshLayout,
-        private val arguments: PostsFragment.Arguments
-    ) {
-
-        init {
-            view.setDistanceToTriggerSync(150)
-        }
-
-        fun install(viewModel: PostsViewModel) {
-            view.setOnRefreshListener {
-                onRefresh(viewModel, it)
-            }
-
-            viewModel.errorObservable.subscribe {
-                view.isRefreshing = false
-            }.let(disposables::add)
-
-            viewModel.articleObservable.subscribe {
-                arguments.page += 1
-                view.visibility = View.VISIBLE
-                view.isRefreshing = false
-            }.let(disposables::add)
-        }
-
-        private fun onRefresh(viewModel: PostsViewModel, direction: SwipyRefreshLayoutDirection) {
-            if (direction == SwipyRefreshLayoutDirection.TOP) {
-                return onTopRefresh(viewModel)
-            }
-            if (direction == SwipyRefreshLayoutDirection.BOTTOM) {
-                return onBotRefresh(viewModel)
-            }
-        }
-
-        private fun onTopRefresh(viewModel: PostsViewModel) {
-            controller.clear()
-            arguments.page = 1
-            viewModel.newRequestObserver.onNext(Unit)
-        }
-
-        private fun onBotRefresh(viewModel: PostsViewModel) {
-            viewModel.pageRequestObserver.onNext(arguments.page + 1)
-        }
-    }
-
-    class RecyclerViewController(
-        private val disposables: CompositeDisposable,
-        private val controller: PostsEpoxyController,
-        private val view: RecyclerView,
-        private val arguments: PostsFragment.Arguments
-    ) {
-
-        private val layoutManager = LinearLayoutManager(view.context)
-        private val scroller = object : LinearSmoothScroller(view.context) {
-            override fun getVerticalSnapPreference() = SNAP_TO_START
-            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics) = .2f
-        }
-
-        fun install(viewModel: PostsViewModel) {
-            view.adapter = controller.adapter
-            view.layoutManager = layoutManager
-
-            viewModel.articleObservable.subscribe(::onSuccess).let(disposables::add)
-        }
-
-        private fun onSuccess(posts: List<Article>) {
-            val lastItem = controller.adapter.itemCount
-            controller.append(posts)
-            controller.requestModelBuild()
-            if (arguments.page != 1) {
-                scrollToPageDivider(lastItem)
-            }
-        }
-
-        private fun scrollToPageDivider(lastItem: Int) {
-            val scroller = this.scroller
-            scroller.targetPosition = lastItem
-            layoutManager.startSmoothScroll(scroller)
-        }
     }
 }

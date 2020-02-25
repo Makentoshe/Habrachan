@@ -5,7 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.common.database.CommentDao
+import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
+import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.model.main.posts.ArticleRepository
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -103,6 +107,41 @@ class PostsViewModel(
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return PostsViewModel(articleRepository, postsDao, commentDao, avatarDao) as T
+        }
+    }
+}
+
+class ArticlesViewModel(
+    private val sessionDao: SessionDao,
+    private val articleManager: HabrArticleManager
+//    private val articleDao: ArticleDao
+) : ViewModel() {
+
+    private val disposables = CompositeDisposable()
+
+    private val articleSubject = BehaviorSubject.create<GetArticlesRequest2>()
+    val articleObservable: Observable<ArticlesResponse>
+        get() = articleSubject.observeOn(Schedulers.io()).flatMap { request ->
+            articleManager.getArticles(request).toObservable()
+        }.observeOn(AndroidSchedulers.mainThread())
+
+    val articleObserver: Observer<GetArticlesRequest2>
+        get() = articleSubject
+
+    fun createRequestAll(page: Int): GetArticlesRequest2 {
+        val session = sessionDao.get()!!
+        val factory = GetArticlesRequest2.Factory(session.clientKey, session.apiKey, session.tokenKey)
+        return factory.all(page)
+    }
+
+    override fun onCleared() = disposables.clear()
+
+    class Factory(
+        private val sessionDao: SessionDao,
+        private val articleManager: HabrArticleManager
+    ) : ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return ArticlesViewModel(sessionDao, articleManager) as T
         }
     }
 }
