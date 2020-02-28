@@ -21,8 +21,6 @@ sealed class ArticlesResponse {
 
     data class Error(val json: String) : ArticlesResponse()
 
-    data class Cache(val data: List<Article>) : ArticlesResponse()
-
     companion object {
         /** Default count of an articles per page */
         const val DEFAULT_SIZE = 20
