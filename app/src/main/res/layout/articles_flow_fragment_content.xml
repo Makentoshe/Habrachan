@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/articles_flow_fragment_slidingpanel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"
+    sothree:umanoInitialState="expanded"
+    sothree:umanoPanelHeight="0dp"
+    sothree:umanoShadowHeight="4dp"
+    android:focusableInTouchMode="true">
+
+    <include layout="@layout/main_posts_fragment_content_search" />
+
+    <fragment
+        android:id="@+id/articles_flow_fragment_slidingpanel_body"
+        android:name="com.makentoshe.habrachan.view.main.posts.ArticlesFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

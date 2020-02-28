@@ -2,7 +2,6 @@ package com.makentoshe.habrachan.common.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
@@ -84,9 +83,8 @@ data class Article(
     val title: String,
     @SerializedName("url")
     val url: String,
-//    @Ignore
-//    @SerializedName("vote")
-//    val vote: Any? = null,
+    @SerializedName("vote")
+    val vote: Double? = null,
     @SerializedName("votes_count")
     val votesCount: Int,
     @SerializedName("is_can_comment")

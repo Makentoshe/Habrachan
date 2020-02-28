@@ -47,4 +47,14 @@ class Converters {
         val jsonArray = Gson().fromJson(json, JsonArray::class.java)
         return jsonArray.map { it.asString }.map { Badge.fromJson(it) }
     }
+
+    @TypeConverter
+    fun anyToJson(any: Any?): String {
+        return any?.toString() ?: "null"
+    }
+
+    @TypeConverter
+    fun jsonToAny(json: String): Any {
+        return json
+    }
 }

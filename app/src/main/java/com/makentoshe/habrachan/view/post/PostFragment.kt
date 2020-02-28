@@ -12,8 +12,10 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.post.PostFragmentModule
@@ -27,6 +29,7 @@ import com.makentoshe.habrachan.model.post.images.PostImageScreen
 import com.makentoshe.habrachan.ui.post.BottomBarUi
 import com.makentoshe.habrachan.ui.post.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
+import com.makentoshe.habrachan.viewmodel.post.VoteArticleViewModel
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
@@ -40,6 +43,8 @@ class PostFragment : Fragment() {
     private val webViewClient by inject<HabrachanWebViewClient>()
     private val javaScriptInterface by inject<JavaScriptInterface>()
     private val broadcastReceiver by inject<PostBroadcastReceiver>()
+
+    private val voteArticleViewModel by inject<VoteArticleViewModel>()
 
     private val arguments = Arguments(this)
     private val disposables = CompositeDisposable()
@@ -88,11 +93,11 @@ class PostFragment : Fragment() {
         }
         // vote article up
         views.bottomBar.findViewById<View>(R.id.post_fragment_bottombar_voteup).setOnClickListener {
-            viewModel.voteArticle.voteUp()
+            voteArticleViewModel.voteUp(arguments.articleId)
         }
         // vote article down
         views.bottomBar.findViewById<View>(R.id.post_fragment_bottombar_votedown).setOnClickListener {
-            viewModel.voteArticle.voteDown()
+            voteArticleViewModel.voteDown(arguments.articleId)
         }
         // return to previous screen
         views.toolbar.setNavigationOnClickListener {
@@ -106,6 +111,26 @@ class PostFragment : Fragment() {
         views.commentsGroup.setOnClickListener {
             navigator.toArticleCommentsScreen(arguments.articleId)
         }
+
+        voteArticleViewModel.voteArticleObservable.subscribe { response ->
+            when (response) {
+                is VoteArticleResponse.Error -> {
+                    showErrorSnackbar(response.additional.joinToString(". "))
+                }
+                is VoteArticleResponse.Success -> {
+                    views.scoreView.text = response.score.toString()
+                }
+            }
+            println(response)
+        }.let(disposables::add)
+    }
+
+    private fun showErrorSnackbar(message: String) {
+        val snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction(R.string.got_it) {
+            snackbar.dismiss()
+        }
+        snackbar.show()
     }
 
     private fun Article.buildHtml(): String {
