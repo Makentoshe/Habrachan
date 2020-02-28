@@ -4,19 +4,25 @@ import android.content.Context
 import com.makentoshe.habrachan.common.repository.InputStreamRepository
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
 import okhttp3.OkHttpClient
+import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
+import toothpick.ktp.delegate.inject
 
 annotation class RepositoryScope
 
-class RepositoryModule(context: Context, client: OkHttpClient) : Module() {
+class RepositoryModule(context: Context) : Module() {
 
+    private val client by inject<OkHttpClient>()
     private val rawResourceRepository = RawResourceRepository(context.resources)
-
-    private val inputStreamRepository = InputStreamRepository(client)
+    private val inputStreamRepository: InputStreamRepository
 
     init {
-        bind<RawResourceRepository>().toInstance(rawResourceRepository)
+        Toothpick.openScopes(NetworkScope::class.java).inject(this)
+
+        inputStreamRepository = InputStreamRepository(client)
         bind<InputStreamRepository>().toInstance(inputStreamRepository)
+        bind<RawResourceRepository>().toInstance(rawResourceRepository)
     }
+
 }

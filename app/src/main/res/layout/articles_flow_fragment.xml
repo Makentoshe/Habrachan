@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/articles_flow_fragment_toolbar"
+        style="@style/Habrachan.Light.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/articles_flow_fragment_toolbar_magnify"
+        style="?attr/habrachanToolbar"
+        android:layout_width="56dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/articles_flow_fragment_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/articles_flow_fragment_toolbar_magnify_icon"
+            style="@style/Habrachan.Light.Toolbar"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_magnify" />
+
+    </FrameLayout>
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/articles_flow_fragment_slidingpanel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:focusableInTouchMode="false"
+        android:gravity="top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/articles_flow_fragment_toolbar"
+        sothree:umanoInitialState="collapsed"
+        sothree:umanoPanelHeight="0dp"
+        sothree:umanoShadowHeight="4dp">
+
+        <fragment
+            android:id="@+id/articles_fragment"
+            android:name="com.makentoshe.habrachan.view.main.posts.ArticlesFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/main_posts_fragment_content_search" />
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

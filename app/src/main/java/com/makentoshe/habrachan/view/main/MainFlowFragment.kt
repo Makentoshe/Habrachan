@@ -13,7 +13,7 @@ import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
 import com.makentoshe.habrachan.model.main.account.AccountFlowScreen
 import com.makentoshe.habrachan.model.main.menu.MenuScreen
-import com.makentoshe.habrachan.model.main.posts.PostsScreen
+import com.makentoshe.habrachan.model.main.posts.ArticlesFlowScreen
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -86,7 +86,7 @@ class MainFlowFragment : Fragment() {
         }
 
         fun toArticlesScreen(page: Int) {
-            router.replaceScreen(PostsScreen(page))
+            router.replaceScreen(ArticlesFlowScreen(page))
         }
 
         fun toMenuScreen() {

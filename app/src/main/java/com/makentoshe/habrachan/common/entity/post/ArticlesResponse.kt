@@ -17,7 +17,14 @@ sealed class ArticlesResponse {
         val serverTime: String,
         @SerializedName("sorted_by")
         val sortedBy: String
-    ): ArticlesResponse()
+    ) : ArticlesResponse()
 
-    data class Error(val json: String): ArticlesResponse()
+    data class Error(val json: String) : ArticlesResponse()
+
+    data class Cache(val data: List<Article>) : ArticlesResponse()
+
+    companion object {
+        /** Default count of an articles per page */
+        const val DEFAULT_SIZE = 20
+    }
 }

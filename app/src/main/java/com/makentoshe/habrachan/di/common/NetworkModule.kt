@@ -52,7 +52,7 @@ class NetworkModule(context: Context) : Module() {
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
         if (BuildConfig.DEBUG) {
             val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.BODY
+            logging.level = HttpLoggingInterceptor.Level.BASIC
             addInterceptor(logging)
         }
         return this
