@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.ui.main.posts.ArticlesFlowFragmentUi
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 class ArticlesFlowFragment : Fragment() {
 
@@ -20,21 +18,21 @@ class ArticlesFlowFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val magnifyView = view.findViewById<View>(R.id.articles_flow_fragment_toolbar_magnify)
-        val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.articles_flow_fragment_slidingpanel)
-        slidingUpPanelLayout.isTouchEnabled = false
-        magnifyView.setOnClickListener {
-            when (slidingUpPanelLayout.panelState) {
-                SlidingUpPanelLayout.PanelState.EXPANDED -> {
-                    slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-                }
-                SlidingUpPanelLayout.PanelState.COLLAPSED -> {
-                    slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-                    closeSoftKeyboard()
-                }
-                else -> Unit
-            }
-        }
+//        val magnifyView = view.findViewById<View>(R.id.articles_flow_fragment_toolbar_magnify)
+//        val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.articles_flow_fragment_slidingpanel)
+//        slidingUpPanelLayout.isTouchEnabled = false
+//        magnifyView.setOnClickListener {
+//            when (slidingUpPanelLayout.panelState) {
+//                SlidingUpPanelLayout.PanelState.EXPANDED -> {
+//                    slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+//                }
+//                SlidingUpPanelLayout.PanelState.COLLAPSED -> {
+//                    slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+//                    closeSoftKeyboard()
+//                }
+//                else -> Unit
+//            }
+//        }
     }
 
     override fun onDestroyView() {
