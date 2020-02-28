@@ -21,7 +21,7 @@ interface HabrArticlesApi {
         @Query("get_article") getArticle: Boolean? = null,
         @Query("exclude") exclude: String? = null,
         @Query("sort") sort: String? = null
-    ): Single<PostsResponse>
+    ):Single<PostsResponse>
 
     @GET("https://habr.com/api/v1/{spec}")
     fun getArticles(

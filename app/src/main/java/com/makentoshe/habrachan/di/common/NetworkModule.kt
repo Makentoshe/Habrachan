@@ -43,6 +43,12 @@ class NetworkModule(context: Context) : Module() {
         bind<GetArticlesRequest.Builder>().toInstance(factory)
         bind<GetArticleRequest.Builder>().toInstance(postFactory)
 
+        bind<GetArticlesRequest.Builder>().toInstance(factory)
+        bind<GetArticleRequest.Builder>().toInstance(postFactory)
+
+        bind<GetArticlesRequest.Builder>().toInstance(factory)
+        bind<GetArticleRequest.Builder>().toInstance(postFactory)
+
         bind<HabrArticleManager>().toInstance(manager)
         bind<HabrCommentsManager>().toInstance(commentsManager)
         bind<LoginManager>().toInstance(loginManager)

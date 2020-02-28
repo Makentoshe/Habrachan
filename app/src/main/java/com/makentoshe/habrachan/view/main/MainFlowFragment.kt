@@ -98,13 +98,17 @@ class MainFlowFragment : Fragment() {
         }
     }
 
-    class Arguments(fragment: MainFlowFragment) {
+    class Arguments(private val mainFlowFragment: MainFlowFragment) {
 
         init {
-            (fragment as Fragment).arguments = Bundle()
+            val fragment = mainFlowFragment as Fragment
+            if (fragment.arguments == null) {
+                fragment.arguments = Bundle()
+            }
         }
 
-        private val fragmentArguments = fragment.requireArguments()
+        private val fragmentArguments: Bundle
+            get() = mainFlowFragment.requireArguments()
 
         var page: Int
             get() = fragmentArguments.getInt(PAGE, 1)

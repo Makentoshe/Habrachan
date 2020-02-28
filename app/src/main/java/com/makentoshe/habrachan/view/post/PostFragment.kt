@@ -182,13 +182,17 @@ class PostFragment : Fragment() {
         }
     }
 
-    class Arguments(fragment: PostFragment) {
+    class Arguments(private val postFragment: PostFragment) {
 
         init {
-            (fragment as Fragment).arguments = Bundle()
+            val fragment = postFragment as Fragment
+            if (fragment.arguments == null) {
+                fragment.arguments = Bundle()
+            }
         }
 
-        private val fragmentArguments = fragment.requireArguments()
+        private val fragmentArguments: Bundle
+            get() = postFragment.requireArguments()
 
         var articleId: Int
             set(value) = fragmentArguments.putInt(ID, value)
