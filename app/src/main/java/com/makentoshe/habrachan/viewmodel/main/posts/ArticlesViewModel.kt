@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.common.database.CommentDao
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
-import com.makentoshe.habrachan.common.network.request.GetArticlesRequest2
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,8 +26,8 @@ class ArticlesViewModel(
 
     private val disposables = CompositeDisposable()
 
-    private val requestSubject = PublishSubject.create<GetArticlesRequest2>()
-    val requestObserver: Observer<GetArticlesRequest2> = requestSubject
+    private val requestSubject = PublishSubject.create<GetArticlesRequest>()
+    val requestObserver: Observer<GetArticlesRequest> = requestSubject
 
     private val articleSubject = PublishSubject.create<ArticlesResponse>()
     val articlesObservable: Observable<ArticlesResponse> = articleSubject
@@ -38,17 +38,17 @@ class ArticlesViewModel(
             .observeOn(AndroidSchedulers.mainThread()).safeSubscribe(articleSubject)
     }
 
-    fun createRequestAll(page: Int): GetArticlesRequest2 {
+    fun createRequestAll(page: Int): GetArticlesRequest {
         val session = sessionDao.get()!!
-        val factory = GetArticlesRequest2.Factory(session.clientKey, session.apiKey, session.tokenKey)
+        val factory = GetArticlesRequest.Factory(session.clientKey, session.apiKey, session.tokenKey)
         return factory.all(page)
     }
 
-    fun createCacheRequest(): GetArticlesRequest2 {
-        return GetArticlesRequest2("", "", null, 0, "")
+    fun createCacheRequest(): GetArticlesRequest {
+        return GetArticlesRequest("", "", "", 0, "")
     }
 
-    private fun performRequest(request: GetArticlesRequest2): ArticlesResponse {
+    private fun performRequest(request: GetArticlesRequest): ArticlesResponse {
         try {
             if (request.client == "") throw Exception("Cache should be invoked here")
             return articleManager.getArticles(request).blockingGet().also { response ->
