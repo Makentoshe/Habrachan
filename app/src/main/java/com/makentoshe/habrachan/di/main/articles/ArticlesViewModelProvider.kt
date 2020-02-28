@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.di.main.posts
+package com.makentoshe.habrachan.di.main.articles
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.ArticleDao
@@ -7,8 +7,8 @@ import com.makentoshe.habrachan.common.database.CommentDao
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.view.main.posts.ArticlesFragment
-import com.makentoshe.habrachan.viewmodel.main.posts.ArticlesViewModel
+import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
+import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import javax.inject.Provider

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.ui.post
+package com.makentoshe.habrachan.ui.articles
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/articles_flow_fragment_slidingpanel_body"
-        android:name="com.makentoshe.habrachan.view.main.posts.ArticlesFragment"
+        android:name="com.makentoshe.habrachan.view.main.articles.ArticlesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

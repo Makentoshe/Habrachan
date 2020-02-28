@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.view.main.posts
+package com.makentoshe.habrachan.view.main.articles
 
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -15,10 +15,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
-import com.makentoshe.habrachan.model.main.posts.PostModelFactory
-import com.makentoshe.habrachan.model.main.posts.PostsEpoxyController
+import com.makentoshe.habrachan.model.main.articles.PostModelFactory
+import com.makentoshe.habrachan.model.main.articles.PostsEpoxyController
 import com.makentoshe.habrachan.ui.main.posts.ArticlesFragmentUi
-import com.makentoshe.habrachan.viewmodel.main.posts.ArticlesViewModel
+import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import io.reactivex.disposables.CompositeDisposable

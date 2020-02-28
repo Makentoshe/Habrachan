@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.view.main.posts
+package com.makentoshe.habrachan.view.main.articles
 
 import android.os.Bundle
 import android.view.LayoutInflater

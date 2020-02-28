@@ -1,9 +1,8 @@
-package com.makentoshe.habrachan.ui.post
+package com.makentoshe.habrachan.ui.articles
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
 import com.makentoshe.habrachan.R
 
 class PostFragmentUi {
