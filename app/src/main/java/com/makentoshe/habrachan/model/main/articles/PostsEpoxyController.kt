@@ -14,11 +14,14 @@ class PostsEpoxyController(private val modelFactory: PostModelFactory) : EpoxyCo
         this.posts.addAll(posts)
     }
 
+    val isEmpty: Boolean
+        get() = posts.isEmpty()
+
     fun clear() = posts.clear()
 
     override fun buildModels() {
         var index = 0
-        val chunkedPosts = this.posts.chunked(20)
+        val chunkedPosts = posts.chunked(20)
         chunkedPosts.forEachIndexed { page, posts ->
             if (page >= 1) {
                 addPageDivide(index, page + 1)

@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.common.database.CommentDao
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
+import com.makentoshe.habrachan.common.entity.posts.NextPage
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import io.reactivex.Observable
@@ -61,7 +62,12 @@ class ArticlesViewModel(
         } catch (e: Exception) {
             if (request.page >= 2) return ArticlesResponse.Error(e.toString())
             val cached = articleDao.getAll()
-            return if (cached.isNotEmpty()) ArticlesResponse.Cache(cached) else ArticlesResponse.Error(e.toString())
+            return if (cached.isNotEmpty()) {
+                val nextPage = NextPage(cached.size / ArticlesResponse.DEFAULT_SIZE + 1, "")
+                ArticlesResponse.Success(cached, nextPage, 0, "", "")
+            } else {
+                ArticlesResponse.Error(e.toString())
+            }
         }
     }
 

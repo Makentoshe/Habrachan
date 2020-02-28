@@ -13,16 +13,13 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
-import com.makentoshe.habrachan.model.main.articles.PostModelFactory
-import com.makentoshe.habrachan.model.main.articles.PostsEpoxyController
 import com.makentoshe.habrachan.ui.main.posts.ArticlesFragmentUi
+import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesControllerViewModel
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 import kotlin.math.max
 
@@ -31,7 +28,7 @@ class ArticlesFragment : Fragment() {
     private var currentPage = 0
     private val disposables = CompositeDisposable()
     private val articlesViewModel by inject<ArticlesViewModel>()
-    private val router by inject<Router>()
+    private val articlesControllerViewModel by inject<ArticlesControllerViewModel>()
 
     private val arguments: ArticlesFlowFragment.Arguments
         get() = (requireParentFragment() as ArticlesFlowFragment).arguments
@@ -42,7 +39,6 @@ class ArticlesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         currentPage = SavedInstanceState(savedInstanceState).page ?: arguments.page
-        val controller = PostsEpoxyController(PostModelFactory(router))
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.articles_fragment_recycler)
         val swipyRefreshView = view.findViewById<SwipyRefreshLayout>(R.id.articles_fragment_swipy)
@@ -50,32 +46,23 @@ class ArticlesFragment : Fragment() {
         val errorMessage = view.findViewById<TextView>(R.id.articles_fragment_message)
         val retryButton = view.findViewById<Button>(R.id.articles_fragment_button)
 
-        val displayArticles: (List<Article>) -> Unit = {
-            progressbar.visibility = View.GONE
-            swipyRefreshView.visibility = View.VISIBLE
-            val lastItem = controller.adapter.itemCount
-            controller.append(it)
-            controller.requestModelBuild()
-            if (currentPage > 1) {
-                val scroller = object : LinearSmoothScroller(view.context) {
-                    override fun getVerticalSnapPreference() = SNAP_TO_START
-                    override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics) = .2f
-                }
-                scroller.targetPosition = max(lastItem - 1, 0)
-                recyclerView.layoutManager?.startSmoothScroll(scroller)
-            }
-        }
-
         articlesViewModel.articlesObservable.subscribe { response ->
             swipyRefreshView.isRefreshing = false
             when (response) {
                 is ArticlesResponse.Success -> {
-                    displayArticles(response.data)
-                    currentPage += 1
-                }
-                is ArticlesResponse.Cache -> {
-                    displayArticles(response.data)
-                    currentPage = response.data.size / ArticlesResponse.DEFAULT_SIZE + 1
+                    progressbar.visibility = View.GONE
+                    swipyRefreshView.visibility = View.VISIBLE
+                    val lastItem = articlesControllerViewModel.adapter.itemCount
+                    articlesControllerViewModel.appendAndRequestBuild(response.data)
+                    if (currentPage > 1) {
+                        val scroller = object : LinearSmoothScroller(view.context) {
+                            override fun getVerticalSnapPreference() = SNAP_TO_START
+                            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics) = .2f
+                        }
+                        scroller.targetPosition = max(lastItem - 1, 0)
+                        recyclerView.layoutManager?.startSmoothScroll(scroller)
+                    }
+                    currentPage = response.nextPage.int
                 }
                 is ArticlesResponse.Error -> {
                     if (currentPage == 1){
@@ -101,10 +88,10 @@ class ArticlesFragment : Fragment() {
         swipyRefreshView.setOnRefreshListener { direction ->
             when (direction) {
                 SwipyRefreshLayoutDirection.TOP -> {
-                    currentPage = arguments.page
+                    currentPage = arguments.page // as usual 1
                     val request = articlesViewModel.createRequestAll(currentPage)
                     articlesViewModel.requestObserver.onNext(request)
-                    controller.clear()
+                    articlesControllerViewModel.clear()
                 }
                 SwipyRefreshLayoutDirection.BOTTOM -> {
                     val request = articlesViewModel.createRequestAll(currentPage)
@@ -115,14 +102,17 @@ class ArticlesFragment : Fragment() {
         }
 
         swipyRefreshView.setDistanceToTriggerSync(128)
-        recyclerView.adapter = controller.adapter
+        recyclerView.adapter = articlesControllerViewModel.adapter
 
         if (savedInstanceState == null) {
             val initialRequest = articlesViewModel.createRequestAll(arguments.page)
             articlesViewModel.requestObserver.onNext(initialRequest)
         } else {
-            val cacheRequest = articlesViewModel.createCacheRequest()
-            articlesViewModel.requestObserver.onNext(cacheRequest)
+            if (articlesControllerViewModel.shouldRequestBuild()) {
+                articlesControllerViewModel.requestBuild()
+                progressbar.visibility = View.GONE
+                swipyRefreshView.visibility = View.VISIBLE
+            }
         }
     }
 
