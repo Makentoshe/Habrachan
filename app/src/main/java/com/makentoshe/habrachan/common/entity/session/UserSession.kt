@@ -10,11 +10,11 @@ data class UserSession(
     @PrimaryKey
     val clientKey: String,
     val apiKey: String,
-    val tokenKey: String? = null,
+    val tokenKey: String = "",
     @Embedded(prefix = "user_")
     val me: User? = null
 ) {
     /** Returns true if user already logged in */
-    val isLogin: Boolean
-        get() = tokenKey != null
+    val isLoggedIn: Boolean
+        get() = tokenKey.isNotBlank()
 }

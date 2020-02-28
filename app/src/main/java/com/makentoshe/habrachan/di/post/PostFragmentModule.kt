@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.model.post.JavaScriptInterface
 import com.makentoshe.habrachan.model.post.PostBroadcastReceiver
 import com.makentoshe.habrachan.view.post.PostFragment
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
+import com.makentoshe.habrachan.viewmodel.post.VoteArticleViewModel
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -26,6 +27,8 @@ class PostFragmentModule private constructor(fragment: PostFragment, postId: Int
         bind<PostBroadcastReceiver>().toClass(PostBroadcastReceiver::class).singleton()
         bind<PostFragmentViewModel>().toProviderInstance(PostFragmentViewModelProvider(fragment, postId))
         bind<PostFragment.Navigator>().toInstance(PostFragment.Navigator(router))
+
+        bind<VoteArticleViewModel>().toProviderInstance(VoteArticleViewModelProvider(fragment))
     }
 
     class Builder(private val postId: Int) {

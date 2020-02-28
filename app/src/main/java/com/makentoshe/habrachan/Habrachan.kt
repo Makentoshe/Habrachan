@@ -1,22 +1,16 @@
 package com.makentoshe.habrachan
 
 import android.app.Application
-import com.makentoshe.habrachan.di.common.ApplicationModule
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.InjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.di.InjectionActivityLifecycleCallback
 import com.makentoshe.habrachan.di.common.*
-import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Cicerone
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
-import toothpick.ktp.delegate.inject
 
 class Habrachan : Application() {
 
     private val cicerone = Cicerone.create()
-
-    private val client by inject<OkHttpClient>()
 
     override fun onCreate() {
         super.onCreate()
@@ -47,9 +41,7 @@ class Habrachan : Application() {
 
     private fun injectNetworkDependencies() {
         val module = NetworkModule(applicationContext)
-        val scope = Toothpick.openScopes(CacheScope::class.java, NetworkScope::class.java)
-        scope.installModules(module)
-        scope.inject(this)
+        Toothpick.openScopes(CacheScope::class.java, NetworkScope::class.java).installModules(module)
     }
 
     private fun injectNavigationDependencies() {
@@ -58,9 +50,8 @@ class Habrachan : Application() {
     }
 
     private fun injectRepositoryDependencies() {
-        val module = RepositoryModule(applicationContext, client)
-        val scope = Toothpick.openScopes(NavigationScope::class.java, RepositoryScope::class.java)
-        scope.installModules(module)
+        val module = RepositoryModule(applicationContext)
+        Toothpick.openScopes(NavigationScope::class.java, RepositoryScope::class.java).installModules(module)
     }
 
 }

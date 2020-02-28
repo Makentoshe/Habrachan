@@ -28,8 +28,8 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
 
-        val imageGetter = SpannedFactory.ImageGetter(inputStreamRepository, fragment.resources)
-        bind<SpannedFactory>().toInstance(SpannedFactory(imageGetter))
+//        val imageGetter = SpannedFactory.ImageGetter(inputStreamRepository, fragment.resources)
+        bind<SpannedFactory>().toInstance(SpannedFactory(null))
 
         val commentsFragmentViewModelProvider = CommentsFragmentViewModelProvider(fragment)
         bind<CommentsFragmentViewModel>().toProviderInstance(commentsFragmentViewModelProvider)
