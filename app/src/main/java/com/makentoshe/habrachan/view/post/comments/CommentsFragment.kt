@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.model.post.comment.*
-import com.makentoshe.habrachan.ui.post.comments.CommentsFragmentUi
+import com.makentoshe.habrachan.ui.articles.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.comments.CommentsFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router

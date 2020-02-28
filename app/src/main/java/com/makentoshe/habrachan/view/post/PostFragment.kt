@@ -26,8 +26,8 @@ import com.makentoshe.habrachan.model.post.JavaScriptInterface
 import com.makentoshe.habrachan.model.post.PostBroadcastReceiver
 import com.makentoshe.habrachan.model.post.html.*
 import com.makentoshe.habrachan.model.post.images.PostImageScreen
-import com.makentoshe.habrachan.ui.post.BottomBarUi
-import com.makentoshe.habrachan.ui.post.PostFragmentUi
+import com.makentoshe.habrachan.ui.articles.BottomBarUi
+import com.makentoshe.habrachan.ui.articles.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.post.PostFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.post.VoteArticleViewModel
 import io.reactivex.disposables.CompositeDisposable

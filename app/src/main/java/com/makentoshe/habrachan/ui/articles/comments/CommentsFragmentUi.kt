@@ -1,10 +1,9 @@
-package com.makentoshe.habrachan.ui.post.comments
+package com.makentoshe.habrachan.ui.articles.comments
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.makentoshe.habrachan.R
 
 class CommentsFragmentUi(private val root: View? = null) {

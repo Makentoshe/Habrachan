@@ -1,8 +1,8 @@
-package com.makentoshe.habrachan.di.main.posts
+package com.makentoshe.habrachan.di.main.articles
 
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.view.main.posts.ArticlesFragment
-import com.makentoshe.habrachan.viewmodel.main.posts.ArticlesViewModel
+import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
+import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind

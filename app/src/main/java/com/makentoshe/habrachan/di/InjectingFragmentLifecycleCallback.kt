@@ -10,14 +10,14 @@ import com.makentoshe.habrachan.di.main.account.login.LoginFragmentModule
 import com.makentoshe.habrachan.di.main.account.login.LoginFragmentScope
 import com.makentoshe.habrachan.di.main.account.user.UserFragmentModule
 import com.makentoshe.habrachan.di.main.account.user.UserFragmentScope
-import com.makentoshe.habrachan.di.main.posts.ArticlesFragmentModule
-import com.makentoshe.habrachan.di.main.posts.ArticlesFragmentScope
+import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentModule
+import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentScope
 import com.makentoshe.habrachan.di.post.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.post.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
 import com.makentoshe.habrachan.view.main.account.login.LoginFragment
 import com.makentoshe.habrachan.view.main.account.user.UserFragment
-import com.makentoshe.habrachan.view.main.posts.ArticlesFragment
+import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
 import com.makentoshe.habrachan.view.post.comments.CommentsFragment
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy

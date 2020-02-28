@@ -16,7 +16,7 @@
 
         <include layout="@layout/post_fragment_toolbar" />
 
-        <com.makentoshe.habrachan.ui.post.NestedWebView
+        <com.makentoshe.habrachan.ui.articles.NestedWebView
             android:id="@+id/post_fragment_webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,7 +32,7 @@
             android:layout_gravity="bottom"
             android:layout_marginStart="-16dp"
             app:hideOnScroll="true"
-            app:layout_behavior=".ui.post.BottomBarBehavior" />
+            app:layout_behavior=".ui.articles.BottomBarBehavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

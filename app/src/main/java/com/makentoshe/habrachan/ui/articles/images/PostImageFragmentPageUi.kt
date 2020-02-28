@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.ui.post.images
+package com.makentoshe.habrachan.ui.articles.images
 
 import android.content.Context
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.main.posts
+package com.makentoshe.habrachan.model.main.articles
 
 import android.view.View
 import com.airbnb.epoxy.EpoxyController

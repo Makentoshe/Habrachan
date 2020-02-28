@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.viewmodel.main.posts
+package com.makentoshe.habrachan.viewmodel.main.articles
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

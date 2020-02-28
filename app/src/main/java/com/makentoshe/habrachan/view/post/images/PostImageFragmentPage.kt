@@ -17,7 +17,7 @@ import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.post.images.PostImageFragmentPageModule
 import com.makentoshe.habrachan.di.post.images.PostImageFragmentPageScope
 import com.makentoshe.habrachan.model.post.PostScreen
-import com.makentoshe.habrachan.ui.post.images.PostImageFragmentPageUi
+import com.makentoshe.habrachan.ui.articles.images.PostImageFragmentPageUi
 import com.makentoshe.habrachan.viewmodel.post.images.PostImageFragmentViewModel
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.reactivex.disposables.CompositeDisposable

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.di.main.posts
+package com.makentoshe.habrachan.di.main.articles
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
