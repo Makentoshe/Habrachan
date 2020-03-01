@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
+        android:theme="?attr/habrachanToolbar"
+        android:id="@+id/article_fragment_collapsingtoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:fitsSystemWindows="true"
+        app:maxLines="7"
+        app:collapsedTitleTextAppearance="@style/Habrachan.TextAppearance.CollapsingToolbar.Collapsed"
+        app:expandedTitleTextAppearance="@style/Habrachan.TextAppearance.CollapsingToolbar.Expanded"
+        app:contentScrim="?attr/colorPrimary"
+        app:expandedTitleGravity="center_horizontal"
+        app:layout_scrollFlags="scroll"
+        app:toolbarId="@id/article_fragment_toolbar">
+
+        <androidx.appcompat.widget.Toolbar
+            style="?attr/habrachanToolbar"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            android:id="@+id/article_fragment_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin" />
+
+    </net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout>
+
+</com.google.android.material.appbar.AppBarLayout>

@@ -2,9 +2,9 @@ package com.makentoshe.habrachan.model.post
 
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.navigation.Screen
-import com.makentoshe.habrachan.view.post.PostFragment
+import com.makentoshe.habrachan.view.post.ArticleFragment
 
 class PostScreen(private val postId: Int) : Screen(){
     override val fragment: Fragment
-        get() = PostFragment.Factory().build(postId)
+        get() = ArticleFragment.Factory().build(postId)
 }

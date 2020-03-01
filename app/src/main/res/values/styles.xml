@@ -44,6 +44,14 @@
     <style name="Habrachan.Light.TextAppearance.Small" parent="Habrachan.Light.TextAppearance">
         <item name="android:textSize">14sp</item>
     </style>
+    
+    <style name="Habrachan.TextAppearance.CollapsingToolbar.Collapsed" parent="Habrachan">
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+    <style name="Habrachan.TextAppearance.CollapsingToolbar.Expanded" parent="Habrachan">
+        <item name="android:textSize">18sp</item>
+    </style>
 
     <style name="Habrachan.Light.Popup" parent="Habrachan.Light">
         <item name="android:background">@android:color/white</item>
