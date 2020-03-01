@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:sothree="http://schemas.android.com/tools"
-    android:id="@+id/post_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="?attr/habrachanDefault">
@@ -10,34 +8,29 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        sothree:layout_editor_absoluteX="0dp"
-        sothree:layout_editor_absoluteY="-193dp">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/post_fragment_toolbar" />
+        <include layout="@layout/article_fragment_toolbar" />
 
-        <com.makentoshe.habrachan.ui.articles.NestedWebView
-            android:id="@+id/post_fragment_webview"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbarStyle="outsideOverlay"
-            android:scrollbars="vertical"
-            android:visibility="gone"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/post_fragment_bottombar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="-16dp"
-            app:hideOnScroll="true"
-            app:layout_behavior=".ui.articles.BottomBarBehavior" />
+            <im.delight.android.webview.AdvancedWebView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/article_fragment_webview"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="vertical" />
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <ProgressBar
-        android:id="@+id/post_fragment_progressbar"
+        android:visibility="gone"
+        android:id="@+id/article_fragment_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +39,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/post_fragment_messageview"
+        android:id="@+id/article_fragment_messageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -57,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/post_fragment_retrybutton"
+        android:id="@+id/article_fragment_retrybutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -65,6 +58,6 @@
         android:text="@string/retry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/post_fragment_messageview" />
+        app:layout_constraintTop_toBottomOf="@id/article_fragment_messageview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

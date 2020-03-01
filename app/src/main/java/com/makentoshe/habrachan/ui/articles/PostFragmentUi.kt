@@ -7,6 +7,6 @@ import com.makentoshe.habrachan.R
 
 class PostFragmentUi {
     fun createView(context: Context): View {
-        return LayoutInflater.from(context).inflate(R.layout.post_fragment, null, false)
+        return LayoutInflater.from(context).inflate(R.layout.article_fragment, null, false)
     }
 }

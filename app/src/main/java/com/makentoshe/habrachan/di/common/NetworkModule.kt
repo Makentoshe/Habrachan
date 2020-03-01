@@ -6,7 +6,6 @@ import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.common.network.manager.UsersManager
-import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.config.Module
@@ -18,23 +17,15 @@ class NetworkModule(context: Context) : Module() {
 
     private val client = OkHttpClient.Builder().addLoggingInterceptor().build()
 
-    private val manager = HabrArticleManager.Builder(client).build("text_html")
-
-    private val postFactory = GetArticleRequest.Builder(
-        client = "85cab69095196f3.89453480",
-        api = "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
-        token = null
-    )
-
+    private val articleManager = HabrArticleManager.Builder(client).build("text_html")
     private val commentsManager = HabrCommentsManager.Factory(client).build()
     private val loginManager = LoginManager.Builder(client).build()
     private val usersManager = UsersManager.Builder(client).build()
 
     init {
         bind<OkHttpClient>().toInstance(client)
-        bind<GetArticleRequest.Builder>().toInstance(postFactory)
 
-        bind<HabrArticleManager>().toInstance(manager)
+        bind<HabrArticleManager>().toInstance(articleManager)
         bind<HabrCommentsManager>().toInstance(commentsManager)
         bind<LoginManager>().toInstance(loginManager)
         bind<UsersManager>().toInstance(usersManager)

@@ -12,12 +12,15 @@ import com.makentoshe.habrachan.di.main.account.user.UserFragmentModule
 import com.makentoshe.habrachan.di.main.account.user.UserFragmentScope
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentModule
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentScope
+import com.makentoshe.habrachan.di.post.ArticleFragmentModule
+import com.makentoshe.habrachan.di.post.ArticleFragmentScope
 import com.makentoshe.habrachan.di.post.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.post.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
 import com.makentoshe.habrachan.view.main.account.login.LoginFragment
 import com.makentoshe.habrachan.view.main.account.user.UserFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
+import com.makentoshe.habrachan.view.post.ArticleFragment
 import com.makentoshe.habrachan.view.post.comments.CommentsFragment
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -32,6 +35,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
             is LoginFragment -> injectLoginFragment(f)
             is UserFragment -> injectUserFragment(f)
             is ArticlesFragment -> injectArticlesFragment(f)
+            is ArticleFragment -> injectArticleFragment(f)
         }
     }
 
@@ -63,5 +67,11 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         val module = ArticlesFragmentModule(fragment)
         val scope = Toothpick.openScopes(ApplicationScope::class.java, ArticlesFragmentScope::class.java)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
+    }
+
+    private fun injectArticleFragment(fragment: ArticleFragment) {
+        val module = ArticleFragmentModule(fragment)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java, ArticleFragmentScope::class.java)
+        scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 }
