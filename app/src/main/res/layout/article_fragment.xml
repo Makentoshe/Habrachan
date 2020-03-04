@@ -5,28 +5,10 @@
     android:layout_height="match_parent"
     style="?attr/habrachanDefault">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+    <include
+        layout="@layout/article_fragment_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/article_fragment_toolbar" />
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <im.delight.android.webview.AdvancedWebView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/article_fragment_webview"
-                android:scrollbarStyle="outsideOverlay"
-                android:scrollbars="vertical" />
-
-        </androidx.core.widget.NestedScrollView>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_height="match_parent" />
 
     <ProgressBar
         android:visibility="gone"

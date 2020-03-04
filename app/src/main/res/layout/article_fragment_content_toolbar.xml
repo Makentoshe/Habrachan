@@ -8,12 +8,14 @@
         android:theme="?attr/habrachanToolbar"
         android:id="@+id/article_fragment_collapsingtoolbar"
         android:layout_width="match_parent"
-        android:layout_height="128dp"
-        android:fitsSystemWindows="true"
-        app:maxLines="7"
+        android:layout_height="wrap_content"
+        app:maxLines="8"
+        app:expandedTitleMarginTop="32dp"
+        app:expandedTitleMarginStart="32dp"
+        app:expandedTitleMarginEnd="32dp"
+        app:expandedTitleMarginBottom="8dp"
         app:collapsedTitleTextAppearance="@style/Habrachan.TextAppearance.CollapsingToolbar.Collapsed"
         app:expandedTitleTextAppearance="@style/Habrachan.TextAppearance.CollapsingToolbar.Expanded"
-        app:contentScrim="?attr/colorPrimary"
         app:expandedTitleGravity="center_horizontal"
         app:layout_scrollFlags="scroll"
         app:toolbarId="@id/article_fragment_toolbar">
@@ -25,6 +27,19 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="pin" />
+
+        <!-- Invisible view helps to calculate and hold an optimal title height -->
+        <TextView
+            android:id="@+id/article_fragment_calculator"
+            android:visibility="invisible"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/Habrachan.TextAppearance.CollapsingToolbar.Expanded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout>
 
