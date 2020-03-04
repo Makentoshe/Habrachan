@@ -7,7 +7,7 @@
 
     <include layout="@layout/article_fragment_content_toolbar" />
 
-    <androidx.core.widget.NestedScrollView
+    <com.makentoshe.habrachan.ui.articles.CustomNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -27,8 +27,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <FrameLayout
+                android:visibility="gone"
+                android:background="@android:color/holo_purple"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/article_fragment_webview"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </com.makentoshe.habrachan.ui.articles.CustomNestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
