@@ -1,14 +1,13 @@
 package com.makentoshe.habrachan.common.entity
 
 import androidx.room.Embedded
-import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class User(
     @SerializedName("avatar")
     val avatar: String,
     @SerializedName("badges")
-    val badges: List<Badge>,
+    val badgesMap: Map<String, Badge>,
 //    @SerializedName("common_tags")
 //    val commonTags: List<Any>,
 //    @SerializedName("contacts")
@@ -52,13 +51,7 @@ data class User(
 //    @SerializedName("payment_methods")
 //    val paymentMethods: List<PaymentMethod>?
 ) {
-    fun toJson(): String? {
-        return Gson().toJson(this)
-    }
 
-    companion object {
-        fun fromJson(json: String): User {
-            return Gson().fromJson(json, User::class.java)
-        }
-    }
+    val badges: List<Badge>
+        get() = badgesMap.map { it.value }
 }
