@@ -13,11 +13,15 @@ class AdvancedWebViewController(private val fragment: ArticleFragment) : Lifecyc
     private lateinit var advancedWebView: AdvancedWebView
     val listener: AdvancedWebView.Listener = object :
         AdvancedWebView.Listener {
-        override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) = fragment.onArticleError()
+        override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
+            fragment.onArticleError(description ?: "Description is null. Error code: $errorCode")
+        }
+        override fun onPageFinished(url: String?) {
+            fragment.onArticleDisplayed()
+        }
         override fun onDownloadRequested(a: String?, b: String?, c: String?, d: Long, e: String?, f: String?) = Unit
         override fun onExternalPageRequest(url: String?) = Unit
         override fun onPageStarted(url: String?, favicon: Bitmap?) = Unit
-        override fun onPageFinished(url: String?) = fragment.onArticleDisplayed()
     }
 
     fun init(advancedWebView: AdvancedWebView) {

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
@@ -19,7 +21,6 @@ import com.makentoshe.habrachan.viewmodel.post.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.post.VoteArticleViewModel
 import im.delight.android.webview.AdvancedWebView
 import io.reactivex.disposables.CompositeDisposable
-import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
@@ -42,21 +43,9 @@ class ArticleFragment : Fragment() {
             articleViewModel.articleObserver.onNext(request)
         }
 
-        val webView = view.findViewById<AdvancedWebView>(R.id.article_fragment_webview)
-        advancedWebViewController.init(webView)
-        val toolbar = view.findViewById<CollapsingToolbarLayout>(R.id.article_fragment_collapsingtoolbar)
+        view.findViewById<AdvancedWebView>(R.id.article_fragment_webview).also(advancedWebViewController::init)
 
-        articleViewModel.articleObservable.subscribe { response ->
-            when (response) {
-                is ArticleResponse.Success -> {
-                    webView.loadHtml(response.article.textHtml)
-                    toolbar.title = response.article.title
-                }
-                is ArticleResponse.Error -> {
-
-                }
-            }
-        }.let(disposables::add)
+        articleViewModel.articleObservable.subscribe(::onArticleReceived).let(disposables::add)
 
 //        viewModel.articleObservable.subscribe { response ->
 //            when(response) {
@@ -128,20 +117,23 @@ class ArticleFragment : Fragment() {
 //        }.let(disposables::add)
     }
 
-    fun onArticleError() {
-
+    private fun onArticleReceived(response: ArticleResponse) = when (response) {
+        is ArticleResponse.Success -> onArticleSuccess(response)
+        is ArticleResponse.Error -> onArticleError(response.json)
     }
 
-    fun onArticleDisplayed() {
-
+    private fun onArticleSuccess(response: ArticleResponse.Success) {
+        val view = view ?: return onArticleError("Fragment view is null. wtf?")
+        setToolbarBehavior(response)
+        view.findViewById<AdvancedWebView>(R.id.article_fragment_webview).loadHtml(response.article.buildHtml())
     }
 
-    private fun showErrorSnackbar(message: String) {
-        val snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE)
-        snackbar.setAction(R.string.got_it) {
-            snackbar.dismiss()
-        }
-        snackbar.show()
+    private fun setToolbarBehavior(response: ArticleResponse.Success) {
+        val view = view ?: return onArticleError("Fragment view is null. wtf?")
+        val toolbar = view.findViewById<Toolbar>(R.id.article_fragment_toolbar)
+        val sas = view.findViewById<TextView>(R.id.article_fragment_calculator)
+        toolbar.title = response.article.title
+        sas.text = response.article.title
     }
 
     private fun Article.buildHtml(): String {
@@ -149,10 +141,23 @@ class ArticleFragment : Fragment() {
         val builder = HtmlBuilder(this)
         builder.addAddon(DisplayScriptAddon(resourceRepository))
         builder.addAddon(StyleAddon(resourceRepository))
-        builder.addAddon(TitleAddon(this))
         builder.addAddon(SpoilerAddon())
         builder.addAddon(ImageAddon())
         return builder.build()
+    }
+
+    fun onArticleError(message: String) {
+        showErrorSnackbar(message)
+        println(message)
+    }
+
+    fun onArticleDisplayed() = Unit
+
+    private fun showErrorSnackbar(message: String) {
+        val view = activity?.window?.decorView ?: throw Exception("Activity decor view is null")
+        val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction(R.string.got_it) { snackbar.dismiss() }
+        snackbar.show()
     }
 
     override fun onDestroy() {
