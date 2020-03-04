@@ -22,6 +22,8 @@ data class Article(
     val commentsCount: Int,
     @SerializedName("comments_new")
     val commentsNew: Int,
+    @SerializedName("editor_version")
+    val editorVersion: Int? = null,
     @SerializedName("favorites_count")
     val favoritesCount: Int,
     @SerializedName("flows")
@@ -89,4 +91,6 @@ data class Article(
     val votesCount: Int,
     @SerializedName("is_can_comment")
     val isCanComment: Boolean? = null
+//    @SerializedName("voting")
+//    val voting: Voting? = null
 )
