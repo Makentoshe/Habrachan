@@ -14,6 +14,7 @@ import com.makentoshe.habrachan.common.entity.post.ArticleResponse
 import com.makentoshe.habrachan.common.repository.RawResourceRepository
 import com.makentoshe.habrachan.model.post.AdvancedWebViewController
 import com.makentoshe.habrachan.model.post.CommentsScreen
+import com.makentoshe.habrachan.model.post.JavaScriptInterface
 import com.makentoshe.habrachan.model.post.html.*
 import com.makentoshe.habrachan.model.post.images.PostImageScreen
 import com.makentoshe.habrachan.ui.articles.PostFragmentUi
@@ -28,6 +29,8 @@ class ArticleFragment : Fragment() {
 
     private val advancedWebViewController by inject<AdvancedWebViewController>()
     private val articleViewModel by inject<ArticleFragmentViewModel>()
+    private val navigator by inject<Navigator>()
+    private val javaScriptInterface by inject<JavaScriptInterface>()
     private val voteArticleViewModel by inject<VoteArticleViewModel>()
 
     private val arguments = Arguments(this)
@@ -47,6 +50,7 @@ class ArticleFragment : Fragment() {
 
         articleViewModel.articleObservable.subscribe(::onArticleReceived).let(disposables::add)
 
+        javaScriptInterface.imageObservable.subscribe(navigator::toArticleResourceScreen).let(disposables::add)
 //        viewModel.articleObservable.subscribe { response ->
 //            when(response) {
 //                is ArticleResponse.Success -> {
@@ -125,7 +129,9 @@ class ArticleFragment : Fragment() {
     private fun onArticleSuccess(response: ArticleResponse.Success) {
         val view = view ?: return onArticleError("Fragment view is null. wtf?")
         setToolbarBehavior(response)
-        view.findViewById<AdvancedWebView>(R.id.article_fragment_webview).loadHtml(response.article.buildHtml())
+        val webView = view.findViewById<AdvancedWebView>(R.id.article_fragment_webview)
+        webView.addJavascriptInterface(javaScriptInterface, "JSInterface")
+        webView.loadHtml(response.article.buildHtml())
     }
 
     private fun setToolbarBehavior(response: ArticleResponse.Success) {
@@ -134,6 +140,7 @@ class ArticleFragment : Fragment() {
         calculator.text = response.article.title
         val toolbar = view.findViewById<Toolbar>(R.id.article_fragment_content_toolbar_toolbar)
         toolbar.title = response.article.title
+        toolbar.setNavigationOnClickListener { navigator.back() }
         val authorView = view.findViewById<TextView>(R.id.article_fragment_content_toolbar_author_login)
         authorView.text = response.article.author.login
         val timeView = view.findViewById<TextView>(R.id.article_fragment_content_toolbar_time)
