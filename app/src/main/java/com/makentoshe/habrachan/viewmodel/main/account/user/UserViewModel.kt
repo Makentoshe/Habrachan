@@ -9,7 +9,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.repository.InputStreamRepository
-import com.makentoshe.habrachan.model.post.comment.BitmapController
+import com.makentoshe.habrachan.model.article.comment.BitmapController
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
-import com.makentoshe.habrachan.ui.main.posts.ArticlesFragmentUi
+import com.makentoshe.habrachan.ui.main.articles.ArticlesFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesControllerViewModel
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout

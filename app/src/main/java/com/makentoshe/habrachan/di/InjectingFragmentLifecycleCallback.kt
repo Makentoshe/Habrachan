@@ -3,6 +3,10 @@ package com.makentoshe.habrachan.di
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.makentoshe.habrachan.di.article.ArticleFragmentModule
+import com.makentoshe.habrachan.di.article.ArticleFragmentScope
+import com.makentoshe.habrachan.di.article.comments.CommentsFragmentModule
+import com.makentoshe.habrachan.di.article.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.account.AccountFlowFragmentModule
 import com.makentoshe.habrachan.di.main.account.AccountFlowFragmentScope
@@ -12,16 +16,12 @@ import com.makentoshe.habrachan.di.main.account.user.UserFragmentModule
 import com.makentoshe.habrachan.di.main.account.user.UserFragmentScope
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentModule
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentScope
-import com.makentoshe.habrachan.di.post.ArticleFragmentModule
-import com.makentoshe.habrachan.di.post.ArticleFragmentScope
-import com.makentoshe.habrachan.di.post.comments.CommentsFragmentModule
-import com.makentoshe.habrachan.di.post.comments.CommentsFragmentScope
+import com.makentoshe.habrachan.view.article.ArticleFragment
+import com.makentoshe.habrachan.view.article.comments.CommentsFragment
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
 import com.makentoshe.habrachan.view.main.account.login.LoginFragment
 import com.makentoshe.habrachan.view.main.account.user.UserFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
-import com.makentoshe.habrachan.view.post.ArticleFragment
-import com.makentoshe.habrachan.view.post.comments.CommentsFragment
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
