@@ -7,7 +7,7 @@
 
     <include layout="@layout/article_fragment_content_toolbar" />
 
-    <com.makentoshe.habrachan.ui.articles.CustomNestedScrollView
+    <com.makentoshe.habrachan.ui.article.CustomNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -39,6 +39,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.makentoshe.habrachan.ui.articles.CustomNestedScrollView>
+    </com.makentoshe.habrachan.ui.article.CustomNestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

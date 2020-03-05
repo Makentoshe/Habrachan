@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.makentoshe.habrachan.ui.main.posts.ArticlesFlowFragmentUi
+import com.makentoshe.habrachan.ui.main.articles.ArticlesFlowFragmentUi
 
 class ArticlesFlowFragment : Fragment() {
 
