@@ -36,13 +36,15 @@ class Converters {
     }
 
     @TypeConverter
-    fun badgesToJson(map: Map<String, Badge>): String {
-        return Gson().toJson(map)
+    fun badgesToJson(badges: List<Badge>): String {
+        val jsonArray = JsonArray()
+        badges.map { it.toJson() }.forEach(jsonArray::add)
+        return jsonArray.toString()
     }
 
-    @Suppress("UNCHECKED_CAST")
     @TypeConverter
-    fun jsonToBadges(json: String) : Map<String, Badge> {
-        return Gson().fromJson(json, Map::class.java) as Map<String, Badge>
+    fun jsonToBadges(json: String) : List<Badge> {
+        val jsonArray = Gson().fromJson(json, JsonArray::class.java)
+        return jsonArray.map { it.asString }.map { Badge.fromJson(it) }
     }
 }

@@ -44,13 +44,12 @@ interface HabrArticleManager {
 
                 override fun getArticles(request: GetArticlesRequest): Single<ArticlesResponse> {
                     return Single.just(request).observeOn(Schedulers.io()).map { request ->
-                        api.getArticles(request.client, request.api, request.token, request.spec, request.page)
-                            .execute()
+                        api.getArticles(request.client, request.api, request.token, request.spec, request.page).execute()
                     }.map { response ->
                         if (response.isSuccessful) {
                             ArticlesConverter().convertBody(response.body()!!)
                         } else {
-                            ArticlesConverter().convertBody(response.errorBody()!!)
+                            ArticlesConverter().convertError(response.errorBody()!!)
                         }
                     }.cast(ArticlesResponse::class.java)
                 }

@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class User(
     @SerializedName("avatar")
     val avatar: String,
-    @SerializedName("badges")
-    val badgesMap: Map<String, Badge>,
+//    @SerializedName("badges")
+//    val badges: List<Badge>,
 //    @SerializedName("common_tags")
 //    val commonTags: List<Any>,
 //    @SerializedName("contacts")
@@ -52,6 +52,6 @@ data class User(
 //    val paymentMethods: List<PaymentMethod>?
 ) {
 
-    val badges: List<Badge>
-        get() = badgesMap.map { it.value }
+//    val badges: List<Badge>
+//        get() = badgesMap.map { it.value }
 }
