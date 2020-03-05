@@ -50,7 +50,7 @@
     </style>
     
     <style name="Habrachan.TextAppearance.CollapsingToolbar.Expanded" parent="Habrachan">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
     <style name="Habrachan.Light.Popup" parent="Habrachan.Light">
