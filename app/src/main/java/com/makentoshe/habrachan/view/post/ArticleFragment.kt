@@ -130,10 +130,16 @@ class ArticleFragment : Fragment() {
 
     private fun setToolbarBehavior(response: ArticleResponse.Success) {
         val view = view ?: return onArticleError("Fragment view is null. wtf?")
-        val calculator = view.findViewById<TextView>(R.id.article_fragment_calculator)
+        val calculator = view.findViewById<TextView>(R.id.article_fragment_content_toolbar_calculator)
         calculator.text = response.article.title
-        val toolbar = view.findViewById<Toolbar>(R.id.article_fragment_toolbar)
+        val toolbar = view.findViewById<Toolbar>(R.id.article_fragment_content_toolbar_toolbar)
         toolbar.title = response.article.title
+        val authorView = view.findViewById<TextView>(R.id.article_fragment_content_toolbar_author_login)
+        authorView.text = response.article.author.login
+        val timeView = view.findViewById<TextView>(R.id.article_fragment_content_toolbar_time)
+        timeView.text = response.article.timePublished
+        val containerView = view.findViewById<View>(R.id.article_fragment_content_toolbar_container)
+        containerView.visibility = View.VISIBLE
     }
 
     private fun Article.buildHtml(): String {
