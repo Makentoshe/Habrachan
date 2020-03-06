@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
 import com.makentoshe.habrachan.model.article.AdvancedWebViewController
 import com.makentoshe.habrachan.model.article.CommentsScreen
 import com.makentoshe.habrachan.model.article.JavaScriptInterface
 import com.makentoshe.habrachan.model.article.images.PostImageScreen
+import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
 import com.makentoshe.habrachan.ui.article.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
@@ -42,34 +43,11 @@ class ArticleFragment : Fragment() {
             val request = articleViewModel.createRequest(arguments.articleId)
             articleViewModel.articleObserver.onNext(request)
         }
-
         view.findViewById<AdvancedWebView>(R.id.article_fragment_webview).also(advancedWebViewController::init)
-
+        view.findViewById<View>(R.id.article_fragment_retrybutton).setOnClickListener { onRetryClicked() }
         articleViewModel.articleObservable.subscribe(::onArticleReceived).let(disposables::add)
-
         javaScriptInterface.imageObservable.subscribe(navigator::toArticleResourceScreen).let(disposables::add)
-//        viewModel.articleObservable.subscribe { response ->
-//            when(response) {
-//                is ArticleResponse.Success -> {
-//                    views.webview.loadData(article.buildHtml(), "text/html", "UFT-8")
-//                    views.commentsCount.text = article.commentsCount.toString()
-//                    views.readingCount.text = article.readingCount.toString()
-//                    views.scoreView.text = if (article.score > 0) {
-//                        "+".plus(article.score.toString())
-//                    } else {
-//                        article.score.toString()
-//                    }
-//                }
-//                is ArticleResponse.Error -> {
-//                    views.webview.visibility = View.GONE
-//                    views.progressBar.visibility = View.GONE
-//                    views.retryButton.visibility = View.VISIBLE
-//                    views.messageView.visibility = View.VISIBLE
-//                    views.messageView.text = throwable.toString()
-//                }
-//            }
-//        }.let(disposables::add)
-//        // success
+
 //        webViewClient.onPublicationReadyToShow {
 //            views.webview.visibility = View.VISIBLE
 //            views.progressBar.visibility = View.GONE
@@ -142,22 +120,42 @@ class ArticleFragment : Fragment() {
         authorView.text = response.article.author.login
         val timeView = view.findViewById<TextView>(R.id.article_fragment_content_toolbar_time)
         timeView.text = response.article.timePublished
-        val containerView = view.findViewById<View>(R.id.article_fragment_content_toolbar_container)
-        containerView.visibility = View.VISIBLE
     }
 
     fun onArticleError(message: String) {
-        showErrorSnackbar(message)
-        println(message)
+        val view = view ?: activity?.window?.decorView ?: throw Exception("Activity decor view is null")
+        val messageView = view.findViewById<TextView>(R.id.article_fragment_messageview)
+        messageView.text = message
+        messageView.visibility = View.VISIBLE
+        val progress = view.findViewById<View>(R.id.article_fragment_progressbar)
+        progress.visibility = View.GONE
+        val retryButton = view.findViewById<View>(R.id.article_fragment_retrybutton)
+        retryButton.visibility = View.VISIBLE
     }
 
-    fun onArticleDisplayed() = Unit
+    fun onArticleDisplayed() {
+        val view = view ?: return onArticleError("Fragment view is null. wtf?")
+        val scrollView = view.findViewById<CustomNestedScrollView>(R.id.article_fragment_scroll)
+        scrollView.visibility = View.VISIBLE
+        val progress = view.findViewById<View>(R.id.article_fragment_progressbar)
+        progress.visibility = View.GONE
+        val appbar = view.findViewById<AppBarLayout>(R.id.article_fragment_content_toolbar_appbar)
+        val containerView = view.findViewById<View>(R.id.article_fragment_content_toolbar_container)
+        containerView.visibility = View.VISIBLE
+        appbar.setExpanded(true, true)
+    }
 
-    private fun showErrorSnackbar(message: String) {
-        val view = activity?.window?.decorView ?: throw Exception("Activity decor view is null")
-        val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
-        snackbar.setAction(R.string.got_it) { snackbar.dismiss() }
-        snackbar.show()
+    private fun onRetryClicked() {
+        val view = view ?: return onArticleError("Fragment view is null. wtf?")
+        val messageView = view.findViewById<TextView>(R.id.article_fragment_messageview)
+        messageView.visibility = View.GONE
+        val progress = view.findViewById<View>(R.id.article_fragment_progressbar)
+        progress.visibility = View.VISIBLE
+        val retryButton = view.findViewById<View>(R.id.article_fragment_retrybutton)
+        retryButton.visibility = View.GONE
+
+        val request = articleViewModel.createRequest(arguments.articleId)
+        articleViewModel.articleObserver.onNext(request)
     }
 
     override fun onDestroy() {
