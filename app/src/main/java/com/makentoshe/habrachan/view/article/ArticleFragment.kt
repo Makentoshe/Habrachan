@@ -4,15 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
-import com.makentoshe.habrachan.model.article.AdvancedWebViewController
+import com.makentoshe.habrachan.common.ui.TintColorController
 import com.makentoshe.habrachan.model.article.CommentsScreen
 import com.makentoshe.habrachan.model.article.JavaScriptInterface
+import com.makentoshe.habrachan.model.article.WebViewController
 import com.makentoshe.habrachan.model.article.images.PostImageScreen
 import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
 import com.makentoshe.habrachan.ui.article.PostFragmentUi
@@ -25,9 +30,9 @@ import toothpick.ktp.delegate.inject
 
 class ArticleFragment : Fragment() {
 
-    private val advancedWebViewController by inject<AdvancedWebViewController>()
-    private val articleViewModel by inject<ArticleFragmentViewModel>()
     private val navigator by inject<Navigator>()
+    private val webViewController by inject<WebViewController>()
+    private val getArticleViewModel by inject<ArticleFragmentViewModel>()
     private val javaScriptInterface by inject<JavaScriptInterface>()
     private val voteArticleViewModel by inject<VoteArticleViewModel>()
 
@@ -40,60 +45,15 @@ class ArticleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            val request = articleViewModel.createRequest(arguments.articleId)
-            articleViewModel.articleObserver.onNext(request)
+            val request = getArticleViewModel.createRequest(arguments.articleId)
+            getArticleViewModel.articleObserver.onNext(request)
         }
-        view.findViewById<AdvancedWebView>(R.id.article_fragment_webview).also(advancedWebViewController::init)
+        view.findViewById<WebView>(R.id.article_fragment_webview).also(webViewController::init)
         view.findViewById<View>(R.id.article_fragment_retrybutton).setOnClickListener { onRetryClicked() }
-        articleViewModel.articleObservable.subscribe(::onArticleReceived).let(disposables::add)
+        getArticleViewModel.articleObservable.subscribe(::onArticleReceived).let(disposables::add)
         javaScriptInterface.imageObservable.subscribe(navigator::toArticleResourceScreen).let(disposables::add)
 
-//        webViewClient.onPublicationReadyToShow {
-//            views.webview.visibility = View.VISIBLE
-//            views.progressBar.visibility = View.GONE
-//        }
-//        // error
-//        viewModel.getArticle.errorObservable.subscribe { throwable ->
-//        }.let(disposables::add)
-//        // retry to receive an article
-//        views.retryButton.setOnClickListener {
-//            views.retryButton.visibility = View.GONE
-//            views.progressBar.visibility = View.VISIBLE
-//            views.messageView.visibility = View.GONE
-//            viewModel.getArticle.requestArticle()
-//        }
-//        // vote article up
-//        views.bottomBar.findViewById<View>(R.id.post_fragment_bottombar_voteup).setOnClickListener {
-//            voteArticleViewModel.voteUp(arguments.articleId)
-//        }
-//        // vote article down
-//        views.bottomBar.findViewById<View>(R.id.post_fragment_bottombar_votedown).setOnClickListener {
-//            voteArticleViewModel.voteDown(arguments.articleId)
-//        }
-//        // return to previous screen
-//        views.toolbar.setNavigationOnClickListener {
-//            navigator.back()
-//        }
-//        // show article's image
-//        broadcastReceiver.addOnImageClickedListener { source, sources ->
-//            navigator.toArticleResourceScreen(source)
-//        }
-//        // show article's comments
-//        views.commentsGroup.setOnClickListener {
-//            navigator.toArticleCommentsScreen(arguments.articleId)
-//        }
-//
-//        voteArticleViewModel.voteArticleObservable.subscribe { response ->
-//            when (response) {
-//                is VoteArticleResponse.Error -> {
-//                    showErrorSnackbar(response.additional.joinToString(". "))
-//                }
-//                is VoteArticleResponse.Success -> {
-//                    views.scoreView.text = response.score.toString()
-//                }
-//            }
-//            println(response)
-//        }.let(disposables::add)
+        voteArticleViewModel.voteArticleObservable.subscribe(::onArticleVoted).let(disposables::add)
     }
 
     private fun onArticleReceived(response: ArticleResponse) = when (response) {
@@ -102,60 +62,129 @@ class ArticleFragment : Fragment() {
     }
 
     private fun onArticleSuccess(response: ArticleResponse.Success) {
-        val view = view ?: return onArticleError("Fragment view is null. wtf?")
-        setToolbarBehavior(response)
-        val webView = view.findViewById<AdvancedWebView>(R.id.article_fragment_webview)
-        webView.addJavascriptInterface(javaScriptInterface, "JSInterface")
-        webView.loadHtml(response.article.buildHtml(resources))
-    }
-
-    private fun setToolbarBehavior(response: ArticleResponse.Success) {
-        val view = view ?: return onArticleError("Fragment view is null. wtf?")
-        val calculator = view.findViewById<TextView>(R.id.article_fragment_content_toolbar_calculator)
+        val calculator = requireView().findViewById<TextView>(R.id.article_fragment_content_toolbar_calculator)
         calculator.text = response.article.title
-        val toolbar = view.findViewById<Toolbar>(R.id.article_fragment_content_toolbar_toolbar)
+
+        val toolbar = requireView().findViewById<Toolbar>(R.id.article_fragment_content_toolbar_toolbar)
         toolbar.title = response.article.title
-        toolbar.setNavigationOnClickListener { navigator.back() }
-        val authorView = view.findViewById<TextView>(R.id.article_fragment_content_toolbar_author_login)
+        toolbar.setNavigationOnClickListener {
+            navigator.back()
+        }
+
+        val authorView = requireView().findViewById<TextView>(R.id.article_fragment_content_toolbar_author_login)
         authorView.text = response.article.author.login
-        val timeView = view.findViewById<TextView>(R.id.article_fragment_content_toolbar_time)
+
+        val timeView = requireView().findViewById<TextView>(R.id.article_fragment_content_toolbar_time)
         timeView.text = response.article.timePublished
+
+        val webView = requireView().findViewById<AdvancedWebView>(R.id.article_fragment_webview)
+        webView.loadHtml(response.article.buildHtml(resources))
+
+        val voteTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_voteview)
+        voteTextView.text = response.article.score.toString()
+
+        val voteUpView = requireView().findViewById<View>(R.id.article_fragment_bottombar_voteup)
+        voteUpView.setOnClickListener {
+            voteArticleViewModel.voteUp(response.article.id)
+        }
+
+        val voteDownView = requireView().findViewById<View>(R.id.article_fragment_bottombar_votedown)
+        voteDownView.setOnClickListener {
+            voteArticleViewModel.voteDown(response.article.id)
+        }
+
+        if (response.article.vote == 1.0) {
+            markVoteUpButton()
+        }
+        if (response.article.vote == -1.0) {
+            markVoteDownButton()
+        }
+
+        val readingTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_reading_count_text)
+        readingTextView.text = response.article.readingCount.toString()
+
+        val commentsTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_comments_count_text)
+        commentsTextView.text = response.article.commentsCount.toString()
+
+        val commentsView = requireView().findViewById<View>(R.id.article_fragment_bottombar_comments)
+        commentsView.setOnClickListener {
+            navigator.toArticleCommentsScreen(arguments.articleId)
+        }
     }
 
     fun onArticleError(message: String) {
-        val view = view ?: activity?.window?.decorView ?: throw Exception("Activity decor view is null")
-        val messageView = view.findViewById<TextView>(R.id.article_fragment_messageview)
+        val messageView = requireView().findViewById<TextView>(R.id.article_fragment_messageview)
         messageView.text = message
         messageView.visibility = View.VISIBLE
-        val progress = view.findViewById<View>(R.id.article_fragment_progressbar)
+
+        val progress = requireView().findViewById<View>(R.id.article_fragment_progressbar)
         progress.visibility = View.GONE
-        val retryButton = view.findViewById<View>(R.id.article_fragment_retrybutton)
+
+        val retryButton = requireView().findViewById<View>(R.id.article_fragment_retrybutton)
         retryButton.visibility = View.VISIBLE
     }
 
     fun onArticleDisplayed() {
-        val view = view ?: return onArticleError("Fragment view is null. wtf?")
-        val scrollView = view.findViewById<CustomNestedScrollView>(R.id.article_fragment_scroll)
+        val scrollView = requireView().findViewById<CustomNestedScrollView>(R.id.article_fragment_scroll)
         scrollView.visibility = View.VISIBLE
-        val progress = view.findViewById<View>(R.id.article_fragment_progressbar)
-        progress.visibility = View.GONE
-        val appbar = view.findViewById<AppBarLayout>(R.id.article_fragment_content_toolbar_appbar)
-        val containerView = view.findViewById<View>(R.id.article_fragment_content_toolbar_container)
+
+        val containerView = requireView().findViewById<View>(R.id.article_fragment_content_toolbar_container)
         containerView.visibility = View.VISIBLE
+
+        val appbar = requireView().findViewById<AppBarLayout>(R.id.article_fragment_content_toolbar_appbar)
         appbar.setExpanded(true, true)
+
+        val progress = requireView().findViewById<View>(R.id.article_fragment_progressbar)
+        progress.visibility = View.GONE
+
+        val bottomBar = requireView().findViewById<View>(R.id.article_fragment_bottombar)
+        bottomBar.visibility = View.VISIBLE
+    }
+
+    private fun onArticleVoted(response: VoteArticleResponse) = when (response) {
+        is VoteArticleResponse.Success -> onArticleVotedSuccess(response)
+        is VoteArticleResponse.Error -> onArticleVotedError(response)
+    }
+
+    private fun onArticleVotedSuccess(response: VoteArticleResponse.Success) {
+        val voteTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_voteview)
+        val currentScore = voteTextView.text.toString().toInt()
+        voteTextView.text = response.score.toString()
+
+        if (response.score > currentScore) markVoteUpButton() else markVoteDownButton()
+    }
+
+    private fun markVoteUpButton() {
+        val icon = requireView().findViewById<ImageView>(R.id.article_fragment_bottombar_voteup_icon)
+        TintColorController(icon).setPositiveTint(requireContext())
+    }
+
+    private fun markVoteDownButton() {
+        val icon = requireView().findViewById<ImageView>(R.id.article_fragment_bottombar_votedown_icon)
+        TintColorController(icon).setNegativeTint(requireContext())
+    }
+
+    private fun onArticleVotedError(response: VoteArticleResponse.Error) {
+        val snackbar = Snackbar.make(requireView(), response.message, Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction(R.string.got_it) { snackbar.dismiss() }
+        if (response.code != 401) {
+            snackbar.setText(response.additional.joinToString(". "))
+        }
+        snackbar.show()
     }
 
     private fun onRetryClicked() {
-        val view = view ?: return onArticleError("Fragment view is null. wtf?")
-        val messageView = view.findViewById<TextView>(R.id.article_fragment_messageview)
+        val messageView = requireView().findViewById<TextView>(R.id.article_fragment_messageview)
         messageView.visibility = View.GONE
-        val progress = view.findViewById<View>(R.id.article_fragment_progressbar)
+
+        val progress = requireView().findViewById<View>(R.id.article_fragment_progressbar)
         progress.visibility = View.VISIBLE
-        val retryButton = view.findViewById<View>(R.id.article_fragment_retrybutton)
+
+        val retryButton = requireView().findViewById<View>(R.id.article_fragment_retrybutton)
         retryButton.visibility = View.GONE
 
-        val request = articleViewModel.createRequest(arguments.articleId)
-        articleViewModel.articleObserver.onNext(request)
+        val request = getArticleViewModel.createRequest(arguments.articleId)
+        getArticleViewModel.articleObserver.onNext(request)
     }
 
     override fun onDestroy() {
