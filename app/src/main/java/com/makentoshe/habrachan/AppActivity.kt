@@ -25,7 +25,7 @@ class AppActivity : AppCompatActivity() {
 //            val screen = UserScreen(UserAccount.Me)
 //            val screen = AccountFlowScreen()
 //            val screen = CommentsScreen(485990)
-            val screen = PostScreen(491796)
+            val screen = PostScreen(442440)
 //            val screen = PostImageScreen("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg")
             router.newRootScreen(screen)
         }

@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.model.article
 
+import android.annotation.SuppressLint
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.makentoshe.habrachan.view.article.ArticleFragment
@@ -17,8 +18,10 @@ class WebViewController(private val fragment: ArticleFragment, private val javaS
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     fun init(webView: WebView) {
         webView.webViewClient = webViewClient
+        webView.settings.javaScriptEnabled = true
         webView.addJavascriptInterface(javaScriptInterface, "JSInterface")
     }
 }

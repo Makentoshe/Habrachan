@@ -24,7 +24,6 @@ import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
 import com.makentoshe.habrachan.ui.article.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
-import im.delight.android.webview.AdvancedWebView
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
@@ -78,8 +77,8 @@ class ArticleFragment : Fragment() {
         val timeView = requireView().findViewById<TextView>(R.id.article_fragment_content_toolbar_time)
         timeView.text = response.article.timePublished
 
-        val webView = requireView().findViewById<AdvancedWebView>(R.id.article_fragment_webview)
-        webView.loadHtml(response.article.buildHtml(resources))
+        val webView = requireView().findViewById<WebView>(R.id.article_fragment_webview)
+        webView.loadData(response.article.buildHtml(resources), "text/html", "utf-8")
 
         val voteTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_voteview)
         TextScoreController(voteTextView).setScore(requireContext(), response.article.score)
