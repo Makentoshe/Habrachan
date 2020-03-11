@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
+import com.makentoshe.habrachan.common.ui.TextScoreController
 import com.makentoshe.habrachan.common.ui.TintColorController
 import com.makentoshe.habrachan.model.article.CommentsScreen
 import com.makentoshe.habrachan.model.article.JavaScriptInterface
@@ -81,7 +82,7 @@ class ArticleFragment : Fragment() {
         webView.loadHtml(response.article.buildHtml(resources))
 
         val voteTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_voteview)
-        voteTextView.text = response.article.score.toString()
+        TextScoreController(voteTextView).setScore(requireContext(), response.article.score)
 
         val voteUpView = requireView().findViewById<View>(R.id.article_fragment_bottombar_voteup)
         voteUpView.setOnClickListener {
@@ -149,7 +150,7 @@ class ArticleFragment : Fragment() {
     private fun onArticleVotedSuccess(response: VoteArticleResponse.Success) {
         val voteTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_voteview)
         val currentScore = voteTextView.text.toString().toInt()
-        voteTextView.text = response.score.toString()
+        TextScoreController(voteTextView).setScore(requireContext(), response.score)
 
         if (response.score > currentScore) markVoteUpButton() else markVoteDownButton()
     }
