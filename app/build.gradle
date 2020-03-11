@@ -115,11 +115,6 @@ dependencies {
     def gif = "1.2.19"
     implementation "pl.droidsonroids.gif:android-gif-drawable:$gif"
 
-    // Android-AdvancedWebView
-    // https://github.com/delight-im/Android-AdvancedWebView
-    def webview = "v3.0.0"
-    implementation "com.github.delight-im:Android-AdvancedWebView:$webview"
-
     // Multiline Collapsing Toolbar
     // https://github.com/opacapp/multiline-collapsingtoolbar
     def collapsing = "27.1.1"
