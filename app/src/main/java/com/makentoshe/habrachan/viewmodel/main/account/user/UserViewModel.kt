@@ -1,25 +1,16 @@
 package com.makentoshe.habrachan.viewmodel.main.account.user
 
-import android.app.Application
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModel
-import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.common.entity.User
-import com.makentoshe.habrachan.common.repository.InputStreamRepository
-import com.makentoshe.habrachan.model.article.comment.BitmapController
+import com.makentoshe.habrachan.common.network.request.AvatarRequest
+import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
-import java.io.File
 
 abstract class UserViewModel(
-    private val repository: InputStreamRepository,
-    private val avatarDao: AvatarDao,
-    private val application: Application
+    private val userAvatarViewModel: UserAvatarViewModel
 ) : ViewModel() {
 
     protected val disposables = CompositeDisposable()
@@ -32,21 +23,10 @@ abstract class UserViewModel(
     val errorObservable: Observable<Throwable>
         get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
 
-    private val avatarSubject = BehaviorSubject.create<Bitmap>()
-    val avatarObservable: Observable<Bitmap>
-        get() = avatarSubject.observeOn(AndroidSchedulers.mainThread())
-
     init {
-        successSubject.map { user ->
-            if (File(user.avatar).name == "stub-user-middle.gif") {
-                return@map application.resources.getDrawable(R.drawable.ic_account_stub, application.theme)!!.toBitmap()
-            }
-            val bitmap = avatarDao.get(user.avatar) ?: BitmapFactory.decodeStream(repository.get(user.avatar))
-            avatarDao.insert(user.avatar, bitmap)
-            return@map bitmap
-        }.map { bitmap ->
-            BitmapController(bitmap).roundCornersPx(application, 10)
-        }.safeSubscribe(avatarSubject)
+        successSubject.subscribe { user ->
+            userAvatarViewModel.avatarObserver.onNext(AvatarRequest(user.avatar))
+        }.let(disposables::add)
     }
 
     override fun onCleared() {

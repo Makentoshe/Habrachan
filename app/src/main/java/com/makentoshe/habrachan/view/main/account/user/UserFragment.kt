@@ -11,8 +11,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.entity.user.AvatarResponse
+import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
+import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
@@ -22,6 +25,7 @@ class UserFragment : Fragment() {
     private val disposables = CompositeDisposable()
     internal val arguments = Arguments(this)
     private val viewModel by inject<UserViewModel>()
+    private val userAvatarViewModel by inject<UserAvatarViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return UserFragmentUi().create(requireContext())
@@ -34,7 +38,6 @@ class UserFragment : Fragment() {
         val ratingView = view.findViewById<TextView>(R.id.user_fragment_rating_value)
         val specializmView = view.findViewById<TextView>(R.id.user_fragment_specializm)
         val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_progress)
-        val avatarView = view.findViewById<ImageView>(R.id.user_fragment_avatar)
 
         viewModel.successObservable.subscribe {
             toolbarView.title = it.login
@@ -51,16 +54,31 @@ class UserFragment : Fragment() {
             Snackbar.make(decorView, it.toString(), Snackbar.LENGTH_LONG).show()
         }.let(disposables::add)
 
-        viewModel.avatarObservable.doOnEach {
-            avatarView.visibility = View.VISIBLE
-        }.subscribe {
-            avatarView.setImageBitmap(it)
-        }.let(disposables::add)
+        userAvatarViewModel.avatarObservable.subscribe(::onAvatarResponse).let(disposables::add)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
+    }
+
+    private fun onAvatarResponse(response: AvatarResponse) = when (response) {
+        is AvatarResponse.Success -> onAvatarSuccess(response)
+        is AvatarResponse.Error -> onAvatarError(response)
+    }
+
+    private fun onAvatarSuccess(response: AvatarResponse.Success) {
+        val avatarView = requireView().findViewById<ImageView>(R.id.user_fragment_avatar)
+        if (response.isStub) {
+            ImageViewController(avatarView).setAvatarStub()
+        } else {
+            ImageViewController(avatarView).setAvatarFromByteArray(response.bytes)
+        }
+    }
+
+    private fun onAvatarError(response: AvatarResponse.Error) {
+        val avatarView = requireView().findViewById<ImageView>(R.id.user_fragment_avatar)
+        ImageViewController(avatarView).setAvatarStub()
     }
 
     class Factory {
