@@ -17,7 +17,7 @@ class ImageViewController(private val imageView: ImageView) {
     fun setAvatarFromByteArray(byteArray: ByteArray) {
         val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
         val drawable = RoundedBitmapDrawableFactory.create(imageView.resources, bitmap)
-        drawable.cornerRadius = 16f
+        drawable.cornerRadius = 8f
         imageView.setImageDrawable(drawable)
         imageView.visibility = View.VISIBLE
     }
@@ -25,7 +25,7 @@ class ImageViewController(private val imageView: ImageView) {
     fun setAvatarStub() {
         val stub = imageView.resources.getDrawable(R.drawable.ic_account_stub, imageView.context.theme)
         val drawable = RoundedBitmapDrawableFactory.create(imageView.resources, stub.toBitmap())
-        drawable.cornerRadius = 16f
+        drawable.cornerRadius = 8f
         imageView.setImageDrawable(drawable)
         imageView.visibility = View.VISIBLE
     }

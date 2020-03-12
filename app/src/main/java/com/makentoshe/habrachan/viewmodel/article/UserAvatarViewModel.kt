@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.viewmodel.article
 
 import android.app.Application
+import android.graphics.BitmapFactory
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -32,14 +33,27 @@ class UserAvatarViewModel(
 
     private fun performAvatarRequest(request: AvatarRequest): AvatarResponse {
         if (File(request.avatarUrl).name == "stub-user-middle.gif") {
-            val drawable = application.resources.getDrawable(R.drawable.ic_account_stub, application.theme)
-            return AvatarResponse.Success(BitmapController(drawable.toBitmap()).toByteArray(), true)
+            return getStubAvatar()
         }
         val bitmap = avatarDao.get(request.avatarUrl)
         return if (bitmap == null) {
-            avatarManager.getAvatar(request).blockingGet()
+            avatarManager.getAvatar(request).blockingGet().also { response ->
+                saveByteArrayToDao(request, response)
+            }
         } else {
             AvatarResponse.Success(BitmapController(bitmap).toByteArray(), false)
+        }
+    }
+
+    private fun getStubAvatar(): AvatarResponse.Success {
+        val drawable = application.resources.getDrawable(R.drawable.ic_account_stub, application.theme)
+        return AvatarResponse.Success(BitmapController(drawable.toBitmap()).toByteArray(), true)
+    }
+
+    private fun saveByteArrayToDao(request: AvatarRequest, response: AvatarResponse) {
+        if (response is AvatarResponse.Success) {
+            val bitmap = BitmapFactory.decodeByteArray(response.bytes, 0, response.bytes.size)
+            avatarDao.insert(request.avatarUrl, bitmap)
         }
     }
 
