@@ -11,7 +11,10 @@ import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import javax.inject.Provider
 
-class ArticleFragmentViewModelProvider(private val fragment: Fragment) : Provider<ArticleFragmentViewModel> {
+class ArticleFragmentViewModelProvider(
+    private val fragment: Fragment,
+    private val userAvatarViewModelProvider: UserAvatarViewModelProvider
+    ) : Provider<ArticleFragmentViewModel> {
 
     private val articleDao by inject<ArticleDao>()
     private val manager by inject<HabrArticleManager>()
@@ -22,7 +25,8 @@ class ArticleFragmentViewModelProvider(private val fragment: Fragment) : Provide
     }
 
     override fun get(): ArticleFragmentViewModel {
-        val factory = ArticleFragmentViewModel.Factory(manager, articleDao, sessionDao)
+        val userAvatarViewModel = userAvatarViewModelProvider.get()
+        val factory = ArticleFragmentViewModel.Factory(manager, articleDao, sessionDao, userAvatarViewModel)
         return ViewModelProviders.of(fragment, factory)[ArticleFragmentViewModel::class.java]
     }
 }

@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.request.AvatarRequest
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -18,7 +19,8 @@ import io.reactivex.subjects.PublishSubject
 class ArticleFragmentViewModel(
     private val manager: HabrArticleManager,
     private val articleDao: ArticleDao,
-    private val sessionDao: SessionDao
+    private val sessionDao: SessionDao,
+    private val userAvatarViewModel: UserAvatarViewModel
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -33,7 +35,12 @@ class ArticleFragmentViewModel(
     init {
         requestSubject.observeOn(Schedulers.io())
             .map(::performRequest)
-            .doOnNext { if (it is ArticleResponse.Success) articleDao.insert(it.article) }
+            .doOnNext {
+                if (it is ArticleResponse.Success) {
+                    articleDao.insert(it.article)
+                    userAvatarViewModel.avatarObserver.onNext(AvatarRequest(it.article.author.avatar))
+                }
+            }
             .subscribe(articleSubject::onNext)
             .let(disposables::add)
     }
@@ -51,7 +58,7 @@ class ArticleFragmentViewModel(
         }
     }
 
-    fun createRequest(articleId: Int) : GetArticleRequest {
+    fun createRequest(articleId: Int): GetArticleRequest {
         val session = sessionDao.get()!!
         return GetArticleRequest(session.clientKey, session.apiKey, session.tokenKey, articleId)
     }
@@ -61,10 +68,11 @@ class ArticleFragmentViewModel(
     class Factory(
         private val manager: HabrArticleManager,
         private val articleDao: ArticleDao,
-        private val sessionDao: SessionDao
+        private val sessionDao: SessionDao,
+        private val userAvatarViewModel: UserAvatarViewModel
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ArticleFragmentViewModel(manager, articleDao, sessionDao) as T
+            return ArticleFragmentViewModel(manager, articleDao, sessionDao, userAvatarViewModel) as T
         }
     }
 }

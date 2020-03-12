@@ -14,8 +14,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
+import com.makentoshe.habrachan.common.entity.user.AvatarResponse
+import com.makentoshe.habrachan.common.ui.ImageTintController
+import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.common.ui.TextScoreController
-import com.makentoshe.habrachan.common.ui.TintColorController
 import com.makentoshe.habrachan.model.article.CommentsScreen
 import com.makentoshe.habrachan.model.article.JavaScriptInterface
 import com.makentoshe.habrachan.model.article.WebViewController
@@ -23,6 +25,7 @@ import com.makentoshe.habrachan.model.article.images.PostImageScreen
 import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
 import com.makentoshe.habrachan.ui.article.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
+import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router
@@ -33,6 +36,7 @@ class ArticleFragment : Fragment() {
     private val navigator by inject<Navigator>()
     private val webViewController by inject<WebViewController>()
     private val getArticleViewModel by inject<ArticleFragmentViewModel>()
+    private val userAvatarViewModel by inject<UserAvatarViewModel>()
     private val javaScriptInterface by inject<JavaScriptInterface>()
     private val voteArticleViewModel by inject<VoteArticleViewModel>()
 
@@ -52,7 +56,7 @@ class ArticleFragment : Fragment() {
         view.findViewById<View>(R.id.article_fragment_retrybutton).setOnClickListener { onRetryClicked() }
         getArticleViewModel.articleObservable.subscribe(::onArticleReceived).let(disposables::add)
         javaScriptInterface.imageObservable.subscribe(navigator::toArticleResourceScreen).let(disposables::add)
-
+        userAvatarViewModel.avatarObservable.subscribe(::onAvatarReceived).let(disposables::add)
         voteArticleViewModel.voteArticleObservable.subscribe(::onArticleVoted).let(disposables::add)
     }
 
@@ -156,20 +160,26 @@ class ArticleFragment : Fragment() {
 
     private fun markVoteUpButton() {
         val icon = requireView().findViewById<ImageView>(R.id.article_fragment_bottombar_voteup_icon)
-        TintColorController(icon).setPositiveTint(requireContext())
+        ImageTintController(icon).setPositiveTint(requireContext())
     }
 
     private fun markVoteDownButton() {
         val icon = requireView().findViewById<ImageView>(R.id.article_fragment_bottombar_votedown_icon)
-        TintColorController(icon).setNegativeTint(requireContext())
+        ImageTintController(icon).setNegativeTint(requireContext())
     }
 
     private fun onArticleVotedError(response: VoteArticleResponse.Error) {
-        val snackbar = Snackbar.make(requireView(), response.message, Snackbar.LENGTH_INDEFINITE)
-        snackbar.setAction(R.string.got_it) { snackbar.dismiss() }
-        if (response.code != 401) {
-            snackbar.setText(response.additional.joinToString(". "))
+        val message = if (response.code != 401) {
+            response.additional.joinToString(". ")
+        } else {
+            response.message
         }
+        displaySnackbarError(message)
+    }
+
+    private fun displaySnackbarError(message: String) {
+        val snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction(R.string.got_it) { snackbar.dismiss() }
         snackbar.show()
     }
 
@@ -185,6 +195,24 @@ class ArticleFragment : Fragment() {
 
         val request = getArticleViewModel.createRequest(arguments.articleId)
         getArticleViewModel.articleObserver.onNext(request)
+    }
+
+    private fun onAvatarReceived(response: AvatarResponse) = when (response) {
+        is AvatarResponse.Success -> onAvatarSuccess(response)
+        is AvatarResponse.Error -> onAvatarError(response)
+    }
+
+    private fun onAvatarSuccess(response: AvatarResponse.Success) {
+        val avatarView = requireView().findViewById<ImageView>(R.id.article_fragment_content_toolbar_author_avatar)
+        if (!response.isStub) {
+            ImageViewController(avatarView).setAvatarFromByteArray(response.bytes)
+            ImageTintController(avatarView).clear()
+        }
+    }
+
+    private fun onAvatarError(response: AvatarResponse.Error) {
+        val avatarView = requireView().findViewById<ImageView>(R.id.article_fragment_content_toolbar_author_avatar)
+        ImageViewController(avatarView).setAvatarStub()
     }
 
     override fun onDestroy() {
