@@ -22,6 +22,8 @@ import com.makentoshe.habrachan.model.article.CommentsScreen
 import com.makentoshe.habrachan.model.article.JavaScriptInterface
 import com.makentoshe.habrachan.model.article.WebViewController
 import com.makentoshe.habrachan.model.article.images.PostImageScreen
+import com.makentoshe.habrachan.model.main.account.user.UserAccount
+import com.makentoshe.habrachan.model.main.account.user.UserScreen
 import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
 import com.makentoshe.habrachan.ui.article.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
@@ -75,8 +77,11 @@ class ArticleFragment : Fragment() {
             navigator.back()
         }
 
-        val authorView = requireView().findViewById<TextView>(R.id.article_fragment_content_toolbar_author_login)
-        authorView.text = response.article.author.login
+        val loginView = requireView().findViewById<TextView>(R.id.article_fragment_content_toolbar_author_login)
+        loginView.text = response.article.author.login
+
+        val authorView = requireView().findViewById<View>(R.id.article_fragment_content_toolbar_author)
+        authorView.setOnClickListener { navigator.toUserScreen(response.article.author.login) }
 
         val timeView = requireView().findViewById<TextView>(R.id.article_fragment_content_toolbar_time)
         timeView.text = response.article.timePublished
@@ -240,6 +245,10 @@ class ArticleFragment : Fragment() {
 
         fun toArticleCommentsScreen(articleId: Int) {
             router.navigateTo(CommentsScreen(articleId))
+        }
+
+        fun toUserScreen(userName: String) {
+            router.navigateTo(UserScreen(UserAccount.User(userName)))
         }
     }
 
