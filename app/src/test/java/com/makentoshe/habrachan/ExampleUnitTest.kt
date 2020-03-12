@@ -1,10 +1,10 @@
 package com.makentoshe.habrachan
 
 import com.makentoshe.habrachan.common.entity.session.UserSession
+import com.makentoshe.habrachan.common.network.manager.AvatarManager
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
-import com.makentoshe.habrachan.common.network.request.GetArticleRequest
-import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
-import com.makentoshe.habrachan.common.network.request.VoteArticleRequest
+import com.makentoshe.habrachan.common.network.manager.UsersManager
+import com.makentoshe.habrachan.common.network.request.*
 import okhttp3.OkHttpClient
 import org.junit.Ignore
 import org.junit.Test
@@ -60,6 +60,25 @@ class ExampleUnitTest {
         val manager = HabrArticleManager.Builder(OkHttpClient()).build()
         val request = requestFactory.all(1)
         val response = manager.getArticles(request).blockingGet()
+        println(response)
+    }
+
+    @Test
+    @Ignore
+    fun getCustomUserByName() {
+        val request = UserRequest(session.clientKey, session.apiKey, session.tokenKey, "missingdays")
+        val manager = UsersManager.Builder(OkHttpClient()).build()
+        val response = manager.getUser(request).blockingGet()
+        println(response)
+    }
+
+    @Test
+    @Ignore
+    fun getUserAvatarTest() {
+        val avatarUrl = "https://habrastorage.org/getpro/habr/avatars/6d5/142/fd3/6d5142fd38ef294711e6ecb9e764f8ed.png"
+        val avatarRequest = AvatarRequest(avatarUrl)
+        val manager = AvatarManager.Builder(OkHttpClient()).build()
+        val response = manager.getAvatar(avatarRequest).blockingGet()
         println(response)
     }
 }

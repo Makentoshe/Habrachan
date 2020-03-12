@@ -7,7 +7,7 @@ import androidx.annotation.ColorRes
 import androidx.core.graphics.drawable.DrawableCompat
 import com.makentoshe.habrachan.R
 
-class TintColorController(private val imageView: ImageView) {
+class ImageTintController(private val imageView: ImageView) {
 
     fun setTintBy(context: Context, score: Int) = when {
         score < 0 -> setNegativeTint(context)
@@ -27,6 +27,10 @@ class TintColorController(private val imageView: ImageView) {
 
     fun setNegativeTint(context: Context) {
         setTint(context, R.color.negative)
+    }
+
+    fun clear() {
+        imageView.imageTintList = null
     }
 
     private fun setTint(context: Context, @ColorRes colorResource: Int) {
