@@ -18,12 +18,14 @@ import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
 import io.reactivex.disposables.CompositeDisposable
+import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 class UserFragment : Fragment() {
 
     private val disposables = CompositeDisposable()
     internal val arguments = Arguments(this)
+    private val navigator by inject<Navigator>()
     private val viewModel by inject<UserViewModel>()
     private val userAvatarViewModel by inject<UserAvatarViewModel>()
 
@@ -33,6 +35,12 @@ class UserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val toolbarView = view.findViewById<Toolbar>(R.id.user_fragment_toolbar)
+        if (arguments.userAccount != UserAccount.Me) {
+            toolbarView.setNavigationIcon(R.drawable.ic_arrow_back)
+        }
+        toolbarView.setNavigationOnClickListener {
+            navigator.back()
+        }
         val fullNameView = view.findViewById<TextView>(R.id.user_fragment_fullname_text)
         val karmaView = view.findViewById<TextView>(R.id.user_fragment_karma_value)
         val ratingView = view.findViewById<TextView>(R.id.user_fragment_rating_value)
@@ -57,11 +65,6 @@ class UserFragment : Fragment() {
         userAvatarViewModel.avatarObservable.subscribe(::onAvatarResponse).let(disposables::add)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposables.clear()
-    }
-
     private fun onAvatarResponse(response: AvatarResponse) = when (response) {
         is AvatarResponse.Success -> onAvatarSuccess(response)
         is AvatarResponse.Error -> onAvatarError(response)
@@ -79,6 +82,11 @@ class UserFragment : Fragment() {
     private fun onAvatarError(response: AvatarResponse.Error) {
         val avatarView = requireView().findViewById<ImageView>(R.id.user_fragment_avatar)
         ImageViewController(avatarView).setAvatarStub()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 
     class Factory {
@@ -112,4 +120,7 @@ class UserFragment : Fragment() {
 
     }
 
+    class Navigator(private val router: Router) {
+        fun back() = router.exit()
+    }
 }
