@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.viewmodel.article.images
+package com.makentoshe.habrachan.viewmodel.images
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

@@ -1,8 +1,8 @@
-package com.makentoshe.habrachan.di.article.images
+package com.makentoshe.habrachan.di.images
 
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.view.article.images.PostImageFragmentPage
-import com.makentoshe.habrachan.viewmodel.article.images.PostImageFragmentViewModel
+import com.makentoshe.habrachan.view.images.PostImageFragmentPage
+import com.makentoshe.habrachan.viewmodel.images.PostImageFragmentViewModel
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module

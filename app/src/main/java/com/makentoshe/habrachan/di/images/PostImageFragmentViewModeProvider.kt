@@ -1,9 +1,9 @@
-package com.makentoshe.habrachan.di.article.images
+package com.makentoshe.habrachan.di.images
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.repository.InputStreamRepository
-import com.makentoshe.habrachan.view.article.images.PostImageFragmentPage
-import com.makentoshe.habrachan.viewmodel.article.images.PostImageFragmentViewModel
+import com.makentoshe.habrachan.view.images.PostImageFragmentPage
+import com.makentoshe.habrachan.viewmodel.images.PostImageFragmentViewModel
 import toothpick.ktp.delegate.inject
 import javax.inject.Provider
 
