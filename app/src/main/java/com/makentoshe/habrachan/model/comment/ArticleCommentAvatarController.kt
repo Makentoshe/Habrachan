@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.graphics.drawable.toBitmap
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.AvatarDao
+import com.makentoshe.habrachan.common.ui.BitmapController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import java.io.File
@@ -37,7 +38,8 @@ class ArticleCommentAvatarController(
             return setAvatarBitmap(viewHolder, cached)
         }
 
-        repository.get(url).map { BitmapController(it).roundCornersPx(context, 10) }
+        repository.get(url).map { BitmapController(it)
+            .roundCornersPx(context, 10) }
             .observeOn(AndroidSchedulers.mainThread()).subscribe({ bitmap ->
                 avatarDao.insert(url, bitmap)
                 setAvatarBitmap(viewHolder, bitmap)

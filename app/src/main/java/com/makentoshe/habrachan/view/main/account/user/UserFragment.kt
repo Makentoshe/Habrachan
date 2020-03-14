@@ -11,7 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.user.AvatarResponse
+import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
@@ -65,12 +65,12 @@ class UserFragment : Fragment() {
         userAvatarViewModel.avatarObservable.subscribe(::onAvatarResponse).let(disposables::add)
     }
 
-    private fun onAvatarResponse(response: AvatarResponse) = when (response) {
-        is AvatarResponse.Success -> onAvatarSuccess(response)
-        is AvatarResponse.Error -> onAvatarError(response)
+    private fun onAvatarResponse(response: ImageResponse) = when (response) {
+        is ImageResponse.Success -> onAvatarSuccess(response)
+        is ImageResponse.Error -> onAvatarError(response)
     }
 
-    private fun onAvatarSuccess(response: AvatarResponse.Success) {
+    private fun onAvatarSuccess(response: ImageResponse.Success) {
         val avatarView = requireView().findViewById<ImageView>(R.id.user_fragment_avatar)
         if (response.isStub) {
             ImageViewController(avatarView).setAvatarStub()
@@ -79,7 +79,7 @@ class UserFragment : Fragment() {
         }
     }
 
-    private fun onAvatarError(response: AvatarResponse.Error) {
+    private fun onAvatarError(response: ImageResponse.Error) {
         val avatarView = requireView().findViewById<ImageView>(R.id.user_fragment_avatar)
         ImageViewController(avatarView).setAvatarStub()
     }

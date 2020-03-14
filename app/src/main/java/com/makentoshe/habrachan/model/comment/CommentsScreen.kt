@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.article
+package com.makentoshe.habrachan.model.comment
 
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.navigation.Screen

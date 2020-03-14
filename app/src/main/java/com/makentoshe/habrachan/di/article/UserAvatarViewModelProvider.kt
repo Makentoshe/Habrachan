@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.di.article
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.AvatarDao
-import com.makentoshe.habrachan.common.network.manager.AvatarManager
+import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import toothpick.Toothpick
@@ -13,7 +13,7 @@ import javax.inject.Provider
 class UserAvatarViewModelProvider(private val fragment: Fragment): Provider<UserAvatarViewModel> {
 
     private val avatarDao by inject<AvatarDao>()
-    private val avatarManager by inject<AvatarManager>()
+    private val avatarManager by inject<ImageManager>()
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
     }
