@@ -83,11 +83,6 @@ dependencies {
     def slidinguppanel = "3.4.0"
     implementation "com.sothree.slidinguppanel:library:$slidinguppanel"
 
-    // Mockk
-    // https://github.com/mockk/mockk
-    def mockk = "1.9.1"
-    testImplementation "io.mockk:mockk:$mockk"
-
     // Xml parsing
     // https://github.com/jhy/jsoup
     def jsoup = "1.11.3"
@@ -126,6 +121,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Mockk
+    // https://github.com/mockk/mockk
+    def mockk = "1.9.1"
+    testImplementation "io.mockk:mockk:$mockk"
+
 }
 
 kapt {
