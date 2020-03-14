@@ -21,3 +21,4 @@ interface CommentDao {
     @Query("DELETE FROM comment")
     fun clear()
 }
+

@@ -1,8 +1,11 @@
 package com.makentoshe.habrachan.common.entity
 
 import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class User(
     @SerializedName("avatar")
     val avatar: String,
@@ -21,6 +24,7 @@ data class User(
     @SerializedName("geo")
     val geo: Geo? = null,
     @SerializedName("id")
+    @PrimaryKey
     val id: String,
     @SerializedName("is_can_vote")
     val isCanVote: Boolean,

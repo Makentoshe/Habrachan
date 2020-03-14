@@ -1,10 +1,7 @@
 package com.makentoshe.habrachan.di.main.articles
 
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.database.ArticleDao
-import com.makentoshe.habrachan.common.database.AvatarDao
-import com.makentoshe.habrachan.common.database.CommentDao
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.*
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
@@ -20,13 +17,14 @@ class ArticlesViewModelProvider(private val fragment: ArticlesFragment) : Provid
     private val articleDao by inject<ArticleDao>()
     private val commentDao by inject<CommentDao>()
     private val avatarDao by inject<AvatarDao>()
+    private val userDao by inject<UserDao>()
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
     }
 
     override fun get(): ArticlesViewModel {
-        val factory = ArticlesViewModel.Factory(sessionDao, manager, articleDao, commentDao, avatarDao)
+        val factory = ArticlesViewModel.Factory(sessionDao, manager, articleDao, commentDao, avatarDao, userDao)
         return ViewModelProviders.of(fragment, factory)[ArticlesViewModel::class.java]
     }
 

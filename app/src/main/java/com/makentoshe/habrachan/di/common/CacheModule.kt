@@ -20,6 +20,7 @@ class CacheModule(context: Context) : Module() {
         bind<ArticleDao>().toInstance(database.articles())
         bind<CommentDao>().toInstance(database.comments())
         bind<AvatarDao>().toInstance(imageDatabase.avatars())
+        bind<UserDao>().toInstance(database.users())
 
         val session = database.session().get()
         if (session == null) database.session().insert(
