@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.AvatarDao
-import com.makentoshe.habrachan.common.entity.user.AvatarResponse
+import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.model.BitmapController
-import com.makentoshe.habrachan.common.network.manager.AvatarManager
-import com.makentoshe.habrachan.common.network.request.AvatarRequest
+import com.makentoshe.habrachan.common.network.manager.ImageManager
+import com.makentoshe.habrachan.common.network.request.ImageRequest
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,49 +21,49 @@ import java.io.File
 class UserAvatarViewModel(
     private val avatarDao: AvatarDao,
     private val application: Application,
-    private val avatarManager: AvatarManager
+    private val imageManager: ImageManager
 ) : ViewModel() {
 
-    private val avatarSubject = BehaviorSubject.create<AvatarRequest>()
-    val avatarObserver: Observer<AvatarRequest> = avatarSubject
-    val avatarObservable: Observable<AvatarResponse>
+    private val avatarSubject = BehaviorSubject.create<ImageRequest>()
+    val avatarObserver: Observer<ImageRequest> = avatarSubject
+    val avatarObservable: Observable<ImageResponse>
         get() = avatarSubject.observeOn(Schedulers.io())
             .map(::performAvatarRequest)
             .observeOn(AndroidSchedulers.mainThread())
 
-    private fun performAvatarRequest(request: AvatarRequest): AvatarResponse {
-        if (File(request.avatarUrl).name == "stub-user-middle.gif") {
+    private fun performAvatarRequest(request: ImageRequest): ImageResponse {
+        if (File(request.imageUrl).name == "stub-user-middle.gif") {
             return getStubAvatar()
         }
-        val bitmap = avatarDao.get(request.avatarUrl)
+        val bitmap = avatarDao.get(request.imageUrl)
         return if (bitmap == null) {
-            avatarManager.getAvatar(request).blockingGet().also { response ->
+            imageManager.getImage(request).blockingGet().also { response ->
                 saveByteArrayToDao(request, response)
             }
         } else {
-            AvatarResponse.Success(BitmapController(bitmap).toByteArray(), false)
+            ImageResponse.Success(BitmapController(bitmap).toByteArray(), false)
         }
     }
 
-    private fun getStubAvatar(): AvatarResponse.Success {
+    private fun getStubAvatar(): ImageResponse.Success {
         val drawable = application.resources.getDrawable(R.drawable.ic_account_stub, application.theme)
-        return AvatarResponse.Success(BitmapController(drawable.toBitmap()).toByteArray(), true)
+        return ImageResponse.Success(BitmapController(drawable.toBitmap()).toByteArray(), true)
     }
 
-    private fun saveByteArrayToDao(request: AvatarRequest, response: AvatarResponse) {
-        if (response is AvatarResponse.Success) {
+    private fun saveByteArrayToDao(request: ImageRequest, response: ImageResponse) {
+        if (response is ImageResponse.Success) {
             val bitmap = BitmapFactory.decodeByteArray(response.bytes, 0, response.bytes.size)
-            avatarDao.insert(request.avatarUrl, bitmap)
+            avatarDao.insert(request.imageUrl, bitmap)
         }
     }
 
     class Factory(
         private val avatarDao: AvatarDao,
         private val application: Application,
-        private val avatarManager: AvatarManager
+        private val imageManager: ImageManager
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return UserAvatarViewModel(avatarDao, application, avatarManager) as T
+            return UserAvatarViewModel(avatarDao, application, imageManager) as T
         }
     }
 }

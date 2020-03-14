@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan
 
 import com.makentoshe.habrachan.common.entity.session.UserSession
-import com.makentoshe.habrachan.common.network.manager.AvatarManager
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.request.*
 import okhttp3.OkHttpClient
@@ -76,9 +76,9 @@ class ExampleUnitTest {
     @Ignore
     fun getUserAvatarTest() {
         val avatarUrl = "https://habrastorage.org/getpro/habr/avatars/6d5/142/fd3/6d5142fd38ef294711e6ecb9e764f8ed.png"
-        val avatarRequest = AvatarRequest(avatarUrl)
-        val manager = AvatarManager.Builder(OkHttpClient()).build()
-        val response = manager.getAvatar(avatarRequest).blockingGet()
+        val avatarRequest = ImageRequest(avatarUrl)
+        val manager = ImageManager.Builder(OkHttpClient()).build()
+        val response = manager.getImage(avatarRequest).blockingGet()
         println(response)
     }
 }

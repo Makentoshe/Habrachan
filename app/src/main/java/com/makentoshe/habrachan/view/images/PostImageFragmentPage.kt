@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.view.article.images
+package com.makentoshe.habrachan.view.images
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -13,12 +13,12 @@ import androidx.fragment.app.Fragment
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.di.article.images.PostImageFragmentPageModule
-import com.makentoshe.habrachan.di.article.images.PostImageFragmentPageScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.model.article.PostScreen
-import com.makentoshe.habrachan.ui.article.images.PostImageFragmentPageUi
-import com.makentoshe.habrachan.viewmodel.article.images.PostImageFragmentViewModel
+import com.makentoshe.habrachan.di.images.PostImageFragmentPageModule
+import com.makentoshe.habrachan.di.images.PostImageFragmentPageScope
+import com.makentoshe.habrachan.model.article.ArticleScreen
+import com.makentoshe.habrachan.ui.images.PostImageFragmentPageUi
+import com.makentoshe.habrachan.viewmodel.images.PostImageFragmentViewModel
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
@@ -112,8 +112,8 @@ class PostImageFragmentPage : Fragment() {
     /** For navigations from [PostImageFragmentPage] */
     class Navigator(private val router: Router) {
         /**
-         * Using [Router.backTo] because default [Router.exit] also closes [PostScreen]
-         * and returns to [MainFlowScreen]. No matter what arguments we pass to [PostScreen]:
+         * Using [Router.backTo] because default [Router.exit] also closes [ArticleScreen]
+         * and returns to [MainFlowScreen]. No matter what arguments we pass to [ArticleScreen]:
          * it will be found in backstack and displayed without problems
          */
 

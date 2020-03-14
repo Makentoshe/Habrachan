@@ -1,7 +1,7 @@
-package com.makentoshe.habrachan.model.article.images
+package com.makentoshe.habrachan.model.images
 
 import com.makentoshe.habrachan.common.navigation.Screen
-import com.makentoshe.habrachan.view.article.images.PostImageFragmentPage
+import com.makentoshe.habrachan.view.images.PostImageFragmentPage
 
 /** Screen displays an image used in publication for browsing or downloading */
 class PostImageScreen(private val source: String) : Screen() {
