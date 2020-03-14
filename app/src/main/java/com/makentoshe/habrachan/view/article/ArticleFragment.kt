@@ -12,15 +12,15 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
-import com.makentoshe.habrachan.common.entity.user.AvatarResponse
 import com.makentoshe.habrachan.common.ui.ImageTintController
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.common.ui.TextScoreController
-import com.makentoshe.habrachan.model.article.CommentsScreen
 import com.makentoshe.habrachan.model.article.JavaScriptInterface
 import com.makentoshe.habrachan.model.article.WebViewController
+import com.makentoshe.habrachan.model.comment.CommentsScreen
 import com.makentoshe.habrachan.model.images.PostImageScreen
 import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import com.makentoshe.habrachan.model.main.account.user.UserScreen
@@ -202,12 +202,12 @@ class ArticleFragment : Fragment() {
         getArticleViewModel.articleObserver.onNext(request)
     }
 
-    private fun onAvatarReceived(response: AvatarResponse) = when (response) {
-        is AvatarResponse.Success -> onAvatarSuccess(response)
-        is AvatarResponse.Error -> onAvatarError(response)
+    private fun onAvatarReceived(response: ImageResponse) = when (response) {
+        is ImageResponse.Success -> onAvatarSuccess(response)
+        is ImageResponse.Error -> onAvatarError(response)
     }
 
-    private fun onAvatarSuccess(response: AvatarResponse.Success) {
+    private fun onAvatarSuccess(response: ImageResponse.Success) {
         val avatarView = requireView().findViewById<ImageView>(R.id.article_fragment_content_toolbar_author_avatar)
         if (!response.isStub) {
             ImageViewController(avatarView).setAvatarFromByteArray(response.bytes)
@@ -215,7 +215,7 @@ class ArticleFragment : Fragment() {
         }
     }
 
-    private fun onAvatarError(response: AvatarResponse.Error) {
+    private fun onAvatarError(response: ImageResponse.Error) {
         val avatarView = requireView().findViewById<ImageView>(R.id.article_fragment_content_toolbar_author_avatar)
         ImageViewController(avatarView).setAvatarStub()
     }

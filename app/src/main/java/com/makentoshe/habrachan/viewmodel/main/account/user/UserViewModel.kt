@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.viewmodel.main.account.user
 
 import androidx.lifecycle.ViewModel
 import com.makentoshe.habrachan.common.entity.User
-import com.makentoshe.habrachan.common.network.request.AvatarRequest
+import com.makentoshe.habrachan.common.network.request.ImageRequest
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,7 +25,7 @@ abstract class UserViewModel(
 
     init {
         successSubject.subscribe { user ->
-            userAvatarViewModel.avatarObserver.onNext(AvatarRequest(user.avatar))
+            userAvatarViewModel.avatarObserver.onNext(ImageRequest(user.avatar))
         }.let(disposables::add)
     }
 

@@ -6,8 +6,8 @@ import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
-import com.makentoshe.habrachan.common.network.request.AvatarRequest
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
+import com.makentoshe.habrachan.common.network.request.ImageRequest
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -38,7 +38,7 @@ class ArticleFragmentViewModel(
             .doOnNext {
                 if (it is ArticleResponse.Success) {
                     articleDao.insert(it.article)
-                    userAvatarViewModel.avatarObserver.onNext(AvatarRequest(it.article.author.avatar))
+                    userAvatarViewModel.avatarObserver.onNext(ImageRequest(it.article.author.avatar))
                 }
             }
             .subscribe(articleSubject::onNext)

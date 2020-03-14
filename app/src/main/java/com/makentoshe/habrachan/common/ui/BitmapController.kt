@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.article.comment
+package com.makentoshe.habrachan.common.ui
 
 import android.content.Context
 import android.graphics.Bitmap

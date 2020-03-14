@@ -18,7 +18,7 @@ class NetworkModule(context: Context) : Module() {
     private val commentsManager = HabrCommentsManager.Factory(client).build()
     private val loginManager = LoginManager.Builder(client).build()
     private val usersManager = UsersManager.Builder(client).build()
-    private val avatarManager = AvatarManager.Builder(client).build()
+    private val avatarManager = ImageManager.Builder(client).build()
 
     init {
         bind<OkHttpClient>().toInstance(client)
@@ -27,7 +27,7 @@ class NetworkModule(context: Context) : Module() {
         bind<HabrCommentsManager>().toInstance(commentsManager)
         bind<LoginManager>().toInstance(loginManager)
         bind<UsersManager>().toInstance(usersManager)
-        bind<AvatarManager>().toInstance(avatarManager)
+        bind<ImageManager>().toInstance(avatarManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
