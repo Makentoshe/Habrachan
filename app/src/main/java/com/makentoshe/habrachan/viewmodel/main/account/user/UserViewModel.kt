@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.viewmodel.main.account.user
 
 import androidx.lifecycle.ViewModel
-import com.makentoshe.habrachan.common.entity.User
+import com.makentoshe.habrachan.common.entity.user.UserResponse
 import com.makentoshe.habrachan.common.network.request.ImageRequest
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import io.reactivex.Observable
@@ -15,17 +15,15 @@ abstract class UserViewModel(
 
     protected val disposables = CompositeDisposable()
 
-    protected val successSubject = BehaviorSubject.create<User>()
-    val successObservable: Observable<User>
-        get() = successSubject.observeOn(AndroidSchedulers.mainThread())
-
-    protected val errorSubject = BehaviorSubject.create<Throwable>()
-    val errorObservable: Observable<Throwable>
-        get() = errorSubject.observeOn(AndroidSchedulers.mainThread())
+    protected val userSubject = BehaviorSubject.create<UserResponse>()
+    val userObservable: Observable<UserResponse>
+        get() = userSubject.observeOn(AndroidSchedulers.mainThread())
 
     init {
-        successSubject.subscribe { user ->
-            userAvatarViewModel.avatarObserver.onNext(ImageRequest(user.avatar))
+        userSubject.subscribe { response ->
+            if (response is UserResponse.Success) {
+                userAvatarViewModel.avatarObserver.onNext(ImageRequest(response.user.avatar))
+            }
         }.let(disposables::add)
     }
 

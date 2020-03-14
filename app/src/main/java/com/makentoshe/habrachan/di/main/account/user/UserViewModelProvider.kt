@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.di.main.account.user
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.UserDao
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.main.account.user.UserAccount
@@ -22,6 +23,7 @@ class UserViewModelProvider(
 
     private val usersManager by inject<UsersManager>()
     private val sessionDao by inject<SessionDao>()
+    private val userDao by inject<UserDao>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
@@ -38,7 +40,7 @@ class UserViewModelProvider(
     }
 
     private fun getCustomUserViewModel(user: UserAccount.User): CustomUserViewModel {
-        val factory = CustomUserViewModel.Factory(usersManager, sessionDao, user, userAvatarViewModel)
+        val factory = CustomUserViewModel.Factory(usersManager, sessionDao, user, userAvatarViewModel, userDao)
         return ViewModelProviders.of(fragment, factory)[CustomUserViewModel::class.java]
     }
 }
