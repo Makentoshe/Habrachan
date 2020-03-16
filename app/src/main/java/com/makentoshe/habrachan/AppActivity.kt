@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.common.navigation.Navigator
@@ -19,15 +20,18 @@ class AppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (savedInstanceState == null) {
-            val screen = MainFlowScreen()
-//            val screen = UserScreen(UserAccount.User("missingdays"))
-//            val screen = UserScreen(UserAccount.Me)
-//            val screen = AccountFlowScreen()
-//            val screen = CommentsScreen(485990)
-//            val screen = PostScreen(490694)
-//            val screen = PostImageScreen("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg")
-            router.newRootScreen(screen)
+        if (savedInstanceState != null) return
+        when (intent.action) {
+            Intent.ACTION_MAIN -> {
+                val screen = MainFlowScreen()
+//                val screen = UserScreen(UserAccount.User("missingdays"))
+//                val screen = UserScreen(UserAccount.Me)
+//                val screen = AccountFlowScreen()
+//                val screen = CommentsScreen(485990)
+//                val screen = PostScreen(490694)
+//                val screen = PostImageScreen("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg")
+                router.newRootScreen(screen)
+            }
         }
     }
 
