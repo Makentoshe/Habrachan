@@ -65,15 +65,15 @@ class MainFlowFragment : Fragment() {
         }
 
         fun toAccountScreen() {
-            router.replaceScreen(AccountFlowScreen())
+            router.customReplace(AccountFlowScreen())
         }
 
         fun toArticlesScreen(page: Int) {
-            router.replaceScreen(ArticlesFlowScreen(page))
+            router.customReplace(ArticlesFlowScreen(page))
         }
 
         fun toMenuScreen() {
-            router.replaceScreen(MenuScreen())
+            router.customReplace(MenuScreen())
         }
 
         fun release() {

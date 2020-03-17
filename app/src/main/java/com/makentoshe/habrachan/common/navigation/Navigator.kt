@@ -50,12 +50,11 @@ class Navigator(
             is Replace -> replace(command)
             is BackTo -> backTo(command)
             is Back -> back()
+            is CustomReplace -> customReplace(command)
         }
     }
 
-    private fun forward(command: Forward) = fragmentForward(command)
-
-    private fun fragmentForward(command: Forward) {
+    private fun forward(command: Forward) {
         val screen = command.screen as Screen
         val fragment = createFragment(screen)
 
@@ -86,9 +85,7 @@ class Navigator(
 
     private fun activityBack() = activity.finish()
 
-    private fun replace(command: Replace) = fragmentReplace(command)
-
-    private fun fragmentReplace(command: Replace) {
+    private fun replace(command: Replace) {
         val screen = command.screen as Screen
         val newFragment = createFragment(screen)
 
@@ -121,10 +118,31 @@ class Navigator(
                 fragmentTransaction
             )
 
-            fragmentTransaction
-                .replace(containerId, newFragment)
-                .commit()
+            fragmentTransaction.replace(containerId, newFragment).commit()
         }
+    }
+
+    private fun customReplace(command: CustomReplace) {
+        val isPopped = fragmentManager.popBackStackImmediate(command.screen.screenKey, 0)
+
+        if (!isPopped) {
+            val newFragment = createFragment(command.screen)
+            val fragmentTransaction = fragmentManager.beginTransaction()
+
+            setupFragmentTransaction(
+                command,
+                fragmentManager.findFragmentById(containerId),
+                newFragment,
+                fragmentTransaction
+            )
+
+            fragmentTransaction
+                .add(containerId, newFragment)
+                .addToBackStack(command.screen.screenKey)
+                .commit()
+            localStackCopy!!.add(command.screen.screenKey)
+        }
+
     }
 
     /**
