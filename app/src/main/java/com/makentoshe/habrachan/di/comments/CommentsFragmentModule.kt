@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.di.article.comments
+package com.makentoshe.habrachan.di.comments
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.CommentDao
@@ -9,9 +9,9 @@ import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.article.comment.ArticleCommentAvatarRepository
 import com.makentoshe.habrachan.model.article.comment.OnCommentGestureDetectorBuilder
 import com.makentoshe.habrachan.model.article.comment.SpannedFactory
-import com.makentoshe.habrachan.view.article.comments.CommentsFragment
+import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.viewmodel.article.comments.CommentsFragmentViewModel
-import ru.terrakok.cicerone.Router
+import com.makentoshe.habrachan.common.navigation.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind

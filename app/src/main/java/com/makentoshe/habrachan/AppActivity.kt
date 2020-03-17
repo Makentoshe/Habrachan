@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.common.navigation.Navigator
+import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.main.MainFlowScreen
 import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 class AppActivity : AppCompatActivity() {

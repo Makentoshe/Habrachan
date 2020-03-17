@@ -2,9 +2,9 @@ package com.makentoshe.habrachan.di.main.articles
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesControllerViewModel
-import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import javax.inject.Provider

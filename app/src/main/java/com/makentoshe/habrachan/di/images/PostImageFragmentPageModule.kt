@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.di.images
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.images.PostImageFragmentPage
 import com.makentoshe.habrachan.viewmodel.images.PostImageFragmentViewModel
-import ru.terrakok.cicerone.Router
+import com.makentoshe.habrachan.common.navigation.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind

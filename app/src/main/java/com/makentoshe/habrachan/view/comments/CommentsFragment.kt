@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.view.article.comments
+package com.makentoshe.habrachan.view.comments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.AvatarDao
+import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.article.comment.*
 import com.makentoshe.habrachan.ui.article.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.comments.CommentsFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 class CommentsFragment : Fragment() {

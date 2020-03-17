@@ -5,7 +5,7 @@ import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.main.account.user.UserFragment
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
-import ru.terrakok.cicerone.Router
+import com.makentoshe.habrachan.common.navigation.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind

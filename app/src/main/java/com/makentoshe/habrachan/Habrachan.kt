@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan
 
 import android.app.Application
+import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.di.InjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.di.InjectionActivityLifecycleCallback
 import com.makentoshe.habrachan.di.common.*
@@ -10,7 +11,7 @@ import toothpick.configuration.Configuration
 
 class Habrachan : Application() {
 
-    private val cicerone = Cicerone.create()
+    private val cicerone = Cicerone.create(Router())
 
     private val injectFragmentLifecycleCallback = InjectingFragmentLifecycleCallback()
     private val injectActivityLifecycleCallback = InjectionActivityLifecycleCallback(injectFragmentLifecycleCallback)

@@ -3,12 +3,12 @@ package com.makentoshe.habrachan
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import io.mockk.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind

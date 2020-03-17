@@ -7,7 +7,7 @@ import com.makentoshe.habrachan.view.article.ArticleFragment
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
-import ru.terrakok.cicerone.Router
+import com.makentoshe.habrachan.common.navigation.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind

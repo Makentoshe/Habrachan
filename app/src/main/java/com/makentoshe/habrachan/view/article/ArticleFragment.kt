@@ -15,6 +15,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
+import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.ui.ImageTintController
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.common.ui.TextScoreController
@@ -30,7 +31,6 @@ import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 class ArticleFragment : Fragment() {

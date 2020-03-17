@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.di.article.ArticleFragmentModule
 import com.makentoshe.habrachan.di.article.ArticleFragmentScope
-import com.makentoshe.habrachan.di.article.comments.CommentsFragmentModule
-import com.makentoshe.habrachan.di.article.comments.CommentsFragmentScope
+import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
+import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
@@ -19,7 +19,7 @@ import com.makentoshe.habrachan.di.main.account.user.UserFragmentScope
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentModule
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentScope
 import com.makentoshe.habrachan.view.article.ArticleFragment
-import com.makentoshe.habrachan.view.article.comments.CommentsFragment
+import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.view.main.MainFlowFragment
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
 import com.makentoshe.habrachan.view.main.account.login.LoginFragment

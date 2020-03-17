@@ -19,7 +19,7 @@ import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.Router
+import com.makentoshe.habrachan.common.navigation.Router
 import toothpick.ktp.delegate.inject
 
 class UserFragment : Fragment() {

@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.main.account.AccountFlowScreen
 import com.makentoshe.habrachan.model.main.articles.ArticlesFlowScreen
 import com.makentoshe.habrachan.model.main.menu.MenuScreen
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
 import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 class MainFlowFragment : Fragment() {
