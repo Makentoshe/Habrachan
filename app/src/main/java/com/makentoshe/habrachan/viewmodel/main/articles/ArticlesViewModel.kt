@@ -2,10 +2,7 @@ package com.makentoshe.habrachan.viewmodel.main.articles
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.common.database.ArticleDao
-import com.makentoshe.habrachan.common.database.AvatarDao
-import com.makentoshe.habrachan.common.database.CommentDao
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.*
 import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
 import com.makentoshe.habrachan.common.entity.posts.NextPage
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
@@ -22,7 +19,8 @@ class ArticlesViewModel(
     private val articleManager: HabrArticleManager,
     private val articleDao: ArticleDao,
     private val commentDao: CommentDao,
-    private val avatarDao: AvatarDao
+    private val avatarDao: AvatarDao,
+    private val userDao: UserDao
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -34,8 +32,7 @@ class ArticlesViewModel(
     val articlesObservable: Observable<ArticlesResponse> = articleSubject
 
     init {
-        requestSubject.observeOn(Schedulers.io()).map(::performRequest)
-            .doOnNext { if (it is ArticlesResponse.Success) it.data.forEach(articleDao::insert) }
+        requestSubject.observeOn(Schedulers.io()).map(::performRequest).doOnNext(::onArticlesSuccess)
             .observeOn(AndroidSchedulers.mainThread()).safeSubscribe(articleSubject)
     }
 
@@ -45,9 +42,12 @@ class ArticlesViewModel(
         return factory.all(page)
     }
 
-    fun createCacheRequest(): GetArticlesRequest {
-        return GetArticlesRequest("", "", "", 0, "")
-    }
+    private fun onArticlesSuccess(response: ArticlesResponse) = if (response is ArticlesResponse.Success) {
+        response.data.forEach { article ->
+            articleDao.insert(article)
+            userDao.insert(article.author)
+        }
+    } else Unit
 
     private fun performRequest(request: GetArticlesRequest): ArticlesResponse {
         try {
@@ -57,6 +57,7 @@ class ArticlesViewModel(
                     articleDao.clear()
                     commentDao.clear()
                     avatarDao.clear()
+                    userDao.clear()
                 }
             }
         } catch (e: Exception) {
@@ -78,10 +79,11 @@ class ArticlesViewModel(
         private val articleManager: HabrArticleManager,
         private val articleDao: ArticleDao,
         private val commentDao: CommentDao,
-        private val avatarDao: AvatarDao
+        private val avatarDao: AvatarDao,
+        private val userDao: UserDao
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ArticlesViewModel(sessionDao, articleManager, articleDao, commentDao, avatarDao) as T
+            return ArticlesViewModel(sessionDao, articleManager, articleDao, commentDao, avatarDao, userDao) as T
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.view.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,28 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
-import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
 import com.makentoshe.habrachan.model.main.account.AccountFlowScreen
 import com.makentoshe.habrachan.model.main.articles.ArticlesFlowScreen
 import com.makentoshe.habrachan.model.main.menu.MenuScreen
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
-import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
-import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class MainFlowFragment : Fragment() {
 
     private val arguments = Arguments(this)
     private val navigator by inject<MainFlowFragment.Navigator>()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        injectDependencies()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,12 +52,6 @@ class MainFlowFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         navigator.release()
-    }
-
-    private fun injectDependencies() {
-        val module = MainFlowFragmentModule(this)
-        val scope = Toothpick.openScopes(ApplicationScope::class.java, MainFlowFragmentScope::class.java)
-        scope.installModules(module).closeOnDestroy(this).inject(this)
     }
 
     class Navigator(
