@@ -35,13 +35,13 @@ class UserAvatarViewModel(
         if (File(request.imageUrl).name == "stub-user-middle.gif") {
             return getStubAvatar()
         }
-        val bitmap = avatarDao.get(request.imageUrl)
-        return if (bitmap == null) {
-            imageManager.getImage(request).blockingGet().also { response ->
-                saveByteArrayToDao(request, response)
-            }
-        } else {
-            ImageResponse.Success(BitmapController(bitmap).toByteArray(), false)
+        try {
+            val response = imageManager.getImage(request).blockingGet()
+            saveByteArrayToDao(request, response)
+            return response
+        }  catch (e: RuntimeException) {
+            val bitmap = avatarDao.get(request.imageUrl) ?: return getStubAvatar()
+            return ImageResponse.Success(BitmapController(bitmap).toByteArray(), false)
         }
     }
 

@@ -12,6 +12,9 @@ class Habrachan : Application() {
 
     private val cicerone = Cicerone.create()
 
+    private val injectFragmentLifecycleCallback = InjectingFragmentLifecycleCallback()
+    private val injectActivityLifecycleCallback = InjectionActivityLifecycleCallback(injectFragmentLifecycleCallback)
+
     override fun onCreate() {
         super.onCreate()
         Toothpick.setConfiguration(getToothpickConfiguration())
@@ -22,8 +25,7 @@ class Habrachan : Application() {
         val scopes = Toothpick.openScopes(RepositoryScope::class.java, ApplicationScope::class.java)
         scopes.installModules(ApplicationModule(applicationContext))
 
-        val injectingFragmentLifecycleCallback = InjectingFragmentLifecycleCallback()
-        registerActivityLifecycleCallbacks(InjectionActivityLifecycleCallback(injectingFragmentLifecycleCallback))
+        registerActivityLifecycleCallbacks(injectActivityLifecycleCallback)
     }
 
     private fun getToothpickConfiguration(): Configuration {
@@ -54,4 +56,7 @@ class Habrachan : Application() {
         Toothpick.openScopes(NavigationScope::class.java, RepositoryScope::class.java).installModules(module)
     }
 
+    fun unregisterActivityLifecycleCallback() {
+        unregisterActivityLifecycleCallbacks(injectActivityLifecycleCallback)
+    }
 }

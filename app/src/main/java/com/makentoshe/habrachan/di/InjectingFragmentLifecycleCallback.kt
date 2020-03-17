@@ -8,6 +8,8 @@ import com.makentoshe.habrachan.di.article.ArticleFragmentScope
 import com.makentoshe.habrachan.di.article.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.article.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
+import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
 import com.makentoshe.habrachan.di.main.account.AccountFlowFragmentModule
 import com.makentoshe.habrachan.di.main.account.AccountFlowFragmentScope
 import com.makentoshe.habrachan.di.main.account.login.LoginFragmentModule
@@ -18,6 +20,7 @@ import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentModule
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentScope
 import com.makentoshe.habrachan.view.article.ArticleFragment
 import com.makentoshe.habrachan.view.article.comments.CommentsFragment
+import com.makentoshe.habrachan.view.main.MainFlowFragment
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
 import com.makentoshe.habrachan.view.main.account.login.LoginFragment
 import com.makentoshe.habrachan.view.main.account.user.UserFragment
@@ -30,6 +33,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
         println("Attached: $f")
         when (f) {
+            is MainFlowFragment -> injectMainFlowFragment(f)
             is CommentsFragment -> injectCommentsFragment(f)
             is AccountFlowFragment -> injectAccountFlowFragment(f)
             is LoginFragment -> injectLoginFragment(f)
@@ -37,6 +41,12 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
             is ArticlesFragment -> injectArticlesFragment(f)
             is ArticleFragment -> injectArticleFragment(f)
         }
+    }
+
+    private fun injectMainFlowFragment(fragment: MainFlowFragment) {
+        val module = MainFlowFragmentModule(fragment)
+        val scope = Toothpick.openScopes(ApplicationScope::class.java, MainFlowFragmentScope::class.java)
+        scope.installModules(module).closeOnDestroy(fragment).inject(fragment)
     }
 
     private fun injectCommentsFragment(fragment: CommentsFragment) {

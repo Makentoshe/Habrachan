@@ -15,6 +15,9 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(comment: User)
 
+    @Query("SELECT * FROM user WHERE login=:login")
+    fun getByLogin(login: String): User?
+
     @Query("DELETE FROM user")
     fun clear()
 }

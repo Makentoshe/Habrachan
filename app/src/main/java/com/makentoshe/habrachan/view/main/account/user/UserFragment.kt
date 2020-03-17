@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.ImageResponse
+import com.makentoshe.habrachan.common.entity.user.UserResponse
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
@@ -41,28 +42,35 @@ class UserFragment : Fragment() {
         toolbarView.setNavigationOnClickListener {
             navigator.back()
         }
-        val fullNameView = view.findViewById<TextView>(R.id.user_fragment_fullname_text)
-        val karmaView = view.findViewById<TextView>(R.id.user_fragment_karma_value)
-        val ratingView = view.findViewById<TextView>(R.id.user_fragment_rating_value)
-        val specializmView = view.findViewById<TextView>(R.id.user_fragment_specializm)
-        val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_progress)
 
-        viewModel.successObservable.subscribe {
-            toolbarView.title = it.login
-            fullNameView.text = it.fullname
-            karmaView.text = it.score.toString()
-            ratingView.text = it.rating.toString()
-            specializmView.text = it.specializm
-
-            progressBar.visibility = View.GONE
-        }.let(disposables::add)
-
-        viewModel.errorObservable.subscribe {
-            val decorView = activity?.window?.decorView ?: return@subscribe
-            Snackbar.make(decorView, it.toString(), Snackbar.LENGTH_LONG).show()
-        }.let(disposables::add)
+        viewModel.userObservable.subscribe(::onUserResponse).let(disposables::add)
 
         userAvatarViewModel.avatarObservable.subscribe(::onAvatarResponse).let(disposables::add)
+    }
+
+    private fun onUserResponse(response: UserResponse) = when(response) {
+        is UserResponse.Success -> onUserSuccess(response)
+        is UserResponse.Error -> onUserError(response)
+    }
+
+    private fun onUserSuccess(response: UserResponse.Success) {
+        val toolbarView = requireView().findViewById<Toolbar>(R.id.user_fragment_toolbar)
+        toolbarView.title = response.user.login
+        val fullNameView = requireView().findViewById<TextView>(R.id.user_fragment_fullname_text)
+        fullNameView.text = response.user.fullname
+        val karmaView = requireView().findViewById<TextView>(R.id.user_fragment_karma_value)
+        karmaView.text = response.user.score.toString()
+        val ratingView = requireView().findViewById<TextView>(R.id.user_fragment_rating_value)
+        ratingView.text = response.user.rating.toString()
+        val specializmView = requireView().findViewById<TextView>(R.id.user_fragment_specializm)
+        specializmView.text = response.user.specializm
+        val progressBar = requireView().findViewById<ProgressBar>(R.id.user_fragment_progress)
+        progressBar.visibility = View.GONE
+    }
+
+    private fun onUserError(response: UserResponse.Error) {
+        val decorView = view ?: activity?.window?.decorView!!
+        Snackbar.make(decorView, response.toString(), Snackbar.LENGTH_LONG).show()
     }
 
     private fun onAvatarResponse(response: ImageResponse) = when (response) {
