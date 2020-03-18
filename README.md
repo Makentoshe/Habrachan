@@ -1,7 +1,5 @@
 # Habrachan
 
-Available information about api [here](https://github.com/Makentoshe/Habrachan/wiki).
-
 ## How to build
 
 In the root invoke `gradlew assembleDebug` for debug apk and `gradlew assembleRelease` for release apk.
