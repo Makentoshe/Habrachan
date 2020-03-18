@@ -2,6 +2,7 @@ package com.makentoshe.habrachan
 
 import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.request.*
@@ -15,13 +16,7 @@ import java.io.File
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
-
-    private val session = UserSession(
-        "85cab69095196f3.89453480",
-        "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
-        File("token").readText()
-    )
+class ExampleUnitTest : BaseTest() {
 
     @Test
     @Ignore

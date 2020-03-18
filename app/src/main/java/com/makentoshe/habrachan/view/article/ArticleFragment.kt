@@ -134,19 +134,20 @@ class ArticleFragment : Fragment() {
     }
 
     fun onArticleDisplayed() {
-        val scrollView = requireView().findViewById<CustomNestedScrollView>(R.id.article_fragment_scroll)
+        val view = view ?: return
+        val scrollView = view.findViewById<CustomNestedScrollView>(R.id.article_fragment_scroll)
         scrollView.visibility = View.VISIBLE
 
-        val containerView = requireView().findViewById<View>(R.id.article_fragment_content_toolbar_container)
+        val containerView = view.findViewById<View>(R.id.article_fragment_content_toolbar_container)
         containerView.visibility = View.VISIBLE
 
-        val appbar = requireView().findViewById<AppBarLayout>(R.id.article_fragment_content_toolbar_appbar)
+        val appbar = view.findViewById<AppBarLayout>(R.id.article_fragment_content_toolbar_appbar)
         appbar.setExpanded(true, true)
 
-        val progress = requireView().findViewById<View>(R.id.article_fragment_progressbar)
+        val progress = view.findViewById<View>(R.id.article_fragment_progressbar)
         progress.visibility = View.GONE
 
-        val bottomBar = requireView().findViewById<View>(R.id.article_fragment_bottombar)
+        val bottomBar = view.findViewById<View>(R.id.article_fragment_bottombar)
         bottomBar.visibility = View.VISIBLE
     }
 
