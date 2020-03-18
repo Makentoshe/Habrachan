@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.common.network.manager
 
-import com.makentoshe.habrachan.common.entity.comment.CommentsResponse
+import com.makentoshe.habrachan.common.entity.comment.GetCommentsResponse
 import com.makentoshe.habrachan.common.entity.comment.VoteCommentResponse
 import com.makentoshe.habrachan.common.network.api.HabrCommentsApi
 import com.makentoshe.habrachan.common.network.converter.CommentsConverter
@@ -14,7 +14,7 @@ import retrofit2.Retrofit
 
 interface HabrCommentsManager {
 
-    fun getComments(request: GetCommentsRequest): Single<CommentsResponse>
+    fun getComments(request: GetCommentsRequest): Single<GetCommentsResponse>
 
     fun voteUp(request: VoteCommentRequest): Single<VoteCommentResponse>
 
@@ -29,17 +29,20 @@ interface HabrCommentsManager {
         fun build(): HabrCommentsManager {
             val api = getRetrofit().create(HabrCommentsApi::class.java)
             return object : HabrCommentsManager {
-                override fun getComments(request: GetCommentsRequest): Single<CommentsResponse> {
+                override fun getComments(request: GetCommentsRequest): Single<GetCommentsResponse> {
                     return Single.just(request).observeOn(Schedulers.io()).map { request ->
                         val response = api.getComments(request.client, request.token, request.api, request.articleId).execute()
-                        CommentsConverter().convertBody(response.body()!!)
+                        if (response.isSuccessful) {
+                            CommentsConverter().convertBody(response.body()!!)
+                        } else {
+                            CommentsConverter().convertError(response.errorBody()!!)
+                        }
                     }
                 }
 
                 override fun voteUp(request: VoteCommentRequest): Single<VoteCommentResponse> {
                     return Single.just(request).observeOn(Schedulers.io()).map { request ->
-                        api.voteUp(request.client, request.token, request.commentId).execute()
-                    }.map { response ->
+                        val response = api.voteUp(request.client, request.token, request.commentId).execute()
                         if (response.isSuccessful) {
                             VoteCommentConverter().convertBody(response.body()!!)
                         } else {
@@ -50,8 +53,7 @@ interface HabrCommentsManager {
 
                 override fun voteDown(request: VoteCommentRequest): Single<VoteCommentResponse> {
                     return Single.just(request).observeOn(Schedulers.io()).map { request ->
-                        api.voteDown(request.client, request.token, request.commentId).execute()
-                    }.map { response ->
+                        val response = api.voteDown(request.client, request.token, request.commentId).execute()
                         if (response.isSuccessful) {
                             VoteCommentConverter().convertBody(response.body()!!)
                         } else {

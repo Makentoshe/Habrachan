@@ -62,9 +62,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
         }
 
         override fun get(): CommentsFragmentViewModel {
-            val factory = CommentsFragmentViewModel.Factory(
-                fragment.arguments.articleId, commentsManager, commentDao, sessionDao
-            )
+            val factory = CommentsFragmentViewModel.Factory(commentsManager, commentDao, sessionDao)
             return ViewModelProviders.of(fragment, factory)[CommentsFragmentViewModel::class.java]
         }
     }
