@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.di.article
 
+import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.article.JavaScriptInterface
 import com.makentoshe.habrachan.model.article.WebViewController
@@ -16,14 +17,14 @@ import toothpick.ktp.delegate.inject
 class ArticleFragmentModule(fragment: ArticleFragment) : Module() {
 
     private val javascriptInterface = JavaScriptInterface()
-
+    private val sessionDao by inject<SessionDao>()
     private val router by inject<Router>()
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
 
         bind<WebViewController>().toInstance(WebViewController(fragment, javascriptInterface))
-        bind<ArticleFragment.Navigator>().toInstance(ArticleFragment.Navigator(router))
+        bind<ArticleFragment.Navigator>().toInstance(ArticleFragment.Navigator(router, sessionDao))
         bind<JavaScriptInterface>().toInstance(javascriptInterface)
 
         val userAvatarViewModelProvider = UserAvatarViewModelProvider(fragment)

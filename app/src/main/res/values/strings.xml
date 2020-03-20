@@ -35,4 +35,5 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="comments">Comments</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="got_it">Got it</string>
+    <string name="should_be_logged_in_for_user">You should be logged in to viewing user profile</string>
 </resources>
