@@ -20,6 +20,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import java.net.UnknownHostException
 
 class CommentsFragmentViewModel(
     private val commentsManager: HabrCommentsManager,
@@ -70,8 +71,8 @@ class CommentsFragmentViewModel(
                 updateCommentInDatabase(request.commentId, response.score)
             }
         }
-    } catch (e: Exception) {
-        VoteCommentResponse.Error(listOf(), 420, e.toString(), request)
+    } catch (exception: Exception) {
+        createVoteCommentErrorResponse(exception, request)
     }
 
     private fun performVoteDownRequest(request: VoteCommentRequest) = try {
@@ -80,8 +81,18 @@ class CommentsFragmentViewModel(
                 updateCommentInDatabase(request.commentId, response.score)
             }
         }
-    } catch (e: Exception) {
-        VoteCommentResponse.Error(listOf(), 420, e.toString(), request)
+    } catch (exception: Exception) {
+        createVoteCommentErrorResponse(exception, request)
+    }
+
+    private fun createVoteCommentErrorResponse(
+        throwable: Throwable, request: VoteCommentRequest
+    ): VoteCommentResponse.Error {
+        val code = when (throwable.cause) {
+            is UnknownHostException -> 498
+            else -> 499
+        }
+        return VoteCommentResponse.Error(listOf(), code, throwable.toString(), request)
     }
 
     private fun updateCommentInDatabase(commentId: Int, score: Int) {

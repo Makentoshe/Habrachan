@@ -12,11 +12,11 @@ import androidx.core.util.isEmpty
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.entity.comment.GetCommentsResponse
 import com.makentoshe.habrachan.common.entity.comment.VoteCommentResponse
 import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.comments.*
 import com.makentoshe.habrachan.ui.article.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
@@ -126,11 +126,16 @@ class CommentsFragment : Fragment() {
     private fun onVoteCommentsResponseSuccess(response: VoteCommentResponse.Success) {
         epoxyController.updateCommentScore(response.request.commentId, response.score)
         epoxyController.requestModelBuild()
-        println("sas")
     }
 
     private fun onVoteCommentsResponseError(response: VoteCommentResponse.Error) {
-
+        val message = when (response.code) {
+            498 -> requireContext().getString(R.string.network_check_error)
+            401 -> requireContext().getString(R.string.should_be_logged_in_for_action)
+            400 -> requireContext().getString(R.string.repeated_voting_is_prohibited)
+            else -> response.message.plus(" ").plus(response.additional.joinToString(". "))
+        }
+        SnackbarErrorController(view ?: return).displayMessage(message)
     }
 
     override fun onDestroy() {
