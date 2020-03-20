@@ -21,7 +21,7 @@ import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.common.ui.TextScoreController
 import com.makentoshe.habrachan.model.article.JavaScriptInterface
 import com.makentoshe.habrachan.model.article.WebViewController
-import com.makentoshe.habrachan.model.comment.CommentsScreen
+import com.makentoshe.habrachan.model.comments.CommentsScreen
 import com.makentoshe.habrachan.model.images.PostImageScreen
 import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import com.makentoshe.habrachan.model.main.account.user.UserScreen
@@ -90,7 +90,7 @@ class ArticleFragment : Fragment() {
         webView.loadData(response.article.buildHtml(resources), "text/html", "utf-8")
 
         val voteTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_voteview)
-        TextScoreController(voteTextView).setScore(requireContext(), response.article.score)
+        TextScoreController(voteTextView).setScoreLight(requireContext(), response.article.score)
 
         val voteUpView = requireView().findViewById<View>(R.id.article_fragment_bottombar_voteup)
         voteUpView.setOnClickListener {
@@ -159,7 +159,7 @@ class ArticleFragment : Fragment() {
     private fun onArticleVotedSuccess(response: VoteArticleResponse.Success) {
         val voteTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_voteview)
         val currentScore = voteTextView.text.toString().toInt()
-        TextScoreController(voteTextView).setScore(requireContext(), response.score)
+        TextScoreController(voteTextView).setScoreLight(requireContext(), response.score)
 
         if (response.score > currentScore) markVoteUpButton() else markVoteDownButton()
     }

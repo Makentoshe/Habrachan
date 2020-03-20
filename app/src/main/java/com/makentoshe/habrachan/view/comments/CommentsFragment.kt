@@ -15,29 +15,26 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.entity.comment.GetCommentsResponse
+import com.makentoshe.habrachan.common.entity.comment.VoteCommentResponse
 import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.model.article.comment.*
-import com.makentoshe.habrachan.model.comment.ArticleCommentsEpoxyController
+import com.makentoshe.habrachan.model.comments.*
 import com.makentoshe.habrachan.ui.article.comments.CommentsFragmentUi
-import com.makentoshe.habrachan.viewmodel.article.comments.CommentsFragmentViewModel
+import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
 class CommentsFragment : Fragment() {
 
     private val arguments = Arguments(this)
-    private val disposables = CompositeDisposable()
-    private val viewModel by inject<CommentsFragmentViewModel>()
+
+    private val disposables by inject<CompositeDisposable>()
+    private val commentsViewModel by inject<CommentsFragmentViewModel>()
     private val navigator by inject<Navigator>()
-    private val spannedFactory by inject<SpannedFactory>()
-    private val commentClickListerFactory by inject<OnCommentGestureDetectorBuilder>()
-    private val commentAvatarRepository by inject<ArticleCommentAvatarRepository>()
-    private val avatarDao by inject<AvatarDao>()
+    private val commentEpoxyModelsController by inject<CommentEpoxyModelsController>()
 
     private val epoxyController by lazy {
-        val avatarController = ArticleCommentAvatarController.Factory(commentAvatarRepository, disposables, avatarDao)
-        val factory = ArticleCommentEpoxyModel.Factory(spannedFactory, commentClickListerFactory, avatarController)
-        ArticleCommentsEpoxyController(factory)
+        val factory = CommentEpoxyModel.Factory(commentEpoxyModelsController)
+        CommentsEpoxyController(factory)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,8 +43,8 @@ class CommentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            val request = viewModel.createRequest(arguments.articleId)
-            viewModel.commentsObserver.onNext(request)
+            val request = commentsViewModel.createGetRequest(arguments.articleId)
+            commentsViewModel.getCommentsObserver.onNext(request)
         }
 
         val retrybutton = view.findViewById<View>(R.id.article_comments_retrybutton)
@@ -57,19 +54,21 @@ class CommentsFragment : Fragment() {
         toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
         toolbar.setNavigationOnClickListener { navigator.back() }
 
-        viewModel.commentsObservable.subscribe(::onCommentsResponse).let(disposables::add)
+        commentsViewModel.getCommentsObservable.subscribe(::onGetCommentsResponse).let(disposables::add)
+        commentsViewModel.voteUpCommentObservable.subscribe().let(disposables::add)
+        commentsViewModel.voteDownCommentObservable.subscribe().let(disposables::add)
 
         // disable touch events for background fragments
         view.setOnClickListener { }
     }
 
-    private fun onCommentsResponse(response: GetCommentsResponse) = when (response) {
-        is GetCommentsResponse.Success -> onCommentsResponseSuccess(response)
-        is GetCommentsResponse.Error -> onCommentsResponseError(response)
+    private fun onGetCommentsResponse(response: GetCommentsResponse) = when (response) {
+        is GetCommentsResponse.Success -> onGetCommentsResponseSuccess(response)
+        is GetCommentsResponse.Error -> onGetCommentsResponseError(response)
     }
 
-    private fun onCommentsResponseSuccess(response: GetCommentsResponse.Success) {
-        val commentsArray = viewModel.toSparseArray(response.data, arguments.articleId)
+    private fun onGetCommentsResponseSuccess(response: GetCommentsResponse.Success) {
+        val commentsArray = commentsViewModel.toSparseArray(response.data, arguments.articleId)
         if (commentsArray.isEmpty()) displayCommentsThumbnail() else displayComments(commentsArray)
     }
 
@@ -99,7 +98,7 @@ class CommentsFragment : Fragment() {
         firstCommentButton.visibility = View.VISIBLE
     }
 
-    private fun onCommentsResponseError(response: GetCommentsResponse.Error) {
+    private fun onGetCommentsResponseError(response: GetCommentsResponse.Error) {
         val view = view ?: return
 
         val retrybutton = view.findViewById<View>(R.id.article_comments_retrybutton)
@@ -122,6 +121,19 @@ class CommentsFragment : Fragment() {
 
         val progressbar = requireView().findViewById<ProgressBar>(R.id.article_comments_progressbar)
         progressbar.visibility = View.VISIBLE
+    }
+
+    private fun onVoteCommentsResponse(response: VoteCommentResponse) = when(response) {
+        is VoteCommentResponse.Success -> onVoteCommentsResponseSuccess(response)
+        is VoteCommentResponse.Error -> onVoteCommentsResponseError(response)
+    }
+
+    private fun onVoteCommentsResponseSuccess(response: VoteCommentResponse.Success) {
+        println("sas")
+    }
+
+    private fun onVoteCommentsResponseError(response: VoteCommentResponse.Error) {
+
     }
 
     override fun onDestroy() {

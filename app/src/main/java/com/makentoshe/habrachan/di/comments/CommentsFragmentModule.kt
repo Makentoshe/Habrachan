@@ -1,44 +1,41 @@
 package com.makentoshe.habrachan.di.comments
 
-import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.database.CommentDao
-import com.makentoshe.habrachan.common.database.SessionDao
-import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
-import com.makentoshe.habrachan.common.repository.InputStreamRepository
-import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.model.article.comment.ArticleCommentAvatarRepository
-import com.makentoshe.habrachan.model.article.comment.OnCommentGestureDetectorBuilder
-import com.makentoshe.habrachan.model.article.comment.SpannedFactory
-import com.makentoshe.habrachan.view.comments.CommentsFragment
-import com.makentoshe.habrachan.viewmodel.article.comments.CommentsFragmentViewModel
+import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.common.network.manager.ImageManager
+import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.model.comments.CommentAvatarController
+import com.makentoshe.habrachan.model.comments.CommentEpoxyModelsController
+import com.makentoshe.habrachan.model.comments.CommentPopupFactory
+import com.makentoshe.habrachan.view.comments.CommentsFragment
+import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
+import io.reactivex.disposables.CompositeDisposable
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
-import javax.inject.Provider
 
 annotation class CommentsFragmentScope
 
 class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
-    private val inputStreamRepository by inject<InputStreamRepository>()
     private val router by inject<Router>()
+    private val avatarDao by inject<AvatarDao>()
+    private val imageManager by inject<ImageManager>()
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
 
-//        val imageGetter = SpannedFactory.ImageGetter(inputStreamRepository, fragment.resources)
-        bind<SpannedFactory>().toInstance(SpannedFactory(null))
+        val disposables = CompositeDisposable()
+        bind<CompositeDisposable>().toInstance(disposables)
 
         val commentsFragmentViewModelProvider = CommentsFragmentViewModelProvider(fragment)
         bind<CommentsFragmentViewModel>().toProviderInstance(commentsFragmentViewModelProvider)
 
-        val onCommentClickListenerFactory = OnCommentGestureDetectorBuilder()
-        bind<OnCommentGestureDetectorBuilder>().toInstance(onCommentClickListenerFactory)
-
-        val articleCommentAvatarRepository = ArticleCommentAvatarRepository(inputStreamRepository)
-        bind<ArticleCommentAvatarRepository>().toInstance(articleCommentAvatarRepository)
+        val avatarControllerFactory = CommentAvatarController.Factory(disposables, avatarDao, imageManager)
+        val commentPopupFactory = CommentPopupFactory(commentsFragmentViewModelProvider.get())
+        val commentEpoxyModelsController = CommentEpoxyModelsController(commentPopupFactory, avatarControllerFactory)
+        bind<CommentEpoxyModelsController>().toInstance(commentEpoxyModelsController)
 
         bind<CommentsFragment.Navigator>().toInstance(CommentsFragment.Navigator(router))
     }
@@ -49,21 +46,4 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
         }
     }
 
-    class CommentsFragmentViewModelProvider(
-        private val fragment: CommentsFragment
-    ) : Provider<CommentsFragmentViewModel> {
-
-        private val commentsManager by inject<HabrCommentsManager>()
-        private val commentDao by inject<CommentDao>()
-        private val sessionDao by inject<SessionDao>()
-
-        init {
-            Toothpick.openScope(ApplicationScope::class.java).inject(this)
-        }
-
-        override fun get(): CommentsFragmentViewModel {
-            val factory = CommentsFragmentViewModel.Factory(commentsManager, commentDao, sessionDao)
-            return ViewModelProviders.of(fragment, factory)[CommentsFragmentViewModel::class.java]
-        }
-    }
 }
