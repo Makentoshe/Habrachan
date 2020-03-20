@@ -4,7 +4,9 @@ import android.content.res.Resources
 import android.view.*
 import android.widget.PopupWindow
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 
 class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel) {
@@ -38,12 +40,12 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel) {
     }
 
     private fun onVoteUp(comment: Comment) {
-//        val request = viewModel.createVoteRequest(comment.id)
-//        viewModel.voteUpCommentObserver.onNext(request)
+        val request = viewModel.createVoteRequest(comment.id)
+        viewModel.voteUpCommentObserver.onNext(request)
     }
 
     private fun onVoteDown(comment: Comment) {
-//        val request = viewModel.createVoteRequest(comment.id)
-//        viewModel.voteDownCommentObserver.onNext(request)
+        val request = viewModel.createVoteRequest(comment.id)
+        viewModel.voteDownCommentObserver.onNext(request)
     }
 }

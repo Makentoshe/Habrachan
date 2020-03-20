@@ -24,11 +24,10 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
         bind<CompositeDisposable>().toInstance(disposables)
 
         val commentsFragmentViewModelProvider = CommentsFragmentViewModelProvider(fragment)
+        val commentsFragmentViewModel = commentsFragmentViewModelProvider.get()
         bind<CommentsFragmentViewModel>().toProviderInstance(commentsFragmentViewModelProvider)
 
-        val commentsEpoxyControllerProvider = CommentsEpoxyControllerProvider(
-            disposables, commentsFragmentViewModelProvider.get()
-        )
+        val commentsEpoxyControllerProvider = CommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel)
         bind<CommentsEpoxyController>().toProviderInstance(commentsEpoxyControllerProvider)
 
         bind<CommentsFragment.Navigator>().toInstance(CommentsFragment.Navigator(router))

@@ -40,42 +40,59 @@ class CommentsFragmentViewModel(
     private val voteUpCommentSubject = PublishSubject.create<VoteCommentRequest>()
     val voteUpCommentObserver: Observer<VoteCommentRequest> = voteUpCommentSubject
     val voteUpCommentObservable: Observable<VoteCommentResponse>
-        get() = voteUpCommentSubject.observeOn(Schedulers.io()).map { request ->
-            commentsManager.voteUp(request).blockingGet()
-        }.onErrorReturn { throwable ->
-            VoteCommentResponse.Error(listOf(), 420, throwable.toString())
-        }.observeOn(AndroidSchedulers.mainThread())
+        get() = voteUpCommentSubject
+            .observeOn(Schedulers.io())
+            .map(::performVoteUpRequest)
+            .observeOn(AndroidSchedulers.mainThread())
 
     private val voteDownCommentSubject = PublishSubject.create<VoteCommentRequest>()
     val voteDownCommentObserver: Observer<VoteCommentRequest> = voteDownCommentSubject
     val voteDownCommentObservable: Observable<VoteCommentResponse>
-        get() = voteDownCommentSubject.observeOn(Schedulers.io()).map { request ->
-            commentsManager.voteDown(request).blockingGet()
-        }.onErrorReturn { throwable ->
-            VoteCommentResponse.Error(listOf(), 420, throwable.toString())
-        }.observeOn(AndroidSchedulers.mainThread())
+        get() = voteDownCommentSubject
+            .observeOn(Schedulers.io())
+            .map(::performVoteDownRequest)
+            .observeOn(AndroidSchedulers.mainThread())
 
-    private fun performGetRequest(request: GetCommentsRequest): GetCommentsResponse {
-        return try {
-            val response = commentsManager.getComments(request).blockingGet()
-            addResponseToDatabase(request, response)
-            response
-        } catch (e: Exception) {
-            getResponseFromDatabase(request)
-        }
-    }
-
-    private fun addResponseToDatabase(request: GetCommentsRequest, response: GetCommentsResponse) {
-        if (response is GetCommentsResponse.Success) {
-            response.data.map { comment ->
-                comment.copy(articleId = request.articleId).also(commentDao::insert)
+    private fun performGetRequest(request: GetCommentsRequest) = try {
+        commentsManager.getComments(request).blockingGet().also { response ->
+            if (response is GetCommentsResponse.Success) {
+                addCommentsToDatabase(request.articleId, response.data)
             }
         }
+    } catch (e: Exception) {
+        val comments = commentDao.getByArticleId(request.articleId)
+        GetCommentsResponse.Success(comments, false, -1, "")
     }
 
-    private fun getResponseFromDatabase(request: GetCommentsRequest): GetCommentsResponse {
-        val comments = commentDao.getByArticleId(request.articleId)
-        return GetCommentsResponse.Success(comments, false, -1, "")
+    private fun performVoteUpRequest(request: VoteCommentRequest) = try {
+        commentsManager.voteUp(request).blockingGet().also { response ->
+            if (response is VoteCommentResponse.Success) {
+                updateCommentInDatabase(request.commentId, response.score)
+            }
+        }
+    } catch (e: Exception) {
+        VoteCommentResponse.Error(listOf(), 420, e.toString(), request)
+    }
+
+    private fun performVoteDownRequest(request: VoteCommentRequest) = try {
+        commentsManager.voteDown(request).blockingGet().also { response ->
+            if (response is VoteCommentResponse.Success) {
+                updateCommentInDatabase(request.commentId, response.score)
+            }
+        }
+    } catch (e: Exception) {
+        VoteCommentResponse.Error(listOf(), 420, e.toString(), request)
+    }
+
+    private fun updateCommentInDatabase(commentId: Int, score: Int) {
+        val comment = commentDao.getById(commentId)
+        if (comment != null) {
+            commentDao.insert(comment.copy(score = score))
+        }
+    }
+
+    private fun addCommentsToDatabase(articleId: Int, comments: List<Comment>) {
+        comments.map { comment -> comment.copy(articleId = articleId).also(commentDao::insert) }
     }
 
     fun createGetRequest(articleId: Int): GetCommentsRequest {

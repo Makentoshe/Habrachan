@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.di.comments
 
 import com.makentoshe.habrachan.common.database.AvatarDao
+import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.*

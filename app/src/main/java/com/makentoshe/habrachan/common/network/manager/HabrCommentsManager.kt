@@ -44,9 +44,9 @@ interface HabrCommentsManager {
                     return Single.just(request).observeOn(Schedulers.io()).map { request ->
                         val response = api.voteUp(request.client, request.token, request.commentId).execute()
                         if (response.isSuccessful) {
-                            VoteCommentConverter().convertBody(response.body()!!)
+                            VoteCommentConverter(request).convertBody(response.body()!!)
                         } else {
-                            VoteCommentConverter().convertError(response.errorBody()!!)
+                            VoteCommentConverter(request).convertError(response.errorBody()!!)
                         }
                     }
                 }
@@ -55,9 +55,9 @@ interface HabrCommentsManager {
                     return Single.just(request).observeOn(Schedulers.io()).map { request ->
                         val response = api.voteDown(request.client, request.token, request.commentId).execute()
                         if (response.isSuccessful) {
-                            VoteCommentConverter().convertBody(response.body()!!)
+                            VoteCommentConverter(request).convertBody(response.body()!!)
                         } else {
-                            VoteCommentConverter().convertError(response.errorBody()!!)
+                            VoteCommentConverter(request).convertError(response.errorBody()!!)
                         }
                     }
                 }

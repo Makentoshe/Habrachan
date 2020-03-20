@@ -50,8 +50,8 @@ class CommentsFragment : Fragment() {
         toolbar.setNavigationOnClickListener { navigator.back() }
 
         commentsViewModel.getCommentsObservable.subscribe(::onGetCommentsResponse).let(disposables::add)
-        commentsViewModel.voteUpCommentObservable.subscribe().let(disposables::add)
-        commentsViewModel.voteDownCommentObservable.subscribe().let(disposables::add)
+        commentsViewModel.voteUpCommentObservable.subscribe(::onVoteCommentsResponse).let(disposables::add)
+        commentsViewModel.voteDownCommentObservable.subscribe(::onVoteCommentsResponse).let(disposables::add)
 
         // disable touch events for background fragments
         view.setOnClickListener { }
@@ -124,6 +124,8 @@ class CommentsFragment : Fragment() {
     }
 
     private fun onVoteCommentsResponseSuccess(response: VoteCommentResponse.Success) {
+        epoxyController.updateCommentScore(response.request.commentId, response.score)
+        epoxyController.requestModelBuild()
         println("sas")
     }
 
