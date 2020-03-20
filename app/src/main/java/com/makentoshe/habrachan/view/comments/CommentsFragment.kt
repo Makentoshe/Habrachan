@@ -30,12 +30,7 @@ class CommentsFragment : Fragment() {
     private val disposables by inject<CompositeDisposable>()
     private val commentsViewModel by inject<CommentsFragmentViewModel>()
     private val navigator by inject<Navigator>()
-    private val commentEpoxyModelsController by inject<CommentEpoxyModelsController>()
-
-    private val epoxyController by lazy {
-        val factory = CommentEpoxyModel.Factory(commentEpoxyModelsController)
-        CommentsEpoxyController(factory)
-    }
+    private val epoxyController by inject<CommentsEpoxyController>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentsFragmentUi().createView(requireContext())
