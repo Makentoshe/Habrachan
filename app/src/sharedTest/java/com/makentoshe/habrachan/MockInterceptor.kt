@@ -1,20 +1,16 @@
 package com.makentoshe.habrachan
 
+import junit.framework.Assert.assertEquals
 import okhttp3.*
-import org.junit.Assert
 
 class MockInterceptor(
-    private val urlToCheck: String,
+    private val url: String,
     private val code: Int,
     private val json: String
 ): Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        Assert.assertEquals(urlToCheck, chain.request().url.toUri().toString())
-        return buildResponse(chain)
-    }
-
-    private fun buildResponse(chain: Interceptor.Chain) : Response {
+        assertEquals(url, chain.request().url.toUri().toString())
         val responseBody = createResponseBody(json, createJsonMediaType())
         return chain.proceed(chain.request())
             .newBuilder()
