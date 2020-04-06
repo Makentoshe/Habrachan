@@ -5,11 +5,7 @@ import java.io.File
 
 abstract class BaseTest {
 
-    protected val session = UserSession(
-        "85cab69095196f3.89453480",
-        "173984950848a2d27c0cc1c76ccf3d6d3dc8255b",
-        File("token").readText()
-    )
+    protected val session = UserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, BuildConfig.TOKEN_KEY)
 
     protected fun getJsonResponse(title: String): String {
         val s = File.separator

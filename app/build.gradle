@@ -15,6 +15,16 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        def token = ""
+        if (project.rootProject.file('local.properties').canRead()) {
+            properties.load(project.rootProject.file("local.properties").newDataInputStream())
+            token = properties.getProperty('api.token')
+        }
+        buildConfigField "String", "CLIENT_KEY", "\"85cab69095196f3.89453480\""
+        buildConfigField "String", "API_KEY", "\"173984950848a2d27c0cc1c76ccf3d6d3dc8255b\""
+        buildConfigField "String", "TOKEN_KEY", "\"$token\""
     }
     buildTypes {
         release {
@@ -40,6 +50,8 @@ android {
         }
     }
 }
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
