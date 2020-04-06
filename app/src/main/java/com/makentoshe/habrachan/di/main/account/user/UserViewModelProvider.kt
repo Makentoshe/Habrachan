@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.di.main.account.user
 
 import androidx.lifecycle.ViewModelProviders
+import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.database.UserDao
 import com.makentoshe.habrachan.common.network.manager.UsersManager
@@ -18,16 +19,10 @@ import javax.inject.Provider
 class UserViewModelProvider(
     private val fragment: UserFragment,
     private val userAccount: UserAccount,
-    private val userAvatarViewModel: UserAvatarViewModel
+    private val userAvatarViewModel: UserAvatarViewModel,
+    private val usersManager: UsersManager,
+    private val database: HabrDatabase
 ) : Provider<UserViewModel> {
-
-    private val usersManager by inject<UsersManager>()
-    private val sessionDao by inject<SessionDao>()
-    private val userDao by inject<UserDao>()
-
-    init {
-        Toothpick.openScopes(ApplicationScope::class.java).inject(this)
-    }
 
     override fun get() = when (userAccount) {
         is UserAccount.User -> getCustomUserViewModel(userAccount)
@@ -35,12 +30,12 @@ class UserViewModelProvider(
     }
 
     private fun getMeUserViewModel(): MeUserViewModel {
-        val factory = MeUserViewModel.Factory(usersManager, sessionDao, userAvatarViewModel)
+        val factory = MeUserViewModel.Factory(usersManager, database.session(), userAvatarViewModel)
         return ViewModelProviders.of(fragment, factory)[MeUserViewModel::class.java]
     }
 
     private fun getCustomUserViewModel(user: UserAccount.User): CustomUserViewModel {
-        val factory = CustomUserViewModel.Factory(usersManager, sessionDao, user, userAvatarViewModel, userDao)
+    val factory = CustomUserViewModel.Factory(usersManager, database.session(), user, userAvatarViewModel, database.users())
         return ViewModelProviders.of(fragment, factory)[CustomUserViewModel::class.java]
     }
 }

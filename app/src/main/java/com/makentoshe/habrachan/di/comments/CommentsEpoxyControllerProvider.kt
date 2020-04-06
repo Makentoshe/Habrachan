@@ -13,15 +13,10 @@ import javax.inject.Provider
 
 class CommentsEpoxyControllerProvider(
     private val disposables: CompositeDisposable,
-    private val commentsFragmentViewModel: CommentsFragmentViewModel
+    private val commentsFragmentViewModel: CommentsFragmentViewModel,
+    private val imageManager: ImageManager,
+    private val avatarDao: AvatarDao
 ) : Provider<CommentsEpoxyController> {
-
-    private val imageManager by inject<ImageManager>()
-    private val avatarDao by inject<AvatarDao>()
-
-    init {
-        Toothpick.openScope(ApplicationScope::class.java).inject(this)
-    }
 
     override fun get(): CommentsEpoxyController {
         val avatarControllerFactory = CommentAvatarController.Factory(disposables, avatarDao, imageManager)

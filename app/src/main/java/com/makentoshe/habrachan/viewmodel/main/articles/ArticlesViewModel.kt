@@ -75,15 +75,17 @@ class ArticlesViewModel(
     override fun onCleared() = disposables.clear()
 
     class Factory(
-        private val sessionDao: SessionDao,
+        private val database: HabrDatabase,
         private val articleManager: HabrArticleManager,
-        private val articleDao: ArticleDao,
-        private val commentDao: CommentDao,
-        private val avatarDao: AvatarDao,
-        private val userDao: UserDao
+        private val imageDatabase: ImageDatabase
     ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ArticlesViewModel(sessionDao, articleManager, articleDao, commentDao, avatarDao, userDao) as T
-        }
+        override fun <T : ViewModel?> create(modelClass: Class<T>) = ArticlesViewModel(
+            database.session(),
+            articleManager,
+            database.articles(),
+            database.comments(),
+            imageDatabase.avatars(),
+            database.users()
+        ) as T
     }
 }

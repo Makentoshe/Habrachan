@@ -1,37 +1,63 @@
 package com.makentoshe.habrachan.di.comments
 
+import androidx.lifecycle.ViewModelProviders
+import androidx.room.Room
+import com.makentoshe.habrachan.BuildConfig
+import com.makentoshe.habrachan.common.database.HabrDatabase
+import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
+import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
-annotation class CommentsFragmentScope
-
 class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
+    private val commentsManager: HabrCommentsManager
+    private val imageManager: ImageManager
+    private val imageDatabase = ImageDatabase(fragment.requireContext())
+
     private val router by inject<Router>()
+    private val client by inject<OkHttpClient>()
+    private val database by inject<HabrDatabase>()
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
+        commentsManager = HabrCommentsManager.Factory(client).build()
+        imageManager = ImageManager.Builder(client).build()
 
         val disposables = CompositeDisposable()
         bind<CompositeDisposable>().toInstance(disposables)
 
-        val commentsFragmentViewModelProvider = CommentsFragmentViewModelProvider(fragment)
-        val commentsFragmentViewModel = commentsFragmentViewModelProvider.get()
-        bind<CommentsFragmentViewModel>().toProviderInstance(commentsFragmentViewModelProvider)
+        val commentsFragmentViewModel = getCommentsFragmentViewModel(fragment)
+        bind<CommentsFragmentViewModel>().toInstance(commentsFragmentViewModel)
 
-        val commentsEpoxyControllerProvider = CommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel)
+        val commentsEpoxyControllerProvider = getCommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel)
         bind<CommentsEpoxyController>().toProviderInstance(commentsEpoxyControllerProvider)
 
         bind<CommentsFragment.Navigator>().toInstance(CommentsFragment.Navigator(router))
     }
+
+    private fun getCommentsFragmentViewModel(fragment: CommentsFragment): CommentsFragmentViewModel {
+        val commentsFragmentViewModelFactory =
+            CommentsFragmentViewModel.Factory(commentsManager, database.comments(), database.session())
+        return ViewModelProviders.of(fragment, commentsFragmentViewModelFactory)[CommentsFragmentViewModel::class.java]
+    }
+
+    private fun getCommentsEpoxyControllerProvider(
+        disposables: CompositeDisposable, commentsFragmentViewModel: CommentsFragmentViewModel
+    ) = CommentsEpoxyControllerProvider(
+        disposables, commentsFragmentViewModel, imageManager, imageDatabase.avatars()
+    )
 
     class Factory {
         fun build(fragment: CommentsFragment): CommentsFragmentModule {

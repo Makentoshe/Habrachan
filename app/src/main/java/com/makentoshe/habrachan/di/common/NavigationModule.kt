@@ -6,8 +6,6 @@ import ru.terrakok.cicerone.NavigatorHolder
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 
-annotation class NavigationScope
-
 class NavigationModule(cicerone: Cicerone<Router>): Module() {
     init {
         bind<Router>().toInstance(cicerone.router)
