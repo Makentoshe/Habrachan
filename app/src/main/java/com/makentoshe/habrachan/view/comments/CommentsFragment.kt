@@ -101,7 +101,7 @@ class CommentsFragment : Fragment() {
 
         val messageview = view.findViewById<TextView>(R.id.article_comments_messageview)
         messageview.visibility = View.VISIBLE
-        messageview.text = response.json
+        messageview.text = response.message.plus("\n").plus(response.additional.joinToString("\n"))
 
         val progressbar = view.findViewById<ProgressBar>(R.id.article_comments_progressbar)
         progressbar.visibility = View.GONE

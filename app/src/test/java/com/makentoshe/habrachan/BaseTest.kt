@@ -13,7 +13,7 @@ abstract class BaseTest {
 
     protected fun getJsonResponse(title: String): String {
         val s = File.separator
-        val path = "${s}src${s}sharedTest${s}java${s}com${s}makentoshe${s}habrachan${s}json${s}$title"
+        val path = "${s}src${s}test${s}java${s}com${s}makentoshe${s}habrachan${s}json${s}$title"
         return File(File("").absoluteFile, path).readText()
     }
 }

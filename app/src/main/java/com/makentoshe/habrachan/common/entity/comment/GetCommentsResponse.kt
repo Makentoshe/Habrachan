@@ -15,5 +15,12 @@ sealed class GetCommentsResponse{
         val serverTime: String
     ): GetCommentsResponse()
 
-    class Error(val json: String): GetCommentsResponse()
+    class Error(
+        @SerializedName("code")
+        val code: Int,
+        @SerializedName("message")
+        val message: String,
+        @SerializedName("additional")
+        val additional: Array<String>
+    ): GetCommentsResponse()
 }
