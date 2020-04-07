@@ -11,7 +11,7 @@ import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import com.makentoshe.habrachan.model.main.account.user.UserScreen
 import com.makentoshe.habrachan.ui.main.account.AccountFlowFragmentUi
 import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
+import com.makentoshe.habrachan.common.navigation.Router
 import toothpick.ktp.delegate.inject
 
 class AccountFlowFragment : Fragment() {

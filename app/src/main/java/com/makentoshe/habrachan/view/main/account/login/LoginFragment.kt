@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.view.main.account.login
 
 import android.app.Activity
 import android.os.Bundle
+import android.os.Debug
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.model.main.account.login.LoginData
 import com.makentoshe.habrachan.ui.main.account.login.LoginFragmentUi
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
 import com.makentoshe.habrachan.viewmodel.main.account.login.LoginViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
@@ -53,13 +56,18 @@ class LoginFragment : Fragment() {
             }
         }
 
-        viewModel.errorObservable.subscribe {
+        viewModel.errorObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
             passwordLayout.error = resources.getString(R.string.invalid_email_or_password)
         }.let(disposables::add)
 
-        viewModel.loginObservable.subscribe {
+        viewModel.loginObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
             navigator.toUserScreen()
         }.let(disposables::add)
+
+        if (BuildConfig.DEBUG) {
+            emailView.setText(BuildConfig.LOGIN)
+            passwordView.setText(BuildConfig.PASSWORD)
+        }
     }
 
     override fun onDestroy() {

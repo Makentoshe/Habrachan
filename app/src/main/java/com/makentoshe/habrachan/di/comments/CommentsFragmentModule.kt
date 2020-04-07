@@ -1,71 +1,67 @@
-package com.makentoshe.habrachan.di.article.comments
+package com.makentoshe.habrachan.di.comments
 
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.database.CommentDao
-import com.makentoshe.habrachan.common.database.SessionDao
+import androidx.room.Room
+import com.makentoshe.habrachan.BuildConfig
+import com.makentoshe.habrachan.common.database.HabrDatabase
+import com.makentoshe.habrachan.common.database.ImageDatabase
+import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
-import com.makentoshe.habrachan.common.repository.InputStreamRepository
+import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.model.article.comment.ArticleCommentAvatarRepository
-import com.makentoshe.habrachan.model.article.comment.OnCommentGestureDetectorBuilder
-import com.makentoshe.habrachan.model.article.comment.SpannedFactory
-import com.makentoshe.habrachan.view.article.comments.CommentsFragment
-import com.makentoshe.habrachan.viewmodel.article.comments.CommentsFragmentViewModel
-import ru.terrakok.cicerone.Router
+import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
+import com.makentoshe.habrachan.view.comments.CommentsFragment
+import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
+import io.reactivex.disposables.CompositeDisposable
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
-import javax.inject.Provider
-
-annotation class CommentsFragmentScope
 
 class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
-    private val inputStreamRepository by inject<InputStreamRepository>()
+    private val commentsManager: HabrCommentsManager
+    private val imageManager: ImageManager
+    private val imageDatabase = ImageDatabase(fragment.requireContext())
+
     private val router by inject<Router>()
+    private val client by inject<OkHttpClient>()
+    private val database by inject<HabrDatabase>()
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
+        commentsManager = HabrCommentsManager.Factory(client).build()
+        imageManager = ImageManager.Builder(client).build()
 
-//        val imageGetter = SpannedFactory.ImageGetter(inputStreamRepository, fragment.resources)
-        bind<SpannedFactory>().toInstance(SpannedFactory(null))
+        val disposables = CompositeDisposable()
+        bind<CompositeDisposable>().toInstance(disposables)
 
-        val commentsFragmentViewModelProvider = CommentsFragmentViewModelProvider(fragment)
-        bind<CommentsFragmentViewModel>().toProviderInstance(commentsFragmentViewModelProvider)
+        val commentsFragmentViewModel = getCommentsFragmentViewModel(fragment)
+        bind<CommentsFragmentViewModel>().toInstance(commentsFragmentViewModel)
 
-        val onCommentClickListenerFactory = OnCommentGestureDetectorBuilder()
-        bind<OnCommentGestureDetectorBuilder>().toInstance(onCommentClickListenerFactory)
-
-        val articleCommentAvatarRepository = ArticleCommentAvatarRepository(inputStreamRepository)
-        bind<ArticleCommentAvatarRepository>().toInstance(articleCommentAvatarRepository)
+        val commentsEpoxyControllerProvider = getCommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel)
+        bind<CommentsEpoxyController>().toProviderInstance(commentsEpoxyControllerProvider)
 
         bind<CommentsFragment.Navigator>().toInstance(CommentsFragment.Navigator(router))
     }
 
+    private fun getCommentsFragmentViewModel(fragment: CommentsFragment): CommentsFragmentViewModel {
+        val commentsFragmentViewModelFactory =
+            CommentsFragmentViewModel.Factory(commentsManager, database.comments(), database.session())
+        return ViewModelProviders.of(fragment, commentsFragmentViewModelFactory)[CommentsFragmentViewModel::class.java]
+    }
+
+    private fun getCommentsEpoxyControllerProvider(
+        disposables: CompositeDisposable, commentsFragmentViewModel: CommentsFragmentViewModel
+    ) = CommentsEpoxyControllerProvider(
+        disposables, commentsFragmentViewModel, imageManager, imageDatabase.avatars()
+    )
+
     class Factory {
         fun build(fragment: CommentsFragment): CommentsFragmentModule {
             return CommentsFragmentModule(fragment)
-        }
-    }
-
-    class CommentsFragmentViewModelProvider(
-        private val fragment: CommentsFragment
-    ) : Provider<CommentsFragmentViewModel> {
-
-        private val commentsManager by inject<HabrCommentsManager>()
-        private val commentDao by inject<CommentDao>()
-        private val sessionDao by inject<SessionDao>()
-
-        init {
-            Toothpick.openScope(ApplicationScope::class.java).inject(this)
-        }
-
-        override fun get(): CommentsFragmentViewModel {
-            val factory = CommentsFragmentViewModel.Factory(
-                fragment.arguments.articleId, commentsManager, commentDao, sessionDao
-            )
-            return ViewModelProviders.of(fragment, factory)[CommentsFragmentViewModel::class.java]
         }
     }
 }

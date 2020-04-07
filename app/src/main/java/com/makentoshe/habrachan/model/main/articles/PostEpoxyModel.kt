@@ -38,6 +38,7 @@ abstract class PostEpoxyModel : EpoxyModelWithHolder<PostEpoxyModel.ViewHolder>(
     override fun bind(holder: ViewHolder) {
         holder.titleView?.text = title
         holder.authorView?.text = author
+        holder.authorView?.requestLayout()
         holder.timeView?.text = timePublished
         holder.hubsView?.text = hubs
         holder.scoreView?.text = score.toString()

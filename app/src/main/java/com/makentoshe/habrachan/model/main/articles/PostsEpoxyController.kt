@@ -3,8 +3,8 @@ package com.makentoshe.habrachan.model.main.articles
 import android.view.View
 import com.airbnb.epoxy.EpoxyController
 import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.article.ArticleScreen
-import ru.terrakok.cicerone.Router
 
 class PostsEpoxyController(private val modelFactory: PostModelFactory) : EpoxyController() {
 

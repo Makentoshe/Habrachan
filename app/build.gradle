@@ -15,6 +15,22 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        def token = ""
+        def password = ""
+        def email = ""
+        if (project.rootProject.file('local.properties').canRead()) {
+            properties.load(project.rootProject.file("local.properties").newDataInputStream())
+            token = properties.getProperty('api.token')
+            password = properties.getProperty('login.password')
+            email = properties.getProperty('login.email')
+        }
+        buildConfigField "String", "CLIENT_KEY", "\"85cab69095196f3.89453480\""
+        buildConfigField "String", "API_KEY", "\"173984950848a2d27c0cc1c76ccf3d6d3dc8255b\""
+        buildConfigField "String", "TOKEN_KEY", "\"$token\""
+        buildConfigField "String", "LOGIN", "\"$email\""
+        buildConfigField "String", "PASSWORD", "\"$password\""
     }
     buildTypes {
         release {
@@ -26,7 +42,22 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+    // share some classes for both tests types
+    sourceSets {
+        String sharedTestDir = 'src/sharedTest/java'
+        test {
+            java.srcDir sharedTestDir
+        }
+        androidTest {
+            java.srcDir sharedTestDir
+        }
+    }
 }
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -137,6 +168,10 @@ dependencies {
 
     def espressoCore = "3.2.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
+
+    def testFragment = "1.3.0-alpha03"
+    implementation "androidx.fragment:fragment:$testFragment"
+    debugImplementation "androidx.fragment:fragment-testing:$testFragment"
 
     // Mockk
     // https://github.com/mockk/mockk

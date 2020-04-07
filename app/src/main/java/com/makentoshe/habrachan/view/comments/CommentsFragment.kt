@@ -1,89 +1,141 @@
-package com.makentoshe.habrachan.view.article.comments
+package com.makentoshe.habrachan.view.comments
 
 import android.os.Bundle
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.util.isEmpty
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.database.AvatarDao
-import com.makentoshe.habrachan.model.article.comment.*
+import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.common.entity.comment.GetCommentsResponse
+import com.makentoshe.habrachan.common.entity.comment.VoteCommentResponse
+import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.common.ui.SnackbarErrorController
+import com.makentoshe.habrachan.model.comments.*
 import com.makentoshe.habrachan.ui.article.comments.CommentsFragmentUi
-import com.makentoshe.habrachan.viewmodel.article.comments.CommentsFragmentViewModel
+import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 class CommentsFragment : Fragment() {
 
-    val arguments = Arguments(this)
-    private val disposables = CompositeDisposable()
-    private val viewModel by inject<CommentsFragmentViewModel>()
+    private val arguments = Arguments(this)
+
+    private val disposables by inject<CompositeDisposable>()
+    private val commentsViewModel by inject<CommentsFragmentViewModel>()
     private val navigator by inject<Navigator>()
-    private val spannedFactory by inject<SpannedFactory>()
-    private val commentClickListerFactory by inject<OnCommentGestureDetectorBuilder>()
-    private val commentAvatarRepository by inject<ArticleCommentAvatarRepository>()
-    private val avatarDao by inject<AvatarDao>()
+    private val epoxyController by inject<CommentsEpoxyController>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentsFragmentUi().createView(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            val request = commentsViewModel.createGetRequest(arguments.articleId)
+            commentsViewModel.getCommentsObserver.onNext(request)
+        }
+
         val retrybutton = view.findViewById<View>(R.id.article_comments_retrybutton)
-        val firstCommentButton = view.findViewById<View>(R.id.article_comments_firstbutton)
-        val messageview = view.findViewById<TextView>(R.id.article_comments_messageview)
-        val progressbar = view.findViewById<ProgressBar>(R.id.article_comments_progressbar)
-        val recyclerview = view.findViewById<RecyclerView>(R.id.article_comments_recyclerview)
+        retrybutton.setOnClickListener(::onRetryButtonClicked)
+
         val toolbar = view.findViewById<Toolbar>(R.id.article_comments_toolbar)
         toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
+        toolbar.setNavigationOnClickListener { navigator.back() }
+
+        commentsViewModel.getCommentsObservable.subscribe(::onGetCommentsResponse).let(disposables::add)
+        commentsViewModel.voteUpCommentObservable.subscribe(::onVoteCommentsResponse).let(disposables::add)
+        commentsViewModel.voteDownCommentObservable.subscribe(::onVoteCommentsResponse).let(disposables::add)
 
         // disable touch events for background fragments
         view.setOnClickListener { }
+    }
 
-        val avatarController = ArticleCommentAvatarController.Factory(commentAvatarRepository, disposables, avatarDao)
-        val factory = ArticleCommentEpoxyModel.Factory(spannedFactory, commentClickListerFactory, avatarController)
-        val epoxyController = ArticleCommentsEpoxyController(factory)
+    private fun onGetCommentsResponse(response: GetCommentsResponse) = when (response) {
+        is GetCommentsResponse.Success -> onGetCommentsResponseSuccess(response)
+        is GetCommentsResponse.Error -> onGetCommentsResponseError(response)
+    }
 
-        viewModel.successObservable.subscribe { commentMap ->
-            if (commentMap.size() == 0) {
-                messageview.setText(R.string.no_comments)
-                messageview.visibility = View.VISIBLE
-                firstCommentButton.visibility = View.VISIBLE
-            } else {
-                epoxyController.setComments(commentMap)
-                recyclerview.adapter = epoxyController.adapter
-                epoxyController.requestModelBuild()
-                recyclerview.visibility = View.VISIBLE
-            }
-            progressbar.visibility = View.GONE
-        }.let(disposables::add)
+    private fun onGetCommentsResponseSuccess(response: GetCommentsResponse.Success) {
+        val commentsArray = commentsViewModel.toSparseArray(response.data, arguments.articleId)
+        if (commentsArray.isEmpty()) displayCommentsThumbnail() else displayComments(commentsArray)
+    }
 
-        viewModel.errorObservable.subscribe {
-            messageview.text = it.toString()
-            messageview.visibility = View.VISIBLE
-            retrybutton.visibility = View.VISIBLE
-            progressbar.visibility = View.GONE
-        }.let(disposables::add)
+    private fun displayComments(comments: SparseArray<ArrayList<Comment>>) {
+        val view = view ?: return
 
-        viewModel.progressObservable.subscribe {
-            messageview.visibility = View.GONE
-            recyclerview.visibility = View.GONE
-            retrybutton.visibility = View.GONE
-            progressbar.visibility = View.VISIBLE
-        }.let(disposables::add)
+        val progressbar = view.findViewById<ProgressBar>(R.id.article_comments_progressbar)
+        progressbar.visibility = View.GONE
 
-        retrybutton.setOnClickListener {
-            viewModel.progressSubject.onNext(Unit)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.article_comments_recyclerview)
+        recyclerView.visibility = View.VISIBLE
+
+        epoxyController.setComments(comments)
+        recyclerView.adapter = epoxyController.adapter
+        epoxyController.requestModelBuild()
+        recyclerView.visibility = View.VISIBLE
+    }
+
+    private fun displayCommentsThumbnail() {
+        val view = view ?: return
+
+        val messageview = view.findViewById<TextView>(R.id.article_comments_messageview)
+        messageview.setText(R.string.no_comments)
+        messageview.visibility = View.VISIBLE
+
+        val firstCommentButton = view.findViewById<View>(R.id.article_comments_firstbutton)
+        firstCommentButton.visibility = View.VISIBLE
+    }
+
+    private fun onGetCommentsResponseError(response: GetCommentsResponse.Error) {
+        val view = view ?: return
+
+        val retrybutton = view.findViewById<View>(R.id.article_comments_retrybutton)
+        retrybutton.visibility = View.VISIBLE
+
+        val messageview = view.findViewById<TextView>(R.id.article_comments_messageview)
+        messageview.visibility = View.VISIBLE
+        messageview.text = response.message.plus("\n").plus(response.additional.joinToString("\n"))
+
+        val progressbar = view.findViewById<ProgressBar>(R.id.article_comments_progressbar)
+        progressbar.visibility = View.GONE
+    }
+
+    private fun onRetryButtonClicked(view: View) {
+        val retrybutton = requireView().findViewById<View>(R.id.article_comments_retrybutton)
+        retrybutton.visibility = View.GONE
+
+        val messageview = requireView().findViewById<TextView>(R.id.article_comments_messageview)
+        messageview.visibility = View.GONE
+
+        val progressbar = requireView().findViewById<ProgressBar>(R.id.article_comments_progressbar)
+        progressbar.visibility = View.VISIBLE
+    }
+
+    private fun onVoteCommentsResponse(response: VoteCommentResponse) = when(response) {
+        is VoteCommentResponse.Success -> onVoteCommentsResponseSuccess(response)
+        is VoteCommentResponse.Error -> onVoteCommentsResponseError(response)
+    }
+
+    private fun onVoteCommentsResponseSuccess(response: VoteCommentResponse.Success) {
+        epoxyController.updateCommentScore(response.request.commentId, response.score)
+        epoxyController.requestModelBuild()
+    }
+
+    private fun onVoteCommentsResponseError(response: VoteCommentResponse.Error) {
+        val message = when (response.code) {
+            498 -> requireContext().getString(R.string.network_check_error)
+            401 -> requireContext().getString(R.string.should_be_logged_in_for_action)
+            400 -> requireContext().getString(R.string.repeated_voting_is_prohibited)
+            else -> response.message.plus(" ").plus(response.additional.joinToString(". "))
         }
-
-        toolbar.setNavigationOnClickListener {
-            navigator.back()
-        }
+        SnackbarErrorController(view ?: return).displayMessage(message)
     }
 
     override fun onDestroy() {

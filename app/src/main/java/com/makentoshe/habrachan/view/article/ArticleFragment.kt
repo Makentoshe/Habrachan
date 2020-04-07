@@ -12,15 +12,17 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
+import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.ui.ImageTintController
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.common.ui.TextScoreController
 import com.makentoshe.habrachan.model.article.JavaScriptInterface
 import com.makentoshe.habrachan.model.article.WebViewController
-import com.makentoshe.habrachan.model.comment.CommentsScreen
+import com.makentoshe.habrachan.model.comments.CommentsScreen
 import com.makentoshe.habrachan.model.images.PostImageScreen
 import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import com.makentoshe.habrachan.model.main.account.user.UserScreen
@@ -30,7 +32,6 @@ import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 class ArticleFragment : Fragment() {
@@ -81,7 +82,11 @@ class ArticleFragment : Fragment() {
         loginView.text = response.article.author.login
 
         val authorView = requireView().findViewById<View>(R.id.article_fragment_content_toolbar_author)
-        authorView.setOnClickListener { navigator.toUserScreen(response.article.author.login) }
+        authorView.setOnClickListener {
+            if (!navigator.toUserScreen(response.article.author.login)) {
+                displaySnackbarError(resources.getString(R.string.should_be_logged_in_for_user))
+            }
+        }
 
         val timeView = requireView().findViewById<TextView>(R.id.article_fragment_content_toolbar_time)
         timeView.text = response.article.timePublished
@@ -90,7 +95,7 @@ class ArticleFragment : Fragment() {
         webView.loadData(response.article.buildHtml(resources), "text/html", "utf-8")
 
         val voteTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_voteview)
-        TextScoreController(voteTextView).setScore(requireContext(), response.article.score)
+        TextScoreController(voteTextView).setScoreLight(requireContext(), response.article.score)
 
         val voteUpView = requireView().findViewById<View>(R.id.article_fragment_bottombar_voteup)
         voteUpView.setOnClickListener {
@@ -119,6 +124,18 @@ class ArticleFragment : Fragment() {
         commentsView.setOnClickListener {
             navigator.toArticleCommentsScreen(arguments.articleId)
         }
+
+        val scrollView = requireView().findViewById<CustomNestedScrollView>(R.id.article_fragment_scroll)
+        scrollView.visibility = View.VISIBLE
+
+        val containerView = requireView().findViewById<View>(R.id.article_fragment_content_toolbar_container)
+        containerView.visibility = View.VISIBLE
+
+        val appbar = requireView().findViewById<AppBarLayout>(R.id.article_fragment_content_toolbar_appbar)
+        appbar.setExpanded(true, true)
+
+        val progress = requireView().findViewById<View>(R.id.article_fragment_progressbar)
+        progress.visibility = View.GONE
     }
 
     fun onArticleError(message: String) {
@@ -134,18 +151,6 @@ class ArticleFragment : Fragment() {
     }
 
     fun onArticleDisplayed() {
-        val scrollView = requireView().findViewById<CustomNestedScrollView>(R.id.article_fragment_scroll)
-        scrollView.visibility = View.VISIBLE
-
-        val containerView = requireView().findViewById<View>(R.id.article_fragment_content_toolbar_container)
-        containerView.visibility = View.VISIBLE
-
-        val appbar = requireView().findViewById<AppBarLayout>(R.id.article_fragment_content_toolbar_appbar)
-        appbar.setExpanded(true, true)
-
-        val progress = requireView().findViewById<View>(R.id.article_fragment_progressbar)
-        progress.visibility = View.GONE
-
         val bottomBar = requireView().findViewById<View>(R.id.article_fragment_bottombar)
         bottomBar.visibility = View.VISIBLE
     }
@@ -158,7 +163,7 @@ class ArticleFragment : Fragment() {
     private fun onArticleVotedSuccess(response: VoteArticleResponse.Success) {
         val voteTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_voteview)
         val currentScore = voteTextView.text.toString().toInt()
-        TextScoreController(voteTextView).setScore(requireContext(), response.score)
+        TextScoreController(voteTextView).setScoreLight(requireContext(), response.score)
 
         if (response.score > currentScore) markVoteUpButton() else markVoteDownButton()
     }
@@ -231,7 +236,7 @@ class ArticleFragment : Fragment() {
         }
     }
 
-    class Navigator(private val router: Router) {
+    class Navigator(private val router: Router, private val sessionDao: SessionDao) {
 
         /** Returns to MainScreen */
         fun back() {
@@ -247,8 +252,13 @@ class ArticleFragment : Fragment() {
             router.navigateTo(CommentsScreen(articleId))
         }
 
-        fun toUserScreen(userName: String) {
-            router.navigateTo(UserScreen(UserAccount.User(userName)))
+        fun toUserScreen(userName: String): Boolean {
+            if (sessionDao.get()!!.isLoggedIn) {
+                router.navigateTo(UserScreen(UserAccount.User(userName)))
+                return true
+            } else {
+                return false
+            }
         }
     }
 

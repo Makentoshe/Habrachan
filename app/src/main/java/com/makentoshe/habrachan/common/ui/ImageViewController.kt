@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.common.ui
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.ImageView
@@ -16,6 +17,10 @@ class ImageViewController(private val imageView: ImageView) {
 
     fun setAvatarFromByteArray(byteArray: ByteArray) {
         val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+        setAvatarFromBitmap(bitmap)
+    }
+
+    fun setAvatarFromBitmap(bitmap: Bitmap) {
         val drawable = RoundedBitmapDrawableFactory.create(imageView.resources, bitmap)
         drawable.cornerRadius = 8f
         imageView.setImageDrawable(drawable)

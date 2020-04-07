@@ -1,12 +1,10 @@
 package com.makentoshe.habrachan.di.common
 
+import com.makentoshe.habrachan.common.navigation.Router
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
-
-annotation class NavigationScope
 
 class NavigationModule(cicerone: Cicerone<Router>): Module() {
     init {

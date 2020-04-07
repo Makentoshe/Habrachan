@@ -6,7 +6,7 @@ import com.airbnb.epoxy.EpoxyControllerAdapter
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.main.articles.PostModelFactory
 import com.makentoshe.habrachan.model.main.articles.PostsEpoxyController
-import ru.terrakok.cicerone.Router
+import com.makentoshe.habrachan.common.navigation.Router
 
 class ArticlesControllerViewModel(private val controller: PostsEpoxyController) : ViewModel() {
 
