@@ -17,6 +17,7 @@ import com.makentoshe.habrachan.model.main.account.login.LoginData
 import com.makentoshe.habrachan.ui.main.account.login.LoginFragmentUi
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
 import com.makentoshe.habrachan.viewmodel.main.account.login.LoginViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
@@ -53,11 +54,11 @@ class LoginFragment : Fragment() {
             }
         }
 
-        viewModel.errorObservable.subscribe {
+        viewModel.errorObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
             passwordLayout.error = resources.getString(R.string.invalid_email_or_password)
         }.let(disposables::add)
 
-        viewModel.loginObservable.subscribe {
+        viewModel.loginObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
             navigator.toUserScreen()
         }.let(disposables::add)
     }

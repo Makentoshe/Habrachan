@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.network.manager.*
+import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.account.AccountFlowFragmentScope
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
 import com.makentoshe.habrachan.view.main.account.login.LoginFragment
@@ -26,7 +27,7 @@ class LoginFragmentModule(fragment: LoginFragment) : Module() {
     private val database by inject<HabrDatabase>()
 
     init {
-        Toothpick.openScopes(AccountFlowFragmentScope::class.java).inject(this)
+        Toothpick.openScopes(ApplicationScope::class.java, AccountFlowFragmentScope::class.java).inject(this)
         loginManager = LoginManager.Builder(client).build()
 
         val loginViewModel = getLoginViewModel(fragment)
