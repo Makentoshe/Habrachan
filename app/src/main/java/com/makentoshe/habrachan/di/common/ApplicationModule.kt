@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.common.database.HabrDatabase
+import com.makentoshe.habrachan.common.entity.session.UserSession
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.config.Module
@@ -20,6 +21,11 @@ class ApplicationModule(context: Context) : Module() {
     init {
         bind<OkHttpClient>().toInstance(client)
         bind<HabrDatabase>().toInstance(database)
+
+        if (database.session().get() == null) {
+            val session = UserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY)
+            database.session().insert(session)
+        }
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
