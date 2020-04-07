@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.view.main.account.user
+package com.makentoshe.habrachan.view.user
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,10 +14,10 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.entity.user.UserResponse
 import com.makentoshe.habrachan.common.ui.ImageViewController
-import com.makentoshe.habrachan.model.main.account.user.UserAccount
-import com.makentoshe.habrachan.ui.main.account.user.UserFragmentUi
+import com.makentoshe.habrachan.model.user.UserAccount
+import com.makentoshe.habrachan.ui.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
-import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
+import com.makentoshe.habrachan.viewmodel.user.UserViewModel
 import io.reactivex.disposables.CompositeDisposable
 import com.makentoshe.habrachan.common.navigation.Router
 import toothpick.ktp.delegate.inject

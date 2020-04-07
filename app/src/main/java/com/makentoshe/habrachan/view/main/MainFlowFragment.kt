@@ -1,12 +1,11 @@
 package com.makentoshe.habrachan.view.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.main.account.AccountFlowScreen
 import com.makentoshe.habrachan.model.main.articles.ArticlesFlowScreen
@@ -19,6 +18,7 @@ class MainFlowFragment : Fragment() {
 
     private val arguments = Arguments(this)
     private val navigator by inject<MainFlowFragment.Navigator>()
+    private val sessionDao by inject<SessionDao>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +33,37 @@ class MainFlowFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val navigation = view.findViewById<BottomNavigationView>(R.id.main_bottom_navigation)
-        navigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_account -> navigator.toAccountScreen()
-                R.id.action_posts -> navigator.toArticlesScreen(arguments.page)
-                R.id.action_menu -> navigator.toMenuScreen()
-                else -> return@setOnNavigationItemSelectedListener false
-            }
-            return@setOnNavigationItemSelectedListener true
+        navigation.setOnNavigationItemSelectedListener(::onNavigationItemSelected)
+
+        val session = sessionDao.get()
+        if (session?.me != null) {
+            navigation.menu.findItem(R.id.action_account).title = session.me.login
         }
+    }
+
+    private fun onNavigationItemSelected(item: MenuItem) = when(item.itemId) {
+        R.id.action_account -> {
+            onAccountClick(); true
+        }
+        R.id.action_posts -> {
+            onArticlesClick(); true
+        }
+        R.id.action_menu -> {
+            onMenuClick(); true
+        }
+        else -> false
+    }
+
+    private fun onAccountClick() {
+        navigator.toAccountScreen()
+    }
+
+    private fun onArticlesClick() {
+        navigator.toArticlesScreen(arguments.page)
+    }
+
+    private fun onMenuClick() {
+        navigator.toMenuScreen()
     }
 
     override fun onStart() {

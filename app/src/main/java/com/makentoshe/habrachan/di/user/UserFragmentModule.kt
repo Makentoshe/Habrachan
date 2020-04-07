@@ -1,22 +1,16 @@
-package com.makentoshe.habrachan.di.main.account.user
+package com.makentoshe.habrachan.di.user
 
 import androidx.lifecycle.ViewModelProviders
-import androidx.room.Room
-import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
-import com.makentoshe.habrachan.common.database.SessionDao
-import com.makentoshe.habrachan.common.database.UserDao
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.view.main.account.user.UserFragment
+import com.makentoshe.habrachan.view.user.UserFragment
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
-import com.makentoshe.habrachan.viewmodel.main.account.user.UserViewModel
+import com.makentoshe.habrachan.viewmodel.user.UserViewModel
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.manager.UsersManager
-import com.makentoshe.habrachan.model.main.account.user.UserAccount
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind

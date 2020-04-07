@@ -14,8 +14,8 @@ import com.makentoshe.habrachan.di.main.account.AccountFlowFragmentModule
 import com.makentoshe.habrachan.di.main.account.AccountFlowFragmentScope
 import com.makentoshe.habrachan.di.main.account.login.LoginFragmentModule
 import com.makentoshe.habrachan.di.main.account.login.LoginFragmentScope
-import com.makentoshe.habrachan.di.main.account.user.UserFragmentModule
-import com.makentoshe.habrachan.di.main.account.user.UserFragmentScope
+import com.makentoshe.habrachan.di.user.UserFragmentModule
+import com.makentoshe.habrachan.di.user.UserFragmentScope
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentModule
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentScope
 import com.makentoshe.habrachan.view.article.ArticleFragment
@@ -23,7 +23,7 @@ import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.view.main.MainFlowFragment
 import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
 import com.makentoshe.habrachan.view.main.account.login.LoginFragment
-import com.makentoshe.habrachan.view.main.account.user.UserFragment
+import com.makentoshe.habrachan.view.user.UserFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy

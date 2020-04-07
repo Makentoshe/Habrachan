@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.viewmodel.main.account.user
+package com.makentoshe.habrachan.viewmodel.user
 
 import androidx.lifecycle.ViewModel
 import com.makentoshe.habrachan.common.entity.user.UserResponse

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.main.account.user
+package com.makentoshe.habrachan.model.user
 
 import java.io.Serializable
 
