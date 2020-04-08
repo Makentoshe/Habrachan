@@ -3,13 +3,13 @@ package com.makentoshe.habrachan.di.user
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
+import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.common.network.manager.ImageManager
+import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.user.UserFragment
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
-import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.common.network.manager.ImageManager
-import com.makentoshe.habrachan.common.network.manager.UsersManager
 import okhttp3.OkHttpClient
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -32,12 +32,8 @@ class UserFragmentModule(fragment: UserFragment) : Module() {
         avatarManager = ImageManager.Builder(client).build()
         usersManager = UsersManager.Builder(client).build()
 
-        val userAvatarViewModel = getUserAvatarViewModel(fragment)
-        val userViewModelProvider = UserViewModelProvider(
-            fragment, fragment.arguments.userAccount, userAvatarViewModel, usersManager, database
-        )
-        bind<UserViewModel>().toProviderInstance(userViewModelProvider)
-        bind<UserAvatarViewModel>().toInstance(userAvatarViewModel)
+        bind<UserViewModel>().toInstance(getUserViewModel(fragment))
+        bind<UserAvatarViewModel>().toInstance(getUserAvatarViewModel(fragment))
         bind<UserFragment.Navigator>().toInstance(UserFragment.Navigator(router))
     }
 
@@ -45,5 +41,10 @@ class UserFragmentModule(fragment: UserFragment) : Module() {
         val application = fragment.requireActivity().application
         val factory = UserAvatarViewModel.Factory(imageDatabase.avatars(), application, avatarManager)
         return ViewModelProviders.of(fragment, factory)[UserAvatarViewModel::class.java]
+    }
+
+    private fun getUserViewModel(fragment: UserFragment): UserViewModel {
+        val factory = UserViewModel.Factory(database, usersManager)
+        return ViewModelProviders.of(fragment, factory)[UserViewModel::class.java]
     }
 }

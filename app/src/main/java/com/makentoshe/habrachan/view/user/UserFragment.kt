@@ -17,9 +17,11 @@ import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.ui.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
-import com.makentoshe.habrachan.viewmodel.user.UserViewModel
 import io.reactivex.disposables.CompositeDisposable
 import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.common.network.request.ImageRequest
+import com.makentoshe.habrachan.viewmodel.user.UserViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import toothpick.ktp.delegate.inject
 
 class UserFragment : Fragment() {
@@ -35,15 +37,19 @@ class UserFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            viewModel.userObserver.onNext(arguments.userAccount)
+        }
+
         val toolbarView = view.findViewById<Toolbar>(R.id.user_fragment_toolbar)
+        toolbarView.setNavigationOnClickListener { navigator.back() }
         if (arguments.userAccount != UserAccount.Me) {
             toolbarView.setNavigationIcon(R.drawable.ic_arrow_back)
         }
-        toolbarView.setNavigationOnClickListener {
-            navigator.back()
-        }
 
-        viewModel.userObservable.subscribe(::onUserResponse).let(disposables::add)
+        viewModel.userObservable
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onUserResponse).let(disposables::add)
 
         userAvatarViewModel.avatarObservable.subscribe(::onAvatarResponse).let(disposables::add)
     }
@@ -66,6 +72,8 @@ class UserFragment : Fragment() {
         specializmView.text = response.user.specializm
         val progressBar = requireView().findViewById<ProgressBar>(R.id.user_fragment_progress)
         progressBar.visibility = View.GONE
+
+        userAvatarViewModel.avatarObserver.onNext(ImageRequest(response.user.avatar))
     }
 
     private fun onUserError(response: UserResponse.Error) {
