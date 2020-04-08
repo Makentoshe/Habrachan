@@ -1,15 +1,20 @@
 package com.makentoshe.habrachan.view.main
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.model.main.account.AccountFlowScreen
+import com.makentoshe.habrachan.model.main.login.LoginScreen
 import com.makentoshe.habrachan.model.main.articles.ArticlesFlowScreen
 import com.makentoshe.habrachan.model.main.menu.MenuScreen
+import com.makentoshe.habrachan.model.user.UserAccount
+import com.makentoshe.habrachan.model.user.UserScreen
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
 import ru.terrakok.cicerone.NavigatorHolder
 import toothpick.ktp.delegate.inject
@@ -17,7 +22,7 @@ import toothpick.ktp.delegate.inject
 class MainFlowFragment : Fragment() {
 
     private val arguments = Arguments(this)
-    private val navigator by inject<MainFlowFragment.Navigator>()
+    private val navigator by inject<Navigator>()
     private val sessionDao by inject<SessionDao>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +46,7 @@ class MainFlowFragment : Fragment() {
         }
     }
 
-    private fun onNavigationItemSelected(item: MenuItem) = when(item.itemId) {
+    private fun onNavigationItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_account -> {
             onAccountClick(); true
         }
@@ -55,7 +60,12 @@ class MainFlowFragment : Fragment() {
     }
 
     private fun onAccountClick() {
-        navigator.toAccountScreen()
+        val session = sessionDao.get()
+        if (session?.isLoggedIn == true) {
+            navigator.toUserScreen()
+        } else {
+            navigator.toLoginScreen()
+        }
     }
 
     private fun onArticlesClick() {
@@ -86,8 +96,12 @@ class MainFlowFragment : Fragment() {
             navigatorHolder.setNavigator(navigator)
         }
 
-        fun toAccountScreen() {
-            router.customReplace(AccountFlowScreen())
+        fun toUserScreen() {
+            router.customReplace(UserScreen(UserAccount.Me))
+        }
+
+        fun toLoginScreen() {
+            router.customReplace(LoginScreen())
         }
 
         fun toArticlesScreen(page: Int) {

@@ -1,8 +1,7 @@
-package com.makentoshe.habrachan.view.main.account.login
+package com.makentoshe.habrachan.view.main.login
 
 import android.app.Activity
 import android.os.Bundle
-import android.os.Debug
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +14,11 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.model.main.account.login.LoginData
+import com.makentoshe.habrachan.common.entity.login.LoginResponse
+import com.makentoshe.habrachan.model.main.login.LoginData
 import com.makentoshe.habrachan.ui.main.account.login.LoginFragmentUi
-import com.makentoshe.habrachan.view.main.account.AccountFlowFragment
-import com.makentoshe.habrachan.viewmodel.main.account.login.LoginViewModel
+import com.makentoshe.habrachan.view.main.MainFlowFragment
+import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
@@ -28,7 +28,7 @@ class LoginFragment : Fragment() {
     private val disposables = CompositeDisposable()
 
     private val viewModel by inject<LoginViewModel>()
-    private val navigator by inject<AccountFlowFragment.Navigator>()
+    private val navigator by inject<MainFlowFragment.Navigator>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LoginFragmentUi().createView(requireContext())
@@ -37,7 +37,6 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val emailView = view.findViewById<TextInputEditText>(R.id.login_fragment_email_edittext)
         val passwordView = view.findViewById<TextInputEditText>(R.id.login_fragment_password_edittext)
-        val passwordLayout = view.findViewById<TextInputLayout>(R.id.login_fragment_password)
         val signInView = view.findViewById<Button>(R.id.login_fragment_loginbutton)
 
         emailView.addTextChangedListener {
@@ -51,22 +50,36 @@ class LoginFragment : Fragment() {
         signInView.setOnClickListener {
             val loginData = LoginData(emailView.text.toString(), passwordView.text.toString())
             viewModel.signInObserver.onNext(loginData)
-            requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE).also {
-                (it as InputMethodManager).hideSoftInputFromWindow(view.windowToken, 0)
-            }
+            hideSoftKeyboard()
         }
 
-        viewModel.errorObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            passwordLayout.error = resources.getString(R.string.invalid_email_or_password)
-        }.let(disposables::add)
-
-        viewModel.loginObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            navigator.toUserScreen()
-        }.let(disposables::add)
+        viewModel.loginObservable.observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onLoginResponse).let(disposables::add)
 
         if (BuildConfig.DEBUG) {
             emailView.setText(BuildConfig.LOGIN)
             passwordView.setText(BuildConfig.PASSWORD)
+        }
+    }
+
+    private fun onLoginResponse(response: LoginResponse) = when(response) {
+        is LoginResponse.Success -> onLoginResponseSuccess(response)
+        is LoginResponse.Error -> onLoginResponseError(response)
+    }
+
+    private fun onLoginResponseSuccess(response: LoginResponse.Success) {
+        navigator.toUserScreen()
+    }
+
+    private fun onLoginResponseError(response: LoginResponse.Error) {
+        val view = view ?: return
+        val passwordLayout = view.findViewById<TextInputLayout>(R.id.login_fragment_password)
+        passwordLayout.error = resources.getString(R.string.invalid_email_or_password)
+    }
+
+    private fun hideSoftKeyboard() {
+        requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE).also {
+            (it as InputMethodManager).hideSoftInputFromWindow(view?.windowToken, 0)
         }
     }
 
