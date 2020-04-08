@@ -12,5 +12,13 @@ sealed class UserResponse {
         val serverTime: String
     ): UserResponse()
 
-    class Error(json: String): UserResponse()
+    class Error(
+//        val json: String
+        @SerializedName("code")
+        val code: Int,
+        @SerializedName("message")
+        val message: String,
+        @SerializedName("additional")
+        val additional: List<String>
+    ): UserResponse()
 }

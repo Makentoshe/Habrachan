@@ -40,7 +40,7 @@ interface UsersManager {
 
                 override fun getUser(request: UserRequest): Single<UserResponse> {
                     return Single.just(request).observeOn(Schedulers.io()).map { request ->
-                        api.getUser(request.client, request.api, request.token, request.name).execute()
+                        api.getUser(request.client, request.token, request.name).execute()
                     }.map { response ->
                         if (response.isSuccessful) {
                             UsersConverter().convertBody(response.body()!!)

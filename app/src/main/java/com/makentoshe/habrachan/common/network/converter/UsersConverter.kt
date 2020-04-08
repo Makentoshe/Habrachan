@@ -7,11 +7,10 @@ import okhttp3.ResponseBody
 class UsersConverter {
 
     fun convertBody(body: ResponseBody): UserResponse.Success {
-        return Gson()
-            .fromJson(body.string(), UserResponse.Success::class.java)
+        return Gson().fromJson(body.string(), UserResponse.Success::class.java)
     }
 
     fun convertError(body: ResponseBody): UserResponse.Error {
-        return UserResponse.Error(body.string())
+        return Gson().fromJson(body.string(), UserResponse.Error::class.java)
     }
 }
