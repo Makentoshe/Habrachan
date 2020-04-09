@@ -1,0 +1,46 @@
+{
+  "data": {
+    "id": 688459,
+    "login": "missingdays",
+    "time_registered": "2014-06-08T20:11:13+04:00",
+    "score": 10,
+    "fullname": "Евгений Бовыкин",
+    "specializm": "Студент, разработчик",
+    "sex": 1,
+    "rating": 0,
+    "vote": 0,
+    "rating_position": 0,
+    "path": "\/users\/missingdays\/",
+    "geo": {
+      "country": "Россия",
+      "region": "Санкт-Петербург и область",
+      "city": "Санкт-Петербург"
+    },
+    "counters": {
+      "posts": 2,
+      "comments": 29,
+      "followed": 1,
+      "followers": 3,
+      "favorites": 70
+    },
+    "badges": [
+      {
+        "id": 1,
+        "title": "Захабренный",
+        "alias": "habred",
+        "description": "Пользователь с кармой \u003E0",
+        "url": null,
+        "is_removable": false,
+        "is_disabled": false
+      }
+    ],
+    "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/6d5\/142\/fd3\/6d5142fd38ef294711e6ecb9e764f8ed.png",
+    "is_readonly": false,
+    "is_rc": false,
+    "is_subscribed": true,
+    "common_tags": [],
+    "contacts": [],
+    "is_can_vote": true
+  },
+  "server_time": "2020-04-08T21:20:59+03:00"
+}

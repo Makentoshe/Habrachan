@@ -60,15 +60,6 @@ class ExampleUnitTest : BaseTest() {
 
     @Test
     @Ignore
-    fun getCustomUserByName() {
-        val request = UserRequest(session.clientKey, session.apiKey, session.tokenKey, "missingdays")
-        val manager = UsersManager.Builder(OkHttpClient()).build()
-        val response = manager.getUser(request).blockingGet()
-        println(response)
-    }
-
-    @Test
-    @Ignore
     fun getUserAvatarTest() {
         val avatarUrl = "https://habrastorage.org/getpro/habr/avatars/6d5/142/fd3/6d5142fd38ef294711e6ecb9e764f8ed.png"
         val avatarRequest = ImageRequest(avatarUrl)

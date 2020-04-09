@@ -24,8 +24,8 @@ import com.makentoshe.habrachan.model.article.JavaScriptInterface
 import com.makentoshe.habrachan.model.article.WebViewController
 import com.makentoshe.habrachan.model.comments.CommentsScreen
 import com.makentoshe.habrachan.model.images.PostImageScreen
-import com.makentoshe.habrachan.model.main.account.user.UserAccount
-import com.makentoshe.habrachan.model.main.account.user.UserScreen
+import com.makentoshe.habrachan.model.user.UserAccount
+import com.makentoshe.habrachan.model.user.UserScreen
 import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
 import com.makentoshe.habrachan.ui.article.PostFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel

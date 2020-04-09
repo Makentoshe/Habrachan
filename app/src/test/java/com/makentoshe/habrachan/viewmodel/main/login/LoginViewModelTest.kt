@@ -5,14 +5,15 @@ import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.login.LoginResponse
 import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.LoginManager
-import com.makentoshe.habrachan.model.main.account.login.LoginData
-import com.makentoshe.habrachan.viewmodel.main.account.login.LoginViewModel
+import com.makentoshe.habrachan.model.main.login.LoginData
 import io.mockk.*
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.Timeout
+import java.util.concurrent.TimeUnit
 
 class LoginViewModelTest {
 
@@ -23,6 +24,9 @@ class LoginViewModelTest {
 
     private val userSession = UserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, "")
 
+    @get:Rule
+    val timeout = Timeout(15, TimeUnit.SECONDS)
+
     @Before
     fun before() {
         every { sessionDao.get() } returns userSession
@@ -31,21 +35,20 @@ class LoginViewModelTest {
 
     @Test
     fun testShouldReturnUserSession() {
-        val response = LoginResponse.Success("a", "b")
-        every { loginManager.login(any()) } returns Single.just(response)
+        val mockkResponse = LoginResponse.Success("a", "b")
+        every { loginManager.login(any()) } returns Single.just(mockkResponse)
         every { sessionDao.insert(any()) } just runs
         // invoke request
         viewModel.signInObserver.onNext(LoginData("email", "password"))
         // check response
-        val session = viewModel.loginObservable.blockingFirst()
-        assertEquals(userSession.clientKey, session.clientKey)
-        assertEquals(userSession.apiKey, session.apiKey)
-        assertEquals(response.accessToken, session.tokenKey)
-        assertNull(session.me)
+        val response = viewModel.loginObservable.blockingFirst() as LoginResponse.Success
+        assertEquals("a", response.accessToken)
         // check UserSession was saved into database
         val slot = slot<UserSession>()
         verify { sessionDao.insert(capture(slot)) }
-        assertEquals(session, slot.captured)
+        assertEquals(userSession.apiKey, slot.captured.apiKey)
+        assertEquals(userSession.clientKey, slot.captured.clientKey)
+        assertEquals(response.accessToken, slot.captured.tokenKey)
     }
 
     @Test
@@ -55,7 +58,7 @@ class LoginViewModelTest {
         //invoke request
         viewModel.signInObserver.onNext(LoginData("email", "password"))
         // check response
-        val response = viewModel.errorObservable.blockingFirst()
+        val response = viewModel.loginObservable.blockingFirst()
         assertEquals(response, errorResponse)
     }
 

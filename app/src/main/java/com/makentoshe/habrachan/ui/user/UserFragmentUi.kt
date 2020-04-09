@@ -1,9 +1,8 @@
-package com.makentoshe.habrachan.ui.main.account.user
+package com.makentoshe.habrachan.ui.user
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
 import com.makentoshe.habrachan.R
 
 class UserFragmentUi {

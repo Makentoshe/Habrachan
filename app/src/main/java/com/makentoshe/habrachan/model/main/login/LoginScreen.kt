@@ -1,8 +1,8 @@
-package com.makentoshe.habrachan.model.main.account.login
+package com.makentoshe.habrachan.model.main.login
 
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.navigation.Screen
-import com.makentoshe.habrachan.view.main.account.login.LoginFragment
+import com.makentoshe.habrachan.view.main.login.LoginFragment
 
 class LoginScreen : Screen() {
     override val fragment: Fragment
