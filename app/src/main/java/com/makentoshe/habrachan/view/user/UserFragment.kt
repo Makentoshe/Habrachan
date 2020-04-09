@@ -7,27 +7,28 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.entity.user.UserResponse
+import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.common.network.request.ImageRequest
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.ui.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
-import io.reactivex.disposables.CompositeDisposable
-import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.common.network.request.ImageRequest
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
 class UserFragment : Fragment() {
 
     private val disposables = CompositeDisposable()
-    internal val arguments = Arguments(this)
+    private val arguments = Arguments(this)
     private val navigator by inject<Navigator>()
     private val viewModel by inject<UserViewModel>()
     private val userAvatarViewModel by inject<UserAvatarViewModel>()
@@ -54,26 +55,33 @@ class UserFragment : Fragment() {
         userAvatarViewModel.avatarObservable.subscribe(::onAvatarResponse).let(disposables::add)
     }
 
-    private fun onUserResponse(response: UserResponse) = when(response) {
+    private fun onUserResponse(response: UserResponse) = when (response) {
         is UserResponse.Success -> onUserSuccess(response)
         is UserResponse.Error -> onUserError(response)
     }
 
     private fun onUserSuccess(response: UserResponse.Success) {
-        val toolbarView = requireView().findViewById<Toolbar>(R.id.user_fragment_toolbar)
-        toolbarView.title = response.user.login
-        val fullNameView = requireView().findViewById<TextView>(R.id.user_fragment_fullname_text)
-        fullNameView.text = response.user.fullname
-        val karmaView = requireView().findViewById<TextView>(R.id.user_fragment_karma_value)
-        karmaView.text = response.user.score.toString()
-        val ratingView = requireView().findViewById<TextView>(R.id.user_fragment_rating_value)
-        ratingView.text = response.user.rating.toString()
-        val specializmView = requireView().findViewById<TextView>(R.id.user_fragment_specializm)
-        specializmView.text = response.user.specializm
-        val progressBar = requireView().findViewById<ProgressBar>(R.id.user_fragment_progress)
-        progressBar.visibility = View.GONE
-
         userAvatarViewModel.avatarObserver.onNext(ImageRequest(response.user.avatar))
+
+        val view = view ?: return Toast.makeText(requireContext(), "View does not responds", Toast.LENGTH_LONG).show()
+
+        val toolbarView = view.findViewById<Toolbar>(R.id.user_fragment_toolbar)
+        toolbarView.title = response.user.login
+
+        val fullNameView = view.findViewById<TextView>(R.id.user_fragment_fullname_text)
+        fullNameView.text = response.user.fullname
+
+        val karmaView = view.findViewById<TextView>(R.id.user_fragment_karma_value)
+        karmaView.text = response.user.score.toString()
+
+        val ratingView = view.findViewById<TextView>(R.id.user_fragment_rating_value)
+        ratingView.text = response.user.rating.toString()
+
+        val specializmView = view.findViewById<TextView>(R.id.user_fragment_specializm)
+        specializmView.text = response.user.specializm
+
+        val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_progress)
+        progressBar.visibility = View.GONE
     }
 
     private fun onUserError(response: UserResponse.Error) {
