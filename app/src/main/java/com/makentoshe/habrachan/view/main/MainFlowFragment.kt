@@ -40,9 +40,14 @@ class MainFlowFragment : Fragment() {
         val navigation = view.findViewById<BottomNavigationView>(R.id.main_bottom_navigation)
         navigation.setOnNavigationItemSelectedListener(::onNavigationItemSelected)
 
+        val item = navigation.menu.findItem(R.id.action_account)
         val session = sessionDao.get()
         if (session?.me != null) {
-            navigation.menu.findItem(R.id.action_account).title = session.me.login
+            item.title = session.me.login
+            item.setIcon(R.drawable.ic_account)
+        } else {
+            item.setTitle(R.string.menu_account)
+            item.setIcon(R.drawable.ic_account_outline)
         }
     }
 

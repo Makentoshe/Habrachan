@@ -118,6 +118,7 @@ class UserFragment : Fragment() {
         val activity = activity ?: return
         val itemView = activity.findViewById<BottomNavigationItemView>(R.id.action_account)
         itemView.setTitle(user.login)
+        itemView.setIcon(resources.getDrawable(R.drawable.ic_account, requireContext().theme))
     }
 
     override fun onDestroy() {
