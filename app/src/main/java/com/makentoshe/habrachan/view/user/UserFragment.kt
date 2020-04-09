@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.ImageResponse
@@ -116,9 +117,10 @@ class UserFragment : Fragment() {
 
     private fun updateUserLoginInBottomNavigationBar(user: User) {
         val activity = activity ?: return
-        val itemView = activity.findViewById<BottomNavigationItemView>(R.id.action_account)
-        itemView.setTitle(user.login)
-        itemView.setIcon(resources.getDrawable(R.drawable.ic_account, requireContext().theme))
+        val navigation = activity.findViewById<BottomNavigationView>(R.id.main_bottom_navigation)
+        val item = navigation.menu.findItem(R.id.action_account)
+        item.setIcon(R.drawable.ic_account)
+        item.title = user.login
     }
 
     override fun onDestroy() {
