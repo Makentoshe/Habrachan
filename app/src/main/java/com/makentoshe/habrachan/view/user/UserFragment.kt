@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.view.user
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.ImageResponse
+import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.entity.user.UserResponse
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.request.ImageRequest
@@ -60,7 +63,10 @@ class UserFragment : Fragment() {
         is UserResponse.Error -> onUserError(response)
     }
 
+    @SuppressLint("RestrictedApi")
     private fun onUserSuccess(response: UserResponse.Success) {
+        updateUserLoginInBottomNavigationBar(response.user)
+
         userAvatarViewModel.avatarObserver.onNext(ImageRequest(response.user.avatar))
 
         val view = view ?: return Toast.makeText(requireContext(), "View does not responds", Toast.LENGTH_LONG).show()
@@ -106,6 +112,12 @@ class UserFragment : Fragment() {
     private fun onAvatarError(response: ImageResponse.Error) {
         val avatarView = requireView().findViewById<ImageView>(R.id.user_fragment_avatar)
         ImageViewController(avatarView).setAvatarStub()
+    }
+
+    private fun updateUserLoginInBottomNavigationBar(user: User) {
+        val activity = activity ?: return
+        val itemView = activity.findViewById<BottomNavigationItemView>(R.id.action_account)
+        itemView.setTitle(user.login)
     }
 
     override fun onDestroy() {
