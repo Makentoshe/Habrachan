@@ -7,9 +7,12 @@ import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.model.article.ArticleScreen
 
-@EpoxyModelClass(layout = R.layout.main_posts_element)
-abstract class PostEpoxyModel : EpoxyModelWithHolder<PostEpoxyModel.ViewHolder>() {
+@EpoxyModelClass(layout = R.layout.main_articles_element)
+abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHolder>() {
 
     @EpoxyAttribute
     var title = ""
@@ -66,6 +69,26 @@ abstract class PostEpoxyModel : EpoxyModelWithHolder<PostEpoxyModel.ViewHolder>(
             readingView = itemView.findViewById(R.id.reading_count_textview)
             commentsView = itemView.findViewById(R.id.comments_count_textview)
             baseView = itemView
+        }
+    }
+
+    class Factory(private val router: Router) {
+        
+        fun build(id: Int, post: Article): ArticleEpoxyModel {
+            val model = ArticleEpoxyModel_()
+            model.id(id)
+            model.title = post.title
+            model.author = post.author.login
+            model.timePublished = post.timePublished
+            model.hubs = post.hubs.joinToString(", ") { it.title }
+            model.score = post.score
+            model.readingsCount = post.readingCount
+            model.commentsCount = post.commentsCount
+            model.clickListener = View.OnClickListener {
+                val screen = ArticleScreen(post.id)
+                router.navigateTo(screen)
+            }
+            return model
         }
     }
 }

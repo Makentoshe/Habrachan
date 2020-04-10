@@ -4,11 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.airbnb.epoxy.EpoxyControllerAdapter
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.model.main.articles.PostModelFactory
-import com.makentoshe.habrachan.model.main.articles.PostsEpoxyController
 import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.model.main.articles.ArticleDivideEpoxyModel
+import com.makentoshe.habrachan.model.main.articles.ArticleEpoxyModel
+import com.makentoshe.habrachan.model.main.articles.ArticlesEpoxyController
+import com.makentoshe.habrachan.model.main.articles.ArticlesPageDivideEpoxyModel
 
-class ArticlesControllerViewModel(private val controller: PostsEpoxyController) : ViewModel() {
+class ArticlesControllerViewModel(private val controller: ArticlesEpoxyController) : ViewModel() {
 
     val adapter: EpoxyControllerAdapter
         get() = controller.adapter
@@ -24,9 +26,10 @@ class ArticlesControllerViewModel(private val controller: PostsEpoxyController) 
 
     fun shouldRequestBuild() = controller.isEmpty.not()
 
-    class Factory(private val router: Router) : ViewModelProvider.NewInstanceFactory() {
+    class Factory(
+        private val controller: ArticlesEpoxyController
+    ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val controller = PostsEpoxyController(PostModelFactory(router))
             return ArticlesControllerViewModel(controller) as T
         }
     }

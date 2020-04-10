@@ -8,19 +8,11 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 
-@EpoxyModelClass(layout = R.layout.main_posts_element_pagedivider)
-abstract class PageDividerEpoxyModel : EpoxyModelWithHolder<PageDividerEpoxyModel.ViewHolder>() {
-
-    private var listener: (() -> Unit)? = null
+@EpoxyModelClass(layout = R.layout.main_articles_divider_page)
+abstract class ArticlesPageDivideEpoxyModel : EpoxyModelWithHolder<ArticlesPageDivideEpoxyModel.ViewHolder>() {
 
     @EpoxyAttribute
     var text: String = ""
-
-    fun setClickListener() {
-        listener = {
-            println("SAS ASA ANUS PSA")
-        }
-    }
 
     override fun bind(holder: ViewHolder) {
         holder.textView?.text = text
@@ -31,6 +23,15 @@ abstract class PageDividerEpoxyModel : EpoxyModelWithHolder<PageDividerEpoxyMode
 
         override fun bindView(itemView: View) {
             textView = itemView.findViewById(R.id.page)
+        }
+    }
+
+    class Factory {
+        fun build(index: Int, page: Int): ArticlesPageDivideEpoxyModel {
+            val model = ArticlesPageDivideEpoxyModel_()
+            model.id(index)
+            model.text(page.toString())
+            return model
         }
     }
 }
