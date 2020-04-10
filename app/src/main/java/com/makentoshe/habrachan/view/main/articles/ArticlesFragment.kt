@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.view.main.articles
 
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
+import com.makentoshe.habrachan.model.main.articles.AppBarStateChangeListener
+import com.makentoshe.habrachan.model.main.articles.AppbarStateBroadcastReceiver
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesControllerViewModel
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
@@ -29,10 +32,17 @@ class ArticlesFragment : Fragment() {
     private val disposables = CompositeDisposable()
     private val articlesViewModel by inject<ArticlesViewModel>()
     private val articlesControllerViewModel by inject<ArticlesControllerViewModel>()
-
+    private val appbarStateBroadcastReceiver = AppbarStateBroadcastReceiver()
+    
     private val arguments: ArticlesFlowFragment.Arguments
         get() = (requireParentFragment() as ArticlesFlowFragment).arguments
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val filter = IntentFilter(AppBarStateChangeListener.State::class.java.simpleName)
+        requireContext().registerReceiver(appbarStateBroadcastReceiver, filter)
+    }
+    
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return ArticlesFragmentUi(container).createView(inflater)
     }
@@ -45,6 +55,21 @@ class ArticlesFragment : Fragment() {
         val progressbar = view.findViewById<ProgressBar>(R.id.articles_Fragment_progress)
         val errorMessage = view.findViewById<TextView>(R.id.articles_fragment_message)
         val retryButton = view.findViewById<Button>(R.id.articles_fragment_button)
+
+        appbarStateBroadcastReceiver.observable.subscribe {
+            try {
+                swipyRefreshView.isEnabled = it == AppBarStateChangeListener.State.EXPANDED && !swipyRefreshView.canChildScrollUp()
+            } catch (npe: NullPointerException) {
+                // in first iteration the canChildScrollUp can throw NPE
+                // because inner views does not initialized properly yet (may be)
+            }
+        }.let(disposables::add)
+
+        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (!swipyRefreshView.canChildScrollDown()) swipyRefreshView.isEnabled = true
+            }
+        })
 
         articlesViewModel.articlesObservable.subscribe { response ->
             swipyRefreshView.isRefreshing = false
