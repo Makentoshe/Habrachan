@@ -151,8 +151,8 @@ class ArticleFragment : Fragment() {
     }
 
     fun onArticleDisplayed() {
-        val bottomBar = requireView().findViewById<View>(R.id.article_fragment_bottombar)
-        bottomBar.visibility = View.VISIBLE
+        val bottomBar = view?.findViewById<View>(R.id.article_fragment_bottombar)
+        bottomBar?.visibility = View.VISIBLE
     }
 
     private fun onArticleVoted(response: VoteArticleResponse) = when (response) {
