@@ -51,7 +51,7 @@ class ExampleUnitTest : BaseTest() {
     @Test
     @Ignore
     fun getAllArticlesTest() {
-        val requestFactory = GetArticlesRequest.Factory(session.clientKey, session.apiKey, session.tokenKey)
+        val requestFactory = GetArticlesRequest.Factory(session)
         val manager = HabrArticleManager.Builder(OkHttpClient()).build()
         val request = requestFactory.all(1)
         val response = manager.getArticles(request).blockingGet()

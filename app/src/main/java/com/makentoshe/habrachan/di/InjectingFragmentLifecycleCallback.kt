@@ -12,6 +12,8 @@ import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
 import com.makentoshe.habrachan.di.main.account.login.LoginFragmentModule
 import com.makentoshe.habrachan.di.main.account.login.LoginFragmentScope
+import com.makentoshe.habrachan.di.main.articles.ArticlesFlowFragmentModule
+import com.makentoshe.habrachan.di.main.articles.ArticlesFlowFragmentScope
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentModule
 import com.makentoshe.habrachan.di.main.articles.ArticlesFragmentScope
 import com.makentoshe.habrachan.di.user.UserFragmentModule
@@ -19,8 +21,9 @@ import com.makentoshe.habrachan.di.user.UserFragmentScope
 import com.makentoshe.habrachan.view.article.ArticleFragment
 import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.view.main.MainFlowFragment
-import com.makentoshe.habrachan.view.main.login.LoginFragment
+import com.makentoshe.habrachan.view.main.articles.ArticlesFlowFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
+import com.makentoshe.habrachan.view.main.login.LoginFragment
 import com.makentoshe.habrachan.view.user.UserFragment
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -34,6 +37,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
             is CommentsFragment -> injectCommentsFragment(f)
             is LoginFragment -> injectLoginFragment(f)
             is UserFragment -> injectUserFragment(f)
+            is ArticlesFlowFragment -> injectArticlesFlowFragment(f)
             is ArticlesFragment -> injectArticlesFragment(f)
             is ArticleFragment -> injectArticleFragment(f)
         }
@@ -63,9 +67,15 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
+    private fun injectArticlesFlowFragment(fragment: ArticlesFlowFragment) {
+        val module = ArticlesFlowFragmentModule(fragment)
+        val scope = Toothpick.openScopes(ApplicationScope::class.java, ArticlesFlowFragmentScope::class.java)
+        scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
+    }
+
     private fun injectArticlesFragment(fragment: ArticlesFragment) {
         val module = ArticlesFragmentModule(fragment)
-        val scope = Toothpick.openScopes(ApplicationScope::class.java, ArticlesFragmentScope::class.java)
+        val scope = Toothpick.openScopes(ArticlesFlowFragmentScope::class.java, ArticlesFragmentScope::class.java)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 

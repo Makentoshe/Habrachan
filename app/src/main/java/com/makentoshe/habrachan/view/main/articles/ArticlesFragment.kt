@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.model.main.articles.AppBarStateChangeListener
 import com.makentoshe.habrachan.model.main.articles.AppbarStateBroadcastReceiver
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFragmentUi
@@ -35,6 +36,7 @@ class ArticlesFragment : Fragment() {
     private val articlesViewModel by inject<ArticlesViewModel>()
     private val articlesControllerViewModel by inject<ArticlesControllerViewModel>()
     private val appbarStateBroadcastReceiver = AppbarStateBroadcastReceiver()
+    private val articlesRequestFactory by inject<GetArticlesRequest.Factory>()
     
     private val arguments: ArticlesFlowFragment.Arguments
         get() = (requireParentFragment() as ArticlesFlowFragment).arguments
@@ -90,8 +92,7 @@ class ArticlesFragment : Fragment() {
     }
 
     private fun executeInitialRequest() {
-        val initialRequest = articlesViewModel.createRequestAll(arguments.page)
-        articlesViewModel.requestObserver.onNext(initialRequest)
+        articlesViewModel.requestObserver.onNext(getArticlesRequest(arguments.page))
     }
 
     private fun executeRebuild() {
@@ -143,6 +144,7 @@ class ArticlesFragment : Fragment() {
         progressbar.visibility = View.GONE
         val errorMessage = view.findViewById<TextView>(R.id.articles_fragment_message)
         errorMessage.text = response.json
+        errorMessage.visibility = View.VISIBLE
         val retryButton = view.findViewById<Button>(R.id.articles_fragment_button)
         retryButton.visibility = View.VISIBLE
     }
@@ -159,20 +161,17 @@ class ArticlesFragment : Fragment() {
         val retryButton = view.findViewById<Button>(R.id.articles_fragment_button)
         retryButton.visibility = View.GONE
 
-        val request = articlesViewModel.createRequestAll(currentPage)
-        articlesViewModel.requestObserver.onNext(request)
+        articlesViewModel.requestObserver.onNext(getArticlesRequest(currentPage))
     }
 
     private fun onRefreshListener(direction: SwipyRefreshLayoutDirection) = when (direction) {
         SwipyRefreshLayoutDirection.TOP -> {
             currentPage = arguments.page // as usual 1
-            val request = articlesViewModel.createRequestAll(currentPage)
-            articlesViewModel.requestObserver.onNext(request)
+            articlesViewModel.requestObserver.onNext(getArticlesRequest(currentPage))
             articlesControllerViewModel.clear()
         }
         SwipyRefreshLayoutDirection.BOTTOM -> {
-            val request = articlesViewModel.createRequestAll(currentPage)
-            articlesViewModel.requestObserver.onNext(request)
+            articlesViewModel.requestObserver.onNext(getArticlesRequest(currentPage))
         }
         else -> Unit
     }
@@ -183,6 +182,10 @@ class ArticlesFragment : Fragment() {
             snackbar.dismiss()
         }
         snackbar.show()
+    }
+
+    private fun getArticlesRequest(page: Int): GetArticlesRequest {
+        return articlesRequestFactory.last(page)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
