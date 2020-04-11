@@ -2,17 +2,19 @@ package com.makentoshe.habrachan.view.main.articles
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.model.main.articles.AppBarStateChangeListener
 import com.makentoshe.habrachan.model.main.articles.AppbarStateBroadcastReceiver
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFlowFragmentUi
-import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 class ArticlesFlowFragment : Fragment() {
 
@@ -30,21 +32,29 @@ class ArticlesFlowFragment : Fragment() {
             }
         })
 
-//        val magnifyView = view.findViewById<View>(R.id.articles_flow_fragment_toolbar_magnify)
-//        val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.articles_flow_fragment_slidingpanel)
-//        slidingUpPanelLayout.isTouchEnabled = false
-//        magnifyView.setOnClickListener {
-//            when (slidingUpPanelLayout.panelState) {
-//                SlidingUpPanelLayout.PanelState.EXPANDED -> {
-//                    slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-//                }
-//                SlidingUpPanelLayout.PanelState.COLLAPSED -> {
-//                    slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-//                    closeSoftKeyboard()
-//                }
-//                else -> Unit
-//            }
-//        }
+        val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.articles_flow_fragment_slidingpanel)
+        slidingUpPanelLayout.isTouchEnabled = false
+
+        val toolbar = view.findViewById<Toolbar>(R.id.articles_flow_fragment_toolbar)
+        toolbar.inflateMenu(R.menu.main_search)
+        toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
+    }
+
+    private fun onSearchMenuItemClick(item: MenuItem): Boolean {
+        if (item.itemId != R.id.action_search) return false
+        val slidingUpPanelLayout = view?.findViewById<SlidingUpPanelLayout>(R.id.articles_flow_fragment_slidingpanel)
+        return when (slidingUpPanelLayout?.panelState) {
+            SlidingUpPanelLayout.PanelState.EXPANDED -> {
+                slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+                true
+            }
+            SlidingUpPanelLayout.PanelState.COLLAPSED -> {
+                slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+                closeSoftKeyboard()
+                true
+            }
+            else -> false
+        }
     }
 
     override fun onDestroyView() {
