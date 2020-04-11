@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesControllerViewModel
@@ -28,6 +29,9 @@ class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
 
         val articlesViewModel = getArticlesViewModel(fragment)
         bind<ArticlesViewModel>().toInstance(articlesViewModel)
+
+        val articlesRequestFactory = GetArticlesRequest.Factory(database.session().get()!!)
+        bind<GetArticlesRequest.Factory>().toInstance(articlesRequestFactory)
 
         bind<ArticlesControllerViewModel>().toProviderInstance(ArticlesControllerViewModelProvider(fragment))
     }

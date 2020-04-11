@@ -10,15 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.model.main.articles.AppBarStateChangeListener
 import com.makentoshe.habrachan.model.main.articles.AppbarStateBroadcastReceiver
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFlowFragmentUi
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import toothpick.ktp.delegate.inject
 
 class ArticlesFlowFragment : Fragment() {
 
     val arguments = Arguments(this)
+    private val sessionDao by inject<SessionDao>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return ArticlesFlowFragmentUi(container).createView(inflater)
@@ -38,6 +42,10 @@ class ArticlesFlowFragment : Fragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.articles_flow_fragment_toolbar)
         toolbar.inflateMenu(R.menu.main_search)
         toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
+
+        val collapsingToolbar = view.findViewById<CollapsingToolbarLayout>(R.id.articles_flow_fragment_collapsing)
+        collapsingToolbar.isTitleEnabled = false
+        toolbar.title = sessionDao.get()!!.articlesRequest
     }
 
     private fun onSearchMenuItemClick(item: MenuItem): Boolean {

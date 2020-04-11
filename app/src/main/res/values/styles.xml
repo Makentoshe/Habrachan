@@ -22,6 +22,8 @@
     <style name="Habrachan.Light.Toolbar" parent="Habrachan.Light">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
         <item name="android:textAppearance">@style/Habrachan.Light.TextAppearance</item>
         <item name="android:tint">@android:color/white</item>
         <item name="android:tintMode">src_atop</item>

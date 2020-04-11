@@ -11,8 +11,11 @@ data class UserSession(
     val clientKey: String,
     val apiKey: String,
     val tokenKey: String = "",
+    /** User instance */
     @Embedded(prefix = "user_")
-    val me: User? = null
+    val me: User? = null,
+    /** Initial request for displaying articles */
+    val articlesRequest: String = "posts/interesting"
 ) {
     /** Returns true if user already logged in */
     val isLoggedIn: Boolean

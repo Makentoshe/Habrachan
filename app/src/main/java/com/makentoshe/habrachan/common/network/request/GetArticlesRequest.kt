@@ -23,5 +23,9 @@ data class GetArticlesRequest(
         fun custom(page: Int, spec: String): GetArticlesRequest {
             return GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, page, spec)
         }
+
+        fun last(page: Int): GetArticlesRequest {
+            return GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, page, session.articlesRequest)
+        }
     }
 }

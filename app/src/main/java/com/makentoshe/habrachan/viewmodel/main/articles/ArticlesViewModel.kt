@@ -38,16 +38,6 @@ class ArticlesViewModel(
             .safeSubscribe(articleSubject)
     }
 
-    fun createRequestAll(page: Int): GetArticlesRequest {
-        val session = sessionDao.get()!!
-        return GetArticlesRequest.Factory(session).all(page)
-    }
-
-    fun createRequestInteresting(page: Int): GetArticlesRequest {
-        val session = sessionDao.get()!!
-        return GetArticlesRequest.Factory(session).interesting(page)
-    }
-
     private fun onArticlesSuccess(response: ArticlesResponse) = if (response is ArticlesResponse.Success) {
         response.data.forEach { article ->
             articleDao.insert(article)
