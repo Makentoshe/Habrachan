@@ -23,6 +23,7 @@ import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesControllerViewMo
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 import kotlin.math.max
@@ -51,7 +52,10 @@ class ArticlesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         currentPage = SavedInstanceState(savedInstanceState).page ?: arguments.page
 
-        articlesViewModel.articlesObservable.subscribe(::onArticlesResponse).let(disposables::add)
+        articlesViewModel.articlesObservable
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onArticlesResponse)
+            .let(disposables::add)
 
         val retryButton = view.findViewById<Button>(R.id.articles_fragment_button)
         retryButton.setOnClickListener(::onRetryListener)

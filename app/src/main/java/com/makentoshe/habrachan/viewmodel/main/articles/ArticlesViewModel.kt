@@ -9,7 +9,6 @@ import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import io.reactivex.Observable
 import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -32,8 +31,11 @@ class ArticlesViewModel(
     val articlesObservable: Observable<ArticlesResponse> = articleSubject
 
     init {
-        requestSubject.observeOn(Schedulers.io()).map(::performRequest).doOnNext(::onArticlesSuccess)
-            .observeOn(AndroidSchedulers.mainThread()).safeSubscribe(articleSubject)
+        requestSubject
+            .observeOn(Schedulers.io())
+            .map(::executeRequest)
+            .doOnNext(::onArticlesSuccess)
+            .safeSubscribe(articleSubject)
     }
 
     fun createRequestAll(page: Int): GetArticlesRequest {
@@ -49,27 +51,38 @@ class ArticlesViewModel(
         }
     } else Unit
 
-    private fun performRequest(request: GetArticlesRequest): ArticlesResponse {
-        try {
-            if (request.client == "") throw Exception("Cache should be invoked here")
-            return articleManager.getArticles(request).blockingGet().also { response ->
-                if (response is ArticlesResponse.Success && request.page == 1) {
-                    articleDao.clear()
-                    commentDao.clear()
-                    avatarDao.clear()
-                    userDao.clear()
-                }
-            }
-        } catch (e: Exception) {
-            if (request.page >= 2) return ArticlesResponse.Error(e.toString())
-            val cached = articleDao.getAll()
-            return if (cached.isNotEmpty()) {
-                val nextPage = NextPage(cached.size / ArticlesResponse.DEFAULT_SIZE + 1, "")
-                ArticlesResponse.Success(cached, nextPage, 0, "", "")
-            } else {
-                ArticlesResponse.Error(e.toString())
-            }
+    private fun executeRequest(request: GetArticlesRequest) = try {
+        executeRequestDefault(request)
+    } catch (runtimeException: RuntimeException) {
+        executeRequestError(request, runtimeException)
+    }
+
+    private fun executeRequestDefault(request: GetArticlesRequest): ArticlesResponse {
+        val response = articleManager.getArticles(request).blockingGet()
+        if (response is ArticlesResponse.Success && request.page == 1) {
+            articleDao.clear()
+            commentDao.clear()
+            avatarDao.clear()
+            userDao.clear()
         }
+        return response
+    }
+
+    private fun executeRequestError(request: GetArticlesRequest, exception: RuntimeException): ArticlesResponse {
+        return if (request.page >= 2) {
+            ArticlesResponse.Error(exception.toString())
+        } else {
+            executeRequestCache(exception)
+        }
+    }
+
+    private fun executeRequestCache(exception: RuntimeException): ArticlesResponse {
+        val cached = articleDao.getAll()
+        if (cached.isEmpty()) {
+            return ArticlesResponse.Error(exception.toString())
+        }
+        val nextPage = NextPage(cached.size / ArticlesResponse.DEFAULT_SIZE + 1, "")
+        return ArticlesResponse.Success(cached, nextPage, 0, "", "")
     }
 
     override fun onCleared() = disposables.clear()
