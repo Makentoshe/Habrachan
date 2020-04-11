@@ -81,7 +81,7 @@ class ArticlesViewModel(
     }
 
     private fun executeRequestCache(exception: RuntimeException): ArticlesResponse {
-        val cached = articleDao.getAll()
+        val cached = articleDao.getAll().sortedByDescending { it.timePublished }
         if (cached.isEmpty()) {
             return ArticlesResponse.Error(exception.toString())
         }
