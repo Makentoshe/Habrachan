@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/articles_fragment_message" />
 
-    <com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:visibility="gone"
         android:id="@+id/articles_fragment_swipy"
         android:layout_width="0dp"
@@ -45,8 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srl_direction="both">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/articles_fragment_recycler"
@@ -54,6 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
