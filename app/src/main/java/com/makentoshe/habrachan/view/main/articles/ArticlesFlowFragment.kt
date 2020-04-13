@@ -9,12 +9,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.SessionDao
-import com.makentoshe.habrachan.model.main.articles.AppBarStateChangeListener
-import com.makentoshe.habrachan.model.main.articles.AppbarStateBroadcastReceiver
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFlowFragmentUi
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import toothpick.ktp.delegate.inject
@@ -29,13 +26,6 @@ class ArticlesFlowFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val appbarLayout = view.findViewById<AppBarLayout>(R.id.articles_flow_fragment_appbar)
-        appbarLayout.addOnOffsetChangedListener(object : AppBarStateChangeListener() {
-            override fun onStateChanged(appBarLayout: AppBarLayout, state: State) {
-                AppbarStateBroadcastReceiver.sendBroadcast(requireContext(), state)
-            }
-        })
-
         val slidingUpPanelLayout = view.findViewById<SlidingUpPanelLayout>(R.id.articles_flow_fragment_slidingpanel)
         slidingUpPanelLayout.isTouchEnabled = false
 

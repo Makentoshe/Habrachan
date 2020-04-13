@@ -1,122 +1,58 @@
 package com.makentoshe.habrachan.viewmodel.main.articles
 
+import android.os.Looper
+import androidx.paging.PagedList
 import com.makentoshe.habrachan.BaseTest
-import com.makentoshe.habrachan.common.database.*
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
-import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
-import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.model.main.articles.pagination.ArticlesDataSource
+import com.makentoshe.habrachan.model.main.articles.pagination.ArticlesPagedListEpoxyController
 import io.mockk.*
-import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.util.concurrent.Executor
 
 class ArticlesViewModelTest : BaseTest() {
 
+    init {
+        mockkStatic(Looper::class)
+        every { Looper.getMainLooper() } returns mockk(relaxed = true)
+    }
+
     private lateinit var viewModel: ArticlesViewModel
-    private val sessionDao = mockk<SessionDao>()
-    private val articleManager = mockk<HabrArticleManager>()
-    private val articleDao = mockk<ArticleDao>()
-    private val commentDao = mockk<CommentDao>()
-    private val avatarDao = mockk<AvatarDao>()
-    private val userDao = mockk<UserDao>()
+    private val controller = mockk<ArticlesPagedListEpoxyController>(relaxed = true)
+    private val dataSource = mockk<ArticlesDataSource>(relaxed = true)
+    private val executorsProvider = object : ArticlesViewModelExecutorsProvider {
+        override val fetchExecutor = Executor { it.run() }
+        override val notifyExecutor = Executor { it.run() }
+    }
+    private val schedulersProvider = object : ArticlesViewModelSchedulersProvider {
+        override val ioScheduler = Schedulers.trampoline()
+    }
 
     @Before
     fun before() {
-        every { sessionDao.get() } returns session
-        every { sessionDao.clear() } just runs
-
-        every { articleDao.clear() } just runs
-        every { articleDao.insert(any()) } just runs
-
-        every { commentDao.clear() } just runs
-
-        every { avatarDao.clear() } just runs
-
-        every { userDao.clear() } just runs
-        every { userDao.insert(any()) } just runs
-
-        viewModel = ArticlesViewModel(sessionDao, articleManager, articleDao, commentDao, avatarDao, userDao)
+        every { controller.pageSize } returns 20
     }
 
     @Test
-    fun testShouldAddSuccessResultToCache() {
-        val mockArticles =
-            Array(20) { mockk<Article>().also { mock -> every { mock.author } returns mockk() } }.toList()
-        val mockArticlesResponse = mockk<ArticlesResponse.Success>()
-        every { articleManager.getArticles(any()) } returns Single.just(mockArticlesResponse)
-        every { mockArticlesResponse.data } returns mockArticles
+    fun testShouldSubmitNewListOnRequest() {
+        every { dataSource.initialSuccessObservable } returns PublishSubject.create()
+        every { dataSource.initialErrorObservable } returns PublishSubject.create()
+        every { dataSource.rangeErrorObservable } returns PublishSubject.create()
+        viewModel = ArticlesViewModel(dataSource, controller, executorsProvider, schedulersProvider)
 
-        val request = GetArticlesRequest.Factory(sessionDao.get()!!).all(10)
-        viewModel.requestObserver.onNext(request)
-        val response = viewModel.articlesObservable.blockingFirst() as ArticlesResponse.Success
+        every { controller.submitList(any()) } just runs
 
-        verify(exactly = 20) { userDao.insert(any()) }
-        verify(exactly = 20) { articleDao.insert(any()) }
+        viewModel.requestObserver.onNext(Unit)
 
-        assertEquals(mockArticlesResponse, response)
+        val slot = slot<PagedList<Article>>()
+        verify(exactly = 1) { controller.submitList(capture(slot)) }
+        val config = slot.captured.config
+        assertEquals(20, config.pageSize)
+        assertEquals(0, config.initialLoadSizeHint)
     }
 
-    @Test
-    fun testShouldClearAllCachesForNewRequest() {
-        val mockArticles =
-            Array(20) { mockk<Article>().also { mock -> every { mock.author } returns mockk() } }.toList()
-        val mockArticlesResponse = mockk<ArticlesResponse.Success>()
-        every { articleManager.getArticles(any()) } returns Single.just(mockArticlesResponse)
-        every { mockArticlesResponse.data } returns mockArticles
-
-        val request = GetArticlesRequest.Factory(sessionDao.get()!!).all(1)
-        viewModel.requestObserver.onNext(request)
-        val response = viewModel.articlesObservable.blockingFirst() as ArticlesResponse.Success
-
-        verify { userDao.clear() }
-        verify { articleDao.clear() }
-        verify { commentDao.clear() }
-        verify { avatarDao.clear() }
-
-        assertEquals(mockArticlesResponse, response)
-    }
-
-    @Test
-    fun testShouldReturnErrorResponse() {
-        val exception = RuntimeException("Message")
-        every { articleManager.getArticles(any()) } returns Single.just(Unit).map { throw exception }
-
-        val request = GetArticlesRequest.Factory(sessionDao.get()!!).all(2)
-        viewModel.requestObserver.onNext(request)
-        val response = viewModel.articlesObservable.blockingFirst() as ArticlesResponse.Error
-
-        assertEquals("java.lang.RuntimeException: Message", response.json)
-    }
-
-    @Test
-    fun testShouldReturnResultFromCache() {
-        every { articleManager.getArticles(any()) } returns Single.just(Unit).map { throw Exception() }
-        val mockArticles = Array(20) { mockk<Article>() }.toList()
-        mockArticles.forEach { mock ->
-            every { mock.author } returns mockk()
-            every { mock.timePublished } returns ""
-        }
-        every { articleDao.getAll() } returns mockArticles
-
-        val request = GetArticlesRequest.Factory(sessionDao.get()!!).all(1)
-        viewModel.requestObserver.onNext(request)
-        val response = viewModel.articlesObservable.blockingFirst() as ArticlesResponse.Success
-
-        assertEquals(mockArticles, response.data)
-    }
-
-    @Test
-    fun testShouldReturnErrorResultFromCache() {
-        val exception = RuntimeException("Message")
-        every { articleManager.getArticles(any()) } returns Single.just(Unit).map { throw exception }
-        every { articleDao.getAll() } returns listOf()
-
-        val request = GetArticlesRequest.Factory(sessionDao.get()!!).all(1)
-        viewModel.requestObserver.onNext(request)
-        val response = viewModel.articlesObservable.blockingFirst() as ArticlesResponse.Error
-
-        assertEquals("java.lang.RuntimeException: Message", response.json)
-    }
 }
