@@ -35,8 +35,8 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
     @EpoxyAttribute
     var commentsCount = 0
 
-    @EpoxyAttribute
     var clickListener: View.OnClickListener? = null
+    var displayDivider = true
 
     override fun bind(holder: ViewHolder) {
         holder.titleView?.text = title
@@ -48,17 +48,19 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
         holder.readingView?.text = readingsCount.toString()
         holder.commentsView?.text = commentsCount.toString()
         holder.baseView?.setOnClickListener(clickListener)
+        holder.divideView?.visibility = if (displayDivider) View.VISIBLE else View.GONE
     }
 
     class ViewHolder : EpoxyHolder() {
         var titleView: TextView? = null
-        var authorView : TextView? = null
+        var authorView: TextView? = null
         var timeView: TextView? = null
         var hubsView: TextView? = null
         var scoreView: TextView? = null
         var readingView: TextView? = null
         var commentsView: TextView? = null
         var baseView: View? = null
+        var divideView: View? = null
 
         override fun bindView(itemView: View) {
             titleView = itemView.findViewById(R.id.title)
@@ -68,12 +70,13 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
             scoreView = itemView.findViewById(R.id.score_textview)
             readingView = itemView.findViewById(R.id.reading_count_textview)
             commentsView = itemView.findViewById(R.id.comments_count_textview)
+            divideView = itemView.findViewById<View>(R.id.divider)
             baseView = itemView
         }
     }
 
     class Factory(private val router: Router) {
-        
+
         fun build(id: Int, post: Article): ArticleEpoxyModel {
             val model = ArticleEpoxyModel_()
             model.id(id)
@@ -84,6 +87,7 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
             model.score = post.score
             model.readingsCount = post.readingCount
             model.commentsCount = post.commentsCount
+            model.displayDivider = id % 20 != 19
             model.clickListener = View.OnClickListener {
                 val screen = ArticleScreen(post.id)
                 router.navigateTo(screen)

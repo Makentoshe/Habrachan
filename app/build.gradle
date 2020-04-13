@@ -130,10 +130,13 @@ dependencies {
     def epoxy = "3.8.0"
     implementation "com.airbnb.android:epoxy:$epoxy"
     kapt "com.airbnb.android:epoxy-processor:$epoxy"
+    implementation "com.airbnb.android:epoxy-paging:$epoxy"
 
-    // SwipyRefreshLayout
-    // https://github.com/omadahealth/SwipyRefreshLayout
-    implementation 'com.github.omadahealth:swipy:1.2.3@aar'
+    // Pagination library
+    // https://developer.android.com/topic/libraries/architecture/paging
+    def pagination = "2.1.2"
+    implementation "androidx.paging:paging-runtime-ktx:$pagination"
+    implementation "androidx.paging:paging-rxjava2:$pagination"
 
     // Subsampling scale image view
     // https://github.com/davemorrissey/subsampling-scale-image-view
