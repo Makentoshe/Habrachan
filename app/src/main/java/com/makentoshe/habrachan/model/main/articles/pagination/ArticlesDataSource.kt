@@ -12,7 +12,6 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.net.UnknownHostException
 
-// todo add tests
 class ArticlesDataSource(
     private val articleManager: HabrArticleManager,
     private val cacheDatabase: HabrDatabase,
@@ -58,48 +57,35 @@ class ArticlesDataSource(
 
     private fun loadCache(page: Int, exception: UnknownHostException): ArticlesResponse {
         if (page > 1) return ArticlesResponse.Error(exception.toString())
-        println("Error - Cache")
-        val articles = cacheDatabase.articles().getAll().sortedByDescending { it.timePublished }
+        val articles = cacheDatabase.articles().getAllSortedByDescendingTimePublished()
         if (articles.isEmpty()) {
-            println("Error - Cache error")
             return ArticlesResponse.Error(exception.toString())
         }
         val nextPage = NextPage(articles.size / ArticlesResponse.DEFAULT_SIZE + 1, "")
-        println("Error - Cache success")
         return ArticlesResponse.Success(articles, nextPage, 0, "", "")
     }
 
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<Article>) {
         val page = (params.startPosition / params.loadSize) + 1
-        println("Request page $page")
-        val response = load(page)
-        println("Request page $page - Done")
-        when (response) {
+        when (val response = load(page)) {
             is ArticlesResponse.Success -> {
                 callback.onResult(response.data)
-                println("Request page $page - Success")
             }
             is ArticlesResponse.Error -> {
                 rangeErrorSubject.onNext(response)
-                println("Request page $page - Error")
             }
         }
     }
 
     override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<Article>) {
         val page = ((params.requestedStartPosition + params.requestedLoadSize) / params.pageSize) + 1
-        println("Initial request page $page")
-        val response = load(page)
-        println("Initial request page $page - Done")
-        when (response) {
+        when (val response = load(page)) {
             is ArticlesResponse.Success -> {
                 callback.onResult(response.data, 0)
                 initialSuccessSubject.onNext(response)
-                println("Initial request page $page - Success")
             }
             is ArticlesResponse.Error -> {
                 initialErrorSubject.onNext(response)
-                println("Request page $page - Error")
             }
         }
     }

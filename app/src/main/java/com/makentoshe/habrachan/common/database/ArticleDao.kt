@@ -9,6 +9,9 @@ interface ArticleDao {
     @Query("SELECT * FROM article")
     fun getAll(): List<Article>
 
+    @Query("SELECT * FROM article ORDER BY timePublished DESC")
+    fun getAllSortedByDescendingTimePublished(): List<Article>
+
     @Query("SELECT * FROM article WHERE id = :id")
     fun getById(id: Int): Article?
 

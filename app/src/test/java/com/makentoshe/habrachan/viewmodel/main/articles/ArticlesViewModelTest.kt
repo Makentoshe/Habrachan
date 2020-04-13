@@ -10,6 +10,7 @@ import io.mockk.*
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.Executor
 
@@ -29,6 +30,11 @@ class ArticlesViewModelTest : BaseTest() {
     }
     private val schedulersProvider = object : ArticlesViewModelSchedulersProvider {
         override val ioScheduler = Schedulers.trampoline()
+    }
+
+    @Before
+    fun before() {
+        every { controller.pageSize } returns 20
     }
 
     @Test
