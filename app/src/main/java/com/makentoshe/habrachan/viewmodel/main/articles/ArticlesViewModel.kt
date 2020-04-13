@@ -12,6 +12,7 @@ import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.model.main.articles.ArticleEpoxyModel
+import com.makentoshe.habrachan.model.main.articles.ArticlesPageDivideEpoxyModel
 import com.makentoshe.habrachan.model.main.articles.pagination.ArticlesDataSource
 import com.makentoshe.habrachan.model.main.articles.pagination.ArticlesPagedListEpoxyController
 import io.reactivex.Observable
@@ -51,9 +52,11 @@ class ArticlesViewModel(
         articlesDataSource.initialSuccessObservable.map { controller.adapter }.safeSubscribe(adapterSubject)
     }
 
-    private fun buildPagedListConfig(ignored: Unit): PagedList.Config {
-        return PagedList.Config.Builder().setPageSize(20).setInitialLoadSizeHint(0).setEnablePlaceholders(false).build()
-    }
+    private fun buildPagedListConfig(ignored: Unit) = PagedList.Config.Builder()
+        .setPageSize(controller.pageSize)
+        .setInitialLoadSizeHint(0)
+        .setEnablePlaceholders(false)
+        .build()
 
     private fun buildPagedList(config: PagedList.Config): PagedList<Article> {
         return PagedList.Builder(articlesDataSource, config)
@@ -76,7 +79,8 @@ class ArticlesViewModel(
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             val source = ArticlesDataSource(articleManager, cacheDatabase, imageDatabase)
             val articleModelFactory = ArticleEpoxyModel.Factory(router)
-            val controller = ArticlesPagedListEpoxyController(articleModelFactory)
+            val divideModelFactory = ArticlesPageDivideEpoxyModel.Factory()
+            val controller = ArticlesPagedListEpoxyController(articleModelFactory, divideModelFactory)
             val executorsProvider = object : ArticlesViewModelExecutorsProvider {
                 override val fetchExecutor = Executors.newSingleThreadExecutor()
                 override val notifyExecutor = Executor { Handler(Looper.getMainLooper()).post(it) }
