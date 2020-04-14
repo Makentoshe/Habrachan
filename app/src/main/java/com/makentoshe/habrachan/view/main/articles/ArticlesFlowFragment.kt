@@ -41,18 +41,17 @@ class ArticlesFlowFragment : Fragment() {
     private fun onSearchMenuItemClick(item: MenuItem): Boolean {
         if (item.itemId != R.id.action_search) return false
         val slidingUpPanelLayout = view?.findViewById<SlidingUpPanelLayout>(R.id.articles_flow_fragment_slidingpanel)
-        return when (slidingUpPanelLayout?.panelState) {
-            SlidingUpPanelLayout.PanelState.EXPANDED -> {
-                slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-                true
-            }
-            SlidingUpPanelLayout.PanelState.COLLAPSED -> {
-                slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-                closeSoftKeyboard()
-                true
-            }
-            else -> false
+        val panelState = slidingUpPanelLayout?.panelState
+        if (panelState != SlidingUpPanelLayout.PanelState.COLLAPSED) {
+            slidingUpPanelLayout?.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+            return true
         }
+        if (panelState != SlidingUpPanelLayout.PanelState.EXPANDED) {
+            slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+            closeSoftKeyboard()
+            return true
+        }
+        return false
     }
 
     override fun onDestroyView() {

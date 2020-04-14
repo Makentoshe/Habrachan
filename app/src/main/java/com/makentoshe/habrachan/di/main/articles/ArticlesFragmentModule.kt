@@ -5,7 +5,6 @@ import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
-import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
@@ -26,9 +25,6 @@ class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
     init {
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
         articleManager = HabrArticleManager.Builder(client).build("text_html")
-
-        val articlesRequestFactory = GetArticlesRequest.Factory(database.session().get()!!)
-        bind<GetArticlesRequest.Factory>().toInstance(articlesRequestFactory)
 
         val articlesViewModel2 = getArticlesViewModel(fragment)
         bind<ArticlesViewModel>().toInstance(articlesViewModel2)
