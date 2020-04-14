@@ -18,14 +18,14 @@ class ArticlesDataSource(
     private val imageDatabase: ImageDatabase
 ) : PositionalDataSource<Article>() {
 
-    private val initialErrorSubject = PublishSubject.create<ArticlesResponse.Error>()
-    val initialErrorObservable: Observable<ArticlesResponse.Error> = initialErrorSubject
+    private val initialErrorSubject = PublishSubject.create<ArticlesLoadInitialErrorContainer>()
+    val initialErrorObservable: Observable<ArticlesLoadInitialErrorContainer> = initialErrorSubject
 
     private val initialSuccessSubject = PublishSubject.create<ArticlesResponse.Success>()
     val initialSuccessObservable: Observable<ArticlesResponse.Success> = initialSuccessSubject
 
-    private val rangeErrorSubject = PublishSubject.create<ArticlesResponse.Error>()
-    val rangeErrorObservable: Observable<ArticlesResponse.Error> = rangeErrorSubject
+    private val rangeErrorSubject = PublishSubject.create<ArticlesLoadRangeErrorContainer>()
+    val rangeErrorObservable: Observable<ArticlesLoadRangeErrorContainer> = rangeErrorSubject
 
     private fun load(page: Int): ArticlesResponse {
         val session = cacheDatabase.session().get()!!
@@ -72,7 +72,8 @@ class ArticlesDataSource(
                 callback.onResult(response.data)
             }
             is ArticlesResponse.Error -> {
-                rangeErrorSubject.onNext(response)
+                val container = ArticlesLoadRangeErrorContainer(response, params, callback)
+                rangeErrorSubject.onNext(container)
             }
         }
     }
@@ -85,7 +86,8 @@ class ArticlesDataSource(
                 initialSuccessSubject.onNext(response)
             }
             is ArticlesResponse.Error -> {
-                initialErrorSubject.onNext(response)
+                val container = ArticlesLoadInitialErrorContainer(response, params, callback)
+                initialErrorSubject.onNext(container)
             }
         }
     }

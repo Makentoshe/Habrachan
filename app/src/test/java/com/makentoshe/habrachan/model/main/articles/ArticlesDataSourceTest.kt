@@ -67,7 +67,7 @@ class ArticlesDataSourceTest {
 
         verify(exactly = 0) { callback.onResult(any(), any()) }
 
-        testInitialErrorObservable.assertValue(mockArticlesResponse).dispose()
+        testInitialErrorObservable.assertValue { it.response == mockArticlesResponse }.dispose()
     }
 
     @Test
@@ -159,7 +159,7 @@ class ArticlesDataSourceTest {
 
         dataSource.loadRange(params, callback)
 
-        testRangeErrorObservable.assertValue(mockArticlesResponse).dispose()
+        testRangeErrorObservable.assertValue { it.response == mockArticlesResponse }.dispose()
     }
 
     @Test
