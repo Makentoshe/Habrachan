@@ -50,7 +50,7 @@ class ArticlesDataSourceTest {
         verify(exactly = 1) { callback.onResult(capture(slot), 0) }
         assertEquals(mockArticles, slot.captured)
 
-        testInitialSuccessObservable.assertValue(mockArticlesResponse).dispose()
+        testInitialSuccessObservable.assertValue{ it.response == mockArticlesResponse }.dispose()
     }
 
     @Test
@@ -177,7 +177,7 @@ class ArticlesDataSourceTest {
 
         dataSource.loadInitial(params, callback)
 
-        testInitialSuccessObservable.assertValue { it.data == mockArticles }.dispose()
+        testInitialSuccessObservable.assertValue { it.response.data == mockArticles }.dispose()
     }
 
     @Test(expected = RuntimeException::class)
