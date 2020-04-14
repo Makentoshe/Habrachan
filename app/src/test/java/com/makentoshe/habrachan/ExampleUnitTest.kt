@@ -1,15 +1,15 @@
 package com.makentoshe.habrachan
 
-import com.makentoshe.habrachan.common.entity.session.UserSession
+import com.makentoshe.habrachan.common.entity.session.ArticlesRequest
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
-import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
-import com.makentoshe.habrachan.common.network.manager.UsersManager
-import com.makentoshe.habrachan.common.network.request.*
+import com.makentoshe.habrachan.common.network.request.GetArticleRequest
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.common.network.request.ImageRequest
+import com.makentoshe.habrachan.common.network.request.VoteArticleRequest
 import okhttp3.OkHttpClient
 import org.junit.Ignore
 import org.junit.Test
-import java.io.File
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -51,9 +51,8 @@ class ExampleUnitTest : BaseTest() {
     @Test
     @Ignore
     fun getAllArticlesTest() {
-        val requestFactory = GetArticlesRequest.Factory(session)
         val manager = HabrArticleManager.Builder(OkHttpClient()).build()
-        val request = requestFactory.all(1)
+        val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, ArticlesRequest.all().request)
         val response = manager.getArticles(request).blockingGet()
         println(response)
     }

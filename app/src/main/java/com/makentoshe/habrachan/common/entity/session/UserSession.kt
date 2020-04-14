@@ -15,7 +15,8 @@ data class UserSession(
     @Embedded(prefix = "user_")
     val me: User? = null,
     /** Initial request for displaying articles */
-    val articlesRequest: String = "posts/interesting"
+    @Embedded(prefix = "articles_request_")
+    val articlesRequest: ArticlesRequest = ArticlesRequest.interesting()
 ) {
     /** Returns true if user already logged in */
     val isLoggedIn: Boolean
