@@ -42,7 +42,7 @@ class ArticlesViewModelTest : BaseTest() {
         every { dataSource.initialSuccessObservable } returns PublishSubject.create()
         every { dataSource.initialErrorObservable } returns PublishSubject.create()
         every { dataSource.rangeErrorObservable } returns PublishSubject.create()
-        viewModel = ArticlesViewModel(dataSource, controller, executorsProvider, schedulersProvider)
+        viewModel = ArticlesViewModel(dataSource, controller, executorsProvider, schedulersProvider, mockk())
 
         every { controller.submitList(any()) } just runs
 

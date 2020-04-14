@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.di.main.articles
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.model.main.articles.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.view.main.articles.ArticlesFlowFragment
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -16,5 +17,8 @@ class ArticlesFlowFragmentModule(fragment: ArticlesFlowFragment): Module() {
     init {
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
         bind<SessionDao>().toInstance(database.session())
+
+        val searchBroadcastReceiver = ArticlesSearchBroadcastReceiver()
+        bind<ArticlesSearchBroadcastReceiver>().toInstance(searchBroadcastReceiver)
     }
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.model.main.articles.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,6 +24,7 @@ class ArticlesFragment : Fragment() {
     private val disposables = CompositeDisposable()
 
     private val viewmodel by inject<ArticlesViewModel>()
+    private val searchBroadcastReceiver by inject<ArticlesSearchBroadcastReceiver>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return ArticlesFragmentUi(container).createView(inflater)
@@ -38,6 +40,8 @@ class ArticlesFragment : Fragment() {
         viewmodel.adapterObservable.observeOn(AndroidSchedulers.mainThread()).subscribe { adapter ->
             recyclerView.adapter = adapter
             progressBar.visibility = View.GONE
+            retryButton.visibility = View.GONE
+            messageView.visibility = View.GONE
             swipeRefreshLayout.isRefreshing = false
             swipeRefreshLayout.visibility = View.VISIBLE
         }.let(disposables::add)
@@ -62,6 +66,14 @@ class ArticlesFragment : Fragment() {
         swipeRefreshLayout.setOnRefreshListener{
             executeInitialRequest()
         }
+        searchBroadcastReceiver.broadcastObservable.subscribe {
+            progressBar.visibility = View.VISIBLE
+            retryButton.visibility = View.GONE
+            messageView.visibility = View.GONE
+            swipeRefreshLayout.visibility = View.GONE
+            viewmodel.updateUserSessionArticlesResponseSpec(it)
+            viewmodel.requestObserver.onNext(Unit)
+        }.let(disposables::add)
 
         if (savedInstanceState == null) {
             return executeInitialRequest()
@@ -78,6 +90,16 @@ class ArticlesFragment : Fragment() {
             snackbar.dismiss()
         }
         snackbar.show()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        searchBroadcastReceiver.registerReceiver(requireContext())
+    }
+
+    override fun onStop() {
+        super.onStop()
+        requireContext().unregisterReceiver(searchBroadcastReceiver)
     }
 
     override fun onDestroy() {

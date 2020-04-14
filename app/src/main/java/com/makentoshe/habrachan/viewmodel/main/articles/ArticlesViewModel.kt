@@ -8,7 +8,9 @@ import androidx.paging.PagedList
 import com.airbnb.epoxy.EpoxyControllerAdapter
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
+import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.model.main.articles.model.ArticleEpoxyModel
@@ -28,7 +30,8 @@ class ArticlesViewModel(
     private val articlesDataSource: ArticlesDataSource,
     private val controller: ArticlesPagedListEpoxyController,
     private val executorsProvider: ArticlesViewModelExecutorsProvider,
-    private val schedulersProvider: ArticlesViewModelSchedulersProvider
+    private val schedulersProvider: ArticlesViewModelSchedulersProvider,
+    private val sessionDao: SessionDao
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -65,6 +68,12 @@ class ArticlesViewModel(
             .build()
     }
 
+    fun updateUserSessionArticlesResponseSpec(articlesRequestSpec: UserSession.ArticlesRequestSpec) {
+        val currentSession = sessionDao.get()!!
+        val newSession = currentSession.copy(articlesRequestSpec = articlesRequestSpec)
+        sessionDao.insert(newSession)
+    }
+
     override fun onCleared() {
         disposables.clear()
     }
@@ -88,7 +97,7 @@ class ArticlesViewModel(
             val schedulersProvider = object : ArticlesViewModelSchedulersProvider {
                 override val ioScheduler = Schedulers.io()
             }
-            return ArticlesViewModel(source, controller, executorsProvider, schedulersProvider) as T
+            return ArticlesViewModel(source, controller, executorsProvider, schedulersProvider, cacheDatabase.session()) as T
         }
     }
 }

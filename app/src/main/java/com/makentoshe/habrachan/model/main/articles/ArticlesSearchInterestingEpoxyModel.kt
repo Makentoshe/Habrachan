@@ -10,7 +10,9 @@ class ArticlesSearchInterestingEpoxyModel : ArticlesSearchEpoxyModel<TextView>()
 
     override fun bind(view: TextView) {
         view.setText(R.string.interesting)
-        view.setOnClickListener { println(requestSpec) }
+        view.setOnClickListener {
+            ArticlesSearchBroadcastReceiver.sendBroadcast(view.context, requestSpec)
+        }
     }
 
     override fun getDefaultLayout(): Int {
