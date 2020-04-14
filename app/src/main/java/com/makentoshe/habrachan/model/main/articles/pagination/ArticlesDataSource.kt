@@ -30,7 +30,7 @@ class ArticlesDataSource(
     private fun load(page: Int): ArticlesResponse {
         val session = cacheDatabase.session().get()!!
         val request = GetArticlesRequest(
-            session.clientKey, session.apiKey, session.tokenKey, page, session.articlesRequest.request
+            session.clientKey, session.apiKey, session.tokenKey, page, session.articlesRequestSpec.request
         )
         try {
             val response = articleManager.getArticles(request).blockingGet()

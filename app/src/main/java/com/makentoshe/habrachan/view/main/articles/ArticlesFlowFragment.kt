@@ -35,7 +35,7 @@ class ArticlesFlowFragment : Fragment() {
 
         val collapsingToolbar = view.findViewById<CollapsingToolbarLayout>(R.id.articles_flow_fragment_collapsing)
         collapsingToolbar.isTitleEnabled = false
-        toolbar.title = sessionDao.get()!!.articlesRequest.toString(requireContext())
+        toolbar.title = sessionDao.get()!!.articlesRequestSpec.toString(requireContext())
     }
 
     private fun onSearchMenuItemClick(item: MenuItem): Boolean {
