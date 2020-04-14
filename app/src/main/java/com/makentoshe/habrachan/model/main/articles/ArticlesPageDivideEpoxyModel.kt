@@ -27,9 +27,9 @@ abstract class ArticlesPageDivideEpoxyModel : EpoxyModelWithHolder<ArticlesPageD
     }
 
     class Factory {
-        fun build(index: Int, page: Int): ArticlesPageDivideEpoxyModel {
+        fun build(index: String, page: Int): ArticlesPageDivideEpoxyModel {
             val model = ArticlesPageDivideEpoxyModel_()
-            model.id(index)
+            model.id("page", index)
             model.text(page.toString())
             return model
         }

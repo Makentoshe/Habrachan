@@ -79,7 +79,7 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
 
         fun build(id: Int, post: Article): ArticleEpoxyModel {
             val model = ArticleEpoxyModel_()
-            model.id(id)
+            model.id("article", id.toString())
             model.title = post.title
             model.author = post.author.login
             model.timePublished = post.timePublished

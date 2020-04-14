@@ -45,12 +45,12 @@ class ArticlesFragment : Fragment() {
         viewmodel.initialErrorObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
             progressBar.visibility = View.GONE
             messageView.visibility = View.VISIBLE
-            messageView.text = it.json
+            messageView.text = it.response.json
             retryButton.visibility = View.VISIBLE
         }.let(disposables::add)
 
         viewmodel.rangeErrorObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            showErrorSnackbar(it.json)
+            showErrorSnackbar(it.response.json)
         }.let(disposables::add)
 
         retryButton.setOnClickListener {

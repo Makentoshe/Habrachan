@@ -13,6 +13,7 @@ import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
 import com.makentoshe.habrachan.model.main.articles.ArticleEpoxyModel
 import com.makentoshe.habrachan.model.main.articles.ArticlesPageDivideEpoxyModel
+import com.makentoshe.habrachan.model.main.articles.ArticlesPageRequestEpoxyModel
 import com.makentoshe.habrachan.model.main.articles.pagination.ArticlesDataSource
 import com.makentoshe.habrachan.model.main.articles.pagination.ArticlesPagedListEpoxyController
 import io.reactivex.Observable
@@ -80,7 +81,10 @@ class ArticlesViewModel(
             val source = ArticlesDataSource(articleManager, cacheDatabase, imageDatabase)
             val articleModelFactory = ArticleEpoxyModel.Factory(router)
             val divideModelFactory = ArticlesPageDivideEpoxyModel.Factory()
-            val controller = ArticlesPagedListEpoxyController(articleModelFactory, divideModelFactory)
+            val requestModelFactory = ArticlesPageRequestEpoxyModel.Factory()
+            val controller = ArticlesPagedListEpoxyController(
+                articleModelFactory, divideModelFactory, requestModelFactory
+            )
             val executorsProvider = object : ArticlesViewModelExecutorsProvider {
                 override val fetchExecutor = Executors.newSingleThreadExecutor()
                 override val notifyExecutor = Executor { Handler(Looper.getMainLooper()).post(it) }

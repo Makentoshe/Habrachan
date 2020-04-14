@@ -5,11 +5,12 @@ import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.main.articles.ArticleEpoxyModel
 import com.makentoshe.habrachan.model.main.articles.ArticlesPageDivideEpoxyModel
-import java.util.*
+import com.makentoshe.habrachan.model.main.articles.ArticlesPageRequestEpoxyModel
 
 class ArticlesPagedListEpoxyController(
     private val articleModelFactory: ArticleEpoxyModel.Factory,
-    private val divideModelFactory: ArticlesPageDivideEpoxyModel.Factory
+    private val divideModelFactory: ArticlesPageDivideEpoxyModel.Factory,
+    private val requestModelFactory: ArticlesPageRequestEpoxyModel.Factory
 ) : PagedListEpoxyController<Article>() {
 
     val pageSize = 20
@@ -21,8 +22,12 @@ class ArticlesPagedListEpoxyController(
     override fun addModels(models: List<EpoxyModel<*>>) {
         var page = 2
         models.chunked(20).flatMap {
-            LinkedList(it).apply { addLast(divideModelFactory.build(-page, page++)) }
-        }.also { super.addModels(it) }
+            it.toMutableList().apply { add(divideModelFactory.build(page.toString(), page++)) }
+        }.let {
+            it.toMutableList().apply { add(requestModelFactory.build()) }
+        }.let {
+            super.addModels(it)
+        }
     }
 }
 
