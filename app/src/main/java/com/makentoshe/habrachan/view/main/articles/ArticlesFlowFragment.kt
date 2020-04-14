@@ -12,14 +12,18 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.model.main.articles.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFlowFragmentUi
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
 class ArticlesFlowFragment : Fragment() {
 
+    private val disposables = CompositeDisposable()
     val arguments = Arguments(this)
     private val sessionDao by inject<SessionDao>()
+    private val searchBroadcastReceiver by inject<ArticlesSearchBroadcastReceiver>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return ArticlesFlowFragmentUi(container).createView(inflater)
@@ -30,12 +34,17 @@ class ArticlesFlowFragment : Fragment() {
         slidingUpPanelLayout.isTouchEnabled = false
 
         val toolbar = view.findViewById<Toolbar>(R.id.articles_flow_fragment_toolbar)
+        toolbar.title = sessionDao.get()!!.articlesRequestSpec.toString(requireContext())
         toolbar.inflateMenu(R.menu.main_search)
         toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
 
         val collapsingToolbar = view.findViewById<CollapsingToolbarLayout>(R.id.articles_flow_fragment_collapsing)
         collapsingToolbar.isTitleEnabled = false
-        toolbar.title = sessionDao.get()!!.articlesRequestSpec.toString(requireContext())
+
+        searchBroadcastReceiver.broadcastObservable.subscribe {
+            toolbar.title = it.toString(requireContext())
+            slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }.let(disposables::add)
     }
 
     private fun onSearchMenuItemClick(item: MenuItem): Boolean {
@@ -54,11 +63,26 @@ class ArticlesFlowFragment : Fragment() {
         return false
     }
 
+    override fun onStart() {
+        super.onStart()
+        searchBroadcastReceiver.registerReceiver(requireContext())
+    }
+
+    override fun onStop() {
+        super.onStop()
+        requireContext().unregisterReceiver(searchBroadcastReceiver)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         requireFragmentManager().fragments.filterIsInstance<ArticlesFragment>().forEach {
             requireFragmentManager().beginTransaction().remove(it).commit()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 
     private fun closeSoftKeyboard() {

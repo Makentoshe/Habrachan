@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.di.main.articles
 
 import com.makentoshe.habrachan.common.database.HabrDatabase
-import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.main.articles.*
 import com.makentoshe.habrachan.view.main.articles.ArticlesSearchFragment
@@ -16,13 +15,12 @@ class ArticlesSearchFragmentModule(fragment: ArticlesSearchFragment): Module() {
 
     init {
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
-        val session = cacheDatabase.session().get()!!
-        val controller = getArticlesSearchEpoxyController(session)
+        val controller = getArticlesSearchEpoxyController()
         bind<ArticlesSearchEpoxyController>().toInstance(controller)
     }
 
-    private fun getArticlesSearchEpoxyController(session: UserSession) = ArticlesSearchEpoxyController(
-        session,
+    private fun getArticlesSearchEpoxyController() = ArticlesSearchEpoxyController(
+        cacheDatabase.session(),
         ArticlesSearchTopEpoxyModel.Factory(),
         ArticlesSearchAllEpoxyModel.Factory(),
         ArticlesSearchInterestingEpoxyModel.Factory(),

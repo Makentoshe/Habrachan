@@ -12,6 +12,8 @@
         style="@style/Habrachan.Light.Toolbar"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:id="@+id/articles_search_fragment_recycler"
+        android:nestedScrollingEnabled="false"
+        android:clipToPadding="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

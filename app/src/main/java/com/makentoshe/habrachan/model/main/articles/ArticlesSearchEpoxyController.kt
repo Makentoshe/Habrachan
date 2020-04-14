@@ -1,11 +1,11 @@
 package com.makentoshe.habrachan.model.main.articles
 
 import com.airbnb.epoxy.EpoxyController
-import com.makentoshe.habrachan.common.entity.session.UserSession
+import com.makentoshe.habrachan.common.database.SessionDao
 
 class ArticlesSearchEpoxyController(
-    private val userSession: UserSession,
-    private val topModelFactory : ArticlesSearchTopEpoxyModel.Factory,
+    private val sessionDao: SessionDao,
+    private val topModelFactory: ArticlesSearchTopEpoxyModel.Factory,
     private val allModelFactory: ArticlesSearchAllEpoxyModel.Factory,
     private val interestingModelFactory: ArticlesSearchInterestingEpoxyModel.Factory,
     private val subscriptionModelFactory: ArticlesSearchSubscriptionEpoxyModel.Factory
@@ -13,11 +13,12 @@ class ArticlesSearchEpoxyController(
 
     override fun buildModels() {
         listOf(
-            topModelFactory.build(),
+//            topModelFactory.build(),
             interestingModelFactory.build(),
-            allModelFactory.build(),
-            subscriptionModelFactory.build()
+            allModelFactory.build()
+//            subscriptionModelFactory.build()
         ).filterNot {
+            val userSession = sessionDao.get()!!
             it.requestSpec == userSession.articlesRequestSpec
         }.forEach {
             it.addTo(this)
