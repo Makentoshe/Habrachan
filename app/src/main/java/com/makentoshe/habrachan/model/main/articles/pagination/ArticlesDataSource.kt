@@ -21,8 +21,8 @@ class ArticlesDataSource(
     private val initialErrorSubject = PublishSubject.create<ArticlesLoadInitialErrorContainer>()
     val initialErrorObservable: Observable<ArticlesLoadInitialErrorContainer> = initialErrorSubject
 
-    private val initialSuccessSubject = PublishSubject.create<ArticlesResponse.Success>()
-    val initialSuccessObservable: Observable<ArticlesResponse.Success> = initialSuccessSubject
+    private val initialSuccessSubject = PublishSubject.create<ArticlesLoadInitialSuccessContainer>()
+    val initialSuccessObservable: Observable<ArticlesLoadInitialSuccessContainer> = initialSuccessSubject
 
     private val rangeErrorSubject = PublishSubject.create<ArticlesLoadRangeErrorContainer>()
     val rangeErrorObservable: Observable<ArticlesLoadRangeErrorContainer> = rangeErrorSubject
@@ -83,7 +83,8 @@ class ArticlesDataSource(
         when (val response = load(page)) {
             is ArticlesResponse.Success -> {
                 callback.onResult(response.data, 0)
-                initialSuccessSubject.onNext(response)
+                val container = ArticlesLoadInitialSuccessContainer(response, params, callback)
+                initialSuccessSubject.onNext(container)
             }
             is ArticlesResponse.Error -> {
                 val container = ArticlesLoadInitialErrorContainer(response, params, callback)
