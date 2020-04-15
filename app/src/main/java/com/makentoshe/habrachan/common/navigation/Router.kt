@@ -4,7 +4,7 @@ import ru.terrakok.cicerone.Router
 
 open class Router : Router() {
 
-    fun customReplace(screen: Screen) {
-        executeCommands(CustomReplace(screen))
+    fun smartReplace(screen: Screen) {
+        executeCommands(SmartReplace(screen))
     }
 }

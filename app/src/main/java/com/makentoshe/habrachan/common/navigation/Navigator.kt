@@ -50,7 +50,7 @@ class Navigator(
             is Replace -> replace(command)
             is BackTo -> backTo(command)
             is Back -> back()
-            is CustomReplace -> customReplace(command)
+            is SmartReplace -> smartReplace(command)
         }
     }
 
@@ -122,27 +122,28 @@ class Navigator(
         }
     }
 
-    private fun customReplace(command: CustomReplace) {
-        val isPopped = fragmentManager.popBackStackImmediate(command.screen.screenKey, 0)
-
-        if (!isPopped) {
+    /**
+     * Performs [SmartReplace] command transition
+     */
+    private fun smartReplace(command: SmartReplace) {
+        val fragment = fragmentManager.findFragmentByTag(command.screen.screenKey)
+        if (fragment == null) {
             val newFragment = createFragment(command.screen)
             val fragmentTransaction = fragmentManager.beginTransaction()
-
             setupFragmentTransaction(
-                command,
-                fragmentManager.findFragmentById(containerId),
-                newFragment,
-                fragmentTransaction
+                command, fragmentManager.findFragmentById(containerId), newFragment, fragmentTransaction
             )
-
-            fragmentTransaction
-                .add(containerId, newFragment)
-                .addToBackStack(command.screen.screenKey)
-                .commit()
-            localStackCopy!!.add(command.screen.screenKey)
+            fragmentTransaction.add(containerId, newFragment, command.screen.screenKey).commit()
+        } else {
+            val currentFragment = fragmentManager.findFragmentById(containerId)
+            if (currentFragment != fragment) {
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                setupFragmentTransaction(
+                    command, fragmentManager.findFragmentById(containerId), fragment, fragmentTransaction
+                )
+                fragmentTransaction.replace(containerId, fragment, command.screen.screenKey).commit()
+            }
         }
-
     }
 
     /**

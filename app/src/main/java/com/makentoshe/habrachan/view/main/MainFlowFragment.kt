@@ -10,8 +10,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.model.main.login.LoginScreen
 import com.makentoshe.habrachan.model.main.articles.ArticlesFlowScreen
+import com.makentoshe.habrachan.model.main.login.LoginScreen
 import com.makentoshe.habrachan.model.main.menu.MenuScreen
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.model.user.UserScreen
@@ -102,19 +102,19 @@ class MainFlowFragment : Fragment() {
         }
 
         fun toUserScreen() {
-            router.customReplace(UserScreen(UserAccount.Me))
+            router.smartReplace(UserScreen(UserAccount.Me))
         }
 
         fun toLoginScreen() {
-            router.customReplace(LoginScreen())
+            router.smartReplace(LoginScreen())
         }
 
         fun toArticlesScreen(page: Int) {
-            router.customReplace(ArticlesFlowScreen(page))
+            router.smartReplace(ArticlesFlowScreen(page))
         }
 
         fun toMenuScreen() {
-            router.customReplace(MenuScreen())
+            router.smartReplace(MenuScreen())
         }
 
         fun release() {
