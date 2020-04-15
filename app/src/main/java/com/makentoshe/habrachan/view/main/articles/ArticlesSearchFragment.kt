@@ -32,10 +32,6 @@ class ArticlesSearchFragment : Fragment() {
         recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerView.adapter = controller.adapter
         controller.requestModelBuild()
-
-        searchBroadcastReceiver.broadcastObservable.subscribe {
-            controller.requestModelBuild()
-        }.let(disposables::add)
     }
 
     override fun onStart() {
@@ -45,7 +41,11 @@ class ArticlesSearchFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        requireContext().unregisterReceiver(searchBroadcastReceiver)
+        try {
+            requireContext().unregisterReceiver(searchBroadcastReceiver)
+        } catch (ignoring: IllegalArgumentException) {
+            // Caused by: java.lang.IllegalArgumentException: Receiver not registered:
+        }
     }
 
     override fun onDestroy() {

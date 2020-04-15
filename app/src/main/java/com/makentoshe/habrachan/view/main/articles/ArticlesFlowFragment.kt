@@ -13,6 +13,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.model.main.articles.ArticlesSearchBroadcastReceiver
+import com.makentoshe.habrachan.model.main.articles.ArticlesSearchEpoxyController
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFlowFragmentUi
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.reactivex.disposables.CompositeDisposable
@@ -24,6 +25,7 @@ class ArticlesFlowFragment : Fragment() {
     val arguments = Arguments(this)
     private val sessionDao by inject<SessionDao>()
     private val searchBroadcastReceiver by inject<ArticlesSearchBroadcastReceiver>()
+    private val articlesSearchEpoxyController by inject<ArticlesSearchEpoxyController>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return ArticlesFlowFragmentUi(container).createView(inflater)
@@ -53,11 +55,12 @@ class ArticlesFlowFragment : Fragment() {
         val panelState = slidingUpPanelLayout?.panelState
         if (panelState != SlidingUpPanelLayout.PanelState.COLLAPSED) {
             slidingUpPanelLayout?.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+            closeSoftKeyboard()
             return true
         }
         if (panelState != SlidingUpPanelLayout.PanelState.EXPANDED) {
             slidingUpPanelLayout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-            closeSoftKeyboard()
+            articlesSearchEpoxyController.requestModelBuild()
             return true
         }
         return false
@@ -70,7 +73,11 @@ class ArticlesFlowFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        requireContext().unregisterReceiver(searchBroadcastReceiver)
+        try {
+            requireContext().unregisterReceiver(searchBroadcastReceiver)
+        } catch (ignoring: IllegalArgumentException) {
+            // Caused by: java.lang.IllegalArgumentException: Receiver not registered
+        }
     }
 
     override fun onDestroyView() {

@@ -99,7 +99,11 @@ class ArticlesFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        requireContext().unregisterReceiver(searchBroadcastReceiver)
+        try {
+            requireContext().unregisterReceiver(searchBroadcastReceiver)
+        } catch (ignoring: IllegalArgumentException) {
+            // Caused by: java.lang.IllegalArgumentException: Receiver not registered
+        }
     }
 
     override fun onDestroy() {

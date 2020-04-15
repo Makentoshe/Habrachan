@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.model.main.articles
 
 import com.airbnb.epoxy.EpoxyController
 import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.entity.session.UserSession
 
 class ArticlesSearchEpoxyController(
     private val sessionDao: SessionDao,
@@ -15,13 +16,18 @@ class ArticlesSearchEpoxyController(
         listOf(
 //            topModelFactory.build(),
             interestingModelFactory.build(),
-            allModelFactory.build()
-//            subscriptionModelFactory.build()
-        ).filterNot {
-            val userSession = sessionDao.get()!!
-            it.requestSpec == userSession.articlesRequestSpec
-        }.forEach {
+            allModelFactory.build(),
+            subscriptionModelFactory.build()
+        ).filter(::filter).forEach {
             it.addTo(this)
         }
+    }
+
+    private fun filter(model: ArticlesSearchEpoxyModel<*>): Boolean {
+        val userSession = sessionDao.get()!!
+        val currentFactor = model.requestSpec != userSession.articlesRequestSpec
+        val isSubscriptionModel = model.requestSpec == UserSession.ArticlesRequestSpec.subscription()
+        val loginInFactor = if (isSubscriptionModel) userSession.isLoggedIn else true
+        return currentFactor && loginInFactor
     }
 }
