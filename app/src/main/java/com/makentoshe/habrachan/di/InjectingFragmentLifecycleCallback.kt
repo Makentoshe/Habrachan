@@ -79,9 +79,8 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     }
 
     private fun injectArticlesSearchFragment(fragment: ArticlesSearchFragment) {
-        val module = ArticlesSearchFragmentModule(fragment)
         val scope = Toothpick.openScopes(ArticlesFlowFragmentScope::class.java, ArticlesSearchFragmentScope::class.java)
-        scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
+        scope.closeOnDestroy(fragment).inject(fragment)
     }
 
     private fun injectArticleFragment(fragment: ArticleFragment) {
