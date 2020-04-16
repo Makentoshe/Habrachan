@@ -11,6 +11,7 @@ import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.net.UnknownHostException
+import javax.net.ssl.SSLHandshakeException
 
 class ArticlesDataSource(
     private val articleManager: HabrArticleManager,
@@ -32,13 +33,14 @@ class ArticlesDataSource(
         val request = GetArticlesRequest(
             session.clientKey, session.apiKey, session.tokenKey, page, session.articlesRequestSpec.request
         )
-        try {
+        return try {
             val response = articleManager.getArticles(request).blockingGet()
             saveCache(page, response)
             return response
         } catch (runtimeException: RuntimeException) {
             when (val cause = runtimeException.cause) {
-                is UnknownHostException -> return loadCache(page, cause)
+                is UnknownHostException -> loadCache(page, cause)
+                is SSLHandshakeException -> loadCache(page, cause)
                 else -> throw runtimeException
             }
         }
@@ -57,7 +59,7 @@ class ArticlesDataSource(
         }
     }
 
-    private fun loadCache(page: Int, exception: UnknownHostException): ArticlesResponse {
+    private fun loadCache(page: Int, exception: Exception): ArticlesResponse {
         if (page > 1) return ArticlesResponse.Error(exception.toString())
         val articles = cacheDatabase.articles().getAllSortedByDescendingTimePublished()
         if (articles.isEmpty()) {

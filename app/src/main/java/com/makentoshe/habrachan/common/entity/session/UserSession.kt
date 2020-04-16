@@ -36,7 +36,7 @@ data class UserSession(
             INTERESTING -> context.getString(R.string.articles_type_interesting)
             ALL -> context.getString(R.string.articles_type_all)
             SUBSCRIPTION -> context.getString(R.string.articles_type_subscription)
-            TOP -> context.getString(R.string.articles_type_top)
+            TOP_ALLTIME -> context.getString(R.string.articles_type_top_alltime)
             else -> throw IllegalStateException()
         }
 
@@ -44,8 +44,8 @@ data class UserSession(
             private const val INTERESTING = "posts/interesting"
             private const val ALL = "posts/all"
             private const val SUBSCRIPTION = "feed/all"
-            private const val TOP = "posts/top"
-            private val types = setOf(INTERESTING, ALL, SUBSCRIPTION, TOP)
+            private const val TOP_ALLTIME = "top/alltime"
+            private val types = setOf(INTERESTING, ALL, SUBSCRIPTION, TOP_ALLTIME)
 
             fun interesting() = ArticlesRequestSpec(INTERESTING)
 
@@ -53,7 +53,7 @@ data class UserSession(
 
             fun subscription() = ArticlesRequestSpec(SUBSCRIPTION)
 
-            fun top() = ArticlesRequestSpec(TOP)
+            fun topAlltime() = ArticlesRequestSpec(TOP_ALLTIME)
 
             fun fromString(context: Context, string: String): ArticlesRequestSpec {
                 if (string == context.getString(R.string.articles_type_interesting)) {
@@ -65,8 +65,8 @@ data class UserSession(
                 if (string == context.getString(R.string.articles_type_subscription)) {
                     return subscription()
                 }
-                if (string == context.getString(R.string.articles_type_top)) {
-                    return top()
+                if (string == context.getString(R.string.articles_type_top_alltime)) {
+                    return topAlltime()
                 }
                 throw IllegalArgumentException(string)
             }

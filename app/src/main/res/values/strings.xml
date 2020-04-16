@@ -41,16 +41,16 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="repeated_voting_is_prohibited">Repeated voting is prohibited</string>
     <string name="menu_search">Search</string>
 
+    <string name="article_model_request_continue">Continue searching</string>
     <string name="articles_type_all">All</string>
     <string name="articles_type_interesting">Interesting</string>
-    <string name="article_model_request_continue">Continue searching</string>
     <string name="articles_type_subscription">By subscription</string>
-    <string name="articles_type_top">Top</string>
+    <string name="articles_type_top_alltime">Top of all-time</string>
     <string-array name="articles_type">
         <item>@string/articles_type_all</item>
         <item>@string/articles_type_interesting</item>
         <item>@string/articles_type_subscription</item>
-        <item>@string/articles_type_top</item>
+        <item>@string/articles_type_top_alltime</item>
     </string-array>
 
 </resources>
