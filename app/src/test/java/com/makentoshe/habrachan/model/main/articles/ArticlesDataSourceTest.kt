@@ -5,7 +5,7 @@ import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
-import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.model.main.articles.pagination.ArticlesDataSource
 import io.mockk.every
 import io.mockk.mockk
@@ -20,7 +20,7 @@ import java.net.UnknownHostException
 class ArticlesDataSourceTest {
 
     private lateinit var dataSource: ArticlesDataSource
-    private val manager = mockk<HabrArticleManager>()
+    private val manager = mockk<ArticlesManager>()
     private val cacheDatabase = mockk<HabrDatabase>(relaxed = true)
     private val imageDatabase = mockk<ImageDatabase>(relaxed = true)
 

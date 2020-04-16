@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.post.ArticleResponse
-import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.ImageRequest
 import io.reactivex.Observable
@@ -17,7 +17,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
 class ArticleFragmentViewModel(
-    private val manager: HabrArticleManager,
+    private val manager: ArticlesManager,
     private val articleDao: ArticleDao,
     private val sessionDao: SessionDao,
     private val userAvatarViewModel: UserAvatarViewModel
@@ -66,7 +66,7 @@ class ArticleFragmentViewModel(
     override fun onCleared() = disposables.clear()
 
     class Factory(
-        private val manager: HabrArticleManager,
+        private val manager: ArticlesManager,
         private val articleDao: ArticleDao,
         private val sessionDao: SessionDao,
         private val userAvatarViewModel: UserAvatarViewModel
