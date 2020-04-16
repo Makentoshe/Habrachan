@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
 import com.makentoshe.habrachan.common.entity.posts.NextPage
-import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -14,7 +14,7 @@ import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 
 class ArticlesDataSource(
-    private val articleManager: HabrArticleManager,
+    private val articlesManager: ArticlesManager,
     private val cacheDatabase: HabrDatabase,
     private val imageDatabase: ImageDatabase
 ) : PositionalDataSource<Article>() {
@@ -34,7 +34,7 @@ class ArticlesDataSource(
             session.clientKey, session.apiKey, session.tokenKey, page, session.articlesRequestSpec.request
         )
         return try {
-            val response = articleManager.getArticles(request).blockingGet()
+            val response = articlesManager.getArticles(request).blockingGet()
             saveCache(page, response)
             return response
         } catch (runtimeException: RuntimeException) {

@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan
 
 import com.makentoshe.habrachan.common.entity.session.UserSession
-import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
@@ -22,7 +22,7 @@ class ExampleUnitTest : BaseTest() {
     @Ignore
     fun voteUpArticleTest() {
         val articleId = 489596
-        val manager = HabrArticleManager.Builder(OkHttpClient()).build()
+        val manager = ArticlesManager.Builder(OkHttpClient()).build()
         val request = VoteArticleRequest(session.clientKey, session.tokenKey, articleId)
         val response = manager.voteUp(request).blockingGet()
         println(response)
@@ -32,7 +32,7 @@ class ExampleUnitTest : BaseTest() {
     @Ignore
     fun voteDownArticleTest() {
         val articleId = 489440
-        val manager = HabrArticleManager.Builder(OkHttpClient()).build()
+        val manager = ArticlesManager.Builder(OkHttpClient()).build()
         val request = VoteArticleRequest(session.clientKey, session.tokenKey, articleId)
         val response = manager.voteDown(request).blockingGet()
         println(response)
@@ -42,16 +42,16 @@ class ExampleUnitTest : BaseTest() {
     @Ignore
     fun getSingleArticleTest() {
         val articleId = 489144
-        val manager = HabrArticleManager.Builder(OkHttpClient()).build()
+        val manager = ArticlesManager.Builder(OkHttpClient()).build()
         val request = GetArticleRequest(session.clientKey, session.tokenKey, session.apiKey, articleId)
-        val response = manager.getPost(request).blockingGet()
+        val response = manager.getArticle(request).blockingGet()
         println(response)
     }
 
     @Test
     @Ignore
     fun getAllArticlesTest() {
-        val manager = HabrArticleManager.Builder(OkHttpClient()).build()
+        val manager = ArticlesManager.Builder(OkHttpClient()).build()
         val spec = UserSession.ArticlesRequestSpec.all()
         val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, spec.request)
         val response = manager.getArticles(request).blockingGet()
@@ -61,7 +61,7 @@ class ExampleUnitTest : BaseTest() {
     @Test
     @Ignore
     fun getTopArticlesTest() {
-        val manager = HabrArticleManager.Builder(OkHttpClient()).build()
+        val manager = ArticlesManager.Builder(OkHttpClient()).build()
         val spec = UserSession.ArticlesRequestSpec.topAlltime()
         val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, spec.request)
         val response = manager.getArticles(request).blockingGet()

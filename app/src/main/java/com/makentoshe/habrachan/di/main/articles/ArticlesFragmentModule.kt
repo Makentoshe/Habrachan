@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
@@ -16,7 +16,7 @@ import toothpick.ktp.delegate.inject
 
 class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
 
-    private val articleManager: HabrArticleManager
+    private val articlesManager: ArticlesManager
 
     private val client by inject<OkHttpClient>()
     private val database by inject<HabrDatabase>()
@@ -24,7 +24,7 @@ class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
 
     init {
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
-        articleManager = HabrArticleManager.Builder(client).build("text_html")
+        articlesManager = ArticlesManager.Builder(client).build()
 
         val articlesViewModel2 = getArticlesViewModel(fragment)
         bind<ArticlesViewModel>().toInstance(articlesViewModel2)
@@ -32,7 +32,7 @@ class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
 
     private fun getArticlesViewModel(fragment: ArticlesFragment): ArticlesViewModel {
         val imageDatabase = ImageDatabase(fragment.requireContext())
-        val factory = ArticlesViewModel.Factory(articleManager, database, imageDatabase, router)
+        val factory = ArticlesViewModel.Factory(articlesManager, database, imageDatabase, router)
         return ViewModelProviders.of(fragment, factory)[ArticlesViewModel::class.java]
     }
 }

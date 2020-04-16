@@ -12,7 +12,7 @@ import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.common.network.manager.HabrArticleManager
+import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.model.main.articles.model.ArticleEpoxyModel
 import com.makentoshe.habrachan.model.main.articles.model.ArticlesPageDivideEpoxyModel
 import com.makentoshe.habrachan.model.main.articles.pagination.ArticlesDataSource
@@ -79,14 +79,14 @@ class ArticlesViewModel(
     }
 
     class Factory(
-        private val articleManager: HabrArticleManager,
+        private val articlesManager: ArticlesManager,
         private val cacheDatabase: HabrDatabase,
         private val imageDatabase: ImageDatabase,
         private val router: Router
     ) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val source = ArticlesDataSource(articleManager, cacheDatabase, imageDatabase)
+            val source = ArticlesDataSource(articlesManager, cacheDatabase, imageDatabase)
             val articleModelFactory = ArticleEpoxyModel.Factory(router)
             val divideModelFactory = ArticlesPageDivideEpoxyModel.Factory()
             val controller = ArticlesPagedListEpoxyController(articleModelFactory, divideModelFactory)
