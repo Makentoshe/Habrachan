@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.ArticleDao
 import com.makentoshe.habrachan.common.database.SessionDao
-import com.makentoshe.habrachan.common.entity.post.ArticleResponse
+import com.makentoshe.habrachan.common.entity.article.ArticleResponse
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.ImageRequest

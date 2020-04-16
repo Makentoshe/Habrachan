@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.common.network.converter
 
 import com.google.gson.Gson
-import com.makentoshe.habrachan.common.entity.post.ArticleResponse
+import com.makentoshe.habrachan.common.entity.article.ArticleResponse
 import okhttp3.ResponseBody
 
 class ArticleConverter {

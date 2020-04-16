@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan
 
-import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
@@ -52,8 +51,8 @@ class ExampleUnitTest : BaseTest() {
     @Ignore
     fun getAllArticlesTest() {
         val manager = ArticlesManager.Builder(OkHttpClient()).build()
-        val spec = UserSession.ArticlesRequestSpec.all()
-        val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, spec.request)
+        val spec = GetArticlesRequest.Spec.all()
+        val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, spec)
         val response = manager.getArticles(request).blockingGet()
         println(response)
     }
@@ -62,8 +61,8 @@ class ExampleUnitTest : BaseTest() {
     @Ignore
     fun getTopArticlesTest() {
         val manager = ArticlesManager.Builder(OkHttpClient()).build()
-        val spec = UserSession.ArticlesRequestSpec.topAlltime()
-        val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, spec.request)
+        val spec = GetArticlesRequest.Spec.topAlltime()
+        val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, spec)
         val response = manager.getArticles(request).blockingGet()
         println(response)
     }

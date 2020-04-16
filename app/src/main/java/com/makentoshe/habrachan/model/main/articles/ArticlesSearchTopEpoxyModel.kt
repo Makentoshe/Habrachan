@@ -2,11 +2,11 @@ package com.makentoshe.habrachan.model.main.articles
 
 import android.widget.TextView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.session.UserSession
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 
 class ArticlesSearchTopEpoxyModel: ArticlesSearchEpoxyModel<TextView>() {
 
-    override val requestSpec = UserSession.ArticlesRequestSpec.topAlltime()
+    override val requestSpec = GetArticlesRequest.Spec.topAlltime()
 
     override fun bind(view: TextView) {
         view.setText(R.string.articles_type_top_alltime)

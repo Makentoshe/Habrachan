@@ -14,8 +14,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.ImageResponse
+import com.makentoshe.habrachan.common.entity.article.ArticleResponse
 import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
-import com.makentoshe.habrachan.common.entity.post.ArticleResponse
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.ui.ImageTintController
 import com.makentoshe.habrachan.common.ui.ImageViewController

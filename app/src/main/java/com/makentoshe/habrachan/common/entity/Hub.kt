@@ -3,8 +3,6 @@ package com.makentoshe.habrachan.common.entity
 import androidx.room.Embedded
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.common.entity.Flow
-import com.makentoshe.habrachan.common.entity.posts.PostsResponse
 
 data class Hub(
     @SerializedName("about")

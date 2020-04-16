@@ -4,8 +4,8 @@ import androidx.paging.PositionalDataSource
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.common.entity.post.ArticlesResponse
-import com.makentoshe.habrachan.common.entity.posts.NextPage
+import com.makentoshe.habrachan.common.entity.article.ArticlesResponse
+import com.makentoshe.habrachan.common.entity.article.NextPage
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import io.reactivex.Observable
@@ -29,10 +29,7 @@ class ArticlesDataSource(
     val rangeErrorObservable: Observable<ArticlesLoadRangeErrorContainer> = rangeErrorSubject
 
     private fun load(page: Int): ArticlesResponse {
-        val session = cacheDatabase.session().get()!!
-        val request = GetArticlesRequest(
-            session.clientKey, session.apiKey, session.tokenKey, page, session.articlesRequestSpec.request
-        )
+        val request = buildGetArticlesRequest(page)
         return try {
             val response = articlesManager.getArticles(request).blockingGet()
             saveCache(page, response)
@@ -44,6 +41,12 @@ class ArticlesDataSource(
                 else -> throw runtimeException
             }
         }
+    }
+
+    private fun buildGetArticlesRequest(page: Int): GetArticlesRequest {
+        val session = cacheDatabase.session().get()!!
+        val spec = session.articlesRequestSpec
+        return GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, page, spec)
     }
 
     private fun saveCache(page: Int, response: ArticlesResponse) {
@@ -65,7 +68,10 @@ class ArticlesDataSource(
         if (articles.isEmpty()) {
             return ArticlesResponse.Error(exception.toString())
         }
-        val nextPage = NextPage(articles.size / ArticlesResponse.DEFAULT_SIZE + 1, "")
+        val nextPage = NextPage(
+            articles.size / ArticlesResponse.DEFAULT_SIZE + 1,
+            ""
+        )
         return ArticlesResponse.Success(articles, nextPage, 0, "", "")
     }
 
