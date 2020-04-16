@@ -13,11 +13,8 @@ data class Article(
     @PrimaryKey
     @SerializedName("id")
     val id: Int,
-
-    // value for better storing in database
-    // should not used directly
+    /** value for better storing in database, should not used directly */
     var index: Int? = null,
-
     @Embedded(prefix = "user_")
     @SerializedName("author")
     val author: User,

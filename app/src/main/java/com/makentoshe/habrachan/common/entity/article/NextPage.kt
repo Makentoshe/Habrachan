@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.entity.posts
+package com.makentoshe.habrachan.common.entity.article
 
 
 import com.google.gson.annotations.SerializedName
