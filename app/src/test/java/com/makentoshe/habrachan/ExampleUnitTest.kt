@@ -52,7 +52,18 @@ class ExampleUnitTest : BaseTest() {
     @Ignore
     fun getAllArticlesTest() {
         val manager = HabrArticleManager.Builder(OkHttpClient()).build()
-        val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, UserSession.ArticlesRequestSpec.all().request)
+        val spec = UserSession.ArticlesRequestSpec.all()
+        val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, spec.request)
+        val response = manager.getArticles(request).blockingGet()
+        println(response)
+    }
+
+    @Test
+    @Ignore
+    fun getTopArticlesTest() {
+        val manager = HabrArticleManager.Builder(OkHttpClient()).build()
+        val spec = UserSession.ArticlesRequestSpec.topAlltime()
+        val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, spec.request)
         val response = manager.getArticles(request).blockingGet()
         println(response)
     }

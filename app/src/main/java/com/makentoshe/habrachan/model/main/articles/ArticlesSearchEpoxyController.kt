@@ -14,7 +14,7 @@ class ArticlesSearchEpoxyController(
 
     override fun buildModels() {
         listOf(
-//            topModelFactory.build(),
+            topModelFactory.build(),
             interestingModelFactory.build(),
             allModelFactory.build(),
             subscriptionModelFactory.build()
