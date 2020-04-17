@@ -17,6 +17,9 @@
         <item name="habrachanBottomBar">@style/Habrachan.Light.BottomBar</item>
         <item name="habrachanPopup">@style/Habrachan.Light.Popup</item>
         <item name="habrachanDefault">@style/Habrachan.Light.Default</item>
+        <item name="habrachanToolbarInput">@style/Habrachan.Light.Toolbar.Input</item>
+        <item name="habrachanToolbarButton">@style/Habrachan.Light.Toolbar.Button</item>
+        <item name="habrachanToolbarChip">@style/Habrachan.Light.Toolbar.Chip</item>
     </style>
 
     <style name="Habrachan.Light.Toolbar" parent="Habrachan.Light">
@@ -27,6 +30,24 @@
         <item name="android:textAppearance">@style/Habrachan.Light.TextAppearance</item>
         <item name="android:tint">@android:color/white</item>
         <item name="android:tintMode">src_atop</item>
+    </style>
+
+    <style name="Habrachan.Light.Toolbar.Input" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="hintTextAppearance">@style/Habrachan.Light.TextAppearance</item>
+        <item name="hintTextColor">@android:color/white</item>
+        <item name="boxStrokeColor">@android:color/white</item>
+        <item name="endIconTint">@android:color/white</item>
+    </style>
+
+    <style name="Habrachan.Light.Toolbar.Button" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Habrachan.Light.Toolbar.Chip" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">@color/selector_habrachan_light_toolbar_chip_background</item>
+        <item name="android:textColor">@color/selector_habrachan_light_toolbar_chip_foreground</item>
+        <item name="checkedIconTint">@color/selector_habrachan_light_toolbar_chip_foreground</item>
     </style>
 
     <style name="Habrachan.Light.BottomBar" parent="Habrachan.Light.Toolbar">
@@ -46,11 +67,11 @@
     <style name="Habrachan.Light.TextAppearance.Small" parent="Habrachan.Light.TextAppearance">
         <item name="android:textSize">14sp</item>
     </style>
-    
+
     <style name="Habrachan.TextAppearance.CollapsingToolbar.Collapsed" parent="Habrachan">
         <item name="android:textSize">14sp</item>
     </style>
-    
+
     <style name="Habrachan.TextAppearance.CollapsingToolbar.Expanded" parent="Habrachan">
         <item name="android:textSize">24sp</item>
     </style>

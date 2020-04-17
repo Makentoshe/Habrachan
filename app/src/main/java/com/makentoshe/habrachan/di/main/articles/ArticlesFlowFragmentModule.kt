@@ -28,6 +28,7 @@ class ArticlesFlowFragmentModule(fragment: ArticlesFlowFragment) : Module() {
         ArticlesSearchTopEpoxyModel.Factory(),
         ArticlesSearchAllEpoxyModel.Factory(),
         ArticlesSearchInterestingEpoxyModel.Factory(),
-        ArticlesSearchSubscriptionEpoxyModel.Factory()
+        ArticlesSearchSubscriptionEpoxyModel.Factory(),
+        ArticlesSearchCustomEpoxyModel.Factory()
     )
 }

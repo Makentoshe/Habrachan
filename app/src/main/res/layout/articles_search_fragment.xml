@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Habrachan.Light.Toolbar"
+    style="@style/Habrachan.Light.Toolbar"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,7 +13,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:id="@+id/articles_search_fragment_recycler"
         android:nestedScrollingEnabled="false"
-        android:clipToPadding="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

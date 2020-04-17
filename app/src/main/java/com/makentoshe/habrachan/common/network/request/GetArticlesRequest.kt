@@ -73,6 +73,7 @@ data class GetArticlesRequest(
 
             fun topAlltime() = Spec(TOP_ALLTIME, null)
 
+            /** @param sort relevance, date, rating */
             fun search(sort: String) = Spec(SEARCH, sort)
         }
     }

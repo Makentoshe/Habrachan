@@ -23,6 +23,11 @@ class ArticlesSearchFragment : Fragment() {
     private val controller by inject<ArticlesSearchEpoxyController>()
     private val searchBroadcastReceiver by inject<ArticlesSearchBroadcastReceiver>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        searchBroadcastReceiver.registerReceiver(requireContext())
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return ArticlesSearchFragmentUi(container).buildView(requireContext())
     }
@@ -31,26 +36,16 @@ class ArticlesSearchFragment : Fragment() {
         recyclerView = view.findViewById<RecyclerView>(R.id.articles_search_fragment_recycler)
         recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerView.adapter = controller.adapter
-        controller.requestModelBuild()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        searchBroadcastReceiver.registerReceiver(requireContext())
-    }
-
-    override fun onStop() {
-        super.onStop()
-        try {
-            requireContext().unregisterReceiver(searchBroadcastReceiver)
-        } catch (ignoring: IllegalArgumentException) {
-            // Caused by: java.lang.IllegalArgumentException: Receiver not registered:
-        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
+        try {
+            requireContext().unregisterReceiver(searchBroadcastReceiver)
+        } catch (ignoring: IllegalArgumentException) {
+            // Caused by: java.lang.IllegalArgumentException: Receiver not registered:
+        }
     }
 
 }
