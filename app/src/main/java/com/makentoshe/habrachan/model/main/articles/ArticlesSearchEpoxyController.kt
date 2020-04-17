@@ -9,7 +9,8 @@ class ArticlesSearchEpoxyController(
     private val topModelFactory: ArticlesSearchTopEpoxyModel.Factory,
     private val allModelFactory: ArticlesSearchAllEpoxyModel.Factory,
     private val interestingModelFactory: ArticlesSearchInterestingEpoxyModel.Factory,
-    private val subscriptionModelFactory: ArticlesSearchSubscriptionEpoxyModel.Factory
+    private val subscriptionModelFactory: ArticlesSearchSubscriptionEpoxyModel.Factory,
+    private val customModelFactory: ArticlesSearchCustomEpoxyModel.Factory
 ) : EpoxyController() {
 
     override fun buildModels() {
@@ -17,7 +18,8 @@ class ArticlesSearchEpoxyController(
             topModelFactory.build(),
             interestingModelFactory.build(),
             allModelFactory.build(),
-            subscriptionModelFactory.build()
+            subscriptionModelFactory.build(),
+            customModelFactory.build()
         ).filter(::filter).forEach {
             it.addTo(this)
         }

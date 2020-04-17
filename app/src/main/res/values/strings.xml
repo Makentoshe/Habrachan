@@ -47,6 +47,9 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="articles_type_subscription">By subscription</string>
     <string name="articles_type_top_alltime">Top of all-time</string>
     <string name="articles_type_search">Search</string>
+    <string name="articles_search_type_date">Date</string>
+    <string name="articles_search_type_relevance">Relevance</string>
+    <string name="articles_search_type_rating">Rating</string>
     <string-array name="articles_type">
         <item>@string/articles_type_all</item>
         <item>@string/articles_type_interesting</item>
