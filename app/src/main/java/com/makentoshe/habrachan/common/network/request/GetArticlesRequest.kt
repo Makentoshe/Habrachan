@@ -10,18 +10,15 @@ data class GetArticlesRequest(
     val token: String,
     val page: Int,
     val spec: Spec,
-    val include: List<String> = listOf("text_html"),
-    val exclude: List<String> = listOf()
+    val include: String? = "text_html",
+    val exclude: String? = null
 ) {
 
     constructor(
-        userSession: UserSession, page: Int, spec: Spec, include: List<String>, exclude: List<String>
+        userSession: UserSession, page: Int, spec: Spec, include: String?, exclude: String?
     ) : this(
         userSession.clientKey, userSession.apiKey, userSession.tokenKey, page, spec, include, exclude
     )
-
-    val includeString = include.joinToString(", ")
-    val excludeString = exclude.joinToString(", ")
 
     class Spec(val request: String, val sort: String?) {
 
