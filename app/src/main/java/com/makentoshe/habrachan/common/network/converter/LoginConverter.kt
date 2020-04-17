@@ -11,8 +11,9 @@ class LoginConverter {
     }
 
     fun convertError(body: ResponseBody): LoginResponse {
-        val map = Gson().fromJson(body.string(), Map::class.java)
-        val additional = (map["additional"] as Map<String, String>).values.joinToString(" ")
-        return LoginResponse.Error(listOf(additional), (map["code"] as Double).toInt(), map["message"].toString())
+        val json = body.string()
+        val map = Gson().fromJson(json, Map::class.java)
+//        val additional = (map["additional"] as List<String>).joinToString(" ")
+        return LoginResponse.Error(listOf(json), (map["code"] as Double).toInt(), map["message"].toString())
     }
 }
