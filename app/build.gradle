@@ -26,8 +26,8 @@ android {
             password = properties.getProperty('login.password')
             email = properties.getProperty('login.email')
         }
-        buildConfigField "String", "CLIENT_KEY", "\"85cab69095196f3.89453480\""
-        buildConfigField "String", "API_KEY", "\"173984950848a2d27c0cc1c76ccf3d6d3dc8255b\""
+        buildConfigField "String", "CLIENT_KEY", "\"84cab69095196f3.89453480\""
+        buildConfigField "String", "API_KEY", "\"173984950847a2d27c0cc1c76ccf3d6d3dc8255b\""
         buildConfigField "String", "TOKEN_KEY", "\"$token\""
         buildConfigField "String", "LOGIN", "\"$email\""
         buildConfigField "String", "PASSWORD", "\"$password\""
@@ -92,7 +92,8 @@ dependencies {
 
     // Material components
     // https://github.com/material-components/material-components-android
-    implementation 'com.google.android.material:material:1.1.0-alpha10'
+    def material = "1.2.0-alpha06"
+    implementation "com.google.android.material:material:$material"
 
     // Architecture components
     // https://developer.android.com/topic/libraries/architecture
