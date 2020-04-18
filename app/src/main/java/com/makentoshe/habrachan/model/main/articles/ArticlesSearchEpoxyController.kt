@@ -13,16 +13,17 @@ class ArticlesSearchEpoxyController(
     private val customModelFactory: ArticlesSearchCustomEpoxyModel.Factory
 ) : EpoxyController() {
 
+    private val models = listOf(
+        topModelFactory.build(),
+        interestingModelFactory.build(),
+        allModelFactory.build(),
+        subscriptionModelFactory.build()
+    )
+
     override fun buildModels() {
-        listOf(
-            topModelFactory.build(),
-            interestingModelFactory.build(),
-            allModelFactory.build(),
-            subscriptionModelFactory.build(),
-            customModelFactory.build()
-        ).filter(::filter).forEach {
-            it.addTo(this)
-        }
+        // todo fix filter
+        models.filter(::filter).forEach { it.addTo(this) }
+        customModelFactory.build().addTo(this)
     }
 
     private fun filter(model: ArticlesSearchEpoxyModel<*>): Boolean {

@@ -23,44 +23,41 @@ data class GetArticlesRequest(
     class Spec(val request: String, val sort: String?) {
 
         init {
-            if (!types.contains(request)) throw IllegalArgumentException(request)
+            if (!request.startsWith(SEARCH) && !request.startsWith(TOP) && !types.contains(request)) {
+                throw IllegalArgumentException(request)
+            }
         }
 
         fun toString(context: Context): String = when (request) {
             INTERESTING -> context.getString(R.string.articles_type_interesting)
             ALL -> context.getString(R.string.articles_type_all)
             SUBSCRIPTION -> context.getString(R.string.articles_type_subscription)
-            TOP_ALLTIME -> context.getString(R.string.articles_type_top_alltime)
-            else -> throw IllegalStateException()
+            else -> when {
+                request.startsWith(SEARCH) -> {
+                    context.getString(R.string.articles_type_search)
+                }
+                request.startsWith(TOP) -> {
+                    context.getString(R.string.articles_type_top)
+                }
+                else -> toString()
+            }
         }
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (javaClass != other?.javaClass) return false
-            other as Spec
-            return request == other.request
+        enum class TopSortTypes(val sort: String) {
+            ALLTIME("alltime"), YEARLY("yearly"), DAILY("daily"), WEEKLY("weekly"), MONTHLY("monthly")
         }
 
-        override fun hashCode() = request.hashCode()
-
+        enum class SearchSortTypes(val sort: String) {
+            DATE("date"), RELEVANCE("relevance"), RATING("rating");
+        }
 
         companion object {
             private const val INTERESTING = "posts/interesting"
             private const val ALL = "posts/all"
             private const val SUBSCRIPTION = "feed/all"
-            private const val TOP_ALLTIME = "top/alltime"
-            private const val TOP_DAILY = "top/daily"
-            private const val TOP_WEEKLY = "top/weekly"
-            private const val TOP_MONTHLY = "top/monthly"
-            private const val TOP_YEARLY = "top/yearly"
-            private const val SEARCH = "search/posts/Android"
-            private val types = setOf(
-                TOP_ALLTIME, TOP_YEARLY, TOP_MONTHLY, TOP_WEEKLY, TOP_DAILY,
-                INTERESTING,
-                ALL,
-                SUBSCRIPTION,
-                SEARCH
-            )
+            private const val TOP = "top/"
+            private const val SEARCH = "search/posts/"
+            private val types = setOf(TOP, INTERESTING, ALL, SUBSCRIPTION, SEARCH)
 
             fun interesting() = Spec(INTERESTING, null)
 
@@ -68,10 +65,9 @@ data class GetArticlesRequest(
 
             fun subscription() = Spec(SUBSCRIPTION, null)
 
-            fun topAlltime() = Spec(TOP_ALLTIME, null)
+            fun top(sortType: TopSortTypes) = Spec(TOP.plus(sortType.sort), null)
 
-            /** @param sort relevance, date, rating */
-            fun search(sort: String) = Spec(SEARCH, sort)
+            fun search(search: String, sortTypes: SearchSortTypes) = Spec(SEARCH.plus(search), sortTypes.sort)
         }
     }
 }

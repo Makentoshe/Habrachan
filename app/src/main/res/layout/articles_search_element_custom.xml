@@ -50,7 +50,7 @@
 
         <com.google.android.material.chip.Chip
             style="?attr/habrachanToolbarChip"
-            android:id="@+id/articles_search_element_custom_chipgroup_date"
+            android:id="@+id/articles_search_element_custom_chip_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/articles_search_type_date"
@@ -58,7 +58,7 @@
 
         <com.google.android.material.chip.Chip
             style="?attr/habrachanToolbarChip"
-            android:id="@+id/articles_search_element_custom_chipgroup_relevance"
+            android:id="@+id/articles_search_element_custom_chip_relevance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/articles_search_type_relevance"
@@ -67,7 +67,7 @@
 
         <com.google.android.material.chip.Chip
             style="?attr/habrachanToolbarChip"
-            android:id="@+id/articles_search_element_custom_chipgroup_rating"
+            android:id="@+id/articles_search_element_custom_chip_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/articles_search_type_rating"
@@ -80,6 +80,7 @@
         style="?attr/habrachanToolbarButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="Start search"
         app:layout_constraintTop_toBottomOf="@id/articles_search_element_custom_chipgroup"
         app:layout_constraintStart_toStartOf="parent"
