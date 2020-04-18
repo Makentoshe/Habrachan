@@ -54,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/articles_search_type_date"
+            android:tag="date"
             android:checkable="true" />
 
         <com.google.android.material.chip.Chip
@@ -62,6 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/articles_search_type_relevance"
+            android:tag="relevance"
             android:checkable="true"
             android:checked="true" />
 
@@ -71,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/articles_search_type_rating"
+            android:tag="rating"
             android:checkable="true" />
 
     </com.google.android.material.chip.ChipGroup>
