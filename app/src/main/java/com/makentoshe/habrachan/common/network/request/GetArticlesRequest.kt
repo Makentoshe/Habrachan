@@ -1,73 +1,156 @@
 package com.makentoshe.habrachan.common.network.request
 
 import android.content.Context
+import androidx.room.Entity
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.session.UserSession
+import java.util.*
 
 data class GetArticlesRequest(
     val client: String,
     val api: String,
     val token: String,
     val page: Int,
-    val spec: Spec,
+    val spec: String,
+    val sort: String? = null,
     val include: String? = "text_html",
     val exclude: String? = null
 ) {
 
     constructor(
-        userSession: UserSession, page: Int, spec: Spec, include: String?, exclude: String?
+        userSession: UserSession,
+        page: Int,
+        spec: Spec2
     ) : this(
-        userSession.clientKey, userSession.apiKey, userSession.tokenKey, page, spec, include, exclude
+        userSession.clientKey,
+        userSession.apiKey,
+        userSession.tokenKey,
+        page,
+        spec.request,
+        spec.sort,
+        spec.include,
+        spec.exclude
     )
 
-    class Spec(val request: String, val sort: String?) {
+    sealed class Spec2(
+        val request: String,
+        val sort: String? = null,
+        val include: String? = "text_html",
+        val exclude: String? = null
+    ): java.io.Serializable {
 
-        init {
-            if (!request.startsWith(SEARCH) && !request.startsWith(TOP) && !types.contains(request)) {
-                throw IllegalArgumentException(request)
+        abstract fun toString(context: Context): String
+
+        @Entity(tableName = "interesting")
+        class Interesting: Spec2("posts/interesting") {
+            override fun toString(context: Context): String {
+                return context.getString(R.string.articles_type_interesting)
             }
         }
 
-        fun toString(context: Context): String = when (request) {
-            INTERESTING -> context.getString(R.string.articles_type_interesting)
-            ALL -> context.getString(R.string.articles_type_all)
-            SUBSCRIPTION -> context.getString(R.string.articles_type_subscription)
-            else -> when {
-                request.startsWith(SEARCH) -> {
-                    context.getString(R.string.articles_type_search)
-                }
-                request.startsWith(TOP) -> {
-                    context.getString(R.string.articles_type_top)
-                }
-                else -> toString()
+        @Entity(tableName = "all")
+        class All: Spec2("posts/all") {
+            override fun toString(context: Context): String {
+                return context.getString(R.string.articles_type_all)
             }
         }
 
-        enum class TopSortTypes(val sort: String) {
-            ALLTIME("alltime"), YEARLY("yearly"), DAILY("daily"), WEEKLY("weekly"), MONTHLY("monthly")
+        @Entity(tableName = "subscription")
+        class Subscription: Spec2("feed/all") {
+            override fun toString(context: Context): String {
+                return context.getString(R.string.articles_type_subscription)
+            }
         }
 
-        enum class SearchSortTypes(val sort: String) {
-            DATE("date"), RELEVANCE("relevance"), RATING("rating");
+        @Entity(tableName = "top")
+        class Top(val type: Type): Spec2("top/${type.value}") {
+
+            override fun toString(context: Context): String {
+                val prefix = context.getString(R.string.articles_type_top)
+                val suffix = type.toString(context).toLowerCase(Locale.getDefault())
+                return "$prefix $suffix"
+            }
+
+            sealed class Type(val value: String) {
+
+                abstract fun toString(context: Context): String
+
+                object AllTime: Type("alltime") {
+                    override fun toString(context: Context): String {
+                        return context.getString(R.string.articles_top_type_alltime)
+                    }
+                }
+
+                object Yearly: Type("yearly") {
+                    override fun toString(context: Context): String {
+                        return context.getString(R.string.articles_top_type_yearly)
+                    }
+                }
+
+                object Monthly: Type("monthly") {
+                    override fun toString(context: Context): String {
+                        return context.getString(R.string.articles_top_type_monthly)
+                    }
+                }
+
+                object Weekly: Type("weekly") {
+                    override fun toString(context: Context): String {
+                        return context.getString(R.string.articles_top_type_weekly)
+                    }
+                }
+
+                object Daily: Type("daily") {
+                    override fun toString(context: Context): String {
+                        return context.getString(R.string.articles_top_type_daily)
+                    }
+                }
+            }
         }
 
-        companion object {
-            private const val INTERESTING = "posts/interesting"
-            private const val ALL = "posts/all"
-            private const val SUBSCRIPTION = "feed/all"
-            private const val TOP = "top/"
-            private const val SEARCH = "search/posts/"
-            private val types = setOf(TOP, INTERESTING, ALL, SUBSCRIPTION, SEARCH)
+        @Entity(tableName = "search")
+        class Search(
+            val search: String, val type: Type
+        ): Spec2("search/posts/$search", type.value) {
 
-            fun interesting() = Spec(INTERESTING, null)
+            constructor(search: String, type: String) : this(search, buildType(type))
 
-            fun all() = Spec(ALL, null)
+            override fun toString(context: Context): String {
+                val prefix = context.getString(R.string.articles_type_search)
+                val suffix = type.toString(context).toLowerCase(Locale.getDefault())
+                return "$prefix $suffix"
+            }
 
-            fun subscription() = Spec(SUBSCRIPTION, null)
+            sealed class Type(val value: String) {
 
-            fun top(sortType: TopSortTypes) = Spec(TOP.plus(sortType.sort), null)
+                abstract fun toString(context: Context): String
 
-            fun search(search: String, sortTypes: SearchSortTypes) = Spec(SEARCH.plus(search), sortTypes.sort)
+                object Date: Type("date") {
+                    override fun toString(context: Context): String {
+                        return context.getString(R.string.articles_search_type_date)
+                    }
+                }
+
+                object Relevance: Type("relevance") {
+                    override fun toString(context: Context): String {
+                        return context.getString(R.string.articles_search_type_relevance)
+                    }
+                }
+
+                object Rating: Type("rating") {
+                    override fun toString(context: Context): String {
+                        return context.getString(R.string.articles_search_type_rating)
+                    }
+                }
+            }
+
+            companion object {
+                private fun buildType(type: String) = when(type) {
+                    "date" -> Type.Date
+                    "relevance" -> Type.Relevance
+                    "rating" -> Type.Rating
+                    else -> throw IllegalArgumentException()
+                }
+            }
         }
     }
 }

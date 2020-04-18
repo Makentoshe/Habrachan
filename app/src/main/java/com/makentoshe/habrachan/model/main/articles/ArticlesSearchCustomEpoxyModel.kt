@@ -8,7 +8,6 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
-import java.util.*
 
 class ArticlesSearchCustomEpoxyModel() : EpoxyModel<ViewGroup>() {
 
@@ -18,9 +17,7 @@ class ArticlesSearchCustomEpoxyModel() : EpoxyModel<ViewGroup>() {
         editText.setOnEditorActionListener { editText, actionId, _ ->
             if (actionId != EditorInfo.IME_ACTION_SEARCH) return@setOnEditorActionListener false
             val selectedChip = chipGroup.findViewById<Chip>(chipGroup.checkedChipId)
-            val sort = selectedChip.text.toString().toUpperCase(Locale.getDefault())
-            val search = editText.text.toString()
-            val spec = GetArticlesRequest.Spec.search(search, GetArticlesRequest.Spec.SearchSortTypes.valueOf(sort))
+            val spec = GetArticlesRequest.Spec2.Search(editText.text.toString(), selectedChip.tag.toString())
             ArticlesSearchBroadcastReceiver.sendBroadcast(view.context, spec)
             return@setOnEditorActionListener true
         }
