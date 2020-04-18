@@ -68,7 +68,7 @@ class ArticlesViewModel(
             .build()
     }
 
-    fun updateUserSessionArticlesResponseSpec(spec: GetArticlesRequest.Spec2) {
+    fun updateUserSessionArticlesResponseSpec(spec: GetArticlesRequest.Spec) {
         val currentSession = sessionDao.get()!!
         val newSession = currentSession.copy(articlesRequestSpec = spec)
         sessionDao.insert(newSession)

@@ -6,6 +6,7 @@ import com.google.gson.JsonArray
 import com.makentoshe.habrachan.common.entity.Badge
 import com.makentoshe.habrachan.common.entity.Flow
 import com.makentoshe.habrachan.common.entity.Hub
+import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 
 class Converters {
 
@@ -46,5 +47,15 @@ class Converters {
     fun jsonToBadges(json: String) : List<Badge> {
         val jsonArray = Gson().fromJson(json, JsonArray::class.java)
         return jsonArray.map { it.asString }.map { Badge.fromJson(it) }
+    }
+
+    @TypeConverter
+    fun specToJson(spec: GetArticlesRequest.Spec): String {
+        return spec.toJson()
+    }
+
+    @TypeConverter
+    fun jsonToSpec(json: String): GetArticlesRequest.Spec {
+        return GetArticlesRequest.Spec.fromJson(json)
     }
 }

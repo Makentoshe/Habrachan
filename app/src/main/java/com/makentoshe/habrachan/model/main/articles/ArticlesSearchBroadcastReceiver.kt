@@ -11,11 +11,11 @@ import io.reactivex.subjects.PublishSubject
 
 class ArticlesSearchBroadcastReceiver : BroadcastReceiver() {
 
-    private val broadcastSubject = PublishSubject.create<GetArticlesRequest.Spec2>()
-    val broadcastObservable: Observable<GetArticlesRequest.Spec2> = broadcastSubject
+    private val broadcastSubject = PublishSubject.create<GetArticlesRequest.Spec>()
+    val broadcastObservable: Observable<GetArticlesRequest.Spec> = broadcastSubject
 
     override fun onReceive(context: Context, intent: Intent) {
-        val spec = intent.getBundleExtra(ACTION).get(ACTION) as GetArticlesRequest.Spec2
+        val spec = intent.getBundleExtra(ACTION).get(ACTION) as GetArticlesRequest.Spec
         broadcastSubject.onNext(spec)
     }
 
@@ -25,7 +25,7 @@ class ArticlesSearchBroadcastReceiver : BroadcastReceiver() {
 
     companion object {
 
-        fun sendBroadcast(context: Context, spec: GetArticlesRequest.Spec2) {
+        fun sendBroadcast(context: Context, spec: GetArticlesRequest.Spec) {
             val bundle = Bundle()
             bundle.putSerializable(ACTION, spec)
             val intent = Intent(ACTION).putExtra(ACTION, bundle)

@@ -17,7 +17,7 @@ class ArticlesSearchCustomEpoxyModel() : EpoxyModel<ViewGroup>() {
         editText.setOnEditorActionListener { editText, actionId, _ ->
             if (actionId != EditorInfo.IME_ACTION_SEARCH) return@setOnEditorActionListener false
             val selectedChip = chipGroup.findViewById<Chip>(chipGroup.checkedChipId)
-            val spec = GetArticlesRequest.Spec2.Search(editText.text.toString(), selectedChip.tag.toString())
+            val spec = GetArticlesRequest.Spec.Search(editText.text.toString(), selectedChip.tag.toString())
             ArticlesSearchBroadcastReceiver.sendBroadcast(view.context, spec)
             return@setOnEditorActionListener true
         }
