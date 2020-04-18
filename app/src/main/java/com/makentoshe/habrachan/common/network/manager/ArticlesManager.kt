@@ -42,8 +42,7 @@ class NativeArticlesManager(private val api: NativeArticlesApi) : ArticlesManage
 
     override fun getArticles(request: GetArticlesRequest): Single<ArticlesResponse> {
         return Single.just(request).observeOn(Schedulers.io()).map { request ->
-            val spec = request.spec.request
-            api.getArticles(request.client, request.api, request.token, spec, request.page, request.include, request.exclude).execute()
+            api.getArticles(request.client, request.api, request.token, request.spec, request.page, request.include, request.exclude).execute()
         }.map { response ->
             if (response.isSuccessful) {
                 ArticlesConverter().convertBody(response.body()!!)

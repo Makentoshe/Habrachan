@@ -10,7 +10,7 @@ class ArticlesSearchSubscriptionEpoxyModel: EpoxyModel<TextView>() {
     override fun bind(view: TextView) {
         view.setText(R.string.articles_type_subscription)
         view.setOnClickListener {
-            val spec = GetArticlesRequest.Spec2.Subscription()
+            val spec = GetArticlesRequest.Spec.Subscription()
             ArticlesSearchBroadcastReceiver.sendBroadcast(view.context, spec)
         }
     }

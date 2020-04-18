@@ -47,7 +47,7 @@ class LoginManagerTest : BaseTest() {
         assertEquals(400, response.code)
         assertEquals("Habr Account error", response.message)
         assertEquals(1, response.additional.size)
-        assertEquals("Пользователь с такой электронной почтой или паролем не найден", response.additional[0])
+        assertEquals(json, response.additional[0])
     }
 
     @Test
@@ -66,7 +66,7 @@ class LoginManagerTest : BaseTest() {
         assertEquals(400, response.code)
         assertEquals("Bad request", response.message)
         assertEquals(1, response.additional.size)
-        assertEquals("[{key=INVALID, field=email}]", response.additional[0])
+        assertEquals(json, response.additional[0])
     }
 
     @Test

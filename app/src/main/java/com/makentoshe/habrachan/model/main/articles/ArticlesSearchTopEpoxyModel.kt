@@ -10,7 +10,7 @@ class ArticlesSearchTopEpoxyModel: EpoxyModel<TextView>() {
     override fun bind(view: TextView) {
         view.setText(R.string.articles_type_top)
         view.setOnClickListener {
-            val spec = GetArticlesRequest.Spec2.Top(GetArticlesRequest.Spec2.Top.Type.AllTime)
+            val spec = GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.AllTime)
             ArticlesSearchBroadcastReceiver.sendBroadcast(view.context, spec)
         }
     }

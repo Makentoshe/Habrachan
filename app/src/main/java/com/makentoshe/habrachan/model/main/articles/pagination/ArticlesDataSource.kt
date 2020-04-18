@@ -45,8 +45,7 @@ class ArticlesDataSource(
 
     private fun buildGetArticlesRequest(page: Int): GetArticlesRequest {
         val session = cacheDatabase.session().get()!!
-        val spec = session.articlesRequestSpec
-        return GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, page, spec)
+        return GetArticlesRequest(session, page, session.articlesRequestSpec)
     }
 
     private fun saveCache(page: Int, response: ArticlesResponse) {
