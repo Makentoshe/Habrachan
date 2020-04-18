@@ -6,10 +6,10 @@ import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 
 class ArticlesSearchTopEpoxyModel: ArticlesSearchEpoxyModel<TextView>() {
 
-    override val requestSpec = GetArticlesRequest.Spec.topAlltime()
+    override val requestSpec = GetArticlesRequest.Spec.top(GetArticlesRequest.Spec.TopSortTypes.ALLTIME)
 
     override fun bind(view: TextView) {
-        view.setText(R.string.articles_type_top_alltime)
+        view.setText(R.string.articles_type_top)
         view.setOnClickListener {
             ArticlesSearchBroadcastReceiver.sendBroadcast(view.context, requestSpec)
         }

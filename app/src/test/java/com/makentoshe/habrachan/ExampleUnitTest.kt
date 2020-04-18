@@ -61,7 +61,7 @@ class ExampleUnitTest : BaseTest() {
     @Ignore
     fun getTopArticlesTest() {
         val manager = ArticlesManager.Builder(OkHttpClient()).build()
-        val spec = GetArticlesRequest.Spec.topAlltime()
+        val spec = GetArticlesRequest.Spec.top(GetArticlesRequest.Spec.TopSortTypes.ALLTIME)
         val request = GetArticlesRequest(session.clientKey, session.apiKey, session.tokenKey, 1, spec)
         val response = manager.getArticles(request).blockingGet()
         println(response)

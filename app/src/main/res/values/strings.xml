@@ -41,21 +41,38 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="repeated_voting_is_prohibited">Repeated voting is prohibited</string>
     <string name="menu_search">Search</string>
 
-    <string name="article_model_request_continue">Continue searching</string>
     <string name="articles_type_all">All</string>
     <string name="articles_type_interesting">Interesting</string>
     <string name="articles_type_subscription">By subscription</string>
-    <string name="articles_type_top_alltime">Top of all-time</string>
+    <string name="articles_type_top">Top of all-time</string>
     <string name="articles_type_search">Search</string>
-    <string name="articles_search_type_date">Date</string>
-    <string name="articles_search_type_relevance">Relevance</string>
-    <string name="articles_search_type_rating">Rating</string>
     <string-array name="articles_type">
         <item>@string/articles_type_all</item>
         <item>@string/articles_type_interesting</item>
         <item>@string/articles_type_subscription</item>
-        <item>@string/articles_type_top_alltime</item>
+        <item>@string/articles_type_top</item>
         <item>@string/articles_type_search</item>
     </string-array>
 
+    <string name="articles_search_type_date">Date</string>
+    <string name="articles_search_type_relevance">Relevance</string>
+    <string name="articles_search_type_rating">Rating</string>
+    <string-array name="articles_search_sort">
+        <item>@string/articles_search_type_date</item>
+        <item>@string/articles_search_type_relevance</item>
+        <item>@string/articles_search_type_rating</item>
+    </string-array>
+    
+    <string name="articles_top_type_alltime">All-time</string>
+    <string name="articles_top_type_yearly">Yearly</string>
+    <string name="articles_top_type_monthly">Monthly</string>
+    <string name="articles_top_type_weekly">Weekly</string>
+    <string name="articles_top_type_daily">Daily</string>
+    <string-array name="articles_top_sort">
+        <item>@string/articles_top_type_alltime</item>
+        <item>@string/articles_top_type_yearly</item>
+        <item>@string/articles_top_type_monthly</item>
+        <item>@string/articles_top_type_weekly</item>
+        <item>@string/articles_top_type_daily</item>
+    </string-array>
 </resources>
