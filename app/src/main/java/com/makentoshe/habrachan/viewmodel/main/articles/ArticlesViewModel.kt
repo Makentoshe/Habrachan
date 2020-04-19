@@ -10,9 +10,9 @@ import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
-import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.model.main.articles.model.ArticleEpoxyModel
 import com.makentoshe.habrachan.model.main.articles.model.ArticlesPageDivideEpoxyModel
 import com.makentoshe.habrachan.model.main.articles.pagination.ArticlesDataSource
@@ -68,7 +68,7 @@ class ArticlesViewModel(
             .build()
     }
 
-    fun updateUserSessionArticlesResponseSpec(spec: GetArticlesRequest.Spec) {
+    fun updateUserSessionArticlesResponseSpec(spec: ArticlesRequestSpec) {
         val currentSession = sessionDao.get()!!
         val newSession = currentSession.copy(articlesRequestSpec = spec)
         sessionDao.insert(newSession)
