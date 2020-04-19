@@ -5,17 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 class ArticlesSearchBroadcastReceiver : BroadcastReceiver() {
 
-    private val broadcastSubject = PublishSubject.create<GetArticlesRequest.Spec>()
-    val broadcastObservable: Observable<GetArticlesRequest.Spec> = broadcastSubject
+    private val broadcastSubject = PublishSubject.create<ArticlesRequestSpec>()
+    val broadcastObservable: Observable<ArticlesRequestSpec> = broadcastSubject
 
     override fun onReceive(context: Context, intent: Intent) {
-        val spec = intent.getBundleExtra(ACTION).get(ACTION) as GetArticlesRequest.Spec
+        val spec = intent.getBundleExtra(ACTION).get(ACTION) as ArticlesRequestSpec
         broadcastSubject.onNext(spec)
     }
 
@@ -25,13 +25,13 @@ class ArticlesSearchBroadcastReceiver : BroadcastReceiver() {
 
     companion object {
 
-        fun sendBroadcast(context: Context, spec: GetArticlesRequest.Spec) {
+        fun sendBroadcast(context: Context, spec: ArticlesRequestSpec) {
             val bundle = Bundle()
             bundle.putSerializable(ACTION, spec)
             val intent = Intent(ACTION).putExtra(ACTION, bundle)
             context.sendBroadcast(intent)
         }
 
-        private const val ACTION = "GetArticlesRequest.Spec"
+        private const val ACTION = "ArticlesRequestSpec"
     }
 }

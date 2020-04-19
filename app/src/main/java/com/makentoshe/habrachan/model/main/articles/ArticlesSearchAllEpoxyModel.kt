@@ -3,14 +3,14 @@ package com.makentoshe.habrachan.model.main.articles
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyModel
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 
 class ArticlesSearchAllEpoxyModel : EpoxyModel<TextView>() {
 
     override fun bind(view: TextView) {
         view.setText(R.string.articles_type_all)
         view.setOnClickListener {
-            val spec = GetArticlesRequest.Spec.All()
+            val spec = ArticlesRequestSpec.All()
             ArticlesSearchBroadcastReceiver.sendBroadcast(view.context, spec)
         }
     }

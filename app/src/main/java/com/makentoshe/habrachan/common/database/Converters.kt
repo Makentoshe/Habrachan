@@ -6,7 +6,7 @@ import com.google.gson.JsonArray
 import com.makentoshe.habrachan.common.entity.Badge
 import com.makentoshe.habrachan.common.entity.Flow
 import com.makentoshe.habrachan.common.entity.Hub
-import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 
 class Converters {
 
@@ -50,12 +50,12 @@ class Converters {
     }
 
     @TypeConverter
-    fun specToJson(spec: GetArticlesRequest.Spec): String {
+    fun specToJson(spec: ArticlesRequestSpec): String {
         return spec.toJson()
     }
 
     @TypeConverter
-    fun jsonToSpec(json: String): GetArticlesRequest.Spec {
-        return GetArticlesRequest.Spec.fromJson(json)
+    fun jsonToSpec(json: String): ArticlesRequestSpec {
+        return ArticlesRequestSpec.fromJson(json)
     }
 }

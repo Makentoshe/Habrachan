@@ -4,7 +4,6 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.makentoshe.habrachan.common.entity.User
-import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 
 @Entity
 data class UserSession(
@@ -15,8 +14,8 @@ data class UserSession(
     /** User instance */
     @Embedded(prefix = "user_")
     val me: User? = null,
-    /** Initial request for displaying articles */
-    val articlesRequestSpec: GetArticlesRequest.Spec = GetArticlesRequest.Spec.Interesting()
+    /** Contains request for displaying articles on start */
+    val articlesRequestSpec: ArticlesRequestSpec = ArticlesRequestSpec.Interesting()
 ) {
     /** Returns true if user already logged in */
     val isLoggedIn: Boolean
