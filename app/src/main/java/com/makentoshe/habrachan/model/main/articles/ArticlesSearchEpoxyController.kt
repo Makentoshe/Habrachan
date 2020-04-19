@@ -1,7 +1,9 @@
 package com.makentoshe.habrachan.model.main.articles
 
 import com.airbnb.epoxy.EpoxyController
+import com.airbnb.epoxy.EpoxyModel
 import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 
 class ArticlesSearchEpoxyController(
     private val sessionDao: SessionDao,
@@ -20,17 +22,29 @@ class ArticlesSearchEpoxyController(
     )
 
     override fun buildModels() {
-        // todo fix filter
-        models.forEach { it.addTo(this) }
+        models.filter(::filterIsLoggedIn).filterNot(::filterIsDisplayed).forEach { it.addTo(this) }
         customModelFactory.build().addTo(this)
     }
 
-    private fun filter(): Boolean {
-//        val userSession = sessionDao.get()!!
-//        val currentFactor = model.requestSpec != userSession.articlesRequestSpec
-//        val isSubscriptionModel = model.requestSpec == GetArticlesRequest.Spec.subscription()
-//        val loginInFactor = if (isSubscriptionModel) userSession.isLoggedIn else true
-//        return currentFactor && loginInFactor
+    private fun filterIsLoggedIn(model: EpoxyModel<*>) : Boolean {
+        if (model !is ArticlesSearchSubscriptionEpoxyModel) return true
+        return sessionDao.get()?.isLoggedIn == true
+    }
+
+    private fun filterIsDisplayed(model: EpoxyModel<*>): Boolean {
+        val spec = sessionDao.get()!!.articlesRequestSpec
+        if (model is ArticlesSearchTopEpoxyModel && spec is ArticlesRequestSpec.Top) {
+            return true
+        }
+        if (model is ArticlesSearchInterestingEpoxyModel && spec is ArticlesRequestSpec.Interesting) {
+            return true
+        }
+        if (model is ArticlesSearchAllEpoxyModel && spec is ArticlesRequestSpec.All) {
+            return true
+        }
+        if (model is ArticlesSearchSubscriptionEpoxyModel && spec is ArticlesRequestSpec.Subscription) {
+            return false
+        }
         return false
     }
 }
