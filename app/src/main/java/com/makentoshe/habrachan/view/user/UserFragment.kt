@@ -11,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
@@ -66,7 +65,9 @@ class UserFragment : Fragment() {
 
     @SuppressLint("RestrictedApi")
     private fun onUserSuccess(response: UserResponse.Success) {
-        updateUserLoginInBottomNavigationBar(response.user)
+        if (arguments.userAccount == UserAccount.Me) {
+            updateUserLoginInBottomNavigationBar(response.user)
+        }
 
         userAvatarViewModel.avatarObserver.onNext(ImageRequest(response.user.avatar))
 
