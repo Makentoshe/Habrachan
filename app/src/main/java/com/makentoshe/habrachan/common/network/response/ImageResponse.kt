@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.entity
+package com.makentoshe.habrachan.common.network.response
 
 sealed class ImageResponse {
 

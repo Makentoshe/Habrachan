@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.common.network.manager
 
-import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.network.request.ImageRequest
+import com.makentoshe.habrachan.common.network.response.ImageResponse
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient

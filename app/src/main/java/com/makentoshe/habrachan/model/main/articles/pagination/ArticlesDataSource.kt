@@ -4,10 +4,10 @@ import androidx.paging.PositionalDataSource
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.common.entity.article.ArticlesResponse
 import com.makentoshe.habrachan.common.entity.article.NextPage
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.common.network.response.ArticlesResponse
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.net.UnknownHostException

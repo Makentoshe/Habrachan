@@ -1,8 +1,5 @@
 package com.makentoshe.habrachan.common.network.manager
 
-import com.makentoshe.habrachan.common.entity.article.ArticleResponse
-import com.makentoshe.habrachan.common.entity.article.ArticlesResponse
-import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
 import com.makentoshe.habrachan.common.network.api.NativeArticlesApi
 import com.makentoshe.habrachan.common.network.converter.ArticleConverter
 import com.makentoshe.habrachan.common.network.converter.ArticlesConverter
@@ -10,6 +7,9 @@ import com.makentoshe.habrachan.common.network.converter.VoteUpArticleConverter
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.common.network.request.VoteArticleRequest
+import com.makentoshe.habrachan.common.network.response.ArticleResponse
+import com.makentoshe.habrachan.common.network.response.ArticlesResponse
+import com.makentoshe.habrachan.common.network.response.VoteArticleResponse
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient

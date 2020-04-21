@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.common.network.converter
 
 import com.google.gson.Gson
-import com.makentoshe.habrachan.common.entity.article.VoteArticleResponse
+import com.makentoshe.habrachan.common.network.response.VoteArticleResponse
 import okhttp3.ResponseBody
 
 class VoteUpArticleConverter {

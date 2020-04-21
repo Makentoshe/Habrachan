@@ -4,7 +4,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.common.repository.InputStreamRepository
+import com.makentoshe.habrachan.common.network.manager.ImageManager
+import com.makentoshe.habrachan.common.network.request.ImageRequest
+import com.makentoshe.habrachan.common.network.response.ImageResponse
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,7 +20,8 @@ import java.util.*
 
 /* ViewModel for downloading image or gif animation for view mode in PostImageFragmentPage */
 class PostImageFragmentViewModel(
-    private val repository: InputStreamRepository, private val imageSource: String
+    private val imageSource: String,
+    private val imageManager: ImageManager
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -45,15 +48,29 @@ class PostImageFragmentViewModel(
 
     fun startLoad() {
         progressSubject.onNext(Unit)
-        if (File(imageSource).extension.toLowerCase(Locale.ENGLISH) == "gif") gifDrawable() else bitmap()
+        bitmap()
     }
 
     /** Downloads a bitmap image */
-    private fun bitmap() = Single.just(imageSource).observeOn(Schedulers.io())
-        .map(repository::get)
-        .map(BitmapFactory::decodeStream)
-        .subscribe(::onBitmapSuccess, ::onError)
-        .let(disposables::add)
+    private fun bitmap() = Single.just(imageSource).observeOn(Schedulers.io()).subscribe({
+        val isGif = File(imageSource).extension.toLowerCase(Locale.ENGLISH) == "gif"
+        when (val response = imageManager.getImage(ImageRequest(imageSource)).blockingGet()) {
+            is ImageResponse.Success -> {
+                if (isGif) {
+                    val gifDrawable = GifDrawable(response.bytes)
+                    onGifDrawableSuccess(gifDrawable)
+                } else {
+                    val bitmap = BitmapFactory.decodeByteArray(response.bytes, 0, response.bytes.size)
+                    onBitmapSuccess(bitmap)
+                }
+            }
+            is ImageResponse.Error -> {
+                onError(Exception(response.message))
+            }
+        }
+    }, {
+        onError(it)
+    }).let(disposables::add)
 
     private fun onBitmapSuccess(bitmap: Bitmap) {
         errorSubject.onComplete()
@@ -61,13 +78,6 @@ class PostImageFragmentViewModel(
         gifDrawableSubject.onComplete()
         bitmapSubject.onNext(bitmap)
     }
-
-    /** Downloads a gif drawable */
-    private fun gifDrawable() = Single.just(imageSource).observeOn(Schedulers.io())
-        .map(repository::get)
-        .map { GifDrawable(it.readBytes()) }
-        .subscribe(::onGifDrawableSuccess, ::onError)
-        .let(disposables::add)
 
     private fun onGifDrawableSuccess(gifDrawable: GifDrawable) {
         errorSubject.onComplete()
@@ -85,10 +95,10 @@ class PostImageFragmentViewModel(
     }
 
     class Factory(
-        private val imageSource: String, private val repository: InputStreamRepository
+        private val imageSource: String, private val imageManager: ImageManager
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostImageFragmentViewModel(repository, imageSource) as T
+            return PostImageFragmentViewModel(imageSource, imageManager) as T
         }
     }
 }

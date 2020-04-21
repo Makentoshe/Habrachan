@@ -4,9 +4,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.View
 import com.makentoshe.habrachan.common.database.AvatarDao
-import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.request.ImageRequest
+import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

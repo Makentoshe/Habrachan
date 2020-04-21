@@ -1,10 +1,10 @@
 package com.makentoshe.habrachan.common.network.manager
 
-import com.makentoshe.habrachan.common.entity.user.UserResponse
 import com.makentoshe.habrachan.common.network.api.UsersApi
 import com.makentoshe.habrachan.common.network.converter.UsersConverter
 import com.makentoshe.habrachan.common.network.request.MeRequest
 import com.makentoshe.habrachan.common.network.request.UserRequest
+import com.makentoshe.habrachan.common.network.response.UserResponse
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient

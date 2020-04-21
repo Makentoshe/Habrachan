@@ -3,9 +3,9 @@ package com.makentoshe.habrachan.viewmodel.main.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.SessionDao
-import com.makentoshe.habrachan.common.entity.login.LoginResponse
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.common.network.request.LoginRequest
+import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.model.main.login.LoginData
 import io.reactivex.Observable
 import io.reactivex.Observer

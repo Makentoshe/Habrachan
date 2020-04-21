@@ -1,12 +1,12 @@
 package com.makentoshe.habrachan.common.network.manager
 
-import com.makentoshe.habrachan.common.entity.comment.GetCommentsResponse
-import com.makentoshe.habrachan.common.entity.comment.VoteCommentResponse
 import com.makentoshe.habrachan.common.network.api.HabrCommentsApi
 import com.makentoshe.habrachan.common.network.converter.CommentsConverter
 import com.makentoshe.habrachan.common.network.converter.VoteCommentConverter
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
+import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
+import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient

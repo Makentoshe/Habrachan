@@ -5,8 +5,8 @@ import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.database.UserDao
 import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.entity.session.UserSession
-import com.makentoshe.habrachan.common.entity.user.UserResponse
 import com.makentoshe.habrachan.common.network.manager.UsersManager
+import com.makentoshe.habrachan.common.network.response.UserResponse
 import com.makentoshe.habrachan.model.user.UserAccount
 import io.mockk.*
 import io.reactivex.Single

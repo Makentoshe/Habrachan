@@ -5,7 +5,6 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.common.repository.RawResourceRepository
 import com.makentoshe.habrachan.model.article.html.*
 
 @Entity
@@ -96,10 +95,9 @@ data class Article(
 ) {
 
     fun buildHtml(resources: Resources): String {
-        val resourceRepository = RawResourceRepository(resources)
         val builder = HtmlBuilder(this)
-        builder.addAddon(DisplayScriptAddon(resourceRepository))
-        builder.addAddon(StyleAddon(resourceRepository))
+        builder.addAddon(DisplayScriptAddon(resources))
+        builder.addAddon(StyleAddon(resources))
         builder.addAddon(SpoilerAddon())
         builder.addAddon(ImageAddon())
         return builder.build()

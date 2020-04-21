@@ -1,10 +1,9 @@
 package com.makentoshe.habrachan.model.article.html
 
-import com.makentoshe.habrachan.common.repository.Repository
+import android.content.res.Resources
 import org.jsoup.nodes.Element
-import java.io.InputStream
 
-class StyleAddon(private val repository: Repository<Int, InputStream>) : HtmlBuilder.Addon {
+class StyleAddon(private val resources: Resources) : HtmlBuilder.Addon {
 
     override fun accept(body: Element) {
         val styleNode = createStyleNode()
@@ -12,8 +11,8 @@ class StyleAddon(private val repository: Repository<Int, InputStream>) : HtmlBui
     }
 
     private fun createStyleNode(): Element {
-        val cssBytes = repository.get(com.makentoshe.habrachan.R.raw.post)?.readBytes()
-        val cssBody = if (cssBytes != null) String(cssBytes) else ""
+        val cssBytes = resources.openRawResource(com.makentoshe.habrachan.R.raw.post).readBytes()
+        val cssBody = String(cssBytes)
         return Element("style").text(cssBody)
     }
 }
