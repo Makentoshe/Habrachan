@@ -1,10 +1,9 @@
 package com.makentoshe.habrachan.model.article.html
 
-import com.makentoshe.habrachan.common.repository.Repository
+import android.content.res.Resources
 import org.jsoup.nodes.Element
-import java.io.InputStream
 
-class DisplayScriptAddon(private val repository: Repository<Int, InputStream>): HtmlBuilder.Addon {
+class DisplayScriptAddon(private val resources: Resources): HtmlBuilder.Addon {
 
     override fun accept(body: Element) {
         val scriptNode = createScriptNode()
@@ -12,8 +11,8 @@ class DisplayScriptAddon(private val repository: Repository<Int, InputStream>): 
     }
 
     private fun createScriptNode() : Element {
-        val jsBytes = repository.get(com.makentoshe.habrachan.R.raw.postjs)?.readBytes()
-        val jsBody = if (jsBytes != null) String(jsBytes) else ""
+        val jsBytes = resources.openRawResource(com.makentoshe.habrachan.R.raw.postjs).readBytes()
+        val jsBody = String(jsBytes)
         return Element("script").attr("type", "text/javascript").text(jsBody)
     }
 }

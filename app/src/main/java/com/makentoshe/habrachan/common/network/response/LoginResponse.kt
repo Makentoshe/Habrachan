@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.entity.login
+package com.makentoshe.habrachan.common.network.response
 
 import com.google.gson.annotations.SerializedName
 

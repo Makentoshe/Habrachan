@@ -7,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.login.LoginResponse
+import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.model.main.login.LoginData
 import com.makentoshe.habrachan.ui.main.account.login.LoginFragmentUi
 import com.makentoshe.habrachan.view.main.MainFlowFragment

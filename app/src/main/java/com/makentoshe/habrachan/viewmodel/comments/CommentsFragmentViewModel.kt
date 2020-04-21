@@ -8,11 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.CommentDao
 import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.common.entity.comment.GetCommentsResponse
-import com.makentoshe.habrachan.common.entity.comment.VoteCommentResponse
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
+import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
+import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers

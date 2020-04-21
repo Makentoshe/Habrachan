@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.AvatarDao
-import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.model.BitmapController
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.request.ImageRequest
+import com.makentoshe.habrachan.common.network.response.ImageResponse
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers

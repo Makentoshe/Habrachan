@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.common.network.converter
 
 import com.google.gson.Gson
-import com.makentoshe.habrachan.common.entity.comment.VoteCommentResponse
 import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
+import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import okhttp3.ResponseBody
 
 class VoteCommentConverter(private val request: VoteCommentRequest) {

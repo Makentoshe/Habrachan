@@ -1,9 +1,9 @@
 package com.makentoshe.habrachan.common.network.manager
 
-import com.makentoshe.habrachan.common.entity.login.LoginResponse
 import com.makentoshe.habrachan.common.network.api.LoginApi
 import com.makentoshe.habrachan.common.network.converter.LoginConverter
 import com.makentoshe.habrachan.common.network.request.LoginRequest
+import com.makentoshe.habrachan.common.network.response.LoginResponse
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient

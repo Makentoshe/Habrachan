@@ -4,9 +4,9 @@ import com.makentoshe.habrachan.BaseTest
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.ResponseInterceptor
 import com.makentoshe.habrachan.UrlInterceptor
-import com.makentoshe.habrachan.common.entity.login.LoginResponse
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.common.network.request.LoginRequest
+import com.makentoshe.habrachan.common.network.response.LoginResponse
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
 import org.junit.Ignore

@@ -1,7 +1,8 @@
-package com.makentoshe.habrachan.common.entity.article
+package com.makentoshe.habrachan.common.network.response
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.entity.article.NextPage
 
 sealed class ArticlesResponse {
 

@@ -14,11 +14,11 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.ImageResponse
 import com.makentoshe.habrachan.common.entity.User
-import com.makentoshe.habrachan.common.entity.user.UserResponse
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.request.ImageRequest
+import com.makentoshe.habrachan.common.network.response.ImageResponse
+import com.makentoshe.habrachan.common.network.response.UserResponse
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.ui.user.UserFragmentUi

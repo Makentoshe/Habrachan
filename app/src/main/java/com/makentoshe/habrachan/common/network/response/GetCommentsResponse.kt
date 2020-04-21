@@ -1,6 +1,7 @@
-package com.makentoshe.habrachan.common.entity.comment
+package com.makentoshe.habrachan.common.network.response
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.common.entity.comment.Comment
 
 sealed class GetCommentsResponse{
 

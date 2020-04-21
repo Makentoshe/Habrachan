@@ -4,8 +4,8 @@ import androidx.paging.PositionalDataSource
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.common.entity.article.ArticlesResponse
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
+import com.makentoshe.habrachan.common.network.response.ArticlesResponse
 import com.makentoshe.habrachan.model.main.articles.pagination.ArticlesDataSource
 import io.mockk.every
 import io.mockk.mockk

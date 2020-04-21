@@ -3,11 +3,11 @@ package com.makentoshe.habrachan.common.network
 import com.makentoshe.habrachan.BaseTest
 import com.makentoshe.habrachan.ResponseInterceptor
 import com.makentoshe.habrachan.UrlInterceptor
-import com.makentoshe.habrachan.common.entity.comment.GetCommentsResponse
-import com.makentoshe.habrachan.common.entity.comment.VoteCommentResponse
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
+import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
+import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import okhttp3.OkHttpClient
 import org.junit.Assert
 import org.junit.Ignore

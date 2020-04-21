@@ -3,10 +3,10 @@ package com.makentoshe.habrachan.common.network
 import com.makentoshe.habrachan.BaseTest
 import com.makentoshe.habrachan.ResponseInterceptor
 import com.makentoshe.habrachan.UrlInterceptor
-import com.makentoshe.habrachan.common.entity.user.UserResponse
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.request.MeRequest
 import com.makentoshe.habrachan.common.network.request.UserRequest
+import com.makentoshe.habrachan.common.network.response.UserResponse
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
 import org.junit.Ignore
