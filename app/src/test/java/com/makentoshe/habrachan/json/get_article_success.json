@@ -1,0 +1,222 @@
+{
+  "data": {
+    "id": 496922,
+    "is_corporative": 1,
+    "is_tutorial": true,
+    "time_published": "2020-04-21T20:49:39+03:00",
+    "time_interesting": null,
+    "comments_count": 0,
+    "score": 1,
+    "votes_count": 1,
+    "favorites_count": 2,
+    "lang": "ru",
+    "tags_string": "cybersecurity, ctf, reverse engineering, android, aes, frida, neoquest, neoquest2020",
+    "title": "Гайд по реверсу клиент-серверного apk на примере задания NeoQUEST-2020",
+    "preview_html": "\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/f0\/7j\/vf\/f07jvfe9r6534tbgp9bwdruryvy.jpeg\u0022\u003E\u003Cbr\u003E\r\nСегодня у нас насыщенная программа (еще бы, столько областей кибербезопасности за раз!): рассмотрим декомпиляцию Android-приложения, перехватим трафик для получения URL-адресов, пересоберем apk без исходного кода, поработаем криптоаналитиками и многое другое:) \u003Cbr\u003E",
+    "text_cut": "Читать дальше \u0026rarr;",
+    "text_html": "\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/f0\/7j\/vf\/f07jvfe9r6534tbgp9bwdruryvy.jpeg\u0022\u003E\u003Cbr\u003E\r\nСегодня у нас насыщенная программа (еще бы, столько областей кибербезопасности за раз!): рассмотрим декомпиляцию Android-приложения, перехватим трафик для получения URL-адресов, пересоберем apk без исходного кода, поработаем криптоаналитиками и многое другое:) \u003Cbr\u003E\r\n\u003Ca name=\u0022habracut\u0022\u003E\u003C\/a\u003E\u003Cbr\u003E\r\nСогласно легенде \u003Ca href=\u0022http:\/\/neoquest.ru\/2020\u0022\u003ENeoQUEST-2020\u003C\/a\u003E, герой нашел старые детали робота, которые необходимо использовать для получения ключа. Let\u0027s get it started!\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Ch2\u003E1. Реверсим apk\u003C\/h2\u003E\u003Cbr\u003E\r\nИтак, перед нами то немногое, что удалось извлечь из полуразобранного робота – \u003Ca href=\u0022https:\/\/neoquest.ru\/2020\/files\/2\/2.apk\u0022\u003Eapk-приложение\u003C\/a\u003E, которое каким-то образом должно помочь нам получить ключ. Сделаем самое очевидное: запустим apk и посмотрим на его функционал. Более чем минималистичный интерфейс приложения сомнений не оставляет – это кастомный файловый клиент FileDroid, позволяющий скачать файл с удаленного сервера. Окей, выглядит несложно. Подключаем телефон к Интернету, делаем пробную попытку скачивания (сразу key.txt – ну а вдруг?) – безуспешно, файл на сервере отсутствует.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/b4\/kf\/z3\/b4kfz3wd44ev6ckfy664ba0ugho.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nПереходим к следующему по уровню сложности мероприятию – декомпилируем apk c помощью \u003Ca href=\u0022https:\/\/github.com\/skylot\/jadx\/releases\u0022\u003EJADX\u003C\/a\u003E и анализируем исходный код приложения, который, к счастью, совсем не обфусцирован. Наша текущая задача – понять, какие файлы предлагает удаленный сервер для скачивания, и выбрать из них тот самый, с ключом. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\nНачинаем с класса com.ctf.filedroid.MainActivity, содержащего пока самый интересный для нас метод onClick(), в котором обрабатывается нажатие на кнопку «Download». Внутри этого метода дважды происходит обращение к классу ConnectionHandler: cперва вызывается метод ConnectionHandler.getToken(), а только затем – ConnectionHandler.getEncryptedFile(), в который передается имя файла, запрошенного пользователем. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/m5\/66\/by\/m566byk1sozhodekerf1ggpf1hc.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nАга, то есть сначала нам нужен токен! Разберемся чуть подробнее с процессом его получения.\u003Cbr\u003E\r\nМетод ConnectionHandler.getToken() принимает на вход две строки, а затем отправляет GET-запрос, передавая эти строки в качестве параметров «crc» и «sign». В ответ сервер присылает данные в JSON-формате, из которых наше приложение извлекает токен доступа и использует его для скачивания файла. Это всё, конечно, хорошо, но что за «crc» и «sign»?\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/yn\/gy\/lg\/yngylgy7dstfocghhk0w_eufgcg.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nЧтобы понять это, двигаемся дальше в сторону класса Checks, любезно предоставляющего методы badHash() и badSign(). Первый из них подсчитывает контрольную сумму от classes.dex и resources.arsc, конкатенирует эти два значения и оборачивает в Base64 (обратим внимание на флаг 10 = NO_WRAP | URL_SAFE, вдруг пригодится). А что же второй метод? А он делает тоже самое с SHA-256 fingerprint’ом подписи приложения. Эх, похоже, что FileDroid не очень-то жаждет быть пересобранным :(\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/lj\/yj\/xo\/ljyjxoxvrlc8q3pjfxyrerya5ho.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nОкей, допустим, что токен получили. Что дальше? Передаем его на вход метода ConnectionHandler.getEncryptedFile(), который присовокупляет к токену имя запрошенного файла и формирует еще один GET-запрос, на этот раз с параметрами «token» и «file». Сервер в ответ (судя по названию метода) отправляет зашифрованный файл, который сохраняется на \/sdcard\/.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nИтак, подведем небольшой промежуточный итог: у нас есть две новости, и… обе плохие. Во-первых, FileDroid не очень поддерживает наше рвение к модификации apk (происходит проверка контрольной суммы и подписи), а во-вторых, полученный от сервера файл обещает быть зашифрованным. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\nЛадно, будем решать проблемы по мере их поступления, а сейчас наша основная проблема состоит в том, что мы всё еще не знаем, какой файл нам нужно скачать. Однако в процессе изучения класса ConnectionHandler мы не могли не заметить, что прямо между методами getToken() и getEncryptedFile() разработчики FileDroid забыли еще один очень соблазнительный метод под говорящим названием getListing(). Значит, сервер такой функционал поддерживает… Кажется, это то, что нужно!\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/fk\/xz\/v1\/fkxzv1ac9ictxo7gy67ku_u44nq.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nДля получения листинга нам потребуются уже известные «crc» и «sign» – не проблема, мы уже знаем, откуда они берутся. Считаем значения, отправляем GET-запрос и … Так, стоп. А куда мы GET-запрос собираемся отправлять? Неплохо было бы сначала получить URL-адрес удаленного сервера. Эх, возвращаемся в MainActivity.onClick() и смотрим, как формируются аргументы netPath для вызова методов getToken() и getEncryptedFile():\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cpre\u003E\u003Ccode class=\u0022coffeescript\u0022\u003EMethod getSecureMethod = \nwat.class.getDeclaredMethod(\u0026quot;getSecure\u0026quot;, new Class[]{String.class});\n\n\/\/ . . .\n\n\/\/ netPath --\u0026gt; ConnectionHandler.getToken()\n(String) getSecureMethod.invoke((Object) null, new Object[]{\u0026quot;fnks\u0026quot;})\n\n\/\/ netPath --\u0026gt; ConnectionHandler. getEncryptedFile()\n(String) getSecureMethod.invoke((Object) null, new Object[]{\u0026quot;qdkm\u0026quot;})\n\u003C\/code\u003E\u003C\/pre\u003E\u003Cbr\u003E\r\nСтранные буквосочетания «fnks» и «qdmk» вынуждают нас обратиться к результату декомпиляции метода wat.getSecure(). \u003Cs\u003EСпойлер: этот результат у JADX так себе. \u003C\/s\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/-r\/ih\/gi\/-rihgizr3f3kvj0uge_1ekoaxsa.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nПри более пристальном рассмотрении становится понятно, что всё это не слишком приятное содержимое метода можно заменить на привычный switch-case такого вида:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cpre\u003E\u003Ccode class=\u0022coffeescript\u0022\u003E\/\/ . . .\nswitch(CODE)\n{\n    case «qdkm»: \n        r.2 = com.ctf.filedroid.x37AtsW8g.rlieh786d(2);\n        break;\n    case «tkog»: \n        r2 = com.ctf.filedroid.x37AtsW8g.rlieh786d(1);\n        break;\n    case «fnks»: \n        String r2 = com.ctf.filedroid.x37AtsW8g.rlieh786d(0);\n\tbreak;\n}\njava.lang.StringBuilder r1 = new java.lang.StringBuilder \nr1.\u0026lt;init\u0026gt;(r2) \njava.lang.String r0 = r1.toString() \njava.lang.String r1 = radon(r0)\nreturn r1 \u003C\/code\u003E\u003C\/pre\u003E\u003Cbr\u003E\r\nТак как «fnks» и «qdmk» уже используются для получения токена и скачивания файла, то «tkog» должен давать URL, необходимый для запроса листинга доступных файлов на сервере. Кажется, появляется надежда дешево получить требуемый путь… В первую очередь посмотрим, как хранятся URL’ы в приложении. Открываем функцию com.ctf.filedroid.x37AtsW8g.rlieh786d() и видим, что каждый URL сохранен в виде закодированного массива байтов, а сама функция формирует из этих байтов строку и возвращает её.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/yt\/4e\/xz\/yt4exza37qeytal-i9snbrlo4co.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nХорошо. Но далее строка передается в функцию com.ctf.filedroid.wat.radon(), реализация которой вынесена в нативную библиотеку libae3d8oe1.so. Реверсить arm64? Хорошая попытка, FileDroid, но давай в другой раз? \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Ch2\u003E2. Получаем URL-адреса сервера\u003C\/h2\u003E\u003Cbr\u003E\r\nПопробуем подойти с другой стороны: перехватить трафик, получить URL-адреса в открытом виде (а в качестве бонуса – еще и значения контрольной суммы и подписи!), сопоставить их байтовым массивам из com.ctf.filedroid.x37AtsW8g.rlieh786d() – может быть шифрование окажется обычным шифром Цезаря или XOR?.. Тогда не составит труда восстановить третий URL-адрес и выполнить листинг. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\nДля перенаправления трафика можно использовать любой удобный прокси (\u003Ca href=\u0022https:\/\/www.charlesproxy.com\u0022\u003ECharles\u003C\/a\u003E, \u003Ca href=\u0022https:\/\/www.telerik.com\/fiddler\u0022\u003Efiddler\u003C\/a\u003E, \u003Ca href=\u0022https:\/\/portswigger.net\/burp\u0022\u003EBURP\u003C\/a\u003E и т.п.). Выполняем настройку переадресации на мобильном устройстве, устанавливаем соответствующий сертификат, проверяем, что перехват осуществляется успешно, и запускаем FileFroid. Пытаемся скачать произвольный файл и … видим «NetworkError». Вызвана эта ошибка наличием certificate-pinning (см. метод com.ctf.filedroid.ConnectionHandler.sendRequest): файловый клиент проверяет, что «зашитый» в приложение сертификат соответствует серверу, с которым осуществляется взаимодействие. Теперь понятно, почему контролируется целостность ресурсов приложения!\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/8y\/su\/ya\/8ysuya2vqxuwxdzrmt9xsuajq7o.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nОднако в перехваченном трафике мы можем увидеть хотя бы доменное имя сервера, к которому обращается файловый клиент, а значит, надежда расшифровать URL-адреса остается!\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/im\/2w\/8l\/im2w8l7u7b0optrada1cuhbxcge.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nВернемся к функции com.ctf.filedroid.x37AtsW8g.rlieh786d() и отметим, что во всех массивах совпадают первые несколько десятков байт:\u003Cbr\u003E\r\n\u003Cpre\u003E\u003Ccode class=\u0022coffeescript\u0022\u003EcArr[0] = new char[]{\u0027K\u0027, \u0027S\u0027, \u0027Y\u0027, \u00275\u0027, \u0027E\u0027, \u0027R\u0027, \u0027Q\u0027, \u0027J\u0027, \u0027S\u0027, \u00270\u0027, \u0027t\u0027, \u0027W\u0027, \u0027B\u0027, \u00272\u0027, \u0027w\u0027, \u0027k\u0027, \u0027N\u0027, \u0027j\u0027, \u00278\u0027, \u0027O\u0027, \u0027D\u0027, \u0027l\u0027, \u0027d\u0027, \u0027K\u0027, \u0027C\u0027, \u0027l\u0027, \u0027U\u0027, \u0027B\u0027, \u0027c\u0027, \u0027T\u0027, \u0027Q\u0027, \u00273\u0027, \u0027P\u0027, \u0027h\u0027, \u0027V\u0027, \u0027J\u0027, \u0027Q\u0027, \u0027R\u0027, \u0027F\u0027, \u0027L\u0027, \u0027U\u0027, \u0027R\u0027, \u00275\u0027, \u0027p\u0027, \u0027b\u0027, \u0027i\u0027, . . .};\n\ncArr[1] = new char[]{\u0027K\u0027, \u0027S\u0027, \u0027Y\u0027, \u00275\u0027, \u0027E\u0027, \u0027R\u0027, \u0027Q\u0027, \u0027J\u0027, \u0027S\u0027, \u00270\u0027, \u0027t\u0027, \u0027W\u0027, \u0027B\u0027, \u00272\u0027, \u0027w\u0027, \u0027k\u0027, \u0027N\u0027, \u0027j\u0027, \u00278\u0027, \u0027O\u0027, \u0027D\u0027, \u0027l\u0027, \u0027d\u0027, \u0027K\u0027, \u0027C\u0027, \u0027l\u0027, \u0027U\u0027, \u0027B\u0027, \u0027c\u0027, \u0027T\u0027, \u0027Q\u0027, \u00273\u0027, \u0027P\u0027, \u0027h\u0027, \u0027V\u0027, \u0027J\u0027, \u0027Q\u0027, \u0027R\u0027, \u0027F\u0027, \u0027L\u0027, \u0027U\u0027, \u0027R\u0027, \u00275\u0027, \u0027p\u0027, \u0027b\u0027, \u0027j\u0027, . . .};\n\ncArr[2] = new char[]{\u0027K\u0027, \u0027S\u0027, \u0027Y\u0027, \u00275\u0027, \u0027E\u0027, \u0027R\u0027, \u0027Q\u0027, \u0027J\u0027, \u0027S\u0027, \u00270\u0027, \u0027t\u0027, \u0027W\u0027, \u0027B\u0027, \u00272\u0027, \u0027w\u0027, \u0027k\u0027, \u0027N\u0027, \u0027j\u0027, \u00278\u0027, \u0027O\u0027, \u0027D\u0027, \u0027l\u0027, \u0027d\u0027, \u0027K\u0027, \u0027C\u0027, \u0027l\u0027, \u0027U\u0027, \u0027B\u0027, \u0027c\u0027, \u0027T\u0027, \u0027Q\u0027, \u00273\u0027, \u0027P\u0027, \u0027h\u0027, \u0027V\u0027, \u0027J\u0027, \u0027Q\u0027, \u0027R\u0027, \u0027F\u0027, \u0027L\u0027, \u0027U\u0027, \u0027R\u0027, \u00275\u0027, \u0027p\u0027, \u0027b\u0027, \u0027j\u0027, . . ., \u0027=\u0027};\n\u003C\/code\u003E\u003C\/pre\u003E\u003Cbr\u003E\r\nКроме того, последний байт третьего массива намекает, что без base64 дело не обошлось. Попробуем декодировать и поксорить получившиеся байты с известной частью URL: \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/8o\/mh\/1m\/8omh1mtmtqzkcdy7mpqyemyiuzw.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nКажется, никто никогда еще так не радовался ARMag3dd0n’у! Дело за малым: последовательно декодируем из base64 URL-адреса и ксорим с найденным ключом. Но… а если бы это был не XOR, а самопальный перестановочный шифр, который не подберешь и со ста попыток? \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Ch2\u003E3. Пересобираем apk с помощью Frida\u003C\/h2\u003E\u003Cbr\u003E\r\nВ рамках этого write-up’а рассмотрим более безболезненный (и, на наш взгляд, более красивый) способ решения – с помощью фреймфорка \u003Ca href=\u0022https:\/\/frida.re\u0022\u003EFrida\u003C\/a\u003E, который позволит в run-time исполнить произвольные методы apk-приложения с нужными нам аргументами. Для этого потребуется телефон с root-правами или эмулятор. Предполагаем следующий план действий:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Col\u003E\r\n\u003Cli\u003EУстановка компонентов Frida на ПК и подопытный телефон.\u003C\/li\u003E\r\n\u003Cli\u003EВосстановление URL-адресов, соответствующих запросам на получение токена или листинга, и скачивание файла (с помощью Frida).\u003C\/li\u003E\r\n\u003Cli\u003EИзвлечение значений контрольной суммы и подписи оригинального приложения.\u003C\/li\u003E\r\n\u003Cli\u003EПолучение листинга файлов, хранящихся на сервере, и выявление нужного файла.\u003C\/li\u003E\r\n\u003Cli\u003EСкачивание и расшифрование файла.\u003C\/li\u003E\r\n\u003C\/ol\u003E\u003Cbr\u003E\r\nДля начала уточним взаимоотношения рутованного телефона и apk. Устанавливаем приложение, запускаем, но файловый клиент не желает полноценно загрузиться, лишь мигает и закрывается. Проверяем сообщения через logcat – да, так и есть, FileDroid уже чувствует неладное и сопротивляется, как может. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/vn\/8s\/2b\/vn8s2bzyijssy664hsdgcxqnawc.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nВновь обращаемся к классу MainActivity и обнаруживаем, что в onCreate() вызывается метод doChecks(), который и вывел в лог приведенные ошибки:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/ws\/xl\/i6\/wsxli6hxrjmgqnnkuh6b5a7h8my.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nКроме того, в onResume() также проверяется, открыт ли типичный для Frida порт: \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/-k\/df\/kv\/-kdfkvyea8g0p6y-dkwxpk3flo4.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nНаш файловый клиент оказывается немного нетолерантным к отладке, руту и самой Frida. Такое противодействие абсолютно не входит в наши планы, поэтому получаем smali-код приложения с помощью утилиты \u003Ca href=\u0022https:\/\/ibotpeaches.github.io\/Apktool\/install\/\u0022\u003Eapktool\u003C\/a\u003E, открываем в любом текстовом редакторе файл MainActivity.smali, находим метод onCreate() и превращаем вызов doChecks() в безобидный комментарий:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/z6\/r2\/ra\/z6r2rautxzhef-0prc9odxmj2ek.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nЗатем лишаем метод suicide() возможности действительно завершить работу приложения: \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/iu\/ti\/q6\/iutiq6k6idg5_6h7wd1he2mjyem.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nДалее снова соберем наше слегка улучшенное приложение с помощью apktool и подпишем его, выполнив следующие команды (могут понадобиться права Администратора):\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cpre\u003E\u003Ccode class=\u0022bash\u0022\u003Ecd \u0026quot;C:\\Program Files\\Java\\jdk-14\\bin\u0026quot;\n.\\keytool -genkey -v -keystore filedroid.keystore -alias filedroid_alias -keyalg RSA -keysize 2048 -validity 10000\n.\\jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore  filedroid.keystore filedroid_patched.apk filedroid_alias\n.\\jarsigner -verify -verbose -certs filedroid_patched.apk\n\u003C\/code\u003E\u003C\/pre\u003E\u003Cbr\u003E\r\nПереустанавливаем приложение на телефоне, запускаем его – ура, загрузка проходит без происшествий, лог чист! \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/qm\/u4\/k2\/qmu4k2ta7zji47msjnyhhq8ibqi.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nПереходим к установке фреймворка Frida на ПК и мобильное устройство:\u003Cbr\u003E\r\n\u003Cpre\u003E\u003Ccode class=\u0022bash\u0022\u003E$ sudo pip3 install frida-tools\n$ wget https:\/\/github.com\/frida\/frida\/releases\/download\/$(frida --version)\/frida-server-$(frida --version)-android-arm.xz\n$ unxz frida-server-$(frida --version)-android-arm.xz\n$ adb push frida-server-$(frida --version)-android-arm \/data\/local\/tmp\/frida-server\n\u003C\/code\u003E\u003C\/pre\u003E\u003Cbr\u003E\r\nЗапускаем сервер фреймворка Frida на мобильном устройстве:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cpre\u003E\u003Ccode class=\u0022bash\u0022\u003E$ adb shell su -с \u0026quot;chmod 755 \/data\/local\/tmp\/frida-server\u0026quot;\n$ adb shell su -с \u0026quot;\/data\/local\/tmp\/frida-server \u0026amp;\u0026quot;  \n\u003C\/code\u003E\u003C\/pre\u003E\u003Cbr\u003E\r\nПодготавливаем простой скрипт get-urls.js, который вызовет wat.getSecure() для всех поддерживаемых серверов запросов:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cpre\u003E\u003Ccode class=\u0022actionscript\u0022\u003EJava.perform(function () \n{\n     const wat = Java.use(\u0027com.ctf.filedroid.wat\u0027);\n\tconsole.log(wat.getSecure(\u0026quot;fnks\u0026quot;));\n\tconsole.log(wat.getSecure(\u0026quot;qdmk\u0026quot;));\n\tconsole.log(wat.getSecure(\u0026quot;tkog\u0026quot;));\n});\u003C\/code\u003E\u003C\/pre\u003E\u003Cbr\u003E\r\nЗапускаем FileDroid на мобильном устройстве и «цепляемся» нашим скриптом к соответствующему процессу: \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/pc\/ir\/if\/pcirifn_grrejaapwi7s-7hg-xe.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Ch2\u003E4. Получаем листинг файлов на сервере\u003C\/h2\u003E\u003Cbr\u003E\r\nНаконец-то удаленный сервер стал для нас чуть ближе! Теперь нам известно, что сервер поддерживает запросы по следующим путям:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Col\u003E\r\n\u003Cli\u003E\u003Ca href=\u0022https:\/\/filedroid.neoquest.ru\/api\/verifyme?crc=\u0022\u003Efiledroid.neoquest.ru\/api\/verifyme?crc=\u003C\/a\u003E{crc}\u0026amp;sign={sign}\u003C\/li\u003E\r\n\u003Cli\u003E\u003Ca href=\u0022https:\/\/filedroid.neoquest.ru\/api\/list_post_apocalyptic_collection?crc=\u0022\u003Efiledroid.neoquest.ru\/api\/list_post_apocalyptic_collection?crc=\u003C\/a\u003E{crc}\u0026amp;sign={sign}\u003C\/li\u003E\r\n\u003Cli\u003E\u003Ca href=\u0022https:\/\/filedroid.neoquest.ru\/api\/file?file=\u0022\u003Efiledroid.neoquest.ru\/api\/file?file=\u003C\/a\u003E{file}\u0026amp;token={token}\u003C\/li\u003E\r\n\u003C\/ol\u003E\u003Cbr\u003E\r\nДля того, чтобы получить листинг доступных файлов, осталось подсчитать значения контрольной суммы и подписи оригинального приложения, а затем закодировать их в base64. Сделать это позволит вот такой скрипт на python3:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cdiv class=\u0022spoiler\u0022 role=\u0022button\u0022 tabindex=\u00220\u0022\u003E\n                        \u003Cb class=\u0022spoiler_title\u0022\u003EСпойлер\u003C\/b\u003E\n                        \u003Cdiv class=\u0022spoiler_text\u0022\u003E\u003Cpre\u003E\u003Ccode class=\u0022coffeescript\u0022\u003Eimport hashlib\nimport binascii\nimport base64\nfrom asn1crypto import cms, x509\nfrom zipfile import ZipFile\n\n\ndef get_info(apk):\n    with ZipFile(apk, \u0027r\u0027) as zipObj:\n        classes = zipObj.read(\u0026quot;classes.dex\u0026quot;)\n        resources = zipObj.read(\u0026quot;resources.arsc\u0026quot;)\n        cert = zipObj.read(\u0026quot;META-INF\/CERT.RSA\u0026quot;)\n        crc = \u0026quot;%s%s\u0026quot; % (get_crc(classes), get_crc(resources))\n        return get_full_crc(classes, resources).decode(\u0026quot;utf-8\u0026quot;), get_sign(cert).decode(\u0026quot;utf-8\u0026quot;)\n\n\ndef get_crc(file):\n    crc = binascii.crc32(file) \u0026amp; 0xffffffff\n    return crc\n\n\ndef get_full_crc(classes, resources):\n    crc = \u0026quot;%s%s\u0026quot; % (get_crc(classes), get_crc(resources))\n    return base64.urlsafe_b64encode(bytes(crc, \u0026quot;utf-8\u0026quot;))\n\n\ndef get_sign(file):\n    pkcs7 = cms.ContentInfo.load(file)\n    data = pkcs7[\u0027content\u0027][\u0027certificates\u0027][0].chosen.dump()\n    sha256 = hashlib.sha256()\n    sha256.update(data)\n    return base64.urlsafe_b64encode(sha256.digest())  \n\nget_info(\u0027filedroid.apk\u0027)\n\u003C\/code\u003E\u003C\/pre\u003E\u003Cbr\u003E\r\n\u003C\/div\u003E\n                    \u003C\/div\u003E\u003Cbr\u003E\r\nВручную тоже можно. Любым удобным инструментом считаем CRC32 от classes.dex и resources.arsc (например, для Linux – стандартной утилитой crc32), получаем значения ‭1276945813‬ и 2814166583 соответственно, конкатенируем их (выйдет 12769458132814166583) и кодируем в base64, например, \u003Ca href=\u0022https:\/\/cryptii.com\/pipes\/hex-to-base64\u0022\u003Eтут\u003C\/a\u003E:‬‬\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/wb\/ba\/km\/wbbakmhm-8jmtyyudjhofelaz8s.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nДля того, чтобы выполнить аналогичную процедуру для подписи приложения, в окне JADX переходим в раздел «APK Signature», копируем значение «SHA-256 Fingerprint» и кодируем его в base64 как байтовый массив:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/wx\/s9\/zg\/wxs9zgvtahyytsnvxis-k8lq8wg.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cb\u003EВажно:\u003C\/b\u003E в оригинальном apk base64-кодирование осуществляется с флагом URL_SAFE, т.е. вместо символов «+» и «\/» используются «–» и «_» соответственно. Необходимо убедиться, что при самостоятельном кодировании это будет тоже соблюдаться. Для этого при кодировании онлайн можно заменить используемый алфавит с «ABCDEFGHIJKLMNOPQRSTUVWXYZabcde fghijklmnopqrstuvwxyz0123456789+\/» на «ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl mnopqrstuvwxyz0123456789–_», а при использовании скрипта на python3 – просто вызвать функцию base64.urlsafe_b64encode().\u003Cbr\u003E\r\nНаконец-то у нас есть все составляющие успешного получения листинга файлов:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Col\u003E\r\n\u003Cli\u003E\u003Ca href=\u0022https:\/\/filedroid.neoquest.ru\/api\/list_post_apocalyptic_collection?crc=\u0022\u003Efiledroid.neoquest.ru\/api\/list_post_apocalyptic_collection?crc=\u003C\/a\u003E{crc}\u0026amp;sign={sign}\u003C\/li\u003E\r\n\u003Cli\u003Ecrc: MTI3Njk0NTgxMzI4MTQxNjY1ODM=\u003C\/li\u003E\r\n\u003Cli\u003Esign: HeiTSPWdCuhpbmVxqLxW-uhrozfG_QWpTv9ygn45eHY=\u003C\/li\u003E\r\n\u003C\/ol\u003E\u003Cbr\u003E\r\nВыполняем GET-запрос – и ура, листинг наш! Причем название одного из файлов говорит само за себя – «open-if-you-want-to-escape» – похоже, он-то нам и нужен. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/bk\/k4\/vz\/bkk4vzawktgg1ilhn1x06q90ahq.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nДалее запросим одноразовый токен доступа и скачаем файл:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cpre\u003E\u003Ccode class=\u0022coffeescript\u0022\u003Eimport requests\n\nresponse = requests.get(\u0027https:\/\/filedroid.neoquest.ru\/api\/verifyme\u0027, \n    \t\tparams={    \u0027crc\u0027: \u0027MTI3Njk0NTgxMzI4MTQxNjY1ODM=\u0027, \n\u0027sign\u0027: HeiTSPWdCuhpbmVxqLxW-uhrozfG_QWpTv9ygn45eHY=},\nverify=False)\n    \ntoken = response.json()[\u0027token\u0027]\nprint(token)\nresponse = requests.get(\u0027https:\/\/filedroid.neoquest.ru\/api\/file\u0027, \nparams={\u0027token\u0027: token, \u0027file\u0027: \u00270p3n1fuw4nt2esk4p3.jpg\u0027}, verify=False)\n\nwith open(\u0026quot;0p3n1fuw4nt2esk4p3.jpg\u0026quot;, \u0027wb\u0027) as fd:\n        fd.write(response.content)\n\u003C\/code\u003E\u003C\/pre\u003E\u003Cbr\u003E\r\nОткрываем скачанный файл и вспоминаем об одном небольшом обстоятельстве, оставленном нами на потом:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/kt\/dc\/rz\/ktdcrzjrng635moxnmt5_phu2nu.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Ch2\u003E5. Добавим щепоточку криптографии...\u003C\/h2\u003E\u003Cbr\u003E\r\nЭх, рановато мы отложили FileDroid. Снова вернемся в JADX и посмотрим, не оставили ли разработчики файлового клиента чего-нибудь полезного для нас. Да, это тот случай, когда code cleanup явно не популярен: неиспользуемый метод decryptFile() спокойно ждет нашего внимания в классе ConnectionHandler. Что мы имеем? \u003Cbr\u003E\r\n\u003Cbr\u003E\r\nШифрование \u003Ca href=\u0022https:\/\/ru.wikipedia.org\/wiki\/Advanced_Encryption_Standard\u0022\u003EAES\u003C\/a\u003E в режиме \u003Ca href=\u0022https:\/\/ru.wikipedia.org\/wiki\/%D0%A0%D0%B5%D0%B6%D0%B8%D0%BC_%D1%88%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F#Cipher_Block_Chaining_(CBC)\u0022\u003ECBC\u003C\/a\u003E, синхропосылка занимает первые 16 байт… Лень – двигатель прогресса, лучше снова воспользуемся Frida и расшифруем наш 0p3n1fuw4nt2esk4p3.jpg без лишних усилий. Вот только что передать в качестве ключ шифрования? Вариантов не так много, а с учетом наличия еще одного «забытого» метода savePlainFile(String file, String token) выбор очевиден.\u003Cbr\u003E\r\nПодготовим следующий скрипт decrypt.js (в качестве \u003Ci\u003Etoken\u003C\/i\u003E укажем актуальное значение, например, \u0027HoHknc572mVpZESSQN1Xa7S9zOidxX1PMbykdoM1EXI=\u0027):\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cpre\u003E\u003Ccode class=\u0022coffeescript\u0022\u003EJava.perform(function () {\n    const JavaString = Java.use(\u0027java.lang.String\u0027);\n    const file_name = JavaString.$new(\u00270p3n1fuw4nt2esk4p3.jpg\u0027);\n    const ConnectionHandler = Java.use(\u0027com.ctf.filedroid.ConnectionHandler\u0027);\n    const result = ConnectionHandler.savePlainFile(file_name, \u0026lt;token\u0026gt;);\n    console.log(result);\n});\n\u003C\/code\u003E\u003C\/pre\u003E\u003Cbr\u003E\r\nПомещаем зашифрованный файл 0p3n1fuw4nt2esk4p3.jpg на \/sdcard\/, запускаем FileDroid и инжектим скрипт decrypt.js с помощью Frida. После того, как скрипт отработает, на \/sdcard\/ появится файл plainfile.jpg. Открываем его и … just solved!\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/fb\/3-\/ah\/fb3-ahlzcqlnfjsromkmbz9eil0.png\u0022\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nЭто непростое задание требовало от участников знаний и навыков сразу в нескольких сферах инфобеза, и мы рады тому, что большинство соревнующихся успешно с ним справилось! Надеемся, что те, кому чуть-чуть не хватило времени или знаний до получения ключа, теперь тоже успешно пройдут аналогичные таски в любом CTF :)",
+    "is_comments_hide": 0,
+    "editor_version": 1,
+    "is_recovery_mode": false,
+    "metadata": {
+      "meta_image": "https:\/\/habrastorage.org\/webt\/f0\/7j\/vf\/f07jvfe9r6534tbgp9bwdruryvy.jpeg"
+    },
+    "flows": [
+      {
+        "id": 1,
+        "name": "Разработка",
+        "alias": "develop",
+        "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+        "path": "\/flows\/develop\/"
+      }
+    ],
+    "hubs": [
+      {
+        "id": 17474,
+        "rating": 76.5415,
+        "is_profiled": false,
+        "title": "Блог компании НеоБИТ",
+        "alias": "neobit",
+        "about_small": "",
+        "about": "НеоБИТ",
+        "count_subscribers": 516,
+        "count_posts": 81,
+        "tags_string": "",
+        "is_membership": false,
+        "is_company": true,
+        "icon": "\/\/habrastorage.org\/getpro\/habr\/company\/a64\/4d8\/803\/a644d8803d9fb17b922220c6c28c1afb.png",
+        "path": "company\/neobit\/"
+      },
+      {
+        "id": 50,
+        "rating": 1011.9908,
+        "is_profiled": true,
+        "title": "Информационная безопасность",
+        "alias": "infosecurity",
+        "about_small": "Защита данных",
+        "about": "О том, как мы защищаем свою информацию - от взлома, повреждения, фишинга и т.д. Новости мира anti-virus, anti-spam, anti-spy  и т.д. Личные впечатления, опыт, мнения.",
+        "count_subscribers": 522898,
+        "count_posts": 10553,
+        "tags_string": "безопасность, фишинг, fishing, защита, взлом, XSS, CSRF, SQL-inj, sql-инъекция, PHP-inj, DoS, DDoS, социальная инженерия, capcha, капча, sql injection, php injection, хакер, хакеры, хакерская атака",
+        "is_membership": false,
+        "is_company": false,
+        "flow": {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        },
+        "icon": "\/\/habrastorage.org\/getpro\/habr\/hub\/135\/2db\/187\/1352db18765addaa6e0b2ac013d386d8.png",
+        "path": "hub\/infosecurity\/"
+      },
+      {
+        "id": 118,
+        "rating": 29.48,
+        "is_profiled": true,
+        "title": "Криптография",
+        "alias": "crypto",
+        "about_small": "Шифрование и криптоанализ",
+        "about": "Криптография (от др.-греч. κρυπτός — скрытый и γράφω — пишу) — наука о методах обеспечения конфиденциальности (невозможности прочтения информации посторонним), целостности данных (невозможности незаметного изменения информации), аутентификации (проверки подлинности авторства или иных свойств объекта), а также невозможности отказа от авторства.",
+        "count_subscribers": 118861,
+        "count_posts": 1247,
+        "tags_string": "криптография, криптология, крипто, crypto, анализ, шифрование, md5, sha2",
+        "is_membership": false,
+        "is_company": false,
+        "flow": {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        },
+        "icon": "\/\/habrastorage.org\/getpro\/habr\/hub\/de4\/a7f\/775\/de4a7f775624db2496fbbe6399b25467.png",
+        "path": "hub\/crypto\/"
+      },
+      {
+        "id": 287,
+        "rating": 55.7335,
+        "is_profiled": false,
+        "title": "Занимательные задачки",
+        "alias": "zadachki",
+        "about_small": "Разминаем мозги",
+        "about": "Хаб для задач из разряда занимательных, но не общеизвестных. Приветствуются сложные задачи с красивым и желательно недлинным решением.",
+        "count_subscribers": 105881,
+        "count_posts": 790,
+        "tags_string": "задачи, логика, занимательная математика, головоломки",
+        "is_membership": false,
+        "is_company": false,
+        "flow": {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        },
+        "icon": "\/\/habrastorage.org\/getpro\/habr\/hub\/d6e\/d3a\/613\/d6ed3a6138cd63164a0c2d8968bef372.png",
+        "path": "hub\/zadachki\/"
+      },
+      {
+        "id": 19011,
+        "rating": 128.3229,
+        "is_profiled": true,
+        "title": "Реверс-инжиниринг",
+        "alias": "reverse-engineering",
+        "about_small": "Расковырять и понять как работает",
+        "about": "Обратная разработка (обратный инжиниринг, реверс-инжиниринг; англ. reverse engineering) — исследование некоторого готового устройства или программы, а также документации на него с целью понять принцип его работы; например, чтобы обнаружить недокументированные возможности (в том числе программные закладки), сделать изменение, или воспроизвести устройство, программу или иной объект с аналогичными функциями, но без копирования как такового.",
+        "count_subscribers": 28281,
+        "count_posts": 653,
+        "tags_string": "reverse engineering, реверс инженеринг, обратный инженеринг",
+        "is_membership": false,
+        "is_company": false,
+        "flow": {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        },
+        "icon": "\/\/habrastorage.org\/getpro\/habr\/hub\/cbe\/1e8\/e40\/cbe1e8e4077f777c9f93f31611802dda.png",
+        "path": "hub\/reverse-engineering\/"
+      }
+    ],
+    "reading_count": 150,
+    "path": "\/company\/neobit\/blog\/496922\/",
+    "full_url": "https:\/\/habr.com\/ru\/company\/neobit\/blog\/496922\/",
+    "author": {
+      "id": 168584,
+      "login": "NWOcs",
+      "time_registered": "2012-02-27T15:34:33+04:00",
+      "score": 120,
+      "fullname": null,
+      "specializm": "Пользователь",
+      "sex": 0,
+      "rating": 14.4,
+      "vote": 0,
+      "contacts": [],
+      "rating_position": 397,
+      "path": "\/users\/nwocs\/",
+      "geo": {
+        "country": null,
+        "region": null,
+        "city": null
+      },
+      "counters": {
+        "posts": 77,
+        "comments": 133,
+        "followed": 0,
+        "followers": 57,
+        "favorites": 7
+      },
+      "badges": [
+        {
+          "id": 1,
+          "title": "Захабренный",
+          "alias": "habred",
+          "description": "Пользователь с кармой \u003E0",
+          "url": null,
+          "is_removable": false,
+          "is_disabled": false
+        },
+        {
+          "id": 7,
+          "title": "Старожил",
+          "alias": "oldresident",
+          "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+          "url": null,
+          "is_removable": false,
+          "is_disabled": false
+        }
+      ],
+      "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/1ae\/b1c\/80e\/1aeb1c80e29f2c8abed5589c861c36b3.png",
+      "is_readonly": false,
+      "is_rc": false,
+      "is_subscribed": false,
+      "common_tags": [],
+      "is_can_vote": true,
+      "payment_methods": []
+    },
+    "has_polls": false,
+    "url": "https:\/\/habr.com\/ru\/company\/neobit\/blog\/496922\/",
+    "post_type": 1,
+    "post_type_str": "simple",
+    "vote": null,
+    "is_can_vote": true,
+    "voting": {
+      "score": 1,
+      "voteCount": {
+        "total": 1,
+        "positive": 1,
+        "negative": 0
+      },
+      "vote": null,
+      "reasonMap": null
+    },
+    "is_habred": true,
+    "is_interesting": false,
+    "is_favorite": false,
+    "comments_new": null,
+    "is_can_comment": true
+  },
+  "server_time": "2020-04-21T21:29:45+03:00"
+}
