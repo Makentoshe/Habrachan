@@ -50,10 +50,7 @@ class ArticlesDataSource(
 
     private fun saveCache(page: Int, response: ArticlesResponse) {
         if (page == 1) {
-            cacheDatabase.users().clear()
-            cacheDatabase.comments().clear()
-            cacheDatabase.articles().clear()
-            cacheDatabase.avatars().clear()
+            cacheDatabase.clear()
         }
         if (response is ArticlesResponse.Success) response.data.forEach { article ->
             cacheDatabase.articles().insert(article)
