@@ -2,9 +2,10 @@ package com.makentoshe.habrachan.viewmodel.user
 
 import com.makentoshe.habrachan.BaseTest
 import com.makentoshe.habrachan.common.database.UserDao
+import com.makentoshe.habrachan.common.database.session.MeDao
 import com.makentoshe.habrachan.common.database.session.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.User
-import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.response.UserResponse
 import com.makentoshe.habrachan.model.user.UserAccount
@@ -22,8 +23,10 @@ class UserViewModelTest : BaseTest() {
     private lateinit var viewModel: UserViewModel
 
     private val sessionDao = mockk<SessionDao>()
+    private val meDao = mockk<MeDao>()
     private val userDao = mockk<UserDao>()
     private val usersManager = mockk<UsersManager>()
+    private val sessionDatabase = mockk<SessionDatabase>()
 
     @get:Rule
     val timeout = Timeout(15, TimeUnit.SECONDS)
@@ -31,7 +34,9 @@ class UserViewModelTest : BaseTest() {
     @Before
     fun before() {
         every { sessionDao.get() } returns session
-        viewModel = UserViewModel(sessionDao, usersManager, userDao)
+        every { sessionDatabase.session() } returns sessionDao
+        every { sessionDatabase.me() } returns meDao
+        viewModel = UserViewModel(usersManager, userDao, sessionDatabase)
     }
 
     @Test
@@ -40,18 +45,18 @@ class UserViewModelTest : BaseTest() {
         val user = mockk<User>()
         val userResponse = mockk<UserResponse.Success>()
         every { userResponse.user } returns user
+        every { meDao.insert(any()) } just runs
         // mock for success run request
         every { usersManager.getMe(any()) } returns Single.just(userResponse)
-        every { sessionDao.insert(any()) } just runs
         // perform request
         viewModel.userObserver.onNext(UserAccount.Me)
         val response = viewModel.userObservable.blockingFirst()
         // check is same response
         assertEquals(userResponse, response)
-        // check user was saved in session
-        val slot = slot<UserSession>()
-        verify(exactly = 1) { sessionDao.insert(capture(slot)) }
-        assertEquals(user, slot.captured.me)
+        // check user was saved
+        val slot = slot<User>()
+        verify(exactly = 1) { meDao.insert(capture(slot)) }
+        assertEquals(user, slot.captured)
     }
 
     @Test
@@ -60,7 +65,6 @@ class UserViewModelTest : BaseTest() {
         val userResponse = mockk<UserResponse.Error>()
         // mock for success run request
         every { usersManager.getMe(any()) } returns Single.just(userResponse)
-//        every { sessionDao.insert(any()) } just runs
         // perform request
         viewModel.userObserver.onNext(UserAccount.Me)
         val response = viewModel.userObservable.blockingFirst()
@@ -71,8 +75,9 @@ class UserViewModelTest : BaseTest() {
     @Test
     fun testShouldReturnSuccessUserResponseFromCacheForMeAction() {
         val user = mockk<User>()
-        every { session.me } returns user
-        every { sessionDao.insert(any()) } just runs
+        every { meDao.get() } returns user
+        every { meDao.isEmpty } returns false
+        every { meDao.insert(any()) } just runs
         // mock for success run request
         every { usersManager.getMe(any()) } returns Single.just(Unit).map { throw Exception() }
         // perform request
@@ -86,7 +91,7 @@ class UserViewModelTest : BaseTest() {
     fun testShouldReturnErrorUserResponseFromCacheForMeAction() {
         // mock for success run request
         every { usersManager.getMe(any()) } returns Single.just(Unit).map { throw Exception() }
-        every { sessionDao.insert(any()) } just runs
+        every { meDao.isEmpty } returns true
         // perform request
         viewModel.userObserver.onNext(UserAccount.Me)
         val response = viewModel.userObservable.blockingFirst() as UserResponse.Error
@@ -100,9 +105,9 @@ class UserViewModelTest : BaseTest() {
         val user = mockk<User>()
         val userResponse = mockk<UserResponse.Success>()
         every { userResponse.user } returns user
+        every { userDao.insert(any()) } just runs
         // mock for success run request
         every { usersManager.getUser(any()) } returns Single.just(userResponse)
-        every { userDao.insert(any()) } just runs
         // perform request
         viewModel.userObserver.onNext(UserAccount.User(""))
         val response = viewModel.userObservable.blockingFirst()

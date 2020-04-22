@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.database.session.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.main.articles.ArticlesFlowScreen
 import com.makentoshe.habrachan.model.main.login.LoginScreen
@@ -23,7 +23,7 @@ class MainFlowFragment : Fragment() {
 
     private val arguments = Arguments(this)
     private val navigator by inject<Navigator>()
-    private val sessionDao by inject<SessionDao>()
+    private val sessionDatabase by inject<SessionDatabase>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +41,8 @@ class MainFlowFragment : Fragment() {
         navigation.setOnNavigationItemSelectedListener(::onNavigationItemSelected)
 
         val item = navigation.menu.findItem(R.id.action_account)
-        val session = sessionDao.get()
-        if (session.me != null) {
-            item.title = session.me.login
+        if (!sessionDatabase.me().isEmpty) {
+            item.title = sessionDatabase.me().get().login
             item.setIcon(R.drawable.ic_account)
         } else {
             item.setTitle(R.string.menu_account)
@@ -65,11 +64,10 @@ class MainFlowFragment : Fragment() {
     }
 
     private fun onAccountClick() {
-        val session = sessionDao.get()
-        if (session?.isLoggedIn == true) {
-            navigator.toUserScreen()
-        } else {
+        if (sessionDatabase.me().isEmpty) {
             navigator.toLoginScreen()
+        } else {
+            navigator.toUserScreen()
         }
     }
 

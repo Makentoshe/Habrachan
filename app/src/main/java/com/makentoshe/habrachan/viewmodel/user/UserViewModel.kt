@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.UserDao
-import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.UsersManager
@@ -20,9 +19,9 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
 class UserViewModel(
-    private val sessionDao: SessionDao,
     private val usersManager: UsersManager,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val sessionDatabase: SessionDatabase
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -45,19 +44,19 @@ class UserViewModel(
     }
 
     private fun onUserRequestMe(userAccount: UserAccount.Me): UserResponse {
-        val session = sessionDao.get()
+        val session = sessionDatabase.session().get()
         val meRequest = MeRequest(session.clientKey, session.tokenKey)
         return usersManager.getMe(meRequest).onErrorReturn { throwable ->
             onUserRequestMeError(session, throwable)
         }.doOnSuccess { userResponse ->
             if (userResponse is UserResponse.Success) {
-                sessionDao.insert(session.copy(me = userResponse.user))
+                sessionDatabase.me().insert(userResponse.user)
             }
         }.blockingGet()
     }
 
     private fun onUserRequestUser(userAccount: UserAccount.User): UserResponse {
-        val session = sessionDao.get()
+        val session = sessionDatabase.session().get()
         val userRequest = UserRequest(session.clientKey, session.tokenKey, userAccount.userName)
         return usersManager.getUser(userRequest).doOnSuccess { userResponse ->
             if (userResponse is UserResponse.Success) userDao.insert(userResponse.user)
@@ -76,11 +75,10 @@ class UserViewModel(
     }
 
     private fun onUserRequestMeError(session: UserSession, throwable: Throwable): UserResponse {
-        val user = session.me
-        return if (user == null) {
+        return if (sessionDatabase.me().isEmpty) {
             UserResponse.Error(400, throwable.toString(), listOf())
         } else {
-            UserResponse.Success(user, "")
+            UserResponse.Success(sessionDatabase.me().get(), "")
         }
     }
 
@@ -92,7 +90,7 @@ class UserViewModel(
         private val usersManager: UsersManager
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return UserViewModel(sessionDatabase.session(), usersManager, database.users()) as T
+            return UserViewModel(usersManager, database.users(), sessionDatabase) as T
         }
     }
 }
