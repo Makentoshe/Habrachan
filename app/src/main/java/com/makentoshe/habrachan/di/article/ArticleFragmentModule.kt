@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.di.article
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
@@ -29,6 +30,7 @@ class ArticleFragmentModule(fragment: ArticleFragment) : Module() {
     private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
     private val database by inject<HabrDatabase>()
+    private val sessionDatabase by inject<SessionDatabase>()
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
@@ -36,7 +38,7 @@ class ArticleFragmentModule(fragment: ArticleFragment) : Module() {
         articlesManager = ArticlesManager.Builder(client).build()
 
         bind<WebViewController>().toInstance(WebViewController(fragment, javascriptInterface))
-        bind<ArticleFragment.Navigator>().toInstance(ArticleFragment.Navigator(router, database.session()))
+        bind<ArticleFragment.Navigator>().toInstance(ArticleFragment.Navigator(router, sessionDatabase.session()))
         bind<JavaScriptInterface>().toInstance(javascriptInterface)
 
         val userAvatarViewModel = getUserAvatarViewModel(fragment)
@@ -58,13 +60,13 @@ class ArticleFragmentModule(fragment: ArticleFragment) : Module() {
     private fun getArticleFragmentViewModel(fragment: ArticleFragment) : ArticleFragmentViewModel {
         val userAvatarViewModel = getUserAvatarViewModel(fragment)
         val factory = ArticleFragmentViewModel.Factory(
-            articlesManager, database.articles(), database.session(), userAvatarViewModel
+            articlesManager, database.articles(), sessionDatabase.session(), userAvatarViewModel
         )
         return ViewModelProviders.of(fragment, factory)[ArticleFragmentViewModel::class.java]
     }
 
     private fun getVoteArticleViewModel(fragment: ArticleFragment): VoteArticleViewModel {
-        val factory = VoteArticleViewModel.Factory(database.session(), articlesManager)
+        val factory = VoteArticleViewModel.Factory(sessionDatabase.session(), articlesManager)
         return ViewModelProviders.of(fragment, factory)[VoteArticleViewModel::class.java]
     }
 }

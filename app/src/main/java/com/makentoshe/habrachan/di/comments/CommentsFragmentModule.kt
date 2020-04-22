@@ -1,10 +1,9 @@
 package com.makentoshe.habrachan.di.comments
 
 import androidx.lifecycle.ViewModelProviders
-import androidx.room.Room
-import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
@@ -14,7 +13,6 @@ import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -29,6 +27,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
     private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
     private val database by inject<HabrDatabase>()
+    private val sessionDatabase by inject<SessionDatabase>()
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
@@ -49,7 +48,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
     private fun getCommentsFragmentViewModel(fragment: CommentsFragment): CommentsFragmentViewModel {
         val commentsFragmentViewModelFactory =
-            CommentsFragmentViewModel.Factory(commentsManager, database.comments(), database.session())
+            CommentsFragmentViewModel.Factory(commentsManager, database.comments(), sessionDatabase.session())
         return ViewModelProviders.of(fragment, commentsFragmentViewModelFactory)[CommentsFragmentViewModel::class.java]
     }
 

@@ -1,7 +1,7 @@
-package com.makentoshe.habrachan.di.main.account.login
+package com.makentoshe.habrachan.di.main.login
 
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.database.HabrDatabase
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.main.login.LoginFragment
@@ -17,7 +17,7 @@ class LoginFragmentModule(fragment: LoginFragment) : Module() {
     private val loginManager: LoginManager
 
     private val client by inject<OkHttpClient>()
-    private val database by inject<HabrDatabase>()
+    private val sessionDatabase by inject<SessionDatabase>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
@@ -28,7 +28,7 @@ class LoginFragmentModule(fragment: LoginFragment) : Module() {
     }
 
     private fun getLoginViewModel(fragment: LoginFragment): LoginViewModel {
-        val factory = LoginViewModel.Factory(database.session(), loginManager)
+        val factory = LoginViewModel.Factory(sessionDatabase.session(), loginManager)
         return ViewModelProviders.of(fragment, factory)[LoginViewModel::class.java]
     }
 }

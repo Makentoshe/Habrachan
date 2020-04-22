@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.viewmodel.main.login
 
-import com.makentoshe.habrachan.BuildConfig
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.BaseTest
+import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.common.network.response.LoginResponse
@@ -15,21 +15,19 @@ import org.junit.Test
 import org.junit.rules.Timeout
 import java.util.concurrent.TimeUnit
 
-class LoginViewModelTest {
+class LoginViewModelTest: BaseTest() {
 
     private lateinit var viewModel: LoginViewModel
 
     private val sessionDao = mockk<SessionDao>()
     private val loginManager = mockk<LoginManager>()
 
-    private val userSession = UserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, "")
-
     @get:Rule
     val timeout = Timeout(15, TimeUnit.SECONDS)
 
     @Before
     fun before() {
-        every { sessionDao.get() } returns userSession
+        every { sessionDao.get() } returns session
         viewModel = LoginViewModel(sessionDao, loginManager)
     }
 
@@ -46,8 +44,8 @@ class LoginViewModelTest {
         // check UserSession was saved into database
         val slot = slot<UserSession>()
         verify { sessionDao.insert(capture(slot)) }
-        assertEquals(userSession.apiKey, slot.captured.apiKey)
-        assertEquals(userSession.clientKey, slot.captured.clientKey)
+        assertEquals(session.apiKey, slot.captured.apiKey)
+        assertEquals(session.clientKey, slot.captured.clientKey)
         assertEquals(response.accessToken, slot.captured.tokenKey)
     }
 

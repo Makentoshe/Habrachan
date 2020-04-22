@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.di.user
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.manager.UsersManager
@@ -21,11 +22,12 @@ class UserFragmentModule(fragment: UserFragment) : Module() {
     private val imageDatabase = ImageDatabase(fragment.requireContext())
 
     private val avatarManager: ImageManager
-    private val usersManager : UsersManager
+    private val usersManager: UsersManager
 
     private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
     private val database by inject<HabrDatabase>()
+    private val sessionDatabase by inject<SessionDatabase>()
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
@@ -44,7 +46,7 @@ class UserFragmentModule(fragment: UserFragment) : Module() {
     }
 
     private fun getUserViewModel(fragment: UserFragment): UserViewModel {
-        val factory = UserViewModel.Factory(database, usersManager)
+        val factory = UserViewModel.Factory(database, sessionDatabase, usersManager)
         return ViewModelProviders.of(fragment, factory)[UserViewModel::class.java]
     }
 }

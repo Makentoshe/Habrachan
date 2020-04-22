@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.viewmodel.article
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.ArticleDao
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.ImageRequest
@@ -59,7 +59,7 @@ class ArticleFragmentViewModel(
     }
 
     fun createRequest(articleId: Int): GetArticleRequest {
-        val session = sessionDao.get()!!
+        val session = sessionDao.get()
         return GetArticleRequest(session.clientKey, session.apiKey, session.tokenKey, articleId)
     }
 

@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.model.main.articles
 
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.EpoxyModel
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 
 class ArticlesSearchEpoxyController(
@@ -28,11 +28,11 @@ class ArticlesSearchEpoxyController(
 
     private fun filterIsLoggedIn(model: EpoxyModel<*>) : Boolean {
         if (model !is ArticlesSearchSubscriptionEpoxyModel) return true
-        return sessionDao.get()?.isLoggedIn == true
+        return sessionDao.get().isLoggedIn
     }
 
     private fun filterIsDisplayed(model: EpoxyModel<*>): Boolean {
-        val spec = sessionDao.get()!!.articlesRequestSpec
+        val spec = sessionDao.get().articlesRequestSpec
         if (model is ArticlesSearchTopEpoxyModel && spec is ArticlesRequestSpec.Top) {
             return true
         }

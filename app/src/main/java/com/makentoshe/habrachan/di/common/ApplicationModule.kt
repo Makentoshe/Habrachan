@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.common.database.HabrDatabase
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.session.UserSession
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,14 +19,19 @@ class ApplicationModule(context: Context) : Module() {
         context, HabrDatabase::class.java, "Habrachan"
     ).allowMainThreadQueries().build()
 
+    private val sessionDatabase = Room.databaseBuilder(
+        context, SessionDatabase::class.java, "HabrachanSession"
+    ).allowMainThreadQueries().build()
+
     init {
         bind<OkHttpClient>().toInstance(client)
         bind<HabrDatabase>().toInstance(database)
 
-        if (database.session().get() == null) {
+        if (sessionDatabase.session().isEmpty) {
             val session = UserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY)
-            database.session().insert(session)
+            sessionDatabase.session().insert(session)
         }
+        bind<SessionDatabase>().toInstance(sessionDatabase)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {

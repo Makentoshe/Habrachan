@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.di.main.articles
 
-import com.makentoshe.habrachan.common.database.HabrDatabase
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.main.articles.*
 import com.makentoshe.habrachan.view.main.articles.ArticlesFlowFragment
@@ -12,11 +12,11 @@ import toothpick.ktp.delegate.inject
 
 class ArticlesFlowFragmentModule(fragment: ArticlesFlowFragment) : Module() {
 
-    private val database by inject<HabrDatabase>()
+    private val sessionDatabase by inject<SessionDatabase>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
-        bind<SessionDao>().toInstance(database.session())
+        bind<SessionDao>().toInstance(sessionDatabase.session())
 
         val searchBroadcastReceiver = ArticlesSearchBroadcastReceiver()
         bind<ArticlesSearchBroadcastReceiver>().toInstance(searchBroadcastReceiver)
@@ -24,7 +24,7 @@ class ArticlesFlowFragmentModule(fragment: ArticlesFlowFragment) : Module() {
     }
 
     private fun getArticlesSearchEpoxyController() = ArticlesSearchEpoxyController(
-        database.session(),
+        sessionDatabase.session(),
         ArticlesSearchTopEpoxyModel.Factory(),
         ArticlesSearchAllEpoxyModel.Factory(),
         ArticlesSearchInterestingEpoxyModel.Factory(),

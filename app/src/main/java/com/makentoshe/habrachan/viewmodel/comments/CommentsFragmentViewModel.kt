@@ -6,7 +6,7 @@ import androidx.core.util.set
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.CommentDao
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
@@ -107,12 +107,12 @@ class CommentsFragmentViewModel(
     }
 
     fun createGetRequest(articleId: Int): GetCommentsRequest {
-        val session = sessionDao.get()!!
+        val session = sessionDao.get()
         return GetCommentsRequest(session.clientKey, session.apiKey, session.tokenKey, articleId)
     }
 
     fun createVoteRequest(commentId: Int): VoteCommentRequest {
-        val session = sessionDao.get()!!
+        val session = sessionDao.get()
         return VoteCommentRequest(session.clientKey, session.tokenKey, commentId)
     }
 

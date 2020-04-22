@@ -3,8 +3,9 @@ package com.makentoshe.habrachan.viewmodel.user
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.HabrDatabase
-import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.database.UserDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.request.MeRequest
@@ -44,7 +45,7 @@ class UserViewModel(
     }
 
     private fun onUserRequestMe(userAccount: UserAccount.Me): UserResponse {
-        val session = sessionDao.get()!!
+        val session = sessionDao.get()
         val meRequest = MeRequest(session.clientKey, session.tokenKey)
         return usersManager.getMe(meRequest).onErrorReturn { throwable ->
             onUserRequestMeError(session, throwable)
@@ -56,7 +57,7 @@ class UserViewModel(
     }
 
     private fun onUserRequestUser(userAccount: UserAccount.User): UserResponse {
-        val session = sessionDao.get()!!
+        val session = sessionDao.get()
         val userRequest = UserRequest(session.clientKey, session.tokenKey, userAccount.userName)
         return usersManager.getUser(userRequest).doOnSuccess { userResponse ->
             if (userResponse is UserResponse.Success) userDao.insert(userResponse.user)
@@ -87,10 +88,11 @@ class UserViewModel(
 
     class Factory(
         private val database: HabrDatabase,
+        private val sessionDatabase: SessionDatabase,
         private val usersManager: UsersManager
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return UserViewModel(database.session(), usersManager, database.users()) as T
+            return UserViewModel(sessionDatabase.session(), usersManager, database.users()) as T
         }
     }
 }

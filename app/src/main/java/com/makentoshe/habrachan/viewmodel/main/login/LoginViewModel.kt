@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.viewmodel.main.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.common.network.request.LoginRequest
 import com.makentoshe.habrachan.common.network.response.LoginResponse
@@ -34,7 +34,7 @@ class LoginViewModel(
     }
 
     private fun onSignIn(loginData: LoginData) {
-        val session = sessionDao.get()!!
+        val session = sessionDao.get()
         val request = LoginRequest.Builder(session.clientKey, session.apiKey).build(loginData.email, loginData.password)
         loginManager.login(request)
             .doOnSuccess(::onLoginResponse)
@@ -48,7 +48,7 @@ class LoginViewModel(
     }
 
     private fun onLoginSuccessResponse(response: LoginResponse.Success) {
-        sessionDao.insert(sessionDao.get()!!.copy(tokenKey = response.accessToken))
+        sessionDao.insert(sessionDao.get().copy(tokenKey = response.accessToken))
     }
 
     override fun onCleared() {

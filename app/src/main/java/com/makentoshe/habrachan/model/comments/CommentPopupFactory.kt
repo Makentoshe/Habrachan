@@ -1,12 +1,11 @@
 package com.makentoshe.habrachan.model.comments
 
 import android.content.res.Resources
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.PopupWindow
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.database.SessionDao
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 
 class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel) {
@@ -14,7 +13,8 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel) {
     fun build(anchor: View, comment: Comment): PopupWindow {
         val menu = PopupWindow(anchor.context)
         menu.isOutsideTouchable = true
-        menu.contentView = LayoutInflater.from(anchor.context).inflate(R.layout.comments_fragment_comment_popup, null, false)
+        menu.contentView =
+            LayoutInflater.from(anchor.context).inflate(R.layout.comments_fragment_comment_popup, null, false)
         menu.contentView.findViewById<View>(R.id.comments_fragment_comment_popup_reply).setOnClickListener {
             onReplyClick(comment)
             menu.dismiss()

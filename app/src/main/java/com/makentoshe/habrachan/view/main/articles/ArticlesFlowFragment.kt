@@ -11,7 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.model.main.articles.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.model.main.articles.ArticlesSearchEpoxyController
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFlowFragmentUi
@@ -36,7 +36,7 @@ class ArticlesFlowFragment : Fragment() {
         slidingUpPanelLayout.isTouchEnabled = false
 
         val toolbar = view.findViewById<Toolbar>(R.id.articles_flow_fragment_toolbar)
-        toolbar.title = sessionDao.get()!!.articlesRequestSpec.toString(requireContext())
+        toolbar.title = sessionDao.get().articlesRequestSpec.toString(requireContext())
         toolbar.inflateMenu(R.menu.main_search)
         toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
 

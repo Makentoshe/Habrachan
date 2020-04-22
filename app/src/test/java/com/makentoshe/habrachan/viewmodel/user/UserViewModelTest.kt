@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.viewmodel.user
 
-import com.makentoshe.habrachan.BuildConfig
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.BaseTest
 import com.makentoshe.habrachan.common.database.UserDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.UsersManager
@@ -17,7 +17,7 @@ import org.junit.Test
 import org.junit.rules.Timeout
 import java.util.concurrent.TimeUnit
 
-class UserViewModelTest {
+class UserViewModelTest : BaseTest() {
 
     private lateinit var viewModel: UserViewModel
 
@@ -25,14 +25,12 @@ class UserViewModelTest {
     private val userDao = mockk<UserDao>()
     private val usersManager = mockk<UsersManager>()
 
-    private val userSession = spyk(UserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, BuildConfig.TOKEN_KEY))
-
     @get:Rule
     val timeout = Timeout(15, TimeUnit.SECONDS)
 
     @Before
     fun before() {
-        every { sessionDao.get() } returns userSession
+        every { sessionDao.get() } returns session
         viewModel = UserViewModel(sessionDao, usersManager, userDao)
     }
 
@@ -73,7 +71,7 @@ class UserViewModelTest {
     @Test
     fun testShouldReturnSuccessUserResponseFromCacheForMeAction() {
         val user = mockk<User>()
-        every { userSession.me } returns user
+        every { session.me } returns user
         every { sessionDao.insert(any()) } just runs
         // mock for success run request
         every { usersManager.getMe(any()) } returns Single.just(Unit).map { throw Exception() }

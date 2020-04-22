@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.main.articles.ArticlesFlowScreen
 import com.makentoshe.habrachan.model.main.login.LoginScreen
@@ -42,7 +42,7 @@ class MainFlowFragment : Fragment() {
 
         val item = navigation.menu.findItem(R.id.action_account)
         val session = sessionDao.get()
-        if (session?.me != null) {
+        if (session.me != null) {
             item.title = session.me.login
             item.setIcon(R.drawable.ic_account)
         } else {

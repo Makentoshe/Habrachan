@@ -8,7 +8,8 @@ import androidx.paging.PagedList
 import com.airbnb.epoxy.EpoxyControllerAdapter
 import com.makentoshe.habrachan.common.database.HabrDatabase
 import com.makentoshe.habrachan.common.database.ImageDatabase
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 import com.makentoshe.habrachan.common.navigation.Router
@@ -82,11 +83,12 @@ class ArticlesViewModel(
         private val articlesManager: ArticlesManager,
         private val cacheDatabase: HabrDatabase,
         private val imageDatabase: ImageDatabase,
+        private val sessionDatabase: SessionDatabase,
         private val router: Router
     ) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val source = ArticlesDataSource(articlesManager, cacheDatabase, imageDatabase)
+            val source = ArticlesDataSource(articlesManager, cacheDatabase, imageDatabase, sessionDatabase)
             val articleModelFactory = ArticleEpoxyModel.Factory(router)
             val divideModelFactory = ArticlesPageDivideEpoxyModel.Factory()
             val controller = ArticlesPagedListEpoxyController(articleModelFactory, divideModelFactory)
@@ -102,7 +104,7 @@ class ArticlesViewModel(
                 controller,
                 executorsProvider,
                 schedulersProvider,
-                cacheDatabase.session()
+                sessionDatabase.session()
             ) as T
         }
     }

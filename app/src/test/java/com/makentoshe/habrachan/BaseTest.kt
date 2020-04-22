@@ -1,11 +1,12 @@
 package com.makentoshe.habrachan
 
 import com.makentoshe.habrachan.common.entity.session.UserSession
+import io.mockk.spyk
 import java.io.File
 
 abstract class BaseTest {
 
-    protected val session = UserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, BuildConfig.TOKEN_KEY)
+    protected val session = spyk(UserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, BuildConfig.TOKEN_KEY))
 
     protected fun getJsonResponse(title: String): String {
         val s = File.separator

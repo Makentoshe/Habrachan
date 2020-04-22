@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.viewmodel.article
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.common.database.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.request.VoteArticleRequest
 import com.makentoshe.habrachan.common.network.response.VoteArticleResponse
@@ -27,7 +27,7 @@ class VoteArticleViewModel(
         get() = voteArticleErrorSubject.observeOn(AndroidSchedulers.mainThread())
 
     fun voteUp(articleId: Int) {
-        val session = sessionDao.get()!!
+        val session = sessionDao.get()
         val request = VoteArticleRequest(session.clientKey, session.tokenKey, articleId)
         articlesManager.voteUp(request).subscribe(
             voteArticleSubject::onNext, voteArticleErrorSubject::onNext
@@ -35,7 +35,7 @@ class VoteArticleViewModel(
     }
 
     fun voteDown(articleId: Int) {
-        val session = sessionDao.get()!!
+        val session = sessionDao.get()
         val request = VoteArticleRequest(session.clientKey, session.tokenKey, articleId)
         articlesManager.voteDown(request).subscribe(
             voteArticleSubject::onNext, voteArticleErrorSubject::onNext

@@ -10,9 +10,9 @@ import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
-import com.makentoshe.habrachan.di.main.account.login.LoginFragmentModule
 import com.makentoshe.habrachan.di.main.account.login.LoginFragmentScope
 import com.makentoshe.habrachan.di.main.articles.*
+import com.makentoshe.habrachan.di.main.login.LoginFragmentModule
 import com.makentoshe.habrachan.di.user.UserFragmentModule
 import com.makentoshe.habrachan.di.user.UserFragmentScope
 import com.makentoshe.habrachan.view.article.ArticleFragment
