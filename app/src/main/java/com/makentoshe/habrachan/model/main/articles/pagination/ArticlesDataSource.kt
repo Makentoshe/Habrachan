@@ -1,8 +1,7 @@
 package com.makentoshe.habrachan.model.main.articles.pagination
 
 import androidx.paging.PositionalDataSource
-import com.makentoshe.habrachan.common.database.HabrDatabase
-import com.makentoshe.habrachan.common.database.ImageDatabase
+import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.article.NextPage
@@ -16,8 +15,7 @@ import javax.net.ssl.SSLHandshakeException
 
 class ArticlesDataSource(
     private val articlesManager: ArticlesManager,
-    private val cacheDatabase: HabrDatabase,
-    private val imageDatabase: ImageDatabase,
+    private val cacheDatabase: CacheDatabase,
     private val sessionDatabase: SessionDatabase
 ) : PositionalDataSource<Article>() {
 
@@ -55,7 +53,7 @@ class ArticlesDataSource(
             cacheDatabase.users().clear()
             cacheDatabase.comments().clear()
             cacheDatabase.articles().clear()
-            imageDatabase.avatars().clear()
+            cacheDatabase.avatars().clear()
         }
         if (response is ArticlesResponse.Success) response.data.forEach { article ->
             cacheDatabase.articles().insert(article)

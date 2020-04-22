@@ -1,8 +1,7 @@
 package com.makentoshe.habrachan.di.main.articles
 
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.database.HabrDatabase
-import com.makentoshe.habrachan.common.database.ImageDatabase
+import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
@@ -20,7 +19,7 @@ class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
     private val articlesManager: ArticlesManager
 
     private val client by inject<OkHttpClient>()
-    private val database by inject<HabrDatabase>()
+    private val database by inject<CacheDatabase>()
     private val sessionDatabase by inject<SessionDatabase>()
     private val router by inject<Router>()
 
@@ -33,8 +32,7 @@ class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
     }
 
     private fun getArticlesViewModel(fragment: ArticlesFragment): ArticlesViewModel {
-        val imageDatabase = ImageDatabase(fragment.requireContext())
-        val factory = ArticlesViewModel.Factory(articlesManager, database, imageDatabase, sessionDatabase, router)
+        val factory = ArticlesViewModel.Factory(articlesManager, database, sessionDatabase, router)
         return ViewModelProviders.of(fragment, factory)[ArticlesViewModel::class.java]
     }
 }

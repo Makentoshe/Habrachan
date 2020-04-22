@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.viewmodel.user
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.common.database.HabrDatabase
+import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.UserDao
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.session.UserSession
@@ -85,7 +85,7 @@ class UserViewModel(
     override fun onCleared() = disposables.clear()
 
     class Factory(
-        private val database: HabrDatabase,
+        private val database: CacheDatabase,
         private val sessionDatabase: SessionDatabase,
         private val usersManager: UsersManager
     ) : ViewModelProvider.NewInstanceFactory() {

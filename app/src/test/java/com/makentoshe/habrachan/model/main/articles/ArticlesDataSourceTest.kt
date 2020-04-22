@@ -1,8 +1,7 @@
 package com.makentoshe.habrachan.model.main.articles
 
 import androidx.paging.PositionalDataSource
-import com.makentoshe.habrachan.common.database.HabrDatabase
-import com.makentoshe.habrachan.common.database.ImageDatabase
+import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
@@ -22,13 +21,12 @@ class ArticlesDataSourceTest {
 
     private lateinit var dataSource: ArticlesDataSource
     private val manager = mockk<ArticlesManager>()
-    private val cacheDatabase = mockk<HabrDatabase>(relaxed = true)
-    private val imageDatabase = mockk<ImageDatabase>(relaxed = true)
+    private val cacheDatabase = mockk<CacheDatabase>(relaxed = true)
     private val sessionDatabase = mockk<SessionDatabase>(relaxed = true)
 
     @Before
     fun before() {
-        dataSource = ArticlesDataSource(manager, cacheDatabase, imageDatabase, sessionDatabase)
+        dataSource = ArticlesDataSource(manager, cacheDatabase, sessionDatabase)
     }
 
     @Test
@@ -107,7 +105,7 @@ class ArticlesDataSourceTest {
         verify { cacheDatabase.users().clear() }
         verify { cacheDatabase.comments().clear() }
         verify { cacheDatabase.articles().clear() }
-        verify { imageDatabase.avatars().clear() }
+        verify { cacheDatabase.avatars().clear() }
     }
 
     @Test

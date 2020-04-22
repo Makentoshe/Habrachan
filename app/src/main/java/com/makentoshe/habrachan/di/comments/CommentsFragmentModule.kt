@@ -1,8 +1,7 @@
 package com.makentoshe.habrachan.di.comments
 
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.database.HabrDatabase
-import com.makentoshe.habrachan.common.database.ImageDatabase
+import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
@@ -22,11 +21,10 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
     private val commentsManager: HabrCommentsManager
     private val imageManager: ImageManager
-    private val imageDatabase = ImageDatabase(fragment.requireContext())
 
     private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
-    private val database by inject<HabrDatabase>()
+    private val database by inject<CacheDatabase>()
     private val sessionDatabase by inject<SessionDatabase>()
 
     init {
@@ -55,7 +53,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
     private fun getCommentsEpoxyControllerProvider(
         disposables: CompositeDisposable, commentsFragmentViewModel: CommentsFragmentViewModel
     ) = CommentsEpoxyControllerProvider(
-        disposables, commentsFragmentViewModel, imageManager, imageDatabase.avatars()
+        disposables, commentsFragmentViewModel, imageManager, database.avatars()
     )
 
     class Factory {
