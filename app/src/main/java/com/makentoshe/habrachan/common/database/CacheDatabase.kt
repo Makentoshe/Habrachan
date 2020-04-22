@@ -19,7 +19,14 @@ abstract class CacheDatabase : RoomDatabase() {
 
     abstract fun comments(): CommentDao
 
-    abstract fun users() : UserDao
+    abstract fun users(): UserDao
 
     fun avatars() = AvatarDao(context)
+
+    fun clear() {
+        articles().clear()
+        comments().clear()
+        avatars().clear()
+        users().clear()
+    }
 }
