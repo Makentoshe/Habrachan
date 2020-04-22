@@ -25,7 +25,11 @@
 
         <include layout="@layout/user_fragment_appbar" />
 
-        <include layout="@layout/user_fragment_content" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/user_fragment_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
