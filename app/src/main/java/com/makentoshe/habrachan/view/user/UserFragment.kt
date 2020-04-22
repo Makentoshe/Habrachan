@@ -11,9 +11,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.navigation.Router
@@ -22,6 +24,7 @@ import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.UserResponse
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.user.UserAccount
+import com.makentoshe.habrachan.model.user.UserContentPagerAdapter
 import com.makentoshe.habrachan.ui.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
@@ -100,9 +103,16 @@ class UserFragment : Fragment() {
     private fun setUserContent(response: UserResponse.Success) {
         val view = view ?: return
 
+        val count = if (arguments.userAccount == UserAccount.Me) 4 else 3
+        val adapter = UserContentPagerAdapter(this, count, response.user)
+
+        val viewPager = view.findViewById<ViewPager2>(R.id.user_fragment_viewpager)
+        viewPager.adapter = adapter
+
         val tabLayout = view.findViewById<TabLayout>(R.id.user_fragment_tab)
-
-
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = resources.getStringArray(R.array.user_fragment_tabs)[position]
+        }.attach()
     }
 
     private fun onUserError(response: UserResponse.Error) {

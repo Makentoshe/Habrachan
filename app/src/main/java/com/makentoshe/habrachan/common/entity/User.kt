@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.common.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 @Entity
@@ -58,4 +59,10 @@ data class User(
 
 //    val badges: List<Badge>
 //        get() = badgesMap.map { it.value }
+
+    fun toJson() = Gson().toJson(this)!!
+
+    companion object {
+        fun fromJson(string: String) = Gson().fromJson(string, User::class.java)!!
+    }
 }
