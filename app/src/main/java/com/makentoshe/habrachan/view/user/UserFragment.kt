@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.navigation.Router
@@ -73,6 +74,8 @@ class UserFragment : Fragment() {
 
         val view = view ?: return Toast.makeText(requireContext(), "View does not responds", Toast.LENGTH_LONG).show()
 
+        view.findViewById<View>(R.id.user_fragment_body).visibility = View.VISIBLE
+
         val toolbarView = view.findViewById<Toolbar>(R.id.user_fragment_toolbar)
         toolbarView.title = response.user.login
 
@@ -90,6 +93,16 @@ class UserFragment : Fragment() {
 
         val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_progress)
         progressBar.visibility = View.GONE
+
+        setUserContent(response)
+    }
+
+    private fun setUserContent(response: UserResponse.Success) {
+        val view = view ?: return
+
+        val tabLayout = view.findViewById<TabLayout>(R.id.user_fragment_tab)
+
+
     }
 
     private fun onUserError(response: UserResponse.Error) {
@@ -117,8 +130,7 @@ class UserFragment : Fragment() {
     }
 
     private fun updateUserLoginInBottomNavigationBar(user: User) {
-        val activity = activity ?: return
-        val navigation = activity.findViewById<BottomNavigationView>(R.id.main_bottom_navigation)
+        val navigation = requireActivity().findViewById<BottomNavigationView>(R.id.main_bottom_navigation) ?: return
         val item = navigation.menu.findItem(R.id.action_account)
         item.setIcon(R.drawable.ic_account)
         item.title = user.login
