@@ -22,8 +22,8 @@
       "followers": 0,
       "favorites": 8
     },
-    "badges": [
-      {
+    "badges": {
+      "0": {
         "id": 1,
         "title": "Захабренный",
         "alias": "habred",
@@ -31,8 +31,53 @@
         "url": null,
         "is_removable": false,
         "is_disabled": false
+      },
+      "1": {
+        "id": 5,
+        "title": "Легенда",
+        "alias": "legend",
+        "description": "Пользователь, опубликовавший 30 и более топиков; рейтинг каждого топика должен быть более 50 баллов",
+        "url": null,
+        "is_removable": false,
+        "is_disabled": false
+      },
+      "2": {
+        "id": 7,
+        "title": "Старожил",
+        "alias": "oldresident",
+        "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+        "url": null,
+        "is_removable": false,
+        "is_disabled": false
+      },
+      "4": {
+        "id": 102,
+        "title": "Бета-тестер",
+        "alias": "tester",
+        "description": "Участвует в тестировании новой функциональности",
+        "url": "https:\/\/habr.com\/beta\/welcome\/",
+        "is_removable": false,
+        "is_disabled": false
+      },
+      "5": {
+        "id": 1018,
+        "title": "Дед Мороз",
+        "alias": "habra_adm",
+        "description": "Пользователь, отправивший подарок в Клубе анонимных Дедов Морозов",
+        "url": null,
+        "is_removable": true,
+        "is_disabled": false
+      },
+      "6": {
+        "id": 1021,
+        "title": "Из редакции",
+        "alias": "editorial",
+        "description": "Из редакции",
+        "url": null,
+        "is_removable": false,
+        "is_disabled": false
       }
-    ],
+    },
     "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
     "is_readonly": false,
     "is_rc": false,

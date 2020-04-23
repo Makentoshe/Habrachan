@@ -11,7 +11,7 @@ data class User(
     @SerializedName("avatar")
     val avatar: String,
     @SerializedName("badges")
-    val badges: List<Badge>,
+    val badges: Badges,
 //    @SerializedName("common_tags")
 //    val commonTags: List<Any>,
 //    @SerializedName("contacts")
