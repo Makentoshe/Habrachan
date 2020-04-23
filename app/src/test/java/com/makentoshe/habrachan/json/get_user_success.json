@@ -32,6 +32,33 @@
         "url": null,
         "is_removable": false,
         "is_disabled": false
+      },
+      {
+        "id": 5,
+        "title": "Легенда",
+        "alias": "legend",
+        "description": "Пользователь, опубликовавший 30 и более топиков; рейтинг каждого топика должен быть более 50 баллов",
+        "url": null,
+        "is_removable": false,
+        "is_disabled": false
+      },
+      {
+        "id": 6,
+        "title": "Комментатор",
+        "alias": "commentator",
+        "description": "Пользователь, оставивший более 5 комментариев, рейтинг которых должен быть более 50 баллов",
+        "url": null,
+        "is_removable": false,
+        "is_disabled": false
+      },
+      {
+        "id": 7,
+        "title": "Старожил",
+        "alias": "oldresident",
+        "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+        "url": null,
+        "is_removable": false,
+        "is_disabled": false
       }
     ],
     "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/6d5\/142\/fd3\/6d5142fd38ef294711e6ecb9e764f8ed.png",

@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.common.entity.Flow
 import com.makentoshe.habrachan.common.entity.Hub
 import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 
-class Converters {
+class HubsConverter {
 
     @TypeConverter
     fun hubsToJson(hubs: List<Hub>): String {
@@ -22,6 +22,9 @@ class Converters {
         val jsonArray = Gson().fromJson(json, JsonArray::class.java)
         return jsonArray.map { it.asString }.map { Hub.fromJson(it) }
     }
+}
+
+class FlowsConverter {
 
     @TypeConverter
     fun flowsToJson(flows: List<Flow>): String {
@@ -36,6 +39,10 @@ class Converters {
         return jsonArray.map { it.asString }.map { Flow.fromJson(it) }
     }
 
+}
+
+class BadgesConverter {
+
     @TypeConverter
     fun badgesToJson(badges: List<Badge>): String {
         val jsonArray = JsonArray()
@@ -48,6 +55,9 @@ class Converters {
         val jsonArray = Gson().fromJson(json, JsonArray::class.java)
         return jsonArray.map { it.asString }.map { Badge.fromJson(it) }
     }
+}
+
+class ArticlesRequestSpecConverter {
 
     @TypeConverter
     fun specToJson(spec: ArticlesRequestSpec): String {
