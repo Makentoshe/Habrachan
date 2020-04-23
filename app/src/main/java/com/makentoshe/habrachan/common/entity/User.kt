@@ -23,7 +23,7 @@ data class User(
     val fullname: String? = null,
     @Embedded(prefix = "geo_")
     @SerializedName("geo")
-    val geo: Geo? = null,
+    val geo: Geo = Geo(),
     @SerializedName("id")
     @PrimaryKey
     val id: String,

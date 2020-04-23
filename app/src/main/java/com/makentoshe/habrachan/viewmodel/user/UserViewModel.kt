@@ -45,7 +45,7 @@ class UserViewModel(
 
     private fun onUserRequestMe(userAccount: UserAccount.Me): UserResponse {
         val session = sessionDatabase.session().get()
-        val meRequest = MeRequest(session.clientKey, session.tokenKey)
+        val meRequest = MeRequest(session)
         return usersManager.getMe(meRequest).onErrorReturn { throwable ->
             onUserRequestMeError(session, throwable)
         }.doOnSuccess { userResponse ->
@@ -57,7 +57,7 @@ class UserViewModel(
 
     private fun onUserRequestUser(userAccount: UserAccount.User): UserResponse {
         val session = sessionDatabase.session().get()
-        val userRequest = UserRequest(session.clientKey, session.tokenKey, userAccount.userName)
+        val userRequest = UserRequest(session, userAccount.userName)
         return usersManager.getUser(userRequest).doOnSuccess { userResponse ->
             if (userResponse is UserResponse.Success) userDao.insert(userResponse.user)
         }.onErrorReturn {
