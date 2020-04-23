@@ -50,7 +50,7 @@ class ArticlesDataSourceTest {
         verify(exactly = 1) { callback.onResult(capture(slot), 0) }
         assertEquals(mockArticles, slot.captured)
 
-        testInitialSuccessObservable.assertValue{ it.response == mockArticlesResponse }.dispose()
+        testInitialSuccessObservable.assertValue { it.response == mockArticlesResponse }.dispose()
     }
 
     @Test
@@ -102,10 +102,7 @@ class ArticlesDataSourceTest {
         val callback = mockk<PositionalDataSource.LoadInitialCallback<Article>>(relaxed = true)
         dataSource.loadInitial(params, callback)
 
-        verify { cacheDatabase.users().clear() }
-        verify { cacheDatabase.comments().clear() }
-        verify { cacheDatabase.articles().clear() }
-        verify { cacheDatabase.avatars().clear() }
+        verify { cacheDatabase.clear() }
     }
 
     @Test
