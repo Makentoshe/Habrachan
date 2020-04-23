@@ -10,4 +10,6 @@ data class Geo(
     val country: String? = null,
     @SerializedName("region")
     val region: String? = null
-)
+) {
+    val isSpecified: Boolean = city != null || country != null || region != null
+}
