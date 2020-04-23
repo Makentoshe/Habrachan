@@ -7,4 +7,5 @@
     <attr name="habrachanDefault" format="reference" />
     <attr name="habrachanBottomBar" format="reference" />
     <attr name="habrachanPopup" format="reference" />
+    <attr name="habrachanChip" format="reference" />
 </resources>
