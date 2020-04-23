@@ -9,7 +9,7 @@ import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.entity.comment.Comment
 
 @Database(entities = [Article::class, Comment::class, User::class], version = 1)
-@TypeConverters(Converters::class)
+@TypeConverters(value = [FlowsConverter::class, BadgesConverter::class, HubsConverter::class])
 abstract class CacheDatabase : RoomDatabase() {
 
     /** Do not use this context */

@@ -10,8 +10,8 @@ import com.google.gson.annotations.SerializedName
 data class User(
     @SerializedName("avatar")
     val avatar: String,
-//    @SerializedName("badges")
-//    val badges: List<Badge>,
+    @SerializedName("badges")
+    val badges: List<Badge>,
 //    @SerializedName("common_tags")
 //    val commonTags: List<Any>,
 //    @SerializedName("contacts")
@@ -56,9 +56,6 @@ data class User(
 //    @SerializedName("payment_methods")
 //    val paymentMethods: List<PaymentMethod>?
 ) {
-
-//    val badges: List<Badge>
-//        get() = badgesMap.map { it.value }
 
     fun toJson() = Gson().toJson(this)!!
 
