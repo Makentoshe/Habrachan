@@ -29,6 +29,9 @@ class UserProfileFragment : Fragment() {
         if (arguments.user.geo.isSpecified) {
             displayLocation(view)
         }
+        if (arguments.user.timeRegistered.isNotBlank()) {
+            displayTimeRegistered(view)
+        }
     }
 
     private fun displayBadges(view: View) {
@@ -64,6 +67,14 @@ class UserProfileFragment : Fragment() {
         val locationView = view.findViewById<TextView>(R.id.user_fragment_content_profile_location_view)
         locationView.text = stringBuilder.toString()
         locationView.visibility = View.VISIBLE
+    }
+
+    private fun displayTimeRegistered(view: View) {
+        val registeredTitle = view.findViewById<TextView>(R.id.user_fragment_content_profile_registered_title)
+        registeredTitle.visibility = View.VISIBLE
+        val registeredView = view.findViewById<TextView>(R.id.user_fragment_content_profile_registered_view)
+        registeredView.text = arguments.user.timeRegistered
+        registeredView.visibility = View.VISIBLE
     }
 
     class Factory {
