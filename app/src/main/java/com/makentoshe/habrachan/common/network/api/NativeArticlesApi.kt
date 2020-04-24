@@ -20,6 +20,15 @@ interface NativeArticlesApi {
         @Query("sort") sort: String? = null
     ): Call<ResponseBody>
 
+    @GET("api/v1/users/{username}/posts")
+    fun getUserArticles(
+        @Header("client") clientKey: String,
+        @Header("token") token: String?,
+        @Path("username") username: String,
+        @Query("include") include: String? = null,
+        @Query("exclude") exclude: String? = null
+    ): Call<ResponseBody>
+
     @GET("api/v1/post/{id}")
     fun getArticle(
         @Header("client") clientKey: String,

@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.common.network.response
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.entity.article.NextPage
 
 sealed class ArticlesResponse {
@@ -16,7 +17,9 @@ sealed class ArticlesResponse {
         @SerializedName("server_time")
         val serverTime: String,
         @SerializedName("sorted_by")
-        val sortedBy: String
+        val sortedBy: String,
+        @SerializedName("author")
+        val author: User? = null
     ) : ArticlesResponse()
 
     data class Error(val json: String) : ArticlesResponse()
