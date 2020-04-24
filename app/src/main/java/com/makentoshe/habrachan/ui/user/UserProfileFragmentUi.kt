@@ -11,3 +11,4 @@ class UserProfileFragmentUi(private val root: ViewGroup?) {
         return LayoutInflater.from(context).inflate(R.layout.user_fragment_content_profile, root, false)
     }
 }
+
