@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.chip.Chip
@@ -12,21 +13,30 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Badge
 import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.ui.user.UserProfileFragmentUi
-import kotlin.random.Random
 
 class UserProfileFragment : Fragment() {
 
     private val arguments = Arguments(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return UserProfileFragmentUi(container).create(requireContext()).apply {
-            setBackgroundColor(Random.nextInt())
-        }
+        return UserProfileFragmentUi(container).create(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (arguments.user.badges.isNotEmpty()) {
+            displayBadges(view)
+        }
+        if (arguments.user.geo.isSpecified) {
+            displayLocation(view)
+        }
+    }
+
+    private fun displayBadges(view: View) {
         val badgesGroup = view.findViewById<ChipGroup>(R.id.user_fragment_content_profile_badges_group)
         arguments.user.badges.map(::buildChipFromBadge).forEach(badgesGroup::addView)
+        badgesGroup.visibility = View.VISIBLE
+        val badgesTitle = view.findViewById<TextView>(R.id.user_fragment_content_profile_badges_title)
+        badgesTitle.visibility = View.VISIBLE
     }
 
     private fun buildChipFromBadge(badge: Badge): Chip {
@@ -36,6 +46,24 @@ class UserProfileFragment : Fragment() {
             Toast.makeText(requireContext(), badge.description, Toast.LENGTH_LONG).show()
         }
         return chip
+    }
+
+    private fun displayLocation(view: View) {
+        val locationTitle = view.findViewById<TextView>(R.id.user_fragment_content_profile_location_title)
+        locationTitle.visibility = View.VISIBLE
+        val stringBuilder = StringBuilder()
+        if (arguments.user.geo.country?.isNotBlank() == true) {
+            stringBuilder.append(arguments.user.geo.country).append(", ")
+        }
+        if (arguments.user.geo.region?.isNotBlank() == true) {
+            stringBuilder.append(arguments.user.geo.region).append(", ")
+        }
+        if (arguments.user.geo.city?.isNotBlank() == true) {
+            stringBuilder.append(arguments.user.geo.city)
+        }
+        val locationView = view.findViewById<TextView>(R.id.user_fragment_content_profile_location_view)
+        locationView.text = stringBuilder.toString()
+        locationView.visibility = View.VISIBLE
     }
 
     class Factory {
