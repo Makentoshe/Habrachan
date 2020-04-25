@@ -12,7 +12,7 @@ class UserArticlesPagedListEpoxyController(
     val pageSize = 20
 
     override fun buildItemModel(currentPosition: Int, item: Article?): EpoxyModel<*> {
-        return articleModelFactory.build(currentPosition, item!!)
+        return articleModelFactory.build(currentPosition, enableSmartDivide = false, post = item!!)
     }
 }
 
