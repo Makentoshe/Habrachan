@@ -3,10 +3,14 @@ package com.makentoshe.habrachan
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.navigation.Navigator
 import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.common.navigation.Screen
+import com.makentoshe.habrachan.model.main.MainFlowScreen
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.model.user.UserScreen
+import com.makentoshe.habrachan.view.user.UserArticlesFragment
 import ru.terrakok.cicerone.NavigatorHolder
 import toothpick.ktp.delegate.inject
 
@@ -25,8 +29,8 @@ class AppActivity : AppCompatActivity() {
         when (intent.action) {
             Intent.ACTION_MAIN -> {
 //                val screen = MainFlowScreen()
-                val screen = UserScreen(UserAccount.User("missingdays"))
-//                val screen = UserScreen(UserAccount.Me)
+//                val screen = UserScreen(UserAccount.User("missingdays"))
+                val screen = UserScreen(UserAccount.Me)
 //                val screen = AccountFlowScreen()
 //                val screen = CommentsScreen(493250)
 //                val screen = ArticleScreen(490694)

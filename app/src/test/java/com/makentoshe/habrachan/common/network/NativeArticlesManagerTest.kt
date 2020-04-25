@@ -98,7 +98,7 @@ class NativeArticlesManagerTest : BaseTest() {
         val json = getJsonResponse("get_user_articles_success_native.json")
         val url = "https://habr.com/api/v1/users/missingdays/posts?include=text_html"
 
-        val request = UserArticlesRequest(session, "missingdays", include = "text_html")
+        val request = UserArticlesRequest(session, "missingdays", page = 1, include = "text_html")
 
         val client = OkHttpClient.Builder()
             .addInterceptor(ResponseInterceptor(200, json))
@@ -166,7 +166,7 @@ class NativeArticlesManagerTest : BaseTest() {
     @Test
     @Ignore("Test uses real api")
     fun getUserArticlesTest() {
-        val request = UserArticlesRequest(session, "missingdays", include = "text_html")
+        val request = UserArticlesRequest(session, "milfgard", page = 1, include = "text_html")
         val manager = ArticlesManager.Builder(OkHttpClient()).build()
         val response = manager.getUserArticles(request).blockingGet()
         println(response)
