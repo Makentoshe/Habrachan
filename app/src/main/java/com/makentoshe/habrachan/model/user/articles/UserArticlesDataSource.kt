@@ -9,7 +9,10 @@ import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.request.UserArticlesRequest
 import com.makentoshe.habrachan.common.network.response.ArticlesResponse
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
+import java.lang.Exception
+import java.lang.RuntimeException
 
 class UserArticlesDataSource(
     private val articlesManager: ArticlesManager,
@@ -59,8 +62,15 @@ class UserArticlesDataSource(
     //todo implement cache
     private fun load(page: Int): ArticlesResponse {
         val request = UserArticlesRequest(sessionDatabase.session().get(), username, page)
-        val response = articlesManager.getUserArticles(request).blockingGet()
-        return response
+        return try {
+            articlesManager.getUserArticles(request).blockingGet()
+        } catch (runtimeException: RuntimeException) {
+            when (runtimeException.cause) {
+                // cause when UserArticleFragment destroyed and subject being disposed
+                is InterruptedException -> ArticlesResponse.Error("")
+                else -> throw runtimeException
+            }
+        }
     }
 
     class Factory(
