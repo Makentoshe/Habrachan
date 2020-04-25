@@ -8,4 +8,8 @@ data class NextPage(
     val int: Int,
     @SerializedName("url")
     val url: String
-)
+) {
+    @Suppress("SENSELESS_COMPARISON")
+    val isSpecified: Boolean
+        get() = url != null
+}
