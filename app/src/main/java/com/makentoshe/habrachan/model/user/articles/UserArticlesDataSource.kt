@@ -30,7 +30,8 @@ class UserArticlesDataSource(
     override fun loadInitial(params: LoadInitialParams<NextPage>, callback: LoadInitialCallback<NextPage, Article>) {
         when (val response = load(1)) {
             is ArticlesResponse.Success -> {
-                callback.onResult(response.data, null, if (response.nextPage.isSpecified) response.nextPage else null)
+                val nextPage = if (response.nextPage.isSpecified) response.nextPage else null
+                callback.onResult(response.data, null, nextPage)
                 val container = UserArticlesLoadInitialSuccessContainer(params, response, callback)
                 initialSuccessSubject.onNext(container)
             }
