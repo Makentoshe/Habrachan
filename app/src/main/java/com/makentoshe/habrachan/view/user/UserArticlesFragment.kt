@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
@@ -26,9 +28,25 @@ class UserArticlesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val messageView = view.findViewById<TextView>(R.id.user_fragment_content_articles_message)
+        val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_content_articles_progress)
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.user_fragment_content_articles_recycler)
         recyclerView.adapter = userArticlesViewModel.controller.adapter
         userArticlesViewModel.controller.requestModelBuild()
+
+        userArticlesViewModel.initialSuccessObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            recyclerView.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            messageView.visibility = View.GONE
+        }.let(disposables::add)
+
+        userArticlesViewModel.initialErrorObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            recyclerView.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            messageView.visibility = View.VISIBLE
+            messageView.text = it.response.json
+        }
 
         if (savedInstanceState == null) {
             userArticlesViewModel.requestObserver.onNext(arguments.user.login)
