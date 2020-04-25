@@ -26,7 +26,7 @@ class UserProfileFragment : Fragment() {
         if (arguments.user.badges.isNotEmpty()) {
             displayBadges(view)
         }
-        if (arguments.user.geo.isSpecified) {
+        if (arguments.user.geo?.isSpecified == true) {
             displayLocation(view)
         }
         if (arguments.user.timeRegistered.isNotBlank()) {
@@ -55,14 +55,14 @@ class UserProfileFragment : Fragment() {
         val locationTitle = view.findViewById<TextView>(R.id.user_fragment_content_profile_location_title)
         locationTitle.visibility = View.VISIBLE
         val stringBuilder = StringBuilder()
-        if (arguments.user.geo.country?.isNotBlank() == true) {
-            stringBuilder.append(arguments.user.geo.country).append(", ")
+        if (arguments.user.geo?.country?.isNotBlank() == true) {
+            stringBuilder.append(arguments.user.geo!!.country).append(", ")
         }
-        if (arguments.user.geo.region?.isNotBlank() == true) {
-            stringBuilder.append(arguments.user.geo.region).append(", ")
+        if (arguments.user.geo?.region?.isNotBlank() == true) {
+            stringBuilder.append(arguments.user.geo!!.region).append(", ")
         }
-        if (arguments.user.geo.city?.isNotBlank() == true) {
-            stringBuilder.append(arguments.user.geo.city)
+        if (arguments.user.geo?.city?.isNotBlank() == true) {
+            stringBuilder.append(arguments.user.geo!!.city)
         }
         val locationView = view.findViewById<TextView>(R.id.user_fragment_content_profile_location_view)
         locationView.text = stringBuilder.toString()
