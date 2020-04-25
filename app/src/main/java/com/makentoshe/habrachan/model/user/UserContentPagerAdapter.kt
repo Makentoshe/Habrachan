@@ -6,8 +6,8 @@ import com.makentoshe.habrachan.view.user.*
 
 class UserContentPagerAdapter(
     fragment: UserFragment,
-    private val itemsCount: Int,
-    private val user: User
+    private val user: User,
+    private val itemsCount: Int
 ) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount() = itemsCount
