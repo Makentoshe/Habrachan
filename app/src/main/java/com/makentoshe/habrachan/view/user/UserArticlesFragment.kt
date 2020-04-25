@@ -28,12 +28,13 @@ class UserArticlesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val recyclerView = view.findViewById<RecyclerView>(R.id.user_fragment_content_articles_recycler)
+        userArticlesViewModel.adapterObservable.observeOn(AndroidSchedulers.mainThread()).subscribe { adapter ->
+            recyclerView.swapAdapter(adapter, true)
+        }.let(disposables::add)
+
         val messageView = view.findViewById<TextView>(R.id.user_fragment_content_articles_message)
         val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_content_articles_progress)
-
-        val recyclerView = view.findViewById<RecyclerView>(R.id.user_fragment_content_articles_recycler)
-        recyclerView.adapter = userArticlesViewModel.controller.adapter
-        userArticlesViewModel.controller.requestModelBuild()
 
         userArticlesViewModel.initialSuccessObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
             recyclerView.visibility = View.VISIBLE
@@ -46,11 +47,22 @@ class UserArticlesFragment : Fragment() {
             progressBar.visibility = View.GONE
             messageView.visibility = View.VISIBLE
             messageView.text = it.response.json
-        }
+        }.let(disposables::add)
 
         if (savedInstanceState == null) {
             userArticlesViewModel.requestObserver.onNext(arguments.user.login)
         }
+    }
+
+    override fun onDestroyView() {
+        // avoid memleak
+        view?.findViewById<RecyclerView>(R.id.user_fragment_content_articles_recycler)?.swapAdapter(null, false)
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 
     class Factory {
@@ -82,4 +94,3 @@ class UserArticlesFragment : Fragment() {
         }
     }
 }
-

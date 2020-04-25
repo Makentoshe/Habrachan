@@ -104,7 +104,7 @@ class UserFragment : Fragment() {
         val view = view ?: return
 
         val count = if (arguments.userAccount == UserAccount.Me) 4 else 3
-        val adapter = UserContentPagerAdapter(this, count, response.user)
+        val adapter = UserContentPagerAdapter(this, response.user, count)
 
         val viewPager = view.findViewById<ViewPager2>(R.id.user_fragment_viewpager)
         viewPager.adapter = adapter

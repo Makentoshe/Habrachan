@@ -95,7 +95,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
     private fun injectUserArticlesFragment(fragment: UserArticlesFragment) {
         val module = UserArticlesFragmentModule(fragment)
-        val scopes = Toothpick.openScopes(ApplicationScope::class.java, UserArticlesFragmentScope::class.java)
+        val scopes = Toothpick.openScopes(UserFragmentScope::class.java, UserArticlesFragmentScope::class.java)
         scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 }
