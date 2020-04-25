@@ -5,8 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.common.navigation.Navigator
 import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.model.user.UserScreen
+import com.makentoshe.habrachan.model.main.MainFlowScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import toothpick.ktp.delegate.inject
 
@@ -24,8 +23,8 @@ class AppActivity : AppCompatActivity() {
         if (savedInstanceState != null) return
         when (intent.action) {
             Intent.ACTION_MAIN -> {
-//                val screen = MainFlowScreen()
-                val screen = UserScreen(UserAccount.User("milfgard"))
+                val screen = MainFlowScreen()
+//                val screen = UserScreen(UserAccount.User("milfgard"))
 //                val screen = UserScreen(UserAccount.Me)
 //                val screen = AccountFlowScreen()
 //                val screen = CommentsScreen(493250)
