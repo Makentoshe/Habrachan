@@ -28,11 +28,11 @@ class ArticlesDataSource(
     private val rangeErrorSubject = PublishSubject.create<ArticlesLoadRangeErrorContainer>()
     val rangeErrorObservable: Observable<ArticlesLoadRangeErrorContainer> = rangeErrorSubject
 
-    private fun load(page: Int): ArticlesResponse {
+    private fun load(pageSize: Int, page: Int): ArticlesResponse {
         val request = buildGetArticlesRequest(page)
         return try {
             val response = articlesManager.getArticles(request).blockingGet()
-            saveCache(page, response)
+            saveCache(pageSize, page, response)
             return response
         } catch (runtimeException: RuntimeException) {
             when (val cause = runtimeException.cause) {
@@ -48,19 +48,20 @@ class ArticlesDataSource(
         return GetArticlesRequest(session, page, session.articlesRequestSpec)
     }
 
-    private fun saveCache(page: Int, response: ArticlesResponse) {
+    private fun saveCache(pageSize: Int, page: Int, response: ArticlesResponse) {
         if (page == 1) {
             cacheDatabase.clear()
         }
-        if (response is ArticlesResponse.Success) response.data.forEach { article ->
-            cacheDatabase.articles().insert(article)
+        if (response is ArticlesResponse.Success) response.data.forEachIndexed { index, article ->
+            val searchIndex = page * pageSize + index
+            cacheDatabase.articles().insert(article.copy(searchIndex = searchIndex))
             cacheDatabase.users().insert(article.author)
         }
     }
 
     private fun loadCache(page: Int, exception: Exception): ArticlesResponse {
         if (page > 1) return ArticlesResponse.Error(exception.toString())
-        val articles = cacheDatabase.articles().getAllSortedByDescendingTimePublished()
+        val articles = cacheDatabase.articles().getAllSortedByDescendingIndex()
         if (articles.isEmpty()) {
             return ArticlesResponse.Error(exception.toString())
         }
@@ -73,7 +74,7 @@ class ArticlesDataSource(
 
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<Article>) {
         val page = (params.startPosition / params.loadSize) + 1
-        when (val response = load(page)) {
+        when (val response = load(params.loadSize, page)) {
             is ArticlesResponse.Success -> {
                 callback.onResult(response.data)
             }
@@ -86,7 +87,7 @@ class ArticlesDataSource(
 
     override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<Article>) {
         val page = ((params.requestedStartPosition + params.requestedLoadSize) / params.pageSize) + 1
-        when (val response = load(page)) {
+        when (val response = load(params.pageSize, page)) {
             is ArticlesResponse.Success -> {
                 callback.onResult(response.data, 0)
                 val container = ArticlesLoadInitialSuccessContainer(response, params, callback)

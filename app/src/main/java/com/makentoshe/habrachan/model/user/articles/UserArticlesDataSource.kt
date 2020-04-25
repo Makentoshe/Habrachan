@@ -9,10 +9,8 @@ import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.request.UserArticlesRequest
 import com.makentoshe.habrachan.common.network.response.ArticlesResponse
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
-import java.lang.Exception
-import java.lang.RuntimeException
+import java.net.UnknownHostException
 
 class UserArticlesDataSource(
     private val articlesManager: ArticlesManager,
@@ -68,9 +66,15 @@ class UserArticlesDataSource(
             when (runtimeException.cause) {
                 // cause when UserArticleFragment destroyed and subject being disposed
                 is InterruptedException -> ArticlesResponse.Error("")
+                // cause when internet disabled
+                is UnknownHostException -> loadCache(request, runtimeException)
                 else -> throw runtimeException
             }
         }
+    }
+
+    private fun loadCache(request: UserArticlesRequest, runtimeException: RuntimeException): ArticlesResponse {
+        return ArticlesResponse.Error(runtimeException.toString())
     }
 
     class Factory(

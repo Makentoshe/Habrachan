@@ -96,7 +96,7 @@ class NativeArticlesManagerTest : BaseTest() {
     @Test
     fun `should parse and return success result for get user articles action`() {
         val json = getJsonResponse("get_user_articles_success_native.json")
-        val url = "https://habr.com/api/v1/users/missingdays/posts?include=text_html"
+        val url = "https://habr.com/api/v1/users/missingdays/posts?page=1&include=text_html"
 
         val request = UserArticlesRequest(session, "missingdays", page = 1, include = "text_html")
 

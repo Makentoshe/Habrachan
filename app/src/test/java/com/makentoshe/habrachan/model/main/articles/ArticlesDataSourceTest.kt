@@ -33,8 +33,12 @@ class ArticlesDataSourceTest {
     fun testShouldReturnArticlesForInitialLoad() {
         val testInitialSuccessObservable = dataSource.initialSuccessObservable.test()
 
-        val mockArticles =
-            Array(20) { mockk<Article>().also { mock -> every { mock.author } returns mockk() } }.toList()
+        val mockArticles = Array(20) {
+            mockk<Article>().also { mock ->
+                every { mock.author } returns mockk()
+                every { mock.copy(any()) } returns mock
+            }
+        }.toList()
 
         val mockArticlesResponse = mockk<ArticlesResponse.Success>()
         every { mockArticlesResponse.data } returns mockArticles
@@ -72,8 +76,12 @@ class ArticlesDataSourceTest {
 
     @Test
     fun testShouldClearCachesAfterSuccessForInitialLoad() {
-        val mockArticles =
-            Array(20) { mockk<Article>().also { mock -> every { mock.author } returns mockk() } }.toList()
+        val mockArticles = Array(20) {
+            mockk<Article>().also { mock ->
+                every { mock.author } returns mockk()
+                every { mock.copy(any()) } returns mock
+            }
+        }.toList()
 
         val mockArticlesResponse = mockk<ArticlesResponse.Success>()
         every { mockArticlesResponse.data } returns mockArticles
@@ -90,8 +98,12 @@ class ArticlesDataSourceTest {
 
     @Test
     fun testShouldCheckCachesForInitialLoad() {
-        val mockArticles =
-            Array(20) { mockk<Article>().also { mock -> every { mock.author } returns mockk() } }.toList()
+        val mockArticles = Array(20) {
+            mockk<Article>().also { mock ->
+                every { mock.author } returns mockk()
+                every { mock.copy(any()) } returns mock
+            }
+        }.toList()
 
         val mockArticlesResponse = mockk<ArticlesResponse.Success>()
         every { mockArticlesResponse.data } returns mockArticles
@@ -107,8 +119,12 @@ class ArticlesDataSourceTest {
 
     @Test
     fun testShouldReturnArticlesForRangeLoad() {
-        val mockArticles =
-            Array(20) { mockk<Article>().also { mock -> every { mock.author } returns mockk() } }.toList()
+        val mockArticles = Array(20) {
+            mockk<Article>().also { mock ->
+                every { mock.author } returns mockk()
+                every { mock.copy(any()) } returns mock
+            }
+        }.toList()
 
         val mockArticlesResponse = mockk<ArticlesResponse.Success>()
         every { mockArticlesResponse.data } returns mockArticles
@@ -127,8 +143,12 @@ class ArticlesDataSourceTest {
 
     @Test
     fun testShouldCheckCachesForRangeLoad() {
-        val mockArticles =
-            Array(20) { mockk<Article>().also { mock -> every { mock.author } returns mockk() } }.toList()
+        val mockArticles = Array(20) {
+            mockk<Article>().also { mock ->
+                every { mock.author } returns mockk()
+                every { mock.copy(any()) } returns mock
+            }
+        }.toList()
 
         val mockArticlesResponse = mockk<ArticlesResponse.Success>()
         every { mockArticlesResponse.data } returns mockArticles
@@ -165,7 +185,7 @@ class ArticlesDataSourceTest {
 
         val mockArticles =
             Array(20) { mockk<Article>().also { mock -> every { mock.author } returns mockk() } }.toList()
-        every { cacheDatabase.articles().getAllSortedByDescendingTimePublished() } returns mockArticles
+        every { cacheDatabase.articles().getAllSortedByDescendingIndex() } returns mockArticles
         every { manager.getArticles(any()) } returns Single.just(Unit)
             .map { throw RuntimeException(UnknownHostException()) }
 
@@ -190,7 +210,7 @@ class ArticlesDataSourceTest {
     fun testShouldReturnErrorIfCacheIsEmpty() {
         val testInitialErrorObservable = dataSource.initialErrorObservable.test()
 
-        every { cacheDatabase.articles().getAllSortedByDescendingTimePublished() } returns emptyList()
+        every { cacheDatabase.articles().getAllSortedByDescendingIndex() } returns emptyList()
         every { manager.getArticles(any()) } returns Single.just(Unit)
             .map { throw RuntimeException(UnknownHostException()) }
 

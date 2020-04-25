@@ -9,12 +9,16 @@ import com.makentoshe.habrachan.model.article.html.*
 
 @Entity
 data class Article(
+    /**
+     * Special mark field. If set upped - this article was in last search response.
+     * DO NOT USE THIS VALUE DIRECTLY.
+     */
+    var searchIndex: Int? = null,
+
     @PrimaryKey
     @SerializedName("id")
     val id: Int,
-    /** value for better storing in database, should not used directly */
-    var index: Int? = null,
-    @Embedded(prefix = "user_")
+    @Embedded(prefix = "author_")
     @SerializedName("author")
     val author: User,
     @SerializedName("comments_count")
