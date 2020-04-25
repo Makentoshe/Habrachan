@@ -57,11 +57,12 @@ class UserArticlesDataSource(
         }
     }
 
-    //todo implement cache
     private fun load(page: Int): ArticlesResponse {
-        val request = UserArticlesRequest(sessionDatabase.session().get(), username, page)
+        val request = UserArticlesRequest(sessionDatabase.session().get(), username, page, include = "text_html")
         return try {
-            articlesManager.getUserArticles(request).blockingGet()
+            val response = articlesManager.getUserArticles(request).blockingGet()
+            if (response is ArticlesResponse.Success) saveCache(response)
+            return response
         } catch (runtimeException: RuntimeException) {
             when (runtimeException.cause) {
                 // cause when UserArticleFragment destroyed and subject being disposed
@@ -74,7 +75,25 @@ class UserArticlesDataSource(
     }
 
     private fun loadCache(request: UserArticlesRequest, runtimeException: RuntimeException): ArticlesResponse {
-        return ArticlesResponse.Error(runtimeException.toString())
+        val articles = cacheDatabase.articles().getAllByUserLoginSortedByDescendingPublicationTime(request.user)
+        if (articles.isEmpty()) {
+            return ArticlesResponse.Error(runtimeException.toString())
+        }
+        val chunkedArticles = articles.chunked(ArticlesResponse.DEFAULT_SIZE)
+        if (chunkedArticles.size < request.page) {
+            return ArticlesResponse.Error(runtimeException.toString())
+        }
+        val pageArticles = chunkedArticles[request.page - 1]
+        val nextPage = if (pageArticles.size == ArticlesResponse.DEFAULT_SIZE) {
+            NextPage(request.page + 1, "")
+        } else {
+            NextPage(request.page + 1, null)
+        }
+        return ArticlesResponse.Success(pageArticles, nextPage, 0, "", "")
+    }
+
+    private fun saveCache(response: ArticlesResponse.Success) {
+        response.data.forEach(cacheDatabase.articles()::insert)
     }
 
     class Factory(
