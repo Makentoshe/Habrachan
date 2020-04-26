@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
+import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.common.network.response.ArticlesResponse
 import com.makentoshe.habrachan.model.user.articles.UserArticlesDataSource
 import com.makentoshe.habrachan.model.user.articles.UserArticlesLoadInitialErrorContainer
 import com.makentoshe.habrachan.model.user.articles.UserArticlesLoadInitialSuccessContainer
@@ -40,13 +42,12 @@ class UserArticlesViewModel(
 
     init {
         requestSubject.observeOn(schedulersProvider.ioScheduler)
+            .doOnNext { adapterSubject.onNext(controller.adapter) }
             .map(articlesDataSourceFactory::build)
             .doOnNext(::setNewSubjects)
             .map(::buildPagedList)
             .subscribe(controller::submitList)
             .let(disposables::add)
-
-        requestSubject.subscribe { adapterSubject.onNext(controller.adapter) }.let(disposables::add)
 
         initialSuccessObservable.subscribe {
             initialErrorSubject.onComplete()
@@ -59,16 +60,20 @@ class UserArticlesViewModel(
         dataSource.initialErrorObservable.safeSubscribe(initialErrorSubject)
     }
 
-    private fun buildPagedList(dataSource: UserArticlesDataSource) = PagedList.Builder(dataSource, buildConfig())
-        .setFetchExecutor(executorsProvider.fetchExecutor)
-        .setNotifyExecutor(executorsProvider.notifyExecutor)
-        .build()
+    private fun buildPagedList(dataSource: UserArticlesDataSource): PagedList<Article> {
+        val builder = PagedList.Builder(dataSource, buildConfig())
+        builder.setFetchExecutor(executorsProvider.fetchExecutor)
+        builder.setNotifyExecutor(executorsProvider.notifyExecutor)
+        return builder.build()
+    }
 
-    private fun buildConfig() = PagedList.Config.Builder()
-        .setPageSize(controller.pageSize)
-        .setInitialLoadSizeHint(0)
-        .setEnablePlaceholders(false)
-        .build()
+    private fun buildConfig(): PagedList.Config {
+        val builder = PagedList.Config.Builder()
+        builder.setPageSize(ArticlesResponse.DEFAULT_SIZE)
+        builder.setInitialLoadSizeHint(0)
+        builder.setEnablePlaceholders(false)
+        return builder.build()
+    }
 
     override fun onCleared() = disposables.clear()
 

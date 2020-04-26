@@ -43,7 +43,7 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun buildChipFromBadge(badge: Badge): Chip {
-        val chip = layoutInflater.inflate(R.layout.user_fragment_profile_badge, null, false) as Chip
+        val chip = layoutInflater.inflate(R.layout.user_fragment_content_profile_badge, null, false) as Chip
         chip.text = badge.title
         chip.setOnClickListener {
             Toast.makeText(requireContext(), badge.description, Toast.LENGTH_LONG).show()
