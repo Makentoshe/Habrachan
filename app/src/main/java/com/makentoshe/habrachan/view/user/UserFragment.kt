@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.view.user
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -26,6 +27,7 @@ import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.model.user.UserContentPagerAdapter
 import com.makentoshe.habrachan.ui.user.UserFragmentUi
+import com.makentoshe.habrachan.view.main.MainFlowFragment
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -37,29 +39,49 @@ class UserFragment : Fragment() {
     private val disposables = CompositeDisposable()
     private val arguments = Arguments(this)
     private val navigator by inject<Navigator>()
+    private val flowNavigator by inject<MainFlowFragment.Navigator>()
     private val viewModel by inject<UserViewModel>()
     private val userAvatarViewModel by inject<UserAvatarViewModel>()
+
+    private lateinit var toolbarView: Toolbar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return UserFragmentUi().create(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            viewModel.userObserver.onNext(arguments.userAccount)
-        }
-
-        val toolbarView = view.findViewById<Toolbar>(R.id.user_fragment_toolbar)
+        toolbarView = view.findViewById(R.id.user_fragment_toolbar)
         toolbarView.setNavigationOnClickListener { navigator.back() }
+        toolbarView.setOnMenuItemClickListener(::onUserOptionsMenuClick)
         if (arguments.userAccount != UserAccount.Me) {
             toolbarView.setNavigationIcon(R.drawable.ic_arrow_back)
+            toolbarView.menu.setGroupVisible(R.id.group_user_custom, true)
+            toolbarView.menu.setGroupVisible(R.id.group_user_me, false)
+        } else {
+            toolbarView.menu.setGroupVisible(R.id.group_user_custom, false)
+            toolbarView.menu.setGroupVisible(R.id.group_user_me, true)
         }
 
-        viewModel.userObservable
-            .observeOn(AndroidSchedulers.mainThread())
+        viewModel.userObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onUserResponse).let(disposables::add)
 
         userAvatarViewModel.avatarObservable.subscribe(::onAvatarResponse).let(disposables::add)
+
+        if (savedInstanceState == null) {
+            viewModel.userObserver.onNext(arguments.userAccount)
+        }
+    }
+
+    private fun onUserOptionsMenuClick(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_logout -> onUserLogout()
+        else -> false
+    }
+
+    private fun onUserLogout() : Boolean {
+        clearUserLoginInBottomNavigationBar()
+        viewModel.userLogoutObserver.onComplete()
+        flowNavigator.toLoginScreen()
+        return true
     }
 
     private fun onUserResponse(response: UserResponse) = when (response) {
@@ -70,7 +92,7 @@ class UserFragment : Fragment() {
     @SuppressLint("RestrictedApi")
     private fun onUserSuccess(response: UserResponse.Success) {
         if (arguments.userAccount == UserAccount.Me) {
-            updateUserLoginInBottomNavigationBar(response.user)
+            setUserLoginInBottomNavigationBar(response.user)
         }
 
         userAvatarViewModel.avatarObserver.onNext(ImageRequest(response.user.avatar))
@@ -79,7 +101,6 @@ class UserFragment : Fragment() {
 
         view.findViewById<View>(R.id.user_fragment_body).visibility = View.VISIBLE
 
-        val toolbarView = view.findViewById<Toolbar>(R.id.user_fragment_toolbar)
         toolbarView.title = response.user.login
 
         val fullNameView = view.findViewById<TextView>(R.id.user_fragment_fullname_text)
@@ -139,11 +160,18 @@ class UserFragment : Fragment() {
         ImageViewController(avatarView).setAvatarStub()
     }
 
-    private fun updateUserLoginInBottomNavigationBar(user: User) {
+    private fun setUserLoginInBottomNavigationBar(user: User) {
         val navigation = requireActivity().findViewById<BottomNavigationView>(R.id.main_bottom_navigation) ?: return
         val item = navigation.menu.findItem(R.id.action_account)
         item.setIcon(R.drawable.ic_account)
         item.title = user.login
+    }
+
+    private fun clearUserLoginInBottomNavigationBar() {
+        val navigation = requireActivity().findViewById<BottomNavigationView>(R.id.main_bottom_navigation) ?: return
+        val item = navigation.menu.findItem(R.id.action_account)
+        item.setIcon(R.drawable.ic_account_outline)
+        item.setTitle(R.string.menu_account)
     }
 
     override fun onDestroy() {

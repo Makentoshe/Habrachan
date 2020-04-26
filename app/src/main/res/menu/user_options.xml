@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group_user_me"
+        android:visible="false">
+        <item
+            android:id="@+id/action_logout"
+            android:title="@string/menu_logout" />
+    </group>
+
+    <group
+        android:id="@+id/group_user_custom"
+        android:visible="false">
+        <item
+            android:id="@+id/action_send_message"
+            android:title="@string/menu_send_message"
+            android:enabled="false" />
+    </group>
+</menu>

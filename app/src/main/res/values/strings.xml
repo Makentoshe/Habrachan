@@ -62,6 +62,8 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="user_content_profile_badges">Badges</string>
     <string name="user_content_profile_location">Location</string>
     <string name="user_content_profile_registered">Registered</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_send_message">Send message</string>
     <string-array name="user_fragment_tabs">
         <item>@string/user_content_profile</item>
         <item>@string/user_content_articles</item>
