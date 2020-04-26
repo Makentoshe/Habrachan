@@ -7,16 +7,12 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.getResourceIdOrThrow
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
@@ -46,13 +42,41 @@ class UserFragment : Fragment() {
     private val userAvatarViewModel by inject<UserAvatarViewModel>()
 
     private lateinit var toolbarView: Toolbar
+    private lateinit var messageView: TextView
+    private lateinit var retryButton: Button
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return UserFragmentUi().create(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        progressBar = view.findViewById(R.id.user_fragment_progress)
+        retryButton = view.findViewById(R.id.user_fragment_retry)
+        messageView = view.findViewById(R.id.user_fragment_message)
         toolbarView = view.findViewById(R.id.user_fragment_toolbar)
+
+        setRetryButtonBehavior()
+        setToolbarBehavior()
+
+        viewModel.userObservable.observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onUserResponse).let(disposables::add)
+
+        userAvatarViewModel.avatarObservable.subscribe(::onAvatarResponse).let(disposables::add)
+
+        if (savedInstanceState == null) {
+            viewModel.userObserver.onNext(arguments.userAccount)
+        }
+    }
+
+    private fun setRetryButtonBehavior() = retryButton.setOnClickListener {
+        viewModel.userObserver.onNext(arguments.userAccount)
+        progressBar.visibility = View.VISIBLE
+        messageView.visibility = View.GONE
+        retryButton.visibility = View.GONE
+    }
+
+    private fun setToolbarBehavior() {
         toolbarView.setNavigationOnClickListener { navigator.back() }
         toolbarView.setOnMenuItemClickListener(::onUserOptionsMenuClick)
         toolbarView.overflowIcon = buildToolbarOverflowIcon(toolbarView)
@@ -63,15 +87,6 @@ class UserFragment : Fragment() {
         } else {
             toolbarView.menu.setGroupVisible(R.id.group_user_custom, false)
             toolbarView.menu.setGroupVisible(R.id.group_user_me, true)
-        }
-
-        viewModel.userObservable.observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onUserResponse).let(disposables::add)
-
-        userAvatarViewModel.avatarObservable.subscribe(::onAvatarResponse).let(disposables::add)
-
-        if (savedInstanceState == null) {
-            viewModel.userObserver.onNext(arguments.userAccount)
         }
     }
 
@@ -129,7 +144,6 @@ class UserFragment : Fragment() {
         val specializmView = view.findViewById<TextView>(R.id.user_fragment_specializm)
         specializmView.text = response.user.specializm
 
-        val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_progress)
         progressBar.visibility = View.GONE
 
         setUserContent(response)
@@ -151,8 +165,10 @@ class UserFragment : Fragment() {
     }
 
     private fun onUserError(response: UserResponse.Error) {
-        val decorView = view ?: activity?.window?.decorView!!
-        Snackbar.make(decorView, response.toString(), Snackbar.LENGTH_LONG).show()
+        progressBar.visibility = View.GONE
+        messageView.visibility = View.VISIBLE
+        messageView.text = response.message
+        retryButton.visibility = View.VISIBLE
     }
 
     private fun onAvatarResponse(response: ImageResponse) = when (response) {
