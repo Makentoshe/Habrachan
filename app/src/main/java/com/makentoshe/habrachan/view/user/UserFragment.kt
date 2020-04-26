@@ -1,18 +1,20 @@
 package com.makentoshe.habrachan.view.user
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.getResourceIdOrThrow
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.navigation.Router
@@ -21,7 +23,9 @@ import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.UserResponse
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.user.UserAccount
+import com.makentoshe.habrachan.model.user.UserContentPagerAdapter
 import com.makentoshe.habrachan.ui.user.UserFragmentUi
+import com.makentoshe.habrachan.view.main.MainFlowFragment
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,29 +37,80 @@ class UserFragment : Fragment() {
     private val disposables = CompositeDisposable()
     private val arguments = Arguments(this)
     private val navigator by inject<Navigator>()
+    private val flowNavigator by inject<MainFlowFragment.Navigator>()
     private val viewModel by inject<UserViewModel>()
     private val userAvatarViewModel by inject<UserAvatarViewModel>()
+
+    private lateinit var toolbarView: Toolbar
+    private lateinit var messageView: TextView
+    private lateinit var retryButton: Button
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return UserFragmentUi().create(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            viewModel.userObserver.onNext(arguments.userAccount)
-        }
+        progressBar = view.findViewById(R.id.user_fragment_progress)
+        retryButton = view.findViewById(R.id.user_fragment_retry)
+        messageView = view.findViewById(R.id.user_fragment_message)
+        toolbarView = view.findViewById(R.id.user_fragment_toolbar)
 
-        val toolbarView = view.findViewById<Toolbar>(R.id.user_fragment_toolbar)
-        toolbarView.setNavigationOnClickListener { navigator.back() }
-        if (arguments.userAccount != UserAccount.Me) {
-            toolbarView.setNavigationIcon(R.drawable.ic_arrow_back)
-        }
+        setRetryButtonBehavior()
+        setToolbarBehavior()
 
-        viewModel.userObservable
-            .observeOn(AndroidSchedulers.mainThread())
+        viewModel.userObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onUserResponse).let(disposables::add)
 
         userAvatarViewModel.avatarObservable.subscribe(::onAvatarResponse).let(disposables::add)
+
+        if (savedInstanceState == null) {
+            viewModel.userObserver.onNext(arguments.userAccount)
+        }
+    }
+
+    private fun setRetryButtonBehavior() = retryButton.setOnClickListener {
+        viewModel.userObserver.onNext(arguments.userAccount)
+        progressBar.visibility = View.VISIBLE
+        messageView.visibility = View.GONE
+        retryButton.visibility = View.GONE
+    }
+
+    private fun setToolbarBehavior() {
+        toolbarView.setNavigationOnClickListener { navigator.back() }
+        toolbarView.setOnMenuItemClickListener(::onUserOptionsMenuClick)
+        toolbarView.overflowIcon = buildToolbarOverflowIcon(toolbarView)
+        if (arguments.userAccount != UserAccount.Me) {
+            toolbarView.setNavigationIcon(R.drawable.ic_arrow_back)
+            toolbarView.menu.setGroupVisible(R.id.group_user_custom, true)
+            toolbarView.menu.setGroupVisible(R.id.group_user_me, false)
+        } else {
+            toolbarView.menu.setGroupVisible(R.id.group_user_custom, false)
+            toolbarView.menu.setGroupVisible(R.id.group_user_me, true)
+        }
+    }
+
+    private fun buildToolbarOverflowIcon(toolbar: Toolbar): Drawable {
+        val toolbarOverflowIcon = resources.getDrawable(R.drawable.ic_overflow, requireContext().theme)
+        val styleTypedArray = requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.habrachanToolbar))
+        val styleResource = styleTypedArray.getResourceIdOrThrow(0)
+        val colorTypedArray = requireContext().obtainStyledAttributes(styleResource, intArrayOf(android.R.attr.tint))
+        val color = resources.getColor(colorTypedArray.getResourceIdOrThrow(0), requireContext().theme)
+        colorTypedArray.recycle()
+        styleTypedArray.recycle()
+        return toolbarOverflowIcon.apply { setTint(color) }
+    }
+
+    private fun onUserOptionsMenuClick(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_logout -> onUserLogout()
+        else -> false
+    }
+
+    private fun onUserLogout(): Boolean {
+        clearUserLoginInBottomNavigationBar()
+        viewModel.userLogoutObserver.onComplete()
+        flowNavigator.toLoginScreen()
+        return true
     }
 
     private fun onUserResponse(response: UserResponse) = when (response) {
@@ -66,14 +121,15 @@ class UserFragment : Fragment() {
     @SuppressLint("RestrictedApi")
     private fun onUserSuccess(response: UserResponse.Success) {
         if (arguments.userAccount == UserAccount.Me) {
-            updateUserLoginInBottomNavigationBar(response.user)
+            setUserLoginInBottomNavigationBar(response.user)
         }
 
         userAvatarViewModel.avatarObserver.onNext(ImageRequest(response.user.avatar))
 
         val view = view ?: return Toast.makeText(requireContext(), "View does not responds", Toast.LENGTH_LONG).show()
 
-        val toolbarView = view.findViewById<Toolbar>(R.id.user_fragment_toolbar)
+        view.findViewById<View>(R.id.user_fragment_body).visibility = View.VISIBLE
+
         toolbarView.title = response.user.login
 
         val fullNameView = view.findViewById<TextView>(R.id.user_fragment_fullname_text)
@@ -88,13 +144,31 @@ class UserFragment : Fragment() {
         val specializmView = view.findViewById<TextView>(R.id.user_fragment_specializm)
         specializmView.text = response.user.specializm
 
-        val progressBar = view.findViewById<ProgressBar>(R.id.user_fragment_progress)
         progressBar.visibility = View.GONE
+
+        setUserContent(response)
+    }
+
+    private fun setUserContent(response: UserResponse.Success) {
+        val view = view ?: return
+
+        val count = if (arguments.userAccount == UserAccount.Me) 4 else 3
+        val adapter = UserContentPagerAdapter(this, response.user, count)
+
+        val viewPager = view.findViewById<ViewPager2>(R.id.user_fragment_viewpager)
+        viewPager.adapter = adapter
+
+        val tabLayout = view.findViewById<TabLayout>(R.id.user_fragment_tab)
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = resources.getStringArray(R.array.user_fragment_tabs)[position]
+        }.attach()
     }
 
     private fun onUserError(response: UserResponse.Error) {
-        val decorView = view ?: activity?.window?.decorView!!
-        Snackbar.make(decorView, response.toString(), Snackbar.LENGTH_LONG).show()
+        progressBar.visibility = View.GONE
+        messageView.visibility = View.VISIBLE
+        messageView.text = response.message
+        retryButton.visibility = View.VISIBLE
     }
 
     private fun onAvatarResponse(response: ImageResponse) = when (response) {
@@ -116,12 +190,18 @@ class UserFragment : Fragment() {
         ImageViewController(avatarView).setAvatarStub()
     }
 
-    private fun updateUserLoginInBottomNavigationBar(user: User) {
-        val activity = activity ?: return
-        val navigation = activity.findViewById<BottomNavigationView>(R.id.main_bottom_navigation)
+    private fun setUserLoginInBottomNavigationBar(user: User) {
+        val navigation = requireActivity().findViewById<BottomNavigationView>(R.id.main_bottom_navigation) ?: return
         val item = navigation.menu.findItem(R.id.action_account)
         item.setIcon(R.drawable.ic_account)
         item.title = user.login
+    }
+
+    private fun clearUserLoginInBottomNavigationBar() {
+        val navigation = requireActivity().findViewById<BottomNavigationView>(R.id.main_bottom_navigation) ?: return
+        val item = navigation.menu.findItem(R.id.action_account)
+        item.setIcon(R.drawable.ic_account_outline)
+        item.setTitle(R.string.menu_account)
     }
 
     override fun onDestroy() {

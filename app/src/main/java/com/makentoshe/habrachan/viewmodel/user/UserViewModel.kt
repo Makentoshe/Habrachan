@@ -33,9 +33,14 @@ class UserViewModel(
     val userObservable: Observable<UserResponse>
         get() = userResponseSubject
 
+    private val userLogoutSubject = PublishSubject.create<Unit>()
+    val userLogoutObserver: Observer<Unit> = userLogoutSubject
+
     init {
         userRequestSubject.observeOn(Schedulers.io()).map(::onUserRequest)
             .subscribe(userResponseSubject::onNext).let(disposables::add)
+
+        userLogoutSubject.observeOn(Schedulers.io()).doOnComplete(::onUserLogout).subscribe().let(disposables::add)
     }
 
     private fun onUserRequest(userAccount: UserAccount) = when (userAccount) {
@@ -45,7 +50,7 @@ class UserViewModel(
 
     private fun onUserRequestMe(userAccount: UserAccount.Me): UserResponse {
         val session = sessionDatabase.session().get()
-        val meRequest = MeRequest(session.clientKey, session.tokenKey)
+        val meRequest = MeRequest(session)
         return usersManager.getMe(meRequest).onErrorReturn { throwable ->
             onUserRequestMeError(session, throwable)
         }.doOnSuccess { userResponse ->
@@ -57,7 +62,7 @@ class UserViewModel(
 
     private fun onUserRequestUser(userAccount: UserAccount.User): UserResponse {
         val session = sessionDatabase.session().get()
-        val userRequest = UserRequest(session.clientKey, session.tokenKey, userAccount.userName)
+        val userRequest = UserRequest(session, userAccount.userName)
         return usersManager.getUser(userRequest).doOnSuccess { userResponse ->
             if (userResponse is UserResponse.Success) userDao.insert(userResponse.user)
         }.onErrorReturn {
@@ -80,6 +85,13 @@ class UserViewModel(
         } else {
             UserResponse.Success(sessionDatabase.me().get(), "")
         }
+    }
+
+    private fun onUserLogout() {
+        sessionDatabase.me().clear()
+        val currentSession = sessionDatabase.session().get()
+        val newSession = currentSession.copy(tokenKey = "")
+        sessionDatabase.session().insert(newSession)
     }
 
     override fun onCleared() = disposables.clear()

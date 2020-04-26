@@ -92,7 +92,7 @@ class UsersManagerTest : BaseTest() {
     @Test
     @Ignore("Test uses real api")
     fun getCustomUserByName() {
-        val request = UserRequest("sas", session.tokenKey, "missingdays")
+        val request = UserRequest(session.clientKey, session.tokenKey, "missingdays", exclude = "id,login")
         val manager = UsersManager.Builder(OkHttpClient()).build()
         val response = manager.getUser(request).blockingGet()
         println(response)

@@ -24,7 +24,7 @@ class AppActivity : AppCompatActivity() {
         when (intent.action) {
             Intent.ACTION_MAIN -> {
                 val screen = MainFlowScreen()
-//                val screen = UserScreen(UserAccount.User("missingdays"))
+//                val screen = UserScreen(UserAccount.User("milfgard"))
 //                val screen = UserScreen(UserAccount.Me)
 //                val screen = AccountFlowScreen()
 //                val screen = CommentsScreen(493250)

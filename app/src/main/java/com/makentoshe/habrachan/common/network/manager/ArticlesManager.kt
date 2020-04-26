@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.common.network.converter.ArticlesConverter
 import com.makentoshe.habrachan.common.network.converter.VoteUpArticleConverter
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.common.network.request.UserArticlesRequest
 import com.makentoshe.habrachan.common.network.request.VoteArticleRequest
 import com.makentoshe.habrachan.common.network.response.ArticleResponse
 import com.makentoshe.habrachan.common.network.response.ArticlesResponse
@@ -18,6 +19,8 @@ import retrofit2.Retrofit
 interface ArticlesManager {
 
     fun getArticles(request: GetArticlesRequest): Single<ArticlesResponse>
+
+    fun getUserArticles(userArticlesRequest: UserArticlesRequest): Single<ArticlesResponse>
 
     fun getArticle(request: GetArticleRequest): Single<ArticleResponse>
 
@@ -50,6 +53,17 @@ class NativeArticlesManager(private val api: NativeArticlesApi) : ArticlesManage
                 ArticlesConverter().convertError(response.errorBody()!!)
             }
         }.cast(ArticlesResponse::class.java)
+    }
+
+    override fun getUserArticles(userArticlesRequest: UserArticlesRequest): Single<ArticlesResponse> {
+        return Single.just(userArticlesRequest).observeOn(Schedulers.io()).map { request ->
+            val response = api.getUserArticles(request.client, request.token, request.user, request.page, request.include, request.exclude).execute()
+            if (response.isSuccessful) {
+                ArticlesConverter().convertBody(response.body()!!)
+            } else {
+                ArticlesConverter().convertError(response.errorBody()!!)
+            }
+        }
     }
 
     override fun getArticle(request: GetArticleRequest): Single<ArticleResponse> {

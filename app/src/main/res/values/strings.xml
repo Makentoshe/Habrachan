@@ -30,10 +30,6 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="karma">Karma</string>
     <string name="rating">Rating</string>
     <string name="full_name">Full name</string>
-    <string name="profile">Profile</string>
-    <string name="articles">Articles</string>
-    <string name="comments">Comments</string>
-    <string name="bookmarks">Bookmarks</string>
     <string name="got_it">Got it</string>
     <string name="should_be_logged_in_for_user">You should be logged in to viewing user profile</string>
     <string name="should_be_logged_in_for_action">You should be logged in to performing this action</string>
@@ -58,4 +54,20 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="articles_top_type_monthly">Monthly</string>
     <string name="articles_top_type_weekly">Weekly</string>
     <string name="articles_top_type_daily">Daily</string>
+
+    <string name="user_content_profile">Profile</string>
+    <string name="user_content_articles">Articles</string>
+    <string name="user_content_comments">Comments</string>
+    <string name="user_content_bookmarks">Bookmarks</string>
+    <string name="user_content_profile_badges">Badges</string>
+    <string name="user_content_profile_location">Location</string>
+    <string name="user_content_profile_registered">Registered</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_send_message">Send message</string>
+    <string-array name="user_fragment_tabs">
+        <item>@string/user_content_profile</item>
+        <item>@string/user_content_articles</item>
+        <item>@string/user_content_comments</item>
+        <item>@string/user_content_bookmarks</item>
+    </string-array>
 </resources>

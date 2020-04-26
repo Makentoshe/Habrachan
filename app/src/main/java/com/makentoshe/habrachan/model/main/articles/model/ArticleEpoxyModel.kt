@@ -77,7 +77,7 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
 
     class Factory(private val router: Router) {
 
-        fun build(id: Int, post: Article): ArticleEpoxyModel {
+        fun build(id: Int, enableSmartDivide: Boolean, post: Article): ArticleEpoxyModel {
             val model = ArticleEpoxyModel_()
             model.id("article", id.toString())
             model.title = post.title
@@ -87,7 +87,7 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
             model.score = post.score
             model.readingsCount = post.readingCount
             model.commentsCount = post.commentsCount
-            model.displayDivider = id % 20 != 19
+            model.displayDivider = if (enableSmartDivide) id % 20 != 19 else true
             model.clickListener = View.OnClickListener {
                 val screen = ArticleScreen(post.id)
                 router.navigateTo(screen)

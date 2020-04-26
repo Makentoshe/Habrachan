@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.di
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.di.article.ArticleFragmentModule
 import com.makentoshe.habrachan.di.article.ArticleFragmentScope
 import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
@@ -13,6 +14,8 @@ import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
 import com.makentoshe.habrachan.di.main.account.login.LoginFragmentScope
 import com.makentoshe.habrachan.di.main.articles.*
 import com.makentoshe.habrachan.di.main.login.LoginFragmentModule
+import com.makentoshe.habrachan.di.user.UserArticlesFragmentModule
+import com.makentoshe.habrachan.di.user.UserArticlesFragmentScope
 import com.makentoshe.habrachan.di.user.UserFragmentModule
 import com.makentoshe.habrachan.di.user.UserFragmentScope
 import com.makentoshe.habrachan.view.article.ArticleFragment
@@ -22,6 +25,7 @@ import com.makentoshe.habrachan.view.main.articles.ArticlesFlowFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesSearchFragment
 import com.makentoshe.habrachan.view.main.login.LoginFragment
+import com.makentoshe.habrachan.view.user.UserArticlesFragment
 import com.makentoshe.habrachan.view.user.UserFragment
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -39,6 +43,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
             is ArticlesFragment -> injectArticlesFragment(f)
             is ArticlesSearchFragment -> injectArticlesSearchFragment(f)
             is ArticleFragment -> injectArticleFragment(f)
+            is UserArticlesFragment -> injectUserArticlesFragment(f)
         }
     }
 
@@ -62,7 +67,14 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
     private fun injectUserFragment(fragment: UserFragment) {
         val module = UserFragmentModule(fragment)
-        val scope = Toothpick.openScopes(ApplicationScope::class.java, UserFragmentScope::class.java)
+        val scope = if (fragment.parentFragment == null && BuildConfig.DEBUG) {
+            // append new scopes for debugging only user screen
+            Toothpick.openScopes(
+                ApplicationScope::class.java, MainFlowFragmentScope::class.java, UserFragmentScope::class.java
+            ).installModules(MainFlowFragmentModule(fragment))
+        } else {
+            Toothpick.openScopes(MainFlowFragmentScope::class.java, UserFragmentScope::class.java)
+        }
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
@@ -86,6 +98,12 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     private fun injectArticleFragment(fragment: ArticleFragment) {
         val module = ArticleFragmentModule(fragment)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, ArticleFragmentScope::class.java)
+        scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
+    }
+
+    private fun injectUserArticlesFragment(fragment: UserArticlesFragment) {
+        val module = UserArticlesFragmentModule(fragment)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java, UserArticlesFragmentScope::class.java)
         scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 }

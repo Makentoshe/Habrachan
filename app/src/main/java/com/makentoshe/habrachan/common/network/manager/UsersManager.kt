@@ -28,7 +28,7 @@ interface UsersManager {
 
                 override fun getMe(request: MeRequest): Single<UserResponse> {
                     return Single.just(request).observeOn(Schedulers.io()).map { request ->
-                        api.getMe(request.client, request.token).execute()
+                        api.getMe(request.client, request.token, request.include, request.exclude).execute()
                     }.map { response ->
                         if (response.isSuccessful) {
                             UsersConverter().convertBody(response.body()!!)
@@ -40,7 +40,9 @@ interface UsersManager {
 
                 override fun getUser(request: UserRequest): Single<UserResponse> {
                     return Single.just(request).observeOn(Schedulers.io()).map { request ->
-                        api.getUser(request.client, request.token, request.name).execute()
+                        api.getUser(
+                            request.client, request.token, request.name, request.include, request.exclude
+                        ).execute()
                     }.map { response ->
                         if (response.isSuccessful) {
                             UsersConverter().convertBody(response.body()!!)

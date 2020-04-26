@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.common.network.request.UserArticlesRequest
 import com.makentoshe.habrachan.common.network.request.VoteArticleRequest
 import com.makentoshe.habrachan.common.network.response.ArticleResponse
 import com.makentoshe.habrachan.common.network.response.ArticlesResponse
@@ -93,6 +94,25 @@ class NativeArticlesManagerTest : BaseTest() {
     }
 
     @Test
+    fun `should parse and return success result for get user articles action`() {
+        val json = getJsonResponse("get_user_articles_success_native.json")
+        val url = "https://habr.com/api/v1/users/missingdays/posts?page=1&include=text_html"
+
+        val request = UserArticlesRequest(session, "missingdays", page = 1, include = "text_html")
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(ResponseInterceptor(200, json))
+            .addInterceptor(UrlInterceptor(url))
+            .build()
+        val manager = ArticlesManager.Builder(client).build()
+        val response = manager.getUserArticles(request).blockingGet() as ArticlesResponse.Success
+
+        Assert.assertEquals(1, response.pages)
+        response.data.map { it.author.login }.forEach { Assert.assertEquals(it, response.author!!.login) }
+        Assert.assertEquals(2, response.data.size)
+    }
+
+    @Test
     @Ignore("Test uses real api")
     fun getAllArticlesTest() {
         val manager = ArticlesManager.Builder(OkHttpClient()).build()
@@ -140,6 +160,15 @@ class NativeArticlesManagerTest : BaseTest() {
         val manager = ArticlesManager.Builder(OkHttpClient()).build()
         val request = VoteArticleRequest(session.clientKey, session.tokenKey, articleId)
         val response = manager.voteDown(request).blockingGet()
+        println(response)
+    }
+
+    @Test
+    @Ignore("Test uses real api")
+    fun getUserArticlesTest() {
+        val request = UserArticlesRequest(session, "milfgard", page = 1, include = "text_html")
+        val manager = ArticlesManager.Builder(OkHttpClient()).build()
+        val response = manager.getUserArticles(request).blockingGet()
         println(response)
     }
 }

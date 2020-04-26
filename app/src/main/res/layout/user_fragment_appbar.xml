@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    style="?attr/habrachanDefault"
+    android:fitsSystemWindows="true"
+    android:layout_height="wrap_content"
+    android:elevation="4dp">
+
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/user_fragment_avatar"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:foregroundGravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_account_stub"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/user_fragment_karma_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/user_fragment_karma"
+                app:layout_constraintEnd_toEndOf="@+id/user_fragment_karma"
+                app:layout_constraintStart_toStartOf="@+id/user_fragment_karma"/>
+
+            <TextView
+                android:id="@+id/user_fragment_karma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="@string/karma"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/user_fragment_avatar"
+                app:layout_constraintEnd_toStartOf="@+id/user_fragment_rating"
+                app:layout_constraintStart_toEndOf="@+id/user_fragment_avatar"/>
+
+            <TextView
+                android:id="@+id/user_fragment_rating_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/user_fragment_rating"
+                app:layout_constraintEnd_toEndOf="@+id/user_fragment_rating"
+                app:layout_constraintStart_toStartOf="@+id/user_fragment_rating"/>
+
+            <TextView
+                android:id="@+id/user_fragment_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:text="@string/rating"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/user_fragment_avatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/user_fragment_karma"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/user_fragment_fullname"
+                app:boxStrokeWidth="0px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                app:hintTextColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_fragment_avatar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/user_fragment_fullname_text"
+                    style="?attr/habrachanDefault"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:paddingTop="8dp"
+                    android:hint="@string/full_name"
+                    android:textSize="24sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/user_fragment_specializm"
+                style="?attr/habrachanDefault"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:paddingStart="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/user_fragment_fullname"
+                app:layout_constraintTop_toBottomOf="@id/user_fragment_fullname"
+                tools:ignore="RtlSymmetry"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/user_fragment_tab"
+        android:layout_width="match_parent"
+        app:tabMode="scrollable"
+        app:tabGravity="center"
+        android:layout_height="wrap_content"/>
+
+</com.google.android.material.appbar.AppBarLayout>
+

@@ -3,14 +3,15 @@ package com.makentoshe.habrachan.common.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 @Entity
 data class User(
     @SerializedName("avatar")
     val avatar: String,
-//    @SerializedName("badges")
-//    val badges: List<Badge>,
+    @SerializedName("badges")
+    val badges: Badges,
 //    @SerializedName("common_tags")
 //    val commonTags: List<Any>,
 //    @SerializedName("contacts")
@@ -22,7 +23,7 @@ data class User(
     val fullname: String? = null,
     @Embedded(prefix = "geo_")
     @SerializedName("geo")
-    val geo: Geo? = null,
+    val geo: Geo? = Geo(),
     @SerializedName("id")
     @PrimaryKey
     val id: String,
@@ -33,7 +34,7 @@ data class User(
     @SerializedName("is_readonly")
     val isReadonly: Boolean,
     @SerializedName("is_subscribed")
-    val isSubscribed: Boolean,
+    val isSubscribed: Boolean? = null,
     @SerializedName("login")
     val login: String,
     @SerializedName("path")
@@ -56,6 +57,9 @@ data class User(
 //    val paymentMethods: List<PaymentMethod>?
 ) {
 
-//    val badges: List<Badge>
-//        get() = badgesMap.map { it.value }
+    fun toJson() = Gson().toJson(this)!!
+
+    companion object {
+        fun fromJson(string: String) = Gson().fromJson(string, User::class.java)!!
+    }
 }
