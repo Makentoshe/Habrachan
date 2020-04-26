@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.di
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.di.article.ArticleFragmentModule
 import com.makentoshe.habrachan.di.article.ArticleFragmentScope
 import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
@@ -66,7 +67,14 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
     private fun injectUserFragment(fragment: UserFragment) {
         val module = UserFragmentModule(fragment)
-        val scope = Toothpick.openScopes(MainFlowFragmentScope::class.java, UserFragmentScope::class.java)
+        val scope = if (fragment.parentFragment == null && BuildConfig.DEBUG) {
+            // append new scopes for debugging only user screen
+            Toothpick.openScopes(
+                ApplicationScope::class.java, MainFlowFragmentScope::class.java, UserFragmentScope::class.java
+            ).installModules(MainFlowFragmentModule(fragment))
+        } else {
+            Toothpick.openScopes(MainFlowFragmentScope::class.java, UserFragmentScope::class.java)
+        }
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
