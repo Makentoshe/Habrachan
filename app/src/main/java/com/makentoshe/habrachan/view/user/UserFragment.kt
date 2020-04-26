@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.view.user
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -11,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.getResourceIdOrThrow
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -53,6 +55,7 @@ class UserFragment : Fragment() {
         toolbarView = view.findViewById(R.id.user_fragment_toolbar)
         toolbarView.setNavigationOnClickListener { navigator.back() }
         toolbarView.setOnMenuItemClickListener(::onUserOptionsMenuClick)
+        toolbarView.overflowIcon = buildToolbarOverflowIcon(toolbarView)
         if (arguments.userAccount != UserAccount.Me) {
             toolbarView.setNavigationIcon(R.drawable.ic_arrow_back)
             toolbarView.menu.setGroupVisible(R.id.group_user_custom, true)
@@ -72,12 +75,23 @@ class UserFragment : Fragment() {
         }
     }
 
+    private fun buildToolbarOverflowIcon(toolbar: Toolbar): Drawable {
+        val toolbarOverflowIcon = resources.getDrawable(R.drawable.ic_overflow, requireContext().theme)
+        val styleTypedArray = requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.habrachanToolbar))
+        val styleResource = styleTypedArray.getResourceIdOrThrow(0)
+        val colorTypedArray = requireContext().obtainStyledAttributes(styleResource, intArrayOf(android.R.attr.tint))
+        val color = resources.getColor(colorTypedArray.getResourceIdOrThrow(0), requireContext().theme)
+        colorTypedArray.recycle()
+        styleTypedArray.recycle()
+        return toolbarOverflowIcon.apply { setTint(color) }
+    }
+
     private fun onUserOptionsMenuClick(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_logout -> onUserLogout()
         else -> false
     }
 
-    private fun onUserLogout() : Boolean {
+    private fun onUserLogout(): Boolean {
         clearUserLoginInBottomNavigationBar()
         viewModel.userLogoutObserver.onComplete()
         flowNavigator.toLoginScreen()

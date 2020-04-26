@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.di.main
 
+import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
@@ -13,7 +14,7 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
-class MainFlowFragmentModule(fragment: MainFlowFragment) : Module() {
+class MainFlowFragmentModule(fragment: Fragment) : Module() {
 
     private val sessionDatabase by inject<SessionDatabase>()
 
