@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.view.article
 
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,7 +93,8 @@ class ArticleFragment : Fragment() {
         timeView.text = response.article.timePublished
 
         val webView = requireView().findViewById<WebView>(R.id.article_fragment_webview)
-        webView.loadData(response.article.buildHtml(resources), "text/html", "utf-8")
+        val base64content = Base64.encodeToString(response.article.buildHtml(resources).toByteArray(), Base64.DEFAULT)
+        webView.loadData(base64content, "text/html; charset=UTF-8", "base64")
 
         val voteTextView = requireView().findViewById<TextView>(R.id.article_fragment_bottombar_voteview)
         TextScoreController(voteTextView).setScoreLight(requireContext(), response.article.score)
