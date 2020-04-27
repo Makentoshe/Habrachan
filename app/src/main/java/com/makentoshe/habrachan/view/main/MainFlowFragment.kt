@@ -14,6 +14,7 @@ import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.main.articles.ArticlesFlowScreen
+import com.makentoshe.habrachan.model.main.login.LoginFlowScreen
 import com.makentoshe.habrachan.model.main.login.LoginScreen
 import com.makentoshe.habrachan.model.main.menu.MenuScreen
 import com.makentoshe.habrachan.model.user.UserAccount
@@ -69,11 +70,7 @@ class MainFlowFragment : Fragment() {
     }
 
     private fun onAccountClick(): Boolean {
-        if (sessionDatabase.me().isEmpty) {
-            navigator.toLoginScreen()
-        } else {
-            navigator.toUserScreen()
-        }
+        navigator.toLoginFlowScreen()
         return true
     }
 
@@ -127,12 +124,8 @@ class MainFlowFragment : Fragment() {
             navigatorHolder.setNavigator(navigator)
         }
 
-        fun toUserScreen() {
-            router.smartReplace(UserScreen(UserAccount.Me))
-        }
-
-        fun toLoginScreen() {
-            router.smartReplace(LoginScreen())
+        fun toLoginFlowScreen() {
+            router.smartReplace(LoginFlowScreen())
         }
 
         fun toArticlesScreen(page: Int) {
