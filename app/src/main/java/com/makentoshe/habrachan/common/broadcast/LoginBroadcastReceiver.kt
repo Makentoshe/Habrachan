@@ -21,11 +21,9 @@ class LoginBroadcastReceiver : BroadcastReceiver() {
 
     companion object {
 
-        fun send(context: Context, login: String) {
-            context.sendBroadcast(Intent(ACTION).putExtra(LOGIN, login))
-        }
+        fun send(context: Context, login: String) = context.sendBroadcast(Intent(ACTION).putExtra(LOGIN, login))
 
         private const val LOGIN = "HabrachanLogin"
-        const val ACTION = "HabrachanLogoutAction"
+        const val ACTION = "HabrachanLoginAction"
     }
 }

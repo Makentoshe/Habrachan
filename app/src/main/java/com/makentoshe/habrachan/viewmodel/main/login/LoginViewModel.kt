@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.viewmodel.main.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.session.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.common.network.request.LoginRequest
 import com.makentoshe.habrachan.common.network.response.LoginResponse
@@ -15,7 +16,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
 class LoginViewModel(
-    private val sessionDao: SessionDao,
+    private val sessionDatabase: SessionDatabase,
     private val loginManager: LoginManager
 ) : ViewModel() {
 
@@ -34,7 +35,7 @@ class LoginViewModel(
     }
 
     private fun onSignIn(loginData: LoginData) {
-        val session = sessionDao.get()
+        val session = sessionDatabase.session().get()
         val request = LoginRequest.Builder(session.clientKey, session.apiKey).build(loginData.email, loginData.password)
         loginManager.login(request)
             .doOnSuccess(::onLoginResponse)
@@ -48,7 +49,9 @@ class LoginViewModel(
     }
 
     private fun onLoginSuccessResponse(response: LoginResponse.Success) {
-        sessionDao.insert(sessionDao.get().copy(tokenKey = response.accessToken))
+        val currentSession = sessionDatabase.session().get()
+        val newSession = currentSession.copy(tokenKey = response.accessToken)
+        sessionDatabase.session().insert(newSession)
     }
 
     override fun onCleared() {
@@ -56,11 +59,11 @@ class LoginViewModel(
     }
 
     class Factory(
-        private val sessionDao: SessionDao,
+        private val sessionDatabase: SessionDatabase,
         private val loginManager: LoginManager
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return LoginViewModel(sessionDao, loginManager) as T
+            return LoginViewModel(sessionDatabase, loginManager) as T
         }
     }
 }

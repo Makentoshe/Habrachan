@@ -13,6 +13,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.broadcast.LoginBroadcastReceiver
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.model.main.login.LoginData
 import com.makentoshe.habrachan.ui.main.account.login.LoginFragmentUi
@@ -25,9 +26,7 @@ import toothpick.ktp.delegate.inject
 class LoginFragment : Fragment() {
 
     private val disposables = CompositeDisposable()
-
     private val viewModel by inject<LoginViewModel>()
-    private val navigator by inject<MainFlowFragment.Navigator>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LoginFragmentUi().createView(requireContext())
@@ -53,7 +52,8 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.loginObservable.observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onLoginResponse).let(disposables::add)
+            .subscribe(::onLoginResponse)
+            .let(disposables::add)
 
         if (BuildConfig.DEBUG) {
             emailView.setText(BuildConfig.LOGIN)
@@ -62,12 +62,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun onLoginResponse(response: LoginResponse) = when(response) {
-        is LoginResponse.Success -> onLoginResponseSuccess(response)
         is LoginResponse.Error -> onLoginResponseError(response)
-    }
-
-    private fun onLoginResponseSuccess(response: LoginResponse.Success) {
-        navigator.toUserScreen()
+        else -> Unit
     }
 
     private fun onLoginResponseError(response: LoginResponse.Error) {
