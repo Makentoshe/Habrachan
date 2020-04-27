@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.model.main.articles.ArticlesSearchBroadcastReceiver
+import com.makentoshe.habrachan.common.broadcast.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.articles.ArticlesViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers

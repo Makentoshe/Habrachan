@@ -67,14 +67,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
     private fun injectUserFragment(fragment: UserFragment) {
         val module = UserFragmentModule(fragment)
-        val scope = if (fragment.parentFragment == null && BuildConfig.DEBUG) {
-            // append new scopes for debugging only user screen
-            Toothpick.openScopes(
-                ApplicationScope::class.java, MainFlowFragmentScope::class.java, UserFragmentScope::class.java
-            ).installModules(MainFlowFragmentModule(fragment))
-        } else {
-            Toothpick.openScopes(MainFlowFragmentScope::class.java, UserFragmentScope::class.java)
-        }
+        val scope = Toothpick.openScopes(ApplicationScope::class.java, UserFragmentScope::class.java)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
