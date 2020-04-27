@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.di.main.articles
 
+import com.makentoshe.habrachan.common.broadcast.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.di.common.ApplicationScope
@@ -18,7 +19,8 @@ class ArticlesFlowFragmentModule(fragment: ArticlesFlowFragment) : Module() {
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
         bind<SessionDao>().toInstance(sessionDatabase.session())
 
-        val searchBroadcastReceiver = ArticlesSearchBroadcastReceiver()
+        val searchBroadcastReceiver =
+            ArticlesSearchBroadcastReceiver()
         bind<ArticlesSearchBroadcastReceiver>().toInstance(searchBroadcastReceiver)
         bind<ArticlesSearchEpoxyController>().toInstance(getArticlesSearchEpoxyController())
     }
