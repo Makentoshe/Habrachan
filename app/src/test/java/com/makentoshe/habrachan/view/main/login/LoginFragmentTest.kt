@@ -12,8 +12,9 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.di.main.login.LoginFragmentScope
 import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentScope
+import com.makentoshe.habrachan.di.main.login.LoginFragmentScope
+import com.makentoshe.habrachan.model.main.login.LoginData
 import com.makentoshe.habrachan.model.main.login.LoginScreen
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.mockk.every
@@ -21,6 +22,7 @@ import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -39,7 +41,7 @@ import toothpick.ktp.delegate.inject
 class LoginFragmentTest : BaseRobolectricTest() {
 
     private val router by inject<Router>()
-    private val mockViewModel = mockk<LoginViewModel>()
+    private val mockViewModel = mockk<LoginViewModel>(relaxed = true)
     private val disposables = spyk(CompositeDisposable())
 
     init {
@@ -199,9 +201,33 @@ class LoginFragmentTest : BaseRobolectricTest() {
     }
 
     @Test
-    fun testShouldCheckDisposablesClearedOnFragmentDestroy() {
-        every { mockViewModel.loginObservable } returns PublishSubject.create()
+    fun testShouldSendLoginDataToViewModelOnSignInButtonClick() {
+        val signInObserver = BehaviorSubject.create<LoginData>()
+        every { mockViewModel.signInObserver } returns signInObserver
 
+        val activity = activityController.setup().get()
+        router.navigateTo(LoginScreen())
+
+        val emailEditText = activity.findViewById<EditText>(R.id.login_fragment_email_edittext)
+        emailEditText.setText("email")
+        Shadows.shadowOf(emailEditText).watchers.forEach { it.afterTextChanged(emailEditText.text) }
+
+        val passwordEditText = activity.findViewById<EditText>(R.id.login_fragment_password_edittext)
+        passwordEditText.setText("password")
+        Shadows.shadowOf(passwordEditText).watchers.forEach { it.afterTextChanged(passwordEditText.text) }
+
+        val signInButton = activity.findViewById<Button>(R.id.login_fragment_loginbutton)
+        signInButton.performClick()
+
+        signInObserver.test().assertValue { loginData ->
+            loginData.password == passwordEditText.text.toString()
+        }.assertValue { loginData ->
+            loginData.email == emailEditText.text.toString()
+        }
+    }
+
+    @Test
+    fun testShouldCheckDisposablesClearedOnFragmentDestroy() {
         activityController.setup().get()
         router.navigateTo(LoginScreen())
         router.exit()
