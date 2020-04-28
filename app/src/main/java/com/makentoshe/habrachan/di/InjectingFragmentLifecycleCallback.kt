@@ -10,10 +10,11 @@ import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
-import com.makentoshe.habrachan.di.main.account.login.LoginFragmentScope
 import com.makentoshe.habrachan.di.main.articles.*
 import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentModule
 import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentScope
+import com.makentoshe.habrachan.di.main.login.LoginFragmentModule
+import com.makentoshe.habrachan.di.main.login.LoginFragmentScope
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentModule
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentScope
 import com.makentoshe.habrachan.di.user.UserFragmentModule
@@ -68,8 +69,9 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     }
 
     private fun injectLoginFragment(fragment: LoginFragment) {
+        val module = LoginFragmentModule(fragment)
         val scope = Toothpick.openScopes(LoginFlowFragmentScope::class.java, LoginFragmentScope::class.java)
-        scope.closeOnDestroy(fragment).inject(fragment)
+        scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
     private fun injectUserFragment(fragment: UserFragment) {

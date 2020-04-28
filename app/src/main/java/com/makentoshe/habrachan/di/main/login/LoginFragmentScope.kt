@@ -1,3 +1,3 @@
-package com.makentoshe.habrachan.di.main.account.login
+package com.makentoshe.habrachan.di.main.login
 
 annotation class LoginFragmentScope
