@@ -4,6 +4,7 @@ import com.makentoshe.habrachan.common.entity.session.UserSession
 import io.mockk.spyk
 import java.io.File
 
+/** Base class for all unit tests */
 abstract class BaseTest {
 
     protected val session = spyk(UserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, BuildConfig.TOKEN_KEY))

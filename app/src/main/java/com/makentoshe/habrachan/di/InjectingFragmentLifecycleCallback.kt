@@ -3,7 +3,6 @@ package com.makentoshe.habrachan.di
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.di.article.ArticleFragmentModule
 import com.makentoshe.habrachan.di.article.ArticleFragmentScope
 import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
@@ -11,9 +10,11 @@ import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
-import com.makentoshe.habrachan.di.main.account.login.LoginFragmentScope
 import com.makentoshe.habrachan.di.main.articles.*
+import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentModule
+import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentScope
 import com.makentoshe.habrachan.di.main.login.LoginFragmentModule
+import com.makentoshe.habrachan.di.main.login.LoginFragmentScope
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentModule
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentScope
 import com.makentoshe.habrachan.di.user.UserFragmentModule
@@ -24,6 +25,7 @@ import com.makentoshe.habrachan.view.main.MainFlowFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesFlowFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesSearchFragment
+import com.makentoshe.habrachan.view.main.login.LoginFlowFragment
 import com.makentoshe.habrachan.view.main.login.LoginFragment
 import com.makentoshe.habrachan.view.user.UserArticlesFragment
 import com.makentoshe.habrachan.view.user.UserFragment
@@ -44,6 +46,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
             is ArticlesSearchFragment -> injectArticlesSearchFragment(f)
             is ArticleFragment -> injectArticleFragment(f)
             is UserArticlesFragment -> injectUserArticlesFragment(f)
+            is LoginFlowFragment -> injectLoginFlowFragment(f)
         }
     }
 
@@ -59,22 +62,21 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
+    private fun injectLoginFlowFragment(fragment: LoginFlowFragment) {
+        val module = LoginFlowFragmentModule(fragment)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java, LoginFlowFragmentScope::class.java)
+        scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
+    }
+
     private fun injectLoginFragment(fragment: LoginFragment) {
         val module = LoginFragmentModule(fragment)
-        val scope = Toothpick.openScopes(MainFlowFragmentScope::class.java, LoginFragmentScope::class.java)
+        val scope = Toothpick.openScopes(LoginFlowFragmentScope::class.java, LoginFragmentScope::class.java)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
     private fun injectUserFragment(fragment: UserFragment) {
         val module = UserFragmentModule(fragment)
-        val scope = if (fragment.parentFragment == null && BuildConfig.DEBUG) {
-            // append new scopes for debugging only user screen
-            Toothpick.openScopes(
-                ApplicationScope::class.java, MainFlowFragmentScope::class.java, UserFragmentScope::class.java
-            ).installModules(MainFlowFragmentModule(fragment))
-        } else {
-            Toothpick.openScopes(MainFlowFragmentScope::class.java, UserFragmentScope::class.java)
-        }
+        val scope = Toothpick.openScopes(ApplicationScope::class.java, UserFragmentScope::class.java)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 

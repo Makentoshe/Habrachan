@@ -17,10 +17,6 @@ abstract class SessionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(userSession: UserSession)
 
-    /** Remove all rows from the database */
-    @Query("DELETE FROM usersession")
-    abstract fun clear()
-
     val isEmpty: Boolean
         get() = get() == null
 

@@ -33,14 +33,9 @@ class UserViewModel(
     val userObservable: Observable<UserResponse>
         get() = userResponseSubject
 
-    private val userLogoutSubject = PublishSubject.create<Unit>()
-    val userLogoutObserver: Observer<Unit> = userLogoutSubject
-
     init {
         userRequestSubject.observeOn(Schedulers.io()).map(::onUserRequest)
             .subscribe(userResponseSubject::onNext).let(disposables::add)
-
-        userLogoutSubject.observeOn(Schedulers.io()).doOnComplete(::onUserLogout).subscribe().let(disposables::add)
     }
 
     private fun onUserRequest(userAccount: UserAccount) = when (userAccount) {
@@ -85,13 +80,6 @@ class UserViewModel(
         } else {
             UserResponse.Success(sessionDatabase.me().get(), "")
         }
-    }
-
-    private fun onUserLogout() {
-        sessionDatabase.me().clear()
-        val currentSession = sessionDatabase.session().get()
-        val newSession = currentSession.copy(tokenKey = "")
-        sessionDatabase.session().insert(newSession)
     }
 
     override fun onCleared() = disposables.clear()

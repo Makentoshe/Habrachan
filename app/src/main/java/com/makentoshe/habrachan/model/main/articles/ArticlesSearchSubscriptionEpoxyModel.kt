@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.model.main.articles
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyModel
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.broadcast.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 
 class ArticlesSearchSubscriptionEpoxyModel : EpoxyModel<TextView>() {

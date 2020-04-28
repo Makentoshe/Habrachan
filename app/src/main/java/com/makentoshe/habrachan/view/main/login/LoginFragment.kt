@@ -16,7 +16,6 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.model.main.login.LoginData
 import com.makentoshe.habrachan.ui.main.account.login.LoginFragmentUi
-import com.makentoshe.habrachan.view.main.MainFlowFragment
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -24,10 +23,8 @@ import toothpick.ktp.delegate.inject
 
 class LoginFragment : Fragment() {
 
-    private val disposables = CompositeDisposable()
-
+    private val disposables by inject<CompositeDisposable>()
     private val viewModel by inject<LoginViewModel>()
-    private val navigator by inject<MainFlowFragment.Navigator>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LoginFragmentUi().createView(requireContext())
@@ -43,7 +40,7 @@ class LoginFragment : Fragment() {
         }
 
         passwordView.addTextChangedListener {
-            signInView.isEnabled = !it.isNullOrEmpty() && !passwordView.text.isNullOrEmpty()
+            signInView.isEnabled = !it.isNullOrEmpty() && !emailView.text.isNullOrEmpty()
         }
 
         signInView.setOnClickListener {
@@ -53,7 +50,8 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.loginObservable.observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onLoginResponse).let(disposables::add)
+            .subscribe(::onLoginResponse)
+            .let(disposables::add)
 
         if (BuildConfig.DEBUG) {
             emailView.setText(BuildConfig.LOGIN)
@@ -61,13 +59,9 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun onLoginResponse(response: LoginResponse) = when(response) {
-        is LoginResponse.Success -> onLoginResponseSuccess(response)
+    private fun onLoginResponse(response: LoginResponse) = when (response) {
         is LoginResponse.Error -> onLoginResponseError(response)
-    }
-
-    private fun onLoginResponseSuccess(response: LoginResponse.Success) {
-        navigator.toUserScreen()
+        else -> Unit
     }
 
     private fun onLoginResponseError(response: LoginResponse.Error) {

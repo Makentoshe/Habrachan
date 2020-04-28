@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.main.articles
+package com.makentoshe.habrachan.common.broadcast
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -15,7 +15,9 @@ class ArticlesSearchBroadcastReceiver : BroadcastReceiver() {
     val broadcastObservable: Observable<ArticlesRequestSpec> = broadcastSubject
 
     override fun onReceive(context: Context, intent: Intent) {
-        val spec = intent.getBundleExtra(ACTION).get(ACTION) as ArticlesRequestSpec
+        val spec = intent.getBundleExtra(ACTION).get(
+            ACTION
+        ) as ArticlesRequestSpec
         broadcastSubject.onNext(spec)
     }
 
@@ -28,7 +30,8 @@ class ArticlesSearchBroadcastReceiver : BroadcastReceiver() {
         fun sendBroadcast(context: Context, spec: ArticlesRequestSpec) {
             val bundle = Bundle()
             bundle.putSerializable(ACTION, spec)
-            val intent = Intent(ACTION).putExtra(ACTION, bundle)
+            val intent = Intent(ACTION).putExtra(
+                ACTION, bundle)
             context.sendBroadcast(intent)
         }
 

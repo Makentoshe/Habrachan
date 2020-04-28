@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.model.main.articles.ArticlesSearchBroadcastReceiver
+import com.makentoshe.habrachan.common.broadcast.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.model.main.articles.ArticlesSearchEpoxyController
 import com.makentoshe.habrachan.ui.main.articles.ArticlesSearchFragmentUi
 import io.reactivex.disposables.CompositeDisposable

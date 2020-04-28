@@ -16,6 +16,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.broadcast.LoginBroadcastReceiver
+import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.entity.User
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.request.ImageRequest
@@ -37,7 +39,6 @@ class UserFragment : Fragment() {
     private val disposables = CompositeDisposable()
     private val arguments = Arguments(this)
     private val navigator by inject<Navigator>()
-    private val flowNavigator by inject<MainFlowFragment.Navigator>()
     private val viewModel by inject<UserViewModel>()
     private val userAvatarViewModel by inject<UserAvatarViewModel>()
 
@@ -107,9 +108,7 @@ class UserFragment : Fragment() {
     }
 
     private fun onUserLogout(): Boolean {
-        clearUserLoginInBottomNavigationBar()
-        viewModel.userLogoutObserver.onComplete()
-        flowNavigator.toLoginScreen()
+        LogoutBroadcastReceiver.send(requireContext())
         return true
     }
 
@@ -121,7 +120,7 @@ class UserFragment : Fragment() {
     @SuppressLint("RestrictedApi")
     private fun onUserSuccess(response: UserResponse.Success) {
         if (arguments.userAccount == UserAccount.Me) {
-            setUserLoginInBottomNavigationBar(response.user)
+            LoginBroadcastReceiver.send(requireContext(), response.user.login)
         }
 
         userAvatarViewModel.avatarObserver.onNext(ImageRequest(response.user.avatar))
@@ -188,20 +187,6 @@ class UserFragment : Fragment() {
     private fun onAvatarError(response: ImageResponse.Error) {
         val avatarView = requireView().findViewById<ImageView>(R.id.user_fragment_avatar)
         ImageViewController(avatarView).setAvatarStub()
-    }
-
-    private fun setUserLoginInBottomNavigationBar(user: User) {
-        val navigation = requireActivity().findViewById<BottomNavigationView>(R.id.main_bottom_navigation) ?: return
-        val item = navigation.menu.findItem(R.id.action_account)
-        item.setIcon(R.drawable.ic_account)
-        item.title = user.login
-    }
-
-    private fun clearUserLoginInBottomNavigationBar() {
-        val navigation = requireActivity().findViewById<BottomNavigationView>(R.id.main_bottom_navigation) ?: return
-        val item = navigation.menu.findItem(R.id.action_account)
-        item.setIcon(R.drawable.ic_account_outline)
-        item.setTitle(R.string.menu_account)
     }
 
     override fun onDestroy() {

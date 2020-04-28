@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.session.SessionDao
-import com.makentoshe.habrachan.model.main.articles.ArticlesSearchBroadcastReceiver
+import com.makentoshe.habrachan.common.broadcast.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.model.main.articles.ArticlesSearchEpoxyController
 import com.makentoshe.habrachan.ui.main.articles.ArticlesFlowFragmentUi
 import com.sothree.slidinguppanel.SlidingUpPanelLayout

@@ -55,6 +55,11 @@ android {
             java.srcDir sharedTestDir
         }
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 
@@ -176,6 +181,11 @@ dependencies {
     def testFragment = "1.3.0-alpha03"
     implementation "androidx.fragment:fragment:$testFragment"
     debugImplementation "androidx.fragment:fragment-testing:$testFragment"
+
+    // Robolectric
+    // http://robolectric.org
+    def robolectric = "4.3"
+    testImplementation "org.robolectric:robolectric:$robolectric"
 
     // Mockk
     // https://github.com/mockk/mockk
