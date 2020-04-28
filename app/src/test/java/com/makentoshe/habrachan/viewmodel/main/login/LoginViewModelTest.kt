@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.viewmodel.main.login
 
 import com.makentoshe.habrachan.BaseTest
 import com.makentoshe.habrachan.common.database.session.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.session.UserSession
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.common.network.response.LoginResponse
@@ -27,8 +28,10 @@ class LoginViewModelTest: BaseTest() {
 
     @Before
     fun before() {
+        val mockSessionDatabase = mockk<SessionDatabase>()
+        every { mockSessionDatabase.session() } returns sessionDao
         every { sessionDao.get() } returns session
-        viewModel = LoginViewModel(sessionDao, loginManager)
+        viewModel = LoginViewModel(mockSessionDatabase, loginManager)
     }
 
     @Test

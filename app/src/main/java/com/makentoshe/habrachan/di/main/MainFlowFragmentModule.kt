@@ -1,7 +1,8 @@
 package com.makentoshe.habrachan.di.main
 
-import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.broadcast.LoginBroadcastReceiver
+import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.navigation.Navigator
@@ -14,9 +15,11 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
-class MainFlowFragmentModule(fragment: Fragment) : Module() {
+class MainFlowFragmentModule(fragment: MainFlowFragment) : Module() {
 
     private val sessionDatabase by inject<SessionDatabase>()
+    private val logoutBroadcastReceiver = LogoutBroadcastReceiver()
+    private val loginBroadcastReceiver = LoginBroadcastReceiver()
 
     init {
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
@@ -25,5 +28,7 @@ class MainFlowFragmentModule(fragment: Fragment) : Module() {
         val (router, navigatorHolder) = Cicerone.create(Router()).let { it.router to it.navigatorHolder }
         bind<MainFlowFragment.Navigator>().toInstance(MainFlowFragment.Navigator(router, navigatorHolder, navigator))
         bind<SessionDao>().toInstance(sessionDatabase.session())
+        bind<LogoutBroadcastReceiver>().toInstance(logoutBroadcastReceiver)
+        bind<LoginBroadcastReceiver>().toInstance(loginBroadcastReceiver)
     }
 }

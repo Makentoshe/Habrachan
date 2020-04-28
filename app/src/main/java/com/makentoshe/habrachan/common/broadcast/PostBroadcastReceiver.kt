@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.article
+package com.makentoshe.habrachan.common.broadcast
 
 import android.content.BroadcastReceiver
 import android.content.Context
