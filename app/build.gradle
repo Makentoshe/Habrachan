@@ -7,11 +7,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.makentoshe.habrachan"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -54,6 +54,9 @@ android {
         androidTest {
             java.srcDir sharedTestDir
         }
+    }
+    lintOptions {
+        lintConfig file("lint.xml")
     }
     testOptions {
         unitTests {
@@ -156,8 +159,10 @@ dependencies {
     def collapsing = "27.1.1"
     implementation "net.opacapp:multiline-collapsingtoolbar:$collapsing"
 
+    def core = "1.2.0"
+    implementation "androidx.core:core-ktx:$core"
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
 

@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.view.user
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -80,7 +81,7 @@ class UserFragment : Fragment() {
     private fun setToolbarBehavior() {
         toolbarView.setNavigationOnClickListener { navigator.back() }
         toolbarView.setOnMenuItemClickListener(::onUserOptionsMenuClick)
-        toolbarView.overflowIcon = buildToolbarOverflowIcon(toolbarView)
+        toolbarView.overflowIcon = buildToolbarOverflowIcon()
         if (arguments.userAccount != UserAccount.Me) {
             toolbarView.setNavigationIcon(R.drawable.ic_arrow_back)
             toolbarView.menu.setGroupVisible(R.id.group_user_custom, true)
@@ -91,12 +92,18 @@ class UserFragment : Fragment() {
         }
     }
 
-    private fun buildToolbarOverflowIcon(toolbar: Toolbar): Drawable {
+    @SuppressLint("NewApi")
+    private fun buildToolbarOverflowIcon(): Drawable {
         val toolbarOverflowIcon = resources.getDrawable(R.drawable.ic_overflow, requireContext().theme)
         val styleTypedArray = requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.habrachanToolbar))
         val styleResource = styleTypedArray.getResourceIdOrThrow(0)
         val colorTypedArray = requireContext().obtainStyledAttributes(styleResource, intArrayOf(android.R.attr.tint))
-        val color = resources.getColor(colorTypedArray.getResourceIdOrThrow(0), requireContext().theme)
+        val color = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M/*23*/) {
+            @Suppress("DEPRECATION")
+            resources.getColor(colorTypedArray.getResourceIdOrThrow(0))
+        } else {
+            resources.getColor(colorTypedArray.getResourceIdOrThrow(0), requireContext().theme)
+        }
         colorTypedArray.recycle()
         styleTypedArray.recycle()
         return toolbarOverflowIcon.apply { setTint(color) }
