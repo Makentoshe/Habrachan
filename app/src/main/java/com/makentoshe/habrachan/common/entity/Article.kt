@@ -4,6 +4,7 @@ import android.content.res.Resources
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.model.article.html.*
 
@@ -105,6 +106,14 @@ data class Article(
         builder.addAddon(SpoilerAddon())
         builder.addAddon(ImageAddon())
         return builder.build()
+    }
+
+    fun toJson(): String = Gson().toJson(this)
+
+    companion object {
+        fun fromJson(json: String): Article {
+            return Gson().fromJson(json, Article::class.java)
+        }
     }
 
 }
