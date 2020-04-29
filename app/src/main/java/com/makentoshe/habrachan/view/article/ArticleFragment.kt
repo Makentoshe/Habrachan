@@ -14,6 +14,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.session.SessionDao
+import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.response.ArticleResponse
 import com.makentoshe.habrachan.common.network.response.ImageResponse
@@ -27,8 +28,8 @@ import com.makentoshe.habrachan.model.comments.CommentsScreen
 import com.makentoshe.habrachan.model.images.PostImageScreen
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.model.user.UserScreen
-import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
 import com.makentoshe.habrachan.ui.article.ArticleFragmentUi
+import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
@@ -233,8 +234,14 @@ class ArticleFragment : Fragment() {
     }
 
     class Factory {
-        fun build(postId: Int) = ArticleFragment().apply {
-            arguments.articleId = postId
+
+        fun build(articleId: Int) = ArticleFragment().apply {
+            arguments.articleId = articleId
+        }
+
+        fun build(article: Article) = ArticleFragment().apply {
+            arguments.articleId = article.id
+            arguments.article = article
         }
     }
 
@@ -280,8 +287,13 @@ class ArticleFragment : Fragment() {
             set(value) = fragmentArguments.putInt(ID, value)
             get() = fragmentArguments.getInt(ID) ?: -1
 
+        var article: Article?
+            set(value) = fragmentArguments.putString(ARTICLE, value?.toJson())
+            get() = fragmentArguments.getString(ARTICLE)?.let(Article::fromJson)
+
         companion object {
             private const val ID = "Id"
+            private const val ARTICLE = "Article"
         }
     }
 
