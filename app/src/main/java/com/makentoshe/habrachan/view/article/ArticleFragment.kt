@@ -28,7 +28,7 @@ import com.makentoshe.habrachan.model.images.PostImageScreen
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.model.user.UserScreen
 import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
-import com.makentoshe.habrachan.ui.article.PostFragmentUi
+import com.makentoshe.habrachan.ui.article.ArticleFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
@@ -48,7 +48,7 @@ class ArticleFragment : Fragment() {
     private val disposables = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return PostFragmentUi().createView(requireContext())
+        return ArticleFragmentUi(container).createView(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -255,7 +255,7 @@ class ArticleFragment : Fragment() {
         }
 
         fun toUserScreen(userName: String): Boolean {
-            if (sessionDao.get()!!.isLoggedIn) {
+            if (sessionDao.get().isLoggedIn) {
                 router.navigateTo(UserScreen(UserAccount.User(userName)))
                 return true
             } else {
