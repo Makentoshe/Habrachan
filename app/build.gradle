@@ -189,7 +189,7 @@ dependencies {
 
     // Robolectric
     // http://robolectric.org
-    def robolectric = "4.3"
+    def robolectric = "4.3.1"
     testImplementation "org.robolectric:robolectric:$robolectric"
 
     // Mockk
