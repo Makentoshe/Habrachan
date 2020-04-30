@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.model.article
 
 import android.annotation.SuppressLint
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.makentoshe.habrachan.view.article.ArticleFragment
@@ -15,6 +16,10 @@ class WebViewController(private val fragment: ArticleFragment, private val javaS
 
         override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
             fragment.onArticleError(description ?: "Description is null. Error code: $errorCode")
+        }
+
+        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            return true
         }
     }
 

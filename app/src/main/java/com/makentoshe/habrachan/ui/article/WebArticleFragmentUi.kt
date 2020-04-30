@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.makentoshe.habrachan.R
 
-class ArticleFragmentUi(private val root: ViewGroup?) {
+class WebArticleFragmentUi(private val root: ViewGroup?) {
     fun createView(context: Context): View {
-        return LayoutInflater.from(context).inflate(R.layout.article_fragment, root, false)
+        return LayoutInflater.from(context).inflate(R.layout.article_fragment_web, root, false)
     }
 }

@@ -16,7 +16,6 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.images.PostImageFragmentPageModule
 import com.makentoshe.habrachan.di.images.PostImageFragmentPageScope
-import com.makentoshe.habrachan.model.article.ArticleScreen
 import com.makentoshe.habrachan.ui.images.PostImageFragmentPageUi
 import com.makentoshe.habrachan.viewmodel.images.PostImageFragmentViewModel
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -116,7 +115,6 @@ class PostImageFragmentPage : Fragment() {
          * and returns to [MainFlowScreen]. No matter what arguments we pass to [ArticleScreen]:
          * it will be found in backstack and displayed without problems
          */
-
         fun back() = router.exit()
     }
 

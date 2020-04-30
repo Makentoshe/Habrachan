@@ -9,7 +9,7 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.model.article.ArticleScreen
+import com.makentoshe.habrachan.model.article.WebArticleScreen
 
 @EpoxyModelClass(layout = R.layout.main_articles_element)
 abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHolder>() {
@@ -77,20 +77,19 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
 
     class Factory(private val router: Router) {
 
-        fun build(id: Int, enableSmartDivide: Boolean, post: Article): ArticleEpoxyModel {
+        fun build(id: Int, enableSmartDivide: Boolean, article: Article): ArticleEpoxyModel {
             val model = ArticleEpoxyModel_()
             model.id("article", id.toString())
-            model.title = post.title
-            model.author = post.author.login
-            model.timePublished = post.timePublished
-            model.hubs = post.hubs.joinToString(", ") { it.title }
-            model.score = post.score
-            model.readingsCount = post.readingCount
-            model.commentsCount = post.commentsCount
+            model.title = article.title
+            model.author = article.author.login
+            model.timePublished = article.timePublished
+            model.hubs = article.hubs.joinToString(", ") { it.title }
+            model.score = article.score
+            model.readingsCount = article.readingCount
+            model.commentsCount = article.commentsCount
             model.displayDivider = if (enableSmartDivide) id % 20 != 19 else true
             model.clickListener = View.OnClickListener {
-                val screen = ArticleScreen(post.id)
-                router.navigateTo(screen)
+                router.navigateTo(WebArticleScreen(article.id))
             }
             return model
         }

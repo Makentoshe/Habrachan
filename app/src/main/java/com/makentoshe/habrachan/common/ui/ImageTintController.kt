@@ -33,7 +33,7 @@ class ImageTintController(private val imageView: ImageView) {
         imageView.imageTintList = null
     }
 
-    private fun setTint(context: Context, @ColorRes colorResource: Int) {
+    fun setTint(context: Context, @ColorRes colorResource: Int) {
         val drawable = DrawableCompat.wrap(imageView.drawable)
         val color = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context.resources.getColor(colorResource, context.theme)
