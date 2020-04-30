@@ -10,7 +10,7 @@ class UserArticlesPagedListEpoxyController(
 ) : PagedListEpoxyController<Article>() {
 
     override fun buildItemModel(currentPosition: Int, item: Article?): EpoxyModel<*> {
-        return articleModelFactory.build(currentPosition, enableSmartDivide = false, post = item!!)
+        return articleModelFactory.build(currentPosition, enableSmartDivide = false, article = item!!)
     }
 }
 
