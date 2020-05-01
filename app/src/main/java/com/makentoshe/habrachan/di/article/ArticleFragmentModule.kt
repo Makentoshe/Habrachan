@@ -7,12 +7,11 @@ import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.model.article.JavaScriptInterface
-import com.makentoshe.habrachan.model.article.WebViewController
 import com.makentoshe.habrachan.view.article.ArticleFragment
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
+import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -21,7 +20,6 @@ import toothpick.ktp.delegate.inject
 
 class ArticleFragmentModule(fragment: ArticleFragment) : Module() {
 
-    private val javascriptInterface = JavaScriptInterface()
     private val avatarManager : ImageManager
     private val articlesManager : ArticlesManager
 
@@ -35,9 +33,9 @@ class ArticleFragmentModule(fragment: ArticleFragment) : Module() {
         avatarManager = ImageManager.Builder(client).build()
         articlesManager = ArticlesManager.Builder(client).build()
 
-        bind<WebViewController>().toInstance(WebViewController(fragment, javascriptInterface))
+        bind<CompositeDisposable>().toInstance(CompositeDisposable())
+
         bind<ArticleFragment.Navigator>().toInstance(ArticleFragment.Navigator(router, sessionDatabase.session()))
-        bind<JavaScriptInterface>().toInstance(javascriptInterface)
 
         val userAvatarViewModel = getUserAvatarViewModel(fragment)
         bind<UserAvatarViewModel>().toInstance(userAvatarViewModel)

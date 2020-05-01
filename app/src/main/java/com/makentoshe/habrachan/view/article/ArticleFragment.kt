@@ -19,6 +19,7 @@ import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.VoteArticleResponse
 import com.makentoshe.habrachan.common.ui.ImageTintController
 import com.makentoshe.habrachan.common.ui.ImageViewController
+import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.common.ui.TextScoreController
 import com.makentoshe.habrachan.model.comments.CommentsScreen
 import com.makentoshe.habrachan.model.images.PostImageScreen
@@ -33,6 +34,7 @@ import toothpick.ktp.delegate.inject
 
 abstract class ArticleFragment : Fragment() {
 
+    protected val disposables by inject<CompositeDisposable>()
     protected val navigator by inject<Navigator>()
     protected val getArticleViewModel by inject<ArticleFragmentViewModel>()
     protected val userAvatarViewModel by inject<UserAvatarViewModel>()
@@ -40,7 +42,6 @@ abstract class ArticleFragment : Fragment() {
 
     @Suppress("LeakingThis")
     protected val arguments = Arguments(this)
-    protected val disposables = CompositeDisposable()
 
     /* Views for displaying in toolbar scope */
     private lateinit var calculatorView: TextView   // View for hack the toolbar height
@@ -67,7 +68,6 @@ abstract class ArticleFragment : Fragment() {
     private lateinit var readingCountView: TextView
     private lateinit var commentsCountView: TextView
     private lateinit var commentsView: View
-    private lateinit var bottombarView: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         containerView = view.findViewById(R.id.article_fragment_content_toolbar_container)
@@ -92,7 +92,6 @@ abstract class ArticleFragment : Fragment() {
         readingCountView = view.findViewById(R.id.article_fragment_bottombar_reading_count_text)
         commentsCountView = view.findViewById(R.id.article_fragment_bottombar_comments_count_text)
         commentsView = view.findViewById(R.id.article_fragment_bottombar_comments)
-        bottombarView = view.findViewById(R.id.article_fragment_bottombar)
 
         if (savedInstanceState == null) {
             val request = getArticleViewModel.createRequest(arguments.articleId)
@@ -128,9 +127,8 @@ abstract class ArticleFragment : Fragment() {
         loginView.text = response.article.author.login
         timePublishedView.text = response.article.timePublished
         authorView.setOnClickListener {
-            if (!navigator.toUserScreen(response.article.author.login)) {
-                displaySnackbarError(resources.getString(R.string.should_be_logged_in_for_user))
-            }
+            val success = navigator.toUserScreen(response.article.author.login)
+            if (!success) displaySnackbarError(resources.getString(R.string.should_be_logged_in_for_user))
         }
         appbarLayout.setExpanded(true, true)
         containerView.visibility = View.VISIBLE
@@ -164,10 +162,6 @@ abstract class ArticleFragment : Fragment() {
         retryButton.visibility = View.VISIBLE
     }
 
-    fun onArticleDisplayed() {
-        bottombarView.visibility = View.VISIBLE
-    }
-
     private fun onArticleVoted(response: VoteArticleResponse) = when (response) {
         is VoteArticleResponse.Success -> onArticleVotedSuccess(response)
         is VoteArticleResponse.Error -> onArticleVotedError(response)
@@ -180,11 +174,11 @@ abstract class ArticleFragment : Fragment() {
     }
 
     private fun markVoteUpButton() {
-        ImageTintController(voteUpIcon).setPositiveTint(requireContext())
+        ImageTintController.from(voteUpIcon).setPositiveTint(requireContext())
     }
 
     private fun markVoteDownButton() {
-        ImageTintController(voteDownIcon).setNegativeTint(requireContext())
+        ImageTintController.from(voteDownIcon).setNegativeTint(requireContext())
     }
 
     private fun onArticleVotedError(response: VoteArticleResponse.Error) {
@@ -197,9 +191,7 @@ abstract class ArticleFragment : Fragment() {
     }
 
     private fun displaySnackbarError(message: String) {
-        val snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE)
-        snackbar.setAction(R.string.got_it) { snackbar.dismiss() }
-        snackbar.show()
+        SnackbarErrorController.from(requireView()).displayIndefiniteMessage(message)
     }
 
     private fun onRetryClicked() {
@@ -213,18 +205,17 @@ abstract class ArticleFragment : Fragment() {
 
     private fun onAvatarReceived(response: ImageResponse) = when (response) {
         is ImageResponse.Success -> onAvatarSuccess(response)
-        is ImageResponse.Error -> onAvatarError(response)
+        is ImageResponse.Error -> onAvatarError()
     }
 
     private fun onAvatarSuccess(response: ImageResponse.Success) {
-        if (!response.isStub) {
-            ImageViewController(avatarView).setAvatarFromByteArray(response.bytes)
-            ImageTintController(avatarView).clear()
-        }
+        if (response.isStub) return
+        ImageViewController.from(avatarView).setAvatarFromByteArray(response.bytes)
+        ImageTintController.from(avatarView).clear()
     }
 
-    private fun onAvatarError(response: ImageResponse.Error) {
-        ImageViewController(avatarView).setAvatarStub()
+    private fun onAvatarError() {
+        ImageViewController.from(avatarView).setAvatarStub()
     }
 
     override fun onDestroy() {
@@ -284,7 +275,7 @@ abstract class ArticleFragment : Fragment() {
 
         var articleId: Int
             set(value) = fragmentArguments.putInt(ID, value)
-            get() = fragmentArguments.getInt(ID) ?: -1
+            get() = fragmentArguments.getInt(ID, -1)
 
         var article: Article?
             set(value) = fragmentArguments.putString(ARTICLE, value?.toJson())

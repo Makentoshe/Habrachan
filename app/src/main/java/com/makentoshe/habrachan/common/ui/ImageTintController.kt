@@ -38,10 +38,17 @@ class ImageTintController(private val imageView: ImageView) {
         val color = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context.resources.getColor(colorResource, context.theme)
         } else {
+            @Suppress("DEPRECATION")
             context.resources.getColor(colorResource)
         }
         drawable.setTint(color)
         imageView.setImageDrawable(drawable)
     }
 
+    companion object {
+
+        fun from(imageView: ImageView): ImageTintController {
+            return ImageTintController(imageView)
+        }
+    }
 }

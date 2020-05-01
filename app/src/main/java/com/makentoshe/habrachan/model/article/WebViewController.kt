@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.makentoshe.habrachan.view.article.ArticleFragment
+import com.makentoshe.habrachan.view.article.WebArticleFragment
 
-class WebViewController(private val fragment: ArticleFragment, private val javaScriptInterface: JavaScriptInterface) {
+class WebViewController(
+    private val fragment: WebArticleFragment,
+    private val javaScriptInterface: JavaScriptInterface
+) {
 
     private val webViewClient = object : WebViewClient() {
 

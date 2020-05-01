@@ -22,6 +22,7 @@ class WebArticleFragment : ArticleFragment() {
     private val javaScriptInterface by inject<JavaScriptInterface>()
 
     private lateinit var webView: WebView
+    private lateinit var bottombarView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return WebArticleFragmentUi(container).createView(requireContext())
@@ -29,6 +30,7 @@ class WebArticleFragment : ArticleFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         webView = view.findViewById(R.id.article_fragment_webview)
+        bottombarView = view.findViewById(R.id.article_fragment_bottombar)
         super.onViewCreated(view, savedInstanceState)
         webViewController.init(webView)
         javaScriptInterface.imageObservable.subscribe(navigator::toArticleResourceScreen).let(disposables::add)
@@ -41,5 +43,10 @@ class WebArticleFragment : ArticleFragment() {
             val base64content = Base64.encodeToString(html.toByteArray(), Base64.DEFAULT)
             webView.loadData(base64content, "text/html; charset=UTF-8", "base64")
         }
+    }
+
+    //todo закрыть интерфейсом
+    fun onArticleDisplayed() {
+        bottombarView.visibility = View.VISIBLE
     }
 }
