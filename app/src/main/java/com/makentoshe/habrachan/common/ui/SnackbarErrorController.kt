@@ -16,5 +16,10 @@ class SnackbarErrorController(private val anchor: View) {
         Snackbar.make(anchor, message, Snackbar.LENGTH_LONG).show()
     }
 
+    companion object {
+        fun from(anchor: View): SnackbarErrorController {
+            return SnackbarErrorController(anchor)
+        }
+    }
 }
 

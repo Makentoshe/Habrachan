@@ -34,4 +34,10 @@ class ImageViewController(private val imageView: ImageView) {
         imageView.setImageDrawable(drawable)
         imageView.visibility = View.VISIBLE
     }
+
+    companion object {
+        fun from(imageView: ImageView): ImageViewController {
+            return ImageViewController(imageView)
+        }
+    }
 }
