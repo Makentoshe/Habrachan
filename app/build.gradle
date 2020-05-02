@@ -66,7 +66,6 @@ android {
 }
 
 
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -158,6 +157,14 @@ dependencies {
     // https://github.com/opacapp/multiline-collapsingtoolbar
     def collapsing = "27.1.1"
     implementation "net.opacapp:multiline-collapsingtoolbar:$collapsing"
+
+    // Markwon
+    // https://github.com/noties/Markwon
+    def markwon = "4.3.1"
+    implementation "io.noties.markwon:core:$markwon"
+    implementation "io.noties.markwon:html:$markwon"
+    implementation "io.noties.markwon:image:$markwon"
+    implementation "io.noties.markwon:ext-tables:$markwon"
 
     def core = "1.2.0"
     implementation "androidx.core:core-ktx:$core"

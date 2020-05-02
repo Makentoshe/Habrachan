@@ -3,10 +3,7 @@ package com.makentoshe.habrachan.di
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.makentoshe.habrachan.di.article.ArticleFragmentModule
-import com.makentoshe.habrachan.di.article.ArticleFragmentScope
-import com.makentoshe.habrachan.di.article.WebArticleFragmentModule
-import com.makentoshe.habrachan.di.article.WebArticleFragmentScope
+import com.makentoshe.habrachan.di.article.*
 import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
@@ -22,6 +19,7 @@ import com.makentoshe.habrachan.di.user.UserArticlesFragmentScope
 import com.makentoshe.habrachan.di.user.UserFragmentModule
 import com.makentoshe.habrachan.di.user.UserFragmentScope
 import com.makentoshe.habrachan.view.article.ArticleFragment
+import com.makentoshe.habrachan.view.article.NativeArticleFragment
 import com.makentoshe.habrachan.view.article.WebArticleFragment
 import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.view.main.MainFlowFragment
@@ -48,6 +46,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
             is ArticlesFragment -> injectArticlesFragment(f)
             is ArticlesSearchFragment -> injectArticlesSearchFragment(f)
             is WebArticleFragment -> injectWebArticleFragment(f)
+            is NativeArticleFragment -> injectNativeArticleFragment(f)
             is UserArticlesFragment -> injectUserArticlesFragment(f)
             is LoginFlowFragment -> injectLoginFlowFragment(f)
         }
@@ -106,6 +105,13 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         Toothpick.openScopes(
             ApplicationScope::class.java, ArticleFragmentScope::class.java, WebArticleFragmentScope::class.java
         ).closeOnDestroy(fragment).installModules(articleModule, webArticleModule).inject(fragment)
+    }
+
+    private fun injectNativeArticleFragment(fragment: NativeArticleFragment) {
+        val articleModule = ArticleFragmentModule(fragment)
+        Toothpick.openScopes(
+            ApplicationScope::class.java, ArticleFragmentScope::class.java, NativeArticleFragmentScope::class.java
+        ).closeOnDestroy(fragment).installModules(articleModule).inject(fragment)
     }
 
     private fun injectUserArticlesFragment(fragment: UserArticlesFragment) {
