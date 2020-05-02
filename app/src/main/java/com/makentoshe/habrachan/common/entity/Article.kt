@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.model.article.html.*
+import io.noties.markwon.ext.tables.Table
 
 @Entity
 data class Article(
@@ -105,6 +106,7 @@ data class Article(
         builder.addAddon(StyleAddon(resources))
         builder.addAddon(SpoilerAddon())
         builder.addAddon(ImageAddon())
+        builder.addAddon(TableAddon())
         return builder.build()
     }
 

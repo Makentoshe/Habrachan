@@ -70,3 +70,7 @@ table {
     overflow-x: auto;
     white-space: nowrap;
 }
+
+.table_img {
+    white-space: normal;
+}

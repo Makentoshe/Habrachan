@@ -16,3 +16,4 @@ class StyleAddon(private val resources: Resources) : HtmlBuilder.Addon {
         return Element("style").text(cssBody)
     }
 }
+
