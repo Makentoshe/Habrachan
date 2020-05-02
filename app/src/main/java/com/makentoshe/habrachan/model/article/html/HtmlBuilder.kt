@@ -12,8 +12,9 @@ class HtmlBuilder(post: Article) {
 
     private val addons = ArrayList<Addon>()
 
-    fun addAddon(addon: Addon) {
+    fun addAddon(addon: Addon): HtmlBuilder {
         addons.add(addon)
+        return this
     }
 
     fun build(): String {

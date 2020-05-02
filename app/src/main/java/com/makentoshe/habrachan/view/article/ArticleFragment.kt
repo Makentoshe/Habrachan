@@ -57,7 +57,7 @@ abstract class ArticleFragment : Fragment() {
     private lateinit var messageView: TextView
     private lateinit var retryButton: MaterialButton
     private lateinit var progressBar: ProgressBar
-    private lateinit var scrollView: CustomNestedScrollView
+    private lateinit var scrollView: View
 
     /* Views for displaying in bottom scope */
     private lateinit var voteTextView: TextView
@@ -230,6 +230,15 @@ abstract class ArticleFragment : Fragment() {
         }
 
         fun buildWeb(article: Article) = WebArticleFragment().apply {
+            arguments.articleId = article.id
+            arguments.article = article
+        }
+
+        fun buildNative(articleId: Int) = NativeArticleFragment().apply {
+            arguments.articleId = articleId
+        }
+
+        fun buildNative(article: Article) = NativeArticleFragment().apply {
             arguments.articleId = article.id
             arguments.article = article
         }

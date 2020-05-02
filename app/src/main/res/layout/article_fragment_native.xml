@@ -16,7 +16,7 @@
 
         <include layout="@layout/article_fragment_content_toolbar" />
 
-        <include layout="@layout/article_fragment_content_web" />
+        <include layout="@layout/article_fragment_content_native" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
