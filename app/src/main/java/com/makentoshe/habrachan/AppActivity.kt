@@ -5,8 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.common.navigation.Navigator
 import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.model.article.NativeArticleScreen
-import com.makentoshe.habrachan.model.article.WebArticleScreen
 import com.makentoshe.habrachan.model.main.MainFlowScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import toothpick.ktp.delegate.inject

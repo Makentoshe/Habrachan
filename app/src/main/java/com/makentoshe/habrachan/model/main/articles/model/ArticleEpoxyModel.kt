@@ -9,7 +9,6 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.model.article.NativeArticleScreen
 import com.makentoshe.habrachan.model.article.WebArticleScreen
 
 @EpoxyModelClass(layout = R.layout.main_articles_element)

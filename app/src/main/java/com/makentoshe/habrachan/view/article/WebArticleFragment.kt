@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.network.response.ArticleResponse
-import com.makentoshe.habrachan.model.article.JavaScriptInterface
-import com.makentoshe.habrachan.model.article.WebViewController
+import com.makentoshe.habrachan.model.article.web.JavaScriptInterface
+import com.makentoshe.habrachan.model.article.web.WebViewController
 import com.makentoshe.habrachan.ui.article.WebArticleFragmentUi
 import toothpick.ktp.delegate.inject
 

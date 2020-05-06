@@ -40,7 +40,6 @@ class NativeArticleTextController(private val recyclerView: RecyclerView) {
         if (content.size != 1) return Block.Text(content)
         val element = content.first()
         return when {
-//            element.select(".spoiler").isNotEmpty() -> buildSpoilerBlock(content)
             element.select("pre > code").isNotEmpty() -> buildCodeBlock(content)
             else -> buildTextBlock(content)
         }
@@ -53,10 +52,6 @@ class NativeArticleTextController(private val recyclerView: RecyclerView) {
     private fun buildCodeBlock(elements: List<Element>): Block {
         return Block.Code(elements)
     }
-
-//        body.select("table").forEach { table ->
-//            table.before("[table must be here]").after("[/table must be here]")
-//        }
 
     companion object {
         fun from(recyclerView: RecyclerView) = NativeArticleTextController(recyclerView)
