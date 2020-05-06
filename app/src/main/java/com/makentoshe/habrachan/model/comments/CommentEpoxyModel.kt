@@ -5,60 +5,39 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.view.comments.controller.NativeCommentController
 
 @EpoxyModelClass(layout = R.layout.comments_fragment_comment)
 abstract class CommentEpoxyModel : EpoxyModelWithHolder<CommentEpoxyModel.ViewHolder>() {
 
-    @EpoxyAttribute
-    var message = ""
-
-    @EpoxyAttribute
-    var author = ""
-
-    @EpoxyAttribute
-    var score = 0
-
-    @EpoxyAttribute
-    var timePublished = ""
-
-    @EpoxyAttribute
-    var avatarUrl: String = ""
-
-    @EpoxyAttribute
-    var level: Int = 0
-
-    @EpoxyAttribute
-    var commentId: Int = 0
-
     lateinit var comment: Comment
 
-    lateinit var modelsController: CommentEpoxyModelsController
+    lateinit var controller: NativeCommentController
 
     override fun bind(holder: ViewHolder) {
-        holder.authorView?.text = author
-        holder.timePublishedView?.text = timePublished
+        holder.authorView?.text = comment.author.login
+        holder.timePublishedView?.text = comment.timePublished
 
-        modelsController.setMessage(message, holder)
-        modelsController.setScore(score, holder)
-        modelsController.setCommentLevel(level, holder)
-        modelsController.setOnClickListener(comment, holder)
-        modelsController.setAvatar(avatarUrl, holder)
+        controller.levelFactory().build(holder.verticalView).setCommentLevel(comment.level)
+        controller.messageFactory().build(holder.messageView).setCommentText(comment.message)
+        controller.scoreFactory().build(holder.scoreView).setCommentScore(comment.score)
+        controller.behaviorFactory().build(holder.rootView).setCommentTouchBehavior(comment)
+        controller.avatarFactory().build(comment.avatar).toAvatarView(holder)
     }
 
     class ViewHolder : EpoxyHolder() {
-        var messageView: TextView? = null
+        lateinit var messageView: TextView
         var authorView: TextView? = null
         var timePublishedView: TextView? = null
-        var scoreView: TextView? = null
-        var avatarView: ImageView? = null
-        var rootView: View? = null
-        var verticalView: LinearLayout? = null
+        lateinit var scoreView: TextView
+        lateinit var avatarView: ImageView
+        lateinit var rootView: View
+        lateinit var verticalView: LinearLayout
         var progressView: ProgressBar? = null
 
         override fun bindView(itemView: View) {
@@ -73,21 +52,11 @@ abstract class CommentEpoxyModel : EpoxyModelWithHolder<CommentEpoxyModel.ViewHo
         }
     }
 
-    class Factory(private val commentEpoxyModelsController: CommentEpoxyModelsController) {
+    class Factory(private val controller: NativeCommentController) {
         fun build(comment: Comment): CommentEpoxyModel {
             val model = CommentEpoxyModel_().id(comment.id)
-
-            model.message = comment.message
-            model.level = comment.level
-            model.author = comment.author.login
-            model.timePublished = comment.timePublished
-            model.score = comment.score
-            model.commentId = comment.id
-            model.avatarUrl = comment.avatar
-
-            model.modelsController = commentEpoxyModelsController
+            model.controller = controller
             model.comment = comment
-
             return model
         }
     }

@@ -15,7 +15,7 @@ import java.io.File
 import java.net.MalformedURLException
 import java.net.URL
 
-class CommentAvatarController(
+class NativeCommentAvatarController(
     private val disposables: CompositeDisposable,
     private val avatarDao: AvatarDao,
     private val imageManager: ImageManager
@@ -33,7 +33,7 @@ class CommentAvatarController(
     }
 
     private fun onImageResponseSuccess(response: ImageResponse.Success, holder: CommentEpoxyModel.ViewHolder) {
-        val controller = ImageViewController(holder.avatarView!!)
+        val controller = ImageViewController(holder.avatarView)
         // set from resources and return
         if (response.isStub) {
             return controller.setAvatarStub()
@@ -41,20 +41,20 @@ class CommentAvatarController(
         // display avatar
         controller.setAvatarFromByteArray(response.bytes)
         holder.progressView!!.visibility = View.GONE
-        holder.avatarView!!.visibility = View.VISIBLE
+        holder.avatarView.visibility = View.VISIBLE
     }
 
     private fun onImageResponseError(response: ImageResponse.Error, holder: CommentEpoxyModel.ViewHolder) {
-        ImageViewController(holder.avatarView!!).setAvatarStub()
+        ImageViewController(holder.avatarView).setAvatarStub()
         holder.progressView!!.visibility = View.GONE
-        holder.avatarView!!.visibility = View.VISIBLE
+        holder.avatarView.visibility = View.VISIBLE
     }
 
     fun toAvatarView(viewHolder: CommentEpoxyModel.ViewHolder) {
-        viewHolder.avatarView!!.setImageDrawable(null)
+        viewHolder.avatarView.setImageDrawable(null)
         // if file is stub - just set avatar from resources
         if (File(request.imageUrl).name.contains("stub-user")) {
-            return onImageResponseError(ImageResponse.Error(""), viewHolder)
+            return onImageResponseError(ImageResponse.Error(request, ""), viewHolder)
         }
         // get avatar from cache if contains
         avatarDao.get(request.imageUrl)?.let { cached ->
@@ -63,7 +63,7 @@ class CommentAvatarController(
                 it.toByteArray()
             }
             cached.recycle()
-            val response = ImageResponse.Success(byteArray, false)
+            val response = ImageResponse.Success(request, byteArray, false)
             return onImageResponseSuccess(response, viewHolder)
         }
         // load avatar from net
@@ -73,7 +73,7 @@ class CommentAvatarController(
                 avatarDao.insert(request.imageUrl, bitmap)
             }
         }.onErrorReturn {
-            ImageResponse.Error(it.toString())
+            ImageResponse.Error(request, it.toString())
         }.observeOn(AndroidSchedulers.mainThread()).subscribe { response ->
             onImageResponse(response, viewHolder)
         }.let(disposables::add)
@@ -92,7 +92,8 @@ class CommentAvatarController(
         private val avatarDao: AvatarDao,
         private val imageManager: ImageManager
     ) {
-        fun build(url: String) = CommentAvatarController(disposables, avatarDao, imageManager).also {
+        @Deprecated("")
+        fun build(url: String) = NativeCommentAvatarController(disposables, avatarDao, imageManager).also {
             it.requestAvatar(url)
         }
     }

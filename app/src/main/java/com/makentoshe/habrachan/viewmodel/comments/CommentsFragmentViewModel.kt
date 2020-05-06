@@ -1,25 +1,36 @@
 package com.makentoshe.habrachan.viewmodel.comments
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.SparseArray
 import androidx.core.util.containsKey
 import androidx.core.util.set
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.CommentDao
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
+import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
+import com.makentoshe.habrachan.common.network.request.ImageRequest
 import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
+import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import io.reactivex.Observable
 import io.reactivex.Observer
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.net.MalformedURLException
+import java.net.URL
 import java.net.UnknownHostException
 
 class CommentsFragmentViewModel(
@@ -141,4 +152,80 @@ class CommentsFragmentViewModel(
             return CommentsFragmentViewModel(commentsManager, commentDao, sessionDao) as T
         }
     }
+}
+
+class AvatarsCommentsFragmentViewModel(
+    private val scheduler: AvatarCommentsScheduler,
+    private val disposables: CompositeDisposable,
+    private val imageManager: ImageManager,
+    private val cacheDatabase: CacheDatabase
+) : ViewModel() {
+
+    private val imageRequestSubject = PublishSubject.create<String>()
+    val imageRequestObserver: Observer<String> = imageRequestSubject
+
+    private val imageResponseSubject = PublishSubject.create<ImageResponse>()
+    val imageResponseObservable: Observable<ImageResponse> = imageResponseSubject
+
+    init {
+        imageRequestSubject.observeOn(scheduler.network).map { url ->
+            ImageRequest(fixUrl(url))
+        }.subscribe { request ->
+            if (isStub(request)) {
+                val response = ImageResponse.Success(request, byteArrayOf(), isStub = true)
+                imageResponseSubject.onNext(response)
+            }
+
+            val cached = getAvatarFromCache(request)
+            if (cached != null) {
+                return@subscribe imageResponseSubject.onNext(cached)
+            }
+
+            val response = imageManager.getImage(request).onErrorReturn {
+                ImageResponse.Error(request, it.toString())
+            }.blockingGet()
+            if (response is ImageResponse.Success) {
+                val bitmap = BitmapFactory.decodeByteArray(response.bytes, 0, response.bytes.size)
+                cacheDatabase.avatars().insert(request.imageUrl, bitmap)
+            }
+            return@subscribe imageResponseSubject.onNext(response)
+        }.let(disposables::add)
+    }
+
+    private fun isStub(request: ImageRequest): Boolean {
+        return File(request.imageUrl).name.contains("stub-user")
+    }
+
+    private fun getAvatarFromCache(request: ImageRequest): ImageResponse? {
+        val cached = cacheDatabase.avatars().get(request.imageUrl) ?: return null
+        val byteArray = ByteArrayOutputStream().let {
+            cached.compress(Bitmap.CompressFormat.PNG, 100, it)
+            it.toByteArray()
+        }
+        cached.recycle()
+        return ImageResponse.Success(request, byteArray, false)
+    }
+
+    private fun fixUrl(url: String) = try {
+        URL(url).toString()
+    } catch (e: MalformedURLException) {
+        "https:".plus(url)
+    }
+
+    override fun onCleared() = disposables.clear()
+
+    class Factory(
+        private val scheduler: AvatarCommentsScheduler,
+        private val disposables: CompositeDisposable,
+        private val imageManager: ImageManager,
+        private val cacheDatabase: CacheDatabase
+    ) : ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return AvatarsCommentsFragmentViewModel(scheduler, disposables, imageManager, cacheDatabase) as T
+        }
+    }
+}
+
+interface AvatarCommentsScheduler {
+    val network: Scheduler
 }

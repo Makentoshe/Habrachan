@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.di.comments
 
 import com.makentoshe.habrachan.common.database.AvatarDao
 import com.makentoshe.habrachan.common.network.manager.ImageManager
+import com.makentoshe.habrachan.view.comments.controller.CommentController
 import com.makentoshe.habrachan.model.comments.*
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -15,12 +16,11 @@ class CommentsEpoxyControllerProvider(
 ) : Provider<CommentsEpoxyController> {
 
     override fun get(): CommentsEpoxyController {
-        val avatarControllerFactory = CommentAvatarController.Factory(disposables, avatarDao, imageManager)
+        val avatarControllerFactory = NativeCommentAvatarController.Factory(disposables, avatarDao, imageManager)
         val commentPopupFactory = CommentPopupFactory(commentsFragmentViewModel)
 
-        val commentEpoxyModelsController = CommentEpoxyModelsController(commentPopupFactory, avatarControllerFactory)
-
-        val commentEpoxyModelFactory = CommentEpoxyModel.Factory(commentEpoxyModelsController)
+        val nativeCommentController = CommentController.Factory(commentPopupFactory, avatarControllerFactory).buildNative()
+        val commentEpoxyModelFactory = CommentEpoxyModel.Factory(nativeCommentController)
 
         return CommentsEpoxyController(commentEpoxyModelFactory)
     }
