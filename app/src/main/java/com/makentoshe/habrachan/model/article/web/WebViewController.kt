@@ -1,9 +1,10 @@
-package com.makentoshe.habrachan.model.article
+package com.makentoshe.habrachan.model.article.web
 
 import android.annotation.SuppressLint
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.makentoshe.habrachan.model.article.web.JavaScriptInterface
 import com.makentoshe.habrachan.view.article.WebArticleFragment
 
 class WebViewController(

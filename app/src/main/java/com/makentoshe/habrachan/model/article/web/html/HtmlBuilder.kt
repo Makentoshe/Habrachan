@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.article.html
+package com.makentoshe.habrachan.model.article.web.html
 
 import androidx.core.util.Consumer
 import com.makentoshe.habrachan.common.entity.Article

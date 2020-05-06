@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.article
+package com.makentoshe.habrachan.model.article.web
 
 import android.content.Intent
 import android.webkit.WebResourceError

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.article.html
+package com.makentoshe.habrachan.model.article.web.html
 
 import android.content.res.Resources
 import org.jsoup.nodes.Element

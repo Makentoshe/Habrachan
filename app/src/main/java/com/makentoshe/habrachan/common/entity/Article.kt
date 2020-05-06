@@ -6,8 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.model.article.html.*
-import io.noties.markwon.ext.tables.Table
+import com.makentoshe.habrachan.model.article.web.html.*
 
 @Entity
 data class Article(

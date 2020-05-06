@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.article
+package com.makentoshe.habrachan.model.article.web
 
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +16,7 @@ class JavaScriptInterface {
     }
 
     @android.webkit.JavascriptInterface
-    fun onImageClickedListener(imageSource: String, imageSourcesString: String) {
+    fun onImageClickedListener(imageSource: String) {
         imageSubject.onNext(imageSource)
     }
 }

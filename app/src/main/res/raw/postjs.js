@@ -13,7 +13,7 @@ function onSpoilerClickedListener(spoilerTitle) {
     }
 }
 
-function onImageClickedListener(image, sources) {
+function onImageClickedListener(image) {
     var imageSource = image.src;
-    JSInterface.onImageClickedListener(imageSource, sources);
+    JSInterface.onImageClickedListener(imageSource);
 }
