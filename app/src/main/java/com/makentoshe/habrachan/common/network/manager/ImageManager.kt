@@ -15,12 +15,11 @@ interface ImageManager {
         fun build() = object : ImageManager {
             override fun getImage(request: ImageRequest): Single<ImageResponse> {
                 return Single.just(request.imageUrl).observeOn(Schedulers.io()).map { url ->
-                    client.newCall(Request.Builder().url(url).build()).execute()
-                }.map { response ->
+                    val response = client.newCall(Request.Builder().url(url).build()).execute()
                     if (response.isSuccessful) {
-                        ImageResponse.Success(response.body!!.bytes(), false)
+                        ImageResponse.Success(request, response.body!!.bytes(), false)
                     } else {
-                        ImageResponse.Error(response.body!!.string())
+                        ImageResponse.Error(request, response.body!!.string())
                     }
                 }
             }

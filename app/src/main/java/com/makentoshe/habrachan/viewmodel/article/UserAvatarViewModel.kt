@@ -33,21 +33,21 @@ class UserAvatarViewModel(
 
     private fun performAvatarRequest(request: ImageRequest): ImageResponse {
         if (File(request.imageUrl).name == "stub-user-middle.gif") {
-            return getStubAvatar()
+            return getStubAvatar(request)
         }
         try {
             val response = imageManager.getImage(request).blockingGet()
             saveByteArrayToDao(request, response)
             return response
         }  catch (e: RuntimeException) {
-            val bitmap = avatarDao.get(request.imageUrl) ?: return getStubAvatar()
-            return ImageResponse.Success(BitmapController(bitmap).toByteArray(), false)
+            val bitmap = avatarDao.get(request.imageUrl) ?: return getStubAvatar(request)
+            return ImageResponse.Success(request, BitmapController(bitmap).toByteArray(), false)
         }
     }
 
-    private fun getStubAvatar(): ImageResponse.Success {
+    private fun getStubAvatar(request: ImageRequest): ImageResponse.Success {
         val drawable = application.resources.getDrawable(R.drawable.ic_account_stub, application.theme)
-        return ImageResponse.Success(BitmapController(drawable.toBitmap()).toByteArray(), true)
+        return ImageResponse.Success(request, BitmapController(drawable.toBitmap()).toByteArray(), true)
     }
 
     private fun saveByteArrayToDao(request: ImageRequest, response: ImageResponse) {
