@@ -1,6 +1,6 @@
 # Habrachan
 
-[![Build Status](http://teamcity.jetbrains.com/app/rest/builds/buildType:(id:TestDrive_Habrachan_Build)/statusIcon)](http://teamcity.jetbrains.com/viewType.html?buildTypeId=TestDrive_Habrachan_Build&guest=1)
+[![Build Status](http://teamcity.jetbrains.com/app/rest/builds/buildType:(id:TestDrive_Habrachan_Build)/statusIcon.svg)](http://teamcity.jetbrains.com/viewType.html?buildTypeId=TestDrive_Habrachan_Build&guest=1)
 
 ## How to build
 
