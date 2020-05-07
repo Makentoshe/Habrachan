@@ -40,12 +40,10 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel) {
     }
 
     private fun onVoteUp(comment: Comment) {
-        val request = viewModel.createVoteRequest(comment.id)
-        viewModel.voteUpCommentObserver.onNext(request)
+        viewModel.voteUpCommentObserver.onNext(comment.id)
     }
 
     private fun onVoteDown(comment: Comment) {
-        val request = viewModel.createVoteRequest(comment.id)
-        viewModel.voteDownCommentObserver.onNext(request)
+        viewModel.voteDownCommentObserver.onNext(comment.id)
     }
 }

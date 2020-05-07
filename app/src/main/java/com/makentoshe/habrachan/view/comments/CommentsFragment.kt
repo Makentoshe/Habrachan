@@ -20,6 +20,7 @@ import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.ui.article.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
@@ -38,8 +39,7 @@ class CommentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            val request = commentsViewModel.createGetRequest(arguments.articleId)
-            commentsViewModel.getCommentsObserver.onNext(request)
+            commentsViewModel.getCommentsObserver.onNext(arguments.articleId)
         }
 
         val retrybutton = view.findViewById<View>(R.id.article_comments_retrybutton)
@@ -49,9 +49,12 @@ class CommentsFragment : Fragment() {
         toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, requireContext().theme)
         toolbar.setNavigationOnClickListener { navigator.back() }
 
-        commentsViewModel.getCommentsObservable.subscribe(::onGetCommentsResponse).let(disposables::add)
-        commentsViewModel.voteUpCommentObservable.subscribe(::onVoteCommentsResponse).let(disposables::add)
-        commentsViewModel.voteDownCommentObservable.subscribe(::onVoteCommentsResponse).let(disposables::add)
+        commentsViewModel.getCommentsObservable.observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onGetCommentsResponse).let(disposables::add)
+        commentsViewModel.voteUpCommentObservable.observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onVoteCommentsResponse).let(disposables::add)
+        commentsViewModel.voteDownCommentObservable.observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onVoteCommentsResponse).let(disposables::add)
 
         // disable touch events for background fragments
         view.setOnClickListener { }
@@ -118,7 +121,7 @@ class CommentsFragment : Fragment() {
         progressbar.visibility = View.VISIBLE
     }
 
-    private fun onVoteCommentsResponse(response: VoteCommentResponse) = when(response) {
+    private fun onVoteCommentsResponse(response: VoteCommentResponse) = when (response) {
         is VoteCommentResponse.Success -> onVoteCommentsResponseSuccess(response)
         is VoteCommentResponse.Error -> onVoteCommentsResponseError(response)
     }
@@ -165,7 +168,7 @@ class CommentsFragment : Fragment() {
 
         var articleId: Int
             set(value) = fragmentArguments.putInt(ID, value)
-            get() = fragmentArguments.getInt(ID) ?: -1
+            get() = fragmentArguments.getInt(ID, -1)
 
         companion object {
             private const val ID = "Id"
