@@ -8,8 +8,7 @@ import androidx.core.util.set
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.CacheDatabase
-import com.makentoshe.habrachan.common.database.CommentDao
-import com.makentoshe.habrachan.common.database.session.SessionDao
+import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
@@ -21,49 +20,76 @@ import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import io.reactivex.Observable
 import io.reactivex.Observer
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.net.MalformedURLException
-import java.net.URL
 import java.net.UnknownHostException
+import java.util.concurrent.ConcurrentHashMap
 
 class CommentsFragmentViewModel(
     private val commentsManager: HabrCommentsManager,
-    private val commentDao: CommentDao,
-    private val sessionDao: SessionDao
-) : ViewModel() {
+    private val imageManager: ImageManager,
+    private val cacheDatabase: CacheDatabase,
+    private val sessionDatabase: SessionDatabase
+) : ViewModel(), GetCommentViewModel, VoteCommentViewModel, AvatarCommentViewModel {
 
     private val disposables = CompositeDisposable()
 
-    private val getCommentsSubject = BehaviorSubject.create<GetCommentsRequest>()
-    val getCommentsObserver: Observer<GetCommentsRequest> = getCommentsSubject
-    val getCommentsObservable: Observable<GetCommentsResponse>
-        get() = getCommentsSubject
-            .observeOn(Schedulers.io())
+    private val getCommentsRequestSubject = PublishSubject.create<Int>()
+    override val getCommentsObserver: Observer<Int> = getCommentsRequestSubject
+
+    private val getCommentsResponseSubject = BehaviorSubject.create<GetCommentsResponse>()
+    override val getCommentsObservable: Observable<GetCommentsResponse> = getCommentsResponseSubject
+
+    private val voteUpCommentRequestSubject = PublishSubject.create<Int>()
+    override val voteUpCommentObserver: Observer<Int> = voteUpCommentRequestSubject
+
+    private val voteUpCommentResponseSubject = PublishSubject.create<VoteCommentResponse>()
+    override val voteUpCommentObservable: Observable<VoteCommentResponse> = voteUpCommentResponseSubject
+
+    private val voteDownCommentRequestSubject = PublishSubject.create<Int>()
+    override val voteDownCommentObserver: Observer<Int> = voteDownCommentRequestSubject
+
+    private val voteDownCommentResponseSubject = PublishSubject.create<VoteCommentResponse>()
+    override val voteDownCommentObservable: Observable<VoteCommentResponse> = voteDownCommentResponseSubject
+
+    private val observablesContainer = ConcurrentHashMap<String, Observable<ImageResponse>>()
+
+    override fun getAvatarObservable(url: String): Observable<ImageResponse> {
+        val cached = observablesContainer[url]
+        if (cached != null) return cached
+        val subject = BehaviorSubject.create<ImageResponse>()
+        observablesContainer[url] = subject
+
+        BehaviorSubject.create<String>().also { request ->
+            request.observeOn(Schedulers.io()).map(::ImageRequest).map(::performAvatarRequest).safeSubscribe(subject)
+        }.onNext(url)
+
+        return subject
+    }
+
+    init {
+        getCommentsRequestSubject.observeOn(Schedulers.io())
+            .map(::createGetRequest)
             .map(::performGetRequest)
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { getCommentsResponseSubject.onNext(it) }
+            .let(disposables::add)
 
-    private val voteUpCommentSubject = PublishSubject.create<VoteCommentRequest>()
-    val voteUpCommentObserver: Observer<VoteCommentRequest> = voteUpCommentSubject
-    val voteUpCommentObservable: Observable<VoteCommentResponse>
-        get() = voteUpCommentSubject
-            .observeOn(Schedulers.io())
+        voteUpCommentRequestSubject.observeOn(Schedulers.io())
+            .map(::createVoteRequest)
             .map(::performVoteUpRequest)
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { voteUpCommentResponseSubject.onNext(it) }
+            .let(disposables::add)
 
-    private val voteDownCommentSubject = PublishSubject.create<VoteCommentRequest>()
-    val voteDownCommentObserver: Observer<VoteCommentRequest> = voteDownCommentSubject
-    val voteDownCommentObservable: Observable<VoteCommentResponse>
-        get() = voteDownCommentSubject
-            .observeOn(Schedulers.io())
+        voteDownCommentRequestSubject.observeOn(Schedulers.io())
+            .map(::createVoteRequest)
             .map(::performVoteDownRequest)
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { voteDownCommentResponseSubject.onNext(it) }
+            .let(disposables::add)
+    }
 
     private fun performGetRequest(request: GetCommentsRequest) = try {
         commentsManager.getComments(request).blockingGet().also { response ->
@@ -72,7 +98,7 @@ class CommentsFragmentViewModel(
             }
         }
     } catch (e: Exception) {
-        val comments = commentDao.getByArticleId(request.articleId)
+        val comments = cacheDatabase.comments().getByArticleId(request.articleId)
         GetCommentsResponse.Success(comments, false, -1, "")
     }
 
@@ -96,6 +122,36 @@ class CommentsFragmentViewModel(
         createVoteCommentErrorResponse(exception, request)
     }
 
+    private fun performAvatarRequest(request: ImageRequest): ImageResponse {
+        try {
+            // if file is stub - just set avatar from resources
+            if (File(request.imageUrl).name.contains("stub-user")) {
+                return ImageResponse.Success(request, byteArrayOf(), isStub = true)
+            }
+
+            val cached = cacheDatabase.avatars().get(request.imageUrl)
+            if (cached != null) {
+                val byteArray = ByteArrayOutputStream().let {
+                    cached.compress(Bitmap.CompressFormat.PNG, 100, it)
+                    it.toByteArray()
+                }
+                cached.recycle()
+                return ImageResponse.Success(request, byteArray, false)
+            }
+
+            return imageManager.getImage(request).doOnSuccess { response ->
+                if (response is ImageResponse.Success) {
+                    val bitmap = BitmapFactory.decodeByteArray(response.bytes, 0, response.bytes.size)
+                    cacheDatabase.avatars().insert(request.imageUrl, bitmap)
+                }
+            }.onErrorReturn {
+                ImageResponse.Error(request, it.toString())
+            }.blockingGet()
+        } catch (e: Exception) {
+            return ImageResponse.Error(request, e.toString())
+        }
+    }
+
     private fun createVoteCommentErrorResponse(
         throwable: Throwable, request: VoteCommentRequest
     ): VoteCommentResponse.Error {
@@ -107,23 +163,23 @@ class CommentsFragmentViewModel(
     }
 
     private fun updateCommentInDatabase(commentId: Int, score: Int) {
-        val comment = commentDao.getById(commentId)
+        val comment = cacheDatabase.comments().getById(commentId)
         if (comment != null) {
-            commentDao.insert(comment.copy(score = score))
+            cacheDatabase.comments().insert(comment.copy(score = score))
         }
     }
 
     private fun addCommentsToDatabase(articleId: Int, comments: List<Comment>) {
-        comments.map { comment -> comment.copy(articleId = articleId).also(commentDao::insert) }
+        comments.map { comment -> comment.copy(articleId = articleId).also(cacheDatabase.comments()::insert) }
     }
 
-    fun createGetRequest(articleId: Int): GetCommentsRequest {
-        val session = sessionDao.get()
+    private fun createGetRequest(articleId: Int): GetCommentsRequest {
+        val session = sessionDatabase.session().get()
         return GetCommentsRequest(session.clientKey, session.apiKey, session.tokenKey, articleId)
     }
 
-    fun createVoteRequest(commentId: Int): VoteCommentRequest {
-        val session = sessionDao.get()
+    private fun createVoteRequest(commentId: Int): VoteCommentRequest {
+        val session = sessionDatabase.session().get()
         return VoteCommentRequest(session.clientKey, session.tokenKey, commentId)
     }
 
@@ -134,98 +190,21 @@ class CommentsFragmentViewModel(
                 commentMap[comment.thread] = ArrayList()
             }
             commentMap[comment.thread]?.add(comment)
-            commentDao.insert(comment.copy(articleId = articleId))
+            cacheDatabase.comments().insert(comment.copy(articleId = articleId))
         }
         return commentMap
-    }
-
-    override fun onCleared() {
-        disposables.clear()
-    }
-
-    class Factory(
-        private val commentsManager: HabrCommentsManager,
-        private val commentDao: CommentDao,
-        private val sessionDao: SessionDao
-    ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return CommentsFragmentViewModel(commentsManager, commentDao, sessionDao) as T
-        }
-    }
-}
-
-class AvatarsCommentsFragmentViewModel(
-    private val scheduler: AvatarCommentsScheduler,
-    private val disposables: CompositeDisposable,
-    private val imageManager: ImageManager,
-    private val cacheDatabase: CacheDatabase
-) : ViewModel() {
-
-    private val imageRequestSubject = PublishSubject.create<String>()
-    val imageRequestObserver: Observer<String> = imageRequestSubject
-
-    private val imageResponseSubject = PublishSubject.create<ImageResponse>()
-    val imageResponseObservable: Observable<ImageResponse> = imageResponseSubject
-
-    init {
-        imageRequestSubject.observeOn(scheduler.network).map { url ->
-            ImageRequest(fixUrl(url))
-        }.subscribe { request ->
-            if (isStub(request)) {
-                val response = ImageResponse.Success(request, byteArrayOf(), isStub = true)
-                imageResponseSubject.onNext(response)
-            }
-
-            val cached = getAvatarFromCache(request)
-            if (cached != null) {
-                return@subscribe imageResponseSubject.onNext(cached)
-            }
-
-            val response = imageManager.getImage(request).onErrorReturn {
-                ImageResponse.Error(request, it.toString())
-            }.blockingGet()
-            if (response is ImageResponse.Success) {
-                val bitmap = BitmapFactory.decodeByteArray(response.bytes, 0, response.bytes.size)
-                cacheDatabase.avatars().insert(request.imageUrl, bitmap)
-            }
-            return@subscribe imageResponseSubject.onNext(response)
-        }.let(disposables::add)
-    }
-
-    private fun isStub(request: ImageRequest): Boolean {
-        return File(request.imageUrl).name.contains("stub-user")
-    }
-
-    private fun getAvatarFromCache(request: ImageRequest): ImageResponse? {
-        val cached = cacheDatabase.avatars().get(request.imageUrl) ?: return null
-        val byteArray = ByteArrayOutputStream().let {
-            cached.compress(Bitmap.CompressFormat.PNG, 100, it)
-            it.toByteArray()
-        }
-        cached.recycle()
-        return ImageResponse.Success(request, byteArray, false)
-    }
-
-    private fun fixUrl(url: String) = try {
-        URL(url).toString()
-    } catch (e: MalformedURLException) {
-        "https:".plus(url)
     }
 
     override fun onCleared() = disposables.clear()
 
     class Factory(
-        private val scheduler: AvatarCommentsScheduler,
-        private val disposables: CompositeDisposable,
+        private val commentsManager: HabrCommentsManager,
         private val imageManager: ImageManager,
-        private val cacheDatabase: CacheDatabase
+        private val cacheDatabase: CacheDatabase,
+        private val sessionDatabase: SessionDatabase
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return AvatarsCommentsFragmentViewModel(scheduler, disposables, imageManager, cacheDatabase) as T
+            return CommentsFragmentViewModel(commentsManager, imageManager, cacheDatabase, sessionDatabase) as T
         }
     }
-}
-
-interface AvatarCommentsScheduler {
-    val network: Scheduler
 }

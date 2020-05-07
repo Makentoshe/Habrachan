@@ -20,25 +20,28 @@ abstract class CommentEpoxyModel : EpoxyModelWithHolder<CommentEpoxyModel.ViewHo
     lateinit var controller: NativeCommentController
 
     override fun bind(holder: ViewHolder) {
-        holder.authorView?.text = comment.author.login
-        holder.timePublishedView?.text = comment.timePublished
+        holder.authorView.text = comment.author.login
+        holder.timePublishedView.text = comment.timePublished
 
         controller.levelFactory().build(holder.verticalView).setCommentLevel(comment.level)
         controller.messageFactory().build(holder.messageView).setCommentText(comment.message)
         controller.scoreFactory().build(holder.scoreView).setCommentScore(comment.score)
         controller.behaviorFactory().build(holder.rootView).setCommentTouchBehavior(comment)
-        controller.avatarFactory().build(comment.avatar).toAvatarView(holder)
+        controller.avatarFactory().build(holder.avatarView).setCommentAvatar(comment.avatar) {
+            holder.avatarView.visibility = View.VISIBLE
+            holder.progressView.visibility = View.GONE
+        }
     }
 
     class ViewHolder : EpoxyHolder() {
         lateinit var messageView: TextView
-        var authorView: TextView? = null
-        var timePublishedView: TextView? = null
+        lateinit var authorView: TextView
+        lateinit var timePublishedView: TextView
         lateinit var scoreView: TextView
         lateinit var avatarView: ImageView
         lateinit var rootView: View
         lateinit var verticalView: LinearLayout
-        var progressView: ProgressBar? = null
+        lateinit var progressView: ProgressBar
 
         override fun bindView(itemView: View) {
             messageView = itemView.findViewById(R.id.comments_fragment_comment_message)

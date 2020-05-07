@@ -24,7 +24,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
     private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
-    private val database by inject<CacheDatabase>()
+    private val cacheDatabase by inject<CacheDatabase>()
     private val sessionDatabase by inject<SessionDatabase>()
 
     init {
@@ -46,15 +46,13 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
     private fun getCommentsFragmentViewModel(fragment: CommentsFragment): CommentsFragmentViewModel {
         val commentsFragmentViewModelFactory =
-            CommentsFragmentViewModel.Factory(commentsManager, database.comments(), sessionDatabase.session())
+            CommentsFragmentViewModel.Factory(commentsManager, imageManager, cacheDatabase, sessionDatabase)
         return ViewModelProviders.of(fragment, commentsFragmentViewModelFactory)[CommentsFragmentViewModel::class.java]
     }
 
     private fun getCommentsEpoxyControllerProvider(
         disposables: CompositeDisposable, commentsFragmentViewModel: CommentsFragmentViewModel
-    ) = CommentsEpoxyControllerProvider(
-        disposables, commentsFragmentViewModel, imageManager, database.avatars()
-    )
+    ) = CommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel)
 
     class Factory {
         fun build(fragment: CommentsFragment): CommentsFragmentModule {
