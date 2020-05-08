@@ -12,7 +12,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.view.comments.controller.NativeCommentController
 
-@EpoxyModelClass(layout = R.layout.comments_fragment_comment)
+@EpoxyModelClass(layout = R.layout.comment_item)
 abstract class CommentEpoxyModel : EpoxyModelWithHolder<CommentEpoxyModel.ViewHolder>() {
 
     lateinit var comment: Comment

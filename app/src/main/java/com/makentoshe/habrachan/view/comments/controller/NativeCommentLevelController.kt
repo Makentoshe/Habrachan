@@ -11,7 +11,7 @@ class NativeCommentLevelController(private val verticalContainer: ViewGroup) {
         verticalContainer.removeAllViews()
         val layoutInflater = LayoutInflater.from(verticalContainer.context)
         repeat(min(level, 10)) {
-            layoutInflater.inflate(R.layout.comments_fragment_comment_vertical, verticalContainer, true)
+            layoutInflater.inflate(R.layout.comment_item_level, verticalContainer, true)
         }
     }
 

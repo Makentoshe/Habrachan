@@ -14,7 +14,7 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel) {
         val menu = PopupWindow(anchor.context)
         menu.isOutsideTouchable = true
         menu.contentView =
-            LayoutInflater.from(anchor.context).inflate(R.layout.comments_fragment_comment_popup, null, false)
+            LayoutInflater.from(anchor.context).inflate(R.layout.comment_item_popup, null, false)
         menu.contentView.findViewById<View>(R.id.comments_fragment_comment_popup_reply).setOnClickListener {
             onReplyClick(comment)
             menu.dismiss()
