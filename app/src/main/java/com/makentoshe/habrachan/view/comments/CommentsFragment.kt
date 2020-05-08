@@ -30,10 +30,10 @@ class CommentsFragment : Fragment() {
 
     private val arguments = Arguments(this)
 
-    private val disposables by inject<CompositeDisposable>()
-    private val commentsViewModel by inject<CommentsFragmentViewModel>()
     private val navigator by inject<Navigator>()
+    private val disposables by inject<CompositeDisposable>()
     private val epoxyController by inject<CommentsEpoxyController>()
+    private val commentsViewModel by inject<CommentsFragmentViewModel>()
 
     private lateinit var appbar: AppBarLayout
     private lateinit var toolbar: Toolbar
@@ -98,8 +98,9 @@ class CommentsFragment : Fragment() {
     }
 
     private fun displayCommentsThumbnail() {
-        messageView.setText(R.string.no_comments)
+        messageView.setText(R.string.comments_message_no_comments)
         messageView.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
 
         firstCommentButton.visibility = View.VISIBLE
     }
@@ -116,6 +117,8 @@ class CommentsFragment : Fragment() {
         retryButton.visibility = View.GONE
         messageView.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
+
+        commentsViewModel.getCommentsObserver.onNext(arguments.articleId)
     }
 
     private fun onVoteCommentsResponse(response: VoteCommentResponse) = when (response) {
@@ -135,7 +138,7 @@ class CommentsFragment : Fragment() {
             400 -> requireContext().getString(R.string.repeated_voting_is_prohibited)
             else -> response.message.plus(" ").plus(response.additional.joinToString(". "))
         }
-        SnackbarErrorController(view ?: return).displayMessage(message)
+        SnackbarErrorController.from(view ?: return).displayMessage(message)
     }
 
     override fun onDestroy() {
