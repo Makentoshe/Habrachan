@@ -5,32 +5,10 @@
     android:layout_height="match_parent"
     style="?attr/habrachanDefault">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include layout="@layout/comments_fragment_toolbar" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/article_comments_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <include layout="@layout/comments_fragment_content" />
 
     <ProgressBar
-        android:id="@+id/article_comments_progressbar"
+        android:id="@+id/comments_fragment_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
-        android:id="@+id/article_comments_messageview"
+        android:id="@+id/comments_fragment_messageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -50,17 +28,17 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
-        android:id="@+id/article_comments_retrybutton"
+        android:id="@+id/comments_fragment_retrybutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:text="@string/retry"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/article_comments_messageview" />
+        app:layout_constraintTop_toBottomOf="@id/comments_fragment_messageview" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/article_comments_firstbutton"
+        android:id="@+id/comments_fragment_firstbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -69,6 +47,6 @@
         android:text="@string/be_the_first"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/article_comments_messageview" />
+        app:layout_constraintTop_toBottomOf="@id/comments_fragment_messageview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
