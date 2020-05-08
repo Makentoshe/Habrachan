@@ -12,8 +12,6 @@
     <string name="retry">Retry</string>
     <string name="scroll_to_top">Scroll to top</string>
     <string name="reply">Reply</string>
-    <string name="be_the_first">Be the first one</string>
-    <string name="no_comments">There are no comments\nfor this publication at now</string>
     <string name="Authorization">Authorization</string>
     <string name="sign_in">Sign in</string>
     <string name="password">Password</string>
@@ -55,19 +53,24 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="articles_top_type_weekly">Weekly</string>
     <string name="articles_top_type_daily">Daily</string>
 
+    <string name="user_content_profile_badges">Badges</string>
+    <string name="user_content_profile_location">Location</string>
+    <string name="user_content_profile_registered">Registered</string>
+
     <string name="user_content_profile">Profile</string>
     <string name="user_content_articles">Articles</string>
     <string name="user_content_comments">Comments</string>
     <string name="user_content_bookmarks">Bookmarks</string>
-    <string name="user_content_profile_badges">Badges</string>
-    <string name="user_content_profile_location">Location</string>
-    <string name="user_content_profile_registered">Registered</string>
-    <string name="menu_logout">Logout</string>
-    <string name="menu_send_message">Send message</string>
     <string-array name="user_fragment_tabs">
         <item>@string/user_content_profile</item>
         <item>@string/user_content_articles</item>
         <item>@string/user_content_comments</item>
         <item>@string/user_content_bookmarks</item>
     </string-array>
+
+    <string name="menu_logout">Logout</string>
+    <string name="menu_send_message">Send message</string>
+
+    <string name="comments_message_no_comments">There are no comments\nfor this publication at now</string>
+    <string name="comments_button_first_comment">Be the first one</string>
 </resources>

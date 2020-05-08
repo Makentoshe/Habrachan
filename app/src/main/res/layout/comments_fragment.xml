@@ -44,7 +44,7 @@
         android:layout_marginTop="16dp"
         android:visibility="gone"
         style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:text="@string/be_the_first"
+        android:text="@string/comments_button_first_comment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/comments_fragment_messageview" />
