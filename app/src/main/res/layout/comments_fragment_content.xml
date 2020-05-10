@@ -11,19 +11,20 @@
         app:expanded="false">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            style="?attr/habrachanToolbar"
             android:id="@+id/comments_fragment_collapsing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
+            app:titleEnabled="false"
             app:toolbarId="@id/comments_fragment_toolbar">
 
             <androidx.appcompat.widget.Toolbar
                 style="?attr/habrachanToolbar"
                 android:id="@+id/comments_fragment_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/toolbar_height_with_subtitle"
                 app:navigationIcon="@drawable/ic_arrow_back"
                 app:layout_collapseMode="pin" />
 

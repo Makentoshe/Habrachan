@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
@@ -69,6 +70,8 @@ class CommentsFragment : Fragment() {
             .subscribe(::onVoteCommentsResponse).let(disposables::add)
 
         toolbar.setNavigationOnClickListener { navigator.back() }
+        arguments.article?.title?.let(toolbar::setTitle)
+        toolbar.setSubtitle(R.string.comments_fragment_subtitle)
         retryButton.setOnClickListener { onRetryButtonClicked() }
         appbar.setExpanded(true)
 
@@ -147,10 +150,10 @@ class CommentsFragment : Fragment() {
     }
 
     class Factory {
-        fun build(articleId: Int): CommentsFragment {
-            return CommentsFragment().apply {
-                arguments.articleId = articleId
-            }
+
+        fun build(articleId: Int, article: Article? = null) = CommentsFragment().apply {
+            arguments.article = article
+            arguments.articleId = articleId
         }
     }
 
@@ -170,8 +173,13 @@ class CommentsFragment : Fragment() {
             set(value) = fragmentArguments.putInt(ID, value)
             get() = fragmentArguments.getInt(ID, -1)
 
+        var article: Article?
+            set(value) = fragmentArguments.putString(ARTICLE, value?.toJson())
+            get() = fragmentArguments.getString(ARTICLE)?.let(Article.Companion::fromJson)
+
         companion object {
             private const val ID = "Id"
+            private const val ARTICLE = "Article"
         }
     }
 
