@@ -1,0 +1,5 @@
+package com.makentoshe.habrachan.viewmodel.comments
+
+import com.makentoshe.habrachan.viewmodel.NetworkSchedulerProvider
+
+interface CommentsViewModelSchedulerProvider : NetworkSchedulerProvider

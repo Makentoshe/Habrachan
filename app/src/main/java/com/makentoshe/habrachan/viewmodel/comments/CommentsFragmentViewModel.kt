@@ -33,7 +33,8 @@ class CommentsFragmentViewModel(
     private val commentsManager: HabrCommentsManager,
     private val imageManager: ImageManager,
     private val cacheDatabase: CacheDatabase,
-    private val sessionDatabase: SessionDatabase
+    private val sessionDatabase: SessionDatabase,
+    schedulerProvider: CommentsViewModelSchedulerProvider
 ) : ViewModel(), GetCommentViewModel, VoteCommentViewModel, AvatarCommentViewModel {
 
     private val disposables = CompositeDisposable()
@@ -72,19 +73,19 @@ class CommentsFragmentViewModel(
     }
 
     init {
-        getCommentsRequestSubject.observeOn(Schedulers.io())
+        getCommentsRequestSubject.observeOn(schedulerProvider.networkScheduler)
             .map(::createGetRequest)
             .map(::performGetRequest)
             .subscribe { getCommentsResponseSubject.onNext(it) }
             .let(disposables::add)
 
-        voteUpCommentRequestSubject.observeOn(Schedulers.io())
+        voteUpCommentRequestSubject.observeOn(schedulerProvider.networkScheduler)
             .map(::createVoteRequest)
             .map(::performVoteUpRequest)
             .subscribe { voteUpCommentResponseSubject.onNext(it) }
             .let(disposables::add)
 
-        voteDownCommentRequestSubject.observeOn(Schedulers.io())
+        voteDownCommentRequestSubject.observeOn(schedulerProvider.networkScheduler)
             .map(::createVoteRequest)
             .map(::performVoteDownRequest)
             .subscribe { voteDownCommentResponseSubject.onNext(it) }
@@ -201,10 +202,12 @@ class CommentsFragmentViewModel(
         private val commentsManager: HabrCommentsManager,
         private val imageManager: ImageManager,
         private val cacheDatabase: CacheDatabase,
-        private val sessionDatabase: SessionDatabase
+        private val sessionDatabase: SessionDatabase,
+        private val schedulerProvider: CommentsViewModelSchedulerProvider
     ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return CommentsFragmentViewModel(commentsManager, imageManager, cacheDatabase, sessionDatabase) as T
-        }
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>) = CommentsFragmentViewModel(
+            commentsManager, imageManager, cacheDatabase, sessionDatabase, schedulerProvider
+        ) as T
     }
 }
