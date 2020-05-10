@@ -10,7 +10,9 @@ import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
+import com.makentoshe.habrachan.viewmodel.comments.CommentsViewModelSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -45,8 +47,12 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
     }
 
     private fun getCommentsFragmentViewModel(fragment: CommentsFragment): CommentsFragmentViewModel {
-        val commentsFragmentViewModelFactory =
-            CommentsFragmentViewModel.Factory(commentsManager, imageManager, cacheDatabase, sessionDatabase)
+        val schedulerProvider = object : CommentsViewModelSchedulerProvider {
+            override val networkScheduler = Schedulers.io()
+        }
+        val commentsFragmentViewModelFactory = CommentsFragmentViewModel.Factory(
+            commentsManager, imageManager, cacheDatabase, sessionDatabase, schedulerProvider
+        )
         return ViewModelProviders.of(fragment, commentsFragmentViewModelFactory)[CommentsFragmentViewModel::class.java]
     }
 
