@@ -188,9 +188,8 @@ class CommentsFragmentViewModelTest {
 
     @Test
     fun testShouldReturnStubAvatarWithoutNetworkAndCache() {
-        val testObservable = viewModel.getAvatarObservable("stub-user").test()
-
-        testObservable.assertValue { (it as ImageResponse.Success).isStub }.dispose()
+        val response = viewModel.getAvatarObservable("stub-user").blockingFirst()
+        assert((response as ImageResponse.Success).isStub)
 
         verify(exactly = 0) { mockImageManager.getImage(any()) }
         verify(exactly = 0) { mockCacheDatabase.avatars().get(any()) }
