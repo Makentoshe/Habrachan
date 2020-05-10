@@ -1,5 +1,7 @@
 package com.makentoshe.habrachan.viewmodel.comments
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
@@ -7,13 +9,14 @@ import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
+import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import okhttp3.internal.cacheGet
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -172,7 +175,7 @@ class CommentsFragmentViewModelTest {
     }
 
     @Test
-    fun sas() {
+    fun testShouldReturnErrorResponseOnVoteDownException() {
         val testObservable = viewModel.voteDownCommentObservable.test()
 
         every { mockCommentsManager.voteDown(any()) } returns Single.just(Exception()).map { throw it }
@@ -181,5 +184,74 @@ class CommentsFragmentViewModelTest {
         viewModel.voteDownCommentObserver.onNext(commentId)
 
         testObservable.assertValue { it is VoteCommentResponse.Error }.dispose()
+    }
+
+    @Test
+    fun testShouldReturnStubAvatarWithoutNetworkAndCache() {
+        val testObservable = viewModel.getAvatarObservable("stub-user").test()
+
+        testObservable.assertValue { (it as ImageResponse.Success).isStub }.dispose()
+
+        verify(exactly = 0) { mockImageManager.getImage(any()) }
+        verify(exactly = 0) { mockCacheDatabase.avatars().get(any()) }
+    }
+
+    @Test
+    fun testShouldReturnSuccessImageResponseFromCache() {
+        val mockBitmap = mockk<Bitmap>(relaxed = true)
+        every { mockCacheDatabase.avatars().get(any()) } returns mockBitmap
+
+        val response = viewModel.getAvatarObservable("from cache").blockingFirst()
+        assert(response is ImageResponse.Success)
+
+        verify { mockCacheDatabase.avatars().get(any()) }
+        verify(exactly = 0) { mockImageManager.getImage(any()) }
+    }
+
+    @Test
+    fun testShouldReturnSuccessImageResponseOnAvatarRequest() {
+        mockkStatic(BitmapFactory::class)
+        every { BitmapFactory.decodeByteArray(any(), any(), any()) } returns mockk(relaxed = true)
+
+        every { mockCacheDatabase.avatars().get(any()) } returns null
+
+        val mockImageResponse = mockk<ImageResponse.Success>(relaxed = true)
+        every { mockImageManager.getImage(any()) } returns Single.just(mockImageResponse)
+
+        val response = viewModel.getAvatarObservable("from network").blockingFirst()
+        assertEquals(response, mockImageResponse)
+
+        unmockkStatic(BitmapFactory::class)
+    }
+
+    @Test
+    fun testShouldSaveSuccessImageResponseToCache() {
+        mockkStatic(BitmapFactory::class)
+        every { BitmapFactory.decodeByteArray(any(), any(), any()) } returns mockk(relaxed = true)
+        every { mockImageManager.getImage(any()) } returns Single.just(mockk<ImageResponse.Success>(relaxed = true))
+        every { mockCacheDatabase.avatars().get("from network") } returns null
+
+        viewModel.getAvatarObservable("from network").blockingFirst()
+
+        verify { mockCacheDatabase.avatars().insert("from network", any()) }
+
+        unmockkStatic(BitmapFactory::class)
+    }
+
+    @Test
+    fun testShouldReturnErrorImageResponseFromNetwork() {
+        every { mockImageManager.getImage(any()) } returns Single.just(Exception("exception")).map { throw it }
+        every { mockCacheDatabase.avatars().get("from network") } returns null
+
+        val response = viewModel.getAvatarObservable("from network").blockingFirst()
+        assert(response is ImageResponse.Error)
+    }
+
+    @Test
+    fun testShouldReturnErrorImageResponseOnNetworkError() {
+        every { mockCacheDatabase.avatars().get(any()) } throws Exception("something wrong")
+
+        val response = viewModel.getAvatarObservable("").blockingFirst()
+        assert(response is ImageResponse.Error)
     }
 }
