@@ -8,6 +8,7 @@ import com.google.android.material.button.MaterialButton
 import com.makentoshe.habrachan.AppActivity
 import com.makentoshe.habrachan.BaseRobolectricTest
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.response.ArticleResponse
@@ -45,7 +46,7 @@ abstract class ArticleFragmentTest : BaseRobolectricTest() {
     protected val disposables = spyk(CompositeDisposable())
     protected val mockArticleViewModel = mockk<ArticleFragmentViewModel>(relaxed = true)
     protected val mockUserAvatarViewModel = mockk<UserAvatarViewModel>(relaxed = true)
-    protected val mockNavigator = mockk<ArticleFragment.Navigator>()
+    protected val mockNavigator = mockk<ArticleFragment.Navigator>(relaxed = true)
     protected val mockVoteArticleViewModel = mockk<VoteArticleViewModel>(relaxed = true)
 
     protected val router by inject<Router>()
@@ -211,7 +212,7 @@ abstract class ArticleFragmentTest : BaseRobolectricTest() {
         val commentsView = activity.findViewById<View>(R.id.article_fragment_bottombar_comments)
         commentsView.performClick()
 
-        verify { mockNavigator.toArticleCommentsScreen(articleId) }
+        verify { mockNavigator.toArticleCommentsScreen(any<Article>()) }
     }
 
     @Test
