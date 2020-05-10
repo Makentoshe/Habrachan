@@ -151,7 +151,7 @@ abstract class ArticleFragment : Fragment() {
             markVoteDownButton()
         }
         commentsView.setOnClickListener {
-            navigator.toArticleCommentsScreen(arguments.articleId)
+            navigator.toArticleCommentsScreen(response.article)
         }
     }
 
@@ -258,6 +258,10 @@ abstract class ArticleFragment : Fragment() {
 
         fun toArticleCommentsScreen(articleId: Int) {
             router.navigateTo(CommentsScreen(articleId))
+        }
+
+        fun toArticleCommentsScreen(article: Article) {
+            router.navigateTo(CommentsScreen(article))
         }
 
         fun toUserScreen(userName: String): Boolean {
