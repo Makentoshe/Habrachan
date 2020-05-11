@@ -8,9 +8,12 @@ import android.widget.PopupWindow
 import android.widget.Toast
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.model.user.UserAccount
+import com.makentoshe.habrachan.model.user.UserScreen
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 
-class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel) {
+class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel, private val router: Router) {
 
     fun build(anchor: View, comment: Comment): PopupWindow {
         val menu = PopupWindow(anchor.context)
@@ -30,7 +33,7 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel) {
             menu.dismiss()
         }
         menu.contentView.findViewById<View>(R.id.comment_item_popup_inspect).setOnClickListener {
-            onInspect(it.context, comment)
+            onInspect(comment)
             menu.dismiss()
         }
         menu.animationStyle = R.style.Default_Popup_Style
@@ -53,7 +56,7 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel) {
         viewModel.voteDownCommentObserver.onNext(comment.id)
     }
 
-    private fun onInspect(context: Context, comment: Comment) {
-        Toast.makeText(context, "Inspect user: ${comment.author.login} not implemented", Toast.LENGTH_LONG).show()
+    private fun onInspect(comment: Comment) {
+        router.navigateTo(UserScreen(UserAccount.User(comment.author.login)))
     }
 }

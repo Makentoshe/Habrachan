@@ -58,7 +58,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
     private fun getCommentsEpoxyControllerProvider(
         disposables: CompositeDisposable, commentsFragmentViewModel: CommentsFragmentViewModel
-    ) = CommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel)
+    ) = CommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel, router)
 
     class Factory {
         fun build(fragment: CommentsFragment): CommentsFragmentModule {
