@@ -1,25 +1,24 @@
 <resources>
 
     <!-- Default theme used for displaying popup windows and does not relates to any theme -->
-    <style name="Default.Popup.Style" parent="Habrachan">
+    <style name="Default.Popup.Style" parent="Theme.MaterialComponents">
         <item name="android:windowEnterAnimation">@anim/popup_window_enlarge</item>
         <item name="android:windowExitAnimation">@anim/popup_window_shrink</item>
     </style>
 
-    <style name="Habrachan" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Habrachan.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">#ff9cc2ce</item>
         <item name="colorAccent">#ff9cc2ce</item>
         <item name="colorPrimaryDark">#ff728e96</item>
-    </style>
 
-    <style name="Habrachan.Light" parent="Habrachan">
         <item name="habrachanToolbar">@style/Habrachan.Light.Toolbar</item>
-        <item name="habrachanBottomBar">@style/Habrachan.Light.BottomBar</item>
-        <item name="habrachanPopup">@style/Habrachan.Light.Popup</item>
-        <item name="habrachanDefault">@style/Habrachan.Light.Default</item>
         <item name="habrachanToolbarInput">@style/Habrachan.Light.Toolbar.Input</item>
         <item name="habrachanToolbarButton">@style/Habrachan.Light.Toolbar.Button</item>
         <item name="habrachanToolbarChip">@style/Habrachan.Light.Toolbar.Chip</item>
+
+        <item name="habrachanBottomBar">@style/Habrachan.Light.BottomBar</item>
+        <item name="habrachanPopup">@style/Habrachan.Light.Popup</item>
+        <item name="habrachanDefault">@style/Habrachan.Light.Default</item>
         <item name="habrachanChip">@style/Habrachan.Light.Chip</item>
     </style>
 
@@ -77,11 +76,11 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="Habrachan.TextAppearance.CollapsingToolbar.Collapsed" parent="Habrachan">
+    <style name="Habrachan.TextAppearance.CollapsingToolbar.Collapsed" parent="Theme.MaterialComponents">
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="Habrachan.TextAppearance.CollapsingToolbar.Expanded" parent="Habrachan">
+    <style name="Habrachan.TextAppearance.CollapsingToolbar.Expanded" parent="Theme.MaterialComponents">
         <item name="android:textSize">24sp</item>
     </style>
 
