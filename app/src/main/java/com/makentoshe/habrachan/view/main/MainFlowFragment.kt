@@ -125,15 +125,15 @@ class MainFlowFragment : Fragment() {
         }
 
         fun toLoginFlowScreen() {
-            router.smartReplace(LoginFlowScreen())
+            router.forwardOrReplace(LoginFlowScreen())
         }
 
         fun toArticlesScreen(page: Int) {
-            router.smartReplace(ArticlesFlowScreen(page))
+            router.forwardOrReplace(ArticlesFlowScreen(page))
         }
 
         fun toMenuScreen() {
-            router.smartReplace(MenuScreen())
+            router.forwardOrReplace(MenuScreen())
         }
 
         fun release() {

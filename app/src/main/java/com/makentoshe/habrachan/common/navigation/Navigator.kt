@@ -17,7 +17,7 @@ class Navigator(
     private val fragmentManager: FragmentManager = activity.supportFragmentManager
 ) : ru.terrakok.cicerone.Navigator {
 
-    private var localStackCopy: LinkedList<String>? = null
+    private lateinit var localStackCopy: LinkedList<String>
 
     override fun applyCommands(commands: Array<Command>) {
         fragmentManager.executePendingTransactions()
@@ -47,31 +47,21 @@ class Navigator(
     private fun applyCommand(command: Command) {
         when (command) {
             is Forward -> forward(command)
+            is ForwardOrReplace -> forwardOrReplace(command)
             is Replace -> replace(command)
             is BackTo -> backTo(command)
             is Back -> back()
-            is SmartReplace -> smartReplace(command)
         }
     }
 
-    private fun forward(command: Forward) {
-        val screen = command.screen as Screen
-        val fragment = createFragment(screen)
+    private fun forward(command: Forward) = internalForward(command, command.screen as Screen)
 
-        val fragmentTransaction = fragmentManager.beginTransaction()
-
-        setupFragmentTransaction(
-            command,
-            fragmentManager.findFragmentById(containerId),
-            fragment,
-            fragmentTransaction
-        )
-
-        fragmentTransaction
-            .add(containerId, fragment, screen.screenKey)
-            .addToBackStack(screen.screenKey)
-            .commit()
-        localStackCopy!!.add(screen.screenKey)
+    private fun forwardOrReplace(command: ForwardOrReplace) {
+        if (localStackCopy.contains(command.screen.screenKey)) {
+            internalSoftReplace(command, command.screen)
+        } else {
+            internalForward(command, command.screen)
+        }
     }
 
     private fun back() {
@@ -119,30 +109,6 @@ class Navigator(
             )
 
             fragmentTransaction.replace(containerId, newFragment).commit()
-        }
-    }
-
-    /**
-     * Performs [SmartReplace] command transition
-     */
-    private fun smartReplace(command: SmartReplace) {
-        val fragment = fragmentManager.findFragmentByTag(command.screen.screenKey)
-        if (fragment == null) {
-            val newFragment = createFragment(command.screen)
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            setupFragmentTransaction(
-                command, fragmentManager.findFragmentById(containerId), newFragment, fragmentTransaction
-            )
-            fragmentTransaction.add(containerId, newFragment, command.screen.screenKey).commit()
-        } else {
-            val currentFragment = fragmentManager.findFragmentById(containerId)
-            if (currentFragment != fragment) {
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                setupFragmentTransaction(
-                    command, fragmentManager.findFragmentById(containerId), fragment, fragmentTransaction
-                )
-                fragmentTransaction.replace(containerId, fragment, command.screen.screenKey).commit()
-            }
         }
     }
 
@@ -205,4 +171,45 @@ class Navigator(
      * @param screen screen
      */
     private fun backToUnexisting(screen: Screen) = backToRoot()
+
+    /** Performs base forward navigation command */
+    private fun internalForward(command: Command, screen: Screen) {
+        val fragment = createFragment(screen)
+
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        setupFragmentTransaction(
+            command,
+            fragmentManager.findFragmentById(containerId),
+            fragment,
+            fragmentTransaction
+        )
+
+        fragmentTransaction
+            .add(containerId, fragment, screen.screenKey)
+            .addToBackStack(screen.screenKey)
+            .commit()
+        localStackCopy.add(screen.screenKey)
+    }
+
+    /** Performs replace command with saving replaced screen in memory */
+    // Todo replace hide/show to detach/attach methods
+    private fun internalSoftReplace(command: Command, screen: Screen) {
+        val fragment = fragmentManager.findFragmentByTag(screen.screenKey)!!
+        // remove selected screen from stack
+        localStackCopy.remove(screen.screenKey)
+        // begin transaction
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        setupFragmentTransaction(
+            command, fragmentManager.findFragmentById(containerId), fragment, fragmentTransaction
+        )
+        // hide all fragments in stack
+        localStackCopy.forEach { screenKey ->
+            fragmentTransaction.hide(fragmentManager.findFragmentByTag(screenKey)!!)
+        }
+        // add selected screen to stack
+        localStackCopy.add(screen.screenKey)
+        // show selected screen
+        fragmentTransaction.show(fragment).commit()
+    }
 }
