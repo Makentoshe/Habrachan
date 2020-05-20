@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.view.main
 
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -15,17 +16,14 @@ import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.main.articles.ArticlesFlowScreen
 import com.makentoshe.habrachan.model.main.login.LoginFlowScreen
-import com.makentoshe.habrachan.model.main.login.LoginScreen
 import com.makentoshe.habrachan.model.main.menu.MenuScreen
-import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.model.user.UserScreen
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
+import com.makentoshe.habrachan.view.OnBackPressedFragment
 import io.reactivex.disposables.CompositeDisposable
-import okhttp3.internal.lockAndWaitNanos
 import ru.terrakok.cicerone.NavigatorHolder
 import toothpick.ktp.delegate.inject
 
-class MainFlowFragment : Fragment() {
+class MainFlowFragment : Fragment(), OnBackPressedFragment {
 
     private val disposables = CompositeDisposable()
     private val arguments = Arguments(this)
@@ -114,6 +112,15 @@ class MainFlowFragment : Fragment() {
         navigator.release()
     }
 
+    override fun onBackPressed(): Boolean {
+        Log.i(javaClass.simpleName, "On Back Press Event")
+        if (childFragmentManager.fragments.count() > 1) {
+            navigator.back()
+            return true
+        }
+        return false
+    }
+
     class Navigator(
         private val router: Router,
         private val navigatorHolder: NavigatorHolder,
@@ -135,6 +142,8 @@ class MainFlowFragment : Fragment() {
         fun toMenuScreen() {
             router.forwardOrReplace(MenuScreen())
         }
+
+        fun back() = router.softExit()
 
         fun release() {
             navigatorHolder.removeNavigator()

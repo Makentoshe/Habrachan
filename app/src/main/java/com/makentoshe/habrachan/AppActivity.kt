@@ -3,24 +3,22 @@ package com.makentoshe.habrachan
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.makentoshe.habrachan.common.navigation.Navigator
+import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.main.MainFlowScreen
-import ru.terrakok.cicerone.NavigatorHolder
+import com.makentoshe.habrachan.view.OnBackPressedFragment
 import toothpick.ktp.delegate.inject
 
 class AppActivity : AppCompatActivity() {
-
-    private val navigator = Navigator(this, R.id.main_container)
-
-    private val navigatorHolder by inject<NavigatorHolder>()
 
     private val router by inject<Router>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         if (savedInstanceState != null) return
+
         when (intent.action) {
             Intent.ACTION_MAIN -> {
                 val screen = MainFlowScreen()
@@ -36,13 +34,20 @@ class AppActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResumeFragments() {
-        super.onResumeFragments()
-        navigatorHolder.setNavigator(navigator)
+    override fun onBackPressed() {
+        if (!supportFragmentManager.onBackPress()) super.onBackPressed()
     }
 
-    override fun onPause() {
-        super.onPause()
-        navigatorHolder.removeNavigator()
+    /** Returns true if back press event was handled */
+    private fun FragmentManager.onBackPress(): Boolean {
+        fragments.forEach { childFragment ->
+            val handled = childFragment.childFragmentManager.onBackPress()
+            if (handled) return true
+
+            if (childFragment is OnBackPressedFragment) {
+                if (childFragment.onBackPressed()) return true
+            }
+        }
+        return false
     }
 }

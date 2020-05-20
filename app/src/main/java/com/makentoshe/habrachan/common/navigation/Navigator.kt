@@ -1,10 +1,11 @@
 package com.makentoshe.habrachan.common.navigation
 
-
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.makentoshe.habrachan.common.navigation.command.BackWithLast
+import com.makentoshe.habrachan.common.navigation.command.ForwardOrReplace
 import ru.terrakok.cicerone.commands.*
 import java.util.*
 
@@ -35,7 +36,7 @@ class Navigator(
 
         val stackSize = fragmentManager.backStackEntryCount
         for (i in 0 until stackSize) {
-            localStackCopy!!.add(fragmentManager.getBackStackEntryAt(i).name!!)
+            localStackCopy.add(fragmentManager.getBackStackEntryAt(i).name!!)
         }
     }
 
@@ -51,6 +52,7 @@ class Navigator(
             is Replace -> replace(command)
             is BackTo -> backTo(command)
             is Back -> back()
+            is BackWithLast -> backWithLast(command)
         }
     }
 
@@ -65,12 +67,16 @@ class Navigator(
     }
 
     private fun back() {
-        if (localStackCopy!!.size > 0) {
+        if (localStackCopy.size > 0) {
             fragmentManager.popBackStack()
-            localStackCopy!!.removeLast()
+            localStackCopy.removeLast()
         } else {
             activityBack()
         }
+    }
+
+    private fun backWithLast(command: BackWithLast) {
+        internalSoftBack(command)
     }
 
     private fun activityBack() = activity.finish()
@@ -196,8 +202,8 @@ class Navigator(
     // Todo replace hide/show to detach/attach methods
     private fun internalSoftReplace(command: Command, screen: Screen) {
         val fragment = fragmentManager.findFragmentByTag(screen.screenKey)!!
-        // remove selected screen from stack
-        localStackCopy.remove(screen.screenKey)
+//        // remove selected screen from stack
+//        localStackCopy.remove(screen.screenKey)
         // begin transaction
         val fragmentTransaction = fragmentManager.beginTransaction()
         setupFragmentTransaction(
@@ -211,5 +217,26 @@ class Navigator(
         localStackCopy.add(screen.screenKey)
         // show selected screen
         fragmentTransaction.show(fragment).commit()
+    }
+
+    /** Performs back operation depends on [localStackCopy] */
+    private fun internalSoftBack(command: Command) {
+        back()
+//        when {
+//            localStackCopy.size > 1 -> {
+//                val fragmentToRemove = fragmentManager.findFragmentByTag(localStackCopy.removeLast())!!
+//
+//                val fragmentTransaction = fragmentManager.beginTransaction()
+//                setupFragmentTransaction(
+//                    command, fragmentManager.findFragmentById(containerId), fragmentToRemove, fragmentTransaction
+//                )
+//
+//                val fragment = fragmentManager.findFragmentByTag(localStackCopy.last)!!
+//                fragmentTransaction.remove(fragmentToRemove).show(fragment).commit()
+//                println(localStackCopy)
+//            }
+////            localStackCopy.size > 0 -> back()
+//            else -> activityBack()
+//        }
     }
 }
