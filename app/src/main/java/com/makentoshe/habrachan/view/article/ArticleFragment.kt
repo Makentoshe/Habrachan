@@ -9,11 +9,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.response.ArticleResponse
 import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.VoteArticleResponse
@@ -21,11 +20,10 @@ import com.makentoshe.habrachan.common.ui.ImageTintController
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.common.ui.TextScoreController
-import com.makentoshe.habrachan.model.comments.CommentsScreen
-import com.makentoshe.habrachan.model.images.PostImageScreen
+import com.makentoshe.habrachan.navigation.comments.CommentsScreen
+import com.makentoshe.habrachan.navigation.images.PostImageScreen
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.model.user.UserScreen
-import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
+import com.makentoshe.habrachan.navigation.user.UserScreen
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
@@ -266,7 +264,13 @@ abstract class ArticleFragment : Fragment() {
 
         fun toUserScreen(userName: String): Boolean {
             if (sessionDao.get().isLoggedIn) {
-                router.navigateTo(UserScreen(UserAccount.User(userName)))
+                router.navigateTo(
+                    UserScreen(
+                        UserAccount.User(
+                            userName
+                        )
+                    )
+                )
                 return true
             } else {
                 return false

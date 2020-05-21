@@ -1,14 +1,14 @@
 package com.makentoshe.habrachan.view.main.login
 
 import com.makentoshe.habrachan.BaseTest
-import com.makentoshe.habrachan.common.navigation.Navigator
-import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.model.main.login.LoginScreen
+import com.makentoshe.habrachan.navigation.Router
+import com.makentoshe.habrachan.navigation.main.login.LoginScreen
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.model.user.UserScreen
+import com.makentoshe.habrachan.navigation.user.UserScreen
 import io.mockk.*
 import org.junit.Before
 import org.junit.Test
+import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
 
 class LoginFlowFragmentNavigatorTest: BaseTest() {

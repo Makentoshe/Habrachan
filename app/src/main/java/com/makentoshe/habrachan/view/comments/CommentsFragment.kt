@@ -16,7 +16,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController

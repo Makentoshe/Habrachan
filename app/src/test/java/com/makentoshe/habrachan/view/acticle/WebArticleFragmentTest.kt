@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.di.article.ArticleFragmentScope
 import com.makentoshe.habrachan.di.article.WebArticleFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.article.web.JavaScriptInterface
-import com.makentoshe.habrachan.model.article.WebArticleScreen
+import com.makentoshe.habrachan.navigation.article.WebArticleScreen
 import com.makentoshe.habrachan.view.article.ArticleFragment
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel

@@ -8,9 +8,9 @@ import android.widget.PopupWindow
 import android.widget.Toast
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.model.user.UserScreen
+import com.makentoshe.habrachan.navigation.user.UserScreen
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 
 class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel, private val router: Router) {
@@ -57,6 +57,12 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel, priv
     }
 
     private fun onInspect(comment: Comment) {
-        router.navigateTo(UserScreen(UserAccount.User(comment.author.login)))
+        router.navigateTo(
+            UserScreen(
+                UserAccount.User(
+                    comment.author.login
+                )
+            )
+        )
     }
 }

@@ -5,11 +5,11 @@ import com.makentoshe.habrachan.AppActivity
 import com.makentoshe.habrachan.BaseRobolectricTest
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentScope
-import com.makentoshe.habrachan.model.main.login.LoginFlowScreen
+import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.mockk.every

@@ -8,14 +8,14 @@ import com.makentoshe.habrachan.AppActivity
 import com.makentoshe.habrachan.BaseRobolectricTest
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
-import com.makentoshe.habrachan.model.comments.CommentsScreen
+import com.makentoshe.habrachan.navigation.comments.CommentsScreen
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.mockk.*
 import io.reactivex.disposables.CompositeDisposable
