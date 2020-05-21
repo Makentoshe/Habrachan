@@ -13,14 +13,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.getResourceIdOrThrow
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.broadcast.LoginBroadcastReceiver
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
-import com.makentoshe.habrachan.common.entity.User
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.request.ImageRequest
 import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.UserResponse
@@ -28,7 +26,6 @@ import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.model.user.UserContentPagerAdapter
 import com.makentoshe.habrachan.ui.user.UserFragmentUi
-import com.makentoshe.habrachan.view.main.MainFlowFragment
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.di.user
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.manager.UsersManager

@@ -5,15 +5,15 @@ import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.navigation.Navigator
-import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.view.main.login.LoginFlowFragment
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Cicerone
+import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -33,7 +33,7 @@ class LoginFlowFragmentModule(fragment: LoginFlowFragment) : Module() {
         val fragmentDisposables = CompositeDisposable()
         bind<CompositeDisposable>().toInstance(fragmentDisposables)
 
-        val navigator = Navigator(fragment.requireActivity(), R.id.login_flow_fragment, fragment.childFragmentManager)
+        val navigator = SupportAppNavigator(fragment.requireActivity(), fragment.childFragmentManager, R.id.login_flow_fragment)
         val (router, navigatorHolder) = Cicerone.create(Router()).let { it.router to it.navigatorHolder }
         bind<LoginFlowFragment.Navigator>().toInstance(LoginFlowFragment.Navigator(router, navigatorHolder, navigator))
 

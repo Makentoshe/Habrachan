@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.response.LoginResponse
-import com.makentoshe.habrachan.model.main.login.LoginScreen
+import com.makentoshe.habrachan.navigation.main.login.LoginScreen
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.model.user.UserScreen
+import com.makentoshe.habrachan.navigation.user.UserScreen
 import com.makentoshe.habrachan.ui.main.account.login.LoginFlowFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -82,7 +82,7 @@ class LoginFlowFragment : Fragment() {
     class Navigator(
         private val router: Router,
         private val navigatorHolder: NavigatorHolder,
-        private val navigator: com.makentoshe.habrachan.common.navigation.Navigator
+        private val navigator: ru.terrakok.cicerone.Navigator
     ) {
 
         fun init() {

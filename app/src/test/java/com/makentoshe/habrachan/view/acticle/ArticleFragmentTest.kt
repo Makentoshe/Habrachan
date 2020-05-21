@@ -9,7 +9,7 @@ import com.makentoshe.habrachan.AppActivity
 import com.makentoshe.habrachan.BaseRobolectricTest
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.response.ArticleResponse
 import com.makentoshe.habrachan.common.network.response.ImageResponse

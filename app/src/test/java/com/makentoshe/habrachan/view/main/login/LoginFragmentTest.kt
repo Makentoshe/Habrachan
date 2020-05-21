@@ -9,13 +9,13 @@ import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.habrachan.AppActivity
 import com.makentoshe.habrachan.BaseRobolectricTest
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentScope
 import com.makentoshe.habrachan.di.main.login.LoginFragmentScope
 import com.makentoshe.habrachan.model.main.login.LoginData
-import com.makentoshe.habrachan.model.main.login.LoginScreen
+import com.makentoshe.habrachan.navigation.main.login.LoginScreen
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.mockk.every
 import io.mockk.mockk

@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.di.images
 
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.images.PostImageFragmentPage

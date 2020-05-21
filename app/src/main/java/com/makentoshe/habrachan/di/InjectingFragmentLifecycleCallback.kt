@@ -119,4 +119,8 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, UserArticlesFragmentScope::class.java)
         scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
+
+    override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
+        println("Destroyed: $f")
+    }
 }

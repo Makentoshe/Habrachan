@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.di.comments
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope

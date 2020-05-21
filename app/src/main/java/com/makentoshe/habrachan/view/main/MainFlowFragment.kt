@@ -12,20 +12,17 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.broadcast.LoginBroadcastReceiver
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.navigation.Router
-import com.makentoshe.habrachan.model.main.articles.ArticlesFlowScreen
-import com.makentoshe.habrachan.model.main.login.LoginFlowScreen
-import com.makentoshe.habrachan.model.main.login.LoginScreen
-import com.makentoshe.habrachan.model.main.menu.MenuScreen
-import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.model.user.UserScreen
+import com.makentoshe.habrachan.navigation.Router
+import com.makentoshe.habrachan.navigation.main.articles.ArticlesFlowScreen
+import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
+import com.makentoshe.habrachan.navigation.main.menu.MenuScreen
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
+import com.makentoshe.habrachan.view.BackPressedFragment
 import io.reactivex.disposables.CompositeDisposable
-import okhttp3.internal.lockAndWaitNanos
 import ru.terrakok.cicerone.NavigatorHolder
 import toothpick.ktp.delegate.inject
 
-class MainFlowFragment : Fragment() {
+class MainFlowFragment : Fragment(), BackPressedFragment {
 
     private val disposables = CompositeDisposable()
     private val arguments = Arguments(this)
@@ -114,10 +111,15 @@ class MainFlowFragment : Fragment() {
         navigator.release()
     }
 
+    override fun onBackPressed(): Boolean {
+        navigator.back()
+        return true
+    }
+
     class Navigator(
         private val router: Router,
         private val navigatorHolder: NavigatorHolder,
-        private val navigator: com.makentoshe.habrachan.common.navigation.Navigator
+        private val navigator: ru.terrakok.cicerone.Navigator
     ) {
 
         fun init() {
@@ -125,15 +127,19 @@ class MainFlowFragment : Fragment() {
         }
 
         fun toLoginFlowScreen() {
-            router.smartReplace(LoginFlowScreen())
+            router.replaceScreen(LoginFlowScreen())
         }
 
         fun toArticlesScreen(page: Int) {
-            router.smartReplace(ArticlesFlowScreen(page))
+            router.replaceScreen(ArticlesFlowScreen(page))
         }
 
         fun toMenuScreen() {
-            router.smartReplace(MenuScreen())
+            router.replaceScreen(MenuScreen())
+        }
+
+        fun back() {
+            router.exit()
         }
 
         fun release() {

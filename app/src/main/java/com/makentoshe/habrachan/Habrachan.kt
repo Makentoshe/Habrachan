@@ -1,11 +1,10 @@
 package com.makentoshe.habrachan
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.IntentFilter
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.navigation.Router
+import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.di.InjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.di.InjectionActivityLifecycleCallback
 import com.makentoshe.habrachan.di.common.*

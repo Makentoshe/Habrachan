@@ -36,8 +36,11 @@ class ArticlesDataSource(
             return response
         } catch (runtimeException: RuntimeException) {
             when (val cause = runtimeException.cause) {
+                // When internet offline
                 is UnknownHostException -> loadCache(page, cause)
                 is SSLHandshakeException -> loadCache(page, cause)
+                // When content is loading and we navigate to another screen
+                is InterruptedException -> loadCache(page, cause)
                 else -> throw runtimeException
             }
         }

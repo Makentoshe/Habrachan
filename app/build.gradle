@@ -94,7 +94,7 @@ dependencies {
 
     // Cicerone
     // https://github.com/terrakok/Cicerone
-    def cicerone = "5.0.0"
+    def cicerone = "5.1.1"
     implementation "ru.terrakok.cicerone:cicerone:$cicerone"
 
     // Material components
