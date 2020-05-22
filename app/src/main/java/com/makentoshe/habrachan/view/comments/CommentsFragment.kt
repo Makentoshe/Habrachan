@@ -29,7 +29,7 @@ import toothpick.ktp.delegate.inject
 
 class CommentsFragment : Fragment() {
 
-    private val arguments = Arguments(this)
+    val arguments = Arguments(this)
 
     private val navigator by inject<CommentsNavigator>()
     private val disposables by inject<CompositeDisposable>()

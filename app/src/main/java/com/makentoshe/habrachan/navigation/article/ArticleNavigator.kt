@@ -3,10 +3,10 @@ package com.makentoshe.habrachan.navigation.article
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.navigation.comments.CommentsScreen
 import com.makentoshe.habrachan.navigation.images.PostImageScreen
 import com.makentoshe.habrachan.navigation.user.UserScreen
+import ru.terrakok.cicerone.Router
 
 class ArticleNavigator(private val router: Router, private val sessionDao: SessionDao) {
 
@@ -30,13 +30,7 @@ class ArticleNavigator(private val router: Router, private val sessionDao: Sessi
 
     fun toUserScreen(userName: String): Boolean {
         if (sessionDao.get().isLoggedIn) {
-            router.navigateTo(
-                UserScreen(
-                    UserAccount.User(
-                        userName
-                    )
-                )
-            )
+            router.navigateTo(UserScreen(UserAccount.User(userName)))
             return true
         } else {
             return false
