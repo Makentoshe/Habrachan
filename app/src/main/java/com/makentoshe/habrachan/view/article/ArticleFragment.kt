@@ -10,9 +10,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.button.MaterialButton
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.response.ArticleResponse
 import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.VoteArticleResponse
@@ -20,10 +18,7 @@ import com.makentoshe.habrachan.common.ui.ImageTintController
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.common.ui.TextScoreController
-import com.makentoshe.habrachan.navigation.comments.CommentsScreen
-import com.makentoshe.habrachan.navigation.images.PostImageScreen
-import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.navigation.user.UserScreen
+import com.makentoshe.habrachan.navigation.article.ArticleNavigator
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
@@ -33,7 +28,7 @@ import toothpick.ktp.delegate.inject
 abstract class ArticleFragment : Fragment() {
 
     protected val disposables by inject<CompositeDisposable>()
-    protected val navigator by inject<Navigator>()
+    protected val navigator by inject<ArticleNavigator>()
     protected val getArticleViewModel by inject<ArticleFragmentViewModel>()
     protected val userAvatarViewModel by inject<UserAvatarViewModel>()
     protected val voteArticleViewModel by inject<VoteArticleViewModel>()
@@ -242,42 +237,6 @@ abstract class ArticleFragment : Fragment() {
         }
     }
 
-    class Navigator(private val router: Router, private val sessionDao: SessionDao) {
-
-        /** Returns to MainScreen */
-        fun back() {
-            router.exit()
-        }
-
-        /** Navigates to [PostImageScreen] */
-        fun toArticleResourceScreen(resource: String) {
-            router.navigateTo(PostImageScreen(resource))
-        }
-
-        fun toArticleCommentsScreen(articleId: Int) {
-            router.navigateTo(CommentsScreen(articleId))
-        }
-
-        fun toArticleCommentsScreen(article: Article) {
-            router.navigateTo(CommentsScreen(article))
-        }
-
-        fun toUserScreen(userName: String): Boolean {
-            if (sessionDao.get().isLoggedIn) {
-                router.navigateTo(
-                    UserScreen(
-                        UserAccount.User(
-                            userName
-                        )
-                    )
-                )
-                return true
-            } else {
-                return false
-            }
-        }
-    }
-
     class Arguments(private val articleFragment: ArticleFragment) {
 
         init {
@@ -304,3 +263,4 @@ abstract class ArticleFragment : Fragment() {
         }
     }
 }
+

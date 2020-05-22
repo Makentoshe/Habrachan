@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.navigation.Router
+import com.makentoshe.habrachan.navigation.main.MainFlowNavigator
 import com.makentoshe.habrachan.navigation.main.SlipNavigator
 import com.makentoshe.habrachan.view.main.MainFlowFragment
 import ru.terrakok.cicerone.Cicerone
@@ -26,7 +27,7 @@ class MainFlowFragmentModule(fragment: MainFlowFragment) : Module() {
 
         val navigator = SlipNavigator(fragment.requireActivity(), R.id.main_container, fragment.childFragmentManager)
         val (router, navigatorHolder) = Cicerone.create(Router()).let { it.router to it.navigatorHolder }
-        bind<MainFlowFragment.Navigator>().toInstance(MainFlowFragment.Navigator(router, navigatorHolder, navigator))
+        bind<MainFlowNavigator>().toInstance(MainFlowNavigator(router, navigatorHolder, navigator))
         bind<SessionDao>().toInstance(sessionDatabase.session())
         bind<LogoutBroadcastReceiver>().toInstance(logoutBroadcastReceiver)
         bind<LoginBroadcastReceiver>().toInstance(loginBroadcastReceiver)

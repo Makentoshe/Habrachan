@@ -17,6 +17,7 @@ import com.makentoshe.habrachan.common.network.response.VoteArticleResponse
 import com.makentoshe.habrachan.common.ui.ImageTintController
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
+import com.makentoshe.habrachan.navigation.article.ArticleNavigator
 import com.makentoshe.habrachan.ui.article.CustomNestedScrollView
 import com.makentoshe.habrachan.view.article.ArticleFragment
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
@@ -46,7 +47,7 @@ abstract class ArticleFragmentTest : BaseRobolectricTest() {
     protected val disposables = spyk(CompositeDisposable())
     protected val mockArticleViewModel = mockk<ArticleFragmentViewModel>(relaxed = true)
     protected val mockUserAvatarViewModel = mockk<UserAvatarViewModel>(relaxed = true)
-    protected val mockNavigator = mockk<ArticleFragment.Navigator>(relaxed = true)
+    protected val mockNavigator = mockk<ArticleNavigator>(relaxed = true)
     protected val mockVoteArticleViewModel = mockk<VoteArticleViewModel>(relaxed = true)
 
     protected val router by inject<Router>()

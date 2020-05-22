@@ -16,6 +16,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.images.PostImageFragmentPageModule
 import com.makentoshe.habrachan.di.images.PostImageFragmentPageScope
+import com.makentoshe.habrachan.navigation.images.PostImageNavigator
 import com.makentoshe.habrachan.ui.images.PostImageFragmentPageUi
 import com.makentoshe.habrachan.viewmodel.images.PostImageFragmentViewModel
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -23,7 +24,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
-import com.makentoshe.habrachan.navigation.Router
 import toothpick.Toothpick
 import toothpick.ktp.delegate.inject
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -37,7 +37,7 @@ class PostImageFragmentPage : Fragment() {
     private val viewModel by inject<PostImageFragmentViewModel>()
 
     /** Creates in [PostImageFragmentPageModule] and injects during onAttach lifecycle event */
-    private val navigator by inject<Navigator>()
+    private val navigator by inject<PostImageNavigator>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -108,16 +108,6 @@ class PostImageFragmentPage : Fragment() {
         }
     }
 
-    /** For navigations from [PostImageFragmentPage] */
-    class Navigator(private val router: Router) {
-        /**
-         * Using [Router.backTo] because default [Router.exit] also closes [ArticleScreen]
-         * and returns to [MainFlowScreen]. No matter what arguments we pass to [ArticleScreen]:
-         * it will be found in backstack and displayed without problems
-         */
-        fun back() = router.exit()
-    }
-
     private class SubsamplingImageStateListener(
         private val views: CreatedViews
     ) : SubsamplingScaleImageView.DefaultOnStateChangedListener() {
@@ -128,7 +118,7 @@ class PostImageFragmentPage : Fragment() {
 
     // TODO fix urls after rotation
     private class PanelSlideListener(
-        private val navigator: Navigator, private val views: CreatedViews
+        private val navigator: PostImageNavigator, private val views: CreatedViews
     ) : SlidingUpPanelLayout.SimplePanelSlideListener() {
 
         private var lock = false
@@ -199,3 +189,4 @@ class PostImageFragmentPage : Fragment() {
         }
     }
 }
+

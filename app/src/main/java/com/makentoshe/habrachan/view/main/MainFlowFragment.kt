@@ -12,14 +12,10 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.broadcast.LoginBroadcastReceiver
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.navigation.Router
-import com.makentoshe.habrachan.navigation.main.articles.ArticlesFlowScreen
-import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
-import com.makentoshe.habrachan.navigation.main.menu.MenuScreen
+import com.makentoshe.habrachan.navigation.main.MainFlowNavigator
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
 import com.makentoshe.habrachan.view.BackPressedFragment
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.NavigatorHolder
 import toothpick.ktp.delegate.inject
 
 class MainFlowFragment : Fragment(), BackPressedFragment {
@@ -27,7 +23,7 @@ class MainFlowFragment : Fragment(), BackPressedFragment {
     private val disposables = CompositeDisposable()
     private val arguments = Arguments(this)
 
-    private val navigator by inject<Navigator>()
+    private val navigator by inject<MainFlowNavigator>()
     private val sessionDatabase by inject<SessionDatabase>()
     private val logoutBroadcastReceiver by inject<LogoutBroadcastReceiver>()
     private val loginBroadcastReceiver by inject<LoginBroadcastReceiver>()
@@ -116,37 +112,6 @@ class MainFlowFragment : Fragment(), BackPressedFragment {
         return true
     }
 
-    class Navigator(
-        private val router: Router,
-        private val navigatorHolder: NavigatorHolder,
-        private val navigator: ru.terrakok.cicerone.Navigator
-    ) {
-
-        fun init() {
-            navigatorHolder.setNavigator(navigator)
-        }
-
-        fun toLoginFlowScreen() {
-            router.replaceScreen(LoginFlowScreen())
-        }
-
-        fun toArticlesScreen(page: Int) {
-            router.replaceScreen(ArticlesFlowScreen(page))
-        }
-
-        fun toMenuScreen() {
-            router.replaceScreen(MenuScreen())
-        }
-
-        fun back() {
-            router.exit()
-        }
-
-        fun release() {
-            navigatorHolder.removeNavigator()
-        }
-    }
-
     class Arguments(private val mainFlowFragment: MainFlowFragment) {
 
         init {
@@ -169,5 +134,4 @@ class MainFlowFragment : Fragment(), BackPressedFragment {
 
     }
 }
-
 
