@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.navigation.comments
 
-import com.makentoshe.habrachan.navigation.Router
+import ru.terrakok.cicerone.Router
 
 class CommentsNavigator(private val router: Router) {
     fun back() = router.exit()
