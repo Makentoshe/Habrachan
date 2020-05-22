@@ -18,13 +18,13 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.broadcast.LoginBroadcastReceiver
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.request.ImageRequest
 import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.UserResponse
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.model.user.UserContentPagerAdapter
+import com.makentoshe.habrachan.navigation.user.UserNavigator
 import com.makentoshe.habrachan.ui.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
@@ -36,7 +36,7 @@ class UserFragment : Fragment() {
 
     private val disposables = CompositeDisposable()
     private val arguments = Arguments(this)
-    private val navigator by inject<Navigator>()
+    private val navigator by inject<UserNavigator>()
     private val viewModel by inject<UserViewModel>()
     private val userAvatarViewModel by inject<UserAvatarViewModel>()
 
@@ -228,8 +228,5 @@ class UserFragment : Fragment() {
         }
 
     }
-
-    class Navigator(private val router: Router) {
-        fun back() = router.exit()
-    }
 }
+

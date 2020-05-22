@@ -16,11 +16,11 @@ import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
+import com.makentoshe.habrachan.navigation.comments.CommentsNavigator
 import com.makentoshe.habrachan.ui.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,7 +31,7 @@ class CommentsFragment : Fragment() {
 
     private val arguments = Arguments(this)
 
-    private val navigator by inject<Navigator>()
+    private val navigator by inject<CommentsNavigator>()
     private val disposables by inject<CompositeDisposable>()
     private val epoxyController by inject<CommentsEpoxyController>()
     private val commentsViewModel by inject<CommentsFragmentViewModel>()
@@ -183,7 +183,4 @@ class CommentsFragment : Fragment() {
         }
     }
 
-    class Navigator(private val router: Router) {
-        fun back() = router.exit()
-    }
 }

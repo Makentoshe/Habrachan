@@ -8,22 +8,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.response.LoginResponse
-import com.makentoshe.habrachan.navigation.main.login.LoginScreen
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.navigation.user.UserScreen
+import com.makentoshe.habrachan.navigation.main.login.LoginFlowNavigator
 import com.makentoshe.habrachan.ui.main.account.login.LoginFlowFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.NavigatorHolder
 import toothpick.ktp.delegate.inject
 
 /** Contains LoginFragment if not logged in and UserFragment otherwise */
 class LoginFlowFragment : Fragment() {
 
-    private val navigator by inject<Navigator>()
+    private val navigator by inject<LoginFlowNavigator>()
     private val disposables by inject<CompositeDisposable>()
     private val loginViewModel by inject<LoginViewModel>()
     private val sessionDatabase by inject<SessionDatabase>()
@@ -79,27 +76,5 @@ class LoginFlowFragment : Fragment() {
         fun build() = LoginFlowFragment()
     }
 
-    class Navigator(
-        private val router: Router,
-        private val navigatorHolder: NavigatorHolder,
-        private val navigator: ru.terrakok.cicerone.Navigator
-    ) {
-
-        fun init() {
-            navigatorHolder.setNavigator(navigator)
-        }
-
-        fun toLoginScreen() {
-            router.replaceScreen(LoginScreen())
-        }
-
-        fun toUserScreen(userAccount: UserAccount) {
-            router.replaceScreen(UserScreen(userAccount))
-        }
-
-        fun release() {
-            navigatorHolder.removeNavigator()
-        }
-    }
-
 }
+

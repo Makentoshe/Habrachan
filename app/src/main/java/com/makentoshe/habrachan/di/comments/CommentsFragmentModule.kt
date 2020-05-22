@@ -8,6 +8,7 @@ import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
+import com.makentoshe.habrachan.navigation.comments.CommentsNavigator
 import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.comments.CommentsViewModelSchedulerProvider
@@ -43,7 +44,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
         val commentsEpoxyControllerProvider = getCommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel)
         bind<CommentsEpoxyController>().toProviderInstance(commentsEpoxyControllerProvider)
 
-        bind<CommentsFragment.Navigator>().toInstance(CommentsFragment.Navigator(router))
+        bind<CommentsNavigator>().toInstance(CommentsNavigator(router))
     }
 
     private fun getCommentsFragmentViewModel(fragment: CommentsFragment): CommentsFragmentViewModel {
