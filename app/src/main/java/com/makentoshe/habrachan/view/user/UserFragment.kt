@@ -34,8 +34,9 @@ import toothpick.ktp.delegate.inject
 
 class UserFragment : Fragment() {
 
+    val arguments = Arguments(this)
+
     private val disposables = CompositeDisposable()
-    private val arguments = Arguments(this)
     private val navigator by inject<UserNavigator>()
     private val viewModel by inject<UserViewModel>()
     private val userAvatarViewModel by inject<UserAvatarViewModel>()
