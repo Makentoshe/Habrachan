@@ -16,23 +16,23 @@ import org.robolectric.RobolectricTestRunner
 import ru.terrakok.cicerone.Router
 
 @RunWith(RobolectricTestRunner::class)
-class ArticleNavigatorTest : BaseRobolectricTest() {
+class ArticleFragmentNavigationTest : BaseRobolectricTest() {
 
-    private lateinit var articleNavigator: ArticleNavigator
+    private lateinit var articleFragmentNavigation: ArticleFragmentNavigation
 
     private val mockRouter = mockk<Router>(relaxed = true)
     private val mockSessionDao = mockk<SessionDao>()
 
     @Before
     fun before() {
-        articleNavigator = ArticleNavigator(mockRouter, mockSessionDao)
+        articleFragmentNavigation = ArticleFragmentNavigation(mockRouter, mockSessionDao)
     }
 
     @Test
     fun testShouldNavigateToCommentsScreenById() {
         val articleId = 1
 
-        articleNavigator.toArticleCommentsScreen(articleId)
+        articleFragmentNavigation.toArticleCommentsScreen(articleId)
 
         val screen = slot<CommentsScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
@@ -47,7 +47,7 @@ class ArticleNavigatorTest : BaseRobolectricTest() {
         mockkObject(Article.Companion)
         every { Article.fromJson(any()) } returns article
 
-        articleNavigator.toArticleCommentsScreen(article)
+        articleFragmentNavigation.toArticleCommentsScreen(article)
 
         val screen = slot<CommentsScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
@@ -61,7 +61,7 @@ class ArticleNavigatorTest : BaseRobolectricTest() {
         every { mockSessionDao.get().isLoggedIn } returns true
         val userName = "UserName"
 
-        assert(articleNavigator.toUserScreen(userName))
+        assert(articleFragmentNavigation.toUserScreen(userName))
 
         val screen = slot<UserScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
@@ -73,7 +73,7 @@ class ArticleNavigatorTest : BaseRobolectricTest() {
         every { mockSessionDao.get().isLoggedIn } returns false
         val userName = "UserName"
 
-        assert(!articleNavigator.toUserScreen(userName))
+        assert(!articleFragmentNavigation.toUserScreen(userName))
 
         verify(exactly = 0) { mockRouter.navigateTo(any()) }
     }
@@ -82,7 +82,7 @@ class ArticleNavigatorTest : BaseRobolectricTest() {
     fun testShouldNavigateToResourceScreen() {
         val resource = "resource"
 
-        articleNavigator.toArticleResourceScreen(resource)
+        articleFragmentNavigation.toArticleResourceScreen(resource)
         val screen = slot<PostImageScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
         assertEquals(resource, screen.captured.fragment.arguments.source)
@@ -90,7 +90,7 @@ class ArticleNavigatorTest : BaseRobolectricTest() {
 
     @Test
     fun testShouldNavigateToBack() {
-        articleNavigator.back()
+        articleFragmentNavigation.back()
         verify { mockRouter.exit() }
     }
 }

@@ -7,7 +7,7 @@ import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.navigation.article.ArticleNavigator
+import com.makentoshe.habrachan.navigation.article.ArticleFragmentNavigation
 import com.makentoshe.habrachan.view.article.ArticleFragment
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
@@ -36,7 +36,7 @@ class ArticleFragmentModule(fragment: ArticleFragment) : Module() {
 
         bind<CompositeDisposable>().toInstance(CompositeDisposable())
 
-        bind<ArticleNavigator>().toInstance(ArticleNavigator(router, sessionDatabase.session()))
+        bind<ArticleFragmentNavigation>().toInstance(ArticleFragmentNavigation(router, sessionDatabase.session()))
 
         val userAvatarViewModel = getUserAvatarViewModel(fragment)
         bind<UserAvatarViewModel>().toInstance(userAvatarViewModel)

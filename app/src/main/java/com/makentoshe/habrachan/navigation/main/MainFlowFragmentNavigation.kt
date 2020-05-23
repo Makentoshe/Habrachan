@@ -1,20 +1,15 @@
 package com.makentoshe.habrachan.navigation.main
 
-import com.makentoshe.habrachan.navigation.Router
+import com.makentoshe.habrachan.navigation.FlowFragmentNavigation
 import com.makentoshe.habrachan.navigation.main.articles.ArticlesFlowScreen
 import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
 import com.makentoshe.habrachan.navigation.main.menu.MenuScreen
 import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 
-class MainFlowNavigator(
-    private val router: Router,
-    private val navigatorHolder: NavigatorHolder,
-    private val navigator: ru.terrakok.cicerone.Navigator
-) {
-
-    fun init() {
-        navigatorHolder.setNavigator(navigator)
-    }
+class MainFlowFragmentNavigation(
+    private val router: Router, navigatorHolder: NavigatorHolder, navigator: ru.terrakok.cicerone.Navigator
+) : FlowFragmentNavigation(navigatorHolder, navigator) {
 
     fun toLoginFlowScreen() {
         router.replaceScreen(LoginFlowScreen())
@@ -30,9 +25,5 @@ class MainFlowNavigator(
 
     fun back() {
         router.exit()
-    }
-
-    fun release() {
-        navigatorHolder.removeNavigator()
     }
 }

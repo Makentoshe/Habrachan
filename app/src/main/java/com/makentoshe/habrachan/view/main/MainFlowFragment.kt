@@ -12,7 +12,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.broadcast.LoginBroadcastReceiver
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.navigation.main.MainFlowNavigator
+import com.makentoshe.habrachan.navigation.main.MainFlowFragmentNavigation
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
 import com.makentoshe.habrachan.view.BackPressedFragment
 import io.reactivex.disposables.CompositeDisposable
@@ -23,7 +23,7 @@ class MainFlowFragment : Fragment(), BackPressedFragment {
     private val disposables = CompositeDisposable()
     private val arguments = Arguments(this)
 
-    private val navigator by inject<MainFlowNavigator>()
+    private val navigator by inject<MainFlowFragmentNavigation>()
     private val sessionDatabase by inject<SessionDatabase>()
     private val logoutBroadcastReceiver by inject<LogoutBroadcastReceiver>()
     private val loginBroadcastReceiver by inject<LoginBroadcastReceiver>()

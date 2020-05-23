@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.navigation.Router
-import com.makentoshe.habrachan.navigation.main.login.LoginFlowNavigator
+import com.makentoshe.habrachan.navigation.main.login.LoginFlowFragmentNavigation
 import com.makentoshe.habrachan.view.main.login.LoginFlowFragment
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -36,7 +36,7 @@ class LoginFlowFragmentModule(fragment: LoginFlowFragment) : Module() {
 
         val navigator = SupportAppNavigator(fragment.requireActivity(), fragment.childFragmentManager, R.id.login_flow_fragment)
         val (router, navigatorHolder) = Cicerone.create(Router()).let { it.router to it.navigatorHolder }
-        bind<LoginFlowNavigator>().toInstance(LoginFlowNavigator(router, navigatorHolder, navigator))
+        bind<LoginFlowFragmentNavigation>().toInstance(LoginFlowFragmentNavigation(router, navigatorHolder, navigator))
 
         bind<LoginViewModel>().toInstance(getLoginViewModel(fragment))
 

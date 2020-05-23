@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.navigation.images.PostImageNavigator
+import com.makentoshe.habrachan.navigation.images.PostImageFragmentNavigation
 import com.makentoshe.habrachan.view.images.PostImageFragmentPage
 import com.makentoshe.habrachan.viewmodel.images.PostImageFragmentViewModel
 import okhttp3.OkHttpClient
@@ -21,8 +21,8 @@ class PostImageFragmentPageModule private constructor(fragment: PostImageFragmen
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
 
-        val navigator = PostImageNavigator(router)
-        bind<PostImageNavigator>().toInstance(navigator)
+        val navigator = PostImageFragmentNavigation(router)
+        bind<PostImageFragmentNavigation>().toInstance(navigator)
 
         val postImageFragmentViewModel = getPostImageFragmentViewModel(fragment)
         bind<PostImageFragmentViewModel>().toInstance(postImageFragmentViewModel)

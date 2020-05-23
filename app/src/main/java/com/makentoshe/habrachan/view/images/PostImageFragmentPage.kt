@@ -16,7 +16,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.images.PostImageFragmentPageModule
 import com.makentoshe.habrachan.di.images.PostImageFragmentPageScope
-import com.makentoshe.habrachan.navigation.images.PostImageNavigator
+import com.makentoshe.habrachan.navigation.images.PostImageFragmentNavigation
 import com.makentoshe.habrachan.ui.images.PostImageFragmentPageUi
 import com.makentoshe.habrachan.viewmodel.images.PostImageFragmentViewModel
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -37,7 +37,7 @@ class PostImageFragmentPage : Fragment() {
     private val viewModel by inject<PostImageFragmentViewModel>()
 
     /** Creates in [PostImageFragmentPageModule] and injects during onAttach lifecycle event */
-    private val navigator by inject<PostImageNavigator>()
+    private val navigator by inject<PostImageFragmentNavigation>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -118,7 +118,7 @@ class PostImageFragmentPage : Fragment() {
 
     // TODO fix urls after rotation
     private class PanelSlideListener(
-        private val navigator: PostImageNavigator, private val views: CreatedViews
+        private val navigator: PostImageFragmentNavigation, private val views: CreatedViews
     ) : SlidingUpPanelLayout.SimplePanelSlideListener() {
 
         private var lock = false

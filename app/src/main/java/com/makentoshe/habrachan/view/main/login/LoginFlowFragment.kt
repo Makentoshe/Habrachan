@@ -10,7 +10,7 @@ import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.navigation.main.login.LoginFlowNavigator
+import com.makentoshe.habrachan.navigation.main.login.LoginFlowFragmentNavigation
 import com.makentoshe.habrachan.ui.main.account.login.LoginFlowFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +20,7 @@ import toothpick.ktp.delegate.inject
 /** Contains LoginFragment if not logged in and UserFragment otherwise */
 class LoginFlowFragment : Fragment() {
 
-    private val navigator by inject<LoginFlowNavigator>()
+    private val navigator by inject<LoginFlowFragmentNavigation>()
     private val disposables by inject<CompositeDisposable>()
     private val loginViewModel by inject<LoginViewModel>()
     private val sessionDatabase by inject<SessionDatabase>()

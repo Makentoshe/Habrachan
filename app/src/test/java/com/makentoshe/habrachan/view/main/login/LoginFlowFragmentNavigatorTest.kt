@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.BaseTest
 import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.navigation.main.login.LoginScreen
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.navigation.main.login.LoginFlowNavigator
+import com.makentoshe.habrachan.navigation.main.login.LoginFlowFragmentNavigation
 import com.makentoshe.habrachan.navigation.user.UserScreen
 import io.mockk.*
 import org.junit.Before
@@ -14,7 +14,7 @@ import ru.terrakok.cicerone.NavigatorHolder
 
 class LoginFlowFragmentNavigatorTest: BaseTest() {
 
-    private lateinit var navigator: LoginFlowNavigator
+    private lateinit var navigator: LoginFlowFragmentNavigation
 
     private val mockRouter = mockk<Router>(relaxed = true)
     private val mockNavigatorHolder = mockk<NavigatorHolder>(relaxed = true)
@@ -22,7 +22,7 @@ class LoginFlowFragmentNavigatorTest: BaseTest() {
 
     @Before
     fun before() {
-         navigator = LoginFlowNavigator(mockRouter, mockNavigatorHolder, mockNavigator)
+         navigator = LoginFlowFragmentNavigation(mockRouter, mockNavigatorHolder, mockNavigator)
     }
 
     @Test
