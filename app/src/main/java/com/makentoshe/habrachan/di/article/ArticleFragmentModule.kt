@@ -3,7 +3,6 @@ package com.makentoshe.habrachan.di.article
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
@@ -14,6 +13,7 @@ import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -21,8 +21,8 @@ import toothpick.ktp.delegate.inject
 
 class ArticleFragmentModule(fragment: ArticleFragment) : Module() {
 
-    private val avatarManager : ImageManager
-    private val articlesManager : ArticlesManager
+    private val avatarManager: ImageManager
+    private val articlesManager: ArticlesManager
 
     private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
@@ -54,7 +54,7 @@ class ArticleFragmentModule(fragment: ArticleFragment) : Module() {
         return ViewModelProviders.of(fragment, factory)[UserAvatarViewModel::class.java]
     }
 
-    private fun getArticleFragmentViewModel(fragment: ArticleFragment) : ArticleFragmentViewModel {
+    private fun getArticleFragmentViewModel(fragment: ArticleFragment): ArticleFragmentViewModel {
         val userAvatarViewModel = getUserAvatarViewModel(fragment)
         val factory = ArticleFragmentViewModel.Factory(
             articlesManager, database.articles(), sessionDatabase.session(), userAvatarViewModel

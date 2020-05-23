@@ -22,7 +22,7 @@ import toothpick.ktp.delegate.inject
 
 class OverlayImageFragment : Fragment() {
 
-    val arguments = Arguments(this)
+    val arguments = OverlayImageFragmentArguments(this)
 
     private val viewModel by inject<OverlayImageFragmentViewModel>()
     private val disposables by inject<CompositeDisposable>()
@@ -103,27 +103,4 @@ class OverlayImageFragment : Fragment() {
             arguments.source = source
         }
     }
-
-    class Arguments(private val overlayImageFragment: OverlayImageFragment) {
-
-        init {
-            val fragment = overlayImageFragment as Fragment
-            if (fragment.arguments == null) {
-                fragment.arguments = Bundle()
-            }
-        }
-
-        private val fragmentArguments: Bundle
-            get() = overlayImageFragment.requireArguments()
-
-        var source: String
-            get() = fragmentArguments.getString(SOURCE) ?: ""
-            set(value) = fragmentArguments.putString(SOURCE, value)
-
-        companion object {
-            private const val SOURCE = "Source"
-        }
-    }
-
 }
-

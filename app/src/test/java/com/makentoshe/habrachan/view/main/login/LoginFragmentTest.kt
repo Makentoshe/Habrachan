@@ -9,7 +9,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.habrachan.AppActivity
 import com.makentoshe.habrachan.BaseRobolectricTest
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentScope
@@ -32,6 +31,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.binding.bind
 import toothpick.ktp.binding.module

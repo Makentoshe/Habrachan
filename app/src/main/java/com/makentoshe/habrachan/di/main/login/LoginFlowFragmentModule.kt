@@ -7,13 +7,13 @@ import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.navigation.main.login.LoginFlowFragmentNavigation
 import com.makentoshe.habrachan.view.main.login.LoginFlowFragment
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Cicerone
+import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import toothpick.Toothpick
 import toothpick.config.Module

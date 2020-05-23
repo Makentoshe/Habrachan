@@ -9,7 +9,6 @@ import com.makentoshe.habrachan.AppActivity
 import com.makentoshe.habrachan.BaseRobolectricTest
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.request.GetArticleRequest
 import com.makentoshe.habrachan.common.network.response.ArticleResponse
 import com.makentoshe.habrachan.common.network.response.ImageResponse
@@ -27,6 +26,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 import org.junit.Assert
 import org.junit.Test
+import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 abstract class ArticleFragmentTest : BaseRobolectricTest() {

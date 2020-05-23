@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.view.main.login
 
 import com.makentoshe.habrachan.BaseTest
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.navigation.main.login.LoginScreen
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.navigation.main.login.LoginFlowFragmentNavigation
@@ -11,6 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 
 class LoginFlowFragmentNavigatorTest: BaseTest() {
 

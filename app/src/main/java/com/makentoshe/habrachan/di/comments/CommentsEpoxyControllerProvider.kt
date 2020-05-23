@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.di.comments
 
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.model.comments.CommentEpoxyModel
 import com.makentoshe.habrachan.model.comments.CommentPopupFactory
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
@@ -8,6 +7,7 @@ import com.makentoshe.habrachan.model.comments.NativeCommentAvatarController
 import com.makentoshe.habrachan.view.comments.controller.CommentController
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
+import ru.terrakok.cicerone.Router
 import javax.inject.Provider
 
 class CommentsEpoxyControllerProvider(

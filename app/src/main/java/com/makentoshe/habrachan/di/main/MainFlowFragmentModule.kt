@@ -6,11 +6,11 @@ import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.navigation.main.MainFlowFragmentNavigation
 import com.makentoshe.habrachan.navigation.main.SlipNavigator
 import com.makentoshe.habrachan.view.main.MainFlowFragment
 import ru.terrakok.cicerone.Cicerone
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind

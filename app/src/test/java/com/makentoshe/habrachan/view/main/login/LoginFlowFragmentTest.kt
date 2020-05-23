@@ -9,7 +9,6 @@ import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentScope
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.navigation.main.login.LoginFlowFragmentNavigation
 import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
@@ -25,6 +24,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.ktp.binding.bind
 import toothpick.ktp.binding.module

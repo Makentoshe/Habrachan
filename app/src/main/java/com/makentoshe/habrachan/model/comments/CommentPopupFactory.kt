@@ -8,10 +8,10 @@ import android.widget.PopupWindow
 import android.widget.Toast
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.navigation.user.UserScreen
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
+import ru.terrakok.cicerone.Router
 
 class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel, private val router: Router) {
 
