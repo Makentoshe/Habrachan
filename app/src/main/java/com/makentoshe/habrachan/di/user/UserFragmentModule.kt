@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.navigation.user.UserNavigator
+import com.makentoshe.habrachan.navigation.user.UserFragmentNavigation
 import com.makentoshe.habrachan.view.user.UserFragment
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
@@ -37,7 +37,7 @@ class UserFragmentModule(fragment: UserFragment) : Module() {
 
         bind<UserViewModel>().toInstance(getUserViewModel(fragment))
         bind<UserAvatarViewModel>().toInstance(getUserAvatarViewModel(fragment))
-        bind<UserNavigator>().toInstance(UserNavigator(router))
+        bind<UserFragmentNavigation>().toInstance(UserFragmentNavigation(router))
     }
 
     private fun getUserAvatarViewModel(fragment: UserFragment): UserAvatarViewModel {

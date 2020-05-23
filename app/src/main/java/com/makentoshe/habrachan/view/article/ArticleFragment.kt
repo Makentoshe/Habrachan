@@ -18,7 +18,7 @@ import com.makentoshe.habrachan.common.ui.ImageTintController
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.common.ui.TextScoreController
-import com.makentoshe.habrachan.navigation.article.ArticleNavigator
+import com.makentoshe.habrachan.navigation.article.ArticleFragmentNavigation
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
@@ -28,7 +28,7 @@ import toothpick.ktp.delegate.inject
 abstract class ArticleFragment : Fragment() {
 
     protected val disposables by inject<CompositeDisposable>()
-    protected val navigator by inject<ArticleNavigator>()
+    protected val navigator by inject<ArticleFragmentNavigation>()
     protected val getArticleViewModel by inject<ArticleFragmentViewModel>()
     protected val userAvatarViewModel by inject<UserAvatarViewModel>()
     protected val voteArticleViewModel by inject<VoteArticleViewModel>()

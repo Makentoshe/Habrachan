@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.navigation.images.PostImageScreen
 import com.makentoshe.habrachan.navigation.user.UserScreen
 import ru.terrakok.cicerone.Router
 
-class ArticleNavigator(private val router: Router, private val sessionDao: SessionDao) {
+class ArticleFragmentNavigation(private val router: Router, private val sessionDao: SessionDao) {
 
     /** Returns to MainScreen */
     fun back() {

@@ -24,7 +24,7 @@ import com.makentoshe.habrachan.common.network.response.UserResponse
 import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.model.user.UserContentPagerAdapter
-import com.makentoshe.habrachan.navigation.user.UserNavigator
+import com.makentoshe.habrachan.navigation.user.UserFragmentNavigation
 import com.makentoshe.habrachan.ui.user.UserFragmentUi
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
@@ -37,7 +37,7 @@ class UserFragment : Fragment() {
     val arguments = Arguments(this)
 
     private val disposables = CompositeDisposable()
-    private val navigator by inject<UserNavigator>()
+    private val navigator by inject<UserFragmentNavigation>()
     private val viewModel by inject<UserViewModel>()
     private val userAvatarViewModel by inject<UserAvatarViewModel>()
 

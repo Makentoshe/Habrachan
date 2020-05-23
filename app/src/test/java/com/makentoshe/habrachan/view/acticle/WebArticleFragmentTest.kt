@@ -6,9 +6,8 @@ import com.makentoshe.habrachan.di.article.ArticleFragmentScope
 import com.makentoshe.habrachan.di.article.WebArticleFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.article.web.JavaScriptInterface
-import com.makentoshe.habrachan.navigation.article.ArticleNavigator
+import com.makentoshe.habrachan.navigation.article.ArticleFragmentNavigation
 import com.makentoshe.habrachan.navigation.article.WebArticleScreen
-import com.makentoshe.habrachan.view.article.ArticleFragment
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.article.VoteArticleViewModel
@@ -46,7 +45,7 @@ class WebArticleFragmentTest : ArticleFragmentTest() {
             bind<CompositeDisposable>().toInstance(disposables)
             bind<UserAvatarViewModel>().toInstance(mockUserAvatarViewModel)
             bind<ArticleFragmentViewModel>().toInstance(mockArticleViewModel)
-            bind<ArticleNavigator>().toInstance(mockNavigator)
+            bind<ArticleFragmentNavigation>().toInstance(mockNavigator)
             bind<JavaScriptInterface>().toInstance(mockJavaScriptInterface)
             bind<VoteArticleViewModel>().toInstance(mockVoteArticleViewModel)
         }).inject(this)

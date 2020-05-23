@@ -10,7 +10,7 @@ import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentScope
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.navigation.Router
-import com.makentoshe.habrachan.navigation.main.login.LoginFlowNavigator
+import com.makentoshe.habrachan.navigation.main.login.LoginFlowFragmentNavigation
 import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.mockk.every
@@ -35,7 +35,7 @@ class LoginFlowFragmentTest : BaseRobolectricTest() {
 
     private val mockViewModel = mockk<LoginViewModel>(relaxed = true)
     private val spyDisposables = spyk(CompositeDisposable())
-    private val mockNavigator = mockk<LoginFlowNavigator>(relaxed = true)
+    private val mockNavigator = mockk<LoginFlowFragmentNavigation>(relaxed = true)
     private val mockSessionDatabase = mockk<SessionDatabase>(relaxed = true)
     private val mockLogoutBroadcastReceiver = mockk<LogoutBroadcastReceiver>(relaxed = true)
 
@@ -48,7 +48,7 @@ class LoginFlowFragmentTest : BaseRobolectricTest() {
         ).installTestModules(module {
             bind<LoginViewModel>().toInstance(mockViewModel)
             bind<CompositeDisposable>().toInstance(spyDisposables)
-            bind<LoginFlowNavigator>().toInstance(mockNavigator)
+            bind<LoginFlowFragmentNavigation>().toInstance(mockNavigator)
             bind<SessionDatabase>().toInstance(mockSessionDatabase)
         }).inject(this)
     }
