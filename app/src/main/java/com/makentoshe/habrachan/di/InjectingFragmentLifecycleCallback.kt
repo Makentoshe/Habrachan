@@ -7,6 +7,8 @@ import com.makentoshe.habrachan.di.article.*
 import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.di.images.OverlayImageFragmentModule
+import com.makentoshe.habrachan.di.images.OverlayImageFragmentScope
 import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
 import com.makentoshe.habrachan.di.main.articles.*
@@ -18,10 +20,10 @@ import com.makentoshe.habrachan.di.user.UserArticlesFragmentModule
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentScope
 import com.makentoshe.habrachan.di.user.UserFragmentModule
 import com.makentoshe.habrachan.di.user.UserFragmentScope
-import com.makentoshe.habrachan.view.article.ArticleFragment
 import com.makentoshe.habrachan.view.article.NativeArticleFragment
 import com.makentoshe.habrachan.view.article.WebArticleFragment
 import com.makentoshe.habrachan.view.comments.CommentsFragment
+import com.makentoshe.habrachan.view.images.OverlayImageFragment
 import com.makentoshe.habrachan.view.main.MainFlowFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesFlowFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
@@ -39,16 +41,23 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         println("Attached: $f")
         when (f) {
             is MainFlowFragment -> injectMainFlowFragment(f)
+
+            is OverlayImageFragment -> injectOverlayImageFragment(f)
+
             is CommentsFragment -> injectCommentsFragment(f)
+
             is LoginFragment -> injectLoginFragment(f)
+            is LoginFlowFragment -> injectLoginFlowFragment(f)
+
             is UserFragment -> injectUserFragment(f)
+
             is ArticlesFlowFragment -> injectArticlesFlowFragment(f)
             is ArticlesFragment -> injectArticlesFragment(f)
             is ArticlesSearchFragment -> injectArticlesSearchFragment(f)
+
             is WebArticleFragment -> injectWebArticleFragment(f)
             is NativeArticleFragment -> injectNativeArticleFragment(f)
             is UserArticlesFragment -> injectUserArticlesFragment(f)
-            is LoginFlowFragment -> injectLoginFlowFragment(f)
         }
     }
 
@@ -117,6 +126,12 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     private fun injectUserArticlesFragment(fragment: UserArticlesFragment) {
         val module = UserArticlesFragmentModule(fragment)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, UserArticlesFragmentScope::class.java)
+        scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
+    }
+
+    private fun injectOverlayImageFragment(fragment: OverlayImageFragment) {
+        val module = OverlayImageFragmentModule(fragment)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java, OverlayImageFragmentScope::class.java)
         scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
