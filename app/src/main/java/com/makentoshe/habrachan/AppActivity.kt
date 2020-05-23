@@ -4,11 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.navigation.StackNavigator
 import com.makentoshe.habrachan.navigation.main.MainFlowScreen
 import com.makentoshe.habrachan.view.BackPressedFragment
 import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 class AppActivity : AppCompatActivity() {

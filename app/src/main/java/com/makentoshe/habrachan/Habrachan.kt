@@ -4,12 +4,14 @@ import android.app.Application
 import android.content.IntentFilter
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.di.InjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.di.InjectionActivityLifecycleCallback
-import com.makentoshe.habrachan.di.common.*
+import com.makentoshe.habrachan.di.common.ApplicationModule
+import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.di.common.NavigationModule
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Cicerone
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
 import toothpick.ktp.delegate.inject

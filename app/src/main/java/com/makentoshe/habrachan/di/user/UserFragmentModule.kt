@@ -3,7 +3,6 @@ package com.makentoshe.habrachan.di.user
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.manager.UsersManager
@@ -13,6 +12,7 @@ import com.makentoshe.habrachan.view.user.UserFragment
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
 import okhttp3.OkHttpClient
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind

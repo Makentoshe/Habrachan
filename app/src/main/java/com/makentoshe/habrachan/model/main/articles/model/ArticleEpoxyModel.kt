@@ -8,8 +8,8 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.navigation.Router
 import com.makentoshe.habrachan.navigation.article.WebArticleScreen
+import ru.terrakok.cicerone.Router
 
 @EpoxyModelClass(layout = R.layout.main_articles_element)
 abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHolder>() {
