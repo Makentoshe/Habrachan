@@ -15,6 +15,8 @@ import java.util.*
 /**
  * Navigator for using with bottom navigation bar
  * and allows to save fragments from another tabs in memory.
+ *
+ * Affected commands: [Replace] and [Back]. Other commands will be ignored.
  */
 open class SlipNavigator(
     activity: FragmentActivity, containerId: Int, fragmentManager: FragmentManager

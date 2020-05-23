@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.navigation.comments.CommentsScreen
-import com.makentoshe.habrachan.navigation.images.PostImageScreen
+import com.makentoshe.habrachan.navigation.images.OverlayImageScreen
 import com.makentoshe.habrachan.navigation.user.UserScreen
 import ru.terrakok.cicerone.Router
 
@@ -15,9 +15,9 @@ class ArticleFragmentNavigation(private val router: Router, private val sessionD
         router.exit()
     }
 
-    /** Navigates to [PostImageScreen] */
+    /** Navigates to [OverlayImageScreen] */
     fun toArticleResourceScreen(resource: String) {
-        router.navigateTo(PostImageScreen(resource))
+        router.navigateTo(OverlayImageScreen(resource))
     }
 
     fun toArticleCommentsScreen(articleId: Int) {

@@ -5,7 +5,7 @@ import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.navigation.comments.CommentsScreen
-import com.makentoshe.habrachan.navigation.images.PostImageScreen
+import com.makentoshe.habrachan.navigation.images.OverlayImageScreen
 import com.makentoshe.habrachan.navigation.user.UserScreen
 import io.mockk.*
 import org.junit.Assert.assertEquals
@@ -83,7 +83,7 @@ class ArticleFragmentNavigationTest : BaseRobolectricTest() {
         val resource = "resource"
 
         articleFragmentNavigation.toArticleResourceScreen(resource)
-        val screen = slot<PostImageScreen>()
+        val screen = slot<OverlayImageScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
         assertEquals(resource, screen.captured.fragment.arguments.source)
     }

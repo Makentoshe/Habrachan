@@ -19,12 +19,11 @@ import java.io.File
 import java.util.*
 
 /* ViewModel for downloading image or gif animation for view mode in PostImageFragmentPage */
-class PostImageFragmentViewModel(
+class OverlayImageFragmentViewModel(
     private val imageSource: String,
-    private val imageManager: ImageManager
+    private val imageManager: ImageManager,
+    private val disposables: CompositeDisposable
 ) : ViewModel() {
-
-    private val disposables = CompositeDisposable()
 
     private val bitmapSubject = BehaviorSubject.create<Bitmap>()
     val bitmapObserver: Observable<Bitmap>
@@ -95,10 +94,12 @@ class PostImageFragmentViewModel(
     }
 
     class Factory(
-        private val imageSource: String, private val imageManager: ImageManager
+        private val imageSource: String,
+        private val imageManager: ImageManager,
+        private val disposables: CompositeDisposable
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostImageFragmentViewModel(imageSource, imageManager) as T
+            return OverlayImageFragmentViewModel(imageSource, imageManager, disposables) as T
         }
     }
 }

@@ -7,20 +7,20 @@ import org.junit.Before
 import org.junit.Test
 import ru.terrakok.cicerone.Router
 
-class PostImageFragmentNavigationTest : BaseTest() {
+class OverlayImageFragmentNavigationTest : BaseTest() {
 
-    private lateinit var commentsFragmentNavigation: PostImageFragmentNavigation
+    private lateinit var overlayImageFragmentNavigation: OverlayImageFragmentNavigation
 
     private val mockRouter = mockk<Router>(relaxed = true)
 
     @Before
     fun before() {
-        commentsFragmentNavigation = PostImageFragmentNavigation(mockRouter)
+        overlayImageFragmentNavigation = OverlayImageFragmentNavigation(mockRouter)
     }
 
     @Test
     fun testShouldNavigateToBack() {
-        commentsFragmentNavigation.back()
+        overlayImageFragmentNavigation.back()
 
         verify { mockRouter.exit() }
     }

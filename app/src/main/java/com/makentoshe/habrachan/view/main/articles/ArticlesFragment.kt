@@ -63,9 +63,11 @@ class ArticlesFragment : Fragment() {
             retryButton.visibility = View.GONE
             viewmodel.requestObserver.onNext(Unit)
         }
+
         swipeRefreshLayout.setOnRefreshListener{
             executeInitialRequest()
         }
+
         searchBroadcastReceiver.broadcastObservable.subscribe {
             progressBar.visibility = View.VISIBLE
             retryButton.visibility = View.GONE
