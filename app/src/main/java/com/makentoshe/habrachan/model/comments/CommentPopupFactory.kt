@@ -1,16 +1,15 @@
 package com.makentoshe.habrachan.model.comments
 
-import android.content.Context
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupWindow
-import android.widget.Toast
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.model.user.UserScreen
+import com.makentoshe.habrachan.view.commentinput.CommentInputScreen
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 
 class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel, private val router: Router) {
@@ -21,7 +20,7 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel, priv
         menu.contentView =
             LayoutInflater.from(anchor.context).inflate(R.layout.comment_item_popup, null, false)
         menu.contentView.findViewById<View>(R.id.comment_item_popup_reply).setOnClickListener {
-            onReplyClick(it.context, comment)
+            onReplyClick(comment)
             menu.dismiss()
         }
         menu.contentView.findViewById<View>(R.id.comment_item_popup_voteup).setOnClickListener {
@@ -44,8 +43,8 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel, priv
         return menu
     }
 
-    private fun onReplyClick(context: Context, comment: Comment) {
-        Toast.makeText(context, "Reply is not implemented", Toast.LENGTH_LONG).show()
+    private fun onReplyClick(comment: Comment) {
+        router.navigateTo(CommentInputScreen(comment))
     }
 
     private fun onVoteUp(comment: Comment) {
