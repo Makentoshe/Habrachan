@@ -160,11 +160,16 @@ dependencies {
 
     // Markwon
     // https://github.com/noties/Markwon
-    def markwon = "4.3.1"
-    implementation "io.noties.markwon:core:$markwon"
-    implementation "io.noties.markwon:html:$markwon"
-    implementation "io.noties.markwon:image:$markwon"
-    implementation "io.noties.markwon:ext-tables:$markwon"
+    def markwon_version = "4.3.1"
+    implementation "io.noties.markwon:core:$markwon_version"
+    implementation "io.noties.markwon:html:$markwon_version"
+    implementation "io.noties.markwon:image:$markwon_version"
+    implementation "io.noties.markwon:ext-tables:$markwon_version"
+    implementation "io.noties.markwon:editor:$markwon_version"
+    implementation "io.noties.markwon:ext-strikethrough:$markwon_version"
+    implementation "io.noties.markwon:inline-parser:$markwon_version"
+//    implementation "io.noties.markwon:linkify:$markwon_version"
+//    implementation "io.noties.markwon:syntax-highlight:$markwon_version"
 
     def core = "1.2.0"
     implementation "androidx.core:core-ktx:$core"

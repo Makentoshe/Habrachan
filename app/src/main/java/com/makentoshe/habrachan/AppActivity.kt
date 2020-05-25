@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.common.navigation.Navigator
 import com.makentoshe.habrachan.common.navigation.Router
 import com.makentoshe.habrachan.model.comments.CommentsScreen
 import com.makentoshe.habrachan.model.main.MainFlowScreen
+import com.makentoshe.habrachan.view.commentinput.CommentInputScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import toothpick.ktp.delegate.inject
 
@@ -28,7 +29,8 @@ class AppActivity : AppCompatActivity() {
 //                val screen = UserScreen(UserAccount.User("milfgard"))
 //                val screen = UserScreen(UserAccount.Me)
 //                val screen = AccountFlowScreen()
-                val screen = CommentsScreen(493250)
+                val screen = CommentInputScreen()
+//                val screen = CommentsScreen(493250)
 //                val screen = NativeArticleScreen(442440)
 //                val screen = WebArticleScreen(492410) //499154
 //                val screen = PostImageScreen("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg")
