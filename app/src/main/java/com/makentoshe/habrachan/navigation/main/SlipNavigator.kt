@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.makentoshe.habrachan.AppActivity
 import ru.terrakok.cicerone.android.support.FragmentParams
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.android.support.SupportAppScreen
@@ -66,13 +67,13 @@ open class SlipNavigator(
     private var skipFirst = true
 
     override fun fragmentBack() {
-        if (replaceStackCopy.size < 0) {
-            return super.activityBack()
-        }
-
         if (skipFirst) {
             skipFirst = false
             replaceStackCopy.removeLast()
+        }
+
+        if (replaceStackCopy.size <= 0) {
+            return super.activityBack()
         }
 
         val screenKey = replaceStackCopy.removeLast()
