@@ -4,23 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/main_container"
+    <androidx.viewpager2.widget.ViewPager2
+        android:visibility="invisible"
+        android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/main_bottom_navigation" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.google.android.material.tabs.TabLayout
+        style="@style/Widget.MaterialComponents.TabLayout.Colored"
         android:id="@+id/main_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        style="?attr/habrachanBottomBar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:tabTextAppearance="@style/Habrachan.TextAppearance.BottomBar"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/main_navigation" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_view_pager">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/action_account"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:icon="@drawable/ic_account_outline"
+            android:text="@string/menu_account" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/action_posts"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:icon="@drawable/ic_agenda"
+            android:text="@string/menu_posts" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/action_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:icon="@drawable/ic_menu"
+            android:text="@string/menu_menu" />
+
+    </com.google.android.material.tabs.TabLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

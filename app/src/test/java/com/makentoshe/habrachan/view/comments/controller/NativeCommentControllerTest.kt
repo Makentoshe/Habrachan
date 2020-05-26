@@ -1,9 +1,6 @@
 package com.makentoshe.habrachan.view.comments.controller
 
 import android.content.Intent
-import android.os.SystemClock
-import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -34,7 +31,7 @@ class NativeCommentControllerTest {
     @Test
     fun testShouldSetPositiveScore() {
         val activity = activityController.setup().get()
-        val container = activity.findViewById<ViewGroup>(R.id.main_container)
+        val container = activity.findViewById<ViewGroup>(R.id.main_view_pager)
         val textView = TextView(activity).also(container::addView)
         controller.scoreFactory().build(textView).setCommentScore(10)
 
@@ -45,7 +42,7 @@ class NativeCommentControllerTest {
     @Test
     fun testShouldSetNegativeScore() {
         val activity = activityController.setup().get()
-        val container = activity.findViewById<ViewGroup>(R.id.main_container)
+        val container = activity.findViewById<ViewGroup>(R.id.main_view_pager)
         val textView = TextView(activity).also(container::addView)
         controller.scoreFactory().build(textView).setCommentScore(-10)
 
@@ -56,7 +53,7 @@ class NativeCommentControllerTest {
     @Test
     fun testShouldSetDefaultScore() {
         val activity = activityController.setup().get()
-        val container = activity.findViewById<ViewGroup>(R.id.main_container)
+        val container = activity.findViewById<ViewGroup>(R.id.main_view_pager)
         val textView = TextView(activity).also(container::addView)
         controller.scoreFactory().build(textView).setCommentScore(0)
 
@@ -68,7 +65,7 @@ class NativeCommentControllerTest {
     @Test
     fun testShouldSetLevel() {
         val activity = activityController.setup().get()
-        val container = activity.findViewById<ViewGroup>(R.id.main_container)
+        val container = activity.findViewById<ViewGroup>(R.id.main_view_pager)
         val levelContainer = LinearLayout(activity).apply {
             orientation = LinearLayout.HORIZONTAL
         }.also(container::addView)
@@ -80,7 +77,7 @@ class NativeCommentControllerTest {
     @Test
     fun testShouldIgnoreMoreThan10Level() {
         val activity = activityController.setup().get()
-        val container = activity.findViewById<ViewGroup>(R.id.main_container)
+        val container = activity.findViewById<ViewGroup>(R.id.main_view_pager)
         val levelContainer = LinearLayout(activity).apply {
             orientation = LinearLayout.HORIZONTAL
         }.also(container::addView)
@@ -92,7 +89,7 @@ class NativeCommentControllerTest {
     @Test
     fun testShouldDisplayCommentMessage() {
         val activity = activityController.setup().get()
-        val container = activity.findViewById<ViewGroup>(R.id.main_container)
+        val container = activity.findViewById<ViewGroup>(R.id.main_view_pager)
         val textView = TextView(activity).also(container::addView)
         controller.messageFactory().build(textView).setCommentText("<sas>html should be parsed</sas>")
 
@@ -102,7 +99,7 @@ class NativeCommentControllerTest {
     @Test
     fun testShouldDisplayAvatar() {
         val activity = activityController.setup().get()
-        val container = activity.findViewById<ViewGroup>(R.id.main_container)
+        val container = activity.findViewById<ViewGroup>(R.id.main_view_pager)
         val imageView = ImageView(activity).also(container::addView)
 
         controller.avatarFactory().build(imageView).setCommentAvatar("")

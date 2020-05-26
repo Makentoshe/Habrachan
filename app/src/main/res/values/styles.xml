@@ -56,6 +56,11 @@
         <item name="itemIconTint">@android:color/white</item>
         <item name="itemTextColor">@android:color/white</item>
         <item name="itemRippleColor">@color/colorPrimaryDark</item>
+        <item name="tabBackground">@color/colorPrimary</item>
+        <item name="tabIconTint">@android:color/white</item>
+        <item name="tabTextColor">@android:color/white</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+        <item name="tabRippleColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="Habrachan.Light.Chip" parent="Habrachan.Light">
@@ -82,6 +87,11 @@
 
     <style name="Habrachan.TextAppearance.CollapsingToolbar.Expanded" parent="Theme.MaterialComponents">
         <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="Habrachan.TextAppearance.BottomBar" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     <style name="Habrachan.Light.Popup" parent="Habrachan.Light">

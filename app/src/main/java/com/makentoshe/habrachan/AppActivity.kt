@@ -3,18 +3,15 @@ package com.makentoshe.habrachan
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.navigation.StackNavigator
 import com.makentoshe.habrachan.navigation.main.MainFlowScreen
-import com.makentoshe.habrachan.view.BackPressedFragment
-import com.makentoshe.habrachan.view.main.MainFlowFragment
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 class AppActivity : AppCompatActivity() {
 
-    private val navigator = StackNavigator(this, R.id.main_container, supportFragmentManager)
+    private val navigator = StackNavigator(this, R.id.main_view_pager, supportFragmentManager)
 
     private val navigatorHolder by inject<NavigatorHolder>()
 

@@ -1,12 +1,12 @@
 package com.makentoshe.habrachan.ui.main
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.makentoshe.habrachan.R
 
-class MainFlowFragmentUi {
-    fun createView(context: Context): View {
-        return LayoutInflater.from(context).inflate(R.layout.main_flow_fragment, null, false)
+class MainFlowFragmentUi(private val root: ViewGroup? = null) {
+    fun inflateView(inflater: LayoutInflater): View {
+        return inflater.inflate(R.layout.main_flow_fragment, root, false)
     }
 }

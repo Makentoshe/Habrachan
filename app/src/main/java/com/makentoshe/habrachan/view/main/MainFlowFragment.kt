@@ -3,99 +3,93 @@ package com.makentoshe.habrachan.view.main
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.broadcast.LoginBroadcastReceiver
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.navigation.main.MainFlowFragmentNavigation
+import com.makentoshe.habrachan.model.main.MainFlowPagerAdapter
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
-import com.makentoshe.habrachan.view.BackPressedFragment
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
-class MainFlowFragment : Fragment(), BackPressedFragment {
+class MainFlowFragment : Fragment() {
 
     private val disposables = CompositeDisposable()
     private val arguments = Arguments(this)
 
-    private val navigator by inject<MainFlowFragmentNavigation>()
     private val sessionDatabase by inject<SessionDatabase>()
     private val logoutBroadcastReceiver by inject<LogoutBroadcastReceiver>()
     private val loginBroadcastReceiver by inject<LoginBroadcastReceiver>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) {
-            navigator.toArticlesScreen(page = 1)
-        }
-    }
+    private lateinit var viewPager: ViewPager2
+    private lateinit var bottomNavigation: TabLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return MainFlowFragmentUi().createView(requireContext())
+        return MainFlowFragmentUi().inflateView(inflater)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val navigation = view.findViewById<BottomNavigationView>(R.id.main_bottom_navigation)
-        navigation.setOnNavigationItemSelectedListener(::onNavigationItemSelected)
+        viewPager = view.findViewById(R.id.main_view_pager)
+        bottomNavigation = view.findViewById(R.id.main_bottom_navigation)
 
-        val item = navigation.menu.findItem(R.id.action_account)
-        if (sessionDatabase.me().isEmpty) setEmptyAccount(item) else setLoggedAccount(item)
+        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        viewPager.adapter = MainFlowPagerAdapter(this)
+        viewPager.isUserInputEnabled = false
+        if (savedInstanceState == null) viewPager.post {
+            viewPager.setCurrentItem(1, false)
+            viewPager.visibility = View.VISIBLE
+        } else {
+            viewPager.visibility = View.VISIBLE
+        }
+
+        val configuredTabs = (0 until bottomNavigation.tabCount).map { position ->
+            val tab = bottomNavigation.getTabAt(position)
+            return@map tab?.text to tab?.icon
+        }
+        TabLayoutMediator(bottomNavigation, viewPager) { tab, position ->
+            tab.text = configuredTabs[position].first.toString()
+            tab.icon = configuredTabs[position].second
+        }.attach()
+
+        if (sessionDatabase.me().isEmpty) setEmptyAccount() else setLoggedAccount()
 
         logoutBroadcastReceiver.observable.subscribe {
-            setEmptyAccount(item)
+            setEmptyAccount()
         }.let(disposables::add)
 
         loginBroadcastReceiver.observable.subscribe {
-            setLoggedAccountAlt(item, it)
+            setLoggedAccountAlt(it)
         }.let(disposables::add)
     }
 
-    private fun onNavigationItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_account -> onAccountClick()
-        R.id.action_posts -> onArticlesClick()
-        R.id.action_menu -> onMenuClick()
-        else -> false
+    private fun setEmptyAccount() {
+        val tab = bottomNavigation.getTabAt(0)
+        tab?.setText(R.string.menu_account)
+        tab?.setIcon(R.drawable.ic_account_outline)
     }
 
-    private fun onAccountClick(): Boolean {
-        navigator.toLoginFlowScreen()
-        return true
+    private fun setLoggedAccount() {
+        setLoggedAccountAlt(sessionDatabase.me().get().login)
     }
 
-    private fun onArticlesClick(): Boolean {
-        navigator.toArticlesScreen(arguments.page)
-        return true
-    }
-
-    private fun onMenuClick(): Boolean {
-        navigator.toMenuScreen()
-        return true
-    }
-
-    private fun setEmptyAccount(item: MenuItem) {
-        item.setTitle(R.string.menu_account)
-        item.setIcon(R.drawable.ic_account_outline)
-    }
-
-    private fun setLoggedAccount(item: MenuItem) {
-        setLoggedAccountAlt(item, sessionDatabase.me().get().login)
-    }
-
-    private fun setLoggedAccountAlt(item: MenuItem, login: String) {
-        item.title = login
-        item.setIcon(R.drawable.ic_account)
+    private fun setLoggedAccountAlt(login: String) {
+        val tab = bottomNavigation.getTabAt(0)
+        tab?.text = login
+        tab?.setIcon(R.drawable.ic_account)
     }
 
     override fun onStart() {
         super.onStart()
-        navigator.init()
+
         val logoutIntentFilter = IntentFilter(LogoutBroadcastReceiver.ACTION)
         requireContext().registerReceiver(logoutBroadcastReceiver, logoutIntentFilter)
+
         val loginIntentFilter = IntentFilter(LoginBroadcastReceiver.ACTION)
         requireContext().registerReceiver(loginBroadcastReceiver, loginIntentFilter)
     }
@@ -104,12 +98,6 @@ class MainFlowFragment : Fragment(), BackPressedFragment {
         super.onStop()
         requireContext().unregisterReceiver(logoutBroadcastReceiver)
         requireContext().unregisterReceiver(loginBroadcastReceiver)
-        navigator.release()
-    }
-
-    override fun onBackPressed(): Boolean {
-        navigator.back()
-        return true
     }
 
     class Arguments(private val mainFlowFragment: MainFlowFragment) {
