@@ -6,6 +6,25 @@
         <item name="android:windowExitAnimation">@anim/popup_window_shrink</item>
     </style>
 
+    <style name="Habrachan.TextAppearance.CollapsingToolbar.Collapsed" parent="Theme.MaterialComponents">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Habrachan.TextAppearance.CollapsingToolbar.Expanded" parent="Theme.MaterialComponents">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <!-- Default theme used for displaying button in toggle group and does not relates to any theme -->
+    <style name="Habrachan.Button.Toggle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:minWidth">36dp</item>
+        <item name="android:minHeight">36dp</item>
+    </style>
+
     <style name="Habrachan.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">#ff9cc2ce</item>
         <item name="colorAccent">#ff9cc2ce</item>
@@ -76,14 +95,6 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="Habrachan.TextAppearance.CollapsingToolbar.Collapsed" parent="Theme.MaterialComponents">
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="Habrachan.TextAppearance.CollapsingToolbar.Expanded" parent="Theme.MaterialComponents">
-        <item name="android:textSize">24sp</item>
-    </style>
-
     <style name="Habrachan.Light.Popup" parent="Habrachan.Light">
         <item name="android:background">@android:color/white</item>
         <item name="android:tint">@android:color/black</item>
@@ -95,4 +106,5 @@
     <style name="Habrachan.Light.Default" parent="Habrachan.Light">
         <item name="android:background">@android:color/white</item>
     </style>
+
 </resources>

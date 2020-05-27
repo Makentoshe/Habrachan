@@ -1,40 +1,36 @@
 package com.makentoshe.habrachan.view.commentinput
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
-import android.text.Spanned
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.StrikethroughSpan
+import android.text.Spannable
+import android.text.TextWatcher
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.ui.commentinput.CommentInputFragmentUi
-import io.noties.markwon.AbstractMarkwonPlugin
-import io.noties.markwon.Markwon
-import io.noties.markwon.SoftBreakAddsNewLinePlugin
-import io.noties.markwon.core.MarkwonTheme
-import io.noties.markwon.core.spans.BlockQuoteSpan
-import io.noties.markwon.core.spans.CodeSpan
-import io.noties.markwon.editor.*
-import io.noties.markwon.editor.handler.EmphasisEditHandler
-import io.noties.markwon.editor.handler.StrongEmphasisEditHandler
-import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
-import io.noties.markwon.inlineparser.BangInlineProcessor
-import io.noties.markwon.inlineparser.EntityInlineProcessor
-import io.noties.markwon.inlineparser.HtmlInlineProcessor
-import io.noties.markwon.inlineparser.MarkwonInlineParser
-import org.commonmark.parser.InlineParserFactory
-import org.commonmark.parser.Parser
-import java.util.concurrent.Executors
 
 class CommentInputFragment : Fragment() {
 
     private lateinit var messageEditText: EditText
+    private lateinit var messageToggleButton: MaterialButtonToggleGroup
+    private lateinit var toolbar: Toolbar
+
+    private val markupConfig = MarkupConfig()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentInputFragmentUi(container).inflateView(inflater)
@@ -42,45 +38,24 @@ class CommentInputFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.setOnClickListener { }
-        messageEditText = view.findViewById(R.id.commentinput_fragment_message_edit)
-        messageEditText.movementMethod = LinkMovementMethod.getInstance()
+        messageEditText = view.findViewById(R.id.commentinput_fragment_input)
+//        messageToggleButton = view.findViewById(R.id.commentinput_fragment_markup)
+        toolbar = view.findViewById(R.id.commentinput_fragment_toolbar)
 
-        val inlineParserFactory: InlineParserFactory =
-            MarkwonInlineParser.factoryBuilder() // no inline images will be parsed
-                .excludeInlineProcessor(BangInlineProcessor::class.java) // no html tags will be parsed
-                .excludeInlineProcessor(HtmlInlineProcessor::class.java) // no entities will be parsed (aka `&amp;` etc)
-                .excludeInlineProcessor(EntityInlineProcessor::class.java)
-                .build()
+        toolbar.setTitle(R.string.commentinput_toolbar_comment_new)
 
+//        messageToggleButton.addOnButtonCheckedListener { _, checkedId, isChecked ->
+//            onMarkupConfigChanged(checkedId, isChecked)
+//        }
+    }
 
-        val markwon = Markwon.builder(requireContext())
-            .usePlugin(StrikethroughPlugin.create())
-//            .usePlugin(LinkifyPlugin.create())
-            .usePlugin(object : AbstractMarkwonPlugin() {
-                override fun configureParser(builder: Parser.Builder) {
-                    // disable all commonmark-java blocks, only inlines will be parsed
-//                        builder.enabledBlockTypes(Collections.emptySet());
-                    builder.inlineParserFactory(inlineParserFactory)
-                }
-            })
-            .usePlugin(SoftBreakAddsNewLinePlugin.create())
-            .build()
+    private fun onMarkupConfigChanged(checkedId: Int, isChecked: Boolean) = when (checkedId) {
+        else -> Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+    }
 
-
-        val editor = MarkwonEditor.builder(markwon)
-            .useEditHandler(EmphasisEditHandler())
-            .useEditHandler(StrongEmphasisEditHandler())
-            .useEditHandler(StrikethroughEditHandler())
-            .useEditHandler(CodeEditHandler())
-            .useEditHandler(BlockQuoteEditHandler())
-//            .useEditHandler(LinkEditHandler())
-            .build()
-
-
-//        editText.addTextChangedListener(MarkwonEditorTextWatcher.withProcess(editor));
-        val listener =
-            MarkwonEditorTextWatcher.withPreRender(editor, Executors.newSingleThreadExecutor(), messageEditText)
-        messageEditText.addTextChangedListener(listener)
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
     }
 
     class Factory {
@@ -99,101 +74,51 @@ class CommentInputScreen(private val comment: Comment? = null) : com.makentoshe.
         }
 }
 
-internal class StrikethroughEditHandler : AbstractEditHandler<StrikethroughSpan>() {
-    override fun configurePersistedSpans(builder: PersistedSpans.Builder) {
-        builder.persistSpan(
-            StrikethroughSpan::class.java
-        ) { StrikethroughSpan() }
+class MarkupMessageTextHandler(private val markupConfig: MarkupConfig) : TextWatcher {
+
+    override fun afterTextChanged(s: Editable) {
+        markupConfig.appendSpans(s)
     }
 
-    override fun handleMarkdownSpan(
-        persistedSpans: PersistedSpans,
-        editable: Editable,
-        input: String,
-        span: StrikethroughSpan,
-        spanStart: Int,
-        spanTextLength: Int
-    ) {
-        val match = MarkwonEditorUtils.findDelimited(input, spanStart, "~~")
-        if (match != null) {
-            editable.setSpan(
-                persistedSpans.get(StrikethroughSpan::class.java),
-                match.start(),
-                match.end(),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+}
+
+data class MarkupConfig(val bold: ArrayList<Config.Bold> = ArrayList()) {
+
+    fun appendSpans(text: Editable) {
+        val iterator = bold.iterator()
+        while (iterator.hasNext()) {
+            val span = iterator.next()
+            if (span.start > text.length) {
+                iterator.remove()
+            } else {
+                span.appendToText(text)
+            }
         }
     }
 
-    override fun markdownSpanType(): Class<StrikethroughSpan> {
-        return StrikethroughSpan::class.java
-    }
-}
+    sealed class Config {
 
-internal class CodeEditHandler : EditHandler<CodeSpan> {
-    private var theme: MarkwonTheme? = null
-    override fun init(markwon: Markwon) {
-        theme = markwon.configuration().theme()
-    }
+        abstract var enabled: Boolean
 
-    override fun configurePersistedSpans(builder: PersistedSpans.Builder) {
-        builder.persistSpan(CodeSpan::class.java) { CodeSpan(theme!!) }
-    }
+        abstract var start: Int
 
-    override fun handleMarkdownSpan(
-        persistedSpans: PersistedSpans,
-        editable: Editable,
-        input: String,
-        span: CodeSpan,
-        spanStart: Int,
-        spanTextLength: Int
-    ) {
-        val match = MarkwonEditorUtils.findDelimited(input, spanStart, "`")
-        if (match != null) {
-            editable.setSpan(
-                persistedSpans.get(CodeSpan::class.java),
-                match.start(),
-                match.end(),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+        abstract var end: Int
+
+        abstract fun appendToText(editable: Editable)
+
+        class Bold(
+            override var enabled: Boolean = false,
+            override var start: Int = -1,
+            override var end: Int = -1
+        ) : Config() {
+
+            override fun appendToText(editable: Editable) {
+                val end = if (end == -1) editable.length else end
+                editable.setSpan(StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
+            }
         }
     }
-
-    override fun markdownSpanType(): Class<CodeSpan> {
-        return CodeSpan::class.java
-    }
 }
 
-internal class BlockQuoteEditHandler : EditHandler<BlockQuoteSpan> {
-    private var theme: MarkwonTheme? = null
-    override fun init(markwon: Markwon) {
-        theme = markwon.configuration().theme()
-    }
-
-    override fun configurePersistedSpans(builder: PersistedSpans.Builder) {
-        builder.persistSpan(
-            BlockQuoteSpan::class.java
-        ) { BlockQuoteSpan(theme!!) }
-    }
-
-    override fun handleMarkdownSpan(
-        persistedSpans: PersistedSpans,
-        editable: Editable,
-        input: String,
-        span: BlockQuoteSpan,
-        spanStart: Int,
-        spanTextLength: Int
-    ) {
-        // todo: here we should actually find a proper ending of a block quote...
-        editable.setSpan(
-            persistedSpans.get(BlockQuoteSpan::class.java),
-            spanStart,
-            spanStart + spanTextLength,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-    }
-
-    override fun markdownSpanType(): Class<BlockQuoteSpan> {
-        return BlockQuoteSpan::class.java
-    }
-}
