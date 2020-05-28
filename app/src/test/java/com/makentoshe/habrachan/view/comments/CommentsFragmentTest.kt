@@ -11,7 +11,6 @@ import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
-import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.navigation.comments.CommentsScreen
@@ -54,7 +53,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
     @Before
     fun before() {
         Toothpick.openScopes(
-            ApplicationScope::class.java, CommentsFragmentScope::class.java
+            ApplicationScope::class.java, CommentsFlowFragment::class.java, CommentsFragment::class.java
         ).installTestModules(module {
             bind<CommentsFragmentViewModel>().toInstance(mockViewModel)
             bind<CompositeDisposable>().toInstance(spyDisposables)
@@ -64,7 +63,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
 
     @After
     fun after() {
-        Toothpick.closeScope(CommentsFragmentScope::class.java)
+        Toothpick.closeScope(CommentsFragment::class.java)
     }
 
     @Test

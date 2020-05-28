@@ -7,20 +7,20 @@ import org.junit.Before
 import org.junit.Test
 import ru.terrakok.cicerone.Router
 
-class CommentsFragmentNavigationTest : BaseTest() {
+class CommentsScreenNavigationTest : BaseTest() {
 
-    private lateinit var commentsFragmentNavigation: CommentsFragmentNavigation
+    private lateinit var commentsScreenNavigation: CommentsScreenNavigation
 
     private val mockRouter = mockk<Router>(relaxed = true)
 
     @Before
     fun before() {
-        commentsFragmentNavigation = CommentsFragmentNavigation(mockRouter)
+        commentsScreenNavigation = CommentsScreenNavigation(mockRouter)
     }
 
     @Test
     fun testShouldNavigateToBack() {
-        commentsFragmentNavigation.back()
+        commentsScreenNavigation.back()
 
         verify { mockRouter.exit() }
     }

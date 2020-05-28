@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/comments_flow_fragment_slidingpanel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="false"
+    android:gravity="bottom"
+    android:elevation="4dp"
+    sothree:umanoInitialState="collapsed"
+    sothree:umanoPanelHeight="56dp"
+    sothree:umanoShadowHeight="4dp">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/comments_fragment_container"
+        android:name="com.makentoshe.habrachan.view.comments.CommentsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="28dp"
+            android:gravity="top"
+            sothree:layout_constraintTop_toTopOf="parent"
+            sothree:layout_constraintEnd_toEndOf="parent"
+            sothree:layout_constraintStart_toStartOf="parent"
+            sothree:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--    <fragment-->
+    <!--        android:id="@+id/comment_input_fragment"-->
+    <!--        android:name="com.makentoshe.habrachan.view.main.articles.ArticlesSearchFragment"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"/>-->
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+

@@ -14,13 +14,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
-import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
+import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,9 +28,8 @@ import toothpick.ktp.delegate.inject
 
 class CommentsFragment : Fragment() {
 
-    val arguments = Arguments(this)
-
-    private val navigator by inject<CommentsFragmentNavigation>()
+    private val arguments by inject<CommentsScreenArguments>()
+    private val navigator by inject<CommentsScreenNavigation>()
     private val disposables by inject<CompositeDisposable>()
     private val epoxyController by inject<CommentsEpoxyController>()
     private val commentsViewModel by inject<CommentsFragmentViewModel>()
@@ -49,6 +47,9 @@ class CommentsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // disable touch events for background fragments
+        view.setOnClickListener { }
+
         appbar = view.findViewById(R.id.comments_fragment_appbar)
         toolbar = view.findViewById(R.id.comments_fragment_toolbar)
         retryButton = view.findViewById(R.id.comments_fragment_retrybutton)
@@ -56,9 +57,6 @@ class CommentsFragment : Fragment() {
         recyclerView = view.findViewById(R.id.comments_fragment_recyclerview)
         messageView = view.findViewById(R.id.comments_fragment_messageview)
         firstCommentButton = view.findViewById(R.id.comments_fragment_firstbutton)
-
-        // disable touch events for background fragments
-        view.setOnClickListener { }
 
         commentsViewModel.getCommentsObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onGetCommentsResponse).let(disposables::add)
@@ -148,39 +146,4 @@ class CommentsFragment : Fragment() {
         super.onDestroy()
         disposables.clear()
     }
-
-    class Factory {
-
-        fun build(articleId: Int, article: Article? = null) = CommentsFragment().apply {
-            arguments.article = article
-            arguments.articleId = articleId
-        }
-    }
-
-    class Arguments(private val commentsFragment: CommentsFragment) {
-
-        init {
-            val fragment = commentsFragment as Fragment
-            if (fragment.arguments == null) {
-                fragment.arguments = Bundle()
-            }
-        }
-
-        private val fragmentArguments: Bundle
-            get() = commentsFragment.requireArguments()
-
-        var articleId: Int
-            set(value) = fragmentArguments.putInt(ID, value)
-            get() = fragmentArguments.getInt(ID, -1)
-
-        var article: Article?
-            set(value) = fragmentArguments.putString(ARTICLE, value?.toJson())
-            get() = fragmentArguments.getString(ARTICLE)?.let(Article.Companion::fromJson)
-
-        companion object {
-            private const val ID = "Id"
-            private const val ARTICLE = "Article"
-        }
-    }
-
 }

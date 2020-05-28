@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.di.article.*
+import com.makentoshe.habrachan.di.comments.CommentsFlowFragmentModule
 import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
-import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.images.OverlayImageFragmentModule
 import com.makentoshe.habrachan.di.images.OverlayImageFragmentScope
@@ -22,6 +22,7 @@ import com.makentoshe.habrachan.di.user.UserFragmentModule
 import com.makentoshe.habrachan.di.user.UserFragmentScope
 import com.makentoshe.habrachan.view.article.NativeArticleFragment
 import com.makentoshe.habrachan.view.article.WebArticleFragment
+import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.view.images.OverlayImageFragment
 import com.makentoshe.habrachan.view.main.MainFlowFragment
@@ -44,6 +45,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
             is OverlayImageFragment -> injectOverlayImageFragment(f)
 
+            is CommentsFlowFragment -> injectCommentsFlowFragment(f)
             is CommentsFragment -> injectCommentsFragment(f)
 
             is LoginFragment -> injectLoginFragment(f)
@@ -69,7 +71,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
     private fun injectCommentsFragment(fragment: CommentsFragment) {
         val module = CommentsFragmentModule.Factory().build(fragment)
-        val scope = Toothpick.openScopes(ApplicationScope::class.java, CommentsFragmentScope::class.java)
+        val scope = Toothpick.openScopes(CommentsFlowFragment::class.java, CommentsFragment::class.java)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
@@ -132,6 +134,12 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     private fun injectOverlayImageFragment(fragment: OverlayImageFragment) {
         val module = OverlayImageFragmentModule(fragment)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, OverlayImageFragmentScope::class.java)
+        scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
+    }
+
+    private fun injectCommentsFlowFragment(fragment: CommentsFlowFragment) {
+        val module = CommentsFlowFragmentModule(fragment)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java, CommentsFlowFragment::class.java)
         scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
