@@ -19,6 +19,7 @@
         <item name="habrachanBottomBar">@style/Habrachan.Light.BottomBar</item>
         <item name="habrachanPopup">@style/Habrachan.Light.Popup</item>
         <item name="habrachanDefault">@style/Habrachan.Light.Default</item>
+        <item name="habrachanDefaultButtonText">@style/Habrachan.Light.Default.Button.Text</item>
         <item name="habrachanChip">@style/Habrachan.Light.Chip</item>
     </style>
 
@@ -94,5 +95,9 @@
 
     <style name="Habrachan.Light.Default" parent="Habrachan.Light">
         <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="Habrachan.Light.Default.Button.Text" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="android:tint">@color/colorPrimary</item>
     </style>
 </resources>

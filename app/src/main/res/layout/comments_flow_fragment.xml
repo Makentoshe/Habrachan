@@ -7,22 +7,42 @@
     <include
         android:id="@+id/comments_flow_fragment_content"
         layout="@layout/comments_flow_fragment_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_width="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/comments_flow_fragment_markup_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/comments_flow_fragment_markup" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
-        android:background="@android:color/holo_purple"
-        android:id="@+id/comments_flow_fragment_markup"
-        android:layout_width="match_parent"
+    <com.google.android.material.button.MaterialButton
+        style="?attr/habrachanDefaultButtonText"
+        android:id="@+id/comments_flow_fragment_send"
+        android:layout_width="48dp"
         android:layout_height="48dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:icon="@drawable/ic_send"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/comments_flow_fragment_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/comments_flow_fragment_markup_container"
+        app:layout_constraintTop_toBottomOf="@id/comments_flow_fragment_content" />
+
+    <TextView
+        android:id="@+id/comments_flow_fragment_markup_container"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:text="Note: html or markdown does not supports now"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/comments_flow_fragment_send"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/comments_flow_fragment_content" />
+
+    <androidx.constraintlayout.widget.Group
+        android:visibility="gone"
+        android:id="@+id/comments_flow_fragment_markup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="comments_flow_fragment_markup_container,comments_flow_fragment_send" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

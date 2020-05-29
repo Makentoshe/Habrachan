@@ -6,6 +6,7 @@
         <attr name="habrachanToolbarButton" format="reference" />
         <attr name="habrachanToolbarChip" format="reference" />
         <attr name="habrachanDefault" format="reference" />
+        <attr name="habrachanDefaultButtonText" format="reference" />
         <attr name="habrachanBottomBar" format="reference" />
         <attr name="habrachanPopup" format="reference" />
         <attr name="habrachanChip" format="reference" />

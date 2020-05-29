@@ -8,7 +8,7 @@
     android:gravity="bottom"
     android:elevation="4dp"
     sothree:umanoInitialState="collapsed"
-    sothree:umanoPanelHeight="56dp"
+    sothree:umanoPanelHeight="48dp"
     sothree:umanoShadowHeight="4dp">
 
     <androidx.fragment.app.FragmentContainerView
@@ -21,23 +21,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="28dp"
-            android:gravity="top"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/comments_flow_fragment_dragindicator"
+            android:layout_width="24dp"
+            android:layout_height="3dp"
+            sothree:cardCornerRadius="2dp"
+            android:backgroundTint="@android:color/tab_indicator_text"
+            android:layout_marginTop="4dp"
             sothree:layout_constraintTop_toTopOf="parent"
-            sothree:layout_constraintEnd_toEndOf="parent"
             sothree:layout_constraintStart_toStartOf="parent"
-            sothree:layout_constraintBottom_toBottomOf="parent" />
+            sothree:layout_constraintEnd_toEndOf="parent" />
+
+        <EditText
+            android:id="@+id/comments_flow_fragment_message_input"
+            android:hint="Comments Input Fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--    <fragment-->
-    <!--        android:id="@+id/comment_input_fragment"-->
-    <!--        android:name="com.makentoshe.habrachan.view.main.articles.ArticlesSearchFragment"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"/>-->
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
