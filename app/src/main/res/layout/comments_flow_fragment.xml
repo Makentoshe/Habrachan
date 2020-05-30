@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/comments_flow_fragment_content"
+        android:id="@+id/comments_flow_fragment_slidingpanel"
         layout="@layout/comments_flow_fragment_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -14,35 +14,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        style="?attr/habrachanDefaultButtonText"
-        android:id="@+id/comments_flow_fragment_send"
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/comments_flow_fragment_send_progress"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        app:icon="@drawable/ic_send"
-        android:enabled="false"
+        android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/comments_flow_fragment_markup_container"
-        app:layout_constraintTop_toBottomOf="@id/comments_flow_fragment_content" />
+        app:layout_constraintTop_toBottomOf="@id/comments_flow_fragment_slidingpanel" />
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        android:id="@+id/comments_flow_fragment_send"
+        style="?attr/habrachanDefaultButtonText"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:enabled="false"
+        app:icon="@drawable/ic_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/comments_flow_fragment_markup_container"
+        app:layout_constraintTop_toBottomOf="@id/comments_flow_fragment_slidingpanel" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/comments_flow_fragment_markup_container"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:gravity="center"
         android:text="Note: html or markdown does not supports now"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/comments_flow_fragment_send"
+        app:layout_constraintEnd_toEndOf="@id/comments_flow_fragment_markup_barrier"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/comments_flow_fragment_content" />
+        app:layout_constraintTop_toBottomOf="@id/comments_flow_fragment_slidingpanel" />
 
-    <androidx.constraintlayout.widget.Group
-        android:visibility="gone"
-        android:id="@+id/comments_flow_fragment_markup"
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/comments_flow_fragment_markup_barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="comments_flow_fragment_markup_container,comments_flow_fragment_send" />
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="comments_flow_fragment_send,comments_flow_fragment_send_progress"
+        app:layout_constraintStart_toEndOf="@id/comments_flow_fragment_markup_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

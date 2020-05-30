@@ -12,6 +12,9 @@ import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFlowFragmentUi
+import com.makentoshe.habrachan.viewmodel.comments.SendCommentViewModel
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
@@ -20,6 +23,7 @@ class CommentsFlowFragment : Fragment() {
     private val disposables by inject<CompositeDisposable>()
     private val arguments by inject<CommentsScreenArguments>()
     private val navigator by inject<CommentsScreenNavigation>()
+    private val sendCommentViewModel by inject<SendCommentViewModel>()
     private val commentsFlowFragmentUi by inject<CommentsFlowFragmentUi>()
 
     private val softKeyboardController = SoftKeyboardController()
@@ -32,6 +36,14 @@ class CommentsFlowFragment : Fragment() {
         softKeyboardController.addVisibilityChangeListener(requireActivity(), ::onSoftKeyboardVisibilityChanged)
         commentsFlowFragmentUi.sendButton.setOnClickListener { onMessageSend() }
         commentsFlowFragmentUi.messageEditText.doAfterTextChanged(::onMessageTextChanged)
+
+        sendCommentViewModel.sendCommentResponseObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            commentsFlowFragmentUi.sendButton.visibility = View.VISIBLE
+            commentsFlowFragmentUi.sendProgressBar.visibility = View.GONE
+            commentsFlowFragmentUi.messageEditText.setText("")
+            commentsFlowFragmentUi.slidingPanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+            println(it)
+        }.let(disposables::add)
     }
 
     private fun onMessageTextChanged(message: Editable?) {
@@ -40,21 +52,22 @@ class CommentsFlowFragment : Fragment() {
 
     private fun onSoftKeyboardVisibilityChanged(visible: Boolean) = if (visible) {
         commentsFlowFragmentUi.markupActionsContainer.visibility = View.VISIBLE
+        commentsFlowFragmentUi.sendButton.visibility = View.VISIBLE
     } else {
         commentsFlowFragmentUi.messageEditText.clearFocus()
         if (commentsFlowFragmentUi.messageEditText.text.isBlank()) {
             commentsFlowFragmentUi.markupActionsContainer.visibility = View.GONE
+            commentsFlowFragmentUi.sendButton.visibility = View.GONE
         } else Unit
     }
 
     private fun onMessageSend() {
         val messageText = commentsFlowFragmentUi.messageEditText.text
         if (messageText.isBlank()) return
-        softKeyboardController.hide(requireActivity())
-        commentsFlowFragmentUi.messageEditText.setText("")
-        commentsFlowFragmentUi.messageEditText.clearFocus()
-        commentsFlowFragmentUi.markupActionsContainer.visibility = View.GONE
-        //send message ->
+        commentsFlowFragmentUi.sendButton.visibility = View.GONE
+        commentsFlowFragmentUi.sendProgressBar.visibility = View.VISIBLE
+
+        sendCommentViewModel.sendCommentRequestObserver.onNext(messageText)
     }
 
     override fun onResume() {

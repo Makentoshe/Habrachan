@@ -34,10 +34,12 @@
 
         <EditText
             android:id="@+id/comments_flow_fragment_message_input"
-            android:hint="Comments Input Fragment"
+            android:hint="@string/comments_flow_fragment_message_input_article"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="top" />
+            android:gravity="top"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
