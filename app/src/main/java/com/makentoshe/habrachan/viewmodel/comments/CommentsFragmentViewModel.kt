@@ -18,6 +18,8 @@ import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
+import com.makentoshe.habrachan.model.comments.tree.CommentsTree
+import com.makentoshe.habrachan.model.comments.tree.TreeNode
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
@@ -73,11 +75,15 @@ class CommentsFragmentViewModel(
     }
 
     init {
-        getCommentsRequestSubject.observeOn(schedulerProvider.networkScheduler)
-            .map(::createGetRequest)
-            .map(::performGetRequest)
-            .subscribe { getCommentsResponseSubject.onNext(it) }
-            .let(disposables::add)
+        getCommentsRequestSubject.observeOn(schedulerProvider.networkScheduler).subscribe { articleId ->
+            val request = createGetRequest(articleId)
+            val response = performGetRequest(request)
+            getCommentsResponseSubject.onNext(response)
+
+            if (response is GetCommentsResponse.Success) {
+                response.data.forEach { cacheDatabase.comments().insert(it.copy(articleId = articleId)) }
+            }
+        }.let(disposables::add)
 
         voteUpCommentRequestSubject.observeOn(schedulerProvider.networkScheduler)
             .map(::createVoteRequest)
@@ -182,6 +188,21 @@ class CommentsFragmentViewModel(
     private fun createVoteRequest(commentId: Int): VoteCommentRequest {
         val session = sessionDatabase.session().get()
         return VoteCommentRequest(session.clientKey, session.tokenKey, commentId)
+    }
+
+    fun toCommentsTree(comments: List<Comment>): CommentsTree {
+        val roots = ArrayList<TreeNode<Comment>>()
+        val nodes = ArrayList<TreeNode<Comment>>()
+        comments.forEach { comment ->
+            val node = TreeNode(comment)
+            nodes.add(node)
+            if (comment.parentId == 0) {
+                roots.add(node)
+            } else {
+                nodes.find { it.value.id == comment.parentId }!!.addChild(node)
+            }
+        }
+        return CommentsTree(roots, nodes)
     }
 
     fun toSparseArray(list: List<Comment>, articleId: Int): SparseArray<ArrayList<Comment>> {

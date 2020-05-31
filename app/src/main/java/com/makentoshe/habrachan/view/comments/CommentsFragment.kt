@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.view.comments
 
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +8,10 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.util.isEmpty
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
@@ -22,6 +19,7 @@ import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
+import com.makentoshe.habrachan.model.comments.tree.CommentsTree
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
@@ -84,15 +82,15 @@ class CommentsFragment : Fragment() {
     }
 
     private fun onGetCommentsResponseSuccess(response: GetCommentsResponse.Success) {
-        val commentsArray = commentsViewModel.toSparseArray(response.data, arguments.articleId)
-        if (commentsArray.isEmpty()) displayCommentsThumbnail() else displayComments(commentsArray)
+        val commentsTree = commentsViewModel.toCommentsTree(response.data)
+        if (commentsTree.isEmpty()) displayCommentsThumbnail() else displayComments(commentsTree)
     }
 
-    private fun displayComments(comments: SparseArray<ArrayList<Comment>>) {
+    private fun displayComments(tree: CommentsTree) {
         progressBar.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
 
-        epoxyController.setComments(comments)
+        epoxyController.setComments(tree)
         recyclerView.adapter = epoxyController.adapter
         epoxyController.requestModelBuild()
         recyclerView.visibility = View.VISIBLE

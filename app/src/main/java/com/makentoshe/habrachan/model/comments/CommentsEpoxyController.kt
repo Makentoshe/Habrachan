@@ -1,39 +1,26 @@
 package com.makentoshe.habrachan.model.comments
 
-import android.util.SparseArray
-import androidx.core.util.forEach
-import androidx.core.util.valueIterator
 import com.airbnb.epoxy.EpoxyController
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.model.comments.tree.CommentsTree
 
 class CommentsEpoxyController(private val factory: CommentEpoxyModel.Factory) : EpoxyController() {
 
-    private var comments = SparseArray<ArrayList<Comment>>()
+    private var comments = CommentsTree(arrayListOf(), arrayListOf())
 
-    fun setComments(comments: SparseArray<ArrayList<Comment>>) {
+    fun setComments(comments: CommentsTree) {
         this.comments = comments
     }
 
     fun updateCommentScore(commentId: Int, score: Int) {
-        comments.forEach { key, list ->
-            if (updateCommentsBranch(key, list, commentId, score)) return requestModelBuild()
-        }
-    }
-
-    private fun updateCommentsBranch(key: Int, comments: ArrayList<Comment>, commentId: Int, score: Int): Boolean {
-        val comment = comments.find { it.id == commentId } ?: return false
-        val index = comments.indexOf(comment)
-        comments.removeAt(index)
-        comments.add(index, comment.copy(score = score))
-        return true
+        val comment = comments.find { it.value.id == commentId }
+        buildCommentModel(comment!!.value.copy(score = score))
+        requestModelBuild()
     }
 
     override fun buildModels() {
-        comments.valueIterator().forEach(::buildCommentsBranchModel)
-    }
-
-    private fun buildCommentsBranchModel(comments: List<Comment>) {
-        comments.forEach(::buildCommentModel)
+        //todo update iteration from forEach to DFS
+        comments.map { it.value }.forEach(::buildCommentModel)
     }
 
     private fun buildCommentModel(comment: Comment) {
