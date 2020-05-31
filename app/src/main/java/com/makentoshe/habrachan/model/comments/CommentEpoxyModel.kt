@@ -10,6 +10,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.model.comments.tree.Tree
 import com.makentoshe.habrachan.view.comments.controller.NativeCommentController
 
 @EpoxyModelClass(layout = R.layout.comment_item)
@@ -19,6 +20,8 @@ abstract class CommentEpoxyModel : EpoxyModelWithHolder<CommentEpoxyModel.ViewHo
 
     lateinit var controller: NativeCommentController
 
+    lateinit var commentsTree: Tree<Comment>
+
     override fun bind(holder: ViewHolder) {
         holder.authorView.text = comment.author.login
         holder.timePublishedView.text = comment.timePublished
@@ -26,7 +29,7 @@ abstract class CommentEpoxyModel : EpoxyModelWithHolder<CommentEpoxyModel.ViewHo
         controller.levelFactory().build(holder.verticalView).setCommentLevel(comment.level)
         controller.messageFactory().build(holder.messageView).setCommentText(comment.message)
         controller.scoreFactory().build(holder.scoreView).setCommentScore(comment.score)
-        controller.behaviorFactory().build(holder.rootView).setCommentTouchBehavior(comment)
+        controller.behaviorFactory(commentsTree).build(holder.rootView).setCommentTouchBehavior(comment)
         controller.avatarFactory().build(holder.avatarView).setCommentAvatar(comment.avatar) {
             holder.avatarView.visibility = View.VISIBLE
             holder.progressView.visibility = View.GONE
@@ -56,9 +59,10 @@ abstract class CommentEpoxyModel : EpoxyModelWithHolder<CommentEpoxyModel.ViewHo
     }
 
     class Factory(private val controller: NativeCommentController) {
-        fun build(comment: Comment): CommentEpoxyModel {
+        fun build(comment: Comment, commentsTree: Tree<Comment>): CommentEpoxyModel {
             val model = CommentEpoxyModel_().id(comment.id)
             model.controller = controller
+            model.commentsTree = commentsTree
             model.comment = comment
             return model
         }

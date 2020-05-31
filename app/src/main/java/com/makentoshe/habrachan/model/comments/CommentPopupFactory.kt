@@ -1,27 +1,29 @@
 package com.makentoshe.habrachan.model.comments
 
-import android.content.Context
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupWindow
-import android.widget.Toast
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.model.comments.tree.Tree
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.navigation.user.UserScreen
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import ru.terrakok.cicerone.Router
 
-class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel, private val router: Router) {
+class CommentPopupFactory(
+    private val viewModel: CommentsFragmentViewModel,
+    private val router: Router
+) {
 
-    fun build(anchor: View, comment: Comment): PopupWindow {
+    fun build(anchor: View, comment: Comment, commentsTree: Tree<Comment>): PopupWindow {
         val menu = PopupWindow(anchor.context)
         menu.isOutsideTouchable = true
         menu.contentView =
             LayoutInflater.from(anchor.context).inflate(R.layout.comment_item_popup, null, false)
         menu.contentView.findViewById<View>(R.id.comment_item_popup_reply).setOnClickListener {
-            onReplyClick(it.context, comment)
+            onReplyClick(comment, commentsTree)
             menu.dismiss()
         }
         menu.contentView.findViewById<View>(R.id.comment_item_popup_voteup).setOnClickListener {
@@ -44,8 +46,10 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel, priv
         return menu
     }
 
-    private fun onReplyClick(context: Context, comment: Comment) {
-        Toast.makeText(context, "Reply is not implemented", Toast.LENGTH_LONG).show()
+    private fun onReplyClick(comment: Comment, commentsTree: Tree<Comment>) {
+        val node = commentsTree.findNode { it == comment }
+        val path = commentsTree.pathToRoot(node!!)
+        println(path)
     }
 
     private fun onVoteUp(comment: Comment) {
@@ -57,12 +61,6 @@ class CommentPopupFactory(private val viewModel: CommentsFragmentViewModel, priv
     }
 
     private fun onInspect(comment: Comment) {
-        router.navigateTo(
-            UserScreen(
-                UserAccount.User(
-                    comment.author.login
-                )
-            )
-        )
+        router.navigateTo(UserScreen(UserAccount.User(comment.author.login)))
     }
 }

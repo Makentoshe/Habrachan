@@ -18,7 +18,7 @@ import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
-import com.makentoshe.habrachan.model.comments.tree.CommentsTree
+import com.makentoshe.habrachan.model.comments.tree.Tree
 import com.makentoshe.habrachan.model.comments.tree.TreeNode
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -190,7 +190,7 @@ class CommentsFragmentViewModel(
         return VoteCommentRequest(session.clientKey, session.tokenKey, commentId)
     }
 
-    fun toCommentsTree(comments: List<Comment>): CommentsTree {
+    fun toCommentsTree(comments: List<Comment>): Tree<Comment> {
         val roots = ArrayList<TreeNode<Comment>>()
         val nodes = ArrayList<TreeNode<Comment>>()
         comments.forEach { comment ->
@@ -202,19 +202,7 @@ class CommentsFragmentViewModel(
                 nodes.find { it.value.id == comment.parentId }!!.addChild(node)
             }
         }
-        return CommentsTree(roots, nodes)
-    }
-
-    fun toSparseArray(list: List<Comment>, articleId: Int): SparseArray<ArrayList<Comment>> {
-        val commentMap = SparseArray<ArrayList<Comment>>()
-        list.forEach { comment ->
-            if (!commentMap.containsKey(comment.thread)) {
-                commentMap[comment.thread] = ArrayList()
-            }
-            commentMap[comment.thread]?.add(comment)
-            cacheDatabase.comments().insert(comment.copy(articleId = articleId))
-        }
-        return commentMap
+        return Tree(roots, nodes)
     }
 
     override fun onCleared() = disposables.clear()

@@ -1,7 +1,9 @@
 package com.makentoshe.habrachan.view.comments.controller
 
+import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.model.comments.CommentPopupFactory
 import com.makentoshe.habrachan.model.comments.NativeCommentAvatarController
+import com.makentoshe.habrachan.model.comments.tree.Tree
 
 class NativeCommentController(
     private val commentPopupFactory: CommentPopupFactory,
@@ -20,8 +22,8 @@ class NativeCommentController(
         return NativeCommentLevelController.Factory()
     }
 
-    override fun behaviorFactory(): NativeCommentBehaviorController.Factory {
-        return NativeCommentBehaviorController.Factory(commentPopupFactory)
+    override fun behaviorFactory(commentsTree: Tree<Comment>): NativeCommentBehaviorController.Factory {
+        return NativeCommentBehaviorController.Factory(commentPopupFactory, commentsTree)
     }
 
     override fun avatarFactory(): NativeCommentAvatarController.Factory {

@@ -6,15 +6,17 @@ import android.view.MotionEvent
 import android.view.View
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.model.comments.CommentPopupFactory
+import com.makentoshe.habrachan.model.comments.tree.Tree
 
 class NativeCommentBehaviorController(
     private val root: View,
-    private val commentPopupFactory: CommentPopupFactory
+    private val commentPopupFactory: CommentPopupFactory,
+    private val commentsTree: Tree<Comment>
 ) {
 
     fun setCommentTouchBehavior(comment: Comment) {
         val listener = CommentGestureListener {
-            val window = commentPopupFactory.build(root, comment)
+            val window = commentPopupFactory.build(root, comment, commentsTree)
             window.showAtLocation(root, Gravity.NO_GRAVITY, it.rawX.toInt(), it.rawY.toInt())
         }
         val detector = GestureDetector(root.context, listener)
@@ -34,8 +36,8 @@ class NativeCommentBehaviorController(
         override fun onLongPress(e: MotionEvent) = onLongClick.invoke(e)
     }
 
-    class Factory(private val commentPopupFactory: CommentPopupFactory) {
-        fun build(root: View) = NativeCommentBehaviorController(root, commentPopupFactory)
+    class Factory(private val commentPopupFactory: CommentPopupFactory, private val commentsTree: Tree<Comment>) {
+        fun build(root: View) = NativeCommentBehaviorController(root, commentPopupFactory, commentsTree)
     }
 }
 

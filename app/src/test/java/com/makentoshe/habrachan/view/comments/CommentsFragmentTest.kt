@@ -6,12 +6,13 @@ import android.widget.TextView
 import com.makentoshe.habrachan.AppActivity
 import com.makentoshe.habrachan.BaseRobolectricTest
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
-import com.makentoshe.habrachan.model.comments.tree.CommentsTree
+import com.makentoshe.habrachan.model.comments.tree.Tree
 import com.makentoshe.habrachan.navigation.comments.CommentsScreen
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.mockk.*
@@ -98,7 +99,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
 
     @Test
     fun testShouldDisplayCommentsOnSuccess() {
-        val mockCommentsTree = CommentsTree(arrayListOf(), arrayListOf(mockk(relaxed = true)))
+        val mockCommentsTree = Tree<Comment>(arrayListOf(), arrayListOf(mockk(relaxed = true)))
         every { mockViewModel.toCommentsTree(any()) } returns mockCommentsTree
 
         val commentsObservable = BehaviorSubject.create<GetCommentsResponse>()
@@ -128,7 +129,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
 
     @Test
     fun testShouldDisplayFirstCommentButtonOnSuccess() {
-        every { mockViewModel.toCommentsTree(any()) } returns CommentsTree(arrayListOf(), arrayListOf())
+        every { mockViewModel.toCommentsTree(any()) } returns Tree(arrayListOf(), arrayListOf())
 
         val commentsObservable = BehaviorSubject.create<GetCommentsResponse>()
         every { mockViewModel.getCommentsObservable } returns commentsObservable

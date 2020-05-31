@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
@@ -19,7 +20,7 @@ import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
-import com.makentoshe.habrachan.model.comments.tree.CommentsTree
+import com.makentoshe.habrachan.model.comments.tree.Tree
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
@@ -86,7 +87,7 @@ class CommentsFragment : Fragment() {
         if (commentsTree.isEmpty()) displayCommentsThumbnail() else displayComments(commentsTree)
     }
 
-    private fun displayComments(tree: CommentsTree) {
+    private fun displayComments(tree: Tree<Comment>) {
         progressBar.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
 

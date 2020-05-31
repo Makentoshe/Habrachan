@@ -2,28 +2,27 @@ package com.makentoshe.habrachan.model.comments
 
 import com.airbnb.epoxy.EpoxyController
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.model.comments.tree.CommentsTree
+import com.makentoshe.habrachan.model.comments.tree.Tree
 
 class CommentsEpoxyController(private val factory: CommentEpoxyModel.Factory) : EpoxyController() {
 
-    private var comments = CommentsTree(arrayListOf(), arrayListOf())
+    private var commentsTree = Tree<Comment>(arrayListOf(), arrayListOf())
 
-    fun setComments(comments: CommentsTree) {
-        this.comments = comments
+    fun setComments(comments: Tree<Comment>) {
+        this.commentsTree = comments
     }
 
     fun updateCommentScore(commentId: Int, score: Int) {
-        val comment = comments.find { it.value.id == commentId }
+        val comment = commentsTree.find { it.value.id == commentId }
         buildCommentModel(comment!!.value.copy(score = score))
         requestModelBuild()
     }
 
     override fun buildModels() {
-        //todo update iteration from forEach to DFS
-        comments.map { it.value }.forEach(::buildCommentModel)
+        commentsTree.forEachDepthFirst { buildCommentModel(it.value) }
     }
 
     private fun buildCommentModel(comment: Comment) {
-        factory.build(comment).addTo(this)
+        factory.build(comment, commentsTree).addTo(this)
     }
 }
