@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/comments_reply_sliding"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:elevation="4dp"
+    sothree:umanoInitialState="collapsed"
+    sothree:umanoPanelHeight="48dp"
+    sothree:umanoShadowHeight="4dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comments_reply_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/comments_reply_dragindicator"
+            android:layout_width="24dp"
+            android:layout_height="3dp"
+            sothree:cardCornerRadius="2dp"
+            android:backgroundTint="@android:color/tab_indicator_text"
+            android:layout_marginTop="4dp"
+            sothree:layout_constraintTop_toTopOf="parent"
+            sothree:layout_constraintStart_toStartOf="parent"
+            sothree:layout_constraintEnd_toEndOf="parent" />
+
+        <EditText
+            android:id="@+id/comments_reply_message_input"
+            android:hint="@string/comments_reply_message_input_article"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

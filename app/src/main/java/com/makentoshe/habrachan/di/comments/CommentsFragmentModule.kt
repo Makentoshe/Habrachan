@@ -7,6 +7,8 @@ import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
+import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
+import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.comments.CommentsViewModelSchedulerProvider
@@ -24,13 +26,13 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
     private val commentsManager: HabrCommentsManager
     private val imageManager: ImageManager
 
-    private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
     private val cacheDatabase by inject<CacheDatabase>()
     private val sessionDatabase by inject<SessionDatabase>()
+    private val navigation by inject<CommentsScreenNavigation>()
 
     init {
-        Toothpick.openScope(ApplicationScope::class.java).inject(this)
+        Toothpick.openScope(CommentsFlowFragment::class.java).inject(this)
         commentsManager = HabrCommentsManager.Factory(client).build()
         imageManager = ImageManager.Builder(client).build()
 
@@ -56,7 +58,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
     private fun getCommentsEpoxyControllerProvider(
         disposables: CompositeDisposable, commentsFragmentViewModel: CommentsFragmentViewModel
-    ) = CommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel, router)
+    ) = CommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel, navigation)
 
     class Factory {
         fun build(fragment: CommentsFragment): CommentsFragmentModule {

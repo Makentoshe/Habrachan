@@ -1,8 +1,9 @@
-package com.makentoshe.habrachan.view.comments
+package com.makentoshe.habrachan.navigation.comments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 
 class CommentsScreenArguments(private val holderFragment: CommentsFlowFragment) {
 

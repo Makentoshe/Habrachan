@@ -2,10 +2,10 @@ package com.makentoshe.habrachan.di.comments
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.navigation.comments.CommentsScreenArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFlowFragmentUi
 import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
-import com.makentoshe.habrachan.view.comments.CommentsScreenArguments
 import com.makentoshe.habrachan.viewmodel.comments.CommentsViewModelSchedulerProvider
 import com.makentoshe.habrachan.viewmodel.comments.SendCommentViewModel
 import io.reactivex.disposables.CompositeDisposable

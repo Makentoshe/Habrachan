@@ -7,7 +7,7 @@ import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.navigation.comments.CommentsScreen
 import com.makentoshe.habrachan.navigation.images.OverlayImageScreen
 import com.makentoshe.habrachan.navigation.user.UserScreen
-import com.makentoshe.habrachan.view.comments.CommentsScreenArguments
+import com.makentoshe.habrachan.navigation.comments.CommentsScreenArguments
 import io.mockk.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -37,7 +37,8 @@ class ArticleFragmentNavigationTest : BaseRobolectricTest() {
 
         val screen = slot<CommentsScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
-        val commentsScreenArguments = CommentsScreenArguments(screen.captured.fragment)
+        val commentsScreenArguments =
+            CommentsScreenArguments(screen.captured.fragment)
         assertEquals(articleId, commentsScreenArguments.articleId)
     }
 
@@ -53,7 +54,8 @@ class ArticleFragmentNavigationTest : BaseRobolectricTest() {
 
         val screen = slot<CommentsScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
-        val commentsScreenArguments = CommentsScreenArguments(screen.captured.fragment)
+        val commentsScreenArguments =
+            CommentsScreenArguments(screen.captured.fragment)
         assertEquals(article, commentsScreenArguments.article)
 
         unmockkObject(Article.Companion)

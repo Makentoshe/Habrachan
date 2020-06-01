@@ -21,6 +21,7 @@ import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import com.makentoshe.habrachan.model.comments.tree.Tree
+import com.makentoshe.habrachan.navigation.comments.CommentsScreenArguments
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject

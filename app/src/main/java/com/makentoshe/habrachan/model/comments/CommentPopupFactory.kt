@@ -7,14 +7,12 @@ import android.widget.PopupWindow
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.model.comments.tree.Tree
-import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.navigation.user.UserScreen
+import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
-import ru.terrakok.cicerone.Router
 
 class CommentPopupFactory(
     private val viewModel: CommentsFragmentViewModel,
-    private val router: Router
+    private val navigation: CommentsScreenNavigation
 ) {
 
     fun build(anchor: View, comment: Comment, commentsTree: Tree<Comment>): PopupWindow {
@@ -49,7 +47,7 @@ class CommentPopupFactory(
     private fun onReplyClick(comment: Comment, commentsTree: Tree<Comment>) {
         val node = commentsTree.findNode { it == comment }
         val path = commentsTree.pathToRoot(node!!)
-        println(path)
+        navigation.toReplyScreen(path.map { it.value })
     }
 
     private fun onVoteUp(comment: Comment) {
@@ -61,6 +59,6 @@ class CommentPopupFactory(
     }
 
     private fun onInspect(comment: Comment) {
-        router.navigateTo(UserScreen(UserAccount.User(comment.author.login)))
+        navigation.toUserScreen(comment.author.login)
     }
 }

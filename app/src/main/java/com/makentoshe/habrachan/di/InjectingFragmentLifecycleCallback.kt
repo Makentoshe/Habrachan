@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.di.article.*
 import com.makentoshe.habrachan.di.comments.CommentsFlowFragmentModule
 import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
+import com.makentoshe.habrachan.di.comments.CommentsReplyFragmentModule
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.images.OverlayImageFragmentModule
 import com.makentoshe.habrachan.di.images.OverlayImageFragmentScope
@@ -24,6 +25,7 @@ import com.makentoshe.habrachan.view.article.NativeArticleFragment
 import com.makentoshe.habrachan.view.article.WebArticleFragment
 import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 import com.makentoshe.habrachan.view.comments.CommentsFragment
+import com.makentoshe.habrachan.view.comments.CommentsReplyFragment
 import com.makentoshe.habrachan.view.images.OverlayImageFragment
 import com.makentoshe.habrachan.view.main.MainFlowFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesFlowFragment
@@ -47,6 +49,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
             is CommentsFlowFragment -> injectCommentsFlowFragment(f)
             is CommentsFragment -> injectCommentsFragment(f)
+            is CommentsReplyFragment -> injectCommentsReplyFragment(f)
 
             is LoginFragment -> injectLoginFragment(f)
             is LoginFlowFragment -> injectLoginFlowFragment(f)
@@ -140,6 +143,12 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     private fun injectCommentsFlowFragment(fragment: CommentsFlowFragment) {
         val module = CommentsFlowFragmentModule(fragment)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, CommentsFlowFragment::class.java)
+        scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
+    }
+
+    private fun injectCommentsReplyFragment(fragment: CommentsReplyFragment) {
+        val module = CommentsReplyFragmentModule(fragment)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java, CommentsReplyFragment::class.java)
         scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/comments_markup_send"
+        style="?attr/habrachanDefaultButtonText"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:enabled="false"
+        app:icon="@drawable/ic_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/comments_markup_actions" />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/comments_markup_send_progress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/comments_markup_actions" />
+
+    <TextView
+        android:id="@+id/comments_markup_actions"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:text="Note: html or markdown does not supports now"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/comments_markup_barrier"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/comments_markup_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="comments_markup_send,comments_markup_send_progress"
+        app:layout_constraintStart_toStartOf="@id/comments_markup_actions" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
+import com.makentoshe.habrachan.navigation.comments.CommentsScreenArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFlowFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.SendCommentViewModel
@@ -83,7 +84,8 @@ class CommentsFlowFragment : Fragment() {
     class Factory {
         fun build(articleId: Int, article: Article?): CommentsFlowFragment {
             val fragment = CommentsFlowFragment()
-            val arguments = CommentsScreenArguments(fragment)
+            val arguments =
+                CommentsScreenArguments(fragment)
             arguments.article = article
             arguments.articleId = articleId
             return fragment
