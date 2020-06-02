@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.ResponseInterceptor
 import com.makentoshe.habrachan.UrlInterceptor
 import com.makentoshe.habrachan.common.network.manager.LoginManager
 import com.makentoshe.habrachan.common.network.request.LoginRequest
+import com.makentoshe.habrachan.common.network.request.OAuthRequest
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
@@ -76,5 +77,16 @@ class LoginManagerTest : BaseTest() {
         val manager = LoginManager.Builder(OkHttpClient()).build()
         val response = manager.login(request).blockingGet()
         println(response)
+    }
+
+    @Test
+    @Ignore("Test uses real api")
+    fun oauthTest() {
+        val request = OAuthRequest("github")
+        val client = OkHttpClient.Builder().followRedirects(false).build()
+
+        val manager = LoginManager.Builder(client).build()
+        val response = manager.oauth(request).blockingGet()
+        println(request)
     }
 }
