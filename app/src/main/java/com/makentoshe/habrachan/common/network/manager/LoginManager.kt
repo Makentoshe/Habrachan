@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.common.network.manager
 
+import android.net.Uri
 import com.makentoshe.habrachan.common.network.api.LoginApi
 import com.makentoshe.habrachan.common.network.converter.LoginConverter
 import com.makentoshe.habrachan.common.network.request.LoginRequest
@@ -47,15 +48,14 @@ interface LoginManager {
                         val response = client.newCall(Request.Builder().url(url).build()).execute()
                         url = response.headers["Location"]
                             ?: throw IllegalStateException("No 'Location' header found")
-                        println("got url: $url")
                         url
                     }.repeatUntil {
                         url.startsWith("https://github.com")
-                    }.last("")
-                        .map {
-                            println(it)
-                            OAuthResponse.Success(url)
-                        }
+                    }.last("").map {
+                        val parsedUrl = Uri.parse(it)
+                        val state = parsedUrl.getQueryParameter("state") ?: ""
+                        OAuthResponse.Success(it, state)
+                    }
                 }
             }
         }
