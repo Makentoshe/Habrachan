@@ -10,34 +10,39 @@ import com.google.android.material.button.MaterialButton
 import com.makentoshe.habrachan.R
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
-class CommentsReplyFragmentUi {
+class CommentsReplyFragmentUi : CommentsInputFragmentUi {
 
     lateinit var toolbar: Toolbar
         private set
 
-    lateinit var markupActionsContainer: View
-        private set
+    private lateinit var internalMarkupActionsContainer: View
+    override val markupActionsContainer: View
+        get() = internalMarkupActionsContainer
 
-    lateinit var sendButton: MaterialButton
-        private set
+    private lateinit var internalSendButton: MaterialButton
+    override val sendButton: MaterialButton
+        get() = internalSendButton
 
-    lateinit var sendProgressBar: ProgressBar
-        private set
+    private lateinit var internalSendProgressBar: ProgressBar
+    override val sendProgressBar: ProgressBar
+        get() = internalSendProgressBar
 
-    lateinit var messageEditText: EditText
-        private set
+    private lateinit var internalMessageEditText: EditText
+    override val messageEditText: EditText
+        get() = internalMessageEditText
 
-    lateinit var slidingPanel: SlidingUpPanelLayout
-        private set
+    private lateinit var internalSlidingPanel: SlidingUpPanelLayout
+    override val slidingPanel: SlidingUpPanelLayout
+        get() = internalSlidingPanel
 
     fun inflateView(inflater: LayoutInflater, root: ViewGroup? = null): View {
         val fragmentView = internalInflateView(inflater, root)
         toolbar = fragmentView.findViewById(R.id.comments_reply_toolbar)
-        markupActionsContainer = fragmentView.findViewById(R.id.comments_reply_markup)
-        sendButton = fragmentView.findViewById(R.id.comments_markup_send)
-        messageEditText = fragmentView.findViewById(R.id.comments_reply_message_input)
-        sendProgressBar = fragmentView.findViewById(R.id.comments_markup_send_progress)
-        slidingPanel = fragmentView.findViewById(R.id.comments_reply_sliding)
+        internalMarkupActionsContainer = fragmentView.findViewById(R.id.comments_reply_markup)
+        internalSendButton = fragmentView.findViewById(R.id.comments_markup_send)
+        internalMessageEditText = fragmentView.findViewById(R.id.comments_reply_message_input)
+        internalSendProgressBar = fragmentView.findViewById(R.id.comments_markup_send_progress)
+        internalSlidingPanel = fragmentView.findViewById(R.id.comments_reply_sliding)
         return fragmentView
     }
 

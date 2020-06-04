@@ -24,6 +24,7 @@
         app:layout_constraintBottom_toTopOf="@id/comments_reply_markup" />
 
     <include
+        android:visibility="gone"
         android:id="@+id/comments_reply_markup"
         layout="@layout/comment_markup"
         android:layout_height="48dp"
