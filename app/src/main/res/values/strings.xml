@@ -18,7 +18,7 @@
     <string name="email">Email</string>
     <string name="cant_sign_in">Can\'t sign in</string>
     <string name="invalid_email_or_password">Invalid email or password</string>
-    <string name="sas">
+    <string name="lorem_ipsum">
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper. Semper quis lectus nulla at volutpat diam ut. Massa placerat duis ultricies lacus sed turpis tincidunt id. Eu consequat ac felis donec et odio. Tempor orci eu lobortis elementum nibh tellus. Lacus sed turpis tincidunt id aliquet risus feugiat. Risus commodo viverra maecenas accumsan lacus vel facilisis. Aenean pharetra magna ac placerat. Sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus. Lectus arcu bibendum at varius vel pharetra vel.
 In aliquam sem fringilla ut. A iaculis at erat pellentesque adipiscing commodo elit. Arcu cursus euismod quis viverra nibh cras pulvinar. Eget sit amet tellus cras. Nisi porta lorem mollis aliquam ut porttitor leo. Scelerisque purus semper eget duis at. Sapien et ligula ullamcorper malesuada proin libero nunc consequat interdum. Consectetur purus ut faucibus pulvinar elementum integer. Quam elementum pulvinar etiam non quam. Malesuada fames ac turpis egestas sed tempus urna et. Proin sagittis nisl rhoncus mattis. Cras pulvinar mattis nunc sed.
 Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar. At tellus at urna condimentum. Ridiculus mus mauris vitae ultricies leo integer malesuada. Vel quam elementum pulvinar etiam. Amet consectetur adipiscing elit duis tristique sollicitudin nibh sit. Porta nibh venenatis cras sed felis eget. Enim blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Egestas fringilla phasellus faucibus scelerisque. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Scelerisque purus semper eget duis at. Felis imperdiet proin fermentum leo vel. Vivamus arcu felis bibendum ut tristique. Nulla aliquet enim tortor at auctor.
@@ -71,10 +71,11 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="menu_logout">Logout</string>
     <string name="menu_send_message">Send message</string>
 
-    <string name="comments_message_no_comments">There are no comments\nfor this publication at now</string>
+    <string name="comments_message_no_comments">No comments for now</string>
     <string name="comments_button_first_comment">Be the first one</string>
     <string name="comments_fragment_subtitle">Comments</string>
     <string name="comment_popup_inspect_user">Inspect user</string>
     <string name="comments_flow_fragment_message_input_article">Reply to article</string>
     <string name="comments_reply_message_input_article">Reply to @user\'s last message</string>
+    <string name="comment_input_prerender_not_support">Note: html or markdown prerender are not currently supported</string>
 </resources>

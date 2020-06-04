@@ -30,7 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:gravity="center"
-        android:text="Note: html or markdown does not supports now"
+        android:text="@string/comment_input_prerender_not_support"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/comments_markup_barrier"
         app:layout_constraintStart_toStartOf="parent" />
