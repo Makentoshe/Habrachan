@@ -34,7 +34,7 @@ import toothpick.ktp.delegate.inject
 @RunWith(RobolectricTestRunner::class)
 class CommentsFragmentTest : BaseRobolectricTest() {
 
-    private val mockSnackbarErrorController = mockk<SnackbarErrorController>()
+    private val mockSnackbarErrorController = mockk<SnackbarErrorController>(relaxed = true)
 
     init {
         mockkObject(SnackbarErrorController)
