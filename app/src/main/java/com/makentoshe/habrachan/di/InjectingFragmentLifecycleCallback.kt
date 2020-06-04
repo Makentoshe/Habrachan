@@ -148,7 +148,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
     private fun injectCommentsReplyFragment(fragment: CommentsReplyFragment) {
         val module = CommentsReplyFragmentModule(fragment)
-        val scopes = Toothpick.openScopes(ApplicationScope::class.java, CommentsReplyFragment::class.java)
+        val scopes = Toothpick.openScopes(CommentsFlowFragment::class.java, CommentsReplyFragment::class.java)
         scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 

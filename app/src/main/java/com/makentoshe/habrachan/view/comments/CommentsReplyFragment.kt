@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.model.comments.CommentsAdapter
+import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.navigation.comments.CommentsReplyScreenArguments
 import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
 import com.makentoshe.habrachan.ui.comments.CommentsReplyFragmentUi
@@ -18,6 +20,7 @@ class CommentsReplyFragment : CommentsInputFragment() {
     override val sendCommentViewModel by inject<SendCommentViewModel>()
     override val disposables by inject<CompositeDisposable>()
 
+    private val commentsAdapterFactory by inject<CommentsAdapter.Factory>()
     private val arguments by inject<CommentsReplyScreenArguments>()
     private val commentsReplyFragmentUi by inject<CommentsReplyFragmentUi>()
 
@@ -30,14 +33,16 @@ class CommentsReplyFragment : CommentsInputFragment() {
         // disable touch events for background fragments
         view.setOnClickListener { }
 
-        val original = arguments.comments.first()
+        val original = arguments.comments.last()
         commentsReplyFragmentUi.toolbar.setTitle(original.author.login)
+
+        commentsReplyFragmentUi.recycler.adapter = commentsAdapterFactory.build(arguments.comments)
     }
 
     class Factory {
         fun build(comments: List<Comment>) = CommentsReplyFragment().apply {
             val arguments = CommentsReplyScreenArguments(this)
-            arguments.comments = comments
+            arguments.comments = comments.map { it.copy(level = 0) }
         }
     }
 }

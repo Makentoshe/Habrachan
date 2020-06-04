@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.makentoshe.habrachan.R
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -13,6 +14,9 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout
 class CommentsReplyFragmentUi : CommentsInputFragmentUi {
 
     lateinit var toolbar: Toolbar
+        private set
+
+    lateinit var recycler: RecyclerView
         private set
 
     private lateinit var internalMarkupActionsContainer: View
@@ -38,6 +42,7 @@ class CommentsReplyFragmentUi : CommentsInputFragmentUi {
     fun inflateView(inflater: LayoutInflater, root: ViewGroup? = null): View {
         val fragmentView = internalInflateView(inflater, root)
         toolbar = fragmentView.findViewById(R.id.comments_reply_toolbar)
+        recycler = fragmentView.findViewById(R.id.comments_reply_recycler)
         internalMarkupActionsContainer = fragmentView.findViewById(R.id.comments_reply_markup)
         internalSendButton = fragmentView.findViewById(R.id.comments_markup_send)
         internalMessageEditText = fragmentView.findViewById(R.id.comments_reply_message_input)

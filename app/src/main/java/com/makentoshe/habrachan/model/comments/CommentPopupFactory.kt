@@ -46,7 +46,7 @@ class CommentPopupFactory(
 
     private fun onReplyClick(comment: Comment, commentsTree: Tree<Comment>) {
         val node = commentsTree.findNode { it == comment }
-        val path = commentsTree.pathToRoot(node!!)
+        val path = commentsTree.pathToRoot(node!!).reversed()
         navigation.toReplyScreen(path.map { it.value })
     }
 
