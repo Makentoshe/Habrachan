@@ -5,7 +5,6 @@ import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.CommentPopupFactory
 import com.makentoshe.habrachan.model.comments.CommentsAdapter
 import com.makentoshe.habrachan.model.comments.NativeCommentAvatarController
@@ -86,7 +85,9 @@ class CommentsReplyFragmentModule(fragment: CommentsReplyFragment) : Module() {
         val schedulerProvider = object : CommentsViewModelSchedulerProvider {
             override val networkScheduler = Schedulers.io()
         }
-        val factory = SendCommentViewModel.Factory(schedulerProvider, sendCommentViewModelDisposables)
+        val factory = SendCommentViewModel.Factory(
+            schedulerProvider, sendCommentViewModelDisposables, commentsManager, sessionDatabase
+        )
         return ViewModelProviders.of(fragment, factory)[SendCommentViewModel::class.java]
     }
 }

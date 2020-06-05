@@ -1,9 +1,10 @@
 package com.makentoshe.habrachan.common.network.request
 
-data class GetCommentsRequest(
+data class SendCommentRequest(
     val client: String,
     val api: String,
     val token: String,
     val articleId: Int,
-    val since: Int = -1
+    val text: String,
+    val parentId: Int = 0
 )
