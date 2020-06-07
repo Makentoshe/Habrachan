@@ -7,6 +7,7 @@ import android.view.WindowManager
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
+import com.makentoshe.habrachan.model.comments.SendCommentData
 import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.SendCommentViewModel
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -18,6 +19,9 @@ abstract class CommentsInputFragment : Fragment() {
     abstract val commentsInputFragmentUi: CommentsInputFragmentUi
     abstract val sendCommentViewModel: SendCommentViewModel
     abstract val disposables: CompositeDisposable
+
+    open val replyToParentId: Int
+        get() = 0
 
     private val softKeyboardController = SoftKeyboardController()
 
@@ -66,7 +70,8 @@ abstract class CommentsInputFragment : Fragment() {
         commentsInputFragmentUi.sendButton.visibility = View.GONE
         commentsInputFragmentUi.sendProgressBar.visibility = View.VISIBLE
 
-        sendCommentViewModel.sendCommentRequestObserver.onNext(messageText)
+        val sendCommentData = SendCommentData(messageText, replyToParentId)
+        sendCommentViewModel.sendCommentRequestObserver.onNext(sendCommentData)
     }
 
 }

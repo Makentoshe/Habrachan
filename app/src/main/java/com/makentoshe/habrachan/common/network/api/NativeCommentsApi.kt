@@ -4,7 +4,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
-interface HabrCommentsApi {
+interface NativeCommentsApi {
 
     @GET("/api/v1/comments/{id}")
     fun getComments(

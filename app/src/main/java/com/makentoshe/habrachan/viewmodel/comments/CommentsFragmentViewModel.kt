@@ -2,15 +2,12 @@ package com.makentoshe.habrachan.viewmodel.comments
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.SparseArray
-import androidx.core.util.containsKey
-import androidx.core.util.set
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
+import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.common.network.request.ImageRequest
@@ -32,7 +29,7 @@ import java.net.UnknownHostException
 import java.util.concurrent.ConcurrentHashMap
 
 class CommentsFragmentViewModel(
-    private val commentsManager: HabrCommentsManager,
+    private val commentsManager: CommentsManager,
     private val imageManager: ImageManager,
     private val cacheDatabase: CacheDatabase,
     private val sessionDatabase: SessionDatabase,
@@ -208,7 +205,7 @@ class CommentsFragmentViewModel(
     override fun onCleared() = disposables.clear()
 
     class Factory(
-        private val commentsManager: HabrCommentsManager,
+        private val commentsManager: CommentsManager,
         private val imageManager: ImageManager,
         private val cacheDatabase: CacheDatabase,
         private val sessionDatabase: SessionDatabase,

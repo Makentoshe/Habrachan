@@ -2,11 +2,10 @@ package com.makentoshe.habrachan.viewmodel.comments
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
+import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.ImageResponse
@@ -14,8 +13,6 @@ import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
-import okhttp3.internal.cacheGet
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -25,7 +22,7 @@ class CommentsFragmentViewModelTest {
 
     private lateinit var viewModel: CommentsFragmentViewModel
 
-    private val mockCommentsManager = mockk<HabrCommentsManager>(relaxed = true)
+    private val mockCommentsManager = mockk<CommentsManager>(relaxed = true)
     private val mockImageManager = mockk<ImageManager>(relaxed = true)
     private val mockCacheDatabase = mockk<CacheDatabase>(relaxed = true)
     private val mockSessionDatabase = mockk<SessionDatabase>(relaxed = true)

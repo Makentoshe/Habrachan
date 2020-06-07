@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.common.network.manager
 
-import com.makentoshe.habrachan.common.network.api.HabrCommentsApi
+import com.makentoshe.habrachan.common.network.api.NativeCommentsApi
 import com.makentoshe.habrachan.common.network.converter.CommentsConverter
 import com.makentoshe.habrachan.common.network.converter.SendCommentConverter
 import com.makentoshe.habrachan.common.network.converter.VoteCommentConverter
@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-interface HabrCommentsManager {
+interface CommentsManager {
 
     fun getComments(request: GetCommentsRequest): Single<GetCommentsResponse>
 
@@ -27,18 +27,14 @@ interface HabrCommentsManager {
 
     class Factory(private val client: OkHttpClient) {
 
-        private val baseUrl = "https://habr.com/"
-
-        private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
-
-        fun build(): HabrCommentsManager {
-            val api = getRetrofit().create(HabrCommentsApi::class.java)
-            return NativeCommentsManager(api)
+        fun buildNative(): CommentsManager {
+            val retrofit = Retrofit.Builder().client(client).baseUrl("https://habr.com/").build()
+            return NativeCommentsManager(retrofit.create(NativeCommentsApi::class.java))
         }
     }
 }
 
-class NativeCommentsManager(private val api: HabrCommentsApi) : HabrCommentsManager {
+class NativeCommentsManager(private val api: NativeCommentsApi) : CommentsManager {
 
     override fun getComments(request: GetCommentsRequest): Single<GetCommentsResponse> {
         return Single.just(request).observeOn(Schedulers.io()).map { request ->

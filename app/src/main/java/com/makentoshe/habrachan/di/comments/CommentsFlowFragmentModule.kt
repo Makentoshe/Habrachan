@@ -1,9 +1,8 @@
 package com.makentoshe.habrachan.di.comments
 
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
+import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
@@ -23,7 +22,7 @@ import toothpick.ktp.delegate.inject
 
 class CommentsFlowFragmentModule(fragment: CommentsFlowFragment) : Module() {
 
-    private val commentsManager: HabrCommentsManager
+    private val commentsManager: CommentsManager
 
     private val client by inject<OkHttpClient>()
     private val sessionDatabase by inject<SessionDatabase>()
@@ -31,7 +30,7 @@ class CommentsFlowFragmentModule(fragment: CommentsFlowFragment) : Module() {
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
-        commentsManager = HabrCommentsManager.Factory(client).build()
+        commentsManager = CommentsManager.Factory(client).buildNative()
 
         val commentsFlowFragmentUi = CommentsFlowFragmentUi()
         bind<CommentsFlowFragmentUi>().toInstance(commentsFlowFragmentUi)

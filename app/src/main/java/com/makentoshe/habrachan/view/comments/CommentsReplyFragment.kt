@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.model.comments.CommentsAdapter
-import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.navigation.comments.CommentsReplyScreenArguments
 import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
 import com.makentoshe.habrachan.ui.comments.CommentsReplyFragmentUi
@@ -23,6 +22,9 @@ class CommentsReplyFragment : CommentsInputFragment() {
     private val commentsAdapterFactory by inject<CommentsAdapter.Factory>()
     private val arguments by inject<CommentsReplyScreenArguments>()
     private val commentsReplyFragmentUi by inject<CommentsReplyFragmentUi>()
+
+    override val replyToParentId: Int
+        get() = arguments.comments.last().id
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return commentsReplyFragmentUi.inflateView(inflater, container)

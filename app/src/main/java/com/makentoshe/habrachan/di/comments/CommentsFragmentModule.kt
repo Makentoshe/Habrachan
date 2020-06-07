@@ -3,9 +3,8 @@ package com.makentoshe.habrachan.di.comments
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
+import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
@@ -15,7 +14,6 @@ import com.makentoshe.habrachan.viewmodel.comments.CommentsViewModelSchedulerPro
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
-import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -23,7 +21,7 @@ import toothpick.ktp.delegate.inject
 
 class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
-    private val commentsManager: HabrCommentsManager
+    private val commentsManager: CommentsManager
     private val imageManager: ImageManager
 
     private val client by inject<OkHttpClient>()
@@ -33,7 +31,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
     init {
         Toothpick.openScope(CommentsFlowFragment::class.java).inject(this)
-        commentsManager = HabrCommentsManager.Factory(client).build()
+        commentsManager = CommentsManager.Factory(client).buildNative()
         imageManager = ImageManager.Builder(client).build()
 
         val disposables = CompositeDisposable()

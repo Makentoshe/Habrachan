@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.common.network
 import com.makentoshe.habrachan.BaseTest
 import com.makentoshe.habrachan.ResponseInterceptor
 import com.makentoshe.habrachan.UrlInterceptor
-import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
+import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
@@ -13,7 +13,7 @@ import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 
-class HabrCommentsManagerTest : BaseTest() {
+class CommentsManagerTest : BaseTest() {
 
     @Test
     fun `should parse and return success result for up voting action`() {
@@ -26,7 +26,7 @@ class HabrCommentsManagerTest : BaseTest() {
             .addInterceptor(ResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
-        val manager = HabrCommentsManager.Factory(client).build()
+        val manager = CommentsManager.Factory(client).buildNative()
         val response = manager.voteUp(request).blockingGet() as VoteCommentResponse.Success
 
         Assert.assertEquals(2077, response.score)
@@ -45,7 +45,7 @@ class HabrCommentsManagerTest : BaseTest() {
             .addInterceptor(ResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
-        val manager = HabrCommentsManager.Factory(client).build()
+        val manager = CommentsManager.Factory(client).buildNative()
         val response = manager.voteDown(request).blockingGet() as VoteCommentResponse.Success
 
         Assert.assertEquals(2077, response.score)
@@ -64,7 +64,7 @@ class HabrCommentsManagerTest : BaseTest() {
             .addInterceptor(ResponseInterceptor(400, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
-        val manager = HabrCommentsManager.Factory(client).build()
+        val manager = CommentsManager.Factory(client).buildNative()
         val response = manager.voteUp(request).blockingGet() as VoteCommentResponse.Error
 
         Assert.assertEquals(696, response.code)
@@ -84,7 +84,7 @@ class HabrCommentsManagerTest : BaseTest() {
             .addInterceptor(ResponseInterceptor(400, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
-        val manager = HabrCommentsManager.Factory(client).build()
+        val manager = CommentsManager.Factory(client).buildNative()
         val response = manager.voteDown(request).blockingGet() as VoteCommentResponse.Error
 
         Assert.assertEquals(696, response.code)
@@ -104,7 +104,7 @@ class HabrCommentsManagerTest : BaseTest() {
             .addInterceptor(ResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
-        val manager = HabrCommentsManager.Factory(client).build()
+        val manager = CommentsManager.Factory(client).buildNative()
         val response = manager.getComments(request).blockingGet() as GetCommentsResponse.Success
 
         Assert.assertEquals(19, response.data.size)
@@ -117,7 +117,7 @@ class HabrCommentsManagerTest : BaseTest() {
     fun voteUpCommentTest() {
         val commentId = 21395226
         val request = VoteCommentRequest(session.clientKey, session.tokenKey, commentId)
-        val manager = HabrCommentsManager.Factory(OkHttpClient()).build()
+        val manager = CommentsManager.Factory(OkHttpClient()).buildNative()
         val response = manager.voteUp(request).blockingGet()
         println(response)
     }
@@ -127,7 +127,7 @@ class HabrCommentsManagerTest : BaseTest() {
     fun voteDownCommentTest() {
         val commentId = 21396134
         val request = VoteCommentRequest(session.clientKey, session.tokenKey, commentId)
-        val manager = HabrCommentsManager.Factory(OkHttpClient()).build()
+        val manager = CommentsManager.Factory(OkHttpClient()).buildNative()
         val response = manager.voteDown(request).blockingGet()
         println(response)
     }
@@ -137,7 +137,7 @@ class HabrCommentsManagerTest : BaseTest() {
     fun getCommentsTest() {
         val articleId = 442440
         val request = GetCommentsRequest(session.clientKey, session.apiKey, session.tokenKey, articleId)
-        val manager = HabrCommentsManager.Factory(OkHttpClient()).build()
+        val manager = CommentsManager.Factory(OkHttpClient()).buildNative()
         val response = manager.getComments(request).blockingGet()
         println(response)
     }

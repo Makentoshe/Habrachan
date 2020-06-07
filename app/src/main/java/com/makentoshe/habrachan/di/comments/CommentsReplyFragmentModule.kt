@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.di.comments
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
+import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.model.comments.CommentPopupFactory
 import com.makentoshe.habrachan.model.comments.CommentsAdapter
@@ -29,7 +29,7 @@ import toothpick.ktp.delegate.inject
 
 class CommentsReplyFragmentModule(fragment: CommentsReplyFragment) : Module() {
 
-    private val commentsManager: HabrCommentsManager
+    private val commentsManager: CommentsManager
     private val imageManager: ImageManager
 
     private val client by inject<OkHttpClient>()
@@ -39,7 +39,7 @@ class CommentsReplyFragmentModule(fragment: CommentsReplyFragment) : Module() {
 
     init {
         Toothpick.openScope(CommentsFlowFragment::class.java).inject(this)
-        commentsManager = HabrCommentsManager.Factory(client).build()
+        commentsManager = CommentsManager.Factory(client).buildNative()
         imageManager = ImageManager.Builder(client).build()
 
         val arguments = CommentsReplyScreenArguments(fragment)
