@@ -27,7 +27,6 @@ class CommentsFlowFragmentModule(fragment: CommentsFlowFragment) : Module() {
 
     private val client by inject<OkHttpClient>()
     private val sessionDatabase by inject<SessionDatabase>()
-    private val navigation by inject<CommentsScreenNavigation>()
     private val router by inject<Router>()
 
     init {
