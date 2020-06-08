@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.common.network.response
 
 import com.google.gson.annotations.SerializedName
 
-sealed class SendCommentResponse() {
+sealed class SendCommentResponse {
 
     class Success(
         @SerializedName("comment")
@@ -11,7 +11,7 @@ sealed class SendCommentResponse() {
         val ok: Boolean,
         @SerializedName("server_time")
         val serverTime: String
-    ) {
+    ) : SendCommentResponse() {
 
         data class Comment(
             @SerializedName("id")
@@ -25,5 +25,5 @@ sealed class SendCommentResponse() {
         )
     }
 
-    class Error(val string: String)
+    class Error(val raw: String): SendCommentResponse()
 }

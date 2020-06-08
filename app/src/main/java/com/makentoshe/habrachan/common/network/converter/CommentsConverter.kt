@@ -7,10 +7,12 @@ import okhttp3.ResponseBody
 class CommentsConverter {
 
     fun convertBody(body: ResponseBody): GetCommentsResponse {
-        return Gson().fromJson(body.string(), GetCommentsResponse.Success::class.java)
+        val jsonString = body.string()
+        return Gson().fromJson(jsonString, GetCommentsResponse.Success::class.java)
     }
 
     fun convertError(body: ResponseBody): GetCommentsResponse {
-        return Gson().fromJson(body.string(), GetCommentsResponse.Error::class.java)
+        val errorJsonString = body.string()
+        return GetCommentsResponse.Error(errorJsonString)
     }
 }

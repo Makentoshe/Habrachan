@@ -111,7 +111,7 @@ class CommentsFragment : Fragment() {
         progressBar.visibility = View.GONE
 
         messageView.visibility = View.VISIBLE
-        messageView.text = response.message.plus("\n").plus(response.additional.joinToString("\n"))
+        messageView.text = response.raw
     }
 
     private fun onRetryButtonClicked() {

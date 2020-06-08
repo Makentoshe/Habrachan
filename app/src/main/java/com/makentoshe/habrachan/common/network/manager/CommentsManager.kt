@@ -34,6 +34,7 @@ interface CommentsManager {
     }
 }
 
+@Suppress("NAME_SHADOWING")
 class NativeCommentsManager(private val api: NativeCommentsApi) : CommentsManager {
 
     override fun getComments(request: GetCommentsRequest): Single<GetCommentsResponse> {
@@ -79,6 +80,6 @@ class NativeCommentsManager(private val api: NativeCommentsApi) : CommentsManage
             } else {
                 SendCommentConverter().convertError(response.errorBody()!!)
             }
-        }.cast(SendCommentResponse::class.java)
+        }
     }
 }

@@ -5,8 +5,10 @@ import com.makentoshe.habrachan.ResponseInterceptor
 import com.makentoshe.habrachan.UrlInterceptor
 import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
+import com.makentoshe.habrachan.common.network.request.SendCommentRequest
 import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
+import com.makentoshe.habrachan.common.network.response.SendCommentResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import okhttp3.OkHttpClient
 import org.junit.Assert
@@ -110,6 +112,63 @@ class CommentsManagerTest : BaseTest() {
         Assert.assertEquals(19, response.data.size)
         Assert.assertEquals(19882394, response.last)
         Assert.assertEquals("2020-03-19T05:55:09+03:00", response.serverTime)
+    }
+
+    @Test
+    fun testShouldParseAndReturnErrorResultForGetCommentAction() {
+        val articleId = 101
+        val url = "https://habr.com/api/v1/comments/$articleId?since=-1"
+        val json = getJsonResponse("get_comments_success.json")
+
+        val request = GetCommentsRequest(session.clientKey, session.apiKey, session.tokenKey, articleId)
+        val client = OkHttpClient.Builder()
+            .addInterceptor(ResponseInterceptor(400, json))
+            .addInterceptor(UrlInterceptor(url))
+            .build()
+        val manager = CommentsManager.Factory(client).buildNative()
+        val response = manager.getComments(request).blockingGet() as GetCommentsResponse.Error
+
+        Assert.assertEquals(json, response.raw)
+    }
+
+    @Test
+    fun testShouldParseAndReturnSuccessResultForSendCommentAction() {
+        val parentId = 1
+        val text = "sas"
+        val articleId = 505240
+        val json = getJsonResponse("send_comment_success.json")
+
+        val url = "https://habr.com/api/v1/comments/$articleId?text=$text&parent_id=$parentId"
+        val request = SendCommentRequest(session.clientKey, session.apiKey, session.tokenKey, articleId, text, parentId)
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(ResponseInterceptor(200, json))
+            .addInterceptor(UrlInterceptor(url))
+            .build()
+        val manager = CommentsManager.Factory(client).buildNative()
+        val response = manager.sendComment(request).blockingGet() as SendCommentResponse.Success
+
+        Assert.assertEquals(response.comment.message, text)
+    }
+
+    @Test
+    fun testShouldParseAndReturnErrorResultForSendCommentAction() {
+        val parentId = 1
+        val text = "sas"
+        val articleId = 505240
+        val json = getJsonResponse("send_comment_success.json")
+
+        val url = "https://habr.com/api/v1/comments/$articleId?text=$text&parent_id=$parentId"
+        val request = SendCommentRequest(session.clientKey, session.apiKey, session.tokenKey, articleId, text, parentId)
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(ResponseInterceptor(400, json))
+            .addInterceptor(UrlInterceptor(url))
+            .build()
+        val manager = CommentsManager.Factory(client).buildNative()
+        val response = manager.sendComment(request).blockingGet() as SendCommentResponse.Error
+
+        Assert.assertEquals(json, response.raw)
     }
 
     @Test
