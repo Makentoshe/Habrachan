@@ -29,7 +29,7 @@ class NativeCommentControllerTest {
 
     private val mockPopupFactory = mockk<CommentPopupFactory>(relaxed = true)
     private val mockAvatarControllerFactory = mockk<NativeCommentAvatarController.Factory>(relaxed = true)
-    private val controller = NativeCommentController(mockPopupFactory, mockAvatarControllerFactory)
+    private val controller = NativeCommentController(mockAvatarControllerFactory, mockPopupFactory)
 
     @Test
     fun testShouldSetPositiveScore() {

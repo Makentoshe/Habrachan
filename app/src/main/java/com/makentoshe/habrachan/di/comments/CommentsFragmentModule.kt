@@ -5,12 +5,18 @@ import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
+import com.makentoshe.habrachan.model.comments.CommentEpoxyModel
+import com.makentoshe.habrachan.model.comments.CommentPopupFactory
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
+import com.makentoshe.habrachan.model.comments.NativeCommentAvatarController
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 import com.makentoshe.habrachan.view.comments.CommentsFragment
+import com.makentoshe.habrachan.view.comments.controller.CommentController
+import com.makentoshe.habrachan.viewmodel.comments.AvatarCommentViewModel
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import com.makentoshe.habrachan.viewmodel.comments.CommentsViewModelSchedulerProvider
+import com.makentoshe.habrachan.viewmodel.comments.VoteCommentViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -40,8 +46,8 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
         val commentsFragmentViewModel = getCommentsFragmentViewModel(fragment)
         bind<CommentsFragmentViewModel>().toInstance(commentsFragmentViewModel)
 
-        val commentsEpoxyControllerProvider = getCommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel)
-        bind<CommentsEpoxyController>().toProviderInstance(commentsEpoxyControllerProvider)
+        val commentsEpoxyController = getCommentsEpoxyController(disposables, fragment, commentsFragmentViewModel)
+        bind<CommentsEpoxyController>().toInstance(commentsEpoxyController)
     }
 
     private fun getCommentsFragmentViewModel(fragment: CommentsFragment): CommentsFragmentViewModel {
@@ -49,18 +55,32 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
             override val networkScheduler = Schedulers.io()
         }
         val commentsFragmentViewModelFactory = CommentsFragmentViewModel.Factory(
-            commentsManager, imageManager, cacheDatabase, sessionDatabase, schedulerProvider
+            commentsManager, cacheDatabase, sessionDatabase, schedulerProvider
         )
         return ViewModelProviders.of(fragment, commentsFragmentViewModelFactory)[CommentsFragmentViewModel::class.java]
     }
 
-    private fun getCommentsEpoxyControllerProvider(
-        disposables: CompositeDisposable, commentsFragmentViewModel: CommentsFragmentViewModel
-    ) = CommentsEpoxyControllerProvider(disposables, commentsFragmentViewModel, navigation)
+    private fun getCommentsEpoxyController(
+        disposables: CompositeDisposable,
+        fragment: CommentsFragment,
+        voteCommentViewModel: VoteCommentViewModel
+    ): CommentsEpoxyController {
+        val commentPopupFactory = CommentPopupFactory(voteCommentViewModel, navigation)
+        val commentAvatarControllerFactory = getCommentAvatarControllerFactory(disposables, fragment)
+        val nativeCommentController = CommentController.Factory(commentAvatarControllerFactory, commentPopupFactory).buildNative()
+        val commentEpoxyModelFactory = CommentEpoxyModel.Factory(nativeCommentController)
+        return CommentsEpoxyController(commentEpoxyModelFactory)
+    }
 
-    class Factory {
-        fun build(fragment: CommentsFragment): CommentsFragmentModule {
-            return CommentsFragmentModule(fragment)
-        }
+    private fun getCommentAvatarViewModel(fragment: CommentsFragment): AvatarCommentViewModel {
+        return AvatarCommentViewModel.Factory(imageManager, cacheDatabase).buildViewModel(fragment)
+    }
+
+    private fun getCommentAvatarControllerFactory(
+        disposables: CompositeDisposable,
+        fragment: CommentsFragment
+    ): NativeCommentAvatarController.Factory {
+        val commentAvatarViewModel = getCommentAvatarViewModel(fragment)
+        return NativeCommentAvatarController.Factory(commentAvatarViewModel, disposables)
     }
 }

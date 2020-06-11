@@ -1,8 +1,10 @@
 package com.makentoshe.habrachan.model.comments.tree
 
 class Tree<T>(
-    val roots: ArrayList<TreeNode<T>>, nodes: ArrayList<TreeNode<T>>
+    val roots: List<TreeNode<T>>, nodes: List<TreeNode<T>>
 ) : ArrayList<TreeNode<T>>(nodes) {
+
+    constructor(list: List<TreeNode<T>>): this(list, emptyList())
 
     fun forEachDepthFirst(action: (TreeNode<T>) -> Unit) {
         DepthFirstSearchAlgorithm(roots).execute(action)

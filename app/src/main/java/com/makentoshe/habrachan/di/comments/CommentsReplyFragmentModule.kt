@@ -1,45 +1,33 @@
 package com.makentoshe.habrachan.di.comments
 
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.database.CacheDatabase
-import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
-import com.makentoshe.habrachan.model.comments.CommentPopupFactory
-import com.makentoshe.habrachan.model.comments.CommentsAdapter
+import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.model.comments.CommentEpoxyModel
+import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.model.comments.NativeCommentAvatarController
 import com.makentoshe.habrachan.navigation.comments.CommentsReplyScreenArguments
-import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
 import com.makentoshe.habrachan.ui.comments.CommentsReplyFragmentUi
-import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 import com.makentoshe.habrachan.view.comments.CommentsReplyFragment
 import com.makentoshe.habrachan.view.comments.controller.CommentController
-import com.makentoshe.habrachan.view.comments.controller.NativeCommentController
-import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
-import com.makentoshe.habrachan.viewmodel.comments.CommentsViewModelSchedulerProvider
-import com.makentoshe.habrachan.viewmodel.comments.SendCommentViewModel
+import com.makentoshe.habrachan.viewmodel.comments.AvatarCommentViewModel
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import toothpick.Toothpick
-import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
-class CommentsReplyFragmentModule(fragment: CommentsReplyFragment) : Module() {
+class CommentsReplyFragmentModule(fragment: CommentsReplyFragment) : CommentsInputFragmentModule(fragment) {
 
-    private val commentsManager: CommentsManager
     private val imageManager: ImageManager
 
     private val client by inject<OkHttpClient>()
     private val cacheDatabase by inject<CacheDatabase>()
-    private val sessionDatabase by inject<SessionDatabase>()
-    private val navigation by inject<CommentsScreenNavigation>()
 
     init {
-        Toothpick.openScope(CommentsFlowFragment::class.java).inject(this)
-        commentsManager = CommentsManager.Factory(client).buildNative()
+        Toothpick.openScopes(ApplicationScope::class.java).inject(this)
         imageManager = ImageManager.Builder(client).build()
 
         val arguments = CommentsReplyScreenArguments(fragment)
@@ -49,45 +37,33 @@ class CommentsReplyFragmentModule(fragment: CommentsReplyFragment) : Module() {
         bind<CommentsReplyFragmentUi>().toInstance(commentsReplyFragmentUi)
         bind<CommentsInputFragmentUi>().toInstance(commentsReplyFragmentUi)
 
-        val sendCommentViewModel = getSendCommentViewModel(fragment)
-        bind<SendCommentViewModel>().toInstance(sendCommentViewModel)
-
         val fragmentDisposables = CompositeDisposable()
         bind<CompositeDisposable>().toInstance(fragmentDisposables)
 
-        val commentsFragmentViewModel = getCommentsFragmentViewModel(fragment)
-        val nativeCommentsController = getNativeCommentController(fragmentDisposables, commentsFragmentViewModel)
-        val commentsAdapterFactory = CommentsAdapter.Factory(nativeCommentsController)
-        bind<CommentsAdapter.Factory>().toInstance(commentsAdapterFactory)
+        val avatarViewModelDisposables = CompositeDisposable()
+        val commentsEpoxyController = getCommentsEpoxyController(avatarViewModelDisposables, fragment)
+        bind<CommentsEpoxyController>().toInstance(commentsEpoxyController)
     }
 
-    private fun getCommentsFragmentViewModel(fragment: CommentsReplyFragment): CommentsFragmentViewModel {
-        val schedulerProvider = object : CommentsViewModelSchedulerProvider {
-            override val networkScheduler = Schedulers.io()
-        }
-        val commentsFragmentViewModelFactory = CommentsFragmentViewModel.Factory(
-            commentsManager, imageManager, cacheDatabase, sessionDatabase, schedulerProvider
-        )
-        return ViewModelProviders.of(fragment, commentsFragmentViewModelFactory)[CommentsFragmentViewModel::class.java]
+    private fun getCommentsEpoxyController(
+        disposables: CompositeDisposable,
+        fragment: Fragment
+    ): CommentsEpoxyController {
+        val commentAvatarControllerFactory = getCommentAvatarControllerFactory(disposables, fragment)
+        val nativeCommentController = CommentController.Factory(commentAvatarControllerFactory, null).buildNative()
+        val commentEpoxyModelFactory = CommentEpoxyModel.Factory(nativeCommentController)
+        return CommentsEpoxyController(commentEpoxyModelFactory)
     }
 
-    private fun getNativeCommentController(
-        disposables: CompositeDisposable, commentsFragmentViewModel: CommentsFragmentViewModel
-    ): NativeCommentController {
-        val commentPopupFactory = CommentPopupFactory(commentsFragmentViewModel, navigation)
-        val nativeCommentAvatarController2 =
-            NativeCommentAvatarController.Factory(commentsFragmentViewModel, disposables)
-        return CommentController.Factory(commentPopupFactory, nativeCommentAvatarController2).buildNative()
+    private fun getCommentAvatarViewModel(fragment: Fragment): AvatarCommentViewModel {
+        return AvatarCommentViewModel.Factory(imageManager, cacheDatabase).buildViewModel(fragment)
     }
 
-    private fun getSendCommentViewModel(fragment: CommentsReplyFragment): SendCommentViewModel {
-        val sendCommentViewModelDisposables = CompositeDisposable()
-        val schedulerProvider = object : CommentsViewModelSchedulerProvider {
-            override val networkScheduler = Schedulers.io()
-        }
-        val factory = SendCommentViewModel.Factory(
-            schedulerProvider, sendCommentViewModelDisposables, commentsManager, sessionDatabase
-        )
-        return ViewModelProviders.of(fragment, factory)[SendCommentViewModel::class.java]
+    private fun getCommentAvatarControllerFactory(
+        disposables: CompositeDisposable,
+        fragment: Fragment
+    ): NativeCommentAvatarController.Factory {
+        val commentAvatarViewModel = getCommentAvatarViewModel(fragment)
+        return NativeCommentAvatarController.Factory(commentAvatarViewModel, disposables)
     }
 }

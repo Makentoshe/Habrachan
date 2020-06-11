@@ -1,7 +1,5 @@
 package com.makentoshe.habrachan.viewmodel.comments
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.common.database.CacheDatabase
@@ -10,31 +8,24 @@ import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
-import com.makentoshe.habrachan.common.network.request.ImageRequest
 import com.makentoshe.habrachan.common.network.request.VoteCommentRequest
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
-import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.model.comments.tree.Tree
 import com.makentoshe.habrachan.model.comments.tree.TreeNode
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
-import java.io.ByteArrayOutputStream
-import java.io.File
 import java.net.UnknownHostException
-import java.util.concurrent.ConcurrentHashMap
 
 class CommentsFragmentViewModel(
     private val commentsManager: CommentsManager,
-    private val imageManager: ImageManager,
     private val cacheDatabase: CacheDatabase,
     private val sessionDatabase: SessionDatabase,
     schedulerProvider: CommentsViewModelSchedulerProvider
-) : ViewModel(), GetCommentViewModel, VoteCommentViewModel, AvatarCommentViewModel {
+) : ViewModel(), GetCommentViewModel, VoteCommentViewModel {
 
     private val disposables = CompositeDisposable()
 
@@ -55,21 +46,6 @@ class CommentsFragmentViewModel(
 
     private val voteDownCommentResponseSubject = PublishSubject.create<VoteCommentResponse>()
     override val voteDownCommentObservable: Observable<VoteCommentResponse> = voteDownCommentResponseSubject
-
-    private val observablesContainer = ConcurrentHashMap<String, Observable<ImageResponse>>()
-
-    override fun getAvatarObservable(url: String): Observable<ImageResponse> {
-        val cached = observablesContainer[url]
-        if (cached != null) return cached
-        val subject = BehaviorSubject.create<ImageResponse>()
-        observablesContainer[url] = subject
-
-        BehaviorSubject.create<String>().also { request ->
-            request.observeOn(Schedulers.io()).map(::ImageRequest).map(::performAvatarRequest).safeSubscribe(subject)
-        }.onNext(url)
-
-        return subject
-    }
 
     init {
         getCommentsRequestSubject.observeOn(schedulerProvider.networkScheduler).subscribe { articleId ->
@@ -126,36 +102,6 @@ class CommentsFragmentViewModel(
         createVoteCommentErrorResponse(exception, request)
     }
 
-    private fun performAvatarRequest(request: ImageRequest): ImageResponse {
-        try {
-            // if file is stub - just set avatar from resources
-            if (File(request.imageUrl).name.contains("stub-user")) {
-                return ImageResponse.Success(request, byteArrayOf(), isStub = true)
-            }
-
-            val cached = cacheDatabase.avatars().get(request.imageUrl)
-            if (cached != null) {
-                val byteArray = ByteArrayOutputStream().let {
-                    cached.compress(Bitmap.CompressFormat.PNG, 100, it)
-                    it.toByteArray()
-                }
-                cached.recycle()
-                return ImageResponse.Success(request, byteArray, false)
-            }
-
-            return imageManager.getImage(request).doOnSuccess { response ->
-                if (response is ImageResponse.Success) {
-                    val bitmap = BitmapFactory.decodeByteArray(response.bytes, 0, response.bytes.size)
-                    cacheDatabase.avatars().insert(request.imageUrl, bitmap)
-                }
-            }.onErrorReturn {
-                ImageResponse.Error(request, it.toString())
-            }.blockingGet()
-        } catch (e: Exception) {
-            return ImageResponse.Error(request, e.toString())
-        }
-    }
-
     private fun createVoteCommentErrorResponse(
         throwable: Throwable, request: VoteCommentRequest
     ): VoteCommentResponse.Error {
@@ -206,14 +152,13 @@ class CommentsFragmentViewModel(
 
     class Factory(
         private val commentsManager: CommentsManager,
-        private val imageManager: ImageManager,
         private val cacheDatabase: CacheDatabase,
         private val sessionDatabase: SessionDatabase,
         private val schedulerProvider: CommentsViewModelSchedulerProvider
     ) : ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>) = CommentsFragmentViewModel(
-            commentsManager, imageManager, cacheDatabase, sessionDatabase, schedulerProvider
+            commentsManager, cacheDatabase, sessionDatabase, schedulerProvider
         ) as T
     }
 }

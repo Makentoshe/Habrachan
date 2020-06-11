@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
-import com.makentoshe.habrachan.model.comments.CommentsAdapter
+import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
+import com.makentoshe.habrachan.model.comments.tree.Tree
+import com.makentoshe.habrachan.model.comments.tree.TreeNode
 import com.makentoshe.habrachan.navigation.comments.CommentsReplyScreenArguments
 import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
 import com.makentoshe.habrachan.ui.comments.CommentsReplyFragmentUi
@@ -21,7 +23,7 @@ class CommentsReplyFragment : CommentsInputFragment() {
     override val disposables by inject<CompositeDisposable>()
     override val softKeyboardController = SoftKeyboardController()
 
-    private val commentsAdapterFactory by inject<CommentsAdapter.Factory>()
+    private val commentsEpoxyController by inject<CommentsEpoxyController>()
     private val arguments by inject<CommentsReplyScreenArguments>()
     private val commentsReplyFragmentUi by inject<CommentsReplyFragmentUi>()
 
@@ -40,7 +42,9 @@ class CommentsReplyFragment : CommentsInputFragment() {
         val original = arguments.comments.last()
         commentsReplyFragmentUi.toolbar.setTitle(original.author.login)
 
-        commentsReplyFragmentUi.recycler.adapter = commentsAdapterFactory.build(arguments.comments)
+        commentsEpoxyController.setComments(Tree(arguments.comments.map(::TreeNode)))
+        commentsReplyFragmentUi.recycler.adapter = commentsEpoxyController.adapter
+        commentsEpoxyController.requestModelBuild()
     }
 
     class Factory {

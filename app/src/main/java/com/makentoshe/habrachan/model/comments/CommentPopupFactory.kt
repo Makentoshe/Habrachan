@@ -9,9 +9,10 @@ import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.model.comments.tree.Tree
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
+import com.makentoshe.habrachan.viewmodel.comments.VoteCommentViewModel
 
 class CommentPopupFactory(
-    private val viewModel: CommentsFragmentViewModel,
+    private val viewModel: VoteCommentViewModel,
     private val navigation: CommentsScreenNavigation
 ) {
 
