@@ -13,7 +13,7 @@ import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.model.comments.tree.Tree
-import com.makentoshe.habrachan.navigation.comments.CommentsScreen
+import com.makentoshe.habrachan.navigation.comments.CommentsFlowScreen
 import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
 import io.mockk.*
 import io.reactivex.disposables.CompositeDisposable
@@ -69,7 +69,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
     @Test
     fun testShouldCheckDisposablesClearedOnFragmentDestroy() {
         activityController.setup().get()
-        router.navigateTo(CommentsScreen(123))
+        router.navigateTo(CommentsFlowScreen(123))
         activityController.destroy()
         verify { spyDisposables.clear() }
     }
@@ -77,7 +77,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
     @Test
     fun testShouldCheckViewStateOnStartup() {
         val activity = activityController.setup().get()
-        router.navigateTo(CommentsScreen(123))
+        router.navigateTo(CommentsFlowScreen(123))
 
         val retryButton = activity.findViewById<View>(R.id.comments_fragment_retrybutton)
         assertEquals(View.GONE, retryButton.visibility)
@@ -106,7 +106,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
         every { mockViewModel.getCommentsObservable } returns commentsObservable
 
         val activity = activityController.setup().get()
-        router.navigateTo(CommentsScreen(123))
+        router.navigateTo(CommentsFlowScreen(123))
 
         val response = mockk<GetCommentsResponse.Success>(relaxed = true)
         commentsObservable.onNext(response)
@@ -135,7 +135,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
         every { mockViewModel.getCommentsObservable } returns commentsObservable
 
         val activity = activityController.setup().get()
-        router.navigateTo(CommentsScreen(123))
+        router.navigateTo(CommentsFlowScreen(123))
 
         val response = mockk<GetCommentsResponse.Success>(relaxed = true)
         commentsObservable.onNext(response)
@@ -163,7 +163,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
         every { mockViewModel.getCommentsObservable } returns commentsObservable
 
         val activity = activityController.setup().get()
-        router.navigateTo(CommentsScreen(123))
+        router.navigateTo(CommentsFlowScreen(123))
 
         val response = mockk<GetCommentsResponse.Error>(relaxed = true)
         commentsObservable.onNext(response)
@@ -190,7 +190,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
         every { mockViewModel.getCommentsObservable } returns commentsObservable
 
         val activity = activityController.setup().get()
-        router.navigateTo(CommentsScreen(123))
+        router.navigateTo(CommentsFlowScreen(123))
 
         val response = mockk<GetCommentsResponse.Error>(relaxed = true)
         commentsObservable.onNext(response)
@@ -220,7 +220,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
         every { mockViewModel.voteUpCommentObservable } returns commentsObservable
 
         activityController.setup().get()
-        router.navigateTo(CommentsScreen(123))
+        router.navigateTo(CommentsFlowScreen(123))
 
         val response = mockk<VoteCommentResponse.Success>(relaxed = true)
         every { response.score } returns 1000
@@ -237,7 +237,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
         every { mockViewModel.voteDownCommentObservable } returns commentsObservable
 
         activityController.setup().get()
-        router.navigateTo(CommentsScreen(123))
+        router.navigateTo(CommentsFlowScreen(123))
 
         val response = mockk<VoteCommentResponse.Success>(relaxed = true)
         every { response.score } returns 1000
@@ -254,7 +254,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
         every { mockViewModel.voteDownCommentObservable } returns commentsObservable
 
         activityController.setup().get()
-        router.navigateTo(CommentsScreen(123))
+        router.navigateTo(CommentsFlowScreen(123))
 
         val response = mockk<VoteCommentResponse.Error>(relaxed = true)
 

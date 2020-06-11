@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.BaseRobolectricTest
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.navigation.comments.CommentsScreen
+import com.makentoshe.habrachan.navigation.comments.CommentsFlowScreen
 import com.makentoshe.habrachan.navigation.images.OverlayImageScreen
 import com.makentoshe.habrachan.navigation.user.UserScreen
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenArguments
@@ -35,7 +35,7 @@ class ArticleFragmentNavigationTest : BaseRobolectricTest() {
 
         articleFragmentNavigation.toArticleCommentsScreen(articleId)
 
-        val screen = slot<CommentsScreen>()
+        val screen = slot<CommentsFlowScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
         val commentsScreenArguments =
             CommentsScreenArguments(screen.captured.fragment)
@@ -52,7 +52,7 @@ class ArticleFragmentNavigationTest : BaseRobolectricTest() {
 
         articleFragmentNavigation.toArticleCommentsScreen(article)
 
-        val screen = slot<CommentsScreen>()
+        val screen = slot<CommentsFlowScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
         val commentsScreenArguments =
             CommentsScreenArguments(screen.captured.fragment)

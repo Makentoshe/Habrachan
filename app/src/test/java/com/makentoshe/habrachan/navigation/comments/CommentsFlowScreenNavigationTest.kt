@@ -7,7 +7,7 @@ import org.junit.Before
 import org.junit.Test
 import ru.terrakok.cicerone.Router
 
-class CommentsScreenNavigationTest : BaseTest() {
+class CommentsFlowScreenNavigationTest : BaseTest() {
 
     private lateinit var commentsScreenNavigation: CommentsScreenNavigation
 

@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.navigation.article
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.navigation.comments.CommentsScreen
+import com.makentoshe.habrachan.navigation.comments.CommentsFlowScreen
 import com.makentoshe.habrachan.navigation.images.OverlayImageScreen
 import com.makentoshe.habrachan.navigation.user.UserScreen
 import ru.terrakok.cicerone.Router
@@ -21,11 +21,11 @@ class ArticleFragmentNavigation(private val router: Router, private val sessionD
     }
 
     fun toArticleCommentsScreen(articleId: Int) {
-        router.navigateTo(CommentsScreen(articleId))
+        router.navigateTo(CommentsFlowScreen(articleId))
     }
 
     fun toArticleCommentsScreen(article: Article) {
-        router.navigateTo(CommentsScreen(article))
+        router.navigateTo(CommentsFlowScreen(article))
     }
 
     fun toUserScreen(userName: String): Boolean {

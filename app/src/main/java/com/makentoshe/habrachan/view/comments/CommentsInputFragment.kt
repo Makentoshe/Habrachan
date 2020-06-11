@@ -19,11 +19,11 @@ abstract class CommentsInputFragment : Fragment() {
     abstract val commentsInputFragmentUi: CommentsInputFragmentUi
     abstract val sendCommentViewModel: SendCommentViewModel
     abstract val disposables: CompositeDisposable
+    abstract val softKeyboardController: SoftKeyboardController
 
     open val replyToParentId: Int
         get() = 0
 
-    private val softKeyboardController = SoftKeyboardController()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         softKeyboardController.addVisibilityChangeListener(requireActivity(), ::onSoftKeyboardVisibilityChanged)
@@ -35,7 +35,6 @@ abstract class CommentsInputFragment : Fragment() {
             commentsInputFragmentUi.sendProgressBar.visibility = View.GONE
             commentsInputFragmentUi.messageEditText.setText("")
             commentsInputFragmentUi.slidingPanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-            println(it)
         }.let(disposables::add)
     }
 
@@ -72,6 +71,11 @@ abstract class CommentsInputFragment : Fragment() {
 
         val sendCommentData = SendCommentData(messageText, replyToParentId)
         sendCommentViewModel.sendCommentRequestObserver.onNext(sendCommentData)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 
 }

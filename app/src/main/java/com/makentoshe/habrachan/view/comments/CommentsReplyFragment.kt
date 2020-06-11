@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
 import com.makentoshe.habrachan.model.comments.CommentsAdapter
 import com.makentoshe.habrachan.navigation.comments.CommentsReplyScreenArguments
 import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
@@ -18,6 +19,7 @@ class CommentsReplyFragment : CommentsInputFragment() {
     override val commentsInputFragmentUi by inject<CommentsInputFragmentUi>()
     override val sendCommentViewModel by inject<SendCommentViewModel>()
     override val disposables by inject<CompositeDisposable>()
+    override val softKeyboardController = SoftKeyboardController()
 
     private val commentsAdapterFactory by inject<CommentsAdapter.Factory>()
     private val arguments by inject<CommentsReplyScreenArguments>()
