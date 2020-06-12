@@ -25,6 +25,9 @@ class CommentsFlowFragment : CommentsInputFragment() {
     private val navigator by inject<CommentsScreenNavigation>()
     private val commentsFlowFragmentUi by inject<CommentsFlowFragmentUi>()
 
+    override val articleId: Int
+        get() = arguments.articleId
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return commentsFlowFragmentUi.inflateView(inflater, container)
     }

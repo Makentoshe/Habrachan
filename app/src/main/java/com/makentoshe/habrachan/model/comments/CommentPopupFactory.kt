@@ -13,7 +13,8 @@ import com.makentoshe.habrachan.viewmodel.comments.VoteCommentViewModel
 
 class CommentPopupFactory(
     private val viewModel: VoteCommentViewModel,
-    private val navigation: CommentsScreenNavigation
+    private val navigation: CommentsScreenNavigation,
+    private val articleId: Int
 ) {
 
     fun build(anchor: View, comment: Comment, commentsTree: Tree<Comment>): PopupWindow {
@@ -48,7 +49,7 @@ class CommentPopupFactory(
     private fun onReplyClick(comment: Comment, commentsTree: Tree<Comment>) {
         val node = commentsTree.findNode { it == comment }
         val path = commentsTree.pathToRoot(node!!).reversed()
-        navigation.toReplyScreen(path.map { it.value })
+        navigation.toReplyScreen(path.map { it.value }, articleId)
     }
 
     private fun onVoteUp(comment: Comment) {

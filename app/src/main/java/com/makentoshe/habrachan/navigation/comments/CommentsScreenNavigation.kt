@@ -9,8 +9,8 @@ class CommentsScreenNavigation(private val router: Router) {
 
     fun back() = router.exit()
 
-    fun toReplyScreen(comments: List<Comment>) {
-        router.navigateTo(CommentsReplyScreen(comments))
+    fun toReplyScreen(comments: List<Comment>, articleId: Int) {
+        router.navigateTo(CommentsReplyScreen(comments, articleId))
     }
 
     fun toUserScreen(login: String) {

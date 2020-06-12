@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.model.comments.CommentEpoxyModel
 import com.makentoshe.habrachan.model.comments.CommentPopupFactory
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.model.comments.NativeCommentAvatarController
+import com.makentoshe.habrachan.navigation.comments.CommentsScreenArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
 import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 import com.makentoshe.habrachan.view.comments.CommentsFragment
@@ -34,6 +35,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
     private val cacheDatabase by inject<CacheDatabase>()
     private val sessionDatabase by inject<SessionDatabase>()
     private val navigation by inject<CommentsScreenNavigation>()
+    private val arguments by inject<CommentsScreenArguments>()
 
     init {
         Toothpick.openScope(CommentsFlowFragment::class.java).inject(this)
@@ -65,7 +67,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
         fragment: CommentsFragment,
         voteCommentViewModel: VoteCommentViewModel
     ): CommentsEpoxyController {
-        val commentPopupFactory = CommentPopupFactory(voteCommentViewModel, navigation)
+        val commentPopupFactory = CommentPopupFactory(voteCommentViewModel, navigation, arguments.articleId)
         val commentAvatarControllerFactory = getCommentAvatarControllerFactory(disposables, fragment)
         val nativeCommentController = CommentController.Factory(commentAvatarControllerFactory, commentPopupFactory).buildNative()
         val commentEpoxyModelFactory = CommentEpoxyModel.Factory(nativeCommentController)

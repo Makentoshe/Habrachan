@@ -21,7 +21,12 @@ class CommentsReplyScreenArguments(private val holderFragment: CommentsReplyFrag
         set(value) = fragmentArguments.putStringArray(COMMENTS, value.map { it.toJson() }.toTypedArray())
         get() = fragmentArguments.getStringArray(COMMENTS)?.map { Comment.fromJson(it) } ?: emptyList()
 
+    var articleId: Int
+        set(value) = fragmentArguments.putInt(ID, value)
+        get() = fragmentArguments.getInt(ID, -1)
+
     companion object {
+        private const val ID = "ArticleId"
         private const val COMMENTS = "Comments"
     }
 }

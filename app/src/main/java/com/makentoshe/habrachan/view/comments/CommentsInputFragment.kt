@@ -24,6 +24,7 @@ abstract class CommentsInputFragment : Fragment() {
     open val replyToParentId: Int
         get() = 0
 
+    abstract val articleId: Int
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         softKeyboardController.addVisibilityChangeListener(requireActivity(), ::onSoftKeyboardVisibilityChanged)
@@ -69,7 +70,7 @@ abstract class CommentsInputFragment : Fragment() {
         commentsInputFragmentUi.sendButton.visibility = View.GONE
         commentsInputFragmentUi.sendProgressBar.visibility = View.VISIBLE
 
-        val sendCommentData = SendCommentData(messageText, replyToParentId)
+        val sendCommentData = SendCommentData(messageText, articleId, replyToParentId)
         sendCommentViewModel.sendCommentRequestObserver.onNext(sendCommentData)
     }
 

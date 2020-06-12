@@ -5,9 +5,8 @@ import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.navigation.Screen
 import com.makentoshe.habrachan.view.comments.CommentsReplyFragment
 
-class CommentsReplyScreen(private val comments: List<Comment>) : Screen() {
+class CommentsReplyScreen(private val comments: List<Comment>, private val articleId: Int) : Screen() {
     override fun getFragment(): Fragment? {
-        return CommentsReplyFragment.Factory().build(comments)
+        return CommentsReplyFragment.Factory().build(comments, articleId)
     }
 }
-
