@@ -10,10 +10,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
+import javax.net.ssl.HostnameVerifier
 
 class ApplicationModule(context: Context) : Module() {
 
-    private val client = OkHttpClient.Builder().addLoggingInterceptor().build()
+    private val client = OkHttpClient.Builder().followRedirects(false).addLoggingInterceptor().addHostnameVerifier().build()
 
     private val cacheDatabase = Room.databaseBuilder(
         context, CacheDatabase::class.java, "HabrachanCache"
@@ -40,6 +41,19 @@ class ApplicationModule(context: Context) : Module() {
             logging.level = HttpLoggingInterceptor.Level.BASIC
             addInterceptor(logging)
         }
+        return this
+    }
+
+
+    /**
+     * Requires for oauth
+     * todo: make xml certificate?
+     */
+    private fun OkHttpClient.Builder.addHostnameVerifier(): OkHttpClient.Builder {
+        val hostnameVerifier = HostnameVerifier { hostname, _ ->
+            hostname == "habr.com" || hostname == "account.habr.com"
+        }
+        this.hostnameVerifier(hostnameVerifier)
         return this
     }
 }
