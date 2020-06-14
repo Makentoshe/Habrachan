@@ -1,21 +1,11 @@
 package com.makentoshe.habrachan.navigation.comments
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 
-class CommentsScreenArguments(private val holderFragment: CommentsFlowFragment) {
-
-    init {
-        val fragment = holderFragment as Fragment
-        if (fragment.arguments == null) {
-            fragment.arguments = Bundle()
-        }
-    }
-
-    private val fragmentArguments: Bundle
-        get() = holderFragment.requireArguments()
+class CommentsFlowFragmentArguments(
+    fragment: CommentsFlowFragment
+) : FragmentArguments<CommentsFlowFragment>(fragment) {
 
     var articleId: Int
         set(value) = fragmentArguments.putInt(ID, value)
@@ -25,8 +15,13 @@ class CommentsScreenArguments(private val holderFragment: CommentsFlowFragment) 
         set(value) = fragmentArguments.putString(ARTICLE, value?.toJson())
         get() = fragmentArguments.getString(ARTICLE)?.let(Article.Companion::fromJson)
 
+    var commentActionEnabled: Boolean
+        set(value) = fragmentArguments.putBoolean(ACTION, value)
+        get() = fragmentArguments.getBoolean(ACTION, false)
+
     companion object {
         private const val ID = "Id"
         private const val ARTICLE = "Article"
+        private const val ACTION = "Action"
     }
 }

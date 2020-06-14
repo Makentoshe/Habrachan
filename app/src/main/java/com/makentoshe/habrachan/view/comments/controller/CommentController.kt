@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.view.comments.controller
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.model.comments.CommentPopupFactory
 import com.makentoshe.habrachan.model.comments.NativeCommentAvatarController
-import com.makentoshe.habrachan.model.comments.tree.Tree
+import com.makentoshe.habrachan.common.model.tree.Tree
 
 /** Controls comments displaying and behaviour */
 interface CommentController {

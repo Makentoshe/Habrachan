@@ -1,17 +1,20 @@
 package com.makentoshe.habrachan.view.comments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
-import com.makentoshe.habrachan.navigation.comments.CommentsScreenArguments
-import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
+import com.makentoshe.habrachan.navigation.StackNavigator
+import com.makentoshe.habrachan.navigation.comments.CommentsFlowFragmentArguments
+import com.makentoshe.habrachan.navigation.comments.CommentsFragmentScreen
 import com.makentoshe.habrachan.ui.comments.CommentsFlowFragmentUi
 import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.SendCommentViewModel
 import io.reactivex.disposables.CompositeDisposable
+import ru.terrakok.cicerone.Navigator
 import toothpick.ktp.delegate.inject
 
 class CommentsFlowFragment : CommentsInputFragment() {
@@ -21,24 +24,30 @@ class CommentsFlowFragment : CommentsInputFragment() {
     override val disposables by inject<CompositeDisposable>()
     override val softKeyboardController = SoftKeyboardController()
 
-    private val arguments by inject<CommentsScreenArguments>()
-    private val navigator by inject<CommentsScreenNavigation>()
+    private val arguments by inject<CommentsFlowFragmentArguments>()
     private val commentsFlowFragmentUi by inject<CommentsFlowFragmentUi>()
 
     override val articleId: Int
         get() = arguments.articleId
 
+    private lateinit var navigator: Navigator
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        navigator = StackNavigator(requireActivity(), R.id.main_container, childFragmentManager)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return commentsFlowFragmentUi.inflateView(inflater, container)
     }
 
-    class Factory {
-        fun build(articleId: Int, article: Article?): CommentsFlowFragment {
-            val fragment = CommentsFlowFragment()
-            val arguments = CommentsScreenArguments(fragment)
-            arguments.article = article
-            arguments.articleId = articleId
-            return fragment
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val containedFragment = childFragmentManager.findFragmentById(R.id.comments_fragment_container)
+        if (containedFragment == null) {
+            val commentsFragment = CommentsFragmentScreen(arguments.articleId, null, true).fragment
+            childFragmentManager.beginTransaction().add(R.id.comments_fragment_container, commentsFragment).commitNow()
         }
+
+        super.onViewCreated(view, savedInstanceState)
     }
 }

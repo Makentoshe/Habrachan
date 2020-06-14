@@ -6,9 +6,10 @@ import com.makentoshe.habrachan.AppActivity
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.navigation.comments.CommentsFlowScreen
-import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
+import com.makentoshe.habrachan.navigation.comments.CommentsFlowFragmentScreen
+import com.makentoshe.habrachan.viewmodel.comments.GetCommentViewModel
 import com.makentoshe.habrachan.viewmodel.comments.SendCommentViewModel
+import com.makentoshe.habrachan.viewmodel.comments.VoteCommentViewModel
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.mockk.mockk
 import io.mockk.spyk
@@ -30,16 +31,17 @@ class CommentsFlowFragmentTest : CommentsInputFragmentTest() {
 
     private val activityController = Robolectric.buildActivity(AppActivity::class.java, Intent())
 
-    private val mockCommentsViewModel = mockk<CommentsFragmentViewModel>(relaxed = true)
     override val spyDisposables = spyk(CompositeDisposable())
     override val mockSoftKeyboardController: SoftKeyboardController = spyk(SoftKeyboardController())
     override val mockSendCommentViewModel = mockk<SendCommentViewModel>(relaxed = true)
+    private val mockGetCommentsViewModel = mockk<GetCommentViewModel>(relaxed = true)
+    private val mockVoteCommentViewModel = mockk<VoteCommentViewModel>(relaxed = true)
 
     private val router by inject<Router>()
 
     override fun buildActivityController(): ActivityController<AppActivity> {
         activityController.setup().get()
-        router.navigateTo(CommentsFlowScreen(123))
+        router.navigateTo(CommentsFlowFragmentScreen(123, null))
         return activityController
     }
 
@@ -60,9 +62,10 @@ class CommentsFlowFragmentTest : CommentsInputFragmentTest() {
             bind<SendCommentViewModel>().toInstance(mockSendCommentViewModel)
         }).inject(this)
         Toothpick.openScopes(
-            ApplicationScope::class.java, CommentsFlowFragment::class.java, CommentsFragment::class.java
+            ApplicationScope::class.java, CommentsFragment::class.java
         ).installTestModules(module {
-            bind<CommentsFragmentViewModel>().toInstance(mockCommentsViewModel)
+            bind<GetCommentViewModel>().toInstance(mockGetCommentsViewModel)
+            bind<VoteCommentViewModel>().toInstance(mockVoteCommentViewModel)
         })
     }
 

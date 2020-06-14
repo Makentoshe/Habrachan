@@ -13,27 +13,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
+import com.makentoshe.habrachan.common.model.Comments
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
-import com.makentoshe.habrachan.navigation.comments.CommentsScreenNavigation
+import com.makentoshe.habrachan.common.model.tree.Tree
+import com.makentoshe.habrachan.navigation.comments.CommentsFragmentArguments
+import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFragmentUi
-import com.makentoshe.habrachan.viewmodel.comments.CommentsFragmentViewModel
-import com.makentoshe.habrachan.model.comments.tree.Tree
-import com.makentoshe.habrachan.navigation.comments.CommentsScreenArguments
-import com.makentoshe.habrachan.viewmodel.comments.AvatarCommentViewModel
+import com.makentoshe.habrachan.viewmodel.comments.GetCommentViewModel
+import com.makentoshe.habrachan.viewmodel.comments.VoteCommentViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
 class CommentsFragment : Fragment() {
 
-    private val arguments by inject<CommentsScreenArguments>()
-    private val navigator by inject<CommentsScreenNavigation>()
+    private val arguments by inject<CommentsFragmentArguments>()
+    private val navigator by inject<CommentsFragmentNavigation>()
     private val disposables by inject<CompositeDisposable>()
     private val epoxyController by inject<CommentsEpoxyController>()
-    private val commentsViewModel by inject<CommentsFragmentViewModel>()
+    private val voteCommentViewModel by inject<VoteCommentViewModel>()
+    private val getCommentsViewModel by inject<GetCommentViewModel>()
 
     private lateinit var appbar: AppBarLayout
     private lateinit var toolbar: Toolbar
@@ -59,23 +61,23 @@ class CommentsFragment : Fragment() {
         messageView = view.findViewById(R.id.comments_fragment_messageview)
         firstCommentButton = view.findViewById(R.id.comments_fragment_firstbutton)
 
-        commentsViewModel.getCommentsObservable.observeOn(AndroidSchedulers.mainThread())
+        getCommentsViewModel.getCommentsObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onGetCommentsResponse).let(disposables::add)
 
-        commentsViewModel.voteUpCommentObservable.observeOn(AndroidSchedulers.mainThread())
+        voteCommentViewModel.voteUpCommentObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onVoteCommentsResponse).let(disposables::add)
 
-        commentsViewModel.voteDownCommentObservable.observeOn(AndroidSchedulers.mainThread())
+        voteCommentViewModel.voteDownCommentObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onVoteCommentsResponse).let(disposables::add)
 
-        toolbar.setNavigationOnClickListener { navigator.back() }
+//        toolbar.setNavigationOnClickListener { navigator.back() }
         arguments.article?.title?.let(toolbar::setTitle)
         toolbar.setSubtitle(R.string.comments_fragment_subtitle)
         retryButton.setOnClickListener { onRetryButtonClicked() }
         appbar.setExpanded(true)
 
         if (savedInstanceState == null) {
-            commentsViewModel.getCommentsObserver.onNext(arguments.articleId)
+            getCommentsViewModel.getCommentsObserver.onNext(arguments.articleId)
         }
     }
 
@@ -85,7 +87,7 @@ class CommentsFragment : Fragment() {
     }
 
     private fun onGetCommentsResponseSuccess(response: GetCommentsResponse.Success) {
-        val commentsTree = commentsViewModel.toCommentsTree(response.data)
+        val commentsTree = Comments.convertCommentsListToCommentsTree(response.data)
         if (commentsTree.isEmpty()) displayCommentsThumbnail() else displayComments(commentsTree)
     }
 
@@ -120,7 +122,7 @@ class CommentsFragment : Fragment() {
         messageView.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
 
-        commentsViewModel.getCommentsObserver.onNext(arguments.articleId)
+        getCommentsViewModel.getCommentsObserver.onNext(arguments.articleId)
     }
 
     private fun onVoteCommentsResponse(response: VoteCommentResponse) = when (response) {

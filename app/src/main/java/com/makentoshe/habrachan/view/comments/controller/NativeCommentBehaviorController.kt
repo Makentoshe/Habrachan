@@ -6,7 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.model.comments.CommentPopupFactory
-import com.makentoshe.habrachan.model.comments.tree.Tree
+import com.makentoshe.habrachan.common.model.tree.Tree
 
 class NativeCommentBehaviorController(
     private val root: View,

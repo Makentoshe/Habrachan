@@ -72,12 +72,6 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         scope.installModules(module).closeOnDestroy(fragment).inject(fragment)
     }
 
-    private fun injectCommentsFragment(fragment: CommentsFragment) {
-        val module = CommentsFragmentModule(fragment)
-        val scope = Toothpick.openScopes(CommentsFlowFragment::class.java, CommentsFragment::class.java)
-        scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
-    }
-
     private fun injectLoginFlowFragment(fragment: LoginFlowFragment) {
         val module = LoginFlowFragmentModule(fragment)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, LoginFlowFragmentScope::class.java)
@@ -150,6 +144,12 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         val module = CommentsReplyFragmentModule(fragment)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, CommentsReplyFragment::class.java)
         scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
+    }
+
+    private fun injectCommentsFragment(fragment: CommentsFragment) {
+        val module = CommentsFragmentModule(fragment)
+        val scope = Toothpick.openScopes(ApplicationScope::class.java, CommentsFragment::class.java)
+        scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
     override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {

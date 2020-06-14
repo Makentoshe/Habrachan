@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.model.comments
 
 import com.airbnb.epoxy.EpoxyController
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.model.comments.tree.Tree
+import com.makentoshe.habrachan.common.model.tree.Tree
 
 class CommentsEpoxyController(private val factory: CommentEpoxyModel.Factory) : EpoxyController() {
 

@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
-import com.makentoshe.habrachan.model.comments.tree.Tree
-import com.makentoshe.habrachan.model.comments.tree.TreeNode
+import com.makentoshe.habrachan.common.model.tree.Tree
+import com.makentoshe.habrachan.common.model.tree.TreeNode
 import com.makentoshe.habrachan.navigation.comments.CommentsReplyScreenArguments
 import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
 import com.makentoshe.habrachan.ui.comments.CommentsReplyFragmentUi

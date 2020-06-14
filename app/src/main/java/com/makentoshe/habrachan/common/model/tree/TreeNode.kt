@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.comments.tree
+package com.makentoshe.habrachan.common.model.tree
 
 class TreeNode<T>(val value: T) {
 

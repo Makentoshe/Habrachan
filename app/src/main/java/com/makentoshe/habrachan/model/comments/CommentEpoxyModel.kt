@@ -10,7 +10,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.model.comments.tree.Tree
+import com.makentoshe.habrachan.common.model.tree.Tree
 import com.makentoshe.habrachan.view.comments.controller.NativeCommentController
 
 @EpoxyModelClass(layout = R.layout.comment_item)

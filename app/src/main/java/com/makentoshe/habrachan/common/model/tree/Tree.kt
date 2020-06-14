@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.model.comments.tree
+package com.makentoshe.habrachan.common.model.tree
 
 class Tree<T>(
     val roots: List<TreeNode<T>>, nodes: List<TreeNode<T>>

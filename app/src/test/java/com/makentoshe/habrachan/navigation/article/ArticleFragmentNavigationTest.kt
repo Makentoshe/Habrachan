@@ -4,10 +4,10 @@ import com.makentoshe.habrachan.BaseRobolectricTest
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.user.UserAccount
-import com.makentoshe.habrachan.navigation.comments.CommentsFlowScreen
+import com.makentoshe.habrachan.navigation.comments.CommentsFlowFragmentScreen
 import com.makentoshe.habrachan.navigation.images.OverlayImageScreen
 import com.makentoshe.habrachan.navigation.user.UserScreen
-import com.makentoshe.habrachan.navigation.comments.CommentsScreenArguments
+import com.makentoshe.habrachan.navigation.comments.CommentsFlowFragmentArguments
 import io.mockk.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -35,10 +35,10 @@ class ArticleFragmentNavigationTest : BaseRobolectricTest() {
 
         articleFragmentNavigation.toArticleCommentsScreen(articleId)
 
-        val screen = slot<CommentsFlowScreen>()
+        val screen = slot<CommentsFlowFragmentScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
         val commentsScreenArguments =
-            CommentsScreenArguments(screen.captured.fragment)
+            CommentsFlowFragmentArguments(screen.captured.fragment)
         assertEquals(articleId, commentsScreenArguments.articleId)
     }
 
@@ -52,10 +52,10 @@ class ArticleFragmentNavigationTest : BaseRobolectricTest() {
 
         articleFragmentNavigation.toArticleCommentsScreen(article)
 
-        val screen = slot<CommentsFlowScreen>()
+        val screen = slot<CommentsFlowFragmentScreen>()
         verify { mockRouter.navigateTo(capture(screen)) }
         val commentsScreenArguments =
-            CommentsScreenArguments(screen.captured.fragment)
+            CommentsFlowFragmentArguments(screen.captured.fragment)
         assertEquals(article, commentsScreenArguments.article)
 
         unmockkObject(Article.Companion)

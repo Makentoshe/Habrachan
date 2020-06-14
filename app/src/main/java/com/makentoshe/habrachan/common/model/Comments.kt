@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.common.model
 
 import com.makentoshe.habrachan.common.entity.comment.Comment
-import com.makentoshe.habrachan.model.comments.tree.Tree
-import com.makentoshe.habrachan.model.comments.tree.TreeNode
+import com.makentoshe.habrachan.common.model.tree.Tree
+import com.makentoshe.habrachan.common.model.tree.TreeNode
 
 object Comments {
     fun convertCommentsListToCommentsTree(list: List<Comment>): Tree<Comment> {

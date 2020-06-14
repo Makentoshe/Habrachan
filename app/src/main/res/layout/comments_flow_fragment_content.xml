@@ -11,9 +11,9 @@
     sothree:umanoPanelHeight="48dp"
     sothree:umanoShadowHeight="4dp">
 
-    <androidx.fragment.app.FragmentContainerView
+    <FrameLayout
+        android:background="@android:color/holo_purple"
         android:id="@+id/comments_fragment_container"
-        android:name="com.makentoshe.habrachan.view.comments.CommentsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

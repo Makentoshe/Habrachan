@@ -41,7 +41,7 @@ class CommentsReplyFragmentTest : CommentsInputFragmentTest() {
         activityController.setup().get()
         val json = getJsonResponse("get_comments_success.json")
         val response = Gson().fromJson(json, GetCommentsResponse.Success::class.java)
-        router.navigateTo(CommentsReplyScreen(response.data))
+        router.navigateTo(CommentsReplyScreen(response.data, 0))
         return activityController
     }
 
