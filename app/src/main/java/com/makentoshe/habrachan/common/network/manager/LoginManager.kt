@@ -1,15 +1,15 @@
 package com.makentoshe.habrachan.common.network.manager
 
-import android.net.Uri
 import com.makentoshe.habrachan.common.network.api.LoginApi
 import com.makentoshe.habrachan.common.network.converter.LoginConverter
 import com.makentoshe.habrachan.common.network.request.LoginRequest
 import com.makentoshe.habrachan.common.network.request.OAuthRequest
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.common.network.response.OAuthResponse
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -18,7 +18,7 @@ interface LoginManager {
 
     fun login(request: LoginRequest): Single<LoginResponse>
 
-    fun oauth(request: OAuthRequest): Single<OAuthResponse>
+    fun oauth(oAuthRequest: OAuthRequest): Single<OAuthResponse>
 
     class Builder(private val client: OkHttpClient) {
 
@@ -41,20 +41,33 @@ interface LoginManager {
                     }
                 }
 
-                override fun oauth(request: OAuthRequest): Single<OAuthResponse> {
-                    var url =
-                        "https://habr.com/auth/o/social-login/?client_id=85cab69095196f3.89453480&response_type=token&redirect_uri=http://cleverpumpkin.ru&social_type=github"
-                    return Observable.fromCallable {
-                        val response = client.newCall(Request.Builder().url(url).build()).execute()
-                        url = response.headers["Location"]
-                            ?: throw IllegalStateException("No 'Location' header found")
-                        url
-                    }.repeatUntil {
-                        url.startsWith("https://github.com")
-                    }.last("").map {
-                        val parsedUrl = Uri.parse(it)
-                        val state = parsedUrl.getQueryParameter("state") ?: ""
-                        OAuthResponse.Success(it, state)
+                override fun oauth(oAuthRequest: OAuthRequest): Single<OAuthResponse> {
+                    val redirectResponseSubject = PublishSubject.create<okhttp3.Response>()
+
+                    Single.just(oAuthRequest).observeOn(Schedulers.io()).map { request ->
+                        return@map api.oauth(request.clientId, request.socialType, request.responseType, request.redirectUri).execute().raw()
+                    }.toObservable().safeSubscribe(redirectResponseSubject)
+
+                    val oauthResponseSubject = PublishSubject.create<okhttp3.Response>()
+
+                    //todo if response is not success - check and return error
+                    redirectResponseSubject.filter { response ->
+                        val location = response.headers["Location"]
+                        val condition = location?.startsWith(oAuthRequest.hostUrl)
+                        // todo return error response
+                            ?: throw IllegalStateException("wtf sas")
+                        if (!condition) {
+                            val newResponse = client.newCall(Request.Builder().get().url(location).build()).execute()
+                            redirectResponseSubject.onNext(newResponse)
+                        }
+                        return@filter condition
+                    }.safeSubscribe(oauthResponseSubject)
+
+                    return oauthResponseSubject.singleOrError().map { response ->
+                        // todo if state or location is null or something else - return OAuthResponse.Error
+                        val locationUrl = response.headers["Location"]?.toHttpUrlOrNull()!!
+                        val state = locationUrl.queryParameter("state") ?: ""
+                        return@map OAuthResponse.Success(locationUrl.toString(), state)
                     }
                 }
             }

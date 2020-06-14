@@ -12,6 +12,7 @@ import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
 import org.junit.Ignore
 import org.junit.Test
+import javax.net.ssl.HostnameVerifier
 
 class LoginManagerTest : BaseTest() {
 
@@ -81,12 +82,13 @@ class LoginManagerTest : BaseTest() {
 
     @Test
     @Ignore("Test uses real api")
-    fun oauthTest() {
-        val request = OAuthRequest("github")
-        val client = OkHttpClient.Builder().followRedirects(false).build()
-
+    fun githubOauthTest() {
+        val request = OAuthRequest(session.clientKey, "github", "https://github.com")
+        val client = OkHttpClient().newBuilder().followRedirects(false).hostnameVerifier(HostnameVerifier { hostname, _ ->
+            hostname == "habr.com" || hostname == "account.habr.com"
+        }).build()
         val manager = LoginManager.Builder(client).build()
         val response = manager.oauth(request).blockingGet()
-        println(request)
+        println(response)
     }
 }

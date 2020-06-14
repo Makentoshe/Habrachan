@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.navigation.StackNavigator
 import com.makentoshe.habrachan.navigation.main.MainFlowScreen
+import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
 import com.makentoshe.habrachan.view.BackPressedFragment
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -27,10 +28,10 @@ class AppActivity : AppCompatActivity() {
 
         when (intent.action) {
             Intent.ACTION_MAIN -> {
-                val screen = MainFlowScreen()
+//                val screen = MainFlowScreen()
 //                val screen = UserScreen(UserAccount.User("milfgard"))
 //                val screen = UserScreen(UserAccount.Me)
-//                val screen = AccountFlowScreen()
+                val screen = LoginFlowScreen()
 //                val screen = CommentsScreen(493250)
 //                val screen = NativeArticleScreen(442440)
 //                val screen = WebArticleScreen(492410) //499154
