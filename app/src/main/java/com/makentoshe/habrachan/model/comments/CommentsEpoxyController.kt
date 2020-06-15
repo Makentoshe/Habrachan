@@ -12,6 +12,8 @@ class CommentsEpoxyController(private val factory: CommentEpoxyModel.Factory) : 
         this.commentsTree = comments
     }
 
+    fun getCommentsTree(): Tree<Comment> = commentsTree
+
     fun updateCommentScore(commentId: Int, score: Int) {
         val comment = commentsTree.find { it.value.id == commentId }
         buildCommentModel(comment!!.value.copy(score = score))
@@ -23,6 +25,6 @@ class CommentsEpoxyController(private val factory: CommentEpoxyModel.Factory) : 
     }
 
     private fun buildCommentModel(comment: Comment) {
-        factory.build(comment, commentsTree).addTo(this)
+        factory.build(comment).addTo(this)
     }
 }

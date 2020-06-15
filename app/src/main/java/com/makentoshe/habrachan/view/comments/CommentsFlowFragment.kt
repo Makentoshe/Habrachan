@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
 import com.makentoshe.habrachan.navigation.StackNavigator
-import com.makentoshe.habrachan.navigation.comments.CommentsFlowFragmentArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentScreen
+import com.makentoshe.habrachan.navigation.comments.CommentsFlowFragmentArguments
 import com.makentoshe.habrachan.ui.comments.CommentsFlowFragmentUi
 import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.SendCommentViewModel
@@ -49,5 +49,9 @@ class CommentsFlowFragment : CommentsInputFragment() {
         }
 
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    companion object {
+        const val COMMENTS_DISPLAY_FRAGMENT_RESULT_CODE = 1
     }
 }

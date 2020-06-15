@@ -14,24 +14,28 @@ import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.model.Comments
+import com.makentoshe.habrachan.common.model.tree.Tree
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
+import com.makentoshe.habrachan.model.comments.CommentActionProvider
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
-import com.makentoshe.habrachan.common.model.tree.Tree
 import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.GetCommentViewModel
 import com.makentoshe.habrachan.viewmodel.comments.VoteCommentViewModel
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.PublishSubject
 import toothpick.ktp.delegate.inject
 
-class CommentsDisplayFragment : Fragment() {
+class CommentsDisplayFragment : Fragment(),
+    CommentActionProvider {
 
     private val arguments by inject<CommentsDisplayFragmentArguments>()
-    private val navigator by inject<CommentsDisplayFragmentNavigation>()
+    private val navigation by inject<CommentsDisplayFragmentNavigation>()
     private val disposables by inject<CompositeDisposable>()
     private val epoxyController by inject<CommentsEpoxyController>()
     private val voteCommentViewModel by inject<VoteCommentViewModel>()
@@ -45,6 +49,18 @@ class CommentsDisplayFragment : Fragment() {
     private lateinit var messageView: TextView
     private lateinit var firstCommentButton: Button
 
+    private val inspectUserSubject = PublishSubject.create<Comment>()
+    override val inspectUserObserver: Observer<Comment> = inspectUserSubject
+
+    private val voteUpCommentSubject = PublishSubject.create<Comment>()
+    override val voteUpCommentObserver: Observer<Comment> = voteUpCommentSubject
+
+    private val voteDownCommentSubject = PublishSubject.create<Comment>()
+    override val voteDownCommentObserver: Observer<Comment> = voteDownCommentSubject
+
+    private val replyCommentSubject = PublishSubject.create<Comment>()
+    override val replyCommentObserver: Observer<Comment> = replyCommentSubject
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentsFragmentUi(container).inflateView(inflater)
     }
@@ -53,6 +69,7 @@ class CommentsDisplayFragment : Fragment() {
         // disable touch events for background fragments
         view.setOnClickListener { }
 
+        // define views and put refs to variables
         appbar = view.findViewById(R.id.comments_fragment_appbar)
         toolbar = view.findViewById(R.id.comments_fragment_toolbar)
         retryButton = view.findViewById(R.id.comments_fragment_retrybutton)
@@ -61,20 +78,35 @@ class CommentsDisplayFragment : Fragment() {
         messageView = view.findViewById(R.id.comments_fragment_messageview)
         firstCommentButton = view.findViewById(R.id.comments_fragment_firstbutton)
 
+        // callback for comments request - displays comments
         getCommentsViewModel.getCommentsObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onGetCommentsResponse).let(disposables::add)
 
+        // requests comment's score change - increase score
+        voteUpCommentSubject.map { it.id }.safeSubscribe(voteCommentViewModel.voteUpCommentObserver)
+        // callback for comment's score change - displays new score
         voteCommentViewModel.voteUpCommentObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onVoteCommentsResponse).let(disposables::add)
 
+        // requests comment's score change - decrease score
+        voteDownCommentSubject.map { it.id }.safeSubscribe(voteCommentViewModel.voteDownCommentObserver)
+        // callback for comment's score change - displays new score
         voteCommentViewModel.voteDownCommentObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onVoteCommentsResponse).let(disposables::add)
 
-        toolbar.setNavigationOnClickListener { navigator.back() }
-        arguments.article?.title?.let(toolbar::setTitle)
+        // requests new screen open with the comment owner profile
+        inspectUserSubject.subscribe { navigation.toUserScreen(it.author.login) }.let(disposables::add)
+
+        // requests new screen for replying to the last comment in thread
+        replyCommentSubject.subscribe(::onReplyCommentRequest).let(disposables::add)
+
+        toolbar.setNavigationOnClickListener { navigation.back() }
         toolbar.setSubtitle(R.string.comments_fragment_subtitle)
-        retryButton.setOnClickListener { onRetryButtonClicked() }
+        arguments.article?.title?.let(toolbar::setTitle)
+
         appbar.setExpanded(true)
+
+        retryButton.setOnClickListener { onRetryButtonClicked() }
 
         if (savedInstanceState == null) {
             getCommentsViewModel.getCommentsObserver.onNext(arguments.articleId)
@@ -143,6 +175,13 @@ class CommentsDisplayFragment : Fragment() {
             else -> response.message.plus(" ").plus(response.additional.joinToString(". "))
         }
         SnackbarErrorController.from(view ?: return).displayMessage(message)
+    }
+
+    private fun onReplyCommentRequest(comment: Comment) {
+        val commentsTree = epoxyController.getCommentsTree()
+        val node = commentsTree.findNode { it == comment }
+        val path = commentsTree.pathToRoot(node!!).reversed()
+        navigation.toReplyScreen(path.map { it.value }, arguments.articleId)
     }
 
     override fun onDestroy() {

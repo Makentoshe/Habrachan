@@ -5,10 +5,7 @@ import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.model.comments.CommentEpoxyModel
-import com.makentoshe.habrachan.model.comments.CommentPopupFactory
-import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
-import com.makentoshe.habrachan.model.comments.NativeCommentAvatarController
+import com.makentoshe.habrachan.model.comments.*
 import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentNavigation
 import com.makentoshe.habrachan.view.comments.CommentsDisplayFragment
@@ -63,9 +60,8 @@ class CommentsFragmentModule(fragment: CommentsDisplayFragment) : Module() {
         val voteCommentViewModel = getVoteCommentViewModel(fragment)
         bind<VoteCommentViewModel>().toInstance(voteCommentViewModel)
 
-        val commentsEpoxyController = getCommentsEpoxyController(disposables, fragment, voteCommentViewModel)
+        val commentsEpoxyController = getCommentsEpoxyController(disposables, fragment)
         bind<CommentsEpoxyController>().toInstance(commentsEpoxyController)
-
     }
 
     private fun getVoteCommentViewModel(commentsFragment: CommentsDisplayFragment): VoteCommentViewModel {
@@ -85,14 +81,19 @@ class CommentsFragmentModule(fragment: CommentsDisplayFragment) : Module() {
     }
 
     private fun getCommentsEpoxyController(
-        disposables: CompositeDisposable, fragment: CommentsDisplayFragment, voteCommentViewModel: VoteCommentViewModel
+        disposables: CompositeDisposable,
+        fragment: CommentsDisplayFragment
     ): CommentsEpoxyController {
-        val commentPopupFactory = CommentPopupFactory(voteCommentViewModel, navigation, arguments.articleId)
+        val commentPopupFactory = getCommentPopupFactory(fragment)
         val commentAvatarControllerFactory = getCommentAvatarControllerFactory(disposables, fragment)
         val nativeCommentController =
             CommentController.Factory(commentAvatarControllerFactory, commentPopupFactory).buildNative()
         val commentEpoxyModelFactory = CommentEpoxyModel.Factory(nativeCommentController)
         return CommentsEpoxyController(commentEpoxyModelFactory)
+    }
+
+    private fun getCommentPopupFactory(commentActionProvider: CommentActionProvider): CommentPopupFactory? {
+        return if (arguments.commentActionEnabled) CommentPopupFactory(commentActionProvider) else null
     }
 
     private fun getCommentAvatarViewModel(fragment: CommentsDisplayFragment): AvatarCommentViewModel {

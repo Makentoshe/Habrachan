@@ -1,9 +1,7 @@
 package com.makentoshe.habrachan.view.comments.controller
 
-import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.model.comments.CommentPopupFactory
 import com.makentoshe.habrachan.model.comments.NativeCommentAvatarController
-import com.makentoshe.habrachan.common.model.tree.Tree
 
 /** Controls comments displaying and behaviour */
 interface CommentController {
@@ -18,7 +16,7 @@ interface CommentController {
     fun levelFactory(): NativeCommentLevelController.Factory
 
     /** What comment should do on any gesture actions */
-    fun behaviorFactory(commentsTree: Tree<Comment>): NativeCommentBehaviorController.Factory
+    fun behaviorFactory(): NativeCommentBehaviorController.Factory
 
     /** How comment should load and display author avatar */
     fun avatarFactory(): NativeCommentAvatarController.Factory
