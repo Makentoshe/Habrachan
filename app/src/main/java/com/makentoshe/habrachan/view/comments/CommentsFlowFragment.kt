@@ -44,7 +44,9 @@ class CommentsFlowFragment : CommentsInputFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val containedFragment = childFragmentManager.findFragmentById(R.id.comments_fragment_container)
         if (containedFragment == null) {
-            val commentsFragment = CommentsDisplayFragmentScreen(arguments.articleId, null, true).fragment
+            val commentsFragment = CommentsDisplayFragmentScreen(
+                arguments.articleId, null, arguments.commentActionsEnabled
+            ).fragment
             childFragmentManager.beginTransaction().add(R.id.comments_fragment_container, commentsFragment).commitNow()
         }
 

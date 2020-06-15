@@ -15,7 +15,7 @@ class CommentsFlowFragmentArguments(
         set(value) = fragmentArguments.putString(ARTICLE, value?.toJson())
         get() = fragmentArguments.getString(ARTICLE)?.let(Article.Companion::fromJson)
 
-    var commentActionEnabled: Boolean
+    var commentActionsEnabled: Boolean
         set(value) = fragmentArguments.putBoolean(ACTION, value)
         get() = fragmentArguments.getBoolean(ACTION, false)
 

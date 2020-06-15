@@ -21,11 +21,11 @@ class ArticleFragmentNavigation(private val router: Router, private val sessionD
     }
 
     fun toArticleCommentsScreen(articleId: Int) {
-        router.navigateTo(CommentsFlowFragmentScreen(articleId, null))
+        router.navigateTo(CommentsFlowFragmentScreen(articleId, null, true))
     }
 
     fun toArticleCommentsScreen(article: Article) {
-        router.navigateTo(CommentsFlowFragmentScreen(article))
+        router.navigateTo(CommentsFlowFragmentScreen(article, true))
     }
 
     fun toUserScreen(userName: String): Boolean {

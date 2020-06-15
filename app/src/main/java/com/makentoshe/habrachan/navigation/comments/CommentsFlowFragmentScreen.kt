@@ -6,16 +6,18 @@ import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 
 class CommentsFlowFragmentScreen(
     private val articleId: Int,
-    private val article: Article?
+    private val article: Article?,
+    private val commentActionsEnabled: Boolean
 ) : Screen() {
 
-    constructor(article: Article) : this(article.id, article)
+    constructor(article: Article, enableCommentActions: Boolean) : this(article.id, article,enableCommentActions)
 
     override fun getFragment(): CommentsFlowFragment {
         val fragment = CommentsFlowFragment()
         val arguments = CommentsFlowFragmentArguments(fragment)
         arguments.article = article
         arguments.articleId = articleId
+        arguments.commentActionsEnabled = commentActionsEnabled
         return fragment
     }
 }
