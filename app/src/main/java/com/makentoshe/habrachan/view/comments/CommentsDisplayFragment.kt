@@ -19,8 +19,8 @@ import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.common.model.tree.Tree
-import com.makentoshe.habrachan.navigation.comments.CommentsFragmentArguments
-import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
+import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentArguments
+import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.GetCommentViewModel
 import com.makentoshe.habrachan.viewmodel.comments.VoteCommentViewModel
@@ -28,10 +28,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
-class CommentsFragment : Fragment() {
+class CommentsDisplayFragment : Fragment() {
 
-    private val arguments by inject<CommentsFragmentArguments>()
-    private val navigator by inject<CommentsFragmentNavigation>()
+    private val arguments by inject<CommentsDisplayFragmentArguments>()
+    private val navigator by inject<CommentsDisplayFragmentNavigation>()
     private val disposables by inject<CompositeDisposable>()
     private val epoxyController by inject<CommentsEpoxyController>()
     private val voteCommentViewModel by inject<VoteCommentViewModel>()
@@ -70,7 +70,7 @@ class CommentsFragment : Fragment() {
         voteCommentViewModel.voteDownCommentObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onVoteCommentsResponse).let(disposables::add)
 
-//        toolbar.setNavigationOnClickListener { navigator.back() }
+        toolbar.setNavigationOnClickListener { navigator.back() }
         arguments.article?.title?.let(toolbar::setTitle)
         toolbar.setSubtitle(R.string.comments_fragment_subtitle)
         retryButton.setOnClickListener { onRetryButtonClicked() }

@@ -9,9 +9,9 @@ import com.makentoshe.habrachan.model.comments.CommentEpoxyModel
 import com.makentoshe.habrachan.model.comments.CommentPopupFactory
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.model.comments.NativeCommentAvatarController
-import com.makentoshe.habrachan.navigation.comments.CommentsFragmentArguments
-import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
-import com.makentoshe.habrachan.view.comments.CommentsFragment
+import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentArguments
+import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentNavigation
+import com.makentoshe.habrachan.view.comments.CommentsDisplayFragment
 import com.makentoshe.habrachan.view.comments.controller.CommentController
 import com.makentoshe.habrachan.viewmodel.NetworkSchedulerProvider
 import com.makentoshe.habrachan.viewmodel.comments.AvatarCommentViewModel
@@ -26,12 +26,12 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
-class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
+class CommentsFragmentModule(fragment: CommentsDisplayFragment) : Module() {
 
     private val commentsManager: CommentsManager
     private val imageManager: ImageManager
-    private val arguments: CommentsFragmentArguments
-    private val navigation: CommentsFragmentNavigation
+    private val arguments: CommentsDisplayFragmentArguments
+    private val navigation: CommentsDisplayFragmentNavigation
 
     private val client by inject<OkHttpClient>()
     private val cacheDatabase by inject<CacheDatabase>()
@@ -48,11 +48,11 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
         commentsManager = CommentsManager.Factory(client).buildNative()
         imageManager = ImageManager.Builder(client).build()
 
-        arguments = CommentsFragmentArguments(fragment)
-        bind<CommentsFragmentArguments>().toInstance(arguments)
+        arguments = CommentsDisplayFragmentArguments(fragment)
+        bind<CommentsDisplayFragmentArguments>().toInstance(arguments)
 
-        navigation = CommentsFragmentNavigation(router)
-        bind<CommentsFragmentNavigation>().toInstance(navigation)
+        navigation = CommentsDisplayFragmentNavigation(router)
+        bind<CommentsDisplayFragmentNavigation>().toInstance(navigation)
 
         val disposables = CompositeDisposable()
         bind<CompositeDisposable>().toInstance(disposables)
@@ -68,7 +68,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
 
     }
 
-    private fun getVoteCommentViewModel(commentsFragment: CommentsFragment): VoteCommentViewModel {
+    private fun getVoteCommentViewModel(commentsFragment: CommentsDisplayFragment): VoteCommentViewModel {
         val voteCommentViewModelDisposables = CompositeDisposable()
         val voteCommentViewModelFactory = VoteCommentViewModel.Factory(
             schedulerProvider, voteCommentViewModelDisposables, commentsManager, cacheDatabase, sessionDatabase
@@ -76,7 +76,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
         return voteCommentViewModelFactory.buildViewModelAttachedTo(commentsFragment)
     }
 
-    private fun getGetCommentsViewModel(commentsFragment: CommentsFragment): GetCommentViewModel {
+    private fun getGetCommentsViewModel(commentsFragment: CommentsDisplayFragment): GetCommentViewModel {
         val getCommentsViewModelDisposables = CompositeDisposable()
         val getCommentViewModelFactory = GetCommentViewModel.Factory(
             schedulerProvider, getCommentsViewModelDisposables, commentsManager, cacheDatabase, sessionDatabase
@@ -85,7 +85,7 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
     }
 
     private fun getCommentsEpoxyController(
-        disposables: CompositeDisposable, fragment: CommentsFragment, voteCommentViewModel: VoteCommentViewModel
+        disposables: CompositeDisposable, fragment: CommentsDisplayFragment, voteCommentViewModel: VoteCommentViewModel
     ): CommentsEpoxyController {
         val commentPopupFactory = CommentPopupFactory(voteCommentViewModel, navigation, arguments.articleId)
         val commentAvatarControllerFactory = getCommentAvatarControllerFactory(disposables, fragment)
@@ -95,13 +95,13 @@ class CommentsFragmentModule(fragment: CommentsFragment) : Module() {
         return CommentsEpoxyController(commentEpoxyModelFactory)
     }
 
-    private fun getCommentAvatarViewModel(fragment: CommentsFragment): AvatarCommentViewModel {
+    private fun getCommentAvatarViewModel(fragment: CommentsDisplayFragment): AvatarCommentViewModel {
         return AvatarCommentViewModel.Factory(imageManager, cacheDatabase).buildViewModel(fragment)
     }
 
     private fun getCommentAvatarControllerFactory(
         disposables: CompositeDisposable,
-        fragment: CommentsFragment
+        fragment: CommentsDisplayFragment
     ): NativeCommentAvatarController.Factory {
         val commentAvatarViewModel = getCommentAvatarViewModel(fragment)
         return NativeCommentAvatarController.Factory(commentAvatarViewModel, disposables)

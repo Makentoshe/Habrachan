@@ -34,7 +34,7 @@ import toothpick.ktp.binding.module
 import toothpick.ktp.delegate.inject
 
 @RunWith(RobolectricTestRunner::class)
-class CommentsFragmentTest : BaseRobolectricTest() {
+class CommentsDisplayFragmentTest : BaseRobolectricTest() {
 
     private val mockSnackbarErrorController = mockk<SnackbarErrorController>(relaxed = true)
 
@@ -59,7 +59,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
         mockkObject(Comments)
 
         Toothpick.openScopes(
-            ApplicationScope::class.java, CommentsFragment::class.java
+            ApplicationScope::class.java, CommentsDisplayFragment::class.java
         ).installTestModules(module {
             bind<GetCommentViewModel>().toInstance(mockGetCommentsViewModel)
             bind<VoteCommentViewModel>().toInstance(mockVoteCommentViewModel)
@@ -70,7 +70,7 @@ class CommentsFragmentTest : BaseRobolectricTest() {
 
     @After
     fun after() {
-        Toothpick.closeScope(CommentsFragment::class.java)
+        Toothpick.closeScope(CommentsDisplayFragment::class.java)
 
         unmockkObject(Comments)
     }

@@ -62,7 +62,7 @@ class CommentsFlowFragmentTest : CommentsInputFragmentTest() {
             bind<SendCommentViewModel>().toInstance(mockSendCommentViewModel)
         }).inject(this)
         Toothpick.openScopes(
-            ApplicationScope::class.java, CommentsFragment::class.java
+            ApplicationScope::class.java, CommentsDisplayFragment::class.java
         ).installTestModules(module {
             bind<GetCommentViewModel>().toInstance(mockGetCommentsViewModel)
             bind<VoteCommentViewModel>().toInstance(mockVoteCommentViewModel)
@@ -71,7 +71,7 @@ class CommentsFlowFragmentTest : CommentsInputFragmentTest() {
 
     @After
     fun after() {
-        Toothpick.closeScope(CommentsFragment::class.java)
+        Toothpick.closeScope(CommentsDisplayFragment::class.java)
         Toothpick.closeScope(CommentsFlowFragment::class.java)
     }
 

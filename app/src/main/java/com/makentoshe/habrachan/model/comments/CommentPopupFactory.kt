@@ -7,12 +7,12 @@ import android.widget.PopupWindow
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.model.tree.Tree
-import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
+import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentNavigation
 import com.makentoshe.habrachan.viewmodel.comments.VoteCommentViewModel
 
 class CommentPopupFactory(
     private val viewModel: VoteCommentViewModel,
-    private val navigation: CommentsFragmentNavigation,
+    private val navigation: CommentsDisplayFragmentNavigation,
     private val articleId: Int
 ) {
 

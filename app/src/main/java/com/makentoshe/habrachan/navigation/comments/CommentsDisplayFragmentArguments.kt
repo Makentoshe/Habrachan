@@ -1,9 +1,11 @@
 package com.makentoshe.habrachan.navigation.comments
 
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.view.comments.CommentsFragment
+import com.makentoshe.habrachan.view.comments.CommentsDisplayFragment
 
-class CommentsFragmentArguments(fragment: CommentsFragment) : FragmentArguments<CommentsFragment>(fragment) {
+class CommentsDisplayFragmentArguments(
+    fragment: CommentsDisplayFragment
+) : FragmentArguments<CommentsDisplayFragment>(fragment) {
 
     var articleId: Int
         set(value) = fragmentArguments.putInt(ARTICLE_ID, value)
