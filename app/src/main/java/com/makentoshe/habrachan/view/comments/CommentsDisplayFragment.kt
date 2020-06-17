@@ -4,26 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.model.Comments
 import com.makentoshe.habrachan.common.model.tree.Tree
-import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.comments.CommentActionProvider
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentArguments
-import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentNavigation
+import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFragmentUi
-import com.makentoshe.habrachan.viewmodel.comments.GetCommentViewModel
 import com.makentoshe.habrachan.viewmodel.comments.VoteCommentViewModel
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,23 +24,15 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import toothpick.ktp.delegate.inject
 
-class CommentsDisplayFragment : Fragment(),
-    CommentActionProvider {
+class CommentsDisplayFragment : Fragment(), CommentActionProvider {
 
     private val arguments by inject<CommentsDisplayFragmentArguments>()
-    private val navigation by inject<CommentsDisplayFragmentNavigation>()
+    private val navigation by inject<CommentsFragmentNavigation>()
     private val disposables by inject<CompositeDisposable>()
     private val epoxyController by inject<CommentsEpoxyController>()
     private val voteCommentViewModel by inject<VoteCommentViewModel>()
-    private val getCommentsViewModel by inject<GetCommentViewModel>()
 
-    private lateinit var appbar: AppBarLayout
-    private lateinit var toolbar: Toolbar
-    private lateinit var retryButton: Button
-    private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
-    private lateinit var messageView: TextView
-    private lateinit var firstCommentButton: Button
 
     private val inspectUserSubject = PublishSubject.create<Comment>()
     override val inspectUserObserver: Observer<Comment> = inspectUserSubject
@@ -66,21 +51,12 @@ class CommentsDisplayFragment : Fragment(),
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        recyclerView = view.findViewById(R.id.comments_fragment_recyclerview)
+
+        displayComments(Comments.convertCommentsListToCommentsTree(arguments.comments))
+
         // disable touch events for background fragments
         view.setOnClickListener { }
-
-        // define views and put refs to variables
-        appbar = view.findViewById(R.id.comments_fragment_appbar)
-        toolbar = view.findViewById(R.id.comments_fragment_toolbar)
-        retryButton = view.findViewById(R.id.comments_fragment_retrybutton)
-        progressBar = view.findViewById(R.id.comments_fragment_progressbar)
-        recyclerView = view.findViewById(R.id.comments_fragment_recyclerview)
-        messageView = view.findViewById(R.id.comments_fragment_messageview)
-        firstCommentButton = view.findViewById(R.id.comments_fragment_firstbutton)
-
-        // callback for comments request - displays comments
-        getCommentsViewModel.getCommentsObservable.observeOn(AndroidSchedulers.mainThread())
-            .subscribe(::onGetCommentsResponse).let(disposables::add)
 
         // requests comment's score change - increase score
         voteUpCommentSubject.map { it.id }.safeSubscribe(voteCommentViewModel.voteUpCommentObserver)
@@ -99,62 +75,12 @@ class CommentsDisplayFragment : Fragment(),
 
         // requests new screen for replying to the last comment in thread
         replyCommentSubject.subscribe(::onReplyCommentRequest).let(disposables::add)
-
-        toolbar.setNavigationOnClickListener { navigation.back() }
-        toolbar.setSubtitle(R.string.comments_fragment_subtitle)
-        arguments.article?.title?.let(toolbar::setTitle)
-
-        appbar.setExpanded(true)
-
-        retryButton.setOnClickListener { onRetryButtonClicked() }
-
-        if (savedInstanceState == null) {
-            getCommentsViewModel.getCommentsObserver.onNext(arguments.articleId)
-        }
-    }
-
-    private fun onGetCommentsResponse(response: GetCommentsResponse) = when (response) {
-        is GetCommentsResponse.Success -> onGetCommentsResponseSuccess(response)
-        is GetCommentsResponse.Error -> onGetCommentsResponseError(response)
-    }
-
-    private fun onGetCommentsResponseSuccess(response: GetCommentsResponse.Success) {
-        val commentsTree = Comments.convertCommentsListToCommentsTree(response.data)
-        if (commentsTree.isEmpty()) displayCommentsThumbnail() else displayComments(commentsTree)
     }
 
     private fun displayComments(tree: Tree<Comment>) {
-        progressBar.visibility = View.GONE
-        recyclerView.visibility = View.VISIBLE
-
         epoxyController.setComments(tree)
         recyclerView.adapter = epoxyController.adapter
         epoxyController.requestModelBuild()
-        recyclerView.visibility = View.VISIBLE
-    }
-
-    private fun displayCommentsThumbnail() {
-        messageView.setText(R.string.comments_message_no_comments)
-        messageView.visibility = View.VISIBLE
-        progressBar.visibility = View.GONE
-
-        firstCommentButton.visibility = View.VISIBLE
-    }
-
-    private fun onGetCommentsResponseError(response: GetCommentsResponse.Error) {
-        retryButton.visibility = View.VISIBLE
-        progressBar.visibility = View.GONE
-
-        messageView.visibility = View.VISIBLE
-        messageView.text = response.raw
-    }
-
-    private fun onRetryButtonClicked() {
-        retryButton.visibility = View.GONE
-        messageView.visibility = View.GONE
-        progressBar.visibility = View.VISIBLE
-
-        getCommentsViewModel.getCommentsObserver.onNext(arguments.articleId)
     }
 
     private fun onVoteCommentsResponse(response: VoteCommentResponse) = when (response) {

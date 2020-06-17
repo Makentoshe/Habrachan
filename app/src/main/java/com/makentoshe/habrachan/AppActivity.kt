@@ -31,7 +31,7 @@ class AppActivity : AppCompatActivity() {
 //                val screen = UserScreen(UserAccount.User("milfgard"))
 //                val screen = UserScreen(UserAccount.Me)
 //                val screen = AccountFlowScreen()
-                val screen = CommentsFlowFragmentScreen(493250, null)
+                val screen = CommentsFlowFragmentScreen(493250, null, true)
 //                val screen = NativeArticleScreen(442440)
 //                val screen = WebArticleScreen(492410) //499154
 //                val screen = PostImageScreen("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg")

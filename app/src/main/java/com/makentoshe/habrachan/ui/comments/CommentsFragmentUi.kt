@@ -8,6 +8,6 @@ import com.makentoshe.habrachan.R
 class CommentsFragmentUi(private val root: ViewGroup? = null) {
 
     fun inflateView(inflater: LayoutInflater): View {
-        return inflater.inflate(R.layout.comments_fragment, root, false)
+        return inflater.inflate(R.layout.comments_display_fragment, root, false)
     }
 }

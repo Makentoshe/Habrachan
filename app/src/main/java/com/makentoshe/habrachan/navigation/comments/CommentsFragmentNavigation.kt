@@ -5,7 +5,7 @@ import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.navigation.user.UserScreen
 import ru.terrakok.cicerone.Router
 
-class CommentsDisplayFragmentNavigation(private val router: Router) {
+class CommentsFragmentNavigation(private val router: Router) {
 
     fun back() = router.exit()
 

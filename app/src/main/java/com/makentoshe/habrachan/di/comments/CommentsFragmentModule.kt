@@ -7,7 +7,7 @@ import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.comments.*
 import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentArguments
-import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentNavigation
+import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
 import com.makentoshe.habrachan.view.comments.CommentsDisplayFragment
 import com.makentoshe.habrachan.view.comments.controller.CommentController
 import com.makentoshe.habrachan.viewmodel.NetworkSchedulerProvider
@@ -28,7 +28,7 @@ class CommentsFragmentModule(fragment: CommentsDisplayFragment) : Module() {
     private val commentsManager: CommentsManager
     private val imageManager: ImageManager
     private val arguments: CommentsDisplayFragmentArguments
-    private val navigation: CommentsDisplayFragmentNavigation
+    private val navigation: CommentsFragmentNavigation
 
     private val client by inject<OkHttpClient>()
     private val cacheDatabase by inject<CacheDatabase>()
@@ -48,8 +48,8 @@ class CommentsFragmentModule(fragment: CommentsDisplayFragment) : Module() {
         arguments = CommentsDisplayFragmentArguments(fragment)
         bind<CommentsDisplayFragmentArguments>().toInstance(arguments)
 
-        navigation = CommentsDisplayFragmentNavigation(router)
-        bind<CommentsDisplayFragmentNavigation>().toInstance(navigation)
+        navigation = CommentsFragmentNavigation(router)
+        bind<CommentsFragmentNavigation>().toInstance(navigation)
 
         val disposables = CompositeDisposable()
         bind<CompositeDisposable>().toInstance(disposables)

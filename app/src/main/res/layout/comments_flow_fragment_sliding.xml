@@ -11,11 +11,7 @@
     sothree:umanoPanelHeight="48dp"
     sothree:umanoShadowHeight="4dp">
 
-    <FrameLayout
-        android:background="@android:color/holo_purple"
-        android:id="@+id/comments_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/comments_flow_fragment_sliding_content" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

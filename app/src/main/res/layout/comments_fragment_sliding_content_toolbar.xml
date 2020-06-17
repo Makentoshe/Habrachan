@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/comments_fragment_appbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:expanded="false">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
         style="?attr/habrachanToolbar"
