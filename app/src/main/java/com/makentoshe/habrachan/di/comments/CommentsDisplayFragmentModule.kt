@@ -12,7 +12,6 @@ import com.makentoshe.habrachan.view.comments.CommentsDisplayFragment
 import com.makentoshe.habrachan.view.comments.controller.CommentController
 import com.makentoshe.habrachan.viewmodel.NetworkSchedulerProvider
 import com.makentoshe.habrachan.viewmodel.comments.AvatarCommentViewModel
-import com.makentoshe.habrachan.viewmodel.comments.GetCommentViewModel
 import com.makentoshe.habrachan.viewmodel.comments.VoteCommentViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -23,7 +22,7 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
-class CommentsFragmentModule(fragment: CommentsDisplayFragment) : Module() {
+class CommentsDisplayFragmentModule(fragment: CommentsDisplayFragment) : Module() {
 
     private val commentsManager: CommentsManager
     private val imageManager: ImageManager
@@ -52,10 +51,7 @@ class CommentsFragmentModule(fragment: CommentsDisplayFragment) : Module() {
         bind<CommentsFragmentNavigation>().toInstance(navigation)
 
         val disposables = CompositeDisposable()
-        bind<CompositeDisposable>().toInstance(disposables)
-
-        val getCommentsViewModel = getGetCommentsViewModel(fragment)
-        bind<GetCommentViewModel>().toInstance(getCommentsViewModel)
+        bind<CompositeDisposable>().withName(fragment.hashCode().toString()).toInstance(disposables)
 
         val voteCommentViewModel = getVoteCommentViewModel(fragment)
         bind<VoteCommentViewModel>().toInstance(voteCommentViewModel)
@@ -72,14 +68,6 @@ class CommentsFragmentModule(fragment: CommentsDisplayFragment) : Module() {
         return voteCommentViewModelFactory.buildViewModelAttachedTo(commentsFragment)
     }
 
-    private fun getGetCommentsViewModel(commentsFragment: CommentsDisplayFragment): GetCommentViewModel {
-        val getCommentsViewModelDisposables = CompositeDisposable()
-        val getCommentViewModelFactory = GetCommentViewModel.Factory(
-            schedulerProvider, getCommentsViewModelDisposables, commentsManager, cacheDatabase, sessionDatabase
-        )
-        return getCommentViewModelFactory.buildViewModelAttachedTo(commentsFragment)
-    }
-
     private fun getCommentsEpoxyController(
         disposables: CompositeDisposable,
         fragment: CommentsDisplayFragment
@@ -89,6 +77,7 @@ class CommentsFragmentModule(fragment: CommentsDisplayFragment) : Module() {
         val nativeCommentController =
             CommentController.Factory(commentAvatarControllerFactory, commentPopupFactory).buildNative()
         val commentEpoxyModelFactory = CommentEpoxyModel.Factory(nativeCommentController)
+        bind<CommentEpoxyModel.Factory>().toInstance(commentEpoxyModelFactory)
         return CommentsEpoxyController(commentEpoxyModelFactory)
     }
 

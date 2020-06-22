@@ -13,6 +13,7 @@ import com.makentoshe.habrachan.common.model.tree.Tree
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
 import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.comments.CommentActionProvider
+import com.makentoshe.habrachan.model.comments.CommentEpoxyModel
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
@@ -26,12 +27,18 @@ import toothpick.ktp.delegate.inject
 
 class CommentsDisplayFragment : Fragment(), CommentActionProvider {
 
-    private val arguments by inject<CommentsDisplayFragmentArguments>()
-    private val navigation by inject<CommentsFragmentNavigation>()
-    private val disposables by inject<CompositeDisposable>()
-    private val epoxyController by inject<CommentsEpoxyController>()
-    private val voteCommentViewModel by inject<VoteCommentViewModel>()
+    private val arguments = CommentsDisplayFragmentArguments(this)
+    private val epoxyController by lazy { CommentsEpoxyController(commentEpoxyModelFactory) }
 
+    // original injects for each fragment
+    private val disposables by inject<CompositeDisposable>(hashCode().toString())
+
+    // common injects for all fragments
+    private val navigation by inject<CommentsFragmentNavigation>()
+    private val voteCommentViewModel by inject<VoteCommentViewModel>()
+    private val commentEpoxyModelFactory by inject<CommentEpoxyModel.Factory>()
+
+    // views
     private lateinit var recyclerView: RecyclerView
 
     private val inspectUserSubject = PublishSubject.create<Comment>()
@@ -107,7 +114,7 @@ class CommentsDisplayFragment : Fragment(), CommentActionProvider {
         val commentsTree = epoxyController.getCommentsTree()
         val node = commentsTree.findNode { it == comment }
         val path = commentsTree.pathToRoot(node!!).reversed()
-        navigation.toReplyScreen(path.map { it.value }, arguments.articleId)
+        navigation.toReplyScreen(path.map { it.value.copy(level = 0) }, arguments.articleId)
     }
 
     override fun onDestroy() {

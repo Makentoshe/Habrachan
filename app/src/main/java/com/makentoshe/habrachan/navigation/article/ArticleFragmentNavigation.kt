@@ -20,10 +20,6 @@ class ArticleFragmentNavigation(private val router: Router, private val sessionD
         router.navigateTo(OverlayImageScreen(resource))
     }
 
-    fun toArticleCommentsScreen(articleId: Int) {
-        router.navigateTo(CommentsFlowFragmentScreen(articleId, null, true))
-    }
-
     fun toArticleCommentsScreen(article: Article) {
         router.navigateTo(CommentsFlowFragmentScreen(article, true))
     }

@@ -26,6 +26,8 @@ import toothpick.ktp.delegate.inject
 
 class CommentsFlowFragment : CommentsInputFragment() {
 
+    private val arguments = CommentsFlowFragmentArguments(this)
+
     private val getCommentsViewModel by inject<GetCommentViewModel>()
     override val sendCommentViewModel by inject<SendCommentViewModel>()
 
@@ -34,11 +36,12 @@ class CommentsFlowFragment : CommentsInputFragment() {
     override val softKeyboardController = SoftKeyboardController()
 
     private val navigation by inject<CommentsFragmentNavigation>()
-    private val arguments by inject<CommentsFlowFragmentArguments>()
     private val commentsFlowFragmentUi by inject<CommentsFlowFragmentUi>()
 
     override val articleId: Int
         get() = arguments.articleId
+
+    private var parentId: Int = 0
 
     private lateinit var toolbar: Toolbar
     private lateinit var retryButton: Button
@@ -55,19 +58,39 @@ class CommentsFlowFragment : CommentsInputFragment() {
         messageView = view.findViewById(R.id.comments_fragment_messageview)
         toolbar = view.findViewById(R.id.comments_fragment_toolbar)
 
-        toolbar.setNavigationOnClickListener { navigation.back() }
+        super.onViewCreated(view, savedInstanceState)
+
+        toolbar.setNavigationOnClickListener {
+            navigation.back()
+        }
+        retryButton.setOnClickListener {
+            onRetryButtonClicked()
+        }
+
+        val comments = arguments.comments
+        if (comments != null) {
+            onViewCreatedComments(view, savedInstanceState, comments)
+        } else {
+            onViewCreatedArticle(view, savedInstanceState)
+        }
+
+    }
+
+    private fun onViewCreatedComments(view: View, savedInstanceState: Bundle?, comments: List<Comment>) {
+        parentId = comments.last().id
+
+        displayComments(comments)
+    }
+
+    private fun onViewCreatedArticle(view: View, savedInstanceState: Bundle?) {
+        parentId = 0
+
         toolbar.setSubtitle(R.string.comments_fragment_subtitle)
         arguments.article?.title?.let(toolbar::setTitle)
 
         // callback for comments request - displays comments
         getCommentsViewModel.getCommentsObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onGetCommentsResponse).let(disposables::add)
-
-        super.onViewCreated(view, savedInstanceState)
-
-        retryButton.setOnClickListener {
-            onRetryButtonClicked()
-        }
 
         if (savedInstanceState == null) {
             getCommentsViewModel.getCommentsObserver.onNext(arguments.articleId)

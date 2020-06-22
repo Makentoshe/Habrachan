@@ -6,7 +6,6 @@ import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.navigation.comments.CommentsFlowFragmentArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFlowFragmentUi
 import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
@@ -46,9 +45,6 @@ class CommentsFlowFragmentModule(fragment: CommentsFlowFragment) : CommentsInput
 
         val commentsFlowFragmentDisposables = CompositeDisposable()
         bind<CompositeDisposable>().toInstance(commentsFlowFragmentDisposables)
-
-        val arguments = CommentsFlowFragmentArguments(fragment)
-        bind<CommentsFlowFragmentArguments>().toInstance(arguments)
 
         val getCommentsViewModel = getGetCommentsViewModel(fragment)
         bind<GetCommentViewModel>().toInstance(getCommentsViewModel)

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.navigation.StackNavigator
 import com.makentoshe.habrachan.navigation.comments.CommentsFlowFragmentScreen
 import com.makentoshe.habrachan.view.BackPressedFragment
@@ -31,7 +32,7 @@ class AppActivity : AppCompatActivity() {
 //                val screen = UserScreen(UserAccount.User("milfgard"))
 //                val screen = UserScreen(UserAccount.Me)
 //                val screen = AccountFlowScreen()
-                val screen = CommentsFlowFragmentScreen(493250, null, true)
+                val screen = CommentsFlowFragmentScreen(493250, null as Article?, true)
 //                val screen = NativeArticleScreen(442440)
 //                val screen = WebArticleScreen(492410) //499154
 //                val screen = PostImageScreen("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg")

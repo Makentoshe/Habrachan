@@ -10,7 +10,7 @@ class CommentsFragmentNavigation(private val router: Router) {
     fun back() = router.exit()
 
     fun toReplyScreen(comments: List<Comment>, articleId: Int) {
-        router.navigateTo(CommentsReplyScreen(comments, articleId))
+        router.navigateTo(CommentsFlowFragmentScreen(articleId, comments, false))
     }
 
     fun toUserScreen(login: String) {

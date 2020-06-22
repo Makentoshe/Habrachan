@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.di.article.*
+import com.makentoshe.habrachan.di.comments.CommentsDisplayFragmentModule
 import com.makentoshe.habrachan.di.comments.CommentsFlowFragmentModule
-import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.comments.CommentsReplyFragmentModule
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.images.OverlayImageFragmentModule
@@ -23,8 +23,8 @@ import com.makentoshe.habrachan.di.user.UserFragmentModule
 import com.makentoshe.habrachan.di.user.UserFragmentScope
 import com.makentoshe.habrachan.view.article.NativeArticleFragment
 import com.makentoshe.habrachan.view.article.WebArticleFragment
-import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 import com.makentoshe.habrachan.view.comments.CommentsDisplayFragment
+import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 import com.makentoshe.habrachan.view.comments.CommentsReplyFragment
 import com.makentoshe.habrachan.view.images.OverlayImageFragment
 import com.makentoshe.habrachan.view.main.MainFlowFragment
@@ -147,7 +147,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     }
 
     private fun injectCommentsFragment(fragment: CommentsDisplayFragment) {
-        val module = CommentsFragmentModule(fragment)
+        val module = CommentsDisplayFragmentModule(fragment)
         val scope = Toothpick.openScopes(ApplicationScope::class.java, CommentsDisplayFragment::class.java)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
