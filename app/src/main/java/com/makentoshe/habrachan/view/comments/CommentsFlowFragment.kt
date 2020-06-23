@@ -53,6 +53,8 @@ class CommentsFlowFragment : Fragment() {
     private lateinit var createCommentView: EditText
     private lateinit var peekController: TextView
 
+    private lateinit var markupLayout: ViewGroup
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentsFlowFragmentUi(container).inflateView(inflater)
     }
@@ -65,6 +67,7 @@ class CommentsFlowFragment : Fragment() {
         bottomSheet = view.findViewById(R.id.comments_fragment_bottom_sheet)
         createCommentView = view.findViewById(R.id.comments_fragment_bottom_sheet_comment_edit)
         peekController = view.findViewById(R.id.comments_fragment_bottom_sheet_peek_controller)
+        markupLayout = view.findViewById(R.id.comments_fragment_markup)
 
         toolbar.setNavigationOnClickListener {
             navigation.back()
@@ -100,6 +103,18 @@ class CommentsFlowFragment : Fragment() {
                 else -> false
             }
         }
+
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                // todo change visibility with smooth animation, mb using onSlide
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    markupLayout.visibility = View.GONE
+                } else {
+                    markupLayout.visibility = View.VISIBLE
+                }
+            }
+        })
     }
 
     private fun onViewCreatedComments(view: View, savedInstanceState: Bundle?, comments: List<Comment>) {

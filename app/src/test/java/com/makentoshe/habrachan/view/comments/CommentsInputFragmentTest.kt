@@ -35,7 +35,7 @@ abstract class CommentsInputFragmentTest : BaseRobolectricTest() {
         val messageText = "Sas"
 
         val activity = buildActivityController().get()
-        val sendButton = activity.findViewById<Button>(R.id.comments_markup_send)
+        val sendButton = activity.findViewById<Button>(R.id.comments_fragment_markup_send)
 
         getMessageView(activity).setText(messageText)
         sendButton.performClick()
@@ -56,7 +56,7 @@ abstract class CommentsInputFragmentTest : BaseRobolectricTest() {
     @Test
     fun testShouldEnableSendButton() {
         val activity = buildActivityController().get()
-        val sendButton = activity.findViewById<Button>(R.id.comments_markup_send)
+        val sendButton = activity.findViewById<Button>(R.id.comments_fragment_markup_send)
 
         assertFalse(sendButton.isEnabled)
         getMessageView(activity).setText("  \n \t ")
@@ -68,8 +68,8 @@ abstract class CommentsInputFragmentTest : BaseRobolectricTest() {
     @Test
     fun testShouldDisplayProgressBarOnSendButtonClick() {
         val activity = buildActivityController().get()
-        val sendButton = activity.findViewById<Button>(R.id.comments_markup_send)
-        val sendButtonProgress = activity.findViewById<ProgressBar>(R.id.comments_markup_send_progress)
+        val sendButton = activity.findViewById<Button>(R.id.comments_fragment_markup_send)
+        val sendButtonProgress = activity.findViewById<ProgressBar>(R.id.comments_fragment_markup_send_progress)
 
         getMessageView(activity).setText("sas")
         sendButton.performClick()
@@ -84,8 +84,8 @@ abstract class CommentsInputFragmentTest : BaseRobolectricTest() {
         every { mockSendCommentViewModel.sendCommentResponseObservable } returns mockObservable
 
         val activity = buildActivityController().get()
-        val sendButton = activity.findViewById<Button>(R.id.comments_markup_send)
-        val sendButtonProgress = activity.findViewById<ProgressBar>(R.id.comments_markup_send_progress)
+        val sendButton = activity.findViewById<Button>(R.id.comments_fragment_markup_send)
+        val sendButtonProgress = activity.findViewById<ProgressBar>(R.id.comments_fragment_markup_send_progress)
 
         getMessageView(activity).setText("sas")
         sendButton.performClick()
@@ -101,7 +101,7 @@ abstract class CommentsInputFragmentTest : BaseRobolectricTest() {
         every { mockSendCommentViewModel.sendCommentResponseObservable } returns mockObservable
 
         val activity = buildActivityController().get()
-        val sendButton = activity.findViewById<Button>(R.id.comments_markup_send)
+        val sendButton = activity.findViewById<Button>(R.id.comments_fragment_markup_send)
 
         getMessageView(activity).setText("sas")
         sendButton.performClick()
@@ -117,7 +117,7 @@ abstract class CommentsInputFragmentTest : BaseRobolectricTest() {
         every { mockSendCommentViewModel.sendCommentResponseObservable } returns mockObservable
 
         val activity = buildActivityController().get()
-        val sendButton = activity.findViewById<Button>(R.id.comments_markup_send)
+        val sendButton = activity.findViewById<Button>(R.id.comments_fragment_markup_send)
 
         getMessageView(activity).setText("sas")
         sendButton.performClick()
@@ -132,7 +132,7 @@ abstract class CommentsInputFragmentTest : BaseRobolectricTest() {
         every { mockSendCommentViewModel.sendCommentResponseObservable } returns mockObservable
 
         val activity = buildActivityController().get()
-        val sendButton = activity.findViewById<Button>(R.id.comments_markup_send)
+        val sendButton = activity.findViewById<Button>(R.id.comments_fragment_markup_send)
 
         getMessageView(activity).setText("sas")
         sendButton.performClick()

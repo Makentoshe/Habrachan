@@ -44,9 +44,9 @@ class CommentsReplyFragmentUi : CommentsInputFragmentUi {
         toolbar = fragmentView.findViewById(R.id.comments_reply_toolbar)
         recycler = fragmentView.findViewById(R.id.comments_reply_recycler)
         internalMarkupActionsContainer = fragmentView.findViewById(R.id.comments_reply_markup)
-        internalSendButton = fragmentView.findViewById(R.id.comments_markup_send)
+        internalSendButton = fragmentView.findViewById(R.id.comments_fragment_markup_send)
         internalMessageEditText = fragmentView.findViewById(R.id.comments_reply_message_input)
-        internalSendProgressBar = fragmentView.findViewById(R.id.comments_markup_send_progress)
+        internalSendProgressBar = fragmentView.findViewById(R.id.comments_fragment_markup_send_progress)
         internalSlidingPanel = fragmentView.findViewById(R.id.comments_reply_sliding)
         return fragmentView
     }

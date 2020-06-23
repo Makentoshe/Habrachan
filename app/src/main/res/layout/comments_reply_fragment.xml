@@ -26,7 +26,7 @@
     <include
         android:visibility="gone"
         android:id="@+id/comments_reply_markup"
-        layout="@layout/comment_markup"
+        layout="@layout/comments_flow_fragment_markup"
         android:layout_height="48dp"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
