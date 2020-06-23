@@ -84,9 +84,9 @@ class CommentsFlowFragment : Fragment() {
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         createCommentView.doAfterTextChanged(peekController::setText)
 
-        // todo replace hardcoded 20f
+        // todo replace hardcoded 20f and 7f
         peekController.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-            bottomSheetBehavior.peekHeight = v.height + dp2px(20f)
+            bottomSheetBehavior.peekHeight = v.height + dp2px(20f /* margins */ + 7f /* drag indicator */)
         }
 
         toolbar.setOnMenuItemClickListener { item ->
