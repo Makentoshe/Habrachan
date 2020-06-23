@@ -3,7 +3,6 @@ package com.makentoshe.habrachan.view.comments
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
-import android.view.WindowManager
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
@@ -41,16 +40,6 @@ abstract class CommentsInputFragment : Fragment() {
 
     private fun onMessageTextChanged(message: Editable?) {
         commentsInputFragmentUi.sendButton.isEnabled = message?.isNotBlank() == true
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
     }
 
     private fun onSoftKeyboardVisibilityChanged(visible: Boolean) = if (visible) {

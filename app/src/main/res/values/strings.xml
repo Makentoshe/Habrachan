@@ -78,4 +78,5 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="comments_flow_fragment_message_input_article">Reply to article</string>
     <string name="comments_reply_message_input_article">Reply to @user\'s last message</string>
     <string name="comment_input_prerender_not_support">Note: html or markdown prerender are not currently supported</string>
+    <string name="menu_comment_create">Create comment</string>
 </resources>

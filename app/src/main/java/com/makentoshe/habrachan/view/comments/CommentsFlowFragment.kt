@@ -1,45 +1,46 @@
 package com.makentoshe.habrachan.view.comments
 
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.model.Comments
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
-import com.makentoshe.habrachan.common.ui.softkeyboard.SoftKeyboardController
 import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentScreen
 import com.makentoshe.habrachan.navigation.comments.CommentsFlowFragmentArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFlowFragmentUi
-import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.GetCommentViewModel
-import com.makentoshe.habrachan.viewmodel.comments.SendCommentViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
+import kotlin.math.floor
 
-class CommentsFlowFragment : CommentsInputFragment() {
+
+class CommentsFlowFragment : Fragment() {
 
     private val arguments = CommentsFlowFragmentArguments(this)
 
     private val getCommentsViewModel by inject<GetCommentViewModel>()
-    override val sendCommentViewModel by inject<SendCommentViewModel>()
+//    override val sendCommentViewModel by inject<SendCommentViewModel>()
 
-    override val commentsInputFragmentUi by inject<CommentsInputFragmentUi>()
-    override val disposables by inject<CompositeDisposable>()
-    override val softKeyboardController = SoftKeyboardController()
+    private val disposables by inject<CompositeDisposable>()
+//    private  val softKeyboardController = SoftKeyboardController()
 
     private val navigation by inject<CommentsFragmentNavigation>()
-    private val commentsFlowFragmentUi by inject<CommentsFlowFragmentUi>()
-
-    override val articleId: Int
-        get() = arguments.articleId
 
     private var parentId: Int = 0
 
@@ -48,8 +49,12 @@ class CommentsFlowFragment : CommentsInputFragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var messageView: TextView
 
+    private lateinit var bottomSheet: ViewGroup
+    private lateinit var createCommentView: EditText
+    private lateinit var peekController: TextView
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return commentsFlowFragmentUi.inflateView(inflater, container)
+        return CommentsFlowFragmentUi(container).inflateView(inflater)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,12 +62,14 @@ class CommentsFlowFragment : CommentsInputFragment() {
         progressBar = view.findViewById(R.id.comments_fragment_progressbar)
         messageView = view.findViewById(R.id.comments_fragment_messageview)
         toolbar = view.findViewById(R.id.comments_fragment_toolbar)
-
-        super.onViewCreated(view, savedInstanceState)
+        bottomSheet = view.findViewById(R.id.comments_fragment_bottom_sheet)
+        createCommentView = view.findViewById(R.id.comments_fragment_bottom_sheet_comment_edit)
+        peekController = view.findViewById(R.id.comments_fragment_bottom_sheet_peek_controller)
 
         toolbar.setNavigationOnClickListener {
             navigation.back()
         }
+
         retryButton.setOnClickListener {
             onRetryButtonClicked()
         }
@@ -74,6 +81,25 @@ class CommentsFlowFragment : CommentsInputFragment() {
             onViewCreatedArticle(view, savedInstanceState)
         }
 
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        createCommentView.doAfterTextChanged(peekController::setText)
+
+        // todo replace hardcoded 20f
+        peekController.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            bottomSheetBehavior.peekHeight = v.height + dp2px(20f)
+        }
+
+        toolbar.setOnMenuItemClickListener { item ->
+            return@setOnMenuItemClickListener when (item.itemId) {
+                R.id.action_comment_create -> {
+                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HIDDEN) {
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun onViewCreatedComments(view: View, savedInstanceState: Bundle?, comments: List<Comment>) {
@@ -97,6 +123,27 @@ class CommentsFlowFragment : CommentsInputFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+        val containedCommentsFragment = childFragmentManager.findFragmentById(R.id.comments_fragment_container)
+        if (containedCommentsFragment == null) {
+            val comments = arguments.comments
+            if (comments != null) {
+                return displayComments(comments)
+            }
+            if (getCommentsViewModel.getCommentsObservable.hasValue()) {
+                onGetCommentsResponse(getCommentsViewModel.getCommentsObservable.value!!)
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
+    }
+
     private fun onGetCommentsResponse(response: GetCommentsResponse) = when (response) {
         is GetCommentsResponse.Success -> onGetCommentsResponseSuccess(response)
         is GetCommentsResponse.Error -> onGetCommentsResponseError(response)
@@ -115,7 +162,10 @@ class CommentsFlowFragment : CommentsInputFragment() {
             val commentsFragment = CommentsDisplayFragmentScreen(
                 arguments.articleId, arguments.commentActionsEnabled, comments
             ).fragment
-            childFragmentManager.beginTransaction().add(R.id.comments_fragment_container, commentsFragment).commitNow()
+            if (!isStateSaved) {
+                childFragmentManager.beginTransaction().add(R.id.comments_fragment_container, commentsFragment)
+                    .commitNow()
+            }
         }
     }
 
@@ -139,5 +189,10 @@ class CommentsFlowFragment : CommentsInputFragment() {
         progressBar.visibility = View.VISIBLE
 
         getCommentsViewModel.getCommentsObserver.onNext(arguments.articleId)
+    }
+
+    private fun dp2px(dip: Float): Int {
+        val r: Resources = resources
+        return floor(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, r.displayMetrics)).toInt()
     }
 }

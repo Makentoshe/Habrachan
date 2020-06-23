@@ -1,28 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/comments_flow_fragment_sliding"
-        layout="@layout/comments_flow_fragment_sliding"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/comments_flow_markup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include layout="@layout/comments_flow_fragment_toolbar" />
 
-    <include
-        android:visibility="gone"
-        android:id="@+id/comments_flow_markup"
-        layout="@layout/comment_markup"
-        android:layout_height="48dp"
-        android:layout_width="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <include layout="@layout/comments_flow_fragment_content" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/comments_flow_fragment_sheet" />
 
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -11,7 +11,6 @@ import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.viewmodel.NetworkSchedulerProvider
-import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
@@ -23,7 +22,7 @@ interface GetCommentViewModel {
     val getCommentsObserver: Observer<Int>
 
     /** Returns all article comments */
-    val getCommentsObservable: Observable<GetCommentsResponse>
+    val getCommentsObservable: BehaviorSubject<GetCommentsResponse>
 
     class Factory(
         private val schedulerProvider: NetworkSchedulerProvider,
@@ -55,7 +54,7 @@ interface GetCommentViewModel {
         override val getCommentsObserver: Observer<Int> = getCommentsRequestSubject
 
         private val getCommentsResponseSubject = BehaviorSubject.create<GetCommentsResponse>()
-        override val getCommentsObservable: Observable<GetCommentsResponse> = getCommentsResponseSubject
+        override val getCommentsObservable = getCommentsResponseSubject
 
         init {
             getCommentsRequestSubject.observeOn(schedulerProvider.networkScheduler).subscribe { articleId ->

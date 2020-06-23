@@ -20,6 +20,7 @@
             android:id="@+id/comments_fragment_toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height_with_subtitle"
+            app:menu="@menu/comment_create"
             app:navigationIcon="@drawable/ic_arrow_back"
             app:layout_collapseMode="pin" />
 

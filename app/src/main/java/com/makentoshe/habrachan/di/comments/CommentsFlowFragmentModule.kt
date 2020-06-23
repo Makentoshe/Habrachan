@@ -7,8 +7,6 @@ import com.makentoshe.habrachan.common.network.manager.CommentsManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
-import com.makentoshe.habrachan.ui.comments.CommentsFlowFragmentUi
-import com.makentoshe.habrachan.ui.comments.CommentsInputFragmentUi
 import com.makentoshe.habrachan.view.comments.CommentsFlowFragment
 import com.makentoshe.habrachan.viewmodel.NetworkSchedulerProvider
 import com.makentoshe.habrachan.viewmodel.comments.GetCommentViewModel
@@ -17,10 +15,11 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
+import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
-class CommentsFlowFragmentModule(fragment: CommentsFlowFragment) : CommentsInputFragmentModule(fragment) {
+class CommentsFlowFragmentModule(fragment: CommentsFlowFragment) : Module() {
 
     private val commentsManager: CommentsManager
     private val imageManager: ImageManager
@@ -38,10 +37,6 @@ class CommentsFlowFragmentModule(fragment: CommentsFlowFragment) : CommentsInput
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
         commentsManager = CommentsManager.Factory(client).buildNative()
         imageManager = ImageManager.Builder(client).build()
-
-        val commentsFlowFragmentUi = CommentsFlowFragmentUi()
-        bind<CommentsFlowFragmentUi>().toInstance(commentsFlowFragmentUi)
-        bind<CommentsInputFragmentUi>().toInstance(commentsFlowFragmentUi)
 
         val commentsFlowFragmentDisposables = CompositeDisposable()
         bind<CompositeDisposable>().toInstance(commentsFlowFragmentDisposables)
