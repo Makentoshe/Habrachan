@@ -2,11 +2,9 @@ package com.makentoshe.habrachan.view.comments
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.text.Editable
 import android.util.TypedValue
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -19,11 +17,13 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.model.Comments
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
+import com.makentoshe.habrachan.model.comments.SendCommentData
 import com.makentoshe.habrachan.navigation.comments.CommentsDisplayFragmentScreen
 import com.makentoshe.habrachan.navigation.comments.CommentsFlowFragmentArguments
 import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFlowFragmentUi
 import com.makentoshe.habrachan.viewmodel.comments.GetCommentViewModel
+import com.makentoshe.habrachan.viewmodel.comments.SendCommentViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
@@ -35,10 +35,9 @@ class CommentsFlowFragment : Fragment() {
     private val arguments = CommentsFlowFragmentArguments(this)
 
     private val getCommentsViewModel by inject<GetCommentViewModel>()
-//    override val sendCommentViewModel by inject<SendCommentViewModel>()
+    private val sendCommentViewModel by inject<SendCommentViewModel>()
 
     private val disposables by inject<CompositeDisposable>()
-//    private  val softKeyboardController = SoftKeyboardController()
 
     private val navigation by inject<CommentsFragmentNavigation>()
 
@@ -54,6 +53,12 @@ class CommentsFlowFragment : Fragment() {
     private lateinit var peekController: TextView
 
     private lateinit var markupLayout: ViewGroup
+    private lateinit var sendButton: Button
+    private lateinit var sendProgressBar: ProgressBar
+
+    private val bottomSheetBehavior by lazy {
+        BottomSheetBehavior.from(bottomSheet)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return CommentsFlowFragmentUi(container).inflateView(inflater)
@@ -68,6 +73,8 @@ class CommentsFlowFragment : Fragment() {
         createCommentView = view.findViewById(R.id.comments_fragment_bottom_sheet_comment_edit)
         peekController = view.findViewById(R.id.comments_fragment_bottom_sheet_peek_controller)
         markupLayout = view.findViewById(R.id.comments_fragment_markup)
+        sendButton = view.findViewById(R.id.comments_fragment_markup_send)
+        sendProgressBar = view.findViewById(R.id.comments_fragment_markup_send_progress)
 
         toolbar.setNavigationOnClickListener {
             navigation.back()
@@ -84,37 +91,53 @@ class CommentsFlowFragment : Fragment() {
             onViewCreatedArticle(view, savedInstanceState)
         }
 
-        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        createCommentView.doAfterTextChanged(peekController::setText)
+        createCommentView.doAfterTextChanged { editable ->
+            onMessageTextChanged(editable)
+        }
 
-        // todo replace hardcoded 20f and 7f
-        peekController.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-            bottomSheetBehavior.peekHeight = v.height + dp2px(20f /* margins */ + 7f /* drag indicator */)
+        sendButton.setOnClickListener {
+            onMessageSend()
+        }
+
+        peekController.addOnLayoutChangeListener { view, _, _, _, _, _, _, _, _ ->
+            onCreateMessageViewChanged(view)
         }
 
         toolbar.setOnMenuItemClickListener { item ->
-            return@setOnMenuItemClickListener when (item.itemId) {
-                R.id.action_comment_create -> {
-                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HIDDEN) {
-                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                    }
-                    true
-                }
-                else -> false
-            }
+            onToolbarMenuClicked(item)
         }
 
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                // todo change visibility with smooth animation, mb using onSlide
-                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    markupLayout.visibility = View.GONE
-                } else {
-                    markupLayout.visibility = View.VISIBLE
-                }
+                onBottomSheetBehaviorStateChanged(newState)
             }
         })
+
+        sendCommentViewModel.sendCommentResponseObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            onSendCommentResponse(it)
+        }.let(disposables::add)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+        val containedCommentsFragment = childFragmentManager.findFragmentById(R.id.comments_fragment_container)
+        if (containedCommentsFragment == null) {
+            val comments = arguments.comments
+            if (comments != null) {
+                return displayComments(comments)
+            }
+            if (getCommentsViewModel.getCommentsObservable.hasValue()) {
+                onGetCommentsResponse(getCommentsViewModel.getCommentsObservable.value!!)
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
     }
 
     private fun onViewCreatedComments(view: View, savedInstanceState: Bundle?, comments: List<Comment>) {
@@ -138,25 +161,45 @@ class CommentsFlowFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    private fun onToolbarMenuClicked(item: MenuItem) = when (item.itemId) {
+        R.id.action_comment_create -> {
+            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HIDDEN) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+            true
+        }
+        else -> false
+    }
 
-        val containedCommentsFragment = childFragmentManager.findFragmentById(R.id.comments_fragment_container)
-        if (containedCommentsFragment == null) {
-            val comments = arguments.comments
-            if (comments != null) {
-                return displayComments(comments)
-            }
-            if (getCommentsViewModel.getCommentsObservable.hasValue()) {
-                onGetCommentsResponse(getCommentsViewModel.getCommentsObservable.value!!)
-            }
+    private fun onBottomSheetBehaviorStateChanged(newState: Int) {
+        // todo change visibility with smooth animation, mb using onSlide
+        if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+            markupLayout.visibility = View.GONE
+        } else {
+            markupLayout.visibility = View.VISIBLE
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
+    private fun onMessageTextChanged(editable: Editable?) {
+        peekController.text = editable
+        sendButton.isEnabled = editable?.isNotBlank() == true
+    }
+
+    private fun onMessageSend() {
+        val messageText = createCommentView.text
+        if (messageText.isBlank()) return
+        sendButton.visibility = View.GONE
+        sendProgressBar.visibility = View.VISIBLE
+
+        val sendCommentData = SendCommentData(messageText, arguments.articleId, parentId)
+        sendCommentViewModel.sendCommentRequestObserver.onNext(sendCommentData)
+    }
+
+    // todo replace hardcoded 20f and 7f
+    private fun onCreateMessageViewChanged(view: View) {
+        val margins = 20f
+        val dragIndicator = 7f
+        bottomSheetBehavior.peekHeight = view.height + dp2px(margins + dragIndicator)
     }
 
     private fun onGetCommentsResponse(response: GetCommentsResponse) = when (response) {
@@ -209,5 +252,12 @@ class CommentsFlowFragment : Fragment() {
     private fun dp2px(dip: Float): Int {
         val r: Resources = resources
         return floor(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, r.displayMetrics)).toInt()
+    }
+
+    private fun onSendCommentResponse(mock: CharSequence) {
+        sendButton.visibility = View.VISIBLE
+        sendProgressBar.visibility = View.GONE
+        createCommentView.setText("")
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 }
