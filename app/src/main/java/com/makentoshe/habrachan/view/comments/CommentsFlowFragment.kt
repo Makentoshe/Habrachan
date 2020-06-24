@@ -86,9 +86,9 @@ class CommentsFlowFragment : Fragment() {
 
         val comments = arguments.comments
         if (comments != null) {
-            onViewCreatedComments(view, savedInstanceState, comments)
+            onViewCreatedComments(comments)
         } else {
-            onViewCreatedArticle(view, savedInstanceState)
+            onViewCreatedArticle(savedInstanceState)
         }
 
         createCommentView.doAfterTextChanged { editable ->
@@ -99,8 +99,8 @@ class CommentsFlowFragment : Fragment() {
             onMessageSend()
         }
 
-        peekController.addOnLayoutChangeListener { view, _, _, _, _, _, _, _, _ ->
-            onCreateMessageViewChanged(view)
+        peekController.addOnLayoutChangeListener { v, _, _, _, _, _, _, _, _ ->
+            onCreateMessageViewChanged(v)
         }
 
         toolbar.setOnMenuItemClickListener { item ->
@@ -140,11 +140,11 @@ class CommentsFlowFragment : Fragment() {
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
     }
 
-    private fun onViewCreatedComments(view: View, savedInstanceState: Bundle?, comments: List<Comment>) {
+    private fun onViewCreatedComments(comments: List<Comment>) {
         displayComments(comments)
     }
 
-    private fun onViewCreatedArticle(view: View, savedInstanceState: Bundle?) {
+    private fun onViewCreatedArticle(savedInstanceState: Bundle?) {
         toolbar.setSubtitle(R.string.comments_fragment_subtitle)
         arguments.article?.title?.let(toolbar::setTitle)
 
@@ -160,7 +160,7 @@ class CommentsFlowFragment : Fragment() {
     private fun onToolbarMenuClicked(item: MenuItem) = when (item.itemId) {
         R.id.action_comment_create -> {
             if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HIDDEN) {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
             }
             true
         }
