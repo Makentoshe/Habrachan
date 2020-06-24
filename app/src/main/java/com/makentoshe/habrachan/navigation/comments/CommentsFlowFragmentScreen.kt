@@ -9,28 +9,32 @@ class CommentsFlowFragmentScreen private constructor(
     private val articleId: Int,
     private val article: Article?,
     private val commentActionsEnabled: Boolean,
-    private val comments: List<Comment>?
+    private val comments: List<Comment>?,
+    private val parentId: Int
 ) : Screen() {
 
     constructor(articleId: Int, article: Article?, commentActionsEnabled: Boolean) : this(
         articleId,
         article,
         commentActionsEnabled,
-        null
+        null,
+        0
     )
 
     constructor(article: Article, commentActionsEnabled: Boolean) : this(
         article.id,
         article,
         commentActionsEnabled,
-        null
+        null,
+        0
     )
 
-    constructor(articleId: Int, comments: List<Comment>?, commentActionsEnabled: Boolean) : this(
+    constructor(articleId: Int, comments: List<Comment>?, commentActionsEnabled: Boolean, parentId: Int) : this(
         articleId,
         null,
         commentActionsEnabled,
-        comments
+        comments,
+        parentId
     )
 
     override fun getFragment(): CommentsFlowFragment {
@@ -40,6 +44,7 @@ class CommentsFlowFragmentScreen private constructor(
         arguments.articleId = articleId
         arguments.commentActionsEnabled = commentActionsEnabled
         arguments.comments = comments
+        arguments.parentId = parentId
         return fragment
     }
 }

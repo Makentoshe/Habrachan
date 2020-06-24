@@ -41,8 +41,6 @@ class CommentsFlowFragment : Fragment() {
 
     private val navigation by inject<CommentsFragmentNavigation>()
 
-    private var parentId: Int = 0
-
     private lateinit var toolbar: Toolbar
     private lateinit var retryButton: Button
     private lateinit var progressBar: ProgressBar
@@ -143,14 +141,10 @@ class CommentsFlowFragment : Fragment() {
     }
 
     private fun onViewCreatedComments(view: View, savedInstanceState: Bundle?, comments: List<Comment>) {
-        parentId = comments.last().id
-
         displayComments(comments)
     }
 
     private fun onViewCreatedArticle(view: View, savedInstanceState: Bundle?) {
-        parentId = 0
-
         toolbar.setSubtitle(R.string.comments_fragment_subtitle)
         arguments.article?.title?.let(toolbar::setTitle)
 
@@ -193,7 +187,7 @@ class CommentsFlowFragment : Fragment() {
         sendButton.visibility = View.GONE
         sendProgressBar.visibility = View.VISIBLE
 
-        val sendCommentData = SendCommentData(messageText, arguments.articleId, parentId)
+        val sendCommentData = SendCommentData(messageText, arguments.articleId, arguments.parentId)
         sendCommentViewModel.sendCommentRequestObserver.onNext(sendCommentData)
     }
 

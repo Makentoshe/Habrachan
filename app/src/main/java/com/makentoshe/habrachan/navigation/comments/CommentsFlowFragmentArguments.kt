@@ -28,10 +28,16 @@ class CommentsFlowFragmentArguments(
         }
         get() = fragmentArguments.getStringArrayList(COMMENTS)?.map { Comment.fromJson(it) }
 
+    var parentId: Int
+        set(value) = fragmentArguments.putInt(PARENT, value)
+        get() = fragmentArguments.getInt(PARENT, 0)
+
+
     companion object {
         private const val ID = "Id"
         private const val ARTICLE = "Article"
         private const val ACTION = "Action"
         private const val COMMENTS = "Comments"
+        private const val PARENT = "ParentId"
     }
 }
