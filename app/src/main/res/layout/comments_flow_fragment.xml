@@ -22,6 +22,7 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <include
+        android:visibility="gone"
         layout="@layout/comments_flow_fragment_markup"
         android:id="@+id/comments_fragment_markup"
         android:layout_width="match_parent"

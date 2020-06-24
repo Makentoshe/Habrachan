@@ -76,6 +76,8 @@ class CommentsFlowFragment : Fragment() {
         sendButton = view.findViewById(R.id.comments_fragment_markup_send)
         sendProgressBar = view.findViewById(R.id.comments_fragment_markup_send_progress)
 
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
         toolbar.setNavigationOnClickListener {
             navigation.back()
         }
