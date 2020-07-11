@@ -219,7 +219,7 @@ class LoginFragmentTest : BaseRobolectricTest() {
         val signInButton = activity.findViewById<Button>(R.id.login_fragment_loginbutton)
         signInButton.performClick()
 
-        signInObserver.test().assertValue { loginData ->
+        signInObserver.cast(LoginData.Default::class.java).test().assertValue { loginData ->
             loginData.password == passwordEditText.text.toString()
         }.assertValue { loginData ->
             loginData.email == emailEditText.text.toString()

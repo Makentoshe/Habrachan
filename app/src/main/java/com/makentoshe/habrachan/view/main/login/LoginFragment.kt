@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.view.main.login
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,10 @@ import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.network.response.LoginResponse
+import com.makentoshe.habrachan.common.network.response.OAuthResponse
 import com.makentoshe.habrachan.model.main.login.LoginData
+import com.makentoshe.habrachan.model.main.login.OauthType
+import com.makentoshe.habrachan.navigation.main.login.OauthScreen
 import com.makentoshe.habrachan.ui.main.account.login.LoginFragmentUi
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,16 +28,22 @@ import toothpick.ktp.delegate.inject
 class LoginFragment : Fragment() {
 
     private val disposables by inject<CompositeDisposable>()
-    private val viewModel by inject<LoginViewModel>()
+    private val loginViewModel by inject<LoginViewModel>()
+
+    private lateinit var emailView: TextInputEditText
+    private lateinit var passwordView: TextInputEditText
+    private lateinit var signInView: Button
+    private lateinit var oauthGithubSignIn: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LoginFragmentUi().createView(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val emailView = view.findViewById<TextInputEditText>(R.id.login_fragment_email_edittext)
-        val passwordView = view.findViewById<TextInputEditText>(R.id.login_fragment_password_edittext)
-        val signInView = view.findViewById<Button>(R.id.login_fragment_loginbutton)
+        emailView = view.findViewById(R.id.login_fragment_email_edittext)
+        passwordView = view.findViewById(R.id.login_fragment_password_edittext)
+        signInView = view.findViewById(R.id.login_fragment_loginbutton)
+        oauthGithubSignIn = view.findViewById(R.id.login_fragment_oauth_github)
 
         emailView.addTextChangedListener {
             signInView.isEnabled = !it.isNullOrEmpty() && !passwordView.text.isNullOrEmpty()
@@ -44,12 +54,18 @@ class LoginFragment : Fragment() {
         }
 
         signInView.setOnClickListener {
-            val loginData = LoginData(emailView.text.toString(), passwordView.text.toString())
-            viewModel.signInObserver.onNext(loginData)
+            val loginData = LoginData.Default(emailView.text.toString(), passwordView.text.toString())
+            loginViewModel.signInObserver.onNext(loginData)
             hideSoftKeyboard()
         }
 
-        viewModel.loginObservable.observeOn(AndroidSchedulers.mainThread())
+        oauthGithubSignIn.setOnClickListener {
+            val fragment = OauthScreen(OauthType.Github).fragment
+            fragment.setTargetFragment(this, oauthRequestCode)
+            parentFragmentManager.beginTransaction().add(R.id.login_flow_fragment, fragment).commit()
+        }
+
+        loginViewModel.loginObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onLoginResponse)
             .let(disposables::add)
 
@@ -81,7 +97,25 @@ class LoginFragment : Fragment() {
         disposables.clear()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == OAuthResponse::javaClass.hashCode()) {
+            onOauthResult(data)
+        }
+    }
+
+    private fun onOauthResult(data: Intent?) {
+        if (data?.hasExtra("token") == true) {
+            loginViewModel.signInObserver.onNext(LoginData.Token(data.getStringExtra("token")!!))
+        } else {
+            // err
+        }
+    }
+
     class Factory {
         fun build() = LoginFragment()
+    }
+
+    companion object {
+        private const val oauthRequestCode = 1
     }
 }

@@ -16,6 +16,7 @@ import org.junit.Test
 import org.junit.rules.Timeout
 import java.util.concurrent.TimeUnit
 
+@Suppress("ReactiveStreamsUnusedPublisher")
 class LoginViewModelTest: BaseTest() {
 
     private lateinit var viewModel: LoginViewModel
@@ -40,7 +41,7 @@ class LoginViewModelTest: BaseTest() {
         every { loginManager.login(any()) } returns Single.just(mockkResponse)
         every { sessionDao.insert(any()) } just runs
         // invoke request
-        viewModel.signInObserver.onNext(LoginData("email", "password"))
+        viewModel.signInObserver.onNext(LoginData.Default("email", "password"))
         // check response
         val response = viewModel.loginObservable.blockingFirst() as LoginResponse.Success
         assertEquals("a", response.accessToken)
@@ -57,7 +58,7 @@ class LoginViewModelTest: BaseTest() {
         val errorResponse = LoginResponse.Error(listOf("additional"), 400, "message")
         every { loginManager.login(any()) } returns Single.just(errorResponse)
         //invoke request
-        viewModel.signInObserver.onNext(LoginData("email", "password"))
+        viewModel.signInObserver.onNext(LoginData.Default("email", "password"))
         // check response
         val response = viewModel.loginObservable.blockingFirst()
         assertEquals(response, errorResponse)
