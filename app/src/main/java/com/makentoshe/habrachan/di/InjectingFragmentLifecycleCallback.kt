@@ -12,10 +12,7 @@ import com.makentoshe.habrachan.di.images.OverlayImageFragmentScope
 import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
 import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
 import com.makentoshe.habrachan.di.main.articles.*
-import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentModule
-import com.makentoshe.habrachan.di.main.login.LoginFlowFragmentScope
-import com.makentoshe.habrachan.di.main.login.LoginFragmentModule
-import com.makentoshe.habrachan.di.main.login.LoginFragmentScope
+import com.makentoshe.habrachan.di.main.login.*
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentModule
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentScope
 import com.makentoshe.habrachan.di.user.UserFragmentModule
@@ -30,6 +27,7 @@ import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
 import com.makentoshe.habrachan.view.main.articles.ArticlesSearchFragment
 import com.makentoshe.habrachan.view.main.login.LoginFlowFragment
 import com.makentoshe.habrachan.view.main.login.LoginFragment
+import com.makentoshe.habrachan.view.main.login.OauthFragment
 import com.makentoshe.habrachan.view.user.UserArticlesFragment
 import com.makentoshe.habrachan.view.user.UserFragment
 import toothpick.Toothpick
@@ -48,6 +46,7 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
             is LoginFragment -> injectLoginFragment(f)
             is LoginFlowFragment -> injectLoginFlowFragment(f)
+            is OauthFragment -> injectOauthFragment(f)
 
             is UserFragment -> injectUserFragment(f)
 
@@ -132,6 +131,12 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     private fun injectOverlayImageFragment(fragment: OverlayImageFragment) {
         val module = OverlayImageFragmentModule(fragment)
         val scopes = Toothpick.openScopes(ApplicationScope::class.java, OverlayImageFragmentScope::class.java)
+        scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
+    }
+
+    private fun injectOauthFragment(fragment: OauthFragment) {
+        val module = OauthFragmentModule(fragment)
+        val scopes = Toothpick.openScopes(ApplicationScope::class.java, OauthFragmentScope::class.java)
         scopes.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 

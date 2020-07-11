@@ -14,7 +14,7 @@ import javax.net.ssl.HostnameVerifier
 
 class ApplicationModule(context: Context) : Module() {
 
-    private val client = OkHttpClient.Builder().followRedirects(false).addLoggingInterceptor().addHostnameVerifier().build()
+    private val client = OkHttpClient.Builder().followRedirects(false).addLoggingInterceptor().build()
 
     private val cacheDatabase = Room.databaseBuilder(
         context, CacheDatabase::class.java, "HabrachanCache"
@@ -51,7 +51,7 @@ class ApplicationModule(context: Context) : Module() {
      */
     private fun OkHttpClient.Builder.addHostnameVerifier(): OkHttpClient.Builder {
         val hostnameVerifier = HostnameVerifier { hostname, _ ->
-            hostname == "habr.com" || hostname == "account.habr.com"
+            hostname == "habr.com" || hostname == "account.habr.com" || hostname == "github.com"
         }
         this.hostnameVerifier(hostnameVerifier)
         return this

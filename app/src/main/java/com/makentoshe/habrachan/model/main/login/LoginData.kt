@@ -1,3 +1,8 @@
 package com.makentoshe.habrachan.model.main.login
 
-data class LoginData(val email: String, val password: String)
+sealed class LoginData {
+    /** Login and password */
+    class Default(val email: String, val password: String) : LoginData()
+    /** Token from OAuth2.0 */
+    class Token(val token: String) : LoginData()
+}
