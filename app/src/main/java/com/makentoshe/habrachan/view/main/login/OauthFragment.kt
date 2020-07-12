@@ -1,12 +1,13 @@
 package com.makentoshe.habrachan.view.main.login
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.*
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.network.response.OAuthResponse
@@ -35,11 +36,14 @@ class OauthFragment : Fragment() {
         webView = view.findViewById(R.id.oauth_fragment_webview)
         webView.settings.javaScriptEnabled = true
         webView.webChromeClient = WebChromeClient()
-        webView.webViewClient = OAuthWebViewClient(this)
+        webView.webViewClient = OAuthWebViewClient(loginViewModel)
 
         if (savedInstanceState == null) {
             loginViewModel.oauthRequestObserver.onNext(OauthType.Github)
         }
+
+        loginViewModel.oauthInterimResponse.observeOn(AndroidSchedulers.mainThread())
+            .subscribe(webView::loadUrl).let(disposables::add)
 
         loginViewModel.oauthResponseObservable.observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onOauthResponse).let(disposables::add)
@@ -47,8 +51,6 @@ class OauthFragment : Fragment() {
 
     private fun onOauthResponse(response: OAuthResponse) = when (response) {
         is OAuthResponse.Interim -> {
-            webView.tag = response
-            webView.loadUrl(response.url)
         }
         is OAuthResponse.Error -> {
             //todo handle error
@@ -61,22 +63,26 @@ class OauthFragment : Fragment() {
     }
 }
 
-class OAuthWebViewClient(private val fragment: OauthFragment) : WebViewClient() {
+class OAuthWebViewClient(private val viewModel: LoginViewModel) : WebViewClient() {
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-        val response = view.tag as OAuthResponse.Interim
-        val condition = response.request.redirectUri.contains(request.url.host.toString())
-        if (condition) {
-            // shitty parsing but others does not work
-            val token = request.url.toString().split("token=")[1]
+        println("WebView: ${request.url}")
+        viewModel.oauthInterimRequestSubject.onNext(request.url.toString())
+        return true
 
-            val intent = Intent().putExtra(response.request.responseType, token)
-            fragment.targetFragment?.onActivityResult(OAuthResponse::javaClass.hashCode(), Activity.RESULT_OK, intent)
-            fragment.parentFragmentManager.beginTransaction().remove(fragment).commit()
-        } else {
-            response.cookies.forEach { cookie ->
-                CookieManager.getInstance().setCookie(request.url?.toString(), cookie.toString());
-            }
-        }
-        return condition
+//        val response = view.tag as OAuthResponse.Interim
+//        val condition = response.request.redirectUri.contains(request.url.host.toString())
+//        if (condition) {
+//            // shitty parsing but others does not work
+//            val token = request.url.toString().split("token=")[1]
+//
+//            val intent = Intent().putExtra(response.request.responseType, token)
+//            fragment.targetFragment?.onActivityResult(OAuthResponse::javaClass.hashCode(), Activity.RESULT_OK, intent)
+//            fragment.parentFragmentManager.beginTransaction().remove(fragment).commit()
+//        } else {
+//            response.cookies.forEach { cookie ->
+//                CookieManager.getInstance().setCookie(request.url?.toString(), cookie.toString());
+//            }
+//        }
+//        return condition
     }
 }

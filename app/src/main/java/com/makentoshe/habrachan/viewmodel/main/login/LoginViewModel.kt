@@ -25,12 +25,10 @@ class LoginViewModel(
     private val disposables = CompositeDisposable()
 
     private val signInSubject = PublishSubject.create<LoginData>()
-    val signInObserver: Observer<LoginData>
-        get() = signInSubject
+    val signInObserver: Observer<LoginData> = signInSubject
 
     private val loginSubject = BehaviorSubject.create<LoginResponse>()
-    val loginObservable: Observable<LoginResponse>
-        get() = loginSubject
+    val loginObservable: Observable<LoginResponse> = loginSubject
 
     private val oauthRequestSubject = PublishSubject.create<OauthType>()
     val oauthRequestObserver: Observer<OauthType> = oauthRequestSubject
@@ -38,17 +36,31 @@ class LoginViewModel(
     private val oauthResponseSubject = BehaviorSubject.create<OAuthResponse>()
     val oauthResponseObservable: Observable<OAuthResponse> = oauthResponseSubject
 
+    /** Manages url that should be opened via WebView for performing OAuth action */
+    private val oauthInterimResponseSubject = PublishSubject.create<String>()
+    val oauthInterimResponse: Observable<String> = oauthInterimResponseSubject
+
+    /** Manages url that received from the WebView and finishes OAuth action */
+    val oauthInterimRequestSubject = BehaviorSubject.create<String>()
+
     init {
         signInSubject.observeOn(Schedulers.io()).subscribe(::onSignIn).let(disposables::add)
 
         oauthRequestSubject.observeOn(Schedulers.io()).map {
             val session = sessionDatabase.session().get()
-            val request = OAuthRequest(session.clientKey, it.socialType, it.hostUrl)
-            return@map loginManager.oauth(request).blockingGet()
-        }.subscribe({ response ->
-            oauthResponseSubject.onNext(response)
+            OAuthRequest(session.clientKey, it.socialType, it.hostUrl)
+        }.subscribe({ request ->
+
+            oauthInterimRequestSubject.subscribe {
+                request.responseSubject.onNext(it)
+                request.responseSubject.onComplete()
+            }.let(disposables::add)
+
+            request.requestSubject.safeSubscribe(oauthInterimResponseSubject)
+            loginManager.oauth(request)
         }, { throwable ->
-            oauthResponseSubject.onNext(OAuthResponse.Error(throwable.toString()))
+            throw throwable
+//            oauthResponseSubject.onNext(OAuthResponse.Error(throwable.toString()))
         }).let(disposables::add)
     }
 

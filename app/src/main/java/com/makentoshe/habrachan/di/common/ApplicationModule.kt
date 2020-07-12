@@ -14,7 +14,7 @@ import javax.net.ssl.HostnameVerifier
 
 class ApplicationModule(context: Context) : Module() {
 
-    private val client = OkHttpClient.Builder().followRedirects(false).addLoggingInterceptor().build()
+    private val client = OkHttpClient.Builder().addLoggingInterceptor().build()
 
     private val cacheDatabase = Room.databaseBuilder(
         context, CacheDatabase::class.java, "HabrachanCache"
