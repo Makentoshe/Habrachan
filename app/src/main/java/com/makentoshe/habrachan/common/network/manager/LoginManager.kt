@@ -8,32 +8,54 @@ import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.common.network.response.OAuthResponse
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
-import okhttp3.Cookie
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import okhttp3.*
 import retrofit2.Retrofit
+import java.util.*
 
 interface LoginManager {
 
-    fun login(request: LoginRequest): Single<LoginResponse>
+    fun login(loginRequest: LoginRequest): Single<LoginResponse>
 
     fun oauth(oAuthRequest: OAuthRequest): Single<OAuthResponse>
 
     class Builder(private val client: OkHttpClient) {
 
-        fun build() = NativeLoginManager(client)
+        private val cookieContainer = LinkedList<Cookie>()
+
+        private val cookieJar = object : CookieJar {
+
+            override fun loadForRequest(url: HttpUrl): List<Cookie> {
+                return cookieContainer
+            }
+
+            override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+                cookies.forEach { cookie ->
+                    val storedCookie = cookieContainer.find { it.name == cookie.name }
+                    if (storedCookie == null) {
+                        cookieContainer.add(cookie)
+                    } else {
+                        cookieContainer.remove(storedCookie)
+                        cookieContainer.add(cookie)
+                    }
+                }
+            }
+        }
+
+        fun build(): LoginManager {
+            val client = client.newBuilder().cookieJar(cookieJar).followRedirects(true).build()
+            return NativeLoginManager(client, cookieContainer)
+        }
     }
 }
 
-class NativeLoginManager(private val client: OkHttpClient) : LoginManager {
+class NativeLoginManager(client: OkHttpClient, private val cookieContainer: LinkedList<Cookie>) : LoginManager {
 
     private val baseUrl = "https://habr.com/"
     private val retrofit = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
     private val api = retrofit.create(LoginApi::class.java)
 
-    override fun login(request: LoginRequest): Single<LoginResponse> {
-        return Single.just(request).observeOn(Schedulers.io()).map { request ->
+    override fun login(loginRequest: LoginRequest): Single<LoginResponse> {
+        return Single.just(loginRequest).observeOn(Schedulers.io()).map { request ->
             val response = api.login(request.client, request.api, request.email, request.password).execute()
             if (response.isSuccessful) {
                 LoginConverter().convertBody(response.body()!!)
@@ -44,32 +66,14 @@ class NativeLoginManager(private val client: OkHttpClient) : LoginManager {
     }
 
     override fun oauth(oAuthRequest: OAuthRequest): Single<OAuthResponse> {
-        val allTimeReceivedCookies = HashSet<Cookie>()
-        val redirectResponseSubject = PublishSubject.create<okhttp3.Response>()
+        return requestOauthAction(oAuthRequest).map { response ->
+            OAuthResponse.Interim(oAuthRequest, response.request.url.toString(), cookieContainer.toSet())
+        }
+    }
 
-        Single.just(oAuthRequest).observeOn(Schedulers.io()).map { request ->
-            return@map api.oauth(request.clientId, request.socialType, request.responseType, request.redirectUri)
-                .execute().raw()
-        }.toObservable().safeSubscribe(redirectResponseSubject)
-
-        val oauthResponseSubject = PublishSubject.create<okhttp3.Response>()
-
-        //todo if response is not success - check and return error
-        redirectResponseSubject.filter { response ->
-            val filterCondition = response.isRedirect
-            Cookie.parseAll(response.request.url, response.headers).let(allTimeReceivedCookies::addAll)
-            if (filterCondition) {
-                // todo return error response
-                val location = response.headers["Location"] ?: throw IllegalStateException("redirect error")
-
-                val newResponse = client.newCall(Request.Builder().head().url(location).build()).execute()
-                redirectResponseSubject.onNext(newResponse)
-            }
-            return@filter !filterCondition
-        }.safeSubscribe(oauthResponseSubject)
-
-        return oauthResponseSubject.singleOrError().map { response ->
-            return@map OAuthResponse.Interim(oAuthRequest, response.request.url.toString(), allTimeReceivedCookies)
+    private fun requestOauthAction(oAuthRequest: OAuthRequest): Single<Response> {
+        return Single.just(oAuthRequest).observeOn(Schedulers.io()).map { request ->
+            api.oauth(request.clientId, request.socialType, request.responseType, request.redirectUri).execute().raw()
         }
     }
 }
