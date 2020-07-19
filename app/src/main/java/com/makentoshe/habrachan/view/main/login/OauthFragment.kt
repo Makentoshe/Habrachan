@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.network.response.OAuthResponse
@@ -23,26 +23,26 @@ import toothpick.ktp.delegate.inject
 class OauthFragment : Fragment() {
 
     private val arguments = OauthFragmentArguments(this)
-    private val webViewClient =
-        OAuthWebViewClient(this) { message ->
-            returnErrorResultToTheParentFragment(message)
-        }
+    private val webViewClient = OAuthWebViewClient(this) { message ->
+        returnErrorResultToTheParentFragment(message)
+    }
 
     private val loginViewModel by inject<LoginViewModel>()
     private val disposables by inject<CompositeDisposable>()
 
     private lateinit var webView: WebView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return OauthFragmentUi(container).inflateView(inflater)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        progressBar = view.findViewById(R.id.oauth_fragment_progress)
         webView = view.findViewById(R.id.oauth_fragment_webview)
         webView.settings.useWideViewPort = true
         webView.settings.javaScriptEnabled = true
         webView.settings.loadWithOverviewMode = true
-        webView.webChromeClient = WebChromeClient()
         webView.webViewClient = webViewClient
 
         if (savedInstanceState == null) {
@@ -61,6 +61,7 @@ class OauthFragment : Fragment() {
     private fun onOauthResponseSuccess(response: OAuthResponse.Interim) {
         webView.tag = response
         webView.loadUrl(response.url)
+        webView.visibility = View.VISIBLE
     }
 
     private fun onOauthResponseError(response: OAuthResponse.Error) {
