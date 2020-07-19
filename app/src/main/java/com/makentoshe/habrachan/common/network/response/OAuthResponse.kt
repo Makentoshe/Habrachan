@@ -5,7 +5,7 @@ import okhttp3.Cookie
 
 sealed class OAuthResponse {
 
-    data class Interim(val request: OAuthRequest, val url: String, val cookies: HashSet<Cookie>): OAuthResponse()
+    data class Interim(val request: OAuthRequest, val url: String, val cookies: Set<Cookie>): OAuthResponse()
 
     data class Error(val string: String): OAuthResponse()
 }
