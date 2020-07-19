@@ -16,6 +16,7 @@ import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.common.network.response.OAuthResponse
+import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.main.login.LoginData
 import com.makentoshe.habrachan.model.main.login.OauthType
 import com.makentoshe.habrachan.navigation.main.login.OauthScreen
@@ -99,16 +100,25 @@ class LoginFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == OAuthResponse::javaClass.hashCode()) {
-            onOauthResult(data)
+            if (resultCode == Activity.RESULT_OK) {
+                onOauthResultSuccess(data)
+            } else {
+                onOauthResultError(data)
+            }
         }
     }
 
-    private fun onOauthResult(data: Intent?) {
+    private fun onOauthResultSuccess(data: Intent?) {
         if (data?.hasExtra("token") == true) {
             loginViewModel.signInObserver.onNext(LoginData.Token(data.getStringExtra("token")!!))
         } else {
-            // err
+            SnackbarErrorController.from(view ?: return).displayIndefiniteMessage("[hard]: token is null")
         }
+    }
+
+    private fun onOauthResultError(data: Intent?) {
+        val message = data?.getStringExtra("ErrorMessage") ?: return
+        SnackbarErrorController.from(view ?: return).displayIndefiniteMessage(message)
     }
 
     class Factory {
