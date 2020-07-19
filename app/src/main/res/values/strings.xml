@@ -75,4 +75,5 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="comments_button_first_comment">Be the first one</string>
     <string name="comments_fragment_subtitle">Comments</string>
     <string name="comment_popup_inspect_user">Inspect user</string>
+    <string name="login_fragment_oauth_separator">or log in with</string>
 </resources>
