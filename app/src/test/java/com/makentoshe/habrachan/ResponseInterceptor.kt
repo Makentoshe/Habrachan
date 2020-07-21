@@ -2,20 +2,16 @@ package com.makentoshe.habrachan
 
 import okhttp3.*
 
-class ResponseInterceptor(
-    private val code: Int,
-    private val json: String
-) : Interceptor {
+class ResponseInterceptor(private val code: Int, private val json: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val responseBody = createResponseBody(json, createJsonMediaType())
-        return chain
-            .proceed(chain.request())
-            .newBuilder()
+        return Response.Builder()
             .code(code)
             .protocol(Protocol.HTTP_2)
             .message(json)
             .body(responseBody)
+            .request(Request.Builder().url("https://response.interceptor").build())
             .addHeader("content-type", createJsonMediaType().toString())
             .build()
     }
