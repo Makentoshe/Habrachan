@@ -156,7 +156,7 @@ dependencies {
     implementation "io.noties.markwon:image:$markwon"
     implementation "io.noties.markwon:ext-tables:$markwon"
 
-    def core = "1.2.0"
+    def core = "1.3.0"
     implementation "androidx.core:core-ktx:$core"
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
