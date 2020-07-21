@@ -13,7 +13,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Ignore
 import org.junit.Test
 
-class LoginManagerTest : BaseTest() {
+class NativeLoginManagerTest : BaseTest() {
 
     @Test
     fun testShouldParseAndReturnSuccessResultForLoginAction() {
