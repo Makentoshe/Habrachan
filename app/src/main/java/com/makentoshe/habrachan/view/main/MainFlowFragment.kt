@@ -14,11 +14,10 @@ import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.navigation.main.MainFlowFragmentNavigation
 import com.makentoshe.habrachan.ui.main.MainFlowFragmentUi
-import com.makentoshe.habrachan.view.BackPressedFragment
 import io.reactivex.disposables.CompositeDisposable
 import toothpick.ktp.delegate.inject
 
-class MainFlowFragment : Fragment(), BackPressedFragment {
+class MainFlowFragment : Fragment() {
 
     private val disposables = CompositeDisposable()
     private val arguments = Arguments(this)
@@ -105,11 +104,6 @@ class MainFlowFragment : Fragment(), BackPressedFragment {
         requireContext().unregisterReceiver(logoutBroadcastReceiver)
         requireContext().unregisterReceiver(loginBroadcastReceiver)
         navigator.release()
-    }
-
-    override fun onBackPressed(): Boolean {
-        navigator.back()
-        return true
     }
 
     class Arguments(private val mainFlowFragment: MainFlowFragment) {

@@ -3,10 +3,8 @@ package com.makentoshe.habrachan
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.navigation.StackNavigator
 import com.makentoshe.habrachan.navigation.main.MainFlowScreen
-import com.makentoshe.habrachan.view.BackPressedFragment
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
@@ -50,21 +48,4 @@ class AppActivity : AppCompatActivity() {
         navigatorHolder.removeNavigator()
     }
 
-    override fun onBackPressed() {
-        if (!supportFragmentManager.sendOnBackPressedEvent()) {
-            super.onBackPressed()
-        }
-    }
-
-    private fun FragmentManager.sendOnBackPressedEvent(): Boolean {
-        fragments.forEach { fragment ->
-            if (fragment !is BackPressedFragment) return@forEach
-
-            if (fragment.childFragmentManager.sendOnBackPressedEvent()) return true
-
-            if (fragment.onBackPressed()) return true
-        }
-
-        return false
-    }
 }
