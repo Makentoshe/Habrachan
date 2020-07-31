@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.common.network
 
 import com.makentoshe.habrachan.BaseTest
-import com.makentoshe.habrachan.ResponseInterceptor
+import com.makentoshe.habrachan.JsonResponseInterceptor
 import com.makentoshe.habrachan.UrlInterceptor
 import com.makentoshe.habrachan.common.entity.session.ArticlesRequestSpec
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
@@ -28,7 +28,7 @@ class NativeArticlesManagerTest : BaseTest() {
         val request = GetArticlesRequest(session, 1, spec)
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(200, json))
+            .addInterceptor(JsonResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = ArticlesManager.Builder(client).build()
@@ -47,7 +47,7 @@ class NativeArticlesManagerTest : BaseTest() {
         val request = GetArticlesRequest(session, 1, spec)
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(401, json))
+            .addInterceptor(JsonResponseInterceptor(401, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = ArticlesManager.Builder(client).build()
@@ -65,7 +65,7 @@ class NativeArticlesManagerTest : BaseTest() {
         val request = GetArticleRequest(session, postId)
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(200, json))
+            .addInterceptor(JsonResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = ArticlesManager.Builder(client).build()
@@ -84,7 +84,7 @@ class NativeArticlesManagerTest : BaseTest() {
         val request = GetArticleRequest(session, postId)
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(400, json))
+            .addInterceptor(JsonResponseInterceptor(400, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = ArticlesManager.Builder(client).build()
@@ -101,7 +101,7 @@ class NativeArticlesManagerTest : BaseTest() {
         val request = UserArticlesRequest(session, "missingdays", page = 1, include = "text_html")
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(200, json))
+            .addInterceptor(JsonResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = ArticlesManager.Builder(client).build()

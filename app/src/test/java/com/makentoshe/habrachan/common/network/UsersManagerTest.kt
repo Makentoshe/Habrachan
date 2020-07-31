@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.common.network
 
 import com.makentoshe.habrachan.BaseTest
-import com.makentoshe.habrachan.ResponseInterceptor
+import com.makentoshe.habrachan.JsonResponseInterceptor
 import com.makentoshe.habrachan.UrlInterceptor
 import com.makentoshe.habrachan.common.network.manager.UsersManager
 import com.makentoshe.habrachan.common.network.request.MeRequest
@@ -20,7 +20,7 @@ class UsersManagerTest : BaseTest() {
         val url = "https://habr.com/api/v1/users/me"
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(200, json))
+            .addInterceptor(JsonResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = UsersManager.Builder(client).build()
@@ -36,7 +36,7 @@ class UsersManagerTest : BaseTest() {
         val url = "https://habr.com/api/v1/users/me"
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(401, json))
+            .addInterceptor(JsonResponseInterceptor(401, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = UsersManager.Builder(client).build()
@@ -53,7 +53,7 @@ class UsersManagerTest : BaseTest() {
         val url = "https://habr.com/api/v1/users/missingdays"
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(200, json))
+            .addInterceptor(JsonResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = UsersManager.Builder(client).build()
@@ -69,7 +69,7 @@ class UsersManagerTest : BaseTest() {
         val url = "https://habr.com/api/v1/users/missingdays"
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(401, json))
+            .addInterceptor(JsonResponseInterceptor(401, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = UsersManager.Builder(client).build()

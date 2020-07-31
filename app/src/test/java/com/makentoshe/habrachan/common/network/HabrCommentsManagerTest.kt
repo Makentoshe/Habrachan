@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.common.network
 
 import com.makentoshe.habrachan.BaseTest
-import com.makentoshe.habrachan.ResponseInterceptor
+import com.makentoshe.habrachan.JsonResponseInterceptor
 import com.makentoshe.habrachan.UrlInterceptor
 import com.makentoshe.habrachan.common.network.manager.HabrCommentsManager
 import com.makentoshe.habrachan.common.network.request.GetCommentsRequest
@@ -23,7 +23,7 @@ class HabrCommentsManagerTest : BaseTest() {
 
         val request = VoteCommentRequest(session.clientKey, session.tokenKey, commentId)
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(200, json))
+            .addInterceptor(JsonResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = HabrCommentsManager.Factory(client).build()
@@ -42,7 +42,7 @@ class HabrCommentsManagerTest : BaseTest() {
 
         val request = VoteCommentRequest(session.clientKey, session.tokenKey, commentId)
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(200, json))
+            .addInterceptor(JsonResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = HabrCommentsManager.Factory(client).build()
@@ -61,7 +61,7 @@ class HabrCommentsManagerTest : BaseTest() {
 
         val request = VoteCommentRequest(session.clientKey, session.tokenKey, commentId)
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(400, json))
+            .addInterceptor(JsonResponseInterceptor(400, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = HabrCommentsManager.Factory(client).build()
@@ -81,7 +81,7 @@ class HabrCommentsManagerTest : BaseTest() {
 
         val request = VoteCommentRequest(session.clientKey, session.tokenKey, commentId)
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(400, json))
+            .addInterceptor(JsonResponseInterceptor(400, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = HabrCommentsManager.Factory(client).build()
@@ -101,7 +101,7 @@ class HabrCommentsManagerTest : BaseTest() {
 
         val request = GetCommentsRequest(session.clientKey, session.apiKey, session.tokenKey, articleId)
         val client = OkHttpClient.Builder()
-            .addInterceptor(ResponseInterceptor(200, json))
+            .addInterceptor(JsonResponseInterceptor(200, json))
             .addInterceptor(UrlInterceptor(url))
             .build()
         val manager = HabrCommentsManager.Factory(client).build()
