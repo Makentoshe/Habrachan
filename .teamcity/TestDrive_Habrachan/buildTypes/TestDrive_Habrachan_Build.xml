@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="921040ae-9570-4f49-b82d-8758b0a9f3ca" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2020.1/project-config.xsd">
+  <name>Build</name>
+  <description />
+  <settings>
+    <options>
+      <option name="allowExternalStatus" value="true" />
+      <option name="artifactRules" value="app/build/outputs/apk/release/* =&gt; apk" />
+      <option name="publishArtifactCondition" value="SUCCESSFUL" />
+    </options>
+    <parameters>
+      <param name="ANDROID_SDK_URL" value="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip" />
+      <param name="build-tools" value="%env.ANDROID_HOME%/build-tools/29.0.3/" />
+      <param name="env.ANDROID_HOME" value="%teamcity.build.checkoutDir%/.android-sdk" />
+      <param name="keystore-password" value="1243568790" />
+      <param name="release-apk-output" value="app/build/outputs/apk/release/" />
+    </parameters>
+    <build-runners>
+      <runner id="RUNNER_2666" name="Clean before install" type="simpleRunner">
+        <parameters>
+          <param name="script.content" value="rm -r -f %env.ANDROID_HOME%" />
+          <param name="teamcity.step.mode" value="execute_always" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_2668" name="Install Android SDK tools" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[ANDROID_SDK_URL=%ANDROID_SDK_URL%
+ANDROID_HOME=%env.ANDROID_HOME%
+
+mkdir "$ANDROID_HOME"
+cd "$ANDROID_HOME" 
+curl -o sdk.zip "$ANDROID_SDK_URL"
+unzip sdk.zip]]></param>
+          <param name="teamcity.step.mode" value="execute_if_failed" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_2669" name="Accept licences for Android SDK" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[mkdir -p "$ANDROID_HOME/licenses"
+echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_2670" name="Update Android SDK 29" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[ANDROID_VERSION=29 
+ANDROID_BUILD_TOOLS_VERSION=29.0.3
+${ANDROID_HOME}/tools/bin/sdkmanager --update
+${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" "platforms;android-${ANDROID_VERSION}" "platform-tools"]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_2672" name="Update Android SDK 28" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[ANDROID_VERSION=28
+ANDROID_BUILD_TOOLS_VERSION=28.0.3
+${ANDROID_HOME}/tools/bin/sdkmanager --update
+${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" "platforms;android-${ANDROID_VERSION}" "platform-tools"]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_2606" name="Clean build with unit tests" type="gradle-runner">
+        <parameters>
+          <param name="jvmArgs" value="-ea -Djavax.net.ssl.trustStoreType=JKS -noverify" />
+          <param name="target.jdk.home" value="%env.JDK_1_8_x64%" />
+          <param name="teamcity.coverage.emma.include.source" value="true" />
+          <param name="teamcity.coverage.emma.instr.parameters" value="-ix -*Test*" />
+          <param name="teamcity.coverage.idea.includePatterns" value="com.makentoshe.habrachan.*" />
+          <param name="teamcity.coverage.jacoco.patterns" value="+:*" />
+          <param name="teamcity.coverage.runner" value="IDEA" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="teamcity.tool.jacoco" value="%teamcity.tool.jacoco.DEFAULT%" />
+          <param name="ui.gradleRUnner.gradle.build.file" value="build.gradle" />
+          <param name="ui.gradleRunner.gradle.tasks.names" value="clean build --info --debug" />
+          <param name="ui.gradleRunner.gradle.wrapper.useWrapper" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_1714" name="Assemble unsigned release apk" type="gradle-runner">
+        <parameters>
+          <param name="target.jdk.home" value="%env.JDK_18_x64%" />
+          <param name="teamcity.coverage.emma.include.source" value="true" />
+          <param name="teamcity.coverage.emma.instr.parameters" value="-ix -*Test*" />
+          <param name="teamcity.coverage.idea.includePatterns" value="*" />
+          <param name="teamcity.coverage.jacoco.patterns" value="+:*" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="teamcity.tool.jacoco" value="%teamcity.tool.jacoco.DEFAULT%" />
+          <param name="ui.gradleRUnner.gradle.build.file" value="build.gradle" />
+          <param name="ui.gradleRunner.gradle.tasks.names" value="assembleRelease" />
+          <param name="ui.gradleRunner.gradle.wrapper.useWrapper" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_2071" name="Sign release apk" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[# Aligning apk file
+%build-tools%/zipalign -v -p 4 %release-apk-output%/app-release-unsigned.apk %release-apk-output%/app-release-unsigned-aligned.apk
+rm %release-apk-output%/app-release-unsigned.apk
+
+# Signing apk file
+%build-tools%/apksigner sign --ks  keystore/habrachan/habrachan_keystore.jks --ks-pass pass:%keystore-password% --key-pass pass:%keystore-password% --out %release-apk-output%/app-release-signed.apk %release-apk-output%/app-release-unsigned-aligned.apk
+rm %release-apk-output%/app-release-unsigned-aligned.apk
+
+# Verify sign is ok
+%build-tools%/apksigner verify %release-apk-output%/app-release-signed.apk]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="TestDrive_Habrachan_HttpsGithubComMakentosheHabrachanRefsHeadsMaster" />
+      <vcs-entry-ref root-id="TestDrive_Habrachan_Keystores">
+        <checkout-rule rule="+:.=&gt; keystore" />
+      </vcs-entry-ref>
+    </vcs-settings>
+    <requirements>
+      <equals id="RQ_569" name="teamcity.agent.jvm.os.name" value="Linux" />
+      <contains id="RQ_2" name="teamcity.agent.name" value="linux-medium" />
+      <matches id="RQ_7" name="teamcity.agent.jvm.os.family" value="Linux" />
+    </requirements>
+    <build-triggers>
+      <build-trigger id="vcsTrigger" type="vcsTrigger">
+        <parameters>
+          <param name="branchFilter" value="+:*" />
+          <param name="enableQueueOptimization" value="true" />
+          <param name="quietPeriodMode" value="USE_DEFAULT" />
+        </parameters>
+      </build-trigger>
+    </build-triggers>
+    <build-extensions>
+      <extension id="BUILD_EXT_287" type="pullRequests">
+        <parameters>
+          <param name="authenticationType" value="token" />
+          <param name="filterAuthorRole" value="MEMBER" />
+          <param name="filterTargetBranch" value="+:refs/heads/master" />
+          <param name="providerType" value="github" />
+          <param name="secure:accessToken" value="credentialsJSON:2303ca51-869d-476c-b9d2-d3998fe18b16" />
+        </parameters>
+      </extension>
+      <extension id="BUILD_EXT_288" type="commit-status-publisher">
+        <parameters>
+          <param name="github_authentication_type" value="token" />
+          <param name="github_host" value="https://api.github.com" />
+          <param name="github_oauth_user" value="Makentoshe" />
+          <param name="publisherId" value="githubStatusPublisher" />
+          <param name="secure:github_access_token" value="credentialsJSON:2303ca51-869d-476c-b9d2-d3998fe18b16" />
+        </parameters>
+      </extension>
+      <extension id="jetbrains.agent.free.space" type="jetbrains.agent.free.space">
+        <parameters>
+          <param name="free-space-work" value="20gb" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <cleanup />
+  </settings>
+</build-type>
+
