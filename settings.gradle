@@ -1,2 +1,6 @@
 include ':app'
-rootProject.name='Habrachan'
+rootProject.name = 'Habrachan'
+
+include ':library'
+include ':library:core'
+include 'library:network'
