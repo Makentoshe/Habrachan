@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.di.images
 
 import androidx.lifecycle.ViewModelProviders
+import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.common.network.manager.ImageManager
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.navigation.images.OverlayImageFragmentNavigation
 import com.makentoshe.habrachan.view.images.OverlayImageFragment
 import com.makentoshe.habrachan.viewmodel.images.OverlayImageFragmentViewModel

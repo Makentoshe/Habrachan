@@ -6,14 +6,12 @@ import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.common.network.manager.UsersManager
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.navigation.user.UserFragmentNavigation
 import com.makentoshe.habrachan.view.user.UserFragment
 import com.makentoshe.habrachan.viewmodel.article.UserAvatarViewModel
 import com.makentoshe.habrachan.viewmodel.user.UserViewModel
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router
-import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
@@ -30,7 +28,7 @@ class UserFragmentModule(fragment: UserFragment) : Module() {
     private val sessionDatabase by inject<SessionDatabase>()
 
     init {
-        Toothpick.openScope(ApplicationScope::class.java).inject(this)
+//        Toothpick.openScope(ApplicationScope::class.java).inject(this)
         avatarManager = ImageManager.Builder(client).build()
         usersManager = UsersManager.Builder(client).build()
         articlesManager = ArticlesManager.Builder(client).build()

@@ -1,11 +1,11 @@
 package com.makentoshe.habrachan.di.article
 
 import androidx.lifecycle.ViewModelProviders
+import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.common.network.manager.ImageManager
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.navigation.article.ArticleFragmentNavigation
 import com.makentoshe.habrachan.view.article.ArticleFragment
 import com.makentoshe.habrachan.viewmodel.article.ArticleFragmentViewModel

@@ -77,7 +77,7 @@ class MainFlowFragment : Fragment() {
     }
 
     private fun setEmptyAccount(item: MenuItem) {
-        item.setTitle(R.string.menu_account)
+        item.setTitle(R.string.fragment_main_account_action)
         item.setIcon(R.drawable.ic_account_outline)
     }
 

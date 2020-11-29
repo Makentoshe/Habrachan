@@ -42,17 +42,28 @@ dependencies {
 
     implementation(kotlin("stdlib"))
 
-    // Room (sql database library)
-    // https://developer.android.com/topic/libraries/architecture/room
-    val room = "2.2.5"
-    api("androidx.room:room-runtime:$room")
-    api("androidx.room:room-ktx:$room")
-    kapt("androidx.room:room-compiler:$room")
+    // Cicerone
+    // https://github.com/terrakok/Cicerone
+    val cicerone = "5.1.1"
+    implementation("ru.terrakok.cicerone:cicerone:$cicerone")
 
-    // Material components
-    // https://github.com/material-components/material-components-android
-    val material = properties["version.androidx.material"]
-    api("com.google.android.material:material:$material")
+    // Toothpick
+    // https://github.com/stephanenicolas/toothpick
+    val toothpick = "3.1.0"
+    implementation("com.github.stephanenicolas.toothpick:ktp:$toothpick")
+    kapt("com.github.stephanenicolas.toothpick:toothpick-compiler:$toothpick")
+    implementation("com.github.stephanenicolas.toothpick:smoothie:$toothpick")
+    implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpick")
+
+    // OkHttp
+    // https://github.com/square/okhttp/
+    val okhttp = "4.1.0"
+    implementation("com.squareup.okhttp3:okhttp:$okhttp")
+
+    // Room
+    val room = "1.1.1"
+    implementation("android.arch.persistence.room:runtime:$room")
+    kapt("android.arch.persistence.room:compiler:$room")
 
     val core = properties["version.androidx.core"]
     implementation("androidx.core:core-ktx:$core")

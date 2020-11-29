@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.main.articles.model.ArticleEpoxyModel
 import com.makentoshe.habrachan.model.user.articles.UserArticlesDataSource
 import com.makentoshe.habrachan.model.user.articles.UserArticlesPagedListEpoxyController
@@ -17,7 +16,6 @@ import com.makentoshe.habrachan.viewmodel.user.articles.UserArticlesViewModelSch
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router
-import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
@@ -34,7 +32,7 @@ class UserArticlesFragmentModule(fragment: UserArticlesFragment) : Module() {
     private val sessionDatabase by inject<SessionDatabase>()
 
     init {
-        Toothpick.openScope(ApplicationScope::class.java).inject(this)
+//        Toothpick.openScope(ApplicationScope::class.java).inject(this)
         articlesManager = ArticlesManager.Builder(client).build()
 
         val userArticlesViewModel = getUserArticlesViewModel(fragment)

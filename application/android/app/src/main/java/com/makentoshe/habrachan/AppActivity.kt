@@ -3,7 +3,7 @@ package com.makentoshe.habrachan
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.makentoshe.habrachan.application.android.main.MainFlowScreen
+import com.makentoshe.habrachan.application.android.screen.main.MainFlowScreen
 import com.makentoshe.habrachan.navigation.StackNavigator
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Habrachan</string>
-    <string name="menu_account">Account</string>
-    <string name="menu_posts">Posts</string>
-    <string name="menu_menu">Menu</string>
+    <string name="fragment_main_account_action">Account</string>
+    <string name="fragment_main_articles_action">Articles</string>
+    <string name="fragment_main_menu_action">Menu</string>
     <string name="top">Top</string>
     <string name="interesting">Interesting</string>
     <string name="all_posts">All posts</string>

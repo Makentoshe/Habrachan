@@ -1,9 +1,9 @@
 package com.makentoshe.habrachan.di.main.articles
 
+import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.common.broadcast.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.model.main.articles.*
 import com.makentoshe.habrachan.view.main.articles.ArticlesFlowFragment
 import toothpick.Toothpick

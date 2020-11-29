@@ -3,13 +3,13 @@
     <item
         android:id="@+id/action_account"
         android:icon="@drawable/ic_account_outline"
-        android:title="@string/menu_account" />
+        android:title="@string/fragment_main_account_action" />
     <item
         android:id="@+id/action_posts"
         android:icon="@drawable/ic_agenda"
-        android:title="@string/menu_posts" />
+        android:title="@string/fragment_main_articles_action" />
     <item
         android:id="@+id/action_menu"
         android:icon="@drawable/ic_menu"
-        android:title="@string/menu_menu"/>
+        android:title="@string/fragment_main_menu_action"/>
 </menu>
