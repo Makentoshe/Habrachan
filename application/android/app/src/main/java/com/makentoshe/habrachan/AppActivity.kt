@@ -3,6 +3,7 @@ package com.makentoshe.habrachan
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.makentoshe.habrachan.application.android.main.MainFlowScreen
 import com.makentoshe.habrachan.navigation.StackNavigator
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -24,7 +25,7 @@ class AppActivity : AppCompatActivity() {
 
         when (intent.action) {
             Intent.ACTION_MAIN -> {
-//                val screen = MainFlowScreen()
+                val screen = MainFlowScreen()
 //                val screen = UserScreen(UserAccount.User("milfgard"))
 //                val screen = UserScreen(UserAccount.Me)
 //                val screen = LoginFlowScreen()
@@ -32,7 +33,7 @@ class AppActivity : AppCompatActivity() {
 //                val screen = NativeArticleScreen(442440)
 //                val screen = WebArticleScreen(492410) //499154
 //                val screen = PostImageScreen("https://habrastorage.org/webt/r7/i1/o6/r7i1o6qrcdmwgj0nrtzc8ctltvs.jpeg")
-//                router.newRootScreen(screen)
+                router.newRootScreen(screen)
             }
         }
     }
