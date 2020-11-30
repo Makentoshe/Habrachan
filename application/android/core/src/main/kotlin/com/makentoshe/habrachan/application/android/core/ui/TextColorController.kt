@@ -1,10 +1,10 @@
-package com.makentoshe.habrachan.common.ui
+package com.makentoshe.habrachan.application.android.core.ui
 
 import android.content.Context
 import android.os.Build
 import android.widget.TextView
 import androidx.annotation.ColorRes
-import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.R
 
 class TextColorController(private val textView: TextView) {
 

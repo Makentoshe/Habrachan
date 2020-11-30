@@ -1,11 +1,11 @@
-package com.makentoshe.habrachan.common.ui
+package com.makentoshe.habrachan.application.android.core.ui
 
 import android.content.Context
 import android.os.Build
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.core.graphics.drawable.DrawableCompat
-import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.R
 
 class ImageTintController(private val imageView: ImageView) {
 

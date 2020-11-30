@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.ui
+package com.makentoshe.habrachan.application.android.core.ui
 
 import android.content.Context
 import android.widget.TextView

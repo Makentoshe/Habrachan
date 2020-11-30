@@ -62,6 +62,9 @@ dependencies {
 
     implementation project(":application:android:core")
 
+    implementation project(":library:core")
+    implementation project(":library:network")
+
     // OkHttp
     // https://github.com/square/okhttp/
     def okhttp = "4.1.0"

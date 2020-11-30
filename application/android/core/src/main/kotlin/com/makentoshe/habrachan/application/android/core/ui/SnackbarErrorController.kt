@@ -1,8 +1,8 @@
-package com.makentoshe.habrachan.common.ui
+package com.makentoshe.habrachan.application.android.core.ui
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.R
 
 class SnackbarErrorController(private val anchor: View) {
 

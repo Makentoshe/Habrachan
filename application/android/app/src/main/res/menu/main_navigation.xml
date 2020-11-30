@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_account_outline"
         android:title="@string/menu_account" />
     <item
-        android:id="@+id/action_posts"
+        android:id="@+id/action_articles"
         android:icon="@drawable/ic_agenda"
         android:title="@string/menu_posts" />
     <item

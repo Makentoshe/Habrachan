@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.common.ui
+package com.makentoshe.habrachan.application.android.core.ui
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.graphics.drawable.toBitmap
-import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.R
 
 class ImageViewController(private val imageView: ImageView) {
 

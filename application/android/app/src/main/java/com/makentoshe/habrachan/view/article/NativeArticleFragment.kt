@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.common.network.response.ArticleResponse
-import com.makentoshe.habrachan.common.ui.NativeArticleTextController
 import com.makentoshe.habrachan.ui.article.NativeArticleFragmentUi
 
 /** Alpha version */
@@ -29,7 +28,7 @@ class NativeArticleFragment : ArticleFragment() {
     override fun onArticleReceived(response: ArticleResponse) {
         super.onArticleReceived(response)
         if (response is ArticleResponse.Success) {
-            NativeArticleTextController.from(recyclerView).setArticleText(response.article.textHtml!!)
+//            NativeArticleTextController.from(recyclerView).setArticleText(response.article.textHtml!!)
             bottombarView.visibility = View.VISIBLE
         }
     }

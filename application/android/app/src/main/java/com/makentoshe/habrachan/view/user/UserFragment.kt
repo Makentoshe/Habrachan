@@ -16,12 +16,12 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.core.ui.ImageViewController
 import com.makentoshe.habrachan.common.broadcast.LoginBroadcastReceiver
 import com.makentoshe.habrachan.common.broadcast.LogoutBroadcastReceiver
 import com.makentoshe.habrachan.common.network.request.ImageRequest
 import com.makentoshe.habrachan.common.network.response.ImageResponse
 import com.makentoshe.habrachan.common.network.response.UserResponse
-import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.model.user.UserContentPagerAdapter
 import com.makentoshe.habrachan.navigation.user.UserFragmentNavigation

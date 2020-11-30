@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.view.comments.controller
 
 import android.widget.TextView
-import com.makentoshe.habrachan.common.ui.TextScoreController
+import com.makentoshe.habrachan.application.android.core.ui.TextScoreController
 
 class NativeCommentScoreController(private val textView: TextView) {
 
