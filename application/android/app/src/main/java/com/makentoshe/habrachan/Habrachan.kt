@@ -43,7 +43,13 @@ class Habrachan : Application() {
             // remove token from session
             sessionDatabase.session().insert(sessionDatabase.session().get().copy(tokenKey = ""))
         }.let(disposables::add)
+
         registerReceiver(logoutBroadcastReceiver, IntentFilter(LogoutBroadcastReceiver.ACTION))
+
+//        Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
+//            println(paramThrowable.printStackTrace())
+//            throw paramThrowable
+//        }
     }
 
     // Using composite disposable is just formality to avoid lint warnings

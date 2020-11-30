@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import com.makentoshe.habrachan.AppActivity
+import com.makentoshe.habrachan.application.android.screen.article.di.ArticleInjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesInjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import toothpick.Toothpick
@@ -11,6 +12,7 @@ import toothpick.Toothpick
 class InjectionActivityLifecycleCallback(
     private val injectingFragmentLifecycleCallback: InjectingFragmentLifecycleCallback
 ) : Application.ActivityLifecycleCallbacks {
+
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         if (activity !is AppActivity) return
         Toothpick.openScopes(ApplicationScope::class.java).inject(activity)
@@ -18,6 +20,9 @@ class InjectionActivityLifecycleCallback(
 
         val articlesCallback = ArticlesInjectingFragmentLifecycleCallback()
         activity.supportFragmentManager.registerFragmentLifecycleCallbacks(articlesCallback, true)
+
+        val articleCallback = ArticleInjectingFragmentLifecycleCallback()
+        activity.supportFragmentManager.registerFragmentLifecycleCallbacks(articleCallback, true)
     }
 
 

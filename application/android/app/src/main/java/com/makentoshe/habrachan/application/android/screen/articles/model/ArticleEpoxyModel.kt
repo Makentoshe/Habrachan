@@ -7,8 +7,8 @@ import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.navigation.article.WebArticleScreen
 import ru.terrakok.cicerone.Router
 
 @EpoxyModelClass(layout = R.layout.main_articles_element)
@@ -89,7 +89,7 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
             model.commentsCount = article.commentsCount
             model.displayDivider = if (enableSmartDivide) id % 20 != 19 else true
             model.clickListener = View.OnClickListener {
-                router.navigateTo(WebArticleScreen(article.id))
+                router.navigateTo(ArticleScreen(article.id))
             }
             return model
         }
