@@ -5,13 +5,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.main.R
 import com.makentoshe.habrachan.application.android.screen.main.navigation.MainFlowNavigation
 import kotlinx.android.synthetic.main.fragment_main.*
-import ru.terrakok.cicerone.android.support.SupportAppScreen
 import toothpick.ktp.delegate.inject
 
 class MainFlowFragment : CoreFragment() {
@@ -37,34 +34,4 @@ class MainFlowFragment : CoreFragment() {
         return true
     }
 
-}
-
-class MainFlowScreen : SupportAppScreen() {
-    override fun getFragment(): Fragment? {
-        return MainFlowFragment()
-    }
-}
-
-class MenuFragment : CoreFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return TextView(requireContext()).apply { text = "Menu fragment" }
-    }
-}
-
-class MenuScreen : SupportAppScreen() {
-    override fun getFragment(): Fragment? {
-        return MenuFragment()
-    }
-}
-
-class AccountFragment : CoreFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return TextView(requireContext()).apply { text = "Account fragment" }
-    }
-}
-
-class AccountScreen : SupportAppScreen() {
-    override fun getFragment(): Fragment? {
-        return AccountFragment()
-    }
 }

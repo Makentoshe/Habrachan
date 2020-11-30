@@ -3,9 +3,9 @@ package com.makentoshe.habrachan.application.android.screen.main.navigation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.application.android.main.R
-import com.makentoshe.habrachan.application.android.screen.main.AccountScreen
-import com.makentoshe.habrachan.application.android.screen.main.MenuScreen
+import com.makentoshe.habrachan.application.android.screen.main.account.AccountScreen
 import com.makentoshe.habrachan.application.android.screen.main.articles.ArticlesScreen
+import com.makentoshe.habrachan.application.android.screen.main.menu.MenuScreen
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class MainFlowNavigationImpl(private val childFragmentManager: FragmentManager): MainFlowNavigation {
