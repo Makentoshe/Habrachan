@@ -3,15 +3,15 @@ package com.makentoshe.habrachan.di
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.makentoshe.habrachan.application.android.screen.main.MainFlowFragment
+import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowFragmentModule
+import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowFragmentScope
 import com.makentoshe.habrachan.di.article.*
 import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.images.OverlayImageFragmentModule
 import com.makentoshe.habrachan.di.images.OverlayImageFragmentScope
-import com.makentoshe.habrachan.di.main.MainFlowFragmentModule
-import com.makentoshe.habrachan.di.main.MainFlowFragmentScope
-import com.makentoshe.habrachan.di.main.articles.*
 import com.makentoshe.habrachan.di.main.login.*
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentModule
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentScope
@@ -21,10 +21,6 @@ import com.makentoshe.habrachan.view.article.NativeArticleFragment
 import com.makentoshe.habrachan.view.article.WebArticleFragment
 import com.makentoshe.habrachan.view.comments.CommentsFragment
 import com.makentoshe.habrachan.view.images.OverlayImageFragment
-import com.makentoshe.habrachan.view.main.MainFlowFragment
-import com.makentoshe.habrachan.view.main.articles.ArticlesFlowFragment
-import com.makentoshe.habrachan.view.main.articles.ArticlesFragment
-import com.makentoshe.habrachan.view.main.articles.ArticlesSearchFragment
 import com.makentoshe.habrachan.view.main.login.LoginFlowFragment
 import com.makentoshe.habrachan.view.main.login.LoginFragment
 import com.makentoshe.habrachan.view.main.login.OauthFragment
@@ -50,10 +46,6 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
             is UserFragment -> injectUserFragment(f)
 
-            is ArticlesFlowFragment -> injectArticlesFlowFragment(f)
-            is ArticlesFragment -> injectArticlesFragment(f)
-            is ArticlesSearchFragment -> injectArticlesSearchFragment(f)
-
             is WebArticleFragment -> injectWebArticleFragment(f)
             is NativeArticleFragment -> injectNativeArticleFragment(f)
             is UserArticlesFragment -> injectUserArticlesFragment(f)
@@ -61,7 +53,10 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     }
 
     private fun injectMainFlowFragment(fragment: MainFlowFragment) {
-        val module = MainFlowFragmentModule(fragment)
+        val module =
+            MainFlowFragmentModule(
+                fragment
+            )
         val scope = Toothpick.openScopes(ApplicationScope::class.java, MainFlowFragmentScope::class.java)
         scope.installModules(module).closeOnDestroy(fragment).inject(fragment)
     }
@@ -88,23 +83,6 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
         val module = UserFragmentModule(fragment)
         val scope = Toothpick.openScopes(ApplicationScope::class.java, UserFragmentScope::class.java)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
-    }
-
-    private fun injectArticlesFlowFragment(fragment: ArticlesFlowFragment) {
-        val module = ArticlesFlowFragmentModule(fragment)
-        val scope = Toothpick.openScopes(ApplicationScope::class.java, ArticlesFlowFragmentScope::class.java)
-        scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
-    }
-
-    private fun injectArticlesFragment(fragment: ArticlesFragment) {
-        val module = ArticlesFragmentModule(fragment)
-        val scope = Toothpick.openScopes(ArticlesFlowFragmentScope::class.java, ArticlesFragmentScope::class.java)
-        scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
-    }
-
-    private fun injectArticlesSearchFragment(fragment: ArticlesSearchFragment) {
-        val scope = Toothpick.openScopes(ArticlesFlowFragmentScope::class.java, ArticlesSearchFragmentScope::class.java)
-        scope.closeOnDestroy(fragment).inject(fragment)
     }
 
     private fun injectWebArticleFragment(fragment: WebArticleFragment) {

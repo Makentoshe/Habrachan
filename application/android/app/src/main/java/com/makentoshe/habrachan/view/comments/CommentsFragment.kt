@@ -14,11 +14,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.core.ui.SnackbarErrorController
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.common.entity.comment.Comment
 import com.makentoshe.habrachan.common.network.response.GetCommentsResponse
 import com.makentoshe.habrachan.common.network.response.VoteCommentResponse
+import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.comments.CommentsEpoxyController
 import com.makentoshe.habrachan.navigation.comments.CommentsFragmentNavigation
 import com.makentoshe.habrachan.ui.comments.CommentsFragmentUi

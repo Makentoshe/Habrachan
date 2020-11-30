@@ -3,11 +3,11 @@ package com.makentoshe.habrachan.di.user
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.ViewModelProviders
+import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleEpoxyModel
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.model.main.articles.model.ArticleEpoxyModel
 import com.makentoshe.habrachan.model.user.articles.UserArticlesDataSource
 import com.makentoshe.habrachan.model.user.articles.UserArticlesPagedListEpoxyController
 import com.makentoshe.habrachan.view.user.UserArticlesFragment

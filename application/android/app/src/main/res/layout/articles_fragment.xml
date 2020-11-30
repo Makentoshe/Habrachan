@@ -6,7 +6,7 @@
 
     <TextView
         android:visibility="gone"
-        android:id="@+id/articles_fragment_message"
+        android:id="@+id/fragment_articles_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -17,7 +17,7 @@
 
     <ProgressBar
         android:translationZ="-1dp"
-        android:id="@+id/articles_Fragment_progress"
+        android:id="@+id/fragment_articles_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,18 +27,18 @@
 
     <com.google.android.material.button.MaterialButton
         android:visibility="gone"
-        android:id="@+id/articles_fragment_button"
+        android:id="@+id/fragment_articles_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/retry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/articles_fragment_message" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_articles_message" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:visibility="gone"
-        android:id="@+id/articles_fragment_swipy"
+        android:id="@+id/fragment_articles_swipe"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/white"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/articles_fragment_recycler"
+            android:id="@+id/fragment_articles_recycler"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

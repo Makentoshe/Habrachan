@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.model.comments
 
 import android.graphics.BitmapFactory
 import android.widget.ImageView
-import com.makentoshe.habrachan.application.android.core.ui.ImageViewController
 import com.makentoshe.habrachan.common.network.response.ImageResponse
+import com.makentoshe.habrachan.common.ui.ImageViewController
 import com.makentoshe.habrachan.viewmodel.comments.AvatarCommentViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

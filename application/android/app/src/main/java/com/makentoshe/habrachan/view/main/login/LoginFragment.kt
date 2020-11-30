@@ -14,9 +14,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.core.ui.SnackbarErrorController
 import com.makentoshe.habrachan.common.network.response.LoginResponse
 import com.makentoshe.habrachan.common.network.response.OAuthResponse
+import com.makentoshe.habrachan.common.ui.SnackbarErrorController
 import com.makentoshe.habrachan.model.main.login.LoginData
 import com.makentoshe.habrachan.model.main.login.OauthType
 import com.makentoshe.habrachan.navigation.main.login.OauthScreen
