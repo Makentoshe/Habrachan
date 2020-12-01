@@ -1,11 +1,11 @@
-package com.makentoshe.habrachan.di.images
+package com.makentoshe.habrachan.application.android.screen.image.di
 
 import androidx.lifecycle.ViewModelProviders
+import com.makentoshe.habrachan.application.android.screen.image.OverlayImageFragment
+import com.makentoshe.habrachan.application.android.screen.image.navigation.OverlayImageFragmentNavigation
+import com.makentoshe.habrachan.application.android.screen.image.viewmodel.OverlayImageFragmentViewModel
 import com.makentoshe.habrachan.common.network.manager.ImageManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import com.makentoshe.habrachan.navigation.images.OverlayImageFragmentNavigation
-import com.makentoshe.habrachan.view.images.OverlayImageFragment
-import com.makentoshe.habrachan.viewmodel.images.OverlayImageFragmentViewModel
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router
@@ -14,6 +14,8 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
+annotation class OverlayImageFragmentScope
+
 class OverlayImageFragmentModule(fragment: OverlayImageFragment) : Module() {
 
     private val router by inject<Router>()
@@ -21,14 +23,14 @@ class OverlayImageFragmentModule(fragment: OverlayImageFragment) : Module() {
 
     init {
         Toothpick.openScope(ApplicationScope::class.java).inject(this)
-        val fragmentDisposables = CompositeDisposable()
-        val viewModelDisposables = CompositeDisposable()
 
+        val fragmentDisposables = CompositeDisposable()
         bind<CompositeDisposable>().toInstance(fragmentDisposables)
 
         val navigator = OverlayImageFragmentNavigation(router)
         bind<OverlayImageFragmentNavigation>().toInstance(navigator)
 
+        val viewModelDisposables = CompositeDisposable()
         val postImageFragmentViewModel = getPostImageFragmentViewModel(fragment, viewModelDisposables)
         bind<OverlayImageFragmentViewModel>().toInstance(postImageFragmentViewModel)
     }

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.navigation.images
+package com.makentoshe.habrachan.application.android.screen.image.navigation
 
 import ru.terrakok.cicerone.Router
 

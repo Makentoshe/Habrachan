@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.viewmodel.images
+package com.makentoshe.habrachan.application.android.screen.image.viewmodel
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -99,7 +99,11 @@ class OverlayImageFragmentViewModel(
         private val disposables: CompositeDisposable
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return OverlayImageFragmentViewModel(imageSource, imageManager, disposables) as T
+            return OverlayImageFragmentViewModel(
+                imageSource,
+                imageManager,
+                disposables
+            ) as T
         }
     }
 }

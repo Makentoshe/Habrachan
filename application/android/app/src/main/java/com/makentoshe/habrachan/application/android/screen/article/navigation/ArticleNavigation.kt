@@ -1,10 +1,10 @@
 package com.makentoshe.habrachan.application.android.screen.article.navigation
 
+import com.makentoshe.habrachan.application.android.screen.image.navigation.OverlayImageScreen
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.makentoshe.habrachan.common.entity.Article
 import com.makentoshe.habrachan.model.user.UserAccount
 import com.makentoshe.habrachan.navigation.comments.CommentsScreen
-import com.makentoshe.habrachan.navigation.images.OverlayImageScreen
 import com.makentoshe.habrachan.navigation.user.UserScreen
 import ru.terrakok.cicerone.Router
 
