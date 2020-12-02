@@ -3,36 +3,32 @@ package com.makentoshe.habrachan.di.common
 import android.content.Context
 import androidx.room.Room
 import com.makentoshe.habrachan.BuildConfig
-import com.makentoshe.habrachan.common.database.CacheDatabase
-import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.entity.session.UserSession
+import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import ru.terrakok.cicerone.Cicerone
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import javax.net.ssl.HostnameVerifier
 
-class ApplicationModule(context: Context) : Module() {
+annotation class ApplicationScope
 
-    private val client = OkHttpClient.Builder().followRedirects(false).addLoggingInterceptor().build()
+class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module() {
+
+    private val client =
+        OkHttpClient.Builder().followRedirects(false).addLoggingInterceptor().build()
 
     private val cacheDatabase = Room.databaseBuilder(
-        context, CacheDatabase::class.java, "HabrachanCache"
-    ).allowMainThreadQueries().build().also { it.context = context }
-
-    private val sessionDatabase = Room.databaseBuilder(
-        context, SessionDatabase::class.java, "HabrachanSession"
-    ).allowMainThreadQueries().build()
+        context, AndroidCacheDatabase::class.java, "HabrachanCache"
+    ).build()
 
     init {
         bind<OkHttpClient>().toInstance(client)
-        bind<CacheDatabase>().toInstance(cacheDatabase)
-
-        if (sessionDatabase.session().isEmpty) {
-            val session = UserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY)
-            sessionDatabase.session().insert(session)
-        }
-        bind<SessionDatabase>().toInstance(sessionDatabase)
+        bind<AndroidCacheDatabase>().toInstance(cacheDatabase)
+        bind<Router>().toInstance(cicerone.router)
+        bind<NavigatorHolder>().toInstance(cicerone.navigatorHolder)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {

@@ -13,11 +13,8 @@ class BadgeRecord(
     val title: String
 ) {
     constructor(badge: Badge) : this(
-        badge.id,
-        badge.alias,
-        badge.description,
-        badge.isDisabled,
-        badge.isRemovable,
-        badge.title
+        badge.id, badge.alias, badge.description, badge.isDisabled, badge.isRemovable, badge.title
     )
+
+    fun toBadge() = Badge(alias, description, id, isDisabled, isRemovable, title)
 }

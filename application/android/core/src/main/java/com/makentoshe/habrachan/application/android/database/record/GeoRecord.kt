@@ -5,9 +5,9 @@ import com.makentoshe.habrachan.entity.Geo
 
 @Entity
 data class GeoRecord(
-    val city: String? = null,
-    val country: String? = null,
-    val region: String? = null
+    val city: String? = null, val country: String? = null, val region: String? = null
 ) {
-    constructor(geo: Geo): this(geo.city, geo.country, geo.region)
+    constructor(geo: Geo) : this(geo.city, geo.country, geo.region)
+
+    fun toGeo() = Geo(city, country, region)
 }

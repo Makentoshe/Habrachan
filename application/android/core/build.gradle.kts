@@ -2,16 +2,10 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
-    kotlin("kapt")
+    id("kotlin-kapt")
 }
 
 android {
-    packagingOptions {
-        exclude("META-INF/DEPENDENCIES")
-        exclude("META-INF/LICENSE*")
-        exclude("META-INF/NOTICE*")
-        exclude("META-INF/*.kotlin_module")
-    }
     compileSdkVersion(29)
     defaultConfig {
         minSdkVersion(21)
@@ -33,6 +27,8 @@ android {
 
         // Allows to use kotlin.Result type as a return
         kotlinOptions.freeCompilerArgs = listOf("-Xallow-result-return-type")
+
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
@@ -48,8 +44,13 @@ dependencies {
     // https://developer.android.com/topic/libraries/architecture/room
     val room = "2.2.5"
     implementation("androidx.room:room-runtime:$room")
-    implementation("androidx.room:room-ktx:$room")
     kapt("androidx.room:room-compiler:$room")
+    implementation("androidx.room:room-ktx:$room")
+
+    // Gson
+    // https://github.com/google/gson
+    val gson = "2.8.6"
+    implementation("com.google.code.gson:gson:$gson")
 
     val core = properties["version.androidx.core"]
     implementation("androidx.core:core-ktx:$core")
@@ -68,4 +69,7 @@ dependencies {
     val espresso = properties["version.androidx.test.espresso"]
     androidTestImplementation("androidx.test.espresso:espresso-core:$espresso")
 
+    // Resolves import javax.annotation.processing.Generated does not exist error
+    // https://github.com/google/dagger/issues/1339
+    compileOnly("com.github.pengrad:jdk9-deps:1.0")
 }
