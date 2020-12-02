@@ -5,17 +5,17 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.screen.main.navigation.MainFlowFragmentNavigation
+import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.screen.main.navigation.MainFlowNavigation
 import kotlinx.android.synthetic.main.main_flow_fragment.*
 import toothpick.ktp.delegate.inject
 
-class MainFlowFragment : Fragment() {
+class MainFlowFragment : CoreFragment() {
 
-    private val arguments = Arguments(this)
+    override val arguments = Arguments(this)
 
-    private val navigator by inject<MainFlowFragmentNavigation>()
+    private val navigator by inject<MainFlowNavigation>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.main_flow_fragment, container, false)
@@ -24,13 +24,13 @@ class MainFlowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragment_main_navigation.setOnNavigationItemSelectedListener(::onNavigationItemSelected)
         fragment_main_navigation.selectedItemId = R.id.action_articles
-        fragment_main_navigation.visibility = View.GONE
+//        fragment_main_navigation.visibility = View.GONE
     }
 
     private fun onNavigationItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_account -> onAccountClick()
-        R.id.action_articles -> onArticlesClick()
-        R.id.action_menu -> onMenuClick()
+//        R.id.action_account -> onAccountClick()
+//        R.id.action_articles -> onArticlesClick()
+//        R.id.action_menu -> onMenuClick()
         else -> false
     }
 
@@ -77,17 +77,7 @@ class MainFlowFragment : Fragment() {
 //        requireContext().unregisterReceiver(loginBroadcastReceiver)
 //    }
 
-    class Arguments(private val mainFlowFragment: MainFlowFragment) {
-
-        init {
-            val fragment = mainFlowFragment as Fragment
-            if (fragment.arguments == null) {
-                fragment.arguments = Bundle()
-            }
-        }
-
-        private val fragmentArguments: Bundle
-            get() = mainFlowFragment.requireArguments()
+    class Arguments(fragment: MainFlowFragment): CoreFragment.Arguments(fragment) {
 
         var page: Int
             get() = fragmentArguments.getInt(PAGE, 1)

@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
 import com.makentoshe.habrachan.navigation.main.menu.MenuScreen
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
-class MainFlowFragmentNavigation(private val fragmentManager: FragmentManager) {
+class MainFlowNavigation(private val fragmentManager: FragmentManager) {
 
     // TODO add stack for navigating back
     private var currentScreen: SupportAppScreen? = null

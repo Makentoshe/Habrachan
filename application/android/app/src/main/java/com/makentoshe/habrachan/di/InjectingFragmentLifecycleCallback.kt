@@ -6,9 +6,6 @@ import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.application.android.screen.image.OverlayImageFragment
 import com.makentoshe.habrachan.application.android.screen.image.di.OverlayImageFragmentModule
 import com.makentoshe.habrachan.application.android.screen.image.di.OverlayImageFragmentScope
-import com.makentoshe.habrachan.application.android.screen.main.MainFlowFragment
-import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowFragmentModule
-import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowFragmentScope
 import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
 import com.makentoshe.habrachan.di.common.ApplicationScope
@@ -31,8 +28,6 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
         println("Attached: $f")
         when (f) {
-            is MainFlowFragment -> injectMainFlowFragment(f)
-
             is OverlayImageFragment -> injectOverlayImageFragment(f)
 
             is CommentsFragment -> injectCommentsFragment(f)
@@ -45,12 +40,6 @@ class InjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCall
 
             is UserArticlesFragment -> injectUserArticlesFragment(f)
         }
-    }
-
-    private fun injectMainFlowFragment(fragment: MainFlowFragment) {
-        val module = MainFlowFragmentModule(fragment)
-        val scope = Toothpick.openScopes(ApplicationScope::class.java, MainFlowFragmentScope::class.java)
-        scope.installModules(module).closeOnDestroy(fragment).inject(fragment)
     }
 
     private fun injectCommentsFragment(fragment: CommentsFragment) {

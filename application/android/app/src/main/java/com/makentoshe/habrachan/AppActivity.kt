@@ -3,6 +3,7 @@ package com.makentoshe.habrachan
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.makentoshe.habrachan.application.android.screen.main.navigation.MainFlowScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
@@ -12,7 +13,8 @@ import toothpick.ktp.delegate.inject
 
 class AppActivity : AppCompatActivity() {
 
-    private val navigator = SupportAppNavigator(this, supportFragmentManager, R.id.fragment_main_container)
+    private val navigator =
+        SupportAppNavigator(this, supportFragmentManager, R.id.fragment_main_container)
 
     private val navigatorHolder by inject<NavigatorHolder>()
     private val router by inject<Router>()
@@ -25,8 +27,8 @@ class AppActivity : AppCompatActivity() {
 
         when (intent.action) {
             Intent.ACTION_MAIN -> {
-//                val screen = MainFlowScreen()
-//                router.newRootScreen(screen)
+                val screen = MainFlowScreen()
+                router.newRootScreen(screen)
             }
         }
     }
