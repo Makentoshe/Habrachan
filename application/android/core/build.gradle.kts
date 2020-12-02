@@ -42,17 +42,14 @@ dependencies {
 
     implementation(kotlin("stdlib"))
 
+    implementation(project(":library:core"))
+
     // Room (sql database library)
     // https://developer.android.com/topic/libraries/architecture/room
     val room = "2.2.5"
-    api("androidx.room:room-runtime:$room")
-    api("androidx.room:room-ktx:$room")
+    implementation("androidx.room:room-runtime:$room")
+    implementation("androidx.room:room-ktx:$room")
     kapt("androidx.room:room-compiler:$room")
-
-    // Material components
-    // https://github.com/material-components/material-components-android
-    val material = properties["version.androidx.material"]
-    api("com.google.android.material:material:$material")
 
     val core = properties["version.androidx.core"]
     implementation("androidx.core:core-ktx:$core")

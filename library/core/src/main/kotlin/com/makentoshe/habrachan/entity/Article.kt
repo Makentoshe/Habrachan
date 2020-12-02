@@ -3,12 +3,6 @@ package com.makentoshe.habrachan.entity
 import com.google.gson.annotations.SerializedName
 
 data class Article(
-    /**
-     * Special mark field. If set upped - this article was in last search response.
-     * DO NOT USE THIS VALUE DIRECTLY.
-     */
-    var searchIndex: Int? = null,
-
     @SerializedName("id")
     val id: Int,
     @SerializedName("author")
