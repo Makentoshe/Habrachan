@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
-import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesSearchEpoxyController
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
 import com.makentoshe.habrachan.common.broadcast.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDao
@@ -48,8 +47,16 @@ class ArticlesFragment2 : CoreFragment() {
             fragment_articles_recycler.adapter = it
         }.let(disposables::add)
 
+        viewModel.searchSubject.subscribe {
+            fragment_articles_flow_toolbar.title = it.request
+        }.let(disposables::add)
+
         viewModel.initialObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
             it.onFailure(::onInitialFailure).onSuccess { onInitialSuccess() }
+        }.let(disposables::add)
+
+        viewModel.afterObservable.subscribe {
+            println(it.exceptionOrNull())
         }.let(disposables::add)
 
         fragment_articles_retry.setOnClickListener { onRetryClick() }
@@ -128,7 +135,7 @@ class ArticlesFlowFragment : Fragment() {
     private val disposables by inject<CompositeDisposable>()
     private val sessionDao by inject<SessionDao>()
     private val searchBroadcastReceiver by inject<ArticlesSearchBroadcastReceiver>()
-    private val articlesSearchEpoxyController by inject<ArticlesSearchEpoxyController>()
+//    private val articlesSearchEpoxyController by inject<ArticlesSearchEpoxyController>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -160,7 +167,7 @@ class ArticlesFlowFragment : Fragment() {
         }
         if (panelState != SlidingUpPanelLayout.PanelState.EXPANDED) {
             fragment_articles_flow_panel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-            articlesSearchEpoxyController.requestModelBuild()
+//            articlesSearchEpoxyController.requestModelBuild()
             return true
         }
         return false

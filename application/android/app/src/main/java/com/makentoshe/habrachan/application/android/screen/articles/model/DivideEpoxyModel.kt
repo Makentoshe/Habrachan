@@ -28,8 +28,7 @@ abstract class DivideEpoxyModel : EpoxyModelWithHolder<DivideEpoxyModel.ViewHold
 
     class Factory {
         fun build(index: String, page: Int): DivideEpoxyModel {
-            val model =
-                DivideEpoxyModel_()
+            val model = DivideEpoxyModel_()
             model.id("page", index)
             model.text(page.toString())
             return model

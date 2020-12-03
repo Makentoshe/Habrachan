@@ -1,10 +1,11 @@
-package com.makentoshe.habrachan.application.android.screen.articles.model.pagination
+package com.makentoshe.habrachan.application.android.screen.articles.model
 
 import androidx.paging.PageKeyedDataSource
 import com.makentoshe.habrachan.application.core.arena.articles.ArticlesArena
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.network.response.ArticlesResponse
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.CoroutineScope
@@ -32,16 +33,14 @@ class ArticlesDataSource(
         params: LoadParams<Int>, callback: LoadCallback<Int, Article>
     ) = arena.suspendFetch(GetArticlesRequest(session, params.key, requestSpec)).fold({
         callback.onResult(it.data, params.key - 1)
-    }, {
-        throw it
-    })
+    }, { throw it })
 
     // Stores last [loadInitial] arguments for retrying
     private lateinit var lastInitialSnapshot: LastInitialSnapshot
 
     // Indicates that the initial load was finished
-    private val initialSubject = BehaviorSubject.create<Result<*>>()
-    val initialObservable: Observable<Result<*>> = initialSubject
+    private val initialSubject = BehaviorSubject.create<Result<ArticlesResponse>>()
+    val initialObservable: Observable<Result<ArticlesResponse>> = initialSubject
 
     override fun loadInitial(
         params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Article>
@@ -59,9 +58,17 @@ class ArticlesDataSource(
         callback.onResult(it.data, null, 2)
     }.let { initialSubject.onNext(it) }
 
+    // Stores last [loadAfter] arguments for retrying
+    private lateinit var lastAfterSnapshot: LastAfterSnapshot
+
+    // Indicates that the after load was finished
+    private val afterSubject: BehaviorSubject<Result<ArticlesResponse>> = BehaviorSubject.create()
+    val afterObservable: Observable<Result<ArticlesResponse>> = afterSubject
+
     override fun loadAfter(
         params: LoadParams<Int>, callback: LoadCallback<Int, Article>
     ) {
+        lastAfterSnapshot = LastAfterSnapshot(params, callback)
         coroutineScope.launch(Dispatchers.IO) {
             println("After isActive=$isActive ${Thread.currentThread()} key=${params.key} size${params.requestedLoadSize}")
             suspendLoadAfter(params, callback)
@@ -70,11 +77,9 @@ class ArticlesDataSource(
 
     private suspend fun suspendLoadAfter(
         params: LoadParams<Int>, callback: LoadCallback<Int, Article>
-    ) = arena.suspendFetch(GetArticlesRequest(session, params.key, requestSpec)).fold({
+    ) = arena.suspendFetch(GetArticlesRequest(session, params.key, requestSpec)).onSuccess {
         callback.onResult(it.data, params.key + 1)
-    }, {
-        throw it
-    })
+    }.let { afterSubject.onNext(it) }
 
     internal data class LastInitialSnapshot(
         val params: LoadInitialParams<Int>, val callback: LoadInitialCallback<Int, Article>

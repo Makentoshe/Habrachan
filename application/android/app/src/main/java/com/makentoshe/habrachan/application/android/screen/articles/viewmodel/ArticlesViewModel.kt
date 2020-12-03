@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.airbnb.epoxy.EpoxyControllerAdapter
-import com.makentoshe.habrachan.application.android.screen.articles.model.pagination.ArticlesDataSource
-import com.makentoshe.habrachan.application.android.screen.articles.model.pagination.ArticlesPagedListEpoxyController
+import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesDataSource
+import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesPagedListEpoxyController
 import com.makentoshe.habrachan.application.core.arena.articles.ArticlesArena
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.network.UserSession
@@ -33,6 +33,9 @@ class ArticlesViewModel(
     private val initialSubject = BehaviorSubject.create<Result<*>>()
     val initialObservable: Observable<Result<*>> = initialSubject
 
+    private val afterSubject = BehaviorSubject.create<Result<*>>()
+    val afterObservable: Observable<Result<*>> = afterSubject
+
     init {
         searchSubject.onNext(userSession.articlesRequestSpec)
 
@@ -48,6 +51,7 @@ class ArticlesViewModel(
     private fun buildDataSource(spec: GetArticlesRequest.Spec): ArticlesDataSource {
         val source = ArticlesDataSource(viewModelScope, userSession, spec, articlesArena)
         source.initialObservable.safeSubscribe(initialSubject)
+        source.afterObservable.safeSubscribe(afterSubject)
         return source
     }
 

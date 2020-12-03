@@ -5,8 +5,9 @@ import com.makentoshe.habrachan.application.android.arena.ArticlesArenaCache
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment2
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleEpoxyModel
+import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesPagedListEpoxyController
 import com.makentoshe.habrachan.application.android.screen.articles.model.DivideEpoxyModel
-import com.makentoshe.habrachan.application.android.screen.articles.model.pagination.ArticlesPagedListEpoxyController
+import com.makentoshe.habrachan.application.android.screen.articles.model.FooterEpoxyModel
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ExecutorsProvider
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.SchedulersProvider
@@ -31,21 +32,21 @@ class ArticlesFragment2Module(fragment: ArticlesFragment2) : Module() {
     private val client by inject<OkHttpClient>()
     private val executorsProvider by inject<ExecutorsProvider>()
     private val schedulersProvider by inject<SchedulersProvider>()
-    private val userSession by inject<UserSession>()
+    private val session by inject<UserSession>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
         bind<CompositeDisposable>().toInstance(CompositeDisposable())
 
         val articlesEpoxyController = ArticlesPagedListEpoxyController(
-            ArticleEpoxyModel.Factory(router), DivideEpoxyModel.Factory()
+            ArticleEpoxyModel.Factory(router), DivideEpoxyModel.Factory(), FooterEpoxyModel.Factory()
         )
 
         val articlesManager = ArticlesManager.Builder(client).native()
         val articlesArena = ArticlesArena(articlesManager, ArticlesArenaCache())
         val factory = ArticlesViewModel.Factory(
             CompositeDisposable(),
-            userSession,
+            session,
             articlesArena,
             articlesEpoxyController,
             executorsProvider,
