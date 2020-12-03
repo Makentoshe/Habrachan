@@ -1,11 +1,11 @@
 package com.makentoshe.habrachan.application.android.screen.image.di
 
 import androidx.lifecycle.ViewModelProviders
+import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.image.OverlayImageFragment
 import com.makentoshe.habrachan.application.android.screen.image.navigation.OverlayImageFragmentNavigation
 import com.makentoshe.habrachan.application.android.screen.image.viewmodel.OverlayImageFragmentViewModel
 import com.makentoshe.habrachan.common.network.manager.ImageManager
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router

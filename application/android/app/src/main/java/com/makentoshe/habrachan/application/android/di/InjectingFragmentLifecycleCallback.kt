@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.di
+package com.makentoshe.habrachan.application.android.di
 
 import android.content.Context
 import androidx.fragment.app.Fragment
@@ -8,7 +8,6 @@ import com.makentoshe.habrachan.application.android.screen.image.di.OverlayImage
 import com.makentoshe.habrachan.application.android.screen.image.di.OverlayImageFragmentScope
 import com.makentoshe.habrachan.di.comments.CommentsFragmentModule
 import com.makentoshe.habrachan.di.comments.CommentsFragmentScope
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.di.main.login.*
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentModule
 import com.makentoshe.habrachan.di.user.UserArticlesFragmentScope

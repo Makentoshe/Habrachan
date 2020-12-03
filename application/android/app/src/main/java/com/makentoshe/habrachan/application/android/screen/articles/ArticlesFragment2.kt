@@ -15,6 +15,7 @@ import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.Ar
 import com.makentoshe.habrachan.common.broadcast.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_articles_flow.*
 import kotlinx.android.synthetic.main.fragment_articles_flow_content.*
@@ -41,12 +42,48 @@ class ArticlesFragment2 : CoreFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragment_articles_flow_panel.isTouchEnabled = false
         fragment_articles_flow_collapsing.isTitleEnabled = false
-
         fragment_articles_flow_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
 
-        viewModel.adapterObservable.subscribe {
-
+        viewModel.adapterObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            fragment_articles_recycler.adapter = it
         }.let(disposables::add)
+
+        viewModel.initialObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            it.onFailure(::onInitialFailure).onSuccess { onInitialSuccess() }
+        }.let(disposables::add)
+
+        fragment_articles_retry.setOnClickListener { onRetryClick() }
+
+        fragment_articles_swipe.setOnRefreshListener { onSwipeRefresh() }
+    }
+
+    private fun onInitialFailure(throwable: Throwable) {
+        fragment_articles_swipe.isRefreshing = false
+        fragment_articles_progress.visibility = View.GONE
+        fragment_articles_swipe.visibility = View.GONE
+
+        // TODO Add normal error handling and displaying
+        fragment_articles_message.text = throwable.toString()
+        fragment_articles_message.visibility = View.VISIBLE
+        fragment_articles_retry.visibility = View.VISIBLE
+    }
+
+    private fun onInitialSuccess() {
+        fragment_articles_swipe.isRefreshing = false
+        fragment_articles_swipe.visibility = View.VISIBLE
+        fragment_articles_progress.visibility = View.GONE
+    }
+
+    private fun onRetryClick() {
+        fragment_articles_retry.visibility = View.GONE
+        fragment_articles_message.visibility = View.GONE
+        fragment_articles_progress.visibility = View.VISIBLE
+
+        onSwipeRefresh()
+    }
+
+    private fun onSwipeRefresh() {
+        viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return)
     }
 
     private fun onSearchMenuItemClick(item: MenuItem): Boolean {

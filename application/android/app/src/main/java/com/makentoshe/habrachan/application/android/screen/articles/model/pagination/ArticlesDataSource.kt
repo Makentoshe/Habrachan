@@ -5,6 +5,8 @@ import com.makentoshe.habrachan.application.core.arena.articles.ArticlesArena
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
@@ -34,9 +36,17 @@ class ArticlesDataSource(
         throw it
     })
 
+    // Stores last [loadInitial] arguments for retrying
+    private lateinit var lastInitialSnapshot: LastInitialSnapshot
+
+    // Indicates that the initial load was finished
+    private val initialSubject = BehaviorSubject.create<Result<*>>()
+    val initialObservable: Observable<Result<*>> = initialSubject
+
     override fun loadInitial(
         params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Article>
     ) {
+        lastInitialSnapshot = LastInitialSnapshot(params, callback)
         coroutineScope.launch(Dispatchers.IO) {
             println("Initial isActive=${isActive} ${Thread.currentThread()} ${params.requestedLoadSize}")
             suspendLoadInitial(params, callback)
@@ -45,11 +55,9 @@ class ArticlesDataSource(
 
     private suspend fun suspendLoadInitial(
         params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Article>
-    ) = arena.suspendFetch(GetArticlesRequest(session, 0, requestSpec)).fold({
-        callback.onResult(it.data, null, 1)
-    }, {
-        throw it
-    })
+    ) = arena.suspendFetch(GetArticlesRequest(session, 1, requestSpec)).onSuccess {
+        callback.onResult(it.data, null, 2)
+    }.let { initialSubject.onNext(it) }
 
     override fun loadAfter(
         params: LoadParams<Int>, callback: LoadCallback<Int, Article>
@@ -67,4 +75,12 @@ class ArticlesDataSource(
     }, {
         throw it
     })
+
+    internal data class LastInitialSnapshot(
+        val params: LoadInitialParams<Int>, val callback: LoadInitialCallback<Int, Article>
+    )
+
+    internal data class LastAfterSnapshot(
+        val params: LoadParams<Int>, val callback: LoadCallback<Int, Article>
+    )
 }

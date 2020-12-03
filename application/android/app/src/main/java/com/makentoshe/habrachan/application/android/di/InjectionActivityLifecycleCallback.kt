@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.di
+package com.makentoshe.habrachan.application.android.di
 
 import android.app.Activity
 import android.app.Application
@@ -7,7 +7,6 @@ import com.makentoshe.habrachan.AppActivity
 import com.makentoshe.habrachan.application.android.screen.article.di.ArticleInjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesInjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowInjectingFragmentLifecycleCallback
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import toothpick.Toothpick
 
 class InjectionActivityLifecycleCallback(

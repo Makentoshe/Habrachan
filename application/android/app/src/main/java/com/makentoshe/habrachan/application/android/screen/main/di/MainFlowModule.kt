@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.application.android.screen.main.di
 
+import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.main.MainFlowFragment
 import com.makentoshe.habrachan.application.android.screen.main.navigation.MainFlowNavigation
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind

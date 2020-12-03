@@ -12,7 +12,6 @@ import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 
@@ -25,14 +24,17 @@ class ArticlesViewModel(
     private val articleController: ArticlesPagedListEpoxyController
 ) : ViewModel() {
 
-    private val searchSubject = BehaviorSubject.create<GetArticlesRequest.Spec>()
-    val searchObserver: Observer<GetArticlesRequest.Spec> = searchSubject
+    /** May contain last search data */
+    val searchSubject = BehaviorSubject.create<GetArticlesRequest.Spec>()
 
     private val adapterSubject = BehaviorSubject.create<EpoxyControllerAdapter>()
     val adapterObservable: Observable<EpoxyControllerAdapter> = adapterSubject
 
+    private val initialSubject = BehaviorSubject.create<Result<*>>()
+    val initialObservable: Observable<Result<*>> = initialSubject
+
     init {
-        searchObserver.onNext(userSession.articlesRequestSpec)
+        searchSubject.onNext(userSession.articlesRequestSpec)
 
         searchSubject.observeOn(schedulersProvider.ioScheduler).map { spec ->
             buildPagedList(buildDataSource(spec))
@@ -44,7 +46,9 @@ class ArticlesViewModel(
     }
 
     private fun buildDataSource(spec: GetArticlesRequest.Spec): ArticlesDataSource {
-        return ArticlesDataSource(viewModelScope, userSession, spec, articlesArena)
+        val source = ArticlesDataSource(viewModelScope, userSession, spec, articlesArena)
+        source.initialObservable.safeSubscribe(initialSubject)
+        return source
     }
 
     private fun buildPagedList(dataSource: ArticlesDataSource): PagedList<Article> {

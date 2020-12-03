@@ -3,23 +3,23 @@ package com.makentoshe.habrachan.application.android.screen.articles.di
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFlowFragment
-import com.makentoshe.habrachan.di.common.ApplicationScope
+import com.makentoshe.habrachan.application.android.di.ApplicationScope
+import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment2
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class ArticlesInjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCallbacks() {
 
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) = when (f) {
-        is ArticlesFlowFragment -> injectArticlesFlowFragment(f)
+        is ArticlesFragment2 -> injectArticlesFragment2(f)
 //        is ArticlesFragment -> injectArticlesFragment(f)
 //        is ArticlesSearchFragment -> injectArticlesSearchFragment(f)
         else -> Unit
     }
 
-    private fun injectArticlesFlowFragment(fragment: ArticlesFlowFragment) {
-        val module = ArticlesFlowFragmentModule(fragment)
-        val scope = Toothpick.openScopes(ApplicationScope::class, ArticlesFlowFragmentScope::class)
+    private fun injectArticlesFragment2(fragment: ArticlesFragment2) {
+        val module = ArticlesFragment2Module(fragment)
+        val scope = Toothpick.openScopes(ApplicationScope::class, ArticlesScope::class)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 

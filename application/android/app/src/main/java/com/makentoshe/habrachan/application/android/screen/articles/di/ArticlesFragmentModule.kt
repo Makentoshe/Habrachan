@@ -1,10 +1,10 @@
 package com.makentoshe.habrachan.application.android.screen.articles.di
 
+import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick

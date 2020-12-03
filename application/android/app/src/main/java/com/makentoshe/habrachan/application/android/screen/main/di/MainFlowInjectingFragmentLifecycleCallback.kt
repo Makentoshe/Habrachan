@@ -3,8 +3,8 @@ package com.makentoshe.habrachan.application.android.screen.main.di
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.main.MainFlowFragment
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
 

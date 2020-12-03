@@ -2,9 +2,9 @@ package com.makentoshe.habrachan.di.main.login
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.LoginManager
-import com.makentoshe.habrachan.di.common.ApplicationScope
 import com.makentoshe.habrachan.view.main.login.OauthFragment
 import com.makentoshe.habrachan.viewmodel.main.login.LoginViewModel
 import io.reactivex.disposables.CompositeDisposable

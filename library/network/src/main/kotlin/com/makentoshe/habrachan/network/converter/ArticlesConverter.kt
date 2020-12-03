@@ -15,6 +15,6 @@ class ArticlesConverter: Converter<ArticlesResponse> {
     }
 
     override fun convertError(body: ResponseBody): Result<ArticlesResponse> {
-        return Result.failure(ConverterException(body.toString()))
+        return Result.failure(ConverterException(body.string()))
     }
 }
