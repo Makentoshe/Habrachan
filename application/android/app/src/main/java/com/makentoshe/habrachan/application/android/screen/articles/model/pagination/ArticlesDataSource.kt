@@ -1,102 +1,70 @@
 package com.makentoshe.habrachan.application.android.screen.articles.model.pagination
 
-import androidx.paging.PositionalDataSource
-import com.makentoshe.habrachan.common.database.CacheDatabase
-import com.makentoshe.habrachan.common.database.session.SessionDatabase
-import com.makentoshe.habrachan.common.entity.Article
-import com.makentoshe.habrachan.common.entity.article.NextPage
-import com.makentoshe.habrachan.common.network.manager.ArticlesManager
-import com.makentoshe.habrachan.common.network.request.GetArticlesRequest
-import com.makentoshe.habrachan.common.network.response.ArticlesResponse
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import java.net.UnknownHostException
-import javax.net.ssl.SSLHandshakeException
+import androidx.paging.PageKeyedDataSource
+import com.makentoshe.habrachan.application.core.arena.articles.ArticlesArena
+import com.makentoshe.habrachan.entity.Article
+import com.makentoshe.habrachan.network.UserSession
+import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 class ArticlesDataSource(
-    private val articlesManager: ArticlesManager,
-    private val cacheDatabase: CacheDatabase,
-    private val sessionDatabase: SessionDatabase
-) : PositionalDataSource<Article>() {
+    private val coroutineScope: CoroutineScope,
+    private val session: UserSession,
+    private val requestSpec: GetArticlesRequest.Spec,
+    private val arena: ArticlesArena
+) : PageKeyedDataSource<Int, Article>() {
 
-    private val initialErrorSubject = PublishSubject.create<ArticlesLoadInitialErrorContainer>()
-    val initialErrorObservable: Observable<ArticlesLoadInitialErrorContainer> = initialErrorSubject
-
-    private val initialSuccessSubject = PublishSubject.create<ArticlesLoadInitialSuccessContainer>()
-    val initialSuccessObservable: Observable<ArticlesLoadInitialSuccessContainer> = initialSuccessSubject
-
-    private val rangeErrorSubject = PublishSubject.create<ArticlesLoadRangeErrorContainer>()
-    val rangeErrorObservable: Observable<ArticlesLoadRangeErrorContainer> = rangeErrorSubject
-
-    private fun load(pageSize: Int, page: Int): ArticlesResponse {
-        val request = buildGetArticlesRequest(page)
-        return try {
-            val response = articlesManager.getArticles(request).blockingGet()
-            saveCache(pageSize, page, response)
-            return response
-        } catch (runtimeException: RuntimeException) {
-            when (val cause = runtimeException.cause) {
-                // When internet offline
-                is UnknownHostException -> loadCache(page, cause)
-                is SSLHandshakeException -> loadCache(page, cause)
-                // When content is loading and we navigate to another screen
-                is InterruptedException -> loadCache(page, cause)
-                else -> throw runtimeException
-            }
+    override fun loadBefore(
+        params: LoadParams<Int>, callback: LoadCallback<Int, Article>
+    ) {
+        coroutineScope.launch(Dispatchers.IO) {
+            println("Before isActive=${isActive} ${Thread.currentThread()} key=${params.key} size${params.requestedLoadSize}")
+            suspendLoadBefore(params, callback)
         }
     }
 
-    private fun buildGetArticlesRequest(page: Int): GetArticlesRequest {
-        val session = sessionDatabase.session().get()
-        return GetArticlesRequest(session, page, session.articlesRequestSpec)
-    }
+    private suspend fun suspendLoadBefore(
+        params: LoadParams<Int>, callback: LoadCallback<Int, Article>
+    ) = arena.suspendFetch(GetArticlesRequest(session, params.key, requestSpec)).fold({
+        callback.onResult(it.data, params.key - 1)
+    }, {
+        throw it
+    })
 
-    private fun saveCache(pageSize: Int, page: Int, response: ArticlesResponse) {
-        if (page == 1) {
-            cacheDatabase.clear()
-        }
-        if (response is ArticlesResponse.Success) response.data.forEachIndexed { index, article ->
-            val searchIndex = page * pageSize + index
-            cacheDatabase.articles().insert(article.copy(searchIndex = searchIndex))
-            cacheDatabase.users().insert(article.author)
-        }
-    }
-
-    private fun loadCache(page: Int, exception: Exception): ArticlesResponse {
-        if (page > 1) return ArticlesResponse.Error(exception.toString())
-        val articles = cacheDatabase.articles().getAllSortedByDescendingIndex()
-        if (articles.isEmpty()) {
-            return ArticlesResponse.Error(exception.toString())
-        }
-        val nextPage = NextPage(articles.size / ArticlesResponse.DEFAULT_SIZE + 1, "")
-        return ArticlesResponse.Success(articles, nextPage, 0, "", "")
-    }
-
-    override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<Article>) {
-        val page = (params.startPosition / params.loadSize) + 1
-        when (val response = load(params.loadSize, page)) {
-            is ArticlesResponse.Success -> {
-                callback.onResult(response.data)
-            }
-            is ArticlesResponse.Error -> {
-                val container = ArticlesLoadRangeErrorContainer(response, params, callback)
-                rangeErrorSubject.onNext(container)
-            }
+    override fun loadInitial(
+        params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Article>
+    ) {
+        coroutineScope.launch(Dispatchers.IO) {
+            println("Initial isActive=${isActive} ${Thread.currentThread()} ${params.requestedLoadSize}")
+            suspendLoadInitial(params, callback)
         }
     }
 
-    override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<Article>) {
-        val page = ((params.requestedStartPosition + params.requestedLoadSize) / params.pageSize) + 1
-        when (val response = load(params.pageSize, page)) {
-            is ArticlesResponse.Success -> {
-                callback.onResult(response.data, 0)
-                val container = ArticlesLoadInitialSuccessContainer(response, params, callback)
-                initialSuccessSubject.onNext(container)
-            }
-            is ArticlesResponse.Error -> {
-                val container = ArticlesLoadInitialErrorContainer(response, params, callback)
-                initialErrorSubject.onNext(container)
-            }
+    private suspend fun suspendLoadInitial(
+        params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Article>
+    ) = arena.suspendFetch(GetArticlesRequest(session, 0, requestSpec)).fold({
+        callback.onResult(it.data, null, 1)
+    }, {
+        throw it
+    })
+
+    override fun loadAfter(
+        params: LoadParams<Int>, callback: LoadCallback<Int, Article>
+    ) {
+        coroutineScope.launch(Dispatchers.IO) {
+            println("After isActive=$isActive ${Thread.currentThread()} key=${params.key} size${params.requestedLoadSize}")
+            suspendLoadAfter(params, callback)
         }
     }
+
+    private suspend fun suspendLoadAfter(
+        params: LoadParams<Int>, callback: LoadCallback<Int, Article>
+    ) = arena.suspendFetch(GetArticlesRequest(session, params.key, requestSpec)).fold({
+        callback.onResult(it.data, params.key + 1)
+    }, {
+        throw it
+    })
 }

@@ -6,11 +6,15 @@ import java.io.Serializable
 /** Request a batch of articles, on selected [page] with selected [spec] */
 data class GetArticlesRequest(val session: UserSession, val page: Int, val spec: Spec) {
 
-    interface Spec : Serializable {
-        val request: String
-        val sort: String?
-        val include: String?
-        val exclude: String?
-        override fun toString(): String
+    sealed class Spec(val request: String) : Serializable {
+        abstract val sort: String?
+        abstract val include: String?
+        abstract val exclude: String?
+
+        class All : Spec("posts/all") {
+            override val sort: String? = null
+            override val include: String? = null
+            override val exclude: String? = null
+        }
     }
 }

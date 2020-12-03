@@ -3,12 +3,12 @@ package com.makentoshe.habrachan.application.android.screen.articles.model.pagin
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleEpoxyModel
-import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesPageDivideEpoxyModel
-import com.makentoshe.habrachan.common.entity.Article
+import com.makentoshe.habrachan.application.android.screen.articles.model.DivideEpoxyModel
+import com.makentoshe.habrachan.entity.Article
 
 class ArticlesPagedListEpoxyController(
     private val articleModelFactory: ArticleEpoxyModel.Factory,
-    private val divideModelFactory: ArticlesPageDivideEpoxyModel.Factory
+    private val divideModelFactory: DivideEpoxyModel.Factory
 ) : PagedListEpoxyController<Article>() {
 
     val pageSize = 20

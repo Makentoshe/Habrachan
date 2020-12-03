@@ -9,7 +9,7 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
 
 @EpoxyModelClass(layout = R.layout.main_articles_divider_page)
-abstract class ArticlesPageDivideEpoxyModel : EpoxyModelWithHolder<ArticlesPageDivideEpoxyModel.ViewHolder>() {
+abstract class DivideEpoxyModel : EpoxyModelWithHolder<DivideEpoxyModel.ViewHolder>() {
 
     @EpoxyAttribute
     var text: String = ""
@@ -27,8 +27,9 @@ abstract class ArticlesPageDivideEpoxyModel : EpoxyModelWithHolder<ArticlesPageD
     }
 
     class Factory {
-        fun build(index: String, page: Int): ArticlesPageDivideEpoxyModel {
-            val model = ArticlesPageDivideEpoxyModel_()
+        fun build(index: String, page: Int): DivideEpoxyModel {
+            val model =
+                DivideEpoxyModel_()
             model.id("page", index)
             model.text(page.toString())
             return model

@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.application.android.screen.main.navigation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesScreen
 import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
 import com.makentoshe.habrachan.navigation.main.menu.MenuScreen
 import ru.terrakok.cicerone.android.support.SupportAppScreen
@@ -14,10 +14,7 @@ class MainFlowNavigation(private val fragmentManager: FragmentManager) {
     private var currentScreen: SupportAppScreen? = null
 
     fun navigateToArticlesScreen(page: Int) {
-        val newScreen =
-            ArticlesFlowScreen(
-                page
-            )
+        val newScreen = ArticlesScreen(page)
         navigateToScreen(newScreen)
     }
 
@@ -31,17 +28,14 @@ class MainFlowNavigation(private val fragmentManager: FragmentManager) {
         navigateToScreen(newScreen)
     }
 
-    private fun navigateToScreen(newScreen: SupportAppScreen) {
-        // if screen already displaying
+    private fun navigateToScreen(newScreen: SupportAppScreen) { // if screen already displaying
         if (currentScreen?.screenKey == newScreen.screenKey) return
 
         val currentFragment = fragmentManager.findFragmentByTag(currentScreen?.screenKey)
         val newFragment = fragmentManager.findFragmentByTag(newScreen.screenKey)
-        if (newFragment != null) {
-            // if contains fragment in backstack - show it
+        if (newFragment != null) { // if contains fragment in backstack - show it
             replaceScreen(newFragment, currentFragment)
-        } else {
-            // if currently shows another fragment - hide it
+        } else { // if currently shows another fragment - hide it
             addScreen(newScreen, currentFragment)
         }
 

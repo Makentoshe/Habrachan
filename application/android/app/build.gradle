@@ -7,6 +7,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE*'
+        exclude 'META-INF/NOTICE*'
+        exclude 'META-INF/*.kotlin_module'
+    }
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.makentoshe.habrachan"
@@ -60,6 +66,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    implementation project(":application:core")
     implementation project(":application:android:core")
 
     implementation project(":library:core")
@@ -102,6 +109,10 @@ dependencies {
     def arch = "1.1.1"
     implementation "android.arch.lifecycle:extensions:$arch"
     implementation "android.arch.lifecycle:viewmodel:$arch"
+
+    // Coroutines for android ViewModel
+    def coroutinesViewModel = "2.3.0-beta01"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutinesViewModel")
 
     // RxJava2
     // https://github.com/ReactiveX/RxJava

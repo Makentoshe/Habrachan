@@ -41,13 +41,13 @@ class UserArticlesViewModel(
     val initialErrorObservable: Observable<UserArticlesLoadInitialErrorContainer> = initialErrorSubject
 
     init {
-        requestSubject.observeOn(schedulersProvider.ioScheduler)
-            .doOnNext { adapterSubject.onNext(controller.adapter) }
-            .map(articlesDataSourceFactory::build)
-            .doOnNext(::setNewSubjects)
-            .map(::buildPagedList)
-            .subscribe(controller::submitList)
-            .let(disposables::add)
+//        requestSubject.observeOn(schedulersProvider.ioScheduler)
+//            .doOnNext { adapterSubject.onNext(controller.adapter) }
+//            .map(articlesDataSourceFactory::build)
+//            .doOnNext(::setNewSubjects)
+//            .map(::buildPagedList)
+//            .subscribe(controller::submitList)
+//            .let(disposables::add)
 
         initialSuccessObservable.subscribe {
             initialErrorSubject.onComplete()

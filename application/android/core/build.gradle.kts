@@ -6,6 +6,13 @@ plugins {
 }
 
 android {
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+        exclude("META-INF/LICENSE*")
+        exclude("META-INF/NOTICE*")
+        exclude("META-INF/*.kotlin_module")
+    }
+
     compileSdkVersion(29)
     defaultConfig {
         minSdkVersion(21)
@@ -39,6 +46,8 @@ dependencies {
     implementation(kotlin("stdlib"))
 
     implementation(project(":library:core"))
+    implementation(project(":library:network"))
+    implementation(project(":application:core"))
 
     // Room (sql database library)
     // https://developer.android.com/topic/libraries/architecture/room

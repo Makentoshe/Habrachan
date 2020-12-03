@@ -22,8 +22,7 @@ class ArticlesSearchTopEpoxyModel: EpoxyModel<TextView>() {
 
     class Factory {
         fun build(): ArticlesSearchTopEpoxyModel {
-            val model =
-                ArticlesSearchTopEpoxyModel()
+            val model = ArticlesSearchTopEpoxyModel()
             model.id("top")
             return model
         }

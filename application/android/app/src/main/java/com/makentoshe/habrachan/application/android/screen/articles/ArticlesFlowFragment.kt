@@ -9,7 +9,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesSearchEpoxyController
+import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
 import com.makentoshe.habrachan.common.broadcast.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDao
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -17,6 +19,62 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_articles_flow.*
 import kotlinx.android.synthetic.main.fragment_articles_flow_content.*
 import toothpick.ktp.delegate.inject
+
+class ArticlesFragment2 : CoreFragment() {
+
+    companion object {
+        fun build(page: Int = 0): ArticlesFragment2 {
+            val fragment = ArticlesFragment2()
+            fragment.arguments.page = page
+            return fragment
+        }
+    }
+
+    override val arguments = Arguments(this)
+    private val viewModel by inject<ArticlesViewModel>()
+    private val disposables by inject<CompositeDisposable>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.fragment_articles_flow, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        fragment_articles_flow_panel.isTouchEnabled = false
+        fragment_articles_flow_collapsing.isTitleEnabled = false
+
+        fragment_articles_flow_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
+
+        viewModel.adapterObservable.subscribe {
+
+        }.let(disposables::add)
+    }
+
+    private fun onSearchMenuItemClick(item: MenuItem): Boolean {
+        if (item.itemId != R.id.action_search) return false
+        when (fragment_articles_flow_panel?.panelState) {
+            SlidingUpPanelLayout.PanelState.COLLAPSED, SlidingUpPanelLayout.PanelState.HIDDEN -> {
+                fragment_articles_flow_panel?.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+                closeSoftKeyboard()
+            }
+            SlidingUpPanelLayout.PanelState.EXPANDED -> {
+                fragment_articles_flow_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+            }
+            else -> return false
+        }
+        return true
+    }
+
+    class Arguments(fragment: ArticlesFragment2) : CoreFragment.Arguments(fragment) {
+
+        var page: Int
+            get() = fragmentArguments.getInt(PAGE, 0)
+            set(value) = fragmentArguments.putInt(PAGE, value)
+
+        companion object {
+            private const val PAGE = "Page"
+        }
+    }
+}
 
 class ArticlesFlowFragment : Fragment() {
 
@@ -35,14 +93,17 @@ class ArticlesFlowFragment : Fragment() {
     private val searchBroadcastReceiver by inject<ArticlesSearchBroadcastReceiver>()
     private val articlesSearchEpoxyController by inject<ArticlesSearchEpoxyController>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         return layoutInflater.inflate(R.layout.fragment_articles_flow, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragment_articles_flow_panel.isTouchEnabled = false
 
-        fragment_articles_flow_toolbar.title = sessionDao.get().articlesRequestSpec.toString(requireContext())
+        fragment_articles_flow_toolbar.title =
+            sessionDao.get().articlesRequestSpec.toString(requireContext())
         fragment_articles_flow_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
         fragment_articles_flow_collapsing.isTitleEnabled = false
 
@@ -77,8 +138,7 @@ class ArticlesFlowFragment : Fragment() {
         super.onStop()
         try {
             requireContext().unregisterReceiver(searchBroadcastReceiver)
-        } catch (ignoring: IllegalArgumentException) {
-            // Caused by: java.lang.IllegalArgumentException: Receiver not registered
+        } catch (ignoring: IllegalArgumentException) { // Caused by: java.lang.IllegalArgumentException: Receiver not registered
         }
     }
 
@@ -95,7 +155,8 @@ class ArticlesFlowFragment : Fragment() {
     }
 
     private fun closeSoftKeyboard() {
-        val imm = requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
         val view = requireActivity().currentFocus ?: View(activity)
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }

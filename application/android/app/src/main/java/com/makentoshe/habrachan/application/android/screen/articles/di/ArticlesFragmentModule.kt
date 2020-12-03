@@ -1,33 +1,17 @@
 package com.makentoshe.habrachan.application.android.screen.articles.di
 
-import android.os.Handler
-import android.os.Looper
-import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment
-import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleEpoxyModel
-import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesPageDivideEpoxyModel
-import com.makentoshe.habrachan.application.android.screen.articles.model.pagination.ArticlesDataSource
-import com.makentoshe.habrachan.application.android.screen.articles.model.pagination.ArticlesPagedListEpoxyController
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModelExecutorsProvider
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModelSchedulersProvider
 import com.makentoshe.habrachan.common.database.CacheDatabase
 import com.makentoshe.habrachan.common.database.session.SessionDatabase
 import com.makentoshe.habrachan.common.network.manager.ArticlesManager
 import com.makentoshe.habrachan.di.common.ApplicationScope
-import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
-import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 import javax.inject.Qualifier
 
-@Target(AnnotationTarget.CLASS)
-@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class ArticlesFragmentScope
 
@@ -44,25 +28,25 @@ class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
         Toothpick.openScopes(ApplicationScope::class.java).inject(this)
         articlesManager = ArticlesManager.Builder(client).build()
 
-        val articlesViewModel2 = getArticlesViewModel(fragment)
-        bind<ArticlesViewModel>().toInstance(articlesViewModel2)
+//        val articlesViewModel2 = getArticlesViewModel(fragment)
+//        bind<ArticlesViewModel>().toInstance(articlesViewModel2)
     }
 
-    private fun getArticlesViewModel(fragment: ArticlesFragment): ArticlesViewModel {
-        val source = ArticlesDataSource(articlesManager, database, sessionDatabase)
-        val articleModelFactory = ArticleEpoxyModel.Factory(router)
-        val divideModelFactory = ArticlesPageDivideEpoxyModel.Factory()
-        val controller = ArticlesPagedListEpoxyController(articleModelFactory, divideModelFactory)
-        val executorsProvider = object :
-            ArticlesViewModelExecutorsProvider {
-            override val fetchExecutor = Executors.newSingleThreadExecutor()
-            override val notifyExecutor = Executor { Handler(Looper.getMainLooper()).post(it) }
-        }
-        val schedulersProvider = object :
-            ArticlesViewModelSchedulersProvider {
-            override val ioScheduler = Schedulers.io()
-        }
-        val factory = ArticlesViewModel.Factory(source, controller, executorsProvider, schedulersProvider, sessionDatabase.session())
-        return ViewModelProviders.of(fragment, factory)[ArticlesViewModel::class.java]
-    }
+//    private fun getArticlesViewModel(fragment: ArticlesFragment): ArticlesViewModel {
+//        val source = ArticlesDataSource(articlesManager, database, sessionDatabase)
+//        val articleModelFactory = ArticleEpoxyModel.Factory(router)
+//        val divideModelFactory = ArticlesPageDivideEpoxyModel.Factory()
+//        val controller = ArticlesPagedListEpoxyController(articleModelFactory, divideModelFactory)
+//        val executorsProvider = object :
+//            ExecutorsProvider {
+//            override val fetchExecutor = Executors.newSingleThreadExecutor()
+//            override val notifyExecutor = Executor { Handler(Looper.getMainLooper()).post(it) }
+//        }
+//        val schedulersProvider = object :
+//            SchedulersProvider {
+//            override val ioScheduler = Schedulers.io()
+//        }
+//        val factory = ArticlesViewModel.Factory(source, controller, executorsProvider, schedulersProvider, sessionDatabase.session())
+//        return ViewModelProviders.of(fragment, factory)[ArticlesViewModel::class.java]
+//    }
 }
