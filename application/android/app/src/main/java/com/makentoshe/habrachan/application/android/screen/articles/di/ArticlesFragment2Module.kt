@@ -36,6 +36,7 @@ class ArticlesFragment2Module(fragment: ArticlesFragment2) : Module() {
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
         bind<CompositeDisposable>().toInstance(CompositeDisposable())
+//        bind<ExceptionHandler>().toInstance(exceptionHandler)
 
         val epoxyController = ArticlesPagedListEpoxyController(
             ArticleEpoxyModel.Factory(router), DivideEpoxyModel.Factory(), FooterEpoxyModel.Factory(exceptionHandler)

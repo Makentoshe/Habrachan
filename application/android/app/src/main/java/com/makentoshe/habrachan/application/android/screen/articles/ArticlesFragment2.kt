@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
 import com.makentoshe.habrachan.common.broadcast.ArticlesSearchBroadcastReceiver
 import com.makentoshe.habrachan.common.database.session.SessionDao
@@ -33,6 +34,7 @@ class ArticlesFragment2 : CoreFragment() {
     override val arguments = Arguments(this)
     private val viewModel by inject<ArticlesViewModel>()
     private val disposables by inject<CompositeDisposable>()
+    private val exceptionHandler by inject<ExceptionHandler>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -65,9 +67,13 @@ class ArticlesFragment2 : CoreFragment() {
         fragment_articles_progress.visibility = View.GONE
         fragment_articles_swipe.visibility = View.GONE
 
-        // TODO Add normal error handling and displaying
-        fragment_articles_message.text = throwable.toString()
+        val entry = exceptionHandler.handleException(throwable)
+        fragment_articles_title.text = entry.title
+        fragment_articles_title.visibility = View.VISIBLE
+
+        fragment_articles_message.text = entry.message
         fragment_articles_message.visibility = View.VISIBLE
+
         fragment_articles_retry.visibility = View.VISIBLE
     }
 
@@ -80,6 +86,7 @@ class ArticlesFragment2 : CoreFragment() {
     private fun onRetryClick() {
         fragment_articles_retry.visibility = View.GONE
         fragment_articles_message.visibility = View.GONE
+        fragment_articles_title.visibility = View.GONE
         fragment_articles_progress.visibility = View.VISIBLE
 
         onSwipeRefresh()
@@ -142,8 +149,7 @@ class ArticlesFlowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragment_articles_flow_panel.isTouchEnabled = false
 
-        fragment_articles_flow_toolbar.title =
-            sessionDao.get().articlesRequestSpec.toString(requireContext())
+        fragment_articles_flow_toolbar.title = sessionDao.get().articlesRequestSpec.toString(requireContext())
         fragment_articles_flow_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
         fragment_articles_flow_collapsing.isTitleEnabled = false
 
@@ -195,8 +201,7 @@ class ArticlesFlowFragment : Fragment() {
     }
 
     private fun closeSoftKeyboard() {
-        val imm =
-            requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
         val view = requireActivity().currentFocus ?: View(activity)
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }

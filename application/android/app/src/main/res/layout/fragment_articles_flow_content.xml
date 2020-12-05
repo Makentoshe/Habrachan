@@ -19,17 +19,28 @@
 
         <TextView
             android:visibility="gone"
+            style="@style/Habrachan.Text.Main"
+            android:id="@+id/fragment_articles_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginHorizontal="@dimen/dimenM"
+            app:layout_constraintBottom_toTopOf="@id/fragment_articles_message" />
+
+        <TextView
+            android:visibility="gone"
+            style="@style/Habrachan.Text.Support"
             android:id="@+id/fragment_articles_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center_horizontal"
+            android:layout_marginHorizontal="@dimen/dimenM"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
-            android:translationZ="-1dp"
             android:id="@+id/fragment_articles_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
