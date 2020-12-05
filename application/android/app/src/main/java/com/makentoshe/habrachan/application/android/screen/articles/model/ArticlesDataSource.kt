@@ -100,4 +100,16 @@ class ArticlesDataSource(
     internal data class LastAfterSnapshot(
         val params: LoadParams<Int>, val callback: LoadCallback<Int, Article>
     )
+
+    class Factory(
+        private val session: UserSession,
+        private val articlesArena: ArticlesArena,
+        private val disposables: CompositeDisposable
+    ) {
+
+        fun build(coroutineScope: CoroutineScope, spec: GetArticlesRequest.Spec): ArticlesDataSource {
+            disposables.clear()
+            return ArticlesDataSource(coroutineScope, session, spec, articlesArena, disposables)
+        }
+    }
 }

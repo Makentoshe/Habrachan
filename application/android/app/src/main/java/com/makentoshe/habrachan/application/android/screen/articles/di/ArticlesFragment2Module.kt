@@ -5,10 +5,7 @@ import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.arena.ArticlesArenaCache
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment2
-import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleEpoxyModel
-import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesPagedListEpoxyController
-import com.makentoshe.habrachan.application.android.screen.articles.model.DivideEpoxyModel
-import com.makentoshe.habrachan.application.android.screen.articles.model.FooterEpoxyModel
+import com.makentoshe.habrachan.application.android.screen.articles.model.*
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ExecutorsProvider
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.SchedulersProvider
@@ -40,19 +37,17 @@ class ArticlesFragment2Module(fragment: ArticlesFragment2) : Module() {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
         bind<CompositeDisposable>().toInstance(CompositeDisposable())
 
-        val articlesEpoxyController = ArticlesPagedListEpoxyController(
+        val epoxyController = ArticlesPagedListEpoxyController(
             ArticleEpoxyModel.Factory(router), DivideEpoxyModel.Factory(), FooterEpoxyModel.Factory(exceptionHandler)
         )
 
-        val articlesManager = ArticlesManager.Builder(client).native()
-        val articlesArena = ArticlesArena(articlesManager, ArticlesArenaCache())
+        val articlesDisposables = CompositeDisposable()
+        val articlesArena = ArticlesArena(ArticlesManager.Builder(client).native(), ArticlesArenaCache())
+        val dataSourceFactory = ArticlesDataSource.Factory(session, articlesArena, articlesDisposables)
+
+        val viewModelDisposables = CompositeDisposable().apply { add(articlesDisposables) }
         val factory = ArticlesViewModel.Factory(
-            CompositeDisposable(),
-            session,
-            articlesArena,
-            articlesEpoxyController,
-            executorsProvider,
-            schedulersProvider
+            viewModelDisposables, session, epoxyController, executorsProvider, schedulersProvider, dataSourceFactory
         )
         val viewModel = ViewModelProviders.of(fragment, factory)[ArticlesViewModel::class.java]
         bind<ArticlesViewModel>().toInstance(viewModel)

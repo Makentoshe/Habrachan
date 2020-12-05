@@ -7,7 +7,6 @@ import androidx.paging.PagedList
 import com.airbnb.epoxy.EpoxyControllerAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesDataSource
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesPagedListEpoxyController
-import com.makentoshe.habrachan.application.core.arena.articles.ArticlesArena
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
@@ -15,15 +14,13 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 
-// TODO compose articlesArena and articleController to separate class
-// for avoiding lite memory leak when viewmodel disposable use in incorrect scope
 class ArticlesViewModel(
     private val disposables: CompositeDisposable,
-    private val articlesArena: ArticlesArena,
     private val executorsProvider: ExecutorsProvider,
     private val schedulersProvider: SchedulersProvider,
     private val userSession: UserSession,
-    private val articleController: ArticlesPagedListEpoxyController
+    private val articleController: ArticlesPagedListEpoxyController,
+    private val dataSourceFactory: ArticlesDataSource.Factory
 ) : ViewModel() {
 
     /** May contain last search data */
@@ -52,7 +49,7 @@ class ArticlesViewModel(
     }
 
     private fun buildDataSource(spec: GetArticlesRequest.Spec): ArticlesDataSource {
-        val source = ArticlesDataSource(viewModelScope, userSession, spec, articlesArena, disposables)
+        val source = dataSourceFactory.build(viewModelScope, spec)
         source.initialObservable.safeSubscribe(initialSubject)
         source.afterSubject.safeSubscribe(afterSubject)
         source.afterSubject.safeSubscribe(articleController.afterSubject)
@@ -72,14 +69,14 @@ class ArticlesViewModel(
     class Factory(
         private val disposables: CompositeDisposable,
         private val userSession: UserSession,
-        private val articlesArena: ArticlesArena,
         private val articleController: ArticlesPagedListEpoxyController,
         private val executorsProvider: ExecutorsProvider,
-        private val schedulersProvider: SchedulersProvider
+        private val schedulersProvider: SchedulersProvider,
+        private val dataSourceFactory: ArticlesDataSource.Factory
     ) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = ArticlesViewModel(
-            disposables, articlesArena, executorsProvider, schedulersProvider, userSession, articleController
+            disposables, executorsProvider, schedulersProvider, userSession, articleController, dataSourceFactory
         ) as T
     }
 }
