@@ -5,6 +5,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.room.Room
 import com.makentoshe.habrachan.BuildConfig
+import com.makentoshe.habrachan.application.android.ExceptionHandler
+import com.makentoshe.habrachan.application.android.ExceptionHandlerImpl
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.network.AndroidUserSession
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ExecutorsProvider
@@ -56,6 +58,8 @@ class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module()
             BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, null, GetArticlesRequest.Spec.All()
         )
         bind<UserSession>().toInstance(userSession)
+
+        bind<ExceptionHandler>().toInstance(ExceptionHandlerImpl(context))
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {

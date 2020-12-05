@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="exception_handler_unknown">Unknown error</string>
+    <string name="exception_handler_unknown_cache">Unknown cache error</string>
+    <string name="exception_handler_network">Network error</string>
+    <string name="exception_handler_network_unknown_host">Internet connection disabled</string>
+    <string name="exception_handler_network_sslpeer_unverified">Provider blocks the host</string>
+</resources>

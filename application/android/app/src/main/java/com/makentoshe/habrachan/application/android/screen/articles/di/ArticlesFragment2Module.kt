@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.articles.di
 
 import androidx.lifecycle.ViewModelProviders
+import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.arena.ArticlesArenaCache
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment2
@@ -33,13 +34,14 @@ class ArticlesFragment2Module(fragment: ArticlesFragment2) : Module() {
     private val executorsProvider by inject<ExecutorsProvider>()
     private val schedulersProvider by inject<SchedulersProvider>()
     private val session by inject<UserSession>()
+    private val exceptionHandler by inject<ExceptionHandler>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
         bind<CompositeDisposable>().toInstance(CompositeDisposable())
 
         val articlesEpoxyController = ArticlesPagedListEpoxyController(
-            ArticleEpoxyModel.Factory(router), DivideEpoxyModel.Factory(), FooterEpoxyModel.Factory()
+            ArticleEpoxyModel.Factory(router), DivideEpoxyModel.Factory(), FooterEpoxyModel.Factory(exceptionHandler)
         )
 
         val articlesManager = ArticlesManager.Builder(client).native()

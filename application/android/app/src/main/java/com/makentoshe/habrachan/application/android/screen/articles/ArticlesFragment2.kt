@@ -55,10 +55,6 @@ class ArticlesFragment2 : CoreFragment() {
             it.onFailure(::onInitialFailure).onSuccess { onInitialSuccess() }
         }.let(disposables::add)
 
-        viewModel.afterObservable.subscribe {
-            println(it.exceptionOrNull())
-        }.let(disposables::add)
-
         fragment_articles_retry.setOnClickListener { onRetryClick() }
 
         fragment_articles_swipe.setOnRefreshListener { onSwipeRefresh() }

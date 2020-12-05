@@ -8,6 +8,7 @@ import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.ExceptionHandler
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,6 +25,8 @@ abstract class FooterEpoxyModel : EpoxyModelWithHolder<FooterEpoxyModel.ViewHold
     /** Allows to retry last after load */
     private lateinit var retryObserver: Observer<Unit>
 
+    private lateinit var exceptionHandler: ExceptionHandler
+
     fun disposables(disposables: CompositeDisposable) {
         compositeDisposable = disposables
     }
@@ -34,6 +37,10 @@ abstract class FooterEpoxyModel : EpoxyModelWithHolder<FooterEpoxyModel.ViewHold
 
     fun retryObserver(observer: Observer<Unit>) {
         retryObserver = observer
+    }
+
+    fun exceptionHandler(exceptionHandler: ExceptionHandler) {
+        this.exceptionHandler = exceptionHandler
     }
 
     // TODO provide exception handler
@@ -54,11 +61,13 @@ abstract class FooterEpoxyModel : EpoxyModelWithHolder<FooterEpoxyModel.ViewHold
         holder.retry.visibility = View.VISIBLE
         holder.progress.visibility = View.GONE
 
+        val entry = exceptionHandler.handleException(throwable)
+
         holder.title.visibility = View.VISIBLE
-        holder.title.text = "Sasasaanuspsa"
+        holder.title.text = entry.title
 
         holder.message.visibility = View.VISIBLE
-        holder.message.text = throwable.toString()
+        holder.message.text = entry.message
     }
 
     private fun onRetry(holder: ViewHolder) {
@@ -89,7 +98,8 @@ abstract class FooterEpoxyModel : EpoxyModelWithHolder<FooterEpoxyModel.ViewHold
         }
     }
 
-    class Factory {
+    class Factory(private val exceptionHandler: ExceptionHandler) {
+
         /**
          * [afterObservable] - calls on each after event. It can be succeed or failed
          * [retryObserver] - retries last after loading and cause [afterObservable] on finish
@@ -100,6 +110,7 @@ abstract class FooterEpoxyModel : EpoxyModelWithHolder<FooterEpoxyModel.ViewHold
             model.disposables(CompositeDisposable())
             model.afterObservable(afterObservable)
             model.retryObserver(retryObserver)
+            model.exceptionHandler(exceptionHandler)
             return model
         }
     }
