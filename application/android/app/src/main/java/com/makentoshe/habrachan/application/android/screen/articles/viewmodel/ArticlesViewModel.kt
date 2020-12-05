@@ -51,7 +51,9 @@ class ArticlesViewModel(
     private fun buildDataSource(spec: GetArticlesRequest.Spec): ArticlesDataSource {
         val source = ArticlesDataSource(viewModelScope, userSession, spec, articlesArena)
         source.initialObservable.safeSubscribe(initialSubject)
-        source.afterObservable.safeSubscribe(afterSubject)
+        source.afterSubject.safeSubscribe(afterSubject)
+        source.afterSubject.safeSubscribe(articleController.afterSubject)
+        articleController.retrySubject.safeSubscribe(source.retryAfterSubject)
         return source
     }
 

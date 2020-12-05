@@ -3,16 +3,22 @@ package com.makentoshe.habrachan.application.android.screen.articles.model
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.makentoshe.habrachan.entity.Article
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 
 class ArticlesPagedListEpoxyController(
     private val articleModelFactory: ArticleEpoxyModel.Factory,
     private val divideModelFactory: DivideEpoxyModel.Factory,
-    private val footerEpoxyModel: FooterEpoxyModel.Factory
+    footerEpoxyModel: FooterEpoxyModel.Factory
 ) : PagedListEpoxyController<Article>() {
 
-    val pageSize = 20
+    /** Returns last after load result */
+    val afterSubject = BehaviorSubject.create<Result<*>>()
 
-    private val footerModel = footerEpoxyModel.build()
+    /** Allows to retry last after load */
+    val retrySubject = PublishSubject.create<Unit>()
+
+    private val footerModel = footerEpoxyModel.build(afterSubject, retrySubject)
 
     override fun buildItemModel(currentPosition: Int, item: Article?): EpoxyModel<*> =
         articleModelFactory.build(currentPosition, enableSmartDivide = true, article = item!!)

@@ -8,6 +8,7 @@ import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.response.ArticlesResponse
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
@@ -62,8 +63,10 @@ class ArticlesDataSource(
     private lateinit var lastAfterSnapshot: LastAfterSnapshot
 
     // Indicates that the after load was finished
-    private val afterSubject: BehaviorSubject<Result<ArticlesResponse>> = BehaviorSubject.create()
-    val afterObservable: Observable<Result<ArticlesResponse>> = afterSubject
+    val afterSubject: BehaviorSubject<Result<ArticlesResponse>> = BehaviorSubject.create()
+
+    // Retries to load last after. If after was already loaded - there will be nothing to happen
+    val retryAfterSubject = PublishSubject.create<Unit>()
 
     override fun loadAfter(
         params: LoadParams<Int>, callback: LoadCallback<Int, Article>
