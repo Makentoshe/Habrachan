@@ -1,17 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="200dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_articles_footer_guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/dimenM" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_articles_footer_guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/dimenL" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_articles_footer_guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/dimenL" />
 
     <ProgressBar
+        style="@style/Habrachan.Progress"
         android:id="@+id/fragment_articles_footer_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fragment_articles_footer_guideline_top" />
+
+    <TextView
+        android:visibility="gone"
+        style="@style/Habrachan.Text.Main"
+        android:id="@+id/fragment_articles_footer_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="@id/fragment_articles_footer_guideline_top" />
+
+    <TextView
+        android:visibility="gone"
+        style="@style/Habrachan.Text.Support"
+        android:id="@+id/fragment_articles_footer_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimenS"
+        app:layout_constraintTop_toBottomOf="@id/fragment_articles_footer_title"
+        app:layout_constraintStart_toStartOf="@id/fragment_articles_footer_guideline_start"
+        app:layout_constraintEnd_toEndOf="@id/fragment_articles_footer_guideline_end" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Habrachan.Button.Text"
+        android:id="@+id/fragment_articles_footer_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/retry"
+        android:layout_marginTop="@dimen/dimenM"
+        app:layout_constraintTop_toBottomOf="@id/fragment_articles_footer_message"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

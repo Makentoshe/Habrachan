@@ -15,6 +15,8 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 
+// TODO compose articlesArena and articleController to separate class
+// for avoiding lite memory leak when viewmodel disposable use in incorrect scope
 class ArticlesViewModel(
     private val disposables: CompositeDisposable,
     private val articlesArena: ArticlesArena,
@@ -39,6 +41,7 @@ class ArticlesViewModel(
     init {
         searchSubject.onNext(userSession.articlesRequestSpec)
 
+        // TODO optimize adapter delivery. May be use AsyncSubject
         searchSubject.observeOn(schedulersProvider.ioScheduler).map { spec ->
             buildPagedList(buildDataSource(spec))
         }.doOnNext { pagedList ->
@@ -49,7 +52,7 @@ class ArticlesViewModel(
     }
 
     private fun buildDataSource(spec: GetArticlesRequest.Spec): ArticlesDataSource {
-        val source = ArticlesDataSource(viewModelScope, userSession, spec, articlesArena)
+        val source = ArticlesDataSource(viewModelScope, userSession, spec, articlesArena, disposables)
         source.initialObservable.safeSubscribe(initialSubject)
         source.afterSubject.safeSubscribe(afterSubject)
         source.afterSubject.safeSubscribe(articleController.afterSubject)
@@ -61,44 +64,6 @@ class ArticlesViewModel(
         return PagedList.Builder(dataSource, 20).setFetchExecutor(executorsProvider.fetchExecutor)
             .setNotifyExecutor(executorsProvider.notifyExecutor).build()
     }
-
-    //    private val requestSubject = PublishSubject.create<Unit>()
-    //    val requestObserver: Observer<Unit> = requestSubject
-    //
-    //    private val adapterSubject = BehaviorSubject.create<EpoxyControllerAdapter>()
-    //    val adapterObservable: Observable<EpoxyControllerAdapter> = adapterSubject
-    //
-    //    val initialErrorObservable = articlesDataSource.initialErrorObservable
-    //    val rangeErrorObservable = articlesDataSource.rangeErrorObservable
-    //
-    //    init {
-    //        requestSubject.observeOn(schedulersProvider.ioScheduler)
-    //            .map(::buildPagedListConfig)
-    //            .map(::buildPagedList)
-    //            .subscribe(controller::submitList)
-    //            .let(disposables::add)
-    //
-    //        articlesDataSource.initialSuccessObservable.map { controller.adapter }.safeSubscribe(adapterSubject)
-    //
-    //        // initial request starts loading initial batch of articles
-    //        requestObserver.onNext(Unit)
-    //    }
-    //
-    //    private fun buildPagedListConfig(ignored: Unit) =
-    //        PagedList.Config.Builder().setPageSize(controller.pageSize).setInitialLoadSizeHint(controller.pageSize).setEnablePlaceholders(false).build()
-    //
-    //    private fun buildPagedList(config: PagedList.Config): PagedList<Article> {
-    //        return PagedList.Builder(articlesDataSource, config)
-    //            .setFetchExecutor(executorsProvider.fetchExecutor)
-    //            .setNotifyExecutor(executorsProvider.notifyExecutor)
-    //            .build()
-    //    }
-    //
-    //    fun updateUserSessionArticlesResponseSpec(spec: ArticlesRequestSpec) {
-    //        val currentSession = sessionDao.get()
-    //        val newSession = currentSession.copy(articlesRequestSpec = spec)
-    //        sessionDao.insert(newSession)
-    //    }
 
     override fun onCleared() {
         disposables.clear()
@@ -114,12 +79,7 @@ class ArticlesViewModel(
     ) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = ArticlesViewModel(
-            disposables,
-            articlesArena,
-            executorsProvider,
-            schedulersProvider,
-            userSession,
-            articleController
+            disposables, articlesArena, executorsProvider, schedulersProvider, userSession, articleController
         ) as T
     }
 }

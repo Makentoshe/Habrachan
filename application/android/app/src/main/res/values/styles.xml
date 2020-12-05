@@ -1,5 +1,5 @@
 <resources>
-
+    <!-- TODO rework styles -->
     <!-- Default theme used for displaying popup windows and does not relates to any theme -->
     <style name="Default.Popup.Style" parent="Theme.MaterialComponents">
         <item name="android:windowEnterAnimation">@anim/popup_window_enlarge</item>
@@ -95,4 +95,30 @@
     <style name="Habrachan.Light.Default" parent="Habrachan.Light">
         <item name="android:background">@android:color/white</item>
     </style>
+
+
+
+
+
+    <style name="Habrachan.Progress" parent="Habrachan.Light">
+        <item name="android:indeterminateTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="Habrachan.Text" parent="Habrachan.Light">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="Habrachan.Text.Main">
+        <item name="android:textSize">@dimen/main_text_size</item>
+    </style>
+
+    <style name="Habrachan.Text.Support">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/dimmed</item>
+    </style>
+
+    <style name="Habrachan.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

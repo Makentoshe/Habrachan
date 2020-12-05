@@ -1,6 +1,9 @@
 package com.makentoshe.habrachan.application.android.screen.articles.model
 
 import android.view.View
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -33,10 +36,38 @@ abstract class FooterEpoxyModel : EpoxyModelWithHolder<FooterEpoxyModel.ViewHold
         retryObserver = observer
     }
 
+    // TODO provide exception handler
     override fun bind(holder: ViewHolder) {
+        holder.progress.visibility = View.VISIBLE
+        holder.title.visibility = View.GONE
+        holder.message.visibility = View.GONE
+        holder.retry.visibility = View.GONE
+
+        holder.retry.setOnClickListener { onRetry(holder) }
+
         afterObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            println(it)
+            it.onFailure { throwable -> onFailure(holder, throwable) }
         }.let(compositeDisposable::add)
+    }
+
+    private fun onFailure(holder: ViewHolder, throwable: Throwable) {
+        holder.retry.visibility = View.VISIBLE
+        holder.progress.visibility = View.GONE
+
+        holder.title.visibility = View.VISIBLE
+        holder.title.text = "Sasasaanuspsa"
+
+        holder.message.visibility = View.VISIBLE
+        holder.message.text = throwable.toString()
+    }
+
+    private fun onRetry(holder: ViewHolder) {
+        holder.progress.visibility = View.VISIBLE
+        holder.title.visibility = View.GONE
+        holder.message.visibility = View.GONE
+        holder.retry.visibility = View.GONE
+
+        retryObserver.onNext(Unit)
     }
 
     override fun unbind(holder: ViewHolder) {
@@ -45,7 +76,16 @@ abstract class FooterEpoxyModel : EpoxyModelWithHolder<FooterEpoxyModel.ViewHold
     }
 
     class ViewHolder : EpoxyHolder() {
+        lateinit var progress: ProgressBar
+        lateinit var title: TextView
+        lateinit var message: TextView
+        lateinit var retry: Button
+
         override fun bindView(itemView: View) {
+            progress = itemView.findViewById(R.id.fragment_articles_footer_progress)
+            title = itemView.findViewById(R.id.fragment_articles_footer_title)
+            message = itemView.findViewById(R.id.fragment_articles_footer_message)
+            retry = itemView.findViewById(R.id.fragment_articles_footer_retry)
         }
     }
 

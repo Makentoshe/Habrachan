@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.response.ArticlesResponse
 import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +19,8 @@ class ArticlesDataSource(
     private val coroutineScope: CoroutineScope,
     private val session: UserSession,
     private val requestSpec: GetArticlesRequest.Spec,
-    private val arena: ArticlesArena
+    private val arena: ArticlesArena,
+    private val disposables: CompositeDisposable
 ) : PageKeyedDataSource<Int, Article>() {
 
     override fun loadBefore(
@@ -83,6 +85,13 @@ class ArticlesDataSource(
     ) = arena.suspendFetch(GetArticlesRequest(session, params.key, requestSpec)).onSuccess {
         callback.onResult(it.data, params.key + 1)
     }.let { afterSubject.onNext(it) }
+
+
+    init {
+        retryAfterSubject.subscribe {
+            loadAfter(lastAfterSnapshot.params, lastAfterSnapshot.callback)
+        }.let(disposables::add)
+    }
 
     internal data class LastInitialSnapshot(
         val params: LoadInitialParams<Int>, val callback: LoadInitialCallback<Int, Article>

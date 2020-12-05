@@ -3,7 +3,16 @@
     <color name="colorPrimary">#ff9cc2ce</color>
     <color name="colorPrimaryDark">#ff728e96</color>
     <color name="colorAccent">#ff728e96</color>
+
     <color name="dark_background_transparent">#D21B1B1B</color>
+
+    <color name="background">#FFFFFF</color>
+    <color name="half_background">#80FFFFFF</color>
+    <color name="separator">#E0E0E0</color>
+    <color name="text">#0C0C0D</color>
+    <color name="dimmed">#99000000</color>
+    <color name="opaque">#4D000000</color>
+
     <color name="positive">#00ff00</color>
     <color name="negative">#ff0000</color>
 </resources>
