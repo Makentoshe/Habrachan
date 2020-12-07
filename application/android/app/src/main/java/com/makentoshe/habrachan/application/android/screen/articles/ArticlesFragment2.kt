@@ -9,11 +9,13 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
+import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.fragment_articles_flow.*
-import kotlinx.android.synthetic.main.fragment_articles_flow_content.*
+import kotlinx.android.synthetic.main.fragment_articles.*
+import kotlinx.android.synthetic.main.fragment_articles_content.*
+import kotlinx.android.synthetic.main.fragment_articles_panel.*
 import toothpick.ktp.delegate.inject
 
 class ArticlesFragment2 : CoreFragment() {
@@ -33,28 +35,64 @@ class ArticlesFragment2 : CoreFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_articles_flow, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_articles, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        onViewCreatedContent()
+        onViewCreatedPanel()
+
         fragment_articles_flow_panel.isTouchEnabled = false
         fragment_articles_flow_collapsing.isTitleEnabled = false
         fragment_articles_flow_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
 
+        viewModel.searchSubject.subscribe {
+            fragment_articles_flow_toolbar.title = it.request
+        }.let(disposables::add)
+    }
+
+    private fun onViewCreatedContent() {
         viewModel.adapterObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
             fragment_articles_recycler.adapter = it
         }.let(disposables::add)
 
-        viewModel.searchSubject.subscribe {
-            fragment_articles_flow_toolbar.title = it.request
+        viewModel.searchSubject.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            onRetryClickView()
         }.let(disposables::add)
 
         viewModel.initialObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            it.onFailure(::onInitialFailure).onSuccess { onInitialSuccess() }
+            it.onFailure(::onInitialFailure).onSuccess { onInitialSuccessView() }
         }.let(disposables::add)
 
-        fragment_articles_retry.setOnClickListener { onRetryClick() }
+        fragment_articles_retry.setOnClickListener {
+            onRetryClickView()
+            viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return@setOnClickListener)
+        }
 
-        fragment_articles_swipe.setOnRefreshListener { onSwipeRefresh() }
+        fragment_articles_swipe.setOnRefreshListener {
+            viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return@setOnRefreshListener)
+        }
+    }
+
+    private fun onViewCreatedPanel() {
+        fragment_articles_category_toggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener // ignore uncheck call
+            closeSearchPanel()
+            onCategoryChecked(checkedId)
+        }
+        fragment_articles_category_toggle.check(R.id.fragment_articles_category_all)
+    }
+
+    private fun onCategoryChecked(checkedId: Int) = when (checkedId) {
+        R.id.fragment_articles_category_all -> {
+            viewModel.searchSubject.onNext(GetArticlesRequest.Spec.All())
+        }
+        R.id.fragment_articles_category_interesting -> {
+            viewModel.searchSubject.onNext(GetArticlesRequest.Spec.Interesting())
+        }
+        R.id.fragment_articles_category_top -> {
+            viewModel.searchSubject.onNext(GetArticlesRequest.Spec.Top())
+        }
+        else -> throw IllegalArgumentException(checkedId.toString())
     }
 
     private fun onInitialFailure(throwable: Throwable) {
@@ -72,23 +110,19 @@ class ArticlesFragment2 : CoreFragment() {
         fragment_articles_retry.visibility = View.VISIBLE
     }
 
-    private fun onInitialSuccess() {
+    private fun onInitialSuccessView() {
+        fragment_articles_recycler.scrollToPosition(0)
         fragment_articles_swipe.isRefreshing = false
         fragment_articles_swipe.visibility = View.VISIBLE
         fragment_articles_progress.visibility = View.GONE
     }
 
-    private fun onRetryClick() {
+    private fun onRetryClickView() {
         fragment_articles_retry.visibility = View.GONE
         fragment_articles_message.visibility = View.GONE
         fragment_articles_title.visibility = View.GONE
         fragment_articles_progress.visibility = View.VISIBLE
-
-        onSwipeRefresh()
-    }
-
-    private fun onSwipeRefresh() {
-        viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return)
+        fragment_articles_swipe.visibility = View.GONE
     }
 
     private fun onSearchMenuItemClick(item: MenuItem): Boolean {
@@ -96,14 +130,16 @@ class ArticlesFragment2 : CoreFragment() {
         when (fragment_articles_flow_panel?.panelState) {
             SlidingUpPanelLayout.PanelState.COLLAPSED, SlidingUpPanelLayout.PanelState.HIDDEN -> {
                 fragment_articles_flow_panel?.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-                closeSoftKeyboard()
             }
-            SlidingUpPanelLayout.PanelState.EXPANDED -> {
-                fragment_articles_flow_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-            }
+            SlidingUpPanelLayout.PanelState.EXPANDED -> closeSearchPanel()
             else -> return false
         }
         return true
+    }
+
+    private fun closeSearchPanel() {
+        fragment_articles_flow_panel?.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        closeSoftKeyboard()
     }
 
     class Arguments(fragment: ArticlesFragment2) : CoreFragment.Arguments(fragment) {

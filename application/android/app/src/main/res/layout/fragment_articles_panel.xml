@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/brand">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_articles_panel_guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="8dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_articles_panel_guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="8dp" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/fragment_articles_category_toggle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightL"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        android:layout_marginHorizontal="@dimen/dimenS"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            style="?attr/habrachanButtonToggleToolbar"
+            android:id="@+id/fragment_articles_category_all"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/articles_type_all" />
+
+        <com.google.android.material.button.MaterialButton
+            style="?attr/habrachanButtonToggleToolbar"
+            android:id="@+id/fragment_articles_category_interesting"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/articles_type_interesting" />
+
+        <com.google.android.material.button.MaterialButton
+            style="?attr/habrachanButtonToggleToolbar"
+            android:id="@+id/fragment_articles_category_top"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/articles_type_top" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

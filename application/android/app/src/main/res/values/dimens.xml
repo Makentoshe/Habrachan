@@ -18,5 +18,12 @@
     <dimen name="dimenS">8dp</dimen>
     <dimen name="dimenXS">4dp</dimen>
 
+    <!-- Elements -->
+    <dimen name="heightM">32dp</dimen>
+    <dimen name="heightL">48dp</dimen>
     <dimen name="separator_height">1dp</dimen>
+
+    <!-- Radius -->
+    <dimen name="radiusS">4dp</dimen>
+    <dimen name="radiusNone">0dp</dimen>
 </resources>

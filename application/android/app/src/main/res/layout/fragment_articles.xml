@@ -29,6 +29,22 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/fragment_articles_flow_content" />
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fragment_articles_flow_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="false"
+        android:gravity="top"
+        android:elevation="4dp"
+        sothree:umanoInitialState="collapsed"
+        sothree:umanoPanelHeight="0dp"
+        sothree:umanoShadowHeight="4dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <include layout="@layout/fragment_articles_content" />
+
+        <include layout="@layout/fragment_articles_panel" />
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

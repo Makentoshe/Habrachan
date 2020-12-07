@@ -10,6 +10,7 @@
         <item name="colorPrimary">#ff9cc2ce</item>
         <item name="colorAccent">#ff9cc2ce</item>
         <item name="colorPrimaryDark">#ff728e96</item>
+        <item name="habrachanButtonToggleToolbar">@style/Habrachan.Button.Toggle.Toolbar</item>
 
         <item name="habrachanToolbar">@style/Habrachan.Light.Toolbar</item>
         <item name="habrachanToolbarInput">@style/Habrachan.Light.Toolbar.Input</item>
@@ -96,10 +97,6 @@
         <item name="android:background">@android:color/white</item>
     </style>
 
-
-
-
-
     <style name="Habrachan.Progress" parent="Habrachan.Light">
         <item name="android:indeterminateTint">@color/colorPrimary</item>
     </style>
@@ -119,6 +116,12 @@
 
     <style name="Habrachan.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Habrachan.Button.Toggle.Toolbar" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/button_toggle_toolbar_foreground_color</item>
+        <item name="backgroundTint">@color/button_toggle_toolbar_background_color</item>
+        <item name="strokeColor">@color/title</item>
     </style>
 
 </resources>

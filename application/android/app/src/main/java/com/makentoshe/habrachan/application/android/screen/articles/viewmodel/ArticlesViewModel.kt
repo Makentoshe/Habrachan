@@ -12,6 +12,7 @@ import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.AsyncSubject
 import io.reactivex.subjects.BehaviorSubject
 
 class ArticlesViewModel(
@@ -26,7 +27,8 @@ class ArticlesViewModel(
     /** May contain last search data */
     val searchSubject = BehaviorSubject.create<GetArticlesRequest.Spec>()
 
-    private val adapterSubject = BehaviorSubject.create<EpoxyControllerAdapter>()
+    /** Adapter will not being changed for whole time */
+    private val adapterSubject = AsyncSubject.create<EpoxyControllerAdapter>()
     val adapterObservable: Observable<EpoxyControllerAdapter> = adapterSubject
 
     private val initialSubject = BehaviorSubject.create<Result<*>>()
@@ -36,15 +38,13 @@ class ArticlesViewModel(
     val afterObservable: Observable<Result<*>> = afterSubject
 
     init {
-        searchSubject.onNext(userSession.articlesRequestSpec)
-
-        // TODO optimize adapter delivery. May be use AsyncSubject
         searchSubject.observeOn(schedulersProvider.ioScheduler).map { spec ->
             buildPagedList(buildDataSource(spec))
         }.doOnNext { pagedList ->
             articleController.submitList(pagedList)
         }.subscribe {
             adapterSubject.onNext(articleController.adapter)
+            adapterSubject.onComplete()
         }.let(disposables::add)
     }
 

@@ -3,10 +3,10 @@
     <string name="menu_account">Account</string>
     <string name="menu_posts">Posts</string>
     <string name="menu_menu">Menu</string>
-    <string name="top">Top</string>
-    <string name="interesting">Interesting</string>
-    <string name="all_posts">All posts</string>
-    <string name="by_subscription">By subscription</string>
+    <string name="category_articles_top">Top</string>
+    <string name="category_articles_interesting">Interesting</string>
+    <string name="category_articles_all">All posts</string>
+    <string name="category_articles_subscription">By subscription</string>
     <string name="start_search">Start search by query</string>
     <string name="relevance">Relevance</string>
     <string name="retry">Retry</string>
@@ -35,7 +35,7 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="repeated_voting_is_prohibited">Repeated voting is prohibited</string>
     <string name="menu_search">Search</string>
 
-    <string name="articles_type_all">All</string>
+    <string name="articles_type_all">All articles</string>
     <string name="articles_type_interesting">Interesting</string>
     <string name="articles_type_subscription">By subscription</string>
     <string name="articles_type_top">Top</string>

@@ -11,10 +11,22 @@ data class GetArticlesRequest(val session: UserSession, val page: Int, val spec:
         abstract val include: String?
         abstract val exclude: String?
 
-        class All : Spec("posts/all") {
-            override val sort: String? = null
-            override val include: String? = null
+        class All(
+            override val sort: String? = null,
+            override val include: String? = null,
             override val exclude: String? = null
-        }
+        ) : Spec("posts/all")
+
+        class Interesting(
+            override val sort: String? = null,
+            override val include: String? = null,
+            override val exclude: String? = null
+        ) : Spec("posts/interesting")
+
+        class Top(
+            override val sort: String? = null,
+            override val include: String? = null,
+            override val exclude: String? = null
+        ) : Spec("top/daily")
     }
 }
