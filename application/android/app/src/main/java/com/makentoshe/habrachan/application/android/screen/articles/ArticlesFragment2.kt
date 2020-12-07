@@ -90,7 +90,7 @@ class ArticlesFragment2 : CoreFragment() {
             viewModel.searchSubject.onNext(GetArticlesRequest.Spec.Interesting())
         }
         R.id.fragment_articles_category_top -> {
-            viewModel.searchSubject.onNext(GetArticlesRequest.Spec.Top())
+            viewModel.searchSubject.onNext(GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily))
         }
         else -> throw IllegalArgumentException(checkedId.toString())
     }
