@@ -20,12 +20,15 @@ class ArticlesArenaCache(
         }
     }
 
+    // TODO add sorting by time_published and other
+    // https://medium.com/androiddevelopers/room-time-2b4cf9672b98
     override fun fetch(key: GetArticlesRequest): Result<ArticlesResponse> {
         debug(Log.DEBUG, "Fetch search articles from cache by key: $key")
         return try {
             val start = (key.page - 1) * key.count
             val end = start + key.count - 1
-            val articles = cacheDatabase.articlesSearchDao().getInRange(start, end).map { it.toArticle() }
+            val articleRecords = cacheDatabase.articlesSearchDao().getInRange(start, end)
+            val articles = articleRecords.sortedBy { it.databaseIndex }.map { it.toArticle() }
             debug(Log.INFO, "Fetched ${articles.size} articles from $start to $end")
             if (articles.isEmpty()) {
                 Result.failure(ArenaStorageException("ArticlesArenaCache"))
