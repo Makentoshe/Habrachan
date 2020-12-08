@@ -46,7 +46,7 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="articles_search_type_relevance">Relevance</string>
     <string name="articles_search_type_rating">Rating</string>
 
-    <string name="articles_top_preposition">of</string>
+    <string name="articles_top_preposition">Top of %1$s</string>
     <string name="articles_top_type_alltime">All-time</string>
     <string name="articles_top_type_yearly">Yearly</string>
     <string name="articles_top_type_monthly">Monthly</string>

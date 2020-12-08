@@ -46,7 +46,7 @@ class ArticlesFragment2 : CoreFragment() {
         fragment_articles_flow_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
 
         viewModel.searchSubject.subscribe {
-            fragment_articles_flow_toolbar.title = it.request
+            fragment_articles_flow_toolbar.title = deserializeSpec(it)
         }.let(disposables::add)
     }
 
@@ -111,7 +111,7 @@ class ArticlesFragment2 : CoreFragment() {
     }
 
     private fun onInitialSuccessView() {
-        fragment_articles_recycler.scrollToPosition(0)
+        fragment_articles_recycler.post { fragment_articles_recycler.scrollToPosition(0) }
         fragment_articles_swipe.isRefreshing = false
         fragment_articles_swipe.visibility = View.VISIBLE
         fragment_articles_progress.visibility = View.GONE
@@ -140,6 +140,35 @@ class ArticlesFragment2 : CoreFragment() {
     private fun closeSearchPanel() {
         fragment_articles_flow_panel?.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         closeSoftKeyboard()
+    }
+
+    private fun deserializeSpec(spec: GetArticlesRequest.Spec): String = when(spec) {
+        is GetArticlesRequest.Spec.All -> {
+            requireContext().getString(R.string.articles_type_all)
+        }
+        is GetArticlesRequest.Spec.Interesting -> {
+            requireContext().getString(R.string.articles_type_interesting)
+        }
+        is GetArticlesRequest.Spec.Top -> {
+            val type = when(spec.type) {
+                GetArticlesRequest.Spec.Top.Type.AllTime -> {
+                    requireContext().getString(R.string.articles_top_type_alltime)
+                }
+                GetArticlesRequest.Spec.Top.Type.Yearly -> {
+                    requireContext().getString(R.string.articles_top_type_yearly)
+                }
+                GetArticlesRequest.Spec.Top.Type.Monthly -> {
+                    requireContext().getString(R.string.articles_top_type_monthly)
+                }
+                GetArticlesRequest.Spec.Top.Type.Weekly -> {
+                    requireContext().getString(R.string.articles_top_type_weekly)
+                }
+                GetArticlesRequest.Spec.Top.Type.Daily -> {
+                    requireContext().getString(R.string.articles_top_type_daily)
+                }
+            }
+            requireContext().getString(R.string.articles_top_preposition, type)
+        }
     }
 
     class Arguments(fragment: ArticlesFragment2) : CoreFragment.Arguments(fragment) {
