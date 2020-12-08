@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.application.android.screen.articles.di
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.arena.ArticlesArenaCache
+import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment2
 import com.makentoshe.habrachan.application.android.screen.articles.model.*
@@ -32,18 +33,19 @@ class ArticlesFragment2Module(fragment: ArticlesFragment2) : Module() {
     private val schedulersProvider by inject<SchedulersProvider>()
     private val session by inject<UserSession>()
     private val exceptionHandler by inject<ExceptionHandler>()
+    private val androidCacheDatabase by inject<AndroidCacheDatabase>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
         bind<CompositeDisposable>().toInstance(CompositeDisposable())
-//        bind<ExceptionHandler>().toInstance(exceptionHandler)
 
         val epoxyController = ArticlesPagedListEpoxyController(
             ArticleEpoxyModel.Factory(router), DivideEpoxyModel.Factory(), FooterEpoxyModel.Factory(exceptionHandler)
         )
 
         val articlesDisposables = CompositeDisposable()
-        val articlesArena = ArticlesArena(ArticlesManager.Builder(client).native(), ArticlesArenaCache())
+        val articlesArenaCache = ArticlesArenaCache(androidCacheDatabase)
+        val articlesArena = ArticlesArena(ArticlesManager.Builder(client).native(), articlesArenaCache)
         val dataSourceFactory = ArticlesDataSource.Factory(session, articlesArena, articlesDisposables)
 
         val viewModelDisposables = CompositeDisposable().apply { add(articlesDisposables) }

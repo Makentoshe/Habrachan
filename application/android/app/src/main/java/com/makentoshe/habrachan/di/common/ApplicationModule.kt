@@ -3,11 +3,9 @@ package com.makentoshe.habrachan.di.common
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import androidx.room.Room
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.ExceptionHandlerImpl
-import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.network.AndroidUserSession
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ExecutorsProvider
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.SchedulersProvider
@@ -31,11 +29,6 @@ class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module()
 
     private val client = OkHttpClient.Builder().followRedirects(false).addLoggingInterceptor().build()
 
-    private val cacheDatabase = Room.databaseBuilder(
-        context, AndroidCacheDatabase::class.java, "HabrachanCache"
-    ).build()
-
-
     private val executorsProvider = object : ExecutorsProvider {
         override val fetchExecutor = Executors.newCachedThreadPool()
         override val notifyExecutor = Executor { Handler(Looper.getMainLooper()).post(it) }
@@ -47,7 +40,6 @@ class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module()
 
     init {
         bind<OkHttpClient>().toInstance(client)
-        bind<AndroidCacheDatabase>().toInstance(cacheDatabase)
         bind<Router>().toInstance(cicerone.router)
         bind<NavigatorHolder>().toInstance(cicerone.navigatorHolder)
         bind<ExecutorsProvider>().toInstance(executorsProvider)

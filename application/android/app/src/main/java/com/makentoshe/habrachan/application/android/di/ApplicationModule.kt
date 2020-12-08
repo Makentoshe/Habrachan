@@ -36,7 +36,6 @@ class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module()
         context, AndroidCacheDatabase::class.java, "HabrachanCache"
     ).build()
 
-
     private val executorsProvider = object : ExecutorsProvider {
         override val fetchExecutor = Executors.newCachedThreadPool()
         override val notifyExecutor = Executor { Handler(Looper.getMainLooper()).post(it) }
