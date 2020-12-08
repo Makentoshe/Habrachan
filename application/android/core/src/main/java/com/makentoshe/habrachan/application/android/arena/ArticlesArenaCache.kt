@@ -27,9 +27,13 @@ class ArticlesArenaCache(
             val end = start + key.count - 1
             val articles = cacheDatabase.articlesSearchDao().getInRange(start, end).map { it.toArticle() }
             debug(Log.INFO, "Fetched ${articles.size} articles from $start to $end")
-            Result.success(ArticlesResponse(articles, NextPage(key.page + 1, ""), -1, "", "", null))
+            if (articles.isEmpty()) {
+                Result.failure(ArenaStorageException("ArticlesArenaCache"))
+            } else {
+                Result.success(ArticlesResponse(articles, NextPage(key.page + 1, ""), -1, "", "", null))
+            }
         } catch (exception: Exception) {
-            debug(Log.INFO, "Could not fetch articles: ${exception.toString()}")
+            debug(Log.INFO, "Could not fetch articles: $exception")
             Result.failure(ArenaStorageException("ArticlesArenaCache").initCause(exception))
         }
     }

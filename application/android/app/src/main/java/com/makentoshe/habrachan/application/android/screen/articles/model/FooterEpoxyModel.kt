@@ -43,7 +43,6 @@ abstract class FooterEpoxyModel : EpoxyModelWithHolder<FooterEpoxyModel.ViewHold
         this.exceptionHandler = exceptionHandler
     }
 
-    // TODO provide exception handler
     override fun bind(holder: ViewHolder) {
         holder.progress.visibility = View.VISIBLE
         holder.title.visibility = View.GONE
