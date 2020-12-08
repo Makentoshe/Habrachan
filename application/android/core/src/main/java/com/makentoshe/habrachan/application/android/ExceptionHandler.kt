@@ -51,7 +51,7 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
     }
 
     private fun handleUnknownArenaStorageException(exception: ArenaStorageException): ExceptionHandler.Entry {
-        Log.e("ExceptionHandler#Cache", exception.toString())
+        exception.printStackTrace()
 
         val title = context.getString(R.string.exception_handler_unknown_cache)
         val description = exception.toString()

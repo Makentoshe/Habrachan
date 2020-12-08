@@ -15,7 +15,7 @@ data class UserRecord(
     val counters: CountersRecord,
     val fullname: String? = null,
     @Embedded(prefix = "geo_")
-    val geo: GeoRecord,
+    val geo: GeoRecord?,
     val isCanVote: Boolean,
     val isRc: Boolean,
     val isReadonly: Boolean,
@@ -55,7 +55,7 @@ data class UserRecord(
         badges.toBadges(),
         counters.toCounters(),
         fullname,
-        geo.toGeo(),
+        geo?.toGeo(),
         id,
         isCanVote,
         isRc,

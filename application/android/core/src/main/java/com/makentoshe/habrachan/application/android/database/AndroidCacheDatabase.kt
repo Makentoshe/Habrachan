@@ -17,5 +17,6 @@ import com.makentoshe.habrachan.application.android.database.record.ArticleRecor
 @TypeConverters(value = [FlowsConverter::class, BadgesConverter::class, HubsConverter::class])
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
-    abstract fun articlesDao(): ArticlesDao
+    /** Contains articles from last search */
+    abstract fun articlesSearchDao(): ArticlesDao
 }

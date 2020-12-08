@@ -11,7 +11,7 @@ data class FlowRecord(
     @SerializedName("alias")
     val alias: String,
     @SerializedName("hubs_count")
-    val hubsCount: Int,
+    val hubsCount: Int?,
     @SerializedName("name")
     val name: String,
     @SerializedName("path")
@@ -19,9 +19,7 @@ data class FlowRecord(
     @SerializedName("url")
     val url: String
 ) {
-    constructor(flow: Flow) : this(
-        flow.id, flow.alias, flow.hubsCount, flow.name, flow.path, flow.url
-    )
+    constructor(flow: Flow) : this(flow.id, flow.alias, flow.hubsCount, flow.name, flow.path, flow.url)
 
-    fun toFlow() = Flow(alias, hubsCount, id, name, path, url)
+    fun toFlow() = Flow(id, name, alias, url, path, hubsCount)
 }

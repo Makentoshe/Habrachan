@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.entity.Article
 
 @Entity
 data class ArticleRecord(
+    val databaseIndex: Int,
     @PrimaryKey
     val id: Int,
     @Embedded(prefix = "author_")
@@ -29,7 +30,7 @@ data class ArticleRecord(
     val isTutorial: Boolean,
     val lang: String,
     @Embedded(prefix = "metadata_")
-    val metadataRecord: MetadataRecord = MetadataRecord(),
+    val metadataRecord: MetadataRecord?,
     val path: String,
     val postType: Int,
     val postTypeStr: String,
@@ -49,7 +50,8 @@ data class ArticleRecord(
     val votesCount: Int,
     val isCanComment: Boolean? = null
 ) {
-    constructor(article: Article) : this(
+    constructor(databaseIndex: Int, article: Article) : this(
+        databaseIndex,
         article.id,
         UserRecord(article.author),
         article.commentsCount,
@@ -110,7 +112,7 @@ data class ArticleRecord(
         isRecoveryMode,
         isTutorial,
         lang,
-        metadataRecord.toMetadata(),
+        metadataRecord?.toMetadata(),
         path,
         postType,
         postTypeStr,

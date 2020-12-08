@@ -6,6 +6,8 @@ import java.io.Serializable
 /** Request a batch of articles, on selected [page] with selected [spec] */
 data class GetArticlesRequest(val session: UserSession, val page: Int, val spec: Spec): Serializable {
 
+    val count = 20
+
     sealed class Spec(val request: String) : Serializable {
         abstract val sort: String?
         abstract val include: String?

@@ -16,7 +16,7 @@ data class User(
     @SerializedName("fullname")
     val fullname: String? = null,
     @SerializedName("geo")
-    val geo: Geo? = Geo(),
+    val geo: Geo? = null,
     @SerializedName("id")
     val id: String,
     @SerializedName("is_can_vote")
