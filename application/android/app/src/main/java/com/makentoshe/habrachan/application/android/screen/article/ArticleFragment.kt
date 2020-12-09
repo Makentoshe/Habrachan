@@ -1,15 +1,25 @@
 package com.makentoshe.habrachan.application.android.screen.article
 
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.ExceptionHandler
+import com.makentoshe.habrachan.application.android.screen.article.model.HabrachanWebViewClient
+import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
+import com.makentoshe.habrachan.application.android.screen.article.model.html.*
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel
+import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.network.response.ArticleResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.fragment_article.*
+import kotlinx.android.synthetic.main.fragment_article_content.*
+import kotlinx.android.synthetic.main.fragment_article_toolbar.*
 import toothpick.ktp.delegate.inject
 
 class ArticleFragment : CoreFragment() {
@@ -23,14 +33,13 @@ class ArticleFragment : CoreFragment() {
     }
 
     override val arguments = Arguments(this)
-    private val disposables by inject<CompositeDisposable>()
-//    private val navigator by inject<ArticleNavigation>()
-//
+    private val javaScriptInterface = JavaScriptInterface()
+    private val webViewClient = HabrachanWebViewClient(this)
+
     private val viewModel by inject<ArticleViewModel>()
-//    private val userAvatarViewModel by inject<UserAvatarViewModel>()
-//    private val voteArticleViewModel by inject<VoteArticleViewModel>()
-//
-//    private val javaScriptInterface by inject<JavaScriptInterface>()
+    private val disposables by inject<CompositeDisposable>()
+    private val exceptionHandler by inject<ExceptionHandler>()
+    //    private val navigator by inject<ArticleNavigation>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_article, container, false)
@@ -41,11 +50,10 @@ class ArticleFragment : CoreFragment() {
             response.fold(::onArticleReceivedSuccess, ::onArticleReceivedFailure)
         }.let(disposables::add)
 
+        fragment_article_webview.webViewClient = webViewClient
+        fragment_article_webview.settings.javaScriptEnabled = true
+        fragment_article_webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
 
-//        fragment_article_webview.webViewClient = HabrachanWebViewClient(this)
-//        fragment_article_webview.settings.javaScriptEnabled = true
-//        fragment_article_webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
-//
 //        fragment_article_retry.setOnClickListener { onRetryClicked() }
 //        articleViewModel.articleObservable.subscribe(::onArticleReceived).let(disposables::add)
 //        userAvatarViewModel.avatarObservable.subscribe(::onAvatarReceived).let(disposables::add)
@@ -56,41 +64,38 @@ class ArticleFragment : CoreFragment() {
     }
 
     private fun onArticleReceivedSuccess(response: ArticleResponse) {
+//        fragment_article_toolbar.setNavigationOnClickListener { navigator.back() }
+        fragment_article_toolbar.title = response.article.title
+        fragment_article_calculator.text = response.article.title
+        fragment_article_login.text = response.article.author.login
+        fragment_article_published.text = response.article.timePublished
+        fragment_article_appbar.setExpanded(true, true)
 
+        fragment_article_progress.visibility = View.GONE
+        fragment_article_scroll.visibility = View.VISIBLE
+        val base64content = Base64.encodeToString(response.article.buildHtml(resources).toByteArray(), Base64.DEFAULT)
+        fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
     }
 
     private fun onArticleReceivedFailure(exception: Throwable) {
+        val entry = exceptionHandler.handleException(exception)
 
+        fragment_article_progress.visibility = View.GONE
+        fragment_article_retry.visibility = View.VISIBLE
+        fragment_article_message.text = entry.message
+        fragment_article_message.visibility = View.VISIBLE
     }
 
-//    private fun onArticleReceivedSuccess(response: ArticleResponse.Success) {
-//        onArticleReceivedSuccessToolbar(response)
-//        onArticleReceivedSuccessBottombar(response)
-//        fragment_article_scroll.visibility = View.VISIBLE
-//        fragment_article_toolbar_container.visibility = View.VISIBLE
-//        fragment_article_progress.visibility = View.GONE
-//
-//        val html = response.article.buildHtml(resources)
-//        val base64content = Base64.encodeToString(html.toByteArray(), Base64.DEFAULT)
-//        fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
-//    }
-//
-//    private fun onArticleReceivedSuccessToolbar(response: ArticleResponse.Success) {
-//        fragment_article_calculator.text = response.article.title
-//        fragment_article_toolbar.title = response.article.title
-//        fragment_article_toolbar.setNavigationOnClickListener { navigator.back() }
-//        fragment_article_login.text = response.article.author.login
-//        fragment_article_published.text = response.article.timePublished
-//        fragment_article_appbar.setExpanded(true, true)
-//        fragment_article_toolbar_container.visibility = View.VISIBLE
-//        fragment_article_author.setOnClickListener {
-//            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
-////            TODO("Not implemented")
-////            val success = navigator.toUserScreen(response.article.author.login)
-////            if (!success) displaySnackbarError(resources.getString(R.string.should_be_logged_in_for_user))
-//        }
-//    }
-//
+    private fun Article.buildHtml(resources: Resources): String {
+        val builder = HtmlBuilder(this)
+        builder.addAddon(DisplayScriptAddon(resources))
+        builder.addAddon(StyleAddon(resources))
+        builder.addAddon(SpoilerAddon())
+        builder.addAddon(ImageAddon())
+        builder.addAddon(TableAddon())
+        return builder.build()
+    }
+
 //    private fun onArticleReceivedSuccessBottombar(response: ArticleResponse.Success) {
 //        fragment_article_bottombar_reading_count_text.text = response.article.readingCount.toString()
 //        fragment_article_bottombar_comments_count_text.text = response.article.commentsCount.toString()
@@ -113,13 +118,6 @@ class ArticleFragment : CoreFragment() {
 //            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
 ////            navigator.toArticleCommentsScreen(response.article)
 //        }
-//    }
-//
-//    fun onArticleReceivedError(message: String) {
-//        fragment_article_message.text = message
-//        fragment_article_message.visibility = View.VISIBLE
-//        fragment_article_progress.visibility = View.GONE
-//        fragment_article_retry.visibility = View.VISIBLE
 //    }
 //
 //    private fun onArticleVoted(response: VoteArticleResponse) = when (response) {
@@ -178,11 +176,11 @@ class ArticleFragment : CoreFragment() {
 //        ImageViewController.from(fragment_article_avatar).setAvatarStub()
 //    }
 //
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        disposables.clear()
-//    }
-//
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
+    }
+
 //    //todo закрыть интерфейсом
 //    fun onArticleDisplayed() {
 //        fragment_article_bottombar.visibility = View.VISIBLE

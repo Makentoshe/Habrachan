@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_article_appbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:expanded="false">
 
     <net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
         android:id="@+id/article_fragment_content_toolbar_collapsing"

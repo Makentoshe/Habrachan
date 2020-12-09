@@ -1,12 +1,10 @@
 package com.makentoshe.habrachan.common.entity
 
-import android.content.res.Resources
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.application.android.screen.article.model.html.*
 
 @Entity
 data class Article(
@@ -98,16 +96,6 @@ data class Article(
 //    @SerializedName("voting")
 //    val voting: Voting? = null
 ) {
-
-    fun buildHtml(resources: Resources): String {
-        val builder = HtmlBuilder(this)
-        builder.addAddon(DisplayScriptAddon(resources))
-        builder.addAddon(StyleAddon(resources))
-        builder.addAddon(SpoilerAddon())
-        builder.addAddon(ImageAddon())
-        builder.addAddon(TableAddon())
-        return builder.build()
-    }
 
     fun toJson(): String = Gson().toJson(this)
 
