@@ -13,13 +13,6 @@ import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
 import ru.terrakok.cicerone.commands.Replace
 
-/**
- * Navigator for screens that should be visible in backstack.
- * Each fragment saves its own state that allows to understand
- * when fragment was recreated and when is just returns to visible state.
- *
- * Affected commands: [Forward] and [Replace]. Other commands works as usual.
- */
 class StackNavigator(
     activity: FragmentActivity, containerId: Int, fragmentManager: FragmentManager
 ) : SupportAppNavigator(activity, fragmentManager, containerId) {
