@@ -9,8 +9,8 @@ import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.ExceptionHandlerImpl
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.network.AndroidUserSession
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ExecutorsProvider
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.SchedulersProvider
+import com.makentoshe.habrachan.application.android.viewmodel.ExecutorsProvider
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import io.reactivex.schedulers.Schedulers

@@ -8,8 +8,8 @@ import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment
 import com.makentoshe.habrachan.application.android.screen.articles.model.*
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ExecutorsProvider
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.SchedulersProvider
+import com.makentoshe.habrachan.application.android.viewmodel.ExecutorsProvider
 import com.makentoshe.habrachan.application.core.arena.articles.ArticlesArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.ArticlesManager
@@ -50,7 +50,7 @@ class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
 
         val viewModelDisposables = CompositeDisposable().apply { add(articlesDisposables) }
         val factory = ArticlesViewModel.Factory(
-            viewModelDisposables, session, epoxyController, executorsProvider, schedulersProvider, dataSourceFactory
+            viewModelDisposables, epoxyController, executorsProvider, schedulersProvider, dataSourceFactory
         )
         val viewModel = ViewModelProviders.of(fragment, factory)[ArticlesViewModel::class.java]
         bind<ArticlesViewModel>().toInstance(viewModel)

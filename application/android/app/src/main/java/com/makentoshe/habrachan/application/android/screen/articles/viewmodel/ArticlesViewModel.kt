@@ -7,8 +7,8 @@ import androidx.paging.PagedList
 import com.airbnb.epoxy.EpoxyControllerAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesDataSource
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesPagedListEpoxyController
+import com.makentoshe.habrachan.application.android.viewmodel.ExecutorsProvider
 import com.makentoshe.habrachan.entity.Article
-import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -19,7 +19,6 @@ class ArticlesViewModel(
     private val disposables: CompositeDisposable,
     private val executorsProvider: ExecutorsProvider,
     private val schedulersProvider: SchedulersProvider,
-    private val userSession: UserSession,
     private val articleController: ArticlesPagedListEpoxyController,
     private val dataSourceFactory: ArticlesDataSource.Factory
 ) : ViewModel() {
@@ -68,7 +67,6 @@ class ArticlesViewModel(
 
     class Factory(
         private val disposables: CompositeDisposable,
-        private val userSession: UserSession,
         private val articleController: ArticlesPagedListEpoxyController,
         private val executorsProvider: ExecutorsProvider,
         private val schedulersProvider: SchedulersProvider,
@@ -76,7 +74,7 @@ class ArticlesViewModel(
     ) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = ArticlesViewModel(
-            disposables, executorsProvider, schedulersProvider, userSession, articleController, dataSourceFactory
+            disposables, executorsProvider, schedulersProvider, articleController, dataSourceFactory
         ) as T
     }
 }

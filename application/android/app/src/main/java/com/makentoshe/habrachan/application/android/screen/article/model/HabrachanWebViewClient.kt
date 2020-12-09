@@ -25,11 +25,11 @@ class HabrachanWebViewClient(private val fragment: ArticleFragment) : WebViewCli
     }
 
     override fun onPageFinished(view: WebView?, url: String?) {
-        fragment.onArticleDisplayed()
+//        fragment.onArticleDisplayed()
     }
 
     override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
-        fragment.onArticleReceivedError(description ?: "Description is null. Error code: $errorCode")
+//        fragment.onArticleReceivedError(description ?: "Description is null. Error code: $errorCode")
     }
 
     fun onPublicationReadyToShow(listener: () -> Unit) {

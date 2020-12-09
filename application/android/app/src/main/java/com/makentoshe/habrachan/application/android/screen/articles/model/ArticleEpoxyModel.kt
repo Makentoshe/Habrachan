@@ -89,7 +89,7 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
             model.commentsCount = article.commentsCount
             model.displayDivider = if (enableSmartDivide) id % 20 != 19 else true
             model.clickListener = View.OnClickListener {
-                router.navigateTo(ArticleScreen(article.id))
+                router.navigateTo(ArticleScreen(article))
             }
             return model
         }

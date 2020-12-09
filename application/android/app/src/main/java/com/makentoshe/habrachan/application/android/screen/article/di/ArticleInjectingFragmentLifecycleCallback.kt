@@ -11,13 +11,13 @@ import toothpick.smoothie.lifecycle.closeOnDestroy
 class ArticleInjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycleCallbacks() {
 
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) = when (f) {
-        is ArticleFragment -> injectWebArticleFragment(f)
+        is ArticleFragment -> injectArticleFragment(f)
         else -> Unit
     }
 
-    private fun injectWebArticleFragment(fragment: ArticleFragment) {
+    private fun injectArticleFragment(fragment: ArticleFragment) {
         val module = ArticleModule(fragment)
-        val scope = Toothpick.openScopes(ApplicationScope::class.java, ArticleScope::class)
+        val scope = Toothpick.openScopes(ApplicationScope::class, ArticleScope::class)
         scope.installModules(module).closeOnDestroy(fragment).inject(fragment)
     }
 }

@@ -5,11 +5,7 @@
     android:id="@+id/fragment_article_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,17 +15,17 @@
             android:id="@+id/fragment_article_webview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="?attr/actionBarSize"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
+            android:layout_marginBottom="?attr/actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <include
-            android:id="@+id/fragment_article_bottombar"
-            android:visibility="gone"
             layout="@layout/fragment_article_bottombar"
+            android:visibility="gone"
+            android:id="@+id/fragment_article_bottombar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
