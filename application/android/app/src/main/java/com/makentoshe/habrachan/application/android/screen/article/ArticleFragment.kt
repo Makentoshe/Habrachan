@@ -12,6 +12,7 @@ import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.article.model.HabrachanWebViewClient
 import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
 import com.makentoshe.habrachan.application.android.screen.article.model.html.*
+import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.network.response.ArticleResponse
@@ -39,7 +40,7 @@ class ArticleFragment : CoreFragment() {
     private val viewModel by inject<ArticleViewModel>()
     private val disposables by inject<CompositeDisposable>()
     private val exceptionHandler by inject<ExceptionHandler>()
-    //    private val navigator by inject<ArticleNavigation>()
+    private val navigator by inject<ArticleNavigation>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_article, container, false)
@@ -64,7 +65,7 @@ class ArticleFragment : CoreFragment() {
     }
 
     private fun onArticleReceivedSuccess(response: ArticleResponse) {
-//        fragment_article_toolbar.setNavigationOnClickListener { navigator.back() }
+        fragment_article_toolbar.setNavigationOnClickListener { navigator.back() }
         fragment_article_toolbar.title = response.article.title
         fragment_article_calculator.text = response.article.title
         fragment_article_login.text = response.article.author.login

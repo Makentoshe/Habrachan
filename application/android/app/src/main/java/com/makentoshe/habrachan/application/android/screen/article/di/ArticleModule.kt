@@ -5,6 +5,7 @@ import com.makentoshe.habrachan.application.android.arena.ArticleArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
+import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel
 import com.makentoshe.habrachan.application.core.arena.articles.ArticleArena
 import com.makentoshe.habrachan.network.UserSession
@@ -30,6 +31,7 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
     init {
         Toothpick.openScope(ApplicationScope::class).inject(this)
         bind<CompositeDisposable>().toInstance(CompositeDisposable())
+        bind<ArticleNavigation>().toInstance(ArticleNavigation(router))
 
         val articleArenaCache = ArticleArenaCache()
         val articleArena = ArticleArena(ArticlesManager.Builder(client).native(), articleArenaCache)
