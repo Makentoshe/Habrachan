@@ -2,14 +2,17 @@ package com.makentoshe.habrachan.application.android.screen.article.di
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.application.android.arena.ArticleArenaCache
+import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel
 import com.makentoshe.habrachan.application.core.arena.articles.ArticleArena
+import com.makentoshe.habrachan.application.core.arena.image.AvatarArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.ArticlesManager
+import com.makentoshe.habrachan.network.manager.ImageManager
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router
@@ -33,9 +36,11 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
         bind<CompositeDisposable>().toInstance(CompositeDisposable())
         bind<ArticleNavigation>().toInstance(ArticleNavigation(router))
 
-        val articleArenaCache = ArticleArenaCache()
-        val articleArena = ArticleArena(ArticlesManager.Builder(client).native(), articleArenaCache)
-        val viewModelFactory = ArticleViewModel.Factory(CompositeDisposable(), session, articleArena, fragment.arguments)
+        val avatarArena = AvatarArena(ImageManager.Builder(client).build(), AvatarArenaCache())
+        val articleArena = ArticleArena(ArticlesManager.Builder(client).native(), ArticleArenaCache())
+        val viewModelFactory = ArticleViewModel.Factory(
+            CompositeDisposable(), session, articleArena, avatarArena, fragment.arguments
+        )
         val viewModel = ViewModelProviders.of(fragment, viewModelFactory)[ArticleViewModel::class.java]
         bind<ArticleViewModel>().toInstance(viewModel)
 

@@ -1,6 +1,8 @@
 package com.makentoshe.habrachan.application.android.screen.article
 
+import android.content.res.ColorStateList
 import android.content.res.Resources
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
@@ -9,13 +11,16 @@ import android.view.ViewGroup
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
+import com.makentoshe.habrachan.application.android.dp2px
 import com.makentoshe.habrachan.application.android.screen.article.model.HabrachanWebViewClient
 import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
 import com.makentoshe.habrachan.application.android.screen.article.model.html.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel
+import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.network.response.ArticleResponse
+import com.makentoshe.habrachan.network.response.ImageResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_article.*
@@ -51,6 +56,10 @@ class ArticleFragment : CoreFragment() {
             response.fold(::onArticleReceivedSuccess, ::onArticleReceivedFailure)
         }.let(disposables::add)
 
+        viewModel.avatarObservable.observeOn(AndroidSchedulers.mainThread()).subscribe { response ->
+            response.fold(::onAvatarReceivedSuccess, ::onAvatarReceivedFailure)
+        }.let(disposables::add)
+
         fragment_article_webview.webViewClient = webViewClient
         fragment_article_webview.settings.javaScriptEnabled = true
         fragment_article_webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
@@ -69,7 +78,6 @@ class ArticleFragment : CoreFragment() {
         fragment_article_toolbar.title = response.article.title
         fragment_article_calculator.text = response.article.title
         fragment_article_login.text = response.article.author.login
-        fragment_article_published.text = response.article.timePublished
         fragment_article_appbar.setExpanded(true, true)
 
         fragment_article_progress.visibility = View.GONE
@@ -95,6 +103,24 @@ class ArticleFragment : CoreFragment() {
         builder.addAddon(ImageAddon())
         builder.addAddon(TableAddon())
         return builder.build()
+    }
+
+    private fun onAvatarReceivedSuccess(response: ImageResponse) {
+        val bitmap = response.bytes.toRoundedDrawable(resources, dp2px(R.dimen.radiusS))
+        fragment_article_avatar_image.setImageDrawable(bitmap)
+        fragment_article_avatar_image.visibility = View.VISIBLE
+
+        fragment_article_avatar_progress.visibility = View.GONE
+    }
+
+    private fun onAvatarReceivedFailure(throwable: Throwable?) {
+        val tintColor = ColorStateList.valueOf(resources.getColor(R.color.title, requireContext().theme))
+        fragment_article_avatar_image.imageTintList = tintColor
+        fragment_article_avatar_image.imageTintMode = PorterDuff.Mode.SRC_ATOP
+        fragment_article_avatar_image.setImageResource(R.drawable.ic_account_stub)
+        fragment_article_avatar_image.visibility = View.VISIBLE
+
+        fragment_article_avatar_progress.visibility = View.GONE
     }
 
 //    private fun onArticleReceivedSuccessBottombar(response: ArticleResponse.Success) {

@@ -23,7 +23,6 @@ abstract class CoreFragment : Fragment() {
             get() = fragment.requireArguments()
     }
 
-
     protected fun closeSoftKeyboard() {
         val imm = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         val view = requireActivity().currentFocus ?: View(activity)

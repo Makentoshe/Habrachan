@@ -18,10 +18,12 @@ internal class ImageManagerImpl(private val client: OkHttpClient) : ImageManager
     override suspend fun getImage(request: ImageRequest): Result<ImageResponse> {
         val response = client.newCall(Request.Builder().url(request.imageUrl).build()).execute()
         return if (response.isSuccessful) {
-            Result.success(ImageResponse(request, response.body!!.bytes(), false))
+            Result.success(ImageResponse(request, response.body!!.bytes()))
         } else {
-            // TODO make new exception
-            Result.failure(Exception(response.body!!.string()))
+            Result.failure(ImageManagerException(response.body!!.string(), request))
         }
     }
 }
+
+// TODO make special exception for whole manager exceptions
+data class ImageManagerException(override val message: String, val request: ImageRequest): Throwable()

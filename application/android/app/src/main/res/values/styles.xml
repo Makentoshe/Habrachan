@@ -66,7 +66,7 @@
     </style>
 
     <style name="Habrachan.Light.TextAppearance" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/title</item>
     </style>
 
     <style name="Habrachan.Light.TextAppearance.Large" parent="Habrachan.Light.TextAppearance">
