@@ -29,8 +29,7 @@ annotation class ApplicationScope
 
 class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module() {
 
-    private val client =
-        OkHttpClient.Builder().followRedirects(false).addLoggingInterceptor().build()
+    private val client = OkHttpClient.Builder().followRedirects(true).addLoggingInterceptor().build()
 
     private val cacheDatabase = Room.databaseBuilder(
         context, AndroidCacheDatabase::class.java, "HabrachanCache"
