@@ -52,6 +52,7 @@ class ArticleFragment : CoreFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // TODO optimize html building
         viewModel.articleObservable.observeOn(AndroidSchedulers.mainThread()).subscribe { response ->
             response.fold(::onArticleReceivedSuccess, ::onArticleReceivedFailure)
         }.let(disposables::add)
@@ -64,9 +65,12 @@ class ArticleFragment : CoreFragment() {
         fragment_article_webview.settings.javaScriptEnabled = true
         fragment_article_webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
 
-//        fragment_article_retry.setOnClickListener { onRetryClicked() }
-//        articleViewModel.articleObservable.subscribe(::onArticleReceived).let(disposables::add)
-//        userAvatarViewModel.avatarObservable.subscribe(::onAvatarReceived).let(disposables::add)
+        fragment_article_retry.setOnClickListener {
+            viewModel.requestObserver.onNext(arguments.articleId)
+            fragment_article_failure.visibility = View.GONE
+            fragment_article_progress.visibility = View.VISIBLE
+        }
+
 //        voteArticleViewModel.voteArticleObservable.subscribe(::onArticleVoted).let(disposables::add)
 //        javaScriptInterface.imageObservable.subscribe{
 //            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
@@ -90,9 +94,9 @@ class ArticleFragment : CoreFragment() {
         val entry = exceptionHandler.handleException(exception)
 
         fragment_article_progress.visibility = View.GONE
-        fragment_article_retry.visibility = View.VISIBLE
+        fragment_article_title.text = entry.title
         fragment_article_message.text = entry.message
-        fragment_article_message.visibility = View.VISIBLE
+        fragment_article_failure.visibility = View.VISIBLE
     }
 
     private fun Article.buildHtml(resources: Resources): String {
@@ -123,7 +127,7 @@ class ArticleFragment : CoreFragment() {
         fragment_article_avatar_progress.visibility = View.GONE
     }
 
-//    private fun onArticleReceivedSuccessBottombar(response: ArticleResponse.Success) {
+    //    private fun onArticleReceivedSuccessBottombar(response: ArticleResponse.Success) {
 //        fragment_article_bottombar_reading_count_text.text = response.article.readingCount.toString()
 //        fragment_article_bottombar_comments_count_text.text = response.article.commentsCount.toString()
 //        TextScoreController(fragment_article_bottombar_voteview).setScoreLight(requireContext(), response.article.score)

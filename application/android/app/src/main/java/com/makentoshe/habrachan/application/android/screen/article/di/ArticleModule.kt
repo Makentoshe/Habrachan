@@ -8,6 +8,7 @@ import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel
+import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.SchedulersProvider
 import com.makentoshe.habrachan.application.core.arena.articles.ArticleArena
 import com.makentoshe.habrachan.application.core.arena.image.AvatarArena
 import com.makentoshe.habrachan.network.UserSession
@@ -28,6 +29,7 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
     private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
     private val session by inject<UserSession>()
+    private val schedulersProvider by inject<SchedulersProvider>()
 
     private val androidCacheDatabase by inject<AndroidCacheDatabase>()
 
@@ -39,7 +41,7 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
         val avatarArena = AvatarArena(ImageManager.Builder(client).build(), AvatarArenaCache())
         val articleArena = ArticleArena(ArticlesManager.Builder(client).native(), ArticleArenaCache())
         val viewModelFactory = ArticleViewModel.Factory(
-            CompositeDisposable(), session, articleArena, avatarArena, fragment.arguments
+            CompositeDisposable(), session, articleArena, avatarArena, fragment.arguments, schedulersProvider
         )
         val viewModel = ViewModelProviders.of(fragment, viewModelFactory)[ArticleViewModel::class.java]
         bind<ArticleViewModel>().toInstance(viewModel)

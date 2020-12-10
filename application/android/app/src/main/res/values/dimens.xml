@@ -19,6 +19,7 @@
     <dimen name="dimenM">12dp</dimen>
     <dimen name="dimenS">8dp</dimen>
     <dimen name="dimenXS">4dp</dimen>
+    <dimen name="dimen2XS">2dp</dimen>
 
     <!-- Elements -->
     <dimen name="heightM">32dp</dimen>
