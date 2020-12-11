@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Toast
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
@@ -73,7 +74,22 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
             fragment_article_progress.visibility = View.VISIBLE
         }
 
-//        voteArticleViewModel.voteArticleObservable.subscribe(::onArticleVoted).let(disposables::add)
+        fragment_article_bottom_comments.setOnClickListener {
+            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+        }
+
+        fragment_article_bottom_voteup.setOnClickListener {
+            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+        }
+
+        fragment_article_bottom_votedown.setOnClickListener {
+            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+        }
+
+        fragment_article_author.setOnClickListener {
+            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+        }
+
 //        javaScriptInterface.imageObservable.subscribe{
 //            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
 //        }.let(disposables::add)
@@ -85,6 +101,10 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_calculator.text = response.article.title
         fragment_article_login.text = response.article.author.login
         fragment_article_appbar.setExpanded(true, true)
+
+        fragment_article_bottom_voteview.text = response.article.score.toString()
+        fragment_article_bottom_reading_count.text = response.article.readingCount.toString()
+        fragment_article_bottom_comments_count.text = response.article.commentsCount.toString()
 
         fragment_article_progress.visibility = View.GONE
         fragment_article_scroll.visibility = View.VISIBLE
