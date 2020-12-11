@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.makentoshe.habrachan.application.android.screen.article.view.CustomNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:visibility="gone"
     android:id="@+id/fragment_article_scroll"
     android:layout_width="match_parent"
@@ -8,30 +9,120 @@
     android:scrollbars="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <WebView
             android:id="@+id/fragment_article_webview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="?attr/actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content" />
 
-        <include
-            layout="@layout/fragment_article_bottombar"
+        <View
             android:visibility="gone"
-            android:id="@+id/fragment_article_bottombar"
+            style="@style/Habrachan.Separator"
+            android:id="@+id/fragment_article_separator"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_article_webview" />
+            android:layout_height="@dimen/separator_height" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/fragment_article_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/heightL"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/fragment_article_bottom_voteup"
+                android:layout_width="@dimen/heightL"
+                android:layout_height="@dimen/heightL"
+                android:src="@drawable/ic_arrow_long"
+                android:layout_gravity="center"
+                android:padding="@dimen/dimenM"
+                app:tintMode="src_atop"
+                app:tint="@color/text"
+                android:rotation="90"
+                tools:ignore="ContentDescription,RtlSymmetry" />
+
+            <TextView
+                style="@style/Habrachan.Text"
+                android:id="@+id/fragment_article_bottom_voteview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="+23"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/fragment_article_bottom_votedown"
+                android:layout_width="@dimen/heightL"
+                android:layout_height="@dimen/heightL"
+                android:src="@drawable/ic_arrow_long"
+                android:layout_gravity="center"
+                android:padding="@dimen/dimenM"
+                app:tintMode="src_atop"
+                app:tint="@color/text"
+                android:rotation="-90"
+                tools:ignore="ContentDescription,RtlSymmetry" />
+
+            <ImageView
+                android:id="@+id/article_fragment_bottom_reading_count_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/heightL"
+                android:src="@drawable/ic_eye"
+                android:layout_gravity="center"
+                android:paddingVertical="@dimen/dimenM"
+                android:paddingEnd="@dimen/dimenS"
+                android:layout_marginStart="@dimen/dimen2XL"
+                app:tintMode="src_atop"
+                app:tint="@color/text"
+                tools:ignore="ContentDescription,RtlSymmetry" />
+
+            <TextView
+                style="@style/Habrachan.Text"
+                android:id="@+id/fragment_article_bottom_reading_count_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="133700" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/article_fragment_bottombar_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/dimenS"
+                tools:ignore="RtlSymmetry,UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/heightL"
+                    android:src="@drawable/ic_comment"
+                    android:layout_gravity="center"
+                    android:paddingVertical="@dimen/dimenM"
+                    android:paddingEnd="@dimen/dimenS"
+                    android:layout_marginStart="@dimen/dimen2XL"
+                    app:tintMode="src_atop"
+                    app:tint="@color/text"
+                    tools:ignore="ContentDescription,RtlSymmetry" />
+
+                <TextView
+                    style="@style/Habrachan.Text"
+                    android:id="@+id/fragment_article_bottombar_comments_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="12345" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </com.makentoshe.habrachan.application.android.screen.article.view.CustomNestedScrollView>

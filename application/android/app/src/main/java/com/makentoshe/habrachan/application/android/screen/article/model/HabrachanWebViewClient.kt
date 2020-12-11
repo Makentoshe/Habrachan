@@ -5,16 +5,8 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.content.ContextCompat
-import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
 
-class HabrachanWebViewClient(private val fragment: ArticleFragment) : WebViewClient() {
-
-    private var listener: (() -> Unit)? = null
-
-    override fun onPageCommitVisible(view: WebView?, url: String?) {
-        super.onPageCommitVisible(view, url)
-        listener?.invoke()
-    }
+class HabrachanWebViewClient(private val listener: HabrachanWebViewClientListener) : WebViewClient() {
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         val url = request?.url
@@ -25,14 +17,10 @@ class HabrachanWebViewClient(private val fragment: ArticleFragment) : WebViewCli
     }
 
     override fun onPageFinished(view: WebView?, url: String?) {
-//        fragment.onArticleDisplayed()
+        listener.onWebPageFinished(view, url)
     }
 
     override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
-//        fragment.onArticleReceivedError(description ?: "Description is null. Error code: $errorCode")
-    }
-
-    fun onPublicationReadyToShow(listener: () -> Unit) {
-        this.listener = listener
+        listener.onWebReceivedError(view, errorCode, description, failingUrl)
     }
 }

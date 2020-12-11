@@ -8,11 +8,13 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.dp2px
 import com.makentoshe.habrachan.application.android.screen.article.model.HabrachanWebViewClient
+import com.makentoshe.habrachan.application.android.screen.article.model.HabrachanWebViewClientListener
 import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
 import com.makentoshe.habrachan.application.android.screen.article.model.html.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
@@ -28,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_article_content.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*
 import toothpick.ktp.delegate.inject
 
-class ArticleFragment : CoreFragment() {
+class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
     companion object {
 
@@ -127,95 +129,19 @@ class ArticleFragment : CoreFragment() {
         fragment_article_avatar_progress.visibility = View.GONE
     }
 
-    //    private fun onArticleReceivedSuccessBottombar(response: ArticleResponse.Success) {
-//        fragment_article_bottombar_reading_count_text.text = response.article.readingCount.toString()
-//        fragment_article_bottombar_comments_count_text.text = response.article.commentsCount.toString()
-//        TextScoreController(fragment_article_bottombar_voteview).setScoreLight(requireContext(), response.article.score)
-//        fragment_article_bottombar_voteup.setOnClickListener {
-//            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
-////            voteArticleViewModel.voteUp(response.article.id)
-//        }
-//        if (response.article.vote == 1.0) {
-//            markVoteUpButton()
-//        }
-//        fragment_article_bottombar_votedown.setOnClickListener {
-//            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
-////            voteArticleViewModel.voteDown(response.article.id)
-//        }
-//        if (response.article.vote == -1.0) {
-//            markVoteDownButton()
-//        }
-//        fragment_article_bottombar_comments.setOnClickListener {
-//            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
-////            navigator.toArticleCommentsScreen(response.article)
-//        }
-//    }
-//
-//    private fun onArticleVoted(response: VoteArticleResponse) = when (response) {
-//        is VoteArticleResponse.Success -> onArticleVotedSuccess(response)
-//        is VoteArticleResponse.Error -> onArticleVotedError(response)
-//    }
-//
-//    private fun onArticleVotedSuccess(response: VoteArticleResponse.Success) {
-//        val currentScore = fragment_article_bottombar_voteview.text.toString().toInt()
-//        TextScoreController(fragment_article_bottombar_voteview).setScoreLight(requireContext(), response.score)
-//        if (response.score > currentScore) markVoteUpButton() else markVoteDownButton()
-//    }
-//
-//    private fun markVoteUpButton() {
-//        ImageTintController.from(fragment_article_bottombar_voteup_icon).setPositiveTint(requireContext())
-//    }
-//
-//    private fun markVoteDownButton() {
-//        ImageTintController.from(fragment_article_bottombar_votedown_icon).setNegativeTint(requireContext())
-//    }
-//
-//    private fun onArticleVotedError(response: VoteArticleResponse.Error) {
-//        val message = if (response.code != 401) {
-//            response.additional.joinToString(". ")
-//        } else {
-//            response.message
-//        }
-//        displaySnackbarError(message)
-//    }
-//
-//    private fun displaySnackbarError(message: String) {
-//        SnackbarErrorController.from(requireView()).displayIndefiniteMessage(message)
-//    }
-//
-//    private fun onRetryClicked() {
-//        fragment_article_message.visibility = View.GONE
-//        fragment_article_progress.visibility = View.VISIBLE
-//        fragment_article_retry.visibility = View.GONE
-//
-//        val request = articleViewModel.createRequest(arguments.articleId)
-//        articleViewModel.articleObserver.onNext(request)
-//    }
-//
-//    private fun onAvatarReceived(response: ImageResponse) = when (response) {
-//        is ImageResponse.Success -> onAvatarSuccess(response)
-//        is ImageResponse.Error -> onAvatarError()
-//    }
-//
-//    private fun onAvatarSuccess(response: ImageResponse.Success) {
-//        if (response.isStub) return
-//        ImageViewController.from(fragment_article_avatar).setAvatarFromByteArray(response.bytes)
-//        ImageTintController.from(fragment_article_avatar).clear()
-//    }
-//
-//    private fun onAvatarError() {
-//        ImageViewController.from(fragment_article_avatar).setAvatarStub()
-//    }
-//
+    override fun onWebPageFinished(view: WebView?, url: String?) {
+        fragment_article_separator.visibility = View.VISIBLE
+        fragment_article_bottom.visibility = View.VISIBLE
+    }
+
+    override fun onWebReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
+        onArticleReceivedFailure(Exception(description))
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
     }
-
-//    //todo закрыть интерфейсом
-//    fun onArticleDisplayed() {
-//        fragment_article_bottombar.visibility = View.VISIBLE
-//    }
 
     class Arguments(articleFragment: ArticleFragment) : CoreFragment.Arguments(articleFragment) {
 
