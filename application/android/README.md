@@ -6,7 +6,7 @@ Another purpose is to extend functionality and bring it closer to the main site.
 
 ### Modules
 
-- **app** - accumulates other modules and controls application flow.
+- **app** - accumulate other modules and controls application flow.
 - **core** - contains abstract entities for whole application
 
 ### Application features (planned and finished)
@@ -18,6 +18,6 @@ Another purpose is to extend functionality and bring it closer to the main site.
 - Logging into service (planned)
 - Displaying user screen (planned)
 - Displaying article images on another screen (planned)
-- Voting articles (planned)
-- Voting comments (planned)
+- Articles voting (planned)
+- Comments voting (planned)
 
