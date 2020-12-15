@@ -4,13 +4,13 @@
 
 Habrachan is a (multiplatform in future) project related to [habr.com](https://habr.com) domain. It contains several parts: 
 
-- **library** - the core of the whole project. The library contains entities, api, deserializers, e.g. for accessing the Habr in several ways.
+- **[library](library)** - the core of the whole project. The library contains entities, api, deserializers, e.g. for accessing the Habr in several ways.
 
   
-- **application:android** - unofficial android application, uses the library to get access to Habr.
+- **[application:android](application/android)** - unofficial android application, uses the library to get access to Habr.
 
 
 There are more complete documentation located in a concrete part of the project. 
 Project has an open [Figma](https://www.figma.com/file/4UiTdPOp4XknPQ1dxPJXnR/Habrachan?node-id=9434%3A548) design for each application.
 
-For nearest roadmap you can check [this]() document.
+For nearest roadmap you can check [this](documents/ROADMAP.md) document.
