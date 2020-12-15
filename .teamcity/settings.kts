@@ -182,7 +182,6 @@ object Build : BuildType({
     }
 
     requirements {
-        equals("teamcity.agent.jvm.os.name", "Linux")
         contains("teamcity.agent.name", "linux-medium")
     }
 })
