@@ -2,12 +2,15 @@
 
 [![Build Status](http://teamcity.jetbrains.com/app/rest/builds/buildType:(id:TestDrive_Habrachan_Build)/statusIcon.svg)](http://teamcity.jetbrains.com/viewType.html?buildTypeId=TestDrive_Habrachan_Build&guest=1)
 
-## How to build
+Habrachan is a (multiplatform in future) project related to [habr.com](https://habr.com) domain. It contains several parts: 
 
-In the root invoke `gradlew assembleDebug` for debug apk and `gradlew assembleRelease` for release apk.
+- **library** - the core of the whole project. The library contains entities, api, deserializers, e.g. for accessing the Habr in several ways.
 
-To start instrumented tests invoke  `gradlew connectedAndroidTest` or `gradlew cAT`.
+  
+- **application:android** - unofficial android application, uses the library to get access to Habr.
 
-To start unit tests invoke `gradlew test`.
 
-To build the APK and immediately install it on a running emulator or connected device, invoke `gradlew installDebug`.
+There are more complete documentation located in a concrete part of the project. 
+Project has an open [Figma](https://www.figma.com/file/4UiTdPOp4XknPQ1dxPJXnR/Habrachan?node-id=9434%3A548) design for each application.
+
+For nearest roadmap you can check [this]() document.
