@@ -180,10 +180,6 @@ object Build : BuildType({
             failBuild = false
         }
     }
-
-    requirements {
-        contains("teamcity.agent.name", "linux-medium")
-    }
 })
 
 object Keystores : GitVcsRoot({
