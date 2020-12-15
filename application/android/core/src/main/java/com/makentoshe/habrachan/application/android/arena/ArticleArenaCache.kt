@@ -5,6 +5,7 @@ import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.request.GetArticleRequest
 import com.makentoshe.habrachan.network.response.ArticleResponse
 
+// TODO implement
 class ArticleArenaCache: ArenaCache<GetArticleRequest, ArticleResponse> {
 
     override fun fetch(key: GetArticleRequest): Result<ArticleResponse> {

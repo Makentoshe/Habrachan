@@ -13,6 +13,7 @@ import com.makentoshe.habrachan.application.android.database.record.ArticleRecor
  *
  * entities - array of object types that database contains.
  */
+// TODO rework recording system - separate objects between tables and bind it with id's
 @Database(entities = [ArticleRecord::class], version = 1)
 @TypeConverters(value = [FlowsConverter::class, BadgesConverter::class, HubsConverter::class])
 abstract class AndroidCacheDatabase : RoomDatabase() {
