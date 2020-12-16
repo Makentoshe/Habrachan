@@ -40,7 +40,8 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
 
         val avatarCache = AvatarArenaCache(cacheDatabase.avatarDao(), fragment.requireContext().cacheDir)
         val avatarArena = AvatarArena(ImageManager.Builder(client).build(), avatarCache)
-        val articleArena = ArticleArena(ArticlesManager.Builder(client).native(), ArticleArenaCache())
+        val articleCache = ArticleArenaCache(cacheDatabase.articlesSearchDao())
+        val articleArena = ArticleArena(ArticlesManager.Builder(client).native(), articleCache)
         val viewModelFactory = ArticleViewModel.Factory(
             CompositeDisposable(), session, articleArena, avatarArena, fragment.arguments, schedulersProvider
         )

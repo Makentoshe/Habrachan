@@ -26,7 +26,7 @@ interface NativeArticlesApi {
         @Header("token") token: String?,
         @Path("username") username: String,
         @Query("page") page: Int,
-        @Query("include") include: String? = null,
+        @Query("include") include: String? = "text_html",
         @Query("exclude") exclude: String? = null
     ): Call<ResponseBody>
 

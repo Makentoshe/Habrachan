@@ -15,13 +15,15 @@ interface ImageManager {
 }
 
 internal class ImageManagerImpl(private val client: OkHttpClient) : ImageManager {
-    override suspend fun getImage(request: ImageRequest): Result<ImageResponse> {
+    override suspend fun getImage(request: ImageRequest): Result<ImageResponse> = try {
         val response = client.newCall(Request.Builder().url(request.imageUrl).build()).execute()
-        return if (response.isSuccessful) {
+        if (response.isSuccessful) {
             Result.success(ImageResponse(request, response.body!!.bytes()))
         } else {
             Result.failure(ImageManagerException(response.body!!.string(), request))
         }
+    } catch (exception: Exception) {
+        Result.failure(ImageManagerException(exception.toString(), request))
     }
 }
 

@@ -46,9 +46,8 @@ class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module()
         bind<SchedulersProvider>().toInstance(schedulersProvider)
         bind<ExceptionHandler>().toInstance(ExceptionHandlerImpl(context))
 
-        val userSession = AndroidUserSession(
-            BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, null, GetArticlesRequest.Spec.All()
-        )
+        val spec = GetArticlesRequest.Spec.All(include = "text_html")
+        val userSession = AndroidUserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, null, spec)
         bind<UserSession>().toInstance(userSession)
     }
 

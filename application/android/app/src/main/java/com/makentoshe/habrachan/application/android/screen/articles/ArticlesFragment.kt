@@ -84,13 +84,16 @@ class ArticlesFragment : CoreFragment() {
 
     private fun onCategoryChecked(checkedId: Int) = when (checkedId) {
         R.id.fragment_articles_category_all -> {
-            viewModel.searchSubject.onNext(GetArticlesRequest.Spec.All())
+            val spec = GetArticlesRequest.Spec.All(include = "text_html")
+            viewModel.searchSubject.onNext(spec)
         }
         R.id.fragment_articles_category_interesting -> {
-            viewModel.searchSubject.onNext(GetArticlesRequest.Spec.Interesting())
+            val spec = GetArticlesRequest.Spec.Interesting(include = "text_html")
+            viewModel.searchSubject.onNext(spec)
         }
         R.id.fragment_articles_category_top -> {
-            viewModel.searchSubject.onNext(GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily))
+            val spec = GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily, include = "text_html")
+            viewModel.searchSubject.onNext(spec)
         }
         else -> throw IllegalArgumentException(checkedId.toString())
     }

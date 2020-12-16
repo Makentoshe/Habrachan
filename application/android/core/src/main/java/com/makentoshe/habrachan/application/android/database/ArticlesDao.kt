@@ -18,9 +18,6 @@ interface ArticlesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(employee: ArticleRecord?)
 
-    @Update
-    fun update(employee: ArticleRecord?)
-
     @Delete
     fun delete(employee: ArticleRecord?)
 
