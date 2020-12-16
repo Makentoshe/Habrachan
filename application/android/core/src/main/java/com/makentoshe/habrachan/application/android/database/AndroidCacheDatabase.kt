@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.application.android.database.converter.BadgesCon
 import com.makentoshe.habrachan.application.android.database.converter.FlowsConverter
 import com.makentoshe.habrachan.application.android.database.converter.HubsConverter
 import com.makentoshe.habrachan.application.android.database.record.ArticleRecord
+import com.makentoshe.habrachan.application.android.database.record.AvatarRecord
 
 /**
  * This is main cache database used in Android application.
@@ -14,10 +15,13 @@ import com.makentoshe.habrachan.application.android.database.record.ArticleRecor
  * entities - array of object types that database contains.
  */
 // TODO rework recording system - separate objects between tables and bind it with id's
-@Database(entities = [ArticleRecord::class], version = 1)
+@Database(entities = [ArticleRecord::class, AvatarRecord::class], version = 1)
 @TypeConverters(value = [FlowsConverter::class, BadgesConverter::class, HubsConverter::class])
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
     /** Contains articles from last search */
     abstract fun articlesSearchDao(): ArticlesDao
+
+    /** Stores indexed avatars paths. The real files stores in file system cache */
+    abstract fun avatarDao(): AvatarDao
 }

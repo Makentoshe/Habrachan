@@ -31,55 +31,20 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
     private val session by inject<UserSession>()
     private val schedulersProvider by inject<SchedulersProvider>()
 
-    private val androidCacheDatabase by inject<AndroidCacheDatabase>()
+    private val cacheDatabase by inject<AndroidCacheDatabase>()
 
     init {
         Toothpick.openScope(ApplicationScope::class).inject(this)
         bind<CompositeDisposable>().toInstance(CompositeDisposable())
         bind<ArticleNavigation>().toInstance(ArticleNavigation(router))
 
-        val avatarArena = AvatarArena(ImageManager.Builder(client).build(), AvatarArenaCache())
+        val avatarCache = AvatarArenaCache(cacheDatabase.avatarDao(), fragment.requireContext().cacheDir)
+        val avatarArena = AvatarArena(ImageManager.Builder(client).build(), avatarCache)
         val articleArena = ArticleArena(ArticlesManager.Builder(client).native(), ArticleArenaCache())
         val viewModelFactory = ArticleViewModel.Factory(
             CompositeDisposable(), session, articleArena, avatarArena, fragment.arguments, schedulersProvider
         )
         val viewModel = ViewModelProviders.of(fragment, viewModelFactory)[ArticleViewModel::class.java]
         bind<ArticleViewModel>().toInstance(viewModel)
-
-//        avatarManager = ImageManager.Builder(client).build()
-//        articlesManager = ArticlesManager.Builder(client).build()
-//
-//
-//        bind<ArticleNavigation>().toInstance(ArticleNavigation(router, sessionDatabase.session()))
-//
-//        val userAvatarViewModel = getUserAvatarViewModel(fragment)
-//        bind<UserAvatarViewModel>().toInstance(userAvatarViewModel)
-//
-//        val articleFragmentViewModelProvider = getArticleFragmentViewModel(fragment)
-//        bind<ArticleViewModel>().toInstance(articleFragmentViewModelProvider)
-//
-//        val voteArticleViewModel = getVoteArticleViewModel(fragment)
-//        bind<VoteArticleViewModel>().toInstance(voteArticleViewModel)
-//
-//        bind<JavaScriptInterface>().toInstance(JavaScriptInterface())
     }
-
-//    private fun getUserAvatarViewModel(fragment: ArticleFragment): UserAvatarViewModel {
-//        val application = fragment.requireActivity().application
-//        val factory = UserAvatarViewModel.Factory(database.avatars(), application, avatarManager)
-//        return ViewModelProviders.of(fragment, factory)[UserAvatarViewModel::class.java]
-//    }
-//
-//    private fun getArticleFragmentViewModel(fragment: ArticleFragment): ArticleViewModel {
-//        val userAvatarViewModel = getUserAvatarViewModel(fragment)
-//        val factory = ArticleViewModel.Factory(
-//            articlesManager, database.articles(), sessionDatabase.session(), userAvatarViewModel
-//        )
-//        return ViewModelProviders.of(fragment, factory)[ArticleViewModel::class.java]
-//    }
-//
-//    private fun getVoteArticleViewModel(fragment: ArticleFragment): VoteArticleViewModel {
-//        val factory = VoteArticleViewModel.Factory(sessionDatabase.session(), articlesManager)
-//        return ViewModelProviders.of(fragment, factory)[VoteArticleViewModel::class.java]
-//    }
 }
