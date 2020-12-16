@@ -9,7 +9,7 @@ interface FlowDao {
     @Query("SELECT * FROM FlowRecord")
     fun getAll(): List<FlowRecord>
 
-    @Query("SELECT * FROM FlowRecord WHERE flowId = :id")
+    @Query("SELECT * FROM FlowRecord WHERE id = :id")
     fun getById(id: Int): FlowRecord?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

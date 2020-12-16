@@ -1,23 +1,23 @@
 package com.makentoshe.habrachan.application.android.database.dao
 
 import androidx.room.*
-import com.makentoshe.habrachan.application.android.database.record.HubRecord
+import com.makentoshe.habrachan.application.android.database.record.HubRecord2
 
 @Dao
 interface HubDao {
 
-    @Query("SELECT * FROM HubRecord")
-    fun getAll(): List<HubRecord>
+    @Query("SELECT * FROM HubRecord2")
+    fun getAll(): List<HubRecord2>
 
-    @Query("SELECT * FROM HubRecord WHERE hubId = :id")
-    fun getById(id: Int): HubRecord?
+    @Query("SELECT * FROM HubRecord2 WHERE id = :id")
+    fun getById(id: Int): HubRecord2?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(record: HubRecord)
+    fun insert(record: HubRecord2)
 
     @Delete
-    fun delete(record: HubRecord)
+    fun delete(record: HubRecord2)
 
-    @Query("DELETE FROM HubRecord")
+    @Query("DELETE FROM HubRecord2")
     fun clear()
 }

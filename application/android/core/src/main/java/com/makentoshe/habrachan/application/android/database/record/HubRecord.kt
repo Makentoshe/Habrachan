@@ -75,3 +75,56 @@ data class HubRecord(
         tagsString
     )
 }
+
+@Entity
+data class HubRecord2(
+    @PrimaryKey
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("flow")
+    val flowId: Int?,
+    @SerializedName("alias")
+    val alias: String,
+    @SerializedName("title")
+    val title: String,
+    @SerializedName("icon")
+    val icon: String,
+    @SerializedName("is_company")
+    val isCompany: Boolean,
+    @SerializedName("is_membership")
+    val isMembership: Boolean,
+    @SerializedName("is_profiled")
+    val isProfiled: Boolean,
+    @SerializedName("path")
+    val path: String,
+    @SerializedName("about")
+    val about: String?,
+    @SerializedName("about_small")
+    val aboutSmall: String?,
+    @SerializedName("count_posts")
+    val countPosts: Int?,
+    @SerializedName("count_subscribers")
+    val countSubscribers: Int?,
+    @SerializedName("rating")
+    val rating: Double?,
+    @SerializedName("tags_string")
+    val tagsString: String?
+) {
+    constructor(hub: Hub) : this(
+        hub.id,
+        hub.flow?.id,
+        hub.title,
+        hub.alias,
+        hub.icon,
+        hub.isCompany,
+        hub.isMembership,
+        hub.isProfiled,
+        hub.path,
+        hub.about,
+        hub.aboutSmall,
+        hub.countPosts,
+        hub.countSubscribers,
+        hub.rating,
+        hub.tagsString
+    )
+}

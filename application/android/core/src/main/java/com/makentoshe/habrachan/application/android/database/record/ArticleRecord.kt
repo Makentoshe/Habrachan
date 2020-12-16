@@ -30,7 +30,7 @@ data class ArticleRecord(
     val isTutorial: Boolean,
     val lang: String,
     @Embedded(prefix = "metadata_")
-    val metadataRecord: MetadataRecord?,
+    val metadataRecord: MetadataRecord? = null,
     val path: String,
     val postType: Int,
     val postTypeStr: String,

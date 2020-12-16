@@ -4,6 +4,8 @@ import android.util.Log
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.database.record.ArticleRecord
+import com.makentoshe.habrachan.application.android.database.record.FlowRecord
+import com.makentoshe.habrachan.application.android.database.record.HubRecord2
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.entity.NextPage
@@ -54,6 +56,12 @@ class ArticlesArenaCache(
             val databaseIndex = (key.page - 1) * key.count + index
             debug(Log.INFO, "Carry $databaseIndex article to cache")
             cacheDatabase.articlesSearchDao().insert(ArticleRecord(databaseIndex, article))
+
+            article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
+            article.hubs.forEach { hub ->
+                cacheDatabase.hubDao().insert(HubRecord2(hub))
+                hub.flow?.let(::FlowRecord)?.let(cacheDatabase.flowDao()::insert)
+            }
         }
     }
 }

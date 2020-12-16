@@ -1,11 +1,13 @@
 package com.makentoshe.habrachan.application.android.database.record
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.Flow
 
 @Entity
 data class FlowRecord(
+    @PrimaryKey
     @SerializedName("id")
     val id: Int,
     @SerializedName("alias")
