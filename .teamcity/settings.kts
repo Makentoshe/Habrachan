@@ -37,6 +37,12 @@ project {
     buildType(LibraryBuild)
     buildType(ApplicationCore)
     buildType(Android)
+
+    params {
+        add(Parameters.AndroidSdkUrl)
+        add(Parameters.AndroidHome)
+        add(Parameters.AndroidBuildTools29)
+    }
 }
 
 //object Build : BuildType({
@@ -48,9 +54,6 @@ project {
 //
 //    params {
 //        param("release-apk-output", "app/build/outputs/apk/release/")
-//        param("ANDROID_SDK_URL", "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip")
-//        param("build-tools", "%env.ANDROID_HOME%/build-tools/29.0.3/")
-//        param("env.ANDROID_HOME", "%teamcity.build.checkoutDir%/.android-sdk")
 //        param("keystore-password", "1243568790")
 //    }
 //

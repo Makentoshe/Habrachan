@@ -7,7 +7,7 @@ object ApplicationCore: PipelineBuildVcs("Application core", {
         gradle {
             name = "Build application core module"
             tasks = "application:core:build --info"
-            buildFile = "build.gradle.kts"
+            buildFile = "build.gradle"
         }
     }
 })
