@@ -14,20 +14,17 @@ object Android: PipelineBuildVcs("Android", {
             name = "Install Android SDK tools"
             executionMode = BuildStep.ExecutionMode.RUN_ON_FAILURE
             scriptContent = """
-                ANDROID_SDK_URL=%ANDROID_SDK_URL%
-                ANDROID_HOME=%env.ANDROID_HOME%
-
-                mkdir "${'$'}ANDROID_HOME"
-                cd "${'$'}ANDROID_HOME"
-                curl -o sdk.zip "${'$'}ANDROID_SDK_URL"
+                mkdir "%env.ANDROID_HOME%"
+                cd "%env.ANDROID_HOME%"
+                curl -o sdk.zip "%ANDROID_SDK_URL%"
                 unzip sdk.zip
             """.trimIndent()
         }
         script {
             name = "Accept licences for Android SDK"
             scriptContent = """
-                mkdir -p "${'$'}ANDROID_HOME/licenses"
-                echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "${'$'}ANDROID_HOME/licenses/android-sdk-license"
+                mkdir -p "%env.ANDROID_HOME%/licenses"
+                echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "%env.ANDROID_HOME%/licenses/android-sdk-license"
             """.trimIndent()
         }
     }
