@@ -1,6 +1,8 @@
 package com.makentoshe.habrachan.entity
 
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class Article(
     @SerializedName("id")
@@ -68,7 +70,7 @@ data class Article(
     @SerializedName("time_interesting")
     val timeInteresting: String? = null,
     @SerializedName("time_published")
-    val timePublished: String,
+    val timePublishedRaw: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("url")
@@ -83,22 +85,6 @@ data class Article(
 //    val voting: Voting? = null
 ) {
 
-//    fun buildHtml(resources: Resources): String {
-//        val builder = HtmlBuilder(this)
-//        builder.addAddon(DisplayScriptAddon(resources))
-//        builder.addAddon(StyleAddon(resources))
-//        builder.addAddon(SpoilerAddon())
-//        builder.addAddon(ImageAddon())
-//        builder.addAddon(TableAddon())
-//        return builder.build()
-//    }
-//
-//    fun toJson(): String = Gson().toJson(this)
-//
-//    companion object {
-//        fun fromJson(json: String): Article {
-//            return Gson().fromJson(json, Article::class.java)
-//        }
-//    }
-//
+    val timePublished: Date
+        get() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(timePublishedRaw)
 }

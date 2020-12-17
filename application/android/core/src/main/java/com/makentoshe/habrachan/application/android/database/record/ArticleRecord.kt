@@ -95,7 +95,7 @@ data class ArticleRecord(
         article.tagsString,
         article.textCut,
         article.timeInteresting,
-        article.timePublished,
+        article.timePublishedRaw,
         article.title,
         article.url,
         article.vote,

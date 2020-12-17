@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.articles.model
 
+import android.content.Context
 import android.view.View
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
@@ -10,6 +11,8 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.entity.Article
 import ru.terrakok.cicerone.Router
+import java.text.SimpleDateFormat
+import java.util.*
 
 @EpoxyModelClass(layout = R.layout.main_articles_element)
 abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHolder>() {
@@ -21,7 +24,7 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
     var author = ""
 
     @EpoxyAttribute
-    var timePublished = ""
+    lateinit var timePublished: Date
 
     @EpoxyAttribute
     var hubs = ""
@@ -42,13 +45,19 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
         holder.titleView?.text = title
         holder.authorView?.text = author
         holder.authorView?.requestLayout()
-        holder.timeView?.text = timePublished
+        holder.timeView?.text = timePublished.time(holder.context)
         holder.hubsView?.text = hubs
         holder.scoreView?.text = score.toString()
         holder.readingView?.text = readingsCount.toString()
         holder.commentsView?.text = commentsCount.toString()
         holder.baseView?.setOnClickListener(clickListener)
         holder.divideView?.visibility = if (displayDivider) View.VISIBLE else View.GONE
+    }
+
+    private fun Date.time(context: Context) : String{
+        val date = SimpleDateFormat("dd MMMM yyyy").format(this)
+        val time = SimpleDateFormat("HH:mm").format(this)
+        return context.getString(R.string.articles_time_format, date, time)
     }
 
     class ViewHolder : EpoxyHolder() {
@@ -61,6 +70,7 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
         var commentsView: TextView? = null
         var baseView: View? = null
         var divideView: View? = null
+        lateinit var context: Context
 
         override fun bindView(itemView: View) {
             titleView = itemView.findViewById(R.id.title)
@@ -72,6 +82,7 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
             commentsView = itemView.findViewById(R.id.comments_count_textview)
             divideView = itemView.findViewById<View>(R.id.divider)
             baseView = itemView
+            context = itemView.context
         }
     }
 

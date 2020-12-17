@@ -35,6 +35,8 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="repeated_voting_is_prohibited">Repeated voting is prohibited</string>
     <string name="menu_search">Search</string>
 
+    <string name="articles_time_format">%1$s in %2$s</string>
+
     <string name="articles_type_all">All articles</string>
     <string name="articles_type_interesting">Interesting</string>
     <string name="articles_type_subscription">By subscription</string>
