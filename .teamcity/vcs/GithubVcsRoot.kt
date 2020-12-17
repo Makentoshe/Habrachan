@@ -10,3 +10,7 @@ object GithubVcsRoot : GitVcsRoot({
         passphrase = "credentialsJSON:51c3ef83-e5b1-405a-9573-dbabef655e0c"
     }
 })
+
+object SpaceVcsRoot: GitVcsRoot({
+    name = "Space"
+})
