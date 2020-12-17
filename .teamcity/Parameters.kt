@@ -10,3 +10,7 @@ object Parameters {
     // Configuration parameters are not passed into build, can be used in references only.
     val AndroidBuildTools29 = Parameter("build-tools", "%${AndroidHome.name}%/build-tools/29.0.3/")
 }
+
+/** Returns a parameter name wrapped with teamcity reference indicator */
+val Parameter.reference: String
+    get() = "%$name%"

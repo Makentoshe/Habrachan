@@ -1,14 +1,16 @@
 package build
 
+import Parameters
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
+import reference
 
 object Android: PipelineBuildVcs("Android", {
     steps {
         script {
             name = "Clean Android home directory"
             executionMode = BuildStep.ExecutionMode.ALWAYS
-            scriptContent = "rm -r -f %env.ANDROID_HOME%"
+            scriptContent = "rm -r -f ${Parameters.AndroidHome.reference}"
         }
         script {
             name = "Install Android SDK tools"
