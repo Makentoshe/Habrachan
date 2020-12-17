@@ -60,7 +60,7 @@ data class ArticleRecord(
         private const val delimiter = ";"
     }
 
-    constructor(databaseIndex: Int, article: Article) : this(
+    constructor(article: Article) : this(
         article.id,
         UserRecord(article.author),
         article.commentsCount,

@@ -52,9 +52,8 @@ class ArticlesArenaCache(
 
         capture(Log.INFO, "Carry search articles to cache with key: $key")
         value.data.forEachIndexed { index, article ->
-            val databaseIndex = (key.page - 1) * key.count + index
-            capture(Log.INFO, "Carry $databaseIndex article to cache")
-            cacheDatabase.articlesSearchDao().insert(ArticleRecord(databaseIndex, article))
+            capture(Log.INFO, "Carry ${(key.page - 1) * key.count + index} article to cache")
+            cacheDatabase.articlesSearchDao().insert(ArticleRecord(article))
 
             article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
             article.hubs.forEach { hub ->
