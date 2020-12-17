@@ -7,7 +7,8 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.VcsTrigger
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
-import jetbrains.buildServer.configs.kotlin.v2019_2.vcs.GitVcsRoot
+import vcs.GithubVcsRoot
+import vcs.Keystores
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -35,24 +36,10 @@ version = "2020.1"
 
 project {
 
-    vcsRoot(Keystores)
-
-    buildType(Build)
-
-    features {
-        feature {
-            id = "PROJECT_EXT_870"
-            type = "Invitation"
-            param("createdByUserId", "27392")
-            param("invitationType", "joinProjectInvitation")
-            param("roleId", "TD_ACTIVE_PROJECT_ADMIN")
-            param("secure:token", "credentialsJSON:c91d1de7-74d3-442b-b282-9b0d2d6cdef0")
-            param("name", "Join project")
-            param("welcomeText", "Hvostov Maksim invites you to join the TestDrive / Habrachan project")
-            param("disabled", "false")
-            param("multi", "true")
-        }
-    }
+//    vcsRoot(Keystores)
+    vcsRoot(GithubVcsRoot)
+//
+    buildType(build.Build)
 }
 
 object Build : BuildType({
@@ -179,14 +166,5 @@ object Build : BuildType({
             requiredSpace = "20gb"
             failBuild = false
         }
-    }
-})
-
-object Keystores : GitVcsRoot({
-    name = "https://github.com/Makentoshe/Keystores"
-    url = "https://github.com/Makentoshe/Keystores"
-    authMethod = password {
-        userName = "Makentoshe"
-        password = "credentialsJSON:7e96df72-acd5-43a7-a77b-8ccc97804767"
     }
 })
