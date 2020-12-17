@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.version
+import vcs.GithubVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -28,8 +29,8 @@ version = "2020.1"
 project {
 
 //    vcsRoot(Keystores)
-//    vcsRoot(GithubVcsRoot)
-//
+    vcsRoot(GithubVcsRoot)
+
 //    buildType(Build)
 }
 
