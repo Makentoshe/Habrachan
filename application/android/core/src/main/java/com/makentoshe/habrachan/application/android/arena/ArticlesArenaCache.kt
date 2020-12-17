@@ -5,7 +5,7 @@ import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.database.record.ArticleRecord
 import com.makentoshe.habrachan.application.android.database.record.FlowRecord
-import com.makentoshe.habrachan.application.android.database.record.HubRecord2
+import com.makentoshe.habrachan.application.android.database.record.HubRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.entity.NextPage
@@ -30,7 +30,9 @@ class ArticlesArenaCache(
             val start = (key.page - 1) * key.count
             val end = start + key.count - 1
             val articleRecords = cacheDatabase.articlesSearchDao().getInRange(start, end)
-            val articles = articleRecords.sortedBy { it.databaseIndex }.map { it.toArticle() }
+            val articles = articleRecords.sortedBy { it.databaseIndex }.map {
+                it.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao())
+            }
             debug(Log.INFO, "Fetched ${articles.size} articles from $start to $end")
             if (articles.isEmpty()) {
                 Result.failure(ArenaStorageException("ArticlesArenaCache"))
@@ -59,7 +61,7 @@ class ArticlesArenaCache(
 
             article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
             article.hubs.forEach { hub ->
-                cacheDatabase.hubDao().insert(HubRecord2(hub))
+                cacheDatabase.hubDao().insert(HubRecord(hub))
                 hub.flow?.let(::FlowRecord)?.let(cacheDatabase.flowDao()::insert)
             }
         }

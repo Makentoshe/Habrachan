@@ -3,6 +3,9 @@ package com.makentoshe.habrachan.application.android.database.record
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.makentoshe.habrachan.application.android.database.dao.BadgeDao
+import com.makentoshe.habrachan.entity.Counters
+import com.makentoshe.habrachan.entity.Geo
 import com.makentoshe.habrachan.entity.User
 
 @Entity
@@ -10,12 +13,14 @@ data class UserRecord(
     @PrimaryKey
     val id: String,
     val avatar: String,
-    val badges: BadgesRecord,
+    /** List of badges ids joined as string */
+    // TODO mb add type converter
+    val badges: String,
     @Embedded(prefix = "counters_")
-    val counters: CountersRecord,
+    val counters: Counters,
     val fullname: String? = null,
     @Embedded(prefix = "geo_")
-    val geo: GeoRecord?,
+    val geo: Geo?,
     val isCanVote: Boolean,
     val isRc: Boolean,
     val isReadonly: Boolean,
@@ -29,13 +34,18 @@ data class UserRecord(
     val specializm: String? = null,
     val timeRegistered: String
 ) {
+
+    companion object {
+        private const val delimiter = ";"
+    }
+
     constructor(user: User) : this(
         user.id,
         user.avatar,
-        BadgesRecord().apply { addAll(user.badges.map(::BadgeRecord)) },
-        CountersRecord(user.counters),
+        user.badges.joinToString(delimiter) { it.id.toString() },
+        user.counters,
         user.fullname,
-        user.geo?.let(::GeoRecord) ?: GeoRecord(),
+        user.geo,
         user.isCanVote,
         user.isRc,
         user.isReadonly,
@@ -50,12 +60,12 @@ data class UserRecord(
         user.timeRegistered
     )
 
-    fun toUser() = User(
+    fun toUser(badgeDao: BadgeDao) = User(
         avatar,
-        badges.toBadges(),
-        counters.toCounters(),
+        badges.split(delimiter).mapNotNull { badgeDao.getById(it.toInt())?.toBadge() },
+        counters,
         fullname,
-        geo?.toGeo(),
+        geo,
         id,
         isCanVote,
         isRc,

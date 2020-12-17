@@ -1,10 +1,12 @@
 package com.makentoshe.habrachan.application.android.database.record
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.makentoshe.habrachan.entity.Badge
 
-@Entity
+@Entity()
 class BadgeRecord(
+    @PrimaryKey
     val id: Int,
     val alias: String,
     val description: String,
@@ -13,7 +15,12 @@ class BadgeRecord(
     val title: String
 ) {
     constructor(badge: Badge) : this(
-        badge.id, badge.alias, badge.description, badge.isDisabled, badge.isRemovable, badge.title
+        badge.id,
+        badge.alias,
+        badge.description,
+        badge.isDisabled,
+        badge.isRemovable,
+        badge.title
     )
 
     fun toBadge() = Badge(alias, description, id, isDisabled, isRemovable, title)

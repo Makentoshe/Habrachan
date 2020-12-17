@@ -3,7 +3,11 @@ package com.makentoshe.habrachan.application.android.database.record
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.makentoshe.habrachan.application.android.database.dao.BadgeDao
+import com.makentoshe.habrachan.application.android.database.dao.FlowDao
+import com.makentoshe.habrachan.application.android.database.dao.HubDao
 import com.makentoshe.habrachan.entity.Article
+import com.makentoshe.habrachan.entity.Metadata
 
 @Entity
 data class ArticleRecord(
@@ -16,10 +20,12 @@ data class ArticleRecord(
     val commentsNew: Int,
     val editorVersion: Int? = null,
     val favoritesCount: Int,
-    val flowRecords: List<FlowRecord> = listOf(),
+    // TODO add Flows converter
+    val flows: String,
     val fullUrl: String,
     val hasPolls: Boolean,
-    val hubRecords: List<HubRecord> = listOf(),
+    // TODO add Hubs converter
+    val hubs: String,
     val isCanVote: Boolean,
     val isCommentsHide: Int,
     val isCorporative: Int,
@@ -30,7 +36,7 @@ data class ArticleRecord(
     val isTutorial: Boolean,
     val lang: String,
     @Embedded(prefix = "metadata_")
-    val metadataRecord: MetadataRecord? = null,
+    val metadata: Metadata? = null,
     val path: String,
     val postType: Int,
     val postTypeStr: String,
@@ -50,6 +56,11 @@ data class ArticleRecord(
     val votesCount: Int,
     val isCanComment: Boolean? = null
 ) {
+
+    companion object {
+        private const val delimiter = ";"
+    }
+
     constructor(databaseIndex: Int, article: Article) : this(
         databaseIndex,
         article.id,
@@ -58,10 +69,10 @@ data class ArticleRecord(
         article.commentsNew,
         article.editorVersion,
         article.favoritesCount,
-        article.flows.map(::FlowRecord),
+        article.flows.joinToString(delimiter) { it.id.toString() },
         article.fullUrl,
         article.hasPolls,
-        article.hubs.map(::HubRecord),
+        article.hubs.joinToString(delimiter) { it.id.toString() },
         article.isCanVote,
         article.isCommentsHide,
         article.isCorporative,
@@ -71,7 +82,7 @@ data class ArticleRecord(
         article.isRecoveryMode,
         article.isTutorial,
         article.lang,
-        article.metadata?.let(::MetadataRecord) ?: MetadataRecord(),
+        article.metadata,
         article.path,
         article.postType,
         article.postTypeStr,
@@ -92,17 +103,17 @@ data class ArticleRecord(
         article.isCanComment
     )
 
-    fun toArticle() = Article(
+    fun toArticle(badgeDao: BadgeDao, hubDao: HubDao, flowDao: FlowDao) = Article(
         id,
-        authorRecord.toUser(),
+        authorRecord.toUser(badgeDao),
         commentsCount,
         commentsNew,
         editorVersion,
         favoritesCount,
-        flowRecords.map { it.toFlow() },
+        flows.split(delimiter).mapNotNull { flowDao.getById(it.toIntOrNull() ?: return@mapNotNull null)?.toFlow() },
         fullUrl,
         hasPolls,
-        hubRecords.map { it.toHub() },
+        hubs.split(delimiter).mapNotNull { hubDao.getById(it.toIntOrNull() ?: return@mapNotNull null)?.toHub(flowDao) },
         isCanVote,
         isCommentsHide,
         isCorporative,
@@ -112,7 +123,7 @@ data class ArticleRecord(
         isRecoveryMode,
         isTutorial,
         lang,
-        metadataRecord?.toMetadata(),
+        metadata,
         path,
         postType,
         postTypeStr,

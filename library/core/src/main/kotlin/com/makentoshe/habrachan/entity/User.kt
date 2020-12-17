@@ -6,11 +6,7 @@ data class User(
     @SerializedName("avatar")
     val avatar: String,
     @SerializedName("badges")
-    val badges: Badges,
-//    @SerializedName("common_tags")
-//    val commonTags: List<Any>,
-//    @SerializedName("contacts")
-//    val contacts: List<Any>,
+    val badges: List<Badge>,
     @SerializedName("counters")
     val counters: Counters,
     @SerializedName("fullname")
@@ -46,12 +42,9 @@ data class User(
 //    @SerializedName("vote")
 //    val vote: Int = 0
 //    @SerializedName("payment_methods")
-//    val paymentMethods: List<PaymentMethod>?
-) {
-
-//    fun toJson() = Gson().toJson(this)!!
-//
-//    companion object {
-//        fun fromJson(string: String) = Gson().fromJson(string, User::class.java)!!
-//    }
-}
+//    val paymentMethods: List<PaymentMethod>?,
+//    @SerializedName("common_tags")
+//    val commonTags: List<Any>,
+//    @SerializedName("contacts")
+//    val contacts: List<Any>,
+)
