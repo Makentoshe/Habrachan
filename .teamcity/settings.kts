@@ -1,3 +1,4 @@
+import build.ApplicationCore
 import build.LibraryBuild
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.version
@@ -33,6 +34,7 @@ project {
     vcsRoot(GithubVcsRoot)
 
     buildType(LibraryBuild)
+    buildType(ApplicationCore)
 }
 
 //object Build : BuildType({
