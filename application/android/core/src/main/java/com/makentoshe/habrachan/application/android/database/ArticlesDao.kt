@@ -6,22 +6,22 @@ import com.makentoshe.habrachan.application.android.database.record.ArticleRecor
 @Dao
 interface ArticlesDao {
 
-    @Query("SELECT * FROM articlerecord")
-    fun getAll(): List<ArticleRecord?>?
+    @Query("SELECT * FROM ArticleRecord")
+    fun getAll(): List<ArticleRecord>
 
-    @Query("SELECT * FROM articlerecord WHERE databaseIndex BETWEEN :start AND :end")
-    fun getInRange(start: Int, end: Int): List<ArticleRecord>
+    @Query("SELECT * FROM ArticleRecord ORDER BY timePublishedRaw DESC LIMIT :count OFFSET :offset")
+    fun getTimePublishedDescSorted(offset: Int, count: Int): List<ArticleRecord>
 
-    @Query("SELECT * FROM articlerecord WHERE id = :id")
+    @Query("SELECT * FROM ArticleRecord WHERE id = :id")
     fun getById(id: Int): ArticleRecord?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(employee: ArticleRecord?)
+    fun insert(employee: ArticleRecord)
 
     @Delete
-    fun delete(employee: ArticleRecord?)
+    fun delete(employee: ArticleRecord)
 
-    @Query("DELETE FROM articlerecord")
+    @Query("DELETE FROM ArticleRecord")
     fun clear()
 }
 

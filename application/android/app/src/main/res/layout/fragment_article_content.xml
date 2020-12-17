@@ -31,7 +31,8 @@
             android:id="@+id/fragment_article_bottom"
             android:layout_width="match_parent"
             android:layout_height="@dimen/heightL"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="wrap_content"

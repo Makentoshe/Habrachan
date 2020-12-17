@@ -17,30 +17,27 @@ class ArticlesArenaCache(
 ) : ArenaCache<GetArticlesRequest, ArticlesResponse> {
 
     companion object {
-        fun debug(priority: Int, string: String) {
+        fun capture(priority: Int, string: String) {
             if (BuildConfig.DEBUG) Log.println(priority, "ArticlesArenaCache", string)
         }
     }
 
-    // TODO add sorting by time_published and other
-    // https://medium.com/androiddevelopers/room-time-2b4cf9672b98
     override fun fetch(key: GetArticlesRequest): Result<ArticlesResponse> {
-        debug(Log.DEBUG, "Fetch search articles from cache by key: $key")
+        capture(Log.INFO, "Fetch search articles from cache by key: $key")
         return try {
-            val start = (key.page - 1) * key.count
-            val end = start + key.count - 1
-            val articleRecords = cacheDatabase.articlesSearchDao().getInRange(start, end)
-            val articles = articleRecords.sortedBy { it.databaseIndex }.map {
-                it.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao())
+            val offset = (key.page - 1) * key.count
+            val articleRecords = cacheDatabase.articlesSearchDao().getTimePublishedDescSorted(offset, key.count)
+            val articles = articleRecords.map { record ->
+                record.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao())
             }
-            debug(Log.INFO, "Fetched ${articles.size} articles from $start to $end")
+            capture(Log.INFO, "Fetched ${articles.size} articles with offset: $offset")
             if (articles.isEmpty()) {
                 Result.failure(ArenaStorageException("ArticlesArenaCache"))
             } else {
                 Result.success(ArticlesResponse(articles, NextPage(key.page + 1, ""), -1, "", "", null))
             }
         } catch (exception: Exception) {
-            debug(Log.INFO, "Could not fetch articles: $exception")
+            capture(Log.INFO, "Could not fetch articles: $exception")
             Result.failure(ArenaStorageException("ArticlesArenaCache").initCause(exception))
         }
     }
@@ -49,14 +46,14 @@ class ArticlesArenaCache(
     override fun carry(key: GetArticlesRequest, value: ArticlesResponse) {
         // clear cache on new search (each search starts from page 1)
         if (key.page == 1) {
-            debug(Log.INFO, "Clear search articles cache")
+            capture(Log.INFO, "Clear search articles cache")
             cacheDatabase.articlesSearchDao().clear()
         }
 
-        debug(Log.DEBUG, "Carry search articles to cache with key: $key")
+        capture(Log.INFO, "Carry search articles to cache with key: $key")
         value.data.forEachIndexed { index, article ->
             val databaseIndex = (key.page - 1) * key.count + index
-            debug(Log.INFO, "Carry $databaseIndex article to cache")
+            capture(Log.INFO, "Carry $databaseIndex article to cache")
             cacheDatabase.articlesSearchDao().insert(ArticleRecord(databaseIndex, article))
 
             article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)

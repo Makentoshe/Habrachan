@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.makentoshe.habrachan.application.android.database.dao.BadgeDao
+import com.makentoshe.habrachan.entity.Badge
 import com.makentoshe.habrachan.entity.Counters
 import com.makentoshe.habrachan.entity.Geo
 import com.makentoshe.habrachan.entity.User
@@ -60,9 +61,18 @@ data class UserRecord(
         user.timeRegistered
     )
 
+    private fun badges(badgeDao: BadgeDao): List<Badge> {
+        if (badges.isEmpty()) return emptyList()
+
+        return badges.split(delimiter).mapNotNull {
+            val id = it.toIntOrNull() ?: return@mapNotNull null
+            badgeDao.getById(id)?.toBadge()
+        }
+    }
+
     fun toUser(badgeDao: BadgeDao) = User(
         avatar,
-        badges.split(delimiter).mapNotNull { badgeDao.getById(it.toInt())?.toBadge() },
+        badges(badgeDao),
         counters,
         fullname,
         geo,

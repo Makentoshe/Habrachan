@@ -11,7 +11,6 @@ import com.makentoshe.habrachan.entity.Metadata
 
 @Entity
 data class ArticleRecord(
-    val databaseIndex: Int,
     @PrimaryKey
     val id: Int,
     @Embedded(prefix = "author_")
@@ -49,7 +48,7 @@ data class ArticleRecord(
     val tagsString: String,
     val textCut: String? = null,
     val timeInteresting: String? = null,
-    val timePublished: String,
+    val timePublishedRaw: String,
     val title: String,
     val url: String,
     val vote: Double? = null,
@@ -62,7 +61,6 @@ data class ArticleRecord(
     }
 
     constructor(databaseIndex: Int, article: Article) : this(
-        databaseIndex,
         article.id,
         UserRecord(article.author),
         article.commentsCount,
@@ -136,7 +134,7 @@ data class ArticleRecord(
         tagsString,
         textCut,
         timeInteresting,
-        timePublished,
+        timePublishedRaw,
         title,
         url,
         vote,
