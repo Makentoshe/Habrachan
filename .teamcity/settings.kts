@@ -1,3 +1,4 @@
+import build.Android
 import build.ApplicationCore
 import build.LibraryBuild
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
@@ -35,6 +36,7 @@ project {
 
     buildType(LibraryBuild)
     buildType(ApplicationCore)
+    buildType(Android)
 }
 
 //object Build : BuildType({
