@@ -5,7 +5,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 import vcs.GithubVcsRoot
 
-object Build : PipelineBuildVcs("TestBuild", {
+object StupidBuild : PipelineBuildVcs("TestBuild", {
     steps {
         gradle {
             name = "Project build"
