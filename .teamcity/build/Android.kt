@@ -12,6 +12,7 @@ object Android : PipelineBuildVcs("Android", {
             executionMode = BuildStep.ExecutionMode.ALWAYS
             scriptContent = """
                 echo ${'$'}JAVA_HOME
+                echo %JAVA_HOME%
             """.trimIndent()
         }
         script {

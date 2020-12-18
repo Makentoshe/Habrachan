@@ -24,6 +24,10 @@ abstract class PipelineBuild(name: String, init: BuildType.() -> Unit) : BuildTy
         root(GithubVcsRoot)
     }
 
+    requirements {
+        matches("teamcity.agent.jvm.os.family", "Linux")
+    }
+
     init()
 })
 
