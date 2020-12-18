@@ -2,27 +2,27 @@ package build
 
 import Parameters
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildStep
+import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import reference
 import updateAndroidSDK
 
-object Android : PipelineBuildVcs("Android", {
+abstract class AndroidVcsBaseBuild(name: String, init: BuildType.() -> Unit): VcsBaseBuild(name, {
 
+    // These params required for compatibility with 1.8 java
     params {
         add(Parameters.Configuration.JavaHome8)
         add(Parameters.Environment.JavaHome8)
     }
 
+    init()
+})
+
+object AndroidDebug : AndroidVcsBaseBuild("Android debug", {
+//    description = "Prepares "
+
     steps {
-        script {
-            name = "Test test"
-            executionMode = BuildStep.ExecutionMode.ALWAYS
-            scriptContent = """
-                echo ${'$'}JAVA_HOME
-                echo %JAVA_HOME%
-            """.trimIndent()
-        }
         script {
             name = "Clean Android home directory"
             executionMode = BuildStep.ExecutionMode.ALWAYS
@@ -49,12 +49,24 @@ object Android : PipelineBuildVcs("Android", {
         updateAndroidSDK("29", "29.0.3")
         gradle {
             name = "Android application build"
-            tasks = "clean :application:android:build --info --debug"
-//            jdkHome = "%env.JDK_1_8_x64%"
-//            jvmArgs = "-ea -Djavax.net.ssl.trustStoreType=JKS -noverify"
-//            coverageEngine = idea {
-//                includeClasses = "com.makentoshe.habrachan.*"
-//            }
+            tasks = "clean :application:android:build --info"
         }
     }
+})
+
+object AndroidRelease: AndroidVcsBaseBuild("Android release", {
+    description = "Assemble release apk, sign in and release it to the google play market"
+
+    // Declares dependencies between builds
+    dependencies {
+        // Build should start after "Android"
+        snapshot(AndroidDebug) {}
+    }
+
+    steps {
+        script {
+            name = "Test test"
+            executionMode = BuildStep.ExecutionMode.ALWAYS
+            scriptContent = "echo sas asa anus psa"
+        }    }
 })

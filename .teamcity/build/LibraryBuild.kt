@@ -2,11 +2,11 @@ package build
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 
-object ApplicationCore: VcsBaseBuild("Application core", {
+object LibraryBuild : VcsBaseBuild("Build library", {
     steps {
         gradle {
-            name = "Build application core module"
-            tasks = "application:core:build --info"
+            name = "Build full library"
+            tasks = "library:build --info"
             buildFile = "build.gradle"
         }
     }

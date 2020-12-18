@@ -1,9 +1,9 @@
-import build.Android
+import build.AndroidDebug
+import build.AndroidRelease
 import build.ApplicationCore
 import build.LibraryBuild
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.version
-import vcs.GithubVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -36,7 +36,8 @@ project {
 
     buildType(LibraryBuild)
     buildType(ApplicationCore)
-    buildType(Android)
+    buildType(AndroidDebug)
+    buildType(AndroidRelease)
 
     params {
         add(Parameters.Configuration.AndroidSdkUrl)

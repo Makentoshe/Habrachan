@@ -1,44 +1,32 @@
 package build
 
+import GithubVcsRoot
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
-import vcs.GithubVcsRoot
 
-object LibraryBuild : PipelineBuildVcs("Build library", {
-    steps {
-        gradle {
-            name = "Build full library"
-            tasks = "library:build --info"
-            buildFile = "build.gradle"
-        }
-    }
-})
+abstract class VcsBaseBuild(name: String, init: BuildType.() -> Unit): BaseBuild(name, {
 
-abstract class PipelineBuild(name: String, init: BuildType.() -> Unit) : BuildType({
-    this.name = name
+    // Triggers are used to add builds to the queue either when an event occurs (like a VCS check-in)
+    // or periodically with some configurable interval
+    triggers {
 
-    // A VCS Root is a set of settings defining how TeamCity communicates with a version control system to
-    // monitor changes and get sources of a build
-    vcs {
-        root(GithubVcsRoot)
-    }
-
-    requirements {
-        matches("teamcity.agent.jvm.os.family", "Linux")
+        // VCS Trigger will add a build to the queue when a VCS check-in is detected.
+        this.vcs { }
     }
 
     init()
 })
 
-abstract class PipelineBuildVcs(name: String, init: BuildType.() -> Unit) : PipelineBuild(name, {
+abstract class BaseBuild(name: String, init: BuildType.() -> Unit): BuildType({
+    this.name = name
 
-    // Triggers are used to add builds to the queue either when an event occurs (like a VCS check-in)
-    // or periodically with some configurable interval
-    triggers {
-        this.vcs {
+    // A VCS Root is a set of settings defining how TeamCity communicates with a version control system to
+    // monitor changes and get sources of a build
+    vcs { root(GithubVcsRoot) }
 
-        }
+    // All requirements that build agents should meet to run this build.
+    requirements {
+        matches("teamcity.agent.jvm.os.family", "Linux")
     }
 
     init()
