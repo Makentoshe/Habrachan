@@ -2,8 +2,10 @@ package build
 
 import Parameters
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildStep
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import reference
+import updateAndroidSDK
 
 object Android : PipelineBuildVcs("Android", {
 
@@ -43,15 +45,16 @@ object Android : PipelineBuildVcs("Android", {
                 echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "${Parameters.Environment.AndroidHome.reference}/licenses/android-sdk-license"
             """.trimIndent()
         }
-        script {
-            val androidVersion = "29"
-            val androidBuildToolsVersion = "29.0.3"
-            val sdkmanager = "${Parameters.Environment.AndroidHome.reference}/tools/bin/sdkmanager"
-            name = "Update Android SDK 29"
-            scriptContent = """
-                $sdkmanager --update
-                $sdkmanager "build-tools;$androidBuildToolsVersion" "platforms;android-$androidVersion" "platform-tools"
-            """.trimIndent()
+        updateAndroidSDK("28", "28.0.3")
+        updateAndroidSDK("29", "29.0.3")
+        gradle {
+            name = "Android application build"
+            tasks = "clean :application:android:build --info --debug"
+//            jdkHome = "%env.JDK_1_8_x64%"
+//            jvmArgs = "-ea -Djavax.net.ssl.trustStoreType=JKS -noverify"
+//            coverageEngine = idea {
+//                includeClasses = "com.makentoshe.habrachan.*"
+//            }
         }
     }
 })
