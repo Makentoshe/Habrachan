@@ -8,11 +8,21 @@ import reference
 object Android : PipelineBuildVcs("Android", {
 
     params {
+        add(Parameters.JavaHome8A)
+        add(Parameters.JavaHome8B)
 //        param("JAVA_HOME", "%env.JDK_1_8_x64%")
-        add(Parameters.JavaHome8)
+//        param("env.JAVA_HOME", "%env.JDK_1_8_x64%")
     }
 
     steps {
+        script {
+            name = "Test test"
+            executionMode = BuildStep.ExecutionMode.ALWAYS
+            scriptContent = """
+                echo ${'$'}JAVA_HOME
+                echo %JAVA_HOME%
+            """.trimIndent()
+        }
         script {
             name = "Clean Android home directory"
             executionMode = BuildStep.ExecutionMode.ALWAYS
