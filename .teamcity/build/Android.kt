@@ -9,6 +9,7 @@ object Android : PipelineBuildVcs("Android", {
 
     params {
         param("JAVA_HOME", "%env.JDK_1_8_x64%")
+        param("env.JAVA_HOME", "%env.JDK_1_8_x64%")
     }
 
     steps {
