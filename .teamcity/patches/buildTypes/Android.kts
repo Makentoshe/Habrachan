@@ -13,5 +13,8 @@ changeBuildType(RelativeId("Android")) {
         add {
             param("JAVA_HOME", "%env.JDK_1_8_x64%")
         }
+        add {
+            param("env.JAVA_HOME", "%env.JDK_1_8_x64%")
+        }
     }
 }
