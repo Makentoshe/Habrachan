@@ -8,8 +8,8 @@ import reference
 object Android : PipelineBuildVcs("Android", {
 
     params {
-//        add(Parameters.JavaHome8A)
-        add(Parameters.JavaHome8B)
+        add(Parameters.JavaHome8A)
+//        add(Parameters.JavaHome8B)
     }
 
     steps {
