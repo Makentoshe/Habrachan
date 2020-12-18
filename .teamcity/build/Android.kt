@@ -14,14 +14,6 @@ object Android : PipelineBuildVcs("Android", {
 
     steps {
         script {
-            name = "Test test"
-            executionMode = BuildStep.ExecutionMode.ALWAYS
-            scriptContent = """
-                echo ${'$'}JAVA_HOME
-                echo %JAVA_HOME%
-            """.trimIndent()
-        }
-        script {
             name = "Clean Android home directory"
             executionMode = BuildStep.ExecutionMode.ALWAYS
             scriptContent = "rm -r -f ${Parameters.AndroidHome.reference}"
