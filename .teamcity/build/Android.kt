@@ -6,6 +6,11 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import reference
 
 object Android : PipelineBuildVcs("Android", {
+
+    params {
+        param("JAVA_HOME", "%env.JDK_1_8_x64%")
+    }
+
     steps {
         script {
             name = "Test test"
