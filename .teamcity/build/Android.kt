@@ -8,6 +8,14 @@ import reference
 object Android : PipelineBuildVcs("Android", {
     steps {
         script {
+            name = "Test test"
+            executionMode = BuildStep.ExecutionMode.ALWAYS
+            scriptContent = """
+                echo ${'$'}JAVA_HOME
+                java -version
+            """.trimIndent()
+        }
+        script {
             name = "Clean Android home directory"
             executionMode = BuildStep.ExecutionMode.ALWAYS
             scriptContent = "rm -r -f ${Parameters.AndroidHome.reference}"
@@ -32,10 +40,11 @@ object Android : PipelineBuildVcs("Android", {
         script {
             val androidVersion = "29"
             val androidBuildToolsVersion = "29.0.3"
+            val sdkmanager = "${Parameters.AndroidHome.reference}/tools/bin/sdkmanager"
             name = "Update Android SDK 29"
             scriptContent = """
-                ${Parameters.AndroidHome.reference}/tools/bin/sdkmanager --update
-                ${Parameters.AndroidHome.reference}/tools/bin/sdkmanager "build-tools;$androidBuildToolsVersion" "platforms;android-$androidVersion" "platform-tools"
+                $sdkmanager --update
+                $sdkmanager "build-tools;$androidBuildToolsVersion" "platforms;android-$androidVersion" "platform-tools"
             """.trimIndent()
         }
     }
