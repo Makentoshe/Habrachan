@@ -12,7 +12,7 @@ object Parameters {
 
     // TODO fix hardcoded value
     // Environment variables will be added to the environment of the processes launched by the build runner
-    val JavaHome8 = Parameter("env.JAVA_HOME", "%JDK_8V_x64%")
+    val JavaHome8 = Parameter("env.JAVA_HOME", "%env.JDK_18_x64%")
 }
 
 /** Returns a parameter name wrapped with teamcity reference indicator */
