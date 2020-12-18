@@ -3,12 +3,13 @@ package build
 import Parameters
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import reference
 import updateAndroidSDK
 
-abstract class AndroidVcsBaseBuild(name: String, init: BuildType.() -> Unit): VcsBaseBuild(name, {
+abstract class AndroidVcsBaseBuild(name: String, init: BuildType.() -> Unit) : VcsBaseBuild(name, {
 
     // These params required for compatibility with 1.8 java
     params {
@@ -19,8 +20,16 @@ abstract class AndroidVcsBaseBuild(name: String, init: BuildType.() -> Unit): Vc
     init()
 })
 
-object AndroidDebug : AndroidVcsBaseBuild("Android debug", {
-//    description = "Prepares "
+object AndroidDebug : AndroidVcsBaseBuild("Android base build", {
+    description = """
+        Any Android build should depends on it. 
+        This build prepares android environment for all available operations
+    """.trimIndent()
+
+    publishArtifacts = PublishMode.SUCCESSFUL
+    artifactRules = """
+        ./application/android/app/build/outputs/apk/debug/* => debug
+    """.trimIndent()
 
     steps {
         script {
@@ -54,7 +63,7 @@ object AndroidDebug : AndroidVcsBaseBuild("Android debug", {
     }
 })
 
-object AndroidRelease: AndroidVcsBaseBuild("Android release", {
+object AndroidRelease : AndroidVcsBaseBuild("Android release", {
     description = "Assemble release apk, sign in and release it to the google play market"
 
     // Declares dependencies between builds
@@ -68,5 +77,6 @@ object AndroidRelease: AndroidVcsBaseBuild("Android release", {
             name = "Test test"
             executionMode = BuildStep.ExecutionMode.ALWAYS
             scriptContent = "echo sas asa anus psa"
-        }    }
+        }
+    }
 })
