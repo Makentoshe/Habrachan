@@ -8,10 +8,8 @@ import reference
 object Android : PipelineBuildVcs("Android", {
 
     params {
-        add(Parameters.JavaHome8A)
+//        add(Parameters.JavaHome8A)
         add(Parameters.JavaHome8B)
-//        param("JAVA_HOME", "%env.JDK_1_8_x64%")
-//        param("env.JAVA_HOME", "%env.JDK_1_8_x64%")
     }
 
     steps {
