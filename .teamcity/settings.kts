@@ -42,6 +42,7 @@ project {
         add(Parameters.AndroidSdkUrl)
         add(Parameters.AndroidHome)
         add(Parameters.AndroidBuildTools29)
+        add(Parameters.JavaHome8)
     }
 }
 

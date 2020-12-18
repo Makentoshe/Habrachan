@@ -9,6 +9,10 @@ object Parameters {
 
     // Configuration parameters are not passed into build, can be used in references only.
     val AndroidBuildTools29 = Parameter("build-tools", "%${AndroidHome.name}%/build-tools/29.0.3/")
+
+    // TODO fix hardcoded value
+    // Environment variables will be added to the environment of the processes launched by the build runner
+    val JavaHome8 = Parameter("env.JAVA_HOME", "java-1.8.0-amazon-corretto")
 }
 
 /** Returns a parameter name wrapped with teamcity reference indicator */
