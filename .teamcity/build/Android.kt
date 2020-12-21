@@ -2,31 +2,23 @@ package build
 
 import Parameters
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildStep
-import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
-import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
-import jetbrains.buildServer.configs.kotlin.v2019_2.ui.remove
 import reference
 import updateAndroidSDK
 
-abstract class AndroidVcsBaseBuild(name: String, init: BuildType.() -> Unit) : VcsBaseBuild(name, {
+object AndroidBuild : VcsBaseBuild("Android build", {
+    description = """
+        Any Android build should depends on it. 
+        This build prepares environment and runs tests
+    """.trimIndent()
 
     // These params required for compatibility with 1.8 java
     params {
         add(Parameters.Configuration.JavaHome8)
         add(Parameters.Environment.JavaHome8)
     }
-
-    init()
-})
-
-object AndroidDebug : AndroidVcsBaseBuild("Android base build", {
-    description = """
-        Any Android build should depends on it. 
-        This build prepares android environment for all available operations
-    """.trimIndent()
 
     publishArtifacts = PublishMode.SUCCESSFUL
     artifactRules = """
@@ -65,22 +57,23 @@ object AndroidDebug : AndroidVcsBaseBuild("Android base build", {
     }
 })
 
-object AndroidRelease : AndroidVcsBaseBuild("Android release", {
-    description = "Assemble release apk, sign in and release it to the google play market"
+
+object AndroidRelease : BaseBuild("Android release", {
+    description = """
+        Assemble release apk, sign in and release it to the google play market.
+        This build should be invoked manually.
+    """.trimIndent()
+
+    // These params required for compatibility with 1.8 java
+    params {
+        add(Parameters.Configuration.JavaHome8)
+        add(Parameters.Environment.JavaHome8)
+    }
 
     // Declares dependencies between builds
     dependencies {
         // Build should start after "Android"
-        snapshot(AndroidDebug) {}
-    }
-
-    // Triggers are used to add builds to the queue either when an event occurs (like a VCS check-in)
-    // or periodically with some configurable interval
-    triggers {
-        remove {
-            // VCS Trigger will add a build to the queue when a VCS check-in is detected.
-            vcs {  }
-        }
+        snapshot(AndroidBuild) {}
     }
 
     steps {

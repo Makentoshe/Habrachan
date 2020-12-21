@@ -1,4 +1,4 @@
-import build.AndroidDebug
+import build.AndroidBuild
 import build.AndroidRelease
 import build.ApplicationCore
 import build.LibraryBuild
@@ -36,7 +36,7 @@ project {
 
     buildType(LibraryBuild)
     buildType(ApplicationCore)
-    buildType(AndroidDebug)
+    buildType(AndroidBuild)
     buildType(AndroidRelease)
 
     params {
