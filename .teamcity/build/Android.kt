@@ -86,13 +86,13 @@ object AndroidRelease : BaseBuild("Android release", {
         val releaseApkOutput = "app/build/outputs/apk/release/"
         val buildToolsReference = Parameters.Configuration.AndroidBuildTools29.reference
 
-        listFilesRecursive(Parameters.Internal.CheckoutDir)
-
         gradle {
             name = "Assemble unsigned release apk"
             tasks = "assembleRelease --info"
             jdkHome = "%env.JDK_18_x64%"
         }
+
+        listFilesRecursive(Parameters.Internal.CheckoutDir)
 
         script {
             name = "Align apk file"

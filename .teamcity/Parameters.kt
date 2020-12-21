@@ -22,7 +22,10 @@ object Parameters {
 
     // Internal params from TeamCity
     object Internal {
+        // Path to repository checkout
         const val CheckoutDir = "%teamcity.build.checkoutDir%"
+
+
     }
 }
 
