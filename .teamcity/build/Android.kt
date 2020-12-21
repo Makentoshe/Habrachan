@@ -22,10 +22,12 @@ object AndroidBuild : VcsBaseBuild("Android build", {
 
     publishArtifacts = PublishMode.SUCCESSFUL
     artifactRules = """
-        ./application/android/app/build/outputs/apk/debug/ => debug
+        application/android/app/build/outputs/apk/debug/ => debug
     """.trimIndent()
 
     steps {
+        listFilesRecursive(Parameters.Internal.CheckoutDir)
+
         installAndroidSdk()
         gradle {
             name = "Android application build"
@@ -61,6 +63,8 @@ object AndroidRelease : BaseBuild("Android release", {
     steps {
         val releaseApkOutput = "app/build/outputs/apk/release/"
         val buildToolsReference = Parameters.Configuration.AndroidBuildTools29.reference
+
+        installAndroidSdk()
 
         gradle {
             name = "Assemble unsigned release apk"
