@@ -6,6 +6,8 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
+import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2019_2.ui.remove
 import reference
 import updateAndroidSDK
 
@@ -70,6 +72,15 @@ object AndroidRelease : AndroidVcsBaseBuild("Android release", {
     dependencies {
         // Build should start after "Android"
         snapshot(AndroidDebug) {}
+    }
+
+    // Triggers are used to add builds to the queue either when an event occurs (like a VCS check-in)
+    // or periodically with some configurable interval
+    triggers {
+        remove {
+            // VCS Trigger will add a build to the queue when a VCS check-in is detected.
+            vcs {  }
+        }
     }
 
     steps {
