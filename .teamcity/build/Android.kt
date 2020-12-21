@@ -36,7 +36,7 @@ object AndroidBuild : VcsBaseBuild("Android build", {
 
 
 object AndroidRelease : BaseBuild("Android release", {
-    private val releaseApkOutput = "application/android/app/build/outputs/apk/release/"
+    val releaseApkOutput = "application/android/app/build/outputs/apk/release/"
 
     description = """
         Assemble release apk, sign in and release it to the google play market.
