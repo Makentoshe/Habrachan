@@ -2,15 +2,19 @@ import Parameters.Environment.AndroidHome
 import jetbrains.buildServer.configs.kotlin.v2019_2.Parameter
 
 object Parameters {
-    // Environment variables will be added to the environment of the processes launched by the build runner
+    /**
+     * Environment variables will be added to the environment of the processes
+     * launched by the build runner
+     */
     object Environment {
 
-        val AndroidHome = Parameter("env.ANDROID_HOME", "%teamcity.build.checkoutDir%/.android-sdk")
+        /** Home directory for android sdk, used in build */
+        val AndroidHome = Parameter("env.ANDROID_HOME", "${Internal.CheckoutDir}.android-sdk")
 
         val JavaHome8 = Parameter("env.JAVA_HOME", "%env.JDK_1_8_x64%")
     }
 
-    // Configuration parameters are not passed into build, can be used in references only.
+    /** Configuration parameters are not passed into build, can be used in references only. */
     object Configuration {
 
         val AndroidSdkUrl = Parameter("ANDROID_SDK_URL", "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip")
@@ -20,11 +24,11 @@ object Parameters {
         val JavaHome8 = Parameter("JAVA_HOME", "%env.JDK_1_8_x64%")
     }
 
-    // Internal params from TeamCity
+    /** Internal params from TeamCity */
     object Internal {
-        // Path to repository checkout
-        const val CheckoutDir = "%teamcity.build.checkoutDir%"
 
+        /** Path to repository checkout */
+        const val CheckoutDir = "%teamcity.build.checkoutDir%"
 
     }
 }
