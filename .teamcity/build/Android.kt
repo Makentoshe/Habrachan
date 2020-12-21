@@ -22,7 +22,7 @@ object AndroidBuild : VcsBaseBuild("Android build", {
 
     publishArtifacts = PublishMode.SUCCESSFUL
     artifactRules = """
-        ./application/android/app/build/outputs/apk/debug/* => debug
+        ./application/android/app/build/outputs/apk/debug/ => debug
     """.trimIndent()
 
     steps {
@@ -64,6 +64,11 @@ object AndroidRelease : BaseBuild("Android release", {
         This build should be invoked manually.
     """.trimIndent()
 
+    publishArtifacts = PublishMode.SUCCESSFUL
+    artifactRules = """
+        ./application/android/app/build/outputs/apk/release/* => release
+    """.trimIndent()
+
     // These params required for compatibility with 1.8 java
     params {
         add(Parameters.Configuration.JavaHome8)
@@ -77,25 +82,32 @@ object AndroidRelease : BaseBuild("Android release", {
     }
 
     steps {
+        val releaseApkOutput = "app/build/outputs/apk/release/"
+        val buildToolsReference = Parameters.Configuration.AndroidBuildTools29.reference
+
         gradle {
             name = "Assemble unsigned release apk"
             tasks = "assembleRelease --info"
             jdkHome = "%env.JDK_18_x64%"
         }
         script {
-            name = "Sign release apk"
+            name = "Align apk file"
             scriptContent = """
-                # Aligning apk file
-                %build-tools%/zipalign -v -p 4 %release-apk-output%/app-release-unsigned.apk %release-apk-output%/app-release-unsigned-aligned.apk
-                rm %release-apk-output%/app-release-unsigned.apk
-
-                # Signing apk file
-                %build-tools%/apksigner sign --ks  keystore/habrachan/habrachan_keystore.jks --ks-pass pass:%keystore-password% --key-pass pass:%keystore-password% --out %release-apk-output%/app-release-signed.apk %release-apk-output%/app-release-unsigned-aligned.apk
-                rm %release-apk-output%/app-release-unsigned-aligned.apk
-
-                # Verify sign is ok
-                %build-tools%/apksigner verify %release-apk-output%/app-release-signed.apk
+                $buildToolsReference/zipalign -v -p 4 $releaseApkOutput/app-release-unsigned.apk $releaseApkOutput/app-release-unsigned-aligned.apk
+                rm $releaseApkOutput/app-release-unsigned.apk
             """.trimIndent()
         }
+//        script {
+//            name = "Sign release apk"
+//            scriptContent = """
+//
+//                # Signing apk file
+//                %build-tools%/apksigner sign --ks  keystore/habrachan/habrachan_keystore.jks --ks-pass pass:%keystore-password% --key-pass pass:%keystore-password% --out %release-apk-output%/app-release-signed.apk %release-apk-output%/app-release-unsigned-aligned.apk
+//                rm %release-apk-output%/app-release-unsigned-aligned.apk
+//
+//                # Verify sign is ok
+//                %build-tools%/apksigner verify %release-apk-output%/app-release-signed.apk
+//            """.trimIndent()
+//        }
     }
 })

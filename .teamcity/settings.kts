@@ -54,7 +54,6 @@ project {
 //    publishArtifacts = PublishMode.SUCCESSFUL
 //
 //    params {
-//        param("release-apk-output", "app/build/outputs/apk/release/")
 //        param("keystore-password", "1243568790")
 //    }
 //
