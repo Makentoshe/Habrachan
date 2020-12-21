@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesScreen
-import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
-import com.makentoshe.habrachan.navigation.main.menu.MenuScreen
+//import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
+//import com.makentoshe.habrachan.navigation.main.menu.MenuScreen
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class MainFlowNavigation(private val fragmentManager: FragmentManager) {
@@ -19,13 +19,13 @@ class MainFlowNavigation(private val fragmentManager: FragmentManager) {
     }
 
     fun navigateToAccountScreen() {
-        val newScreen = LoginFlowScreen()
-        navigateToScreen(newScreen)
+//        val newScreen = LoginFlowScreen()
+//        navigateToScreen(newScreen)
     }
 
     fun navigateToMenuScreen() {
-        val newScreen = MenuScreen()
-        navigateToScreen(newScreen)
+//        val newScreen = MenuScreen()
+//        navigateToScreen(newScreen)
     }
 
     private fun navigateToScreen(newScreen: SupportAppScreen) { // if screen already displaying
