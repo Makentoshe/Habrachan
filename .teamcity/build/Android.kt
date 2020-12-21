@@ -31,22 +31,20 @@ object AndroidBuild : VcsBaseBuild("Android build", {
             name = "Android application build"
             tasks = "clean :application:android:app:build"
         }
-
-        listFilesRecursive(Parameters.Internal.CheckoutDir)
     }
 })
 
 
 object AndroidRelease : BaseBuild("Android release", {
+    private val releaseApkOutput = "application/android/app/build/outputs/apk/release/"
+
     description = """
         Assemble release apk, sign in and release it to the google play market.
         This build should be invoked manually.
     """.trimIndent()
 
     publishArtifacts = PublishMode.SUCCESSFUL
-    artifactRules = """
-        ./application/android/app/build/outputs/apk/release/* => release
-    """.trimIndent()
+    artifactRules = "$releaseApkOutput => release"
 
     // These params required for compatibility with 1.8 java
     params {
@@ -61,19 +59,14 @@ object AndroidRelease : BaseBuild("Android release", {
     }
 
     steps {
-        val releaseApkOutput = "app/build/outputs/apk/release/"
         val buildToolsReference = Parameters.Configuration.AndroidBuildTools29.reference
-
         installAndroidSdk()
-
         gradle {
             name = "Assemble unsigned release apk"
-            tasks = "clean assembleRelease"
+            tasks = "clean application:android:app:assembleRelease"
             jdkHome = "%env.JDK_18_x64%"
         }
-
         listFilesRecursive(Parameters.Internal.CheckoutDir)
-
         script {
             name = "Align apk file"
             scriptContent = """
