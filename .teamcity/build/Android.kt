@@ -26,13 +26,13 @@ object AndroidBuild : VcsBaseBuild("Android build", {
     """.trimIndent()
 
     steps {
-        listFilesRecursive(Parameters.Internal.CheckoutDir)
-
         installAndroidSdk()
         gradle {
             name = "Android application build"
-            tasks = "clean :application:android:build --info"
+            tasks = "clean :application:android:build"
         }
+
+        listFilesRecursive(Parameters.Internal.CheckoutDir)
     }
 })
 
@@ -68,7 +68,7 @@ object AndroidRelease : BaseBuild("Android release", {
 
         gradle {
             name = "Assemble unsigned release apk"
-            tasks = "assembleRelease --info"
+            tasks = "clean assembleRelease"
             jdkHome = "%env.JDK_18_x64%"
         }
 
