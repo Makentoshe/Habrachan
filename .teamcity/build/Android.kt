@@ -5,6 +5,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.BuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
+import listFilesRecursive
 import reference
 import updateAndroidSDK
 
@@ -85,11 +86,14 @@ object AndroidRelease : BaseBuild("Android release", {
         val releaseApkOutput = "app/build/outputs/apk/release/"
         val buildToolsReference = Parameters.Configuration.AndroidBuildTools29.reference
 
+        listFilesRecursive(Parameters.Internal.CheckoutDir)
+
         gradle {
             name = "Assemble unsigned release apk"
             tasks = "assembleRelease --info"
             jdkHome = "%env.JDK_18_x64%"
         }
+
         script {
             name = "Align apk file"
             scriptContent = """

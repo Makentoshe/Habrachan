@@ -15,3 +15,12 @@ fun BuildSteps.updateAndroidSDK(
 
     init()
 }
+
+fun BuildSteps.listFilesRecursive(path: String, init: ScriptBuildStep.() -> Unit = {}) = script {
+    name = "List files in Path($path)"
+    scriptContent = """
+                ls -R $path
+    """.trimIndent()
+
+    init()
+}
