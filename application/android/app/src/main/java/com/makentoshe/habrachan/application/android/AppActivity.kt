@@ -1,8 +1,9 @@
-package com.makentoshe.habrachan
+package com.makentoshe.habrachan.application.android
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.navigation.StackSupportAppNavigator
 import com.makentoshe.habrachan.application.android.screen.main.navigation.MainFlowScreen
 import ru.terrakok.cicerone.NavigatorHolder
@@ -13,7 +14,9 @@ import toothpick.ktp.delegate.inject
 
 class AppActivity : AppCompatActivity() {
 
-    private val navigator = StackSupportAppNavigator(this, supportFragmentManager, R.id.fragment_main_container)
+    private val navigator = StackSupportAppNavigator(this, supportFragmentManager,
+        R.id.fragment_main_container
+    )
 
     private val navigatorHolder by inject<NavigatorHolder>()
     private val router by inject<Router>()

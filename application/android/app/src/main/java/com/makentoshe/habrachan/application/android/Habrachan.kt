@@ -1,9 +1,9 @@
-package com.makentoshe.habrachan
+package com.makentoshe.habrachan.application.android
 
 import android.app.Application
+import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.di.ApplicationModule
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.di.InjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.application.android.di.InjectionActivityLifecycleCallback
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Cicerone
@@ -23,15 +23,13 @@ class Habrachan : Application() {
         scopes.installModules(ApplicationModule(applicationContext, Cicerone.create(Router())))
         scopes.inject(this)
 
-        val injectActivityLifecycleCallback = InjectionActivityLifecycleCallback(
-            InjectingFragmentLifecycleCallback()
-        )
+        val injectActivityLifecycleCallback = InjectionActivityLifecycleCallback()
         registerActivityLifecycleCallbacks(injectActivityLifecycleCallback)
 
-        Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
-            println(paramThrowable.printStackTrace())
-            throw paramThrowable
-        }
+//        Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
+//            println(paramThrowable.printStackTrace())
+//            throw paramThrowable
+//        }
     }
 
     // Using composite disposable is just formality to avoid lint warnings
