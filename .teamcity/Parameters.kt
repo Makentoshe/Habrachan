@@ -7,7 +7,7 @@ object Parameters {
 
         val AndroidHome = Parameter("env.ANDROID_HOME", "%teamcity.build.checkoutDir%/.android-sdk")
 
-        val JavaHome8 = Parameter("env.JAVA_HOME", "%env.JDK_1_8_x64%")
+        val JavaHome8 = Parameter("env.JAVA_HOME", "%env.JDK_18_x64%")
     }
 
     // Configuration parameters are not passed into build, can be used in references only.
@@ -17,7 +17,7 @@ object Parameters {
 
         val AndroidBuildTools29 = Parameter("build-tools", "%${AndroidHome.name}%/build-tools/29.0.3/")
 
-        val JavaHome8 = Parameter("JAVA_HOME", "%env.JDK_1_8_x64%")
+        val JavaHome8 = Parameter("JAVA_HOME", "%env.JDK_18_x64%")
     }
 }
 
