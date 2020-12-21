@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
@@ -140,7 +141,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     }
 
     private fun onAvatarReceivedFailure(throwable: Throwable?) {
-        val tintColor = ColorStateList.valueOf(resources.getColor(R.color.title, requireContext().theme))
+        val tintColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.title))
         fragment_article_avatar_image.imageTintList = tintColor
         fragment_article_avatar_image.imageTintMode = PorterDuff.Mode.SRC_ATOP
         fragment_article_avatar_image.setImageResource(R.drawable.ic_account_stub)
