@@ -77,10 +77,25 @@ object AndroidRelease : BaseBuild("Android release", {
     }
 
     steps {
+        gradle {
+            name = "Assemble unsigned release apk"
+            tasks = "assembleRelease --info"
+            jdkHome = "%env.JDK_18_x64%"
+        }
         script {
-            name = "Test test"
-            executionMode = BuildStep.ExecutionMode.ALWAYS
-            scriptContent = "echo sas asa anus psa"
+            name = "Sign release apk"
+            scriptContent = """
+                # Aligning apk file
+                %build-tools%/zipalign -v -p 4 %release-apk-output%/app-release-unsigned.apk %release-apk-output%/app-release-unsigned-aligned.apk
+                rm %release-apk-output%/app-release-unsigned.apk
+
+                # Signing apk file
+                %build-tools%/apksigner sign --ks  keystore/habrachan/habrachan_keystore.jks --ks-pass pass:%keystore-password% --key-pass pass:%keystore-password% --out %release-apk-output%/app-release-signed.apk %release-apk-output%/app-release-unsigned-aligned.apk
+                rm %release-apk-output%/app-release-unsigned-aligned.apk
+
+                # Verify sign is ok
+                %build-tools%/apksigner verify %release-apk-output%/app-release-signed.apk
+            """.trimIndent()
         }
     }
 })
