@@ -29,7 +29,7 @@ object AndroidBuild : VcsBaseBuild("Android build", {
         installAndroidSdk()
         gradle {
             name = "Android application build"
-            tasks = "clean :application:android:build"
+            tasks = "clean :application:android:app:build"
         }
 
         listFilesRecursive(Parameters.Internal.CheckoutDir)
