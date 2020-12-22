@@ -39,7 +39,7 @@ object Parameters {
     object Credential {
 
         /** Token for android's keystore */
-        val Keystore = Parameter("Keystore", "credentialsJSON:ecec29f2-58f4-44e8-896c-50e86206ff9a")
+        val Keystore = Parameter("keystore", "credentialsJSON:ecec29f2-58f4-44e8-896c-50e86206ff9a")
 
     }
 }

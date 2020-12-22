@@ -6,7 +6,6 @@ import installAndroidSdk
 import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
-import listFilesRecursive
 import reference
 
 object AndroidBuild : VcsBaseBuild("Android build", {
@@ -91,8 +90,12 @@ object AndroidRelease : BaseBuild("Android release", {
                 $buildToolsReference/apksigner sign --ks  habrachan_keystore.jks --ks-pass pass:$keystoreCredentials --key-pass pass:$keystoreCredentials --out $releaseApkOutput/app-release-signed.apk $releaseApkOutput/app-release-aligned.apk
             """.trimIndent()
         }
+        script {
+            name = "Print keystore"
+            scriptContent = keystoreCredentials
+        }
 
-        listFilesRecursive(Parameters.Internal.CheckoutDir)
+//        listFilesRecursive(Parameters.Internal.CheckoutDir)
 //        script {
 //            name = "Sign release apk"
 //            scriptContent = """
