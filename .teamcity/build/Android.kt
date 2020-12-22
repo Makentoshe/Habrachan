@@ -72,6 +72,11 @@ object AndroidRelease : BaseBuild("Android release", {
         val buildToolsReference = Parameters.Configuration.AndroidBuildTools29.reference
         val keystoreCredentials = Parameters.Credential.Keystore.reference
 
+        script {
+            name = "Print keystore"
+            scriptContent = keystoreCredentials
+        }
+
         installAndroidSdk()
         gradle {
             name = "Assemble unsigned release apk"
@@ -89,10 +94,6 @@ object AndroidRelease : BaseBuild("Android release", {
             scriptContent = """
                 $buildToolsReference/apksigner sign --ks  habrachan_keystore.jks --ks-pass pass:$keystoreCredentials --key-pass pass:$keystoreCredentials --out $releaseApkOutput/app-release-signed.apk $releaseApkOutput/app-release-aligned.apk
             """.trimIndent()
-        }
-        script {
-            name = "Print keystore"
-            scriptContent = keystoreCredentials
         }
 
 //        listFilesRecursive(Parameters.Internal.CheckoutDir)
