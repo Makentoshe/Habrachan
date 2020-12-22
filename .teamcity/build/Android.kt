@@ -1,5 +1,6 @@
 package build
 
+import Metadata
 import Parameters
 import installAndroidSdk
 import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
@@ -52,11 +53,21 @@ object AndroidRelease : BaseBuild("Android release", {
         add(Parameters.Environment.JavaHome8)
     }
 
-    // Declares dependencies between builds
+    // Snapshot dependencies are used to create build chains.
+    // When being a part of build chain the build of this configuration
+    // will start only when all dependencies are built.
+    //
+    // If necessary, the dependencies will be triggered automatically.
+    // Build configurations linked by a snapshot dependency can optionally
+    // use revisions synchronization to ensure the same snapshot of the sources.
     dependencies {
         // Build should start after "Android"
         snapshot(AndroidBuild) {}
     }
+
+    // A VCS Root is a set of settings defining how TeamCity communicates with a version control system to
+    // monitor changes and get sources of a build
+    vcs { root(Metadata) }
 
     steps {
         val buildToolsReference = Parameters.Configuration.AndroidBuildTools29.reference
@@ -66,7 +77,6 @@ object AndroidRelease : BaseBuild("Android release", {
             tasks = "clean application:android:app:assembleRelease"
             jdkHome = "%env.JDK_18_x64%"
         }
-        listFilesRecursive(Parameters.Internal.CheckoutDir)
         script {
             name = "Align apk file"
             scriptContent = """
@@ -74,6 +84,8 @@ object AndroidRelease : BaseBuild("Android release", {
                 rm $releaseApkOutput/app-release-unsigned.apk
             """.trimIndent()
         }
+
+        listFilesRecursive(Parameters.Internal.CheckoutDir)
 //        script {
 //            name = "Sign release apk"
 //            scriptContent = """
