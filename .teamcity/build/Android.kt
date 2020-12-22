@@ -50,6 +50,7 @@ object AndroidRelease : BaseBuild("Android release", {
     params {
         add(Parameters.Configuration.JavaHome8)
         add(Parameters.Environment.JavaHome8)
+        password(Parameters.Credential.Keystore.name, Parameters.Credential.Keystore.value)
     }
 
     // Snapshot dependencies are used to create build chains.
