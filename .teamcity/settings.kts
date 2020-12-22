@@ -33,6 +33,7 @@ project {
 
 //    vcsRoot(Keystores)
     vcsRoot(GithubVcsRoot)
+    vcsRoot(MetadataVcsRoot)
 
     buildType(LibraryBuild)
     buildType(ApplicationCore)

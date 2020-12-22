@@ -14,7 +14,7 @@ object SpaceVcsRoot : GitVcsRoot({
 })
 
 /** Contains sensitive metadata. Keystores for signing android application, for example */
-object Metadata : GitVcsRoot({
+object MetadataVcsRoot : GitVcsRoot({
     name = "Metadata"
     url = "ssh://git@git.jetbrains.space/makentoshe/habrachan/Habrachan-metadata.git"
     authMethod = uploadedKey {

@@ -1,6 +1,6 @@
 package build
 
-import Metadata
+import MetadataVcsRoot
 import Parameters
 import installAndroidSdk
 import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
@@ -67,7 +67,7 @@ object AndroidRelease : BaseBuild("Android release", {
 
     // A VCS Root is a set of settings defining how TeamCity communicates with a version control system to
     // monitor changes and get sources of a build
-    vcs { root(Metadata) }
+    vcs { root(MetadataVcsRoot) }
 
     steps {
         val buildToolsReference = Parameters.Configuration.AndroidBuildTools29.reference
