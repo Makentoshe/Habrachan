@@ -43,6 +43,7 @@ project {
         add(Parameters.Configuration.AndroidSdkUrl)
         add(Parameters.Environment.AndroidHome)
         add(Parameters.Configuration.AndroidBuildTools29)
+        add(Parameters.Credential.Keystore)
     }
 }
 

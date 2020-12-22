@@ -31,6 +31,17 @@ object Parameters {
         const val CheckoutDir = "%teamcity.build.checkoutDir%"
 
     }
+
+    /**
+     * Generated token will be stored on the server and can be used
+     * in project configuration files instead of the secure value.
+     */
+    object Credential {
+
+        /** Token for android's keystore */
+        val Keystore = Parameter("Keystore", "credentialsJSON:ecec29f2-58f4-44e8-896c-50e86206ff9a")
+
+    }
 }
 
 /** Returns a parameter name wrapped with teamcity reference indicator */

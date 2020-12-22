@@ -71,7 +71,7 @@ object AndroidRelease : BaseBuild("Android release", {
 
     steps {
         val buildToolsReference = Parameters.Configuration.AndroidBuildTools29.reference
-        val keystoreCredentials = "credentialsJSON:ecec29f2-58f4-44e8-896c-50e86206ff9a"
+        val keystoreCredentials = Parameters.Credential.Keystore.reference
 
         installAndroidSdk()
         gradle {
