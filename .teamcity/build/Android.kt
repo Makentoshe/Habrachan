@@ -80,19 +80,20 @@ object AndroidRelease : BaseBuild("Android release", {
         script {
             name = "Align apk file"
             scriptContent = """
-                $buildToolsReference/zipalign -v -p 4 $releaseApkOutput/app-release-unsigned.apk $releaseApkOutput/app-release-unsigned-aligned.apk
-                rm $releaseApkOutput/app-release-unsigned.apk
+                $buildToolsReference/zipalign -v -p 4 $releaseApkOutput/app-release-unsigned.apk $releaseApkOutput/app-release-aligned.apk
             """.trimIndent()
         }
-
+        script {
+            name = "Sign aligned apk file"
+            scriptContent = """
+                $buildToolsReference/apksigner sign --ks  habrachan_keystore.jks --ks-pass pass:credentialsJSON:ecec29f2-58f4-44e8-896c-50e86206ff9a --key-pass pass:credentialsJSON:ecec29f2-58f4-44e8-896c-50e86206ff9a --out $releaseApkOutput/app-release-signed.apk $releaseApkOutput/app-release-aligned.apk
+            """.trimIndent()
+        }
         listFilesRecursive(Parameters.Internal.CheckoutDir)
 //        script {
 //            name = "Sign release apk"
 //            scriptContent = """
 //
-//                # Signing apk file
-//                %build-tools%/apksigner sign --ks  keystore/habrachan/habrachan_keystore.jks --ks-pass pass:%keystore-password% --key-pass pass:%keystore-password% --out %release-apk-output%/app-release-signed.apk %release-apk-output%/app-release-unsigned-aligned.apk
-//                rm %release-apk-output%/app-release-unsigned-aligned.apk
 //
 //                # Verify sign is ok
 //                %build-tools%/apksigner verify %release-apk-output%/app-release-signed.apk

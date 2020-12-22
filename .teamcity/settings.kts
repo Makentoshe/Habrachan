@@ -31,7 +31,6 @@ version = "2020.1"
 
 project {
 
-//    vcsRoot(Keystores)
     vcsRoot(GithubVcsRoot)
     vcsRoot(MetadataVcsRoot)
 
