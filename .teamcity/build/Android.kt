@@ -73,11 +73,6 @@ object AndroidRelease : BaseBuild("Android release", {
         val buildToolsReference = Parameters.Configuration.AndroidBuildTools29.reference
         val keystoreCredentials = Parameters.Credential.Keystore.reference
 
-        script {
-            name = "Print keystore"
-            scriptContent = keystoreCredentials
-        }
-
         installAndroidSdk()
         gradle {
             name = "Assemble unsigned release apk"
