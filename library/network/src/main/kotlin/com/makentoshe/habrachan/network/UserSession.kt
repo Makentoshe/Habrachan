@@ -3,6 +3,8 @@ package com.makentoshe.habrachan.network
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 
 interface UserSession {
+
+    @Deprecated("Seems like it is not required. Last check was in 30.12.2020")
     /** Key for the api access */
     val client: String
 
@@ -20,3 +22,9 @@ interface UserSession {
         get() = token != null
 }
 
+internal fun userSession(client: String, api: String) = object: UserSession {
+    override val api = api
+    override val client = client
+    override val token: String? = null
+    override val articlesRequestSpec = GetArticlesRequest.Spec.All()
+}
