@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="8dp"
+    android:paddingTop="8dp">
+
+    <ImageView
+        android:id="@+id/layout_comment_item_avatar"
+        android:layout_width="@dimen/heightML"
+        android:layout_height="@dimen/heightML"
+        android:src="@drawable/ic_account_stub"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:text="Makentoshe"
+        android:id="@+id/layout_comment_item_author"
+        style="@style/Habrachan.Text.Main.Bold"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/heightXSL"
+        android:layout_marginStart="@dimen/dimenS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_avatar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:text="December 26th at 18:54"
+        android:id="@+id/layout_comment_item_timestamp"
+        style="@style/Habrachan.Text.Support"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/heightXSL"
+        android:layout_marginStart="@dimen/dimenS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_avatar"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_author"
+        app:layout_constraintBottom_toTopOf="@id/barrier" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="layout_comment_item_timestamp, layout_comment_item_avatar" />
+
+    <TextView
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisi vitae suscipit tellus mauris a diam maecenas. Nulla pharetra diam sit amet..."
+        style="@style/Habrachan.Text.Main"
+        android:id="@+id/layout_comment_item_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimenXS"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- TODO move to common (may be into the core module and create controller class) -->
+    <LinearLayout
+        android:id="@+id/layout_comment_item_vote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body">
+
+        <ImageView
+            android:id="@+id/fragment_article_bottom_voteup"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_arrow_long"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            app:tintMode="src_atop"
+            app:tint="@color/text"
+            android:rotation="90"
+            tools:ignore="ContentDescription,RtlSymmetry" />
+
+        <TextView
+            android:text="14"
+            style="@style/Habrachan.Text"
+            android:id="@+id/fragment_article_bottom_voteview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center" />
+
+        <ImageView
+            android:id="@+id/fragment_article_bottom_votedown"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_arrow_long"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            app:tintMode="src_atop"
+            app:tint="@color/text"
+            android:rotation="-90"
+            tools:ignore="ContentDescription,RtlSymmetry" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/layout_comment_item_replies"
+        style="@style/Habrachan.Text.Main.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Show replies (297)"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_vote"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_vote"
+        app:layout_constraintTop_toTopOf="@id/layout_comment_item_vote" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

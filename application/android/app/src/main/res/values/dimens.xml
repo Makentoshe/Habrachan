@@ -22,8 +22,11 @@
     <dimen name="dimen2XS">2dp</dimen>
 
     <!-- Elements -->
+    <dimen name="heightXS">16dp</dimen>
+    <dimen name="heightXSL">18dp</dimen>
     <dimen name="heightS">24dp</dimen>
     <dimen name="heightM">32dp</dimen>
+    <dimen name="heightML">36dp</dimen>
     <dimen name="heightL">48dp</dimen>
     <dimen name="separator_height">1dp</dimen>
 

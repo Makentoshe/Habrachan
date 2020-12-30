@@ -114,6 +114,11 @@
         <item name="android:textSize">@dimen/main_text_size</item>
     </style>
 
+    <style name="Habrachan.Text.Main.Bold">
+        <item name="android:textSize">@dimen/main_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Habrachan.Text.Support">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/dimmed</item>
