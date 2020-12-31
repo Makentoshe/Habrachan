@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Habrachan</string>
+
+    <string name="not_implemented">Not implemented</string>
+
     <string name="menu_account">Account</string>
     <string name="menu_posts">Posts</string>
     <string name="menu_menu">Menu</string>
@@ -55,6 +58,9 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="articles_top_type_weekly">Weekly</string>
     <string name="articles_top_type_daily">Daily</string>
 
+    <string name="comments_reply_empty">Reply on this comment</string>
+    <string name="comments_reply_count">Show replies(%1$d)</string>
+
     <string name="user_content_profile_badges">Badges</string>
     <string name="user_content_profile_location">Location</string>
     <string name="user_content_profile_registered">Registered</string>
@@ -78,4 +84,5 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="comments_fragment_subtitle">Comments</string>
     <string name="comment_popup_inspect_user">Inspect user</string>
     <string name="login_fragment_oauth_separator">or log in with</string>
+
 </resources>

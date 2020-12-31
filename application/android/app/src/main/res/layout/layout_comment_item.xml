@@ -17,7 +17,6 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:text="Makentoshe"
         android:id="@+id/layout_comment_item_author"
         style="@style/Habrachan.Text.Main.Bold"
         android:layout_width="0dp"
@@ -28,7 +27,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:text="December 26th at 18:54"
         android:id="@+id/layout_comment_item_timestamp"
         style="@style/Habrachan.Text.Support"
         android:layout_width="0dp"
@@ -47,7 +45,6 @@
         app:constraint_referenced_ids="layout_comment_item_timestamp, layout_comment_item_avatar" />
 
     <TextView
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisi vitae suscipit tellus mauris a diam maecenas. Nulla pharetra diam sit amet..."
         style="@style/Habrachan.Text.Main"
         android:id="@+id/layout_comment_item_body"
         android:layout_width="match_parent"
@@ -67,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body">
 
         <ImageView
-            android:id="@+id/fragment_article_bottom_voteup"
+            android:id="@+id/layout_comment_item_vote_up"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_arrow_long"
@@ -79,15 +76,14 @@
             tools:ignore="ContentDescription,RtlSymmetry" />
 
         <TextView
-            android:text="14"
             style="@style/Habrachan.Text"
-            android:id="@+id/fragment_article_bottom_voteview"
+            android:id="@+id/layout_comment_item_vote_score"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center" />
 
         <ImageView
-            android:id="@+id/fragment_article_bottom_votedown"
+            android:id="@+id/layout_comment_item_vote_down"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_arrow_long"
@@ -105,7 +101,6 @@
         style="@style/Habrachan.Text.Main.Bold"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:text="Show replies (297)"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_vote"
         app:layout_constraintEnd_toEndOf="parent"
