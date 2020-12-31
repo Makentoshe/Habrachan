@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.application.android.screen.comments
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,12 +8,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter2
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentViewHolder
+import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_article.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import toothpick.ktp.delegate.inject
 
 class ArticleCommentsFragment : CoreFragment() {
 
@@ -28,6 +35,8 @@ class ArticleCommentsFragment : CoreFragment() {
     }
 
     override val arguments = Arguments(this)
+    private val adapter by inject<CommentAdapter2>()
+    private val viewModel by inject<ArticleCommentsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -43,10 +52,18 @@ class ArticleCommentsFragment : CoreFragment() {
         val dividerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.drawable_divider)
         dividerItemDecoration.setDrawable(dividerDrawable!!)
         fragment_comments_article_recycler.addItemDecoration(dividerItemDecoration)
-        fragment_comments_article_recycler.adapter = CommentAdapter(childFragmentManager, 10)
+        fragment_comments_article_recycler.adapter = adapter
+
+        lifecycleScope.launch {
+            viewModel.comments.catch {
+                println(it)
+            }.collect {
+                adapter.submitData(it)
+            }
+        }
     }
 
-    class Arguments(fragment: ArticleCommentsFragment): CoreFragment.Arguments(fragment) {
+    class Arguments(fragment: ArticleCommentsFragment) : CoreFragment.Arguments(fragment) {
 
         var articleId: Int
             get() = fragmentArguments.getInt(ARTICLE_ID)
@@ -59,9 +76,8 @@ class ArticleCommentsFragment : CoreFragment() {
 }
 
 class CommentAdapter(
-    private val fragmentManager: FragmentManager,
-    private val count: Int
-): RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
+    private val fragmentManager: FragmentManager, private val count: Int
+) : RecyclerView.Adapter<CommentViewHolder>() {
 
     override fun getItemCount(): Int {
         return count
@@ -78,9 +94,4 @@ class CommentAdapter(
         }
     }
 
-    // TODO move holder to controller class
-    class CommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val context: Context = view.context
-        val replyTextView : View = view.findViewById<View>(R.id.layout_comment_item_replies)
-    }
 }
