@@ -28,11 +28,9 @@ data class Comment(
     @SerializedName("time_changed")
     val timeChanged: String?,
     @SerializedName("time_published")
-    val timePublished: String,
+    val timePublished: String
 
 //    @Embedded(prefix = "any_")
 //    @SerializedName("vote")
 //    val vote: Any?,
-
-    val articleId: Int
 )
