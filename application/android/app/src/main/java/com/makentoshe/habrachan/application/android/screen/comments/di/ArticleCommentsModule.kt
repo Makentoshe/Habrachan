@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.di
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
+import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter2
@@ -26,6 +27,7 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment): Module() {
     private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
     private val session by inject<UserSession>()
+    private val database by inject<AndroidCacheDatabase>()
     private val exceptionHandler by inject<ExceptionHandler>()
 
     init {
@@ -40,7 +42,7 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment): Module() {
 
     private fun getArticleCommentsViewModel(fragment: ArticleCommentsFragment): ArticleCommentsViewModel {
         val manager = CommentsManager.Factory(client).native()
-        val arena = CommentsArena(manager, CommentsArenaCache())
+        val arena = CommentsArena(manager, CommentsArenaCache(database.commentDao()))
         val factory = ArticleCommentsViewModel.Factory(session, arena)
         return ViewModelProviders.of(fragment, factory)[ArticleCommentsViewModel::class.java]
     }
