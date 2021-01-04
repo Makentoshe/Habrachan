@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ConcatAdapter
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
+import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.RepliesCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentSeparatorAdapter
@@ -26,6 +27,7 @@ class RepliesCommentsModule(fragment: RepliesCommentsFragment) : Module() {
 
     private val client by inject<OkHttpClient>()
     private val session by inject<UserSession>()
+    private val database by inject<AndroidCacheDatabase>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
@@ -45,7 +47,7 @@ class RepliesCommentsModule(fragment: RepliesCommentsFragment) : Module() {
 
     private fun getRepliesCommentsViewModel(fragment: Fragment): RepliesCommentsViewModel {
         val manager = CommentsManager.Factory(client).native()
-        val arena = CommentsCacheFirstArena(manager, CommentsArenaCache())
+        val arena = CommentsCacheFirstArena(manager, CommentsArenaCache(database.commentDao()))
         val factory = RepliesCommentsViewModel.Factory(session, arena)
         return ViewModelProviders.of(fragment, factory)[RepliesCommentsViewModel::class.java]
     }

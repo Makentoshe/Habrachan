@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.di
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
+import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.model.ReplyCommentPagingAdapter
@@ -23,6 +24,7 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment): Module() {
 
     private val client by inject<OkHttpClient>()
     private val session by inject<UserSession>()
+    private val database by inject<AndroidCacheDatabase>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
@@ -36,7 +38,7 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment): Module() {
 
     private fun getArticleCommentsViewModel(fragment: ArticleCommentsFragment): CommentsViewModel {
         val manager = CommentsManager.Factory(client).native()
-        val arena = CommentsSourceFirstArena(manager, CommentsArenaCache())
+        val arena = CommentsSourceFirstArena(manager, CommentsArenaCache(database.commentDao()))
         val factory = CommentsViewModel.Factory(session, arena)
         return ViewModelProviders.of(fragment, factory)[CommentsViewModel::class.java]
     }
