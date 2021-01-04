@@ -1,17 +1,15 @@
 package com.makentoshe.habrachan.application.android.screen.comments.di
 
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter2
-import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
-import com.makentoshe.habrachan.application.core.arena.comments.CommentsArena
+import com.makentoshe.habrachan.application.android.screen.comments.model.ReplyCommentPagingAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
+import com.makentoshe.habrachan.application.core.arena.comments.CommentsSourceFirstArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.CommentsManager
 import okhttp3.OkHttpClient
-import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -23,26 +21,24 @@ annotation class ArticleCommentsScope
 
 class ArticleCommentsModule(fragment: ArticleCommentsFragment): Module() {
 
-    private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
     private val session by inject<UserSession>()
-    private val exceptionHandler by inject<ExceptionHandler>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
 
-        val adapter = CommentAdapter2(fragment.childFragmentManager)
-        bind<CommentAdapter2>().toInstance(adapter)
+        val adapter = ReplyCommentPagingAdapter(fragment.childFragmentManager, fragment.arguments.articleId)
+        bind<ReplyCommentPagingAdapter>().toInstance(adapter)
 
         val viewModel = getArticleCommentsViewModel(fragment)
-        bind<ArticleCommentsViewModel>().toInstance(viewModel)
+        bind<CommentsViewModel>().toInstance(viewModel)
     }
 
-    private fun getArticleCommentsViewModel(fragment: ArticleCommentsFragment): ArticleCommentsViewModel {
+    private fun getArticleCommentsViewModel(fragment: ArticleCommentsFragment): CommentsViewModel {
         val manager = CommentsManager.Factory(client).native()
-        val arena = CommentsArena(manager, CommentsArenaCache())
-        val factory = ArticleCommentsViewModel.Factory(session, arena)
-        return ViewModelProviders.of(fragment, factory)[ArticleCommentsViewModel::class.java]
+        val arena = CommentsSourceFirstArena(manager, CommentsArenaCache())
+        val factory = CommentsViewModel.Factory(session, arena)
+        return ViewModelProviders.of(fragment, factory)[CommentsViewModel::class.java]
     }
 }
 

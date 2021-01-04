@@ -7,16 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter2
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentViewHolder
-import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
+import com.makentoshe.habrachan.application.android.screen.comments.model.ReplyCommentPagingAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_article.*
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -31,18 +29,27 @@ class ArticleCommentsFragment : CoreFragment() {
             Log.println(level, "ArticleCommentsFragment", message())
         }
 
-        fun build() = ArticleCommentsFragment()
+        fun build(articleId: Int) = ArticleCommentsFragment().apply {
+            arguments.articleId = articleId
+        }
     }
 
     override val arguments = Arguments(this)
-    private val adapter by inject<CommentAdapter2>()
-    private val viewModel by inject<ArticleCommentsViewModel>()
+    private val adapter by inject<ReplyCommentPagingAdapter>()
+    private val viewModel by inject<CommentsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_comments_article, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) { // init article comments loading
+            lifecycleScope.launch {
+                val spec = CommentsViewModel.CommentsSpec(arguments.articleId)
+                viewModel.sendSpecChannel.send(spec)
+            }
+        }
+
         fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         fragment_comments_article_toolbar.setNavigationOnClickListener {
             Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
@@ -54,8 +61,10 @@ class ArticleCommentsFragment : CoreFragment() {
         fragment_comments_article_recycler.addItemDecoration(dividerItemDecoration)
         fragment_comments_article_recycler.adapter = adapter
 
+        // TODO implement progress bar for displaying loading process
         lifecycleScope.launch {
             viewModel.comments.catch {
+                // TODO implement error handling
                 println(it)
             }.collect {
                 adapter.submitData(it)
@@ -73,25 +82,4 @@ class ArticleCommentsFragment : CoreFragment() {
             private const val ARTICLE_ID = "ArticleId"
         }
     }
-}
-
-class CommentAdapter(
-    private val fragmentManager: FragmentManager, private val count: Int
-) : RecyclerView.Adapter<CommentViewHolder>() {
-
-    override fun getItemCount(): Int {
-        return count
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return CommentViewHolder(inflater.inflate(R.layout.layout_comment_item, parent, false))
-    }
-
-    override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        holder.replyTextView.setOnClickListener {
-            RepliesCommentsFragment.build().show(fragmentManager, "tag")
-        }
-    }
-
 }

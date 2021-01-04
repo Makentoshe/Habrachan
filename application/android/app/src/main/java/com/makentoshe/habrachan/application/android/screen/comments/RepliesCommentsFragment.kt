@@ -6,15 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
+import com.makentoshe.habrachan.application.android.CoreBottomSheetDialogFragment
+import com.makentoshe.habrachan.application.android.screen.comments.model.ReplyCommentPagingAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.TitleCommentPagingAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.RepliesCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_replies.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import toothpick.ktp.delegate.inject
 
-class RepliesCommentsFragment : BottomSheetDialogFragment() {
+class RepliesCommentsFragment : CoreBottomSheetDialogFragment() {
 
     companion object {
         fun capture(level: Int, message: () -> String) {
@@ -22,41 +31,58 @@ class RepliesCommentsFragment : BottomSheetDialogFragment() {
             Log.println(level, "RepliesCommentsFragment", message())
         }
 
-        fun build() = RepliesCommentsFragment()
+        fun build(articleId: Int, commentId: Int) = RepliesCommentsFragment().apply {
+            arguments.articleId = articleId
+            arguments.commentId = commentId
+        }
     }
+
+    override val arguments = Arguments(this)
+    private val viewModel by inject<RepliesCommentsViewModel>()
+    private val replyAdapter by inject<ReplyCommentPagingAdapter>()
+    private val titleAdapter by inject<TitleCommentPagingAdapter>()
+    private val concatAdapter by inject<ConcatAdapter>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ) = inflater.inflate(R.layout.fragment_comments_replies, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val titleAdapter = CommentAdapter(childFragmentManager, 1)
-        val separatorAdapter = SeparatorAdapter()
-        val repliesAdapter = CommentAdapter(childFragmentManager, 3)
-
-        fragment_comments_replies_recycler.adapter =
-            ConcatAdapter(titleAdapter, separatorAdapter, repliesAdapter)
+        fragment_comments_replies_recycler.adapter = concatAdapter
 
         val dividerItemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
         val dividerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.drawable_divider)
         dividerItemDecoration.setDrawable(dividerDrawable!!)
         fragment_comments_replies_recycler.addItemDecoration(dividerItemDecoration)
+
+        if (savedInstanceState == null) {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val spec = RepliesCommentsViewModel.CommentsSpec(arguments.articleId, arguments.commentId)
+                viewModel.sendSpecChannel.send(spec)
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.comment.collectLatest {
+                titleAdapter.submitData(PagingData.from(listOf(it)))
+                replyAdapter.submitData(PagingData.from(it.childs))
+            }
+        }
     }
-}
 
-class SeparatorAdapter : RecyclerView.Adapter<SeparatorAdapter.SeparatorViewHolder>() {
+    class Arguments(fragment: RepliesCommentsFragment) : CoreBottomSheetDialogFragment.Arguments(fragment) {
 
-    override fun getItemCount() = 1
+        var articleId: Int
+            get() = fragmentArguments.getInt(ARTICLE_ID)
+            set(value) = fragmentArguments.putInt(ARTICLE_ID, value)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeparatorViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.fragment_comments_replies_separator, parent, false)
-        return SeparatorViewHolder(view)
+        var commentId: Int
+            get() = fragmentArguments.getInt(COMMENT_ID)
+            set(value) = fragmentArguments.putInt(COMMENT_ID, value)
+
+        companion object {
+            private const val ARTICLE_ID = "ArticleId"
+            private const val COMMENT_ID = "CommentId"
+        }
     }
-
-    override fun onBindViewHolder(holder: SeparatorViewHolder, position: Int) {
-
-    }
-
-    class SeparatorViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }
