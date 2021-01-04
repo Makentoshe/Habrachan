@@ -70,6 +70,11 @@ dependencies {
     val constraint = properties["version.androidx.constraint"]
     implementation("androidx.constraintlayout:constraintlayout:$constraint")
 
+    // Material components
+    // https://github.com/material-components/material-components-android
+    val material = properties["version.androidx.material"]
+    implementation("com.google.android.material:material:$material")
+
     testImplementation("junit:junit:4.12")
 
     val runner = properties["version.androidx.test.runner"]
