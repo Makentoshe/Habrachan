@@ -8,4 +8,6 @@ data class CommentAuthorRecord(
     val login: String
 ) {
     constructor(author: CommentAuthor) : this(author.login)
+
+    fun toCommentAuthor() = CommentAuthor(login)
 }

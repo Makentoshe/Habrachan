@@ -36,7 +36,10 @@ data class CommentRecord(
     @SerializedName("time_changed")
     val timeChanged: String?,
     @SerializedName("time_published")
-    val timePublished: String, val articleId: Int
+    val timePublished: String,
+
+    /** Article id for many comments to 1 article relation. */
+    val articleId: Int
 ) {
 
     constructor(article: Article, comment: Comment) : this(article.id, comment)
@@ -56,5 +59,21 @@ data class CommentRecord(
         comment.timeChanged,
         comment.timePublished,
         articleId
+    )
+
+    fun toComment() = Comment(
+        id,
+        author.toCommentAuthor(),
+        avatar,
+        isAuthor,
+        isCanVote,
+        isFavorite,
+        level,
+        message,
+        parentId,
+        score,
+        thread,
+        timeChanged,
+        timePublished
     )
 }
