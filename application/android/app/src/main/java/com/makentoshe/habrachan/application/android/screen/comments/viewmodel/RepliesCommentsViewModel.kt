@@ -2,8 +2,6 @@ package com.makentoshe.habrachan.application.android.screen.comments.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagingData
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModel
 import com.makentoshe.habrachan.application.android.screen.comments.model.buildModelsFromList
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
 import com.makentoshe.habrachan.network.UserSession
@@ -19,18 +17,23 @@ class RepliesCommentsViewModel(
     private val session: UserSession, private val arena: CommentsCacheFirstArena
 ) : ViewModel() {
 
-    private val specChannel = Channel<CommentsSpec>()
-    private val commentsChannel = Channel<PagingData<CommentModel>>()
+    private val commentChannel = Channel<CommentsSpec>()
 
     /** Channel for requesting a batch of comments by [CommentsSpec] */
-    val sendSpecChannel: SendChannel<CommentsSpec> = specChannel
+    val sendCommentChannel: SendChannel<CommentsSpec> = commentChannel
 
     /** Flow returns a parent comment for the replies */
-    val comment = specChannel.receiveAsFlow().map { spec ->
+    val comment = commentChannel.receiveAsFlow().map { spec ->
         val result = arena.suspendFetch(GetCommentsRequest(session, spec.articleId))
         val models = buildModelsFromList(result.getOrThrow())
         models.find { it.comment.id == spec.commentId } ?: throw NoSuchElementException()
     }.flowOn(Dispatchers.IO)
+
+    private val avatarChannel = Channel<AvatarSpec>()
+
+    val sendAvatarChannel: SendChannel<AvatarSpec> = avatarChannel
+
+    val avatar = avatarChannel.receiveAsFlow().flowOn(Dispatchers.IO)
 
     class Factory(
         private val session: UserSession, private val arena: CommentsCacheFirstArena
@@ -42,4 +45,7 @@ class RepliesCommentsViewModel(
 
     /** Spec for requesting and organizing comments */
     data class CommentsSpec(val articleId: Int, val commentId: Int)
+
+    /** Spec for requesting comment avatar */
+    data class AvatarSpec(val commentId: Int, val url: String)
 }

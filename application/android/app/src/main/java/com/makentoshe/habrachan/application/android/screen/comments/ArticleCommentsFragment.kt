@@ -61,7 +61,6 @@ class ArticleCommentsFragment : CoreFragment() {
         fragment_comments_article_recycler.addItemDecoration(dividerItemDecoration)
         fragment_comments_article_recycler.adapter = adapter
 
-        // TODO implement progress bar for displaying loading process
         lifecycleScope.launch {
             viewModel.comments.catch {
                 // TODO implement error handling
@@ -69,6 +68,13 @@ class ArticleCommentsFragment : CoreFragment() {
             }.collect {
                 adapter.submitData(it)
             }
+        }
+
+        adapter.addLoadStateListener {
+            if (it.append.endOfPaginationReached) {
+                fragment_comments_article_progress.visibility = View.GONE
+                fragment_comments_article_recycler.visibility = View.VISIBLE
+            } else println(it)
         }
     }
 

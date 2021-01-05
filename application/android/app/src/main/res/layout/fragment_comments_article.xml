@@ -13,7 +13,18 @@
         app:title="Здесь будет довольно длинное название статьи, которое точно не поместится в 1 строку"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ProgressBar
+        style="@style/Habrachan.Progress"
+        android:id="@+id/fragment_comments_article_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragment_comments_article_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/fragment_comments_article_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -59,7 +59,7 @@ class RepliesCommentsFragment : CoreBottomSheetDialogFragment() {
         if (savedInstanceState == null) {
             lifecycleScope.launch(Dispatchers.IO) {
                 val spec = RepliesCommentsViewModel.CommentsSpec(arguments.articleId, arguments.commentId)
-                viewModel.sendSpecChannel.send(spec)
+                viewModel.sendCommentChannel.send(spec)
             }
         }
 

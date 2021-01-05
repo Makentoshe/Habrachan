@@ -44,9 +44,7 @@ abstract class CommentPagingAdapter(
     }
 
     abstract fun onBindViewHolder(
-        controller: CommentViewController,
-        holder: CommentViewHolder,
-        model: CommentModel
+        controller: CommentViewController, holder: CommentViewHolder, model: CommentModel
     )
 }
 
