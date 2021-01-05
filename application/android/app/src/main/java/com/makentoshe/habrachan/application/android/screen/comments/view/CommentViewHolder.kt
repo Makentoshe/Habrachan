@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.model
+package com.makentoshe.habrachan.application.android.screen.comments.view
 
 import android.content.Context
 import android.view.View

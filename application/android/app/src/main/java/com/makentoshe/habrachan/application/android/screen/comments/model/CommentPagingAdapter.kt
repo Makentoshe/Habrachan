@@ -9,6 +9,7 @@ import androidx.paging.PagingDataAdapter
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.screen.comments.RepliesCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
 
 abstract class CommentPagingAdapter(
     protected val fragmentManager: FragmentManager, protected val articleId: Int

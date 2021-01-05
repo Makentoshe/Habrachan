@@ -8,16 +8,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.BuildConfig
-import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.*
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.android.screen.comments.model.ReplyCommentPagingAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_article.*
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
@@ -35,19 +35,21 @@ class ArticleCommentsFragment : CoreFragment() {
     }
 
     override val arguments = Arguments(this)
+    private lateinit var exceptionController: ExceptionController
     private val adapter by inject<ReplyCommentPagingAdapter>()
     private val viewModel by inject<CommentsViewModel>()
+    private val exceptionHandler by inject<ExceptionHandler>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_comments_article, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) { // init article comments loading
-            lifecycleScope.launch {
-                val spec = CommentsViewModel.CommentsSpec(arguments.articleId)
-                viewModel.sendSpecChannel.send(spec)
-            }
+        exceptionController = ExceptionController(ExceptionViewHolder(fragment_comments_article_exception))
+        exceptionController.setRetryButton { adapter.retry() }
+
+        if (savedInstanceState == null) lifecycleScope.launch { // init article comments loading
+            viewModel.sendSpecChannel.send(CommentsDataSource.CommentsSpec(arguments.articleId))
         }
 
         fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
@@ -62,19 +64,26 @@ class ArticleCommentsFragment : CoreFragment() {
         fragment_comments_article_recycler.adapter = adapter
 
         lifecycleScope.launch {
-            viewModel.comments.catch {
-                // TODO implement error handling
-                println(it)
-            }.collect {
-                adapter.submitData(it)
-            }
+            viewModel.comments.collectLatest { adapter.submitData(it) }
         }
 
         adapter.addLoadStateListener {
-            if (it.append.endOfPaginationReached) {
-                fragment_comments_article_progress.visibility = View.GONE
-                fragment_comments_article_recycler.visibility = View.VISIBLE
-            } else println(it)
+            when (val state = it.refresh) {
+                is LoadState.Loading -> {
+                    fragment_comments_article_progress.visibility = View.VISIBLE
+                    fragment_comments_article_recycler.visibility = View.GONE
+                    exceptionController.disable()
+                }
+                is LoadState.NotLoading -> {
+                    fragment_comments_article_progress.visibility = View.GONE
+                    fragment_comments_article_recycler.visibility = View.VISIBLE
+                    exceptionController.disable()
+                }
+                is LoadState.Error -> {
+                    fragment_comments_article_progress.visibility = View.GONE
+                    exceptionController.render(exceptionHandler.handleException(state.error))
+                }
+            }
         }
     }
 

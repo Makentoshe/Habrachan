@@ -26,7 +26,11 @@ class CommentsArenaCache(
     override fun fetch(key: GetCommentsRequest): Result<List<Comment>> = try {
         val records = commentDao.getByArticleId(key.articleId)
         capture(Log.INFO) { "Fetched ${records.size} comments by key: $key" }
-        Result.success(records.map { it.toComment() })
+        if (records.isEmpty()) {
+            Result.failure(ArenaStorageException("CommentsArenaCache"))
+        } else {
+            Result.success(records.map { it.toComment() })
+        }
     } catch (exception: Exception) {
         capture(Log.INFO) { "Could not fetch comments: $exception"}
         Result.failure(ArenaStorageException("CommentsArenaCache").initCause(exception))

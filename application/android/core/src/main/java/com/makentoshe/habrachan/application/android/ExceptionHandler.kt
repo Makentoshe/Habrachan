@@ -2,10 +2,15 @@ package com.makentoshe.habrachan.application.android
 
 import android.content.Context
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 import javax.net.ssl.SSLPeerUnverifiedException
+
+// TODO move exceptions to another module
 
 interface ExceptionHandler {
 
@@ -64,5 +69,28 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
         val title = context.getString(R.string.exception_handler_unknown)
         val description = exception.toString()
         return ExceptionHandler.Entry(title, description)
+    }
+}
+
+data class ExceptionViewHolder(val root: View) {
+    val titleView: TextView = root.findViewById(R.id.layout_exception_title)
+    val messageView: TextView = root.findViewById(R.id.layout_exception_message)
+    val retryButton: Button = root.findViewById(R.id.layout_exception_retry)
+}
+
+class ExceptionController(private val holder: ExceptionViewHolder) {
+
+    fun render(entry: ExceptionHandler.Entry) {
+        holder.root.visibility = View.VISIBLE
+        holder.titleView.text = entry.title
+        holder.messageView.text = entry.message
+    }
+
+    fun disable() {
+        holder.root.visibility = View.GONE
+    }
+
+    fun setRetryButton(listener: (View) -> Unit) {
+        holder.retryButton.setOnClickListener(listener)
     }
 }

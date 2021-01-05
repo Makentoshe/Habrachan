@@ -3,19 +3,22 @@ package com.makentoshe.habrachan.application.android.screen.comments.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModel
-import com.makentoshe.habrachan.application.android.screen.comments.model.buildModelsFromList
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.core.arena.Arena
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsSourceFirstArena
 import com.makentoshe.habrachan.entity.Comment
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetCommentsRequest
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.plus
 
 class CommentsViewModel(
@@ -23,19 +26,14 @@ class CommentsViewModel(
 ) : ViewModel() {
 
     /** Channel for requesting a batch of comments by article id */
-    private val specChannel = Channel<CommentsSpec>()
-    val sendSpecChannel: SendChannel<CommentsSpec> = specChannel
+    private val specChannel = Channel<CommentsDataSource.CommentsSpec>()
+    val sendSpecChannel: SendChannel<CommentsDataSource.CommentsSpec> = specChannel
 
     /** Flow returns a prepared list comments for the recycler view */
-    val comments: Flow<PagingData<CommentModel>> = specChannel.receiveAsFlow().map { spec ->
-        val result = arena.suspendFetch(GetCommentsRequest(session, spec.articleId)).onFailure { throw it }
-        return@map result.getOrNull()?.let(::filterAndEmit) ?: throw result.exceptionOrNull()!!
+    @FlowPreview
+    val comments = specChannel.consumeAsFlow().flatMapConcat { spec ->
+        Pager(PagingConfig(0), initialKey = spec) { CommentsDataSource(session, arena) }.flow
     }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
-
-    private fun filterAndEmit(comments: List<Comment>): PagingData<CommentModel> {
-        val models = buildModelsFromList(comments)
-        return PagingData.from(models.filter { it.parent == null })
-    }
 
     class Factory(
         private val session: UserSession, private val arena: CommentsSourceFirstArena
@@ -44,7 +42,4 @@ class CommentsViewModel(
             return CommentsViewModel(session, arena) as T
         }
     }
-
-    /** Spec for requesting and organizing comments */
-    data class CommentsSpec(val articleId: Int)
 }

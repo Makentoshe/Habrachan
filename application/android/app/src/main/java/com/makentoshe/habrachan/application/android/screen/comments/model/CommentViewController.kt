@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.model
 
 import android.view.View
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
 import com.makentoshe.habrachan.entity.Comment
 
 class CommentViewController(private val holder: CommentViewHolder) {
