@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -45,7 +46,7 @@ class RepliesCommentsFragment : CoreBottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.fragment_comments_replies, container, false)
+    ): View = inflater.inflate(R.layout.fragment_comments_replies, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragment_comments_replies_recycler.adapter = concatAdapter
@@ -66,6 +67,13 @@ class RepliesCommentsFragment : CoreBottomSheetDialogFragment() {
             viewModel.comment.collectLatest {
                 titleAdapter.submitData(PagingData.from(listOf(it)))
                 replyAdapter.submitData(PagingData.from(it.childs))
+            }
+        }
+
+        titleAdapter.addLoadStateListener {
+            // scroll to top when title content appears
+            if (it.append is LoadState.NotLoading && it.append.endOfPaginationReached) {
+                fragment_comments_replies_recycler.scrollToPosition(0)
             }
         }
     }
