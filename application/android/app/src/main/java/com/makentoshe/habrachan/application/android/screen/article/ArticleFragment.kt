@@ -51,7 +51,11 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private val exceptionHandler by inject<ExceptionHandler>()
     private val navigator by inject<ArticleNavigation>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_article, container, false)
     }
 
@@ -76,7 +80,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         }
 
         fragment_article_bottom_comments.setOnClickListener {
-            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+            navigator.toCommentsScreen(arguments.articleId)
         }
 
         fragment_article_bottom_voteup.setOnClickListener {
@@ -91,9 +95,9 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
             Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
         }
 
-//        javaScriptInterface.imageObservable.subscribe{
-//            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
-//        }.let(disposables::add)
+        javaScriptInterface.imageObservable.subscribe {
+            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+        }.let(disposables::add)
     }
 
     private fun onArticleReceivedSuccess(response: ArticleResponse) {
@@ -109,7 +113,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
         fragment_article_progress.visibility = View.GONE
         fragment_article_scroll.visibility = View.VISIBLE
-        val base64content = Base64.encodeToString(response.article.buildHtml(resources).toByteArray(), Base64.DEFAULT)
+        val base64content =
+            Base64.encodeToString(response.article.buildHtml(resources).toByteArray(), Base64.DEFAULT)
         fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
     }
 
@@ -157,7 +162,12 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_bottom?.visibility = View.VISIBLE
     }
 
-    override fun onWebReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
+    override fun onWebReceivedError(
+        view: WebView?,
+        errorCode: Int,
+        description: String?,
+        failingUrl: String?
+    ) {
         onArticleReceivedFailure(Exception(description))
     }
 
