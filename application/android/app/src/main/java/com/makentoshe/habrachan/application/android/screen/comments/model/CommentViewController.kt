@@ -7,11 +7,12 @@ import com.makentoshe.habrachan.entity.Comment
 
 class CommentViewController(private val holder: CommentViewHolder) {
 
-    fun render(comment: Comment) {
+    fun render(comment: Comment): CommentViewController {
         holder.authorView.text = comment.author.login
         holder.voteScoreView.text = comment.score.toString()
         holder.bodyView.text = comment.message
         holder.timestampView.text = comment.timePublished
+        return this
     }
 
     fun setReplies(replies: Int, clickListener: (View) -> Unit) {
@@ -26,6 +27,12 @@ class CommentViewController(private val holder: CommentViewHolder) {
     fun setVoteListener(voteUpListener: (View) -> Unit, voteDownListener: (View) -> Unit) {
         holder.voteUpView.setOnClickListener(voteUpListener)
         holder.voteDownView.setOnClickListener(voteDownListener)
+    }
+
+    fun setUserClickListener(listener: (View) -> Unit) {
+        holder.avatarView.setOnClickListener(listener)
+        holder.authorView.setOnClickListener(listener)
+        holder.timestampView.setOnClickListener(listener)
     }
 
     fun setVoteScore(score: Int) {

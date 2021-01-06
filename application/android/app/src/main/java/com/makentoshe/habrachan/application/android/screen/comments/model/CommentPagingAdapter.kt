@@ -32,14 +32,18 @@ abstract class CommentPagingAdapter(
             "Comment is null at position $position"
         }
 
-        val controller = CommentViewController(holder)
-        controller.render(model.comment)
+        val controller = CommentViewController(holder).render(model.comment)
         // TODO implement comments voting
         controller.setVoteListener({
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
         }, {
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
         })
+
+        controller.setUserClickListener {
+            // TODO implement navigation to user screen
+            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+        }
 
         onBindViewHolder(controller, holder, model)
     }
