@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreBottomSheetDialogFragment
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.android.screen.comments.model.ReplyCommentPagingAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.TitleCommentPagingAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.RepliesCommentsViewModel
@@ -56,11 +57,9 @@ class RepliesCommentsFragment : CoreBottomSheetDialogFragment() {
         dividerItemDecoration.setDrawable(dividerDrawable!!)
         fragment_comments_replies_recycler.addItemDecoration(dividerItemDecoration)
 
-        if (savedInstanceState == null) {
-            lifecycleScope.launch(Dispatchers.IO) {
-                val spec = RepliesCommentsViewModel.CommentsSpec(arguments.articleId, arguments.commentId)
-                viewModel.sendCommentChannel.send(spec)
-            }
+        if (savedInstanceState == null) lifecycleScope.launch(Dispatchers.IO) {
+            val spec = CommentsDataSource.CommentsSpec(arguments.articleId, arguments.commentId)
+            viewModel.sendCommentChannel.send(spec)
         }
 
         lifecycleScope.launch(Dispatchers.IO) {

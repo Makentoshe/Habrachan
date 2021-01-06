@@ -35,10 +35,11 @@ class ArticleCommentsFragment : CoreFragment() {
     }
 
     override val arguments = Arguments(this)
-    private lateinit var exceptionController: ExceptionController
     private val adapter by inject<ReplyCommentPagingAdapter>()
     private val viewModel by inject<CommentsViewModel>()
     private val exceptionHandler by inject<ExceptionHandler>()
+
+    private lateinit var exceptionController: ExceptionController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
