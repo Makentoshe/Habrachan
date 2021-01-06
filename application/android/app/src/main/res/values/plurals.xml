@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="comments_replies_count">
+        <item quantity="one">%d reply below</item>
+        <item quantity="other">%d replies below</item>
+    </plurals>
+</resources>

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="36dp"
-    android:paddingStart="@dimen/dimenS"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="@dimen/heightL"
+    android:paddingStart="@dimen/dimenS">
 
     <TextView
+        android:id="@+id/fragment_comments_replies_separator_count"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:text="3 replies below"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
+        android:id="@+id/fragment_comments_replies_separator_overflow"
         android:layout_width="36dp"
         android:layout_height="match_parent"
         app:tint="@color/dimmed"

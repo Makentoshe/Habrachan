@@ -38,7 +38,10 @@ class RepliesCommentsModule(fragment: RepliesCommentsFragment) : Module() {
         val repliesAdapter = ReplyCommentPagingAdapter(fragment.childFragmentManager, fragment.arguments.articleId)
         bind<ReplyCommentPagingAdapter>().toInstance(repliesAdapter)
 
-        val concatAdapter = ConcatAdapter(titleAdapter, CommentSeparatorAdapter(), repliesAdapter)
+        val separatorAdapter = CommentSeparatorAdapter()
+        bind<CommentSeparatorAdapter>().toInstance(separatorAdapter)
+
+        val concatAdapter = ConcatAdapter(titleAdapter, separatorAdapter, repliesAdapter)
         bind<ConcatAdapter>().toInstance(concatAdapter)
 
         val viewModel = getRepliesCommentsViewModel(fragment)

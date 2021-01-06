@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreBottomSheetDialogFragment
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentSeparatorAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.android.screen.comments.model.ReplyCommentPagingAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.TitleCommentPagingAdapter
@@ -42,6 +43,7 @@ class RepliesCommentsFragment : CoreBottomSheetDialogFragment() {
     override val arguments = Arguments(this)
     private val viewModel by inject<RepliesCommentsViewModel>()
     private val replyAdapter by inject<ReplyCommentPagingAdapter>()
+    private val separatorAdapter by inject<CommentSeparatorAdapter>()
     private val titleAdapter by inject<TitleCommentPagingAdapter>()
     private val concatAdapter by inject<ConcatAdapter>()
 
@@ -65,6 +67,7 @@ class RepliesCommentsFragment : CoreBottomSheetDialogFragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.comment.collectLatest {
                 titleAdapter.submitData(PagingData.from(listOf(it)))
+                separatorAdapter.submitData(PagingData.from(listOf(it)))
                 replyAdapter.submitData(PagingData.from(it.childs))
             }
         }
