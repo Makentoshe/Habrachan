@@ -80,7 +80,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         }
 
         fragment_article_bottom_comments.setOnClickListener {
-            navigator.toCommentsScreen(arguments.articleId)
+            // TODO add warning, that article data does not received yet
         }
 
         fragment_article_bottom_voteup.setOnClickListener {
@@ -110,6 +110,10 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_bottom_voteview.text = response.article.score.toString()
         fragment_article_bottom_reading_count.text = response.article.readingCount.toString()
         fragment_article_bottom_comments_count.text = response.article.commentsCount.toString()
+        fragment_article_bottom_comments.setOnClickListener {
+            navigator.toCommentsScreen(response.article)
+        }
+
 
         fragment_article_progress.visibility = View.GONE
         fragment_article_scroll.visibility = View.VISIBLE

@@ -16,6 +16,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.Commen
 import com.makentoshe.habrachan.application.android.screen.comments.model.ReplyCommentPagingAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
+import com.makentoshe.habrachan.entity.Article
 import kotlinx.android.synthetic.main.fragment_comments_article.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -29,9 +30,12 @@ class ArticleCommentsFragment : CoreFragment() {
             Log.println(level, "ArticleCommentsFragment", message())
         }
 
-        fun build(articleId: Int) = ArticleCommentsFragment().apply {
+        fun build(articleId: Int, title: String) = ArticleCommentsFragment().apply {
             arguments.articleId = articleId
+            arguments.articleTitle = title
         }
+
+        fun build(article: Article) = build(article.id, article.title)
     }
 
     override val arguments = Arguments(this)
@@ -56,6 +60,7 @@ class ArticleCommentsFragment : CoreFragment() {
 
         fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         fragment_comments_article_toolbar.setNavigationOnClickListener { navigation.back() }
+        fragment_comments_article_toolbar.title = arguments.articleTitle
 
         val dividerItemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
         val dividerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.drawable_divider)
@@ -93,8 +98,13 @@ class ArticleCommentsFragment : CoreFragment() {
             get() = fragmentArguments.getInt(ARTICLE_ID)
             set(value) = fragmentArguments.putInt(ARTICLE_ID, value)
 
+        var articleTitle: String
+            get() = fragmentArguments.getString(ARTICLE_TITLE, "")
+            set(value) = fragmentArguments.putString(ARTICLE_TITLE, value)
+
         companion object {
             private const val ARTICLE_ID = "ArticleId"
+            private const val ARTICLE_TITLE = "ArticleTitle"
         }
     }
 }
