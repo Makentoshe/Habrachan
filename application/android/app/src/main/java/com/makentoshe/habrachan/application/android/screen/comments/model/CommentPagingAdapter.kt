@@ -9,10 +9,13 @@ import androidx.paging.PagingDataAdapter
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.screen.comments.RepliesCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
 
 abstract class CommentPagingAdapter(
-    protected val fragmentManager: FragmentManager, protected val articleId: Int
+    protected val fragmentManager: FragmentManager,
+    protected val articleId: Int,
+    protected val navigation: ArticleCommentsNavigation
 ) : PagingDataAdapter<CommentModel, CommentViewHolder>(CommentDiffUtilItemCallback()) {
 
     companion object {
@@ -41,8 +44,7 @@ abstract class CommentPagingAdapter(
         })
 
         controller.setUserClickListener {
-            // TODO implement navigation to user screen
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            navigation.toUserScreen(holder.context)
         }
 
         onBindViewHolder(controller, holder, model)
@@ -54,15 +56,14 @@ abstract class CommentPagingAdapter(
 }
 
 class ReplyCommentPagingAdapter(
-    fragmentManager: FragmentManager, articleId: Int
-) : CommentPagingAdapter(fragmentManager, articleId) {
+    fragmentManager: FragmentManager, articleId: Int, navigation: ArticleCommentsNavigation
+) : CommentPagingAdapter(fragmentManager, articleId, navigation) {
 
     override fun onBindViewHolder(
         controller: CommentViewController, holder: CommentViewHolder, model: CommentModel
     ) = controller.setReplies(model.childs.count()) {
         if (model.childs.isEmpty()) {
-            // TODO implement comments replying
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            navigation.toCommentReply(holder.context)
         } else {
             val fragment = RepliesCommentsFragment.build(articleId, model.comment.id)
             fragment.show(fragmentManager, model.comment.id.toString())
@@ -71,13 +72,10 @@ class ReplyCommentPagingAdapter(
 }
 
 class TitleCommentPagingAdapter(
-    fragmentManager: FragmentManager, articleId: Int
-) : CommentPagingAdapter(fragmentManager, articleId) {
+    fragmentManager: FragmentManager, articleId: Int, navigation: ArticleCommentsNavigation
+) : CommentPagingAdapter(fragmentManager, articleId, navigation) {
 
     override fun onBindViewHolder(
         controller: CommentViewController, holder: CommentViewHolder, model: CommentModel
-    ) = controller.setReplies(0) {
-        // TODO implement comments replying
-        Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-    }
+    ) = controller.setReplies(0) { navigation.toCommentReply(holder.context) }
 }

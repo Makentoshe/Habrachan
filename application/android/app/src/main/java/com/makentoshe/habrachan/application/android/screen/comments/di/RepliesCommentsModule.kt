@@ -10,11 +10,13 @@ import com.makentoshe.habrachan.application.android.screen.comments.RepliesComme
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentSeparatorAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.ReplyCommentPagingAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.TitleCommentPagingAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.RepliesCommentsViewModel
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.CommentsManager
 import okhttp3.OkHttpClient
+import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -25,6 +27,7 @@ import javax.inject.Qualifier
 annotation class RepliesCommentsScope
 class RepliesCommentsModule(fragment: RepliesCommentsFragment) : Module() {
 
+    private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
     private val session by inject<UserSession>()
     private val database by inject<AndroidCacheDatabase>()
@@ -32,10 +35,13 @@ class RepliesCommentsModule(fragment: RepliesCommentsFragment) : Module() {
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
 
-        val titleAdapter = TitleCommentPagingAdapter(fragment.childFragmentManager, fragment.arguments.articleId)
+        val navigation = ArticleCommentsNavigation(router)
+        bind<ArticleCommentsNavigation>().toInstance(navigation)
+
+        val titleAdapter = TitleCommentPagingAdapter(fragment.childFragmentManager, fragment.arguments.articleId, navigation)
         bind<TitleCommentPagingAdapter>().toInstance(titleAdapter)
 
-        val repliesAdapter = ReplyCommentPagingAdapter(fragment.childFragmentManager, fragment.arguments.articleId)
+        val repliesAdapter = ReplyCommentPagingAdapter(fragment.childFragmentManager, fragment.arguments.articleId, navigation)
         bind<ReplyCommentPagingAdapter>().toInstance(repliesAdapter)
 
         val separatorAdapter = CommentSeparatorAdapter()

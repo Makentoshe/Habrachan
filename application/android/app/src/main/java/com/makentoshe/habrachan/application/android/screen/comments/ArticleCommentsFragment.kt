@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -15,6 +14,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.android.screen.comments.model.ReplyCommentPagingAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_article.*
 import kotlinx.coroutines.flow.collectLatest
@@ -38,6 +38,7 @@ class ArticleCommentsFragment : CoreFragment() {
     private val adapter by inject<ReplyCommentPagingAdapter>()
     private val viewModel by inject<CommentsViewModel>()
     private val exceptionHandler by inject<ExceptionHandler>()
+    private val navigation by inject<ArticleCommentsNavigation>()
 
     private lateinit var exceptionController: ExceptionController
 
@@ -54,9 +55,7 @@ class ArticleCommentsFragment : CoreFragment() {
         }
 
         fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-        fragment_comments_article_toolbar.setNavigationOnClickListener {
-            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
-        }
+        fragment_comments_article_toolbar.setNavigationOnClickListener { navigation.back() }
 
         val dividerItemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
         val dividerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.drawable_divider)
