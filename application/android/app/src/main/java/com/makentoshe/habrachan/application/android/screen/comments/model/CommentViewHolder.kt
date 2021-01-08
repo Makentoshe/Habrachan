@@ -10,7 +10,6 @@ import com.makentoshe.habrachan.R
 // TODO move holder to controller class
 class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val context: Context = view.context
-    val replyTextView: TextView = view.findViewById(R.id.layout_comment_item_replies)
     val avatarView: ImageView = view.findViewById(R.id.layout_comment_item_avatar)
     val authorView: TextView = view.findViewById(R.id.layout_comment_item_author)
     val timestampView: TextView = view.findViewById(R.id.layout_comment_item_timestamp)

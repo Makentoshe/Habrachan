@@ -9,6 +9,7 @@ import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class ArticleCommentsInjectingFragmentLifecycleCallback: FragmentManager.FragmentLifecycleCallbacks() {
+
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) = when(f) {
         is ArticleCommentsFragment -> injectArticleCommentsFragment(f)
             else -> Unit

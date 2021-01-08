@@ -9,9 +9,9 @@ import androidx.paging.PagingDataAdapter
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 
-class CommentAdapter2(
+class CommentAdapter(
     private val fragmentManager: FragmentManager
-) : PagingDataAdapter<CommentModel, CommentViewHolder>(CommentDiffUtilItemCallback()) {
+) : PagingDataAdapter<CommentEntityModel, CommentViewHolder>(CommentDiffUtilItemCallback()) {
 
     companion object {
         inline fun capture(level: Int, message: () -> String) {
@@ -32,10 +32,6 @@ class CommentAdapter2(
 
         val controller = CommentViewController(holder)
         controller.render(model.comment)
-        controller.setReplies(model.childs.count()) {
-//            RepliesCommentsFragment.build().show(fragmentManager, model.comment.id.toString())
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-        }
         controller.setVoteListener({
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
         }, {

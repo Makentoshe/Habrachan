@@ -7,15 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter2
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentViewHolder
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_article.*
 import kotlinx.coroutines.flow.catch
@@ -35,7 +33,7 @@ class ArticleCommentsFragment : CoreFragment() {
     }
 
     override val arguments = Arguments(this)
-    private val adapter by inject<CommentAdapter2>()
+    private val adapter by inject<CommentAdapter>()
     private val viewModel by inject<ArticleCommentsViewModel>()
 
     override fun onCreateView(
@@ -73,25 +71,4 @@ class ArticleCommentsFragment : CoreFragment() {
             private const val ARTICLE_ID = "ArticleId"
         }
     }
-}
-
-class CommentAdapter(
-    private val fragmentManager: FragmentManager, private val count: Int
-) : RecyclerView.Adapter<CommentViewHolder>() {
-
-    override fun getItemCount(): Int {
-        return count
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return CommentViewHolder(inflater.inflate(R.layout.layout_comment_item, parent, false))
-    }
-
-    override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        holder.replyTextView.setOnClickListener {
-            RepliesCommentsFragment.build().show(fragmentManager, "tag")
-        }
-    }
-
 }

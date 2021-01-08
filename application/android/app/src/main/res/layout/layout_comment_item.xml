@@ -35,13 +35,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_avatar"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_author"
-        app:layout_constraintBottom_toTopOf="@id/barrier" />
+        app:layout_constraintBottom_toTopOf="@id/layout_comment_item_barrier_horizontal" />
 
     <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
+        android:id="@+id/layout_comment_item_barrier_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
+        app:constraint_referenced_ids="layout_comment_item_timestamp, layout_comment_item_avatar" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/layout_comment_item_barrier_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="right"
         app:constraint_referenced_ids="layout_comment_item_timestamp, layout_comment_item_avatar" />
 
     <TextView
@@ -50,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimenXS"
-        app:layout_constraintTop_toBottomOf="@id/barrier"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_barrier_horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -60,8 +67,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_barrier_vertical">
 
         <ImageView
             android:id="@+id/layout_comment_item_vote_up"
@@ -95,17 +103,5 @@
             tools:ignore="ContentDescription,RtlSymmetry" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/layout_comment_item_replies"
-        style="@style/Habrachan.Text.Main.Bold"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_vote"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@id/layout_comment_item_vote"
-        app:layout_constraintTop_toTopOf="@id/layout_comment_item_vote" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
