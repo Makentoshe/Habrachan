@@ -1,6 +1,6 @@
 # Habrachan
 
-[![Build Status](http://teamcity.jetbrains.com/app/rest/builds/buildType:(id:TestDrive_Habrachan_Build)/statusIcon.svg)](http://teamcity.jetbrains.com/viewType.html?buildTypeId=TestDrive_Habrachan_Build&guest=1)
+[![Build Status](http://ebovykin.beta.teamcity.com/app/rest/builds/buildType:(id:TestDrive_Habrachan_AndroidBuild)/statusIcon.svg)](https://ebovykin.beta.teamcity.com/buildConfiguration/TestDrive_Habrachan_AndroidBuild?mode=builds)
 
 Habrachan is a (multiplatform in future) project related to [habr.com](https://habr.com) domain. It contains several parts: 
 
