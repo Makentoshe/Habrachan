@@ -4,15 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="8dp"
-    android:paddingTop="8dp">
+    android:paddingHorizontal="8dp">
+
+    <LinearLayout
+        android:id="@+id/layout_comment_item_level"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/layout_comment_item_avatar"
         android:layout_width="@dimen/heightML"
         android:layout_height="@dimen/heightML"
         android:src="@drawable/ic_account_stub"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/dimenS"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_level"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
@@ -20,20 +29,21 @@
         android:id="@+id/layout_comment_item_author"
         style="@style/Habrachan.Text.Main.Bold"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/heightXSL"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimenS"
+        android:layout_marginTop="@dimen/dimenS"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_avatar"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Makentoshe (author name)"/>
 
     <TextView
         android:id="@+id/layout_comment_item_timestamp"
         style="@style/Habrachan.Text.Support"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/heightXSL"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimenS"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_avatar"
-        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_author"
-        app:layout_constraintBottom_toTopOf="@id/layout_comment_item_barrier_horizontal" />
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_author"/>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/layout_comment_item_barrier_horizontal"
@@ -47,17 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="right"
-        app:constraint_referenced_ids="layout_comment_item_timestamp, layout_comment_item_avatar" />
-
-    <TextView
-        style="@style/Habrachan.Text.Main"
-        android:id="@+id/layout_comment_item_body"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimenXS"
-        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_barrier_horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:constraint_referenced_ids="layout_comment_item_timestamp, layout_comment_item_author" />
 
     <!-- TODO move to common (may be into the core module and create controller class) -->
     <LinearLayout
@@ -86,7 +86,8 @@
             android:id="@+id/layout_comment_item_vote_score"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center" />
+            android:gravity="center"
+            tools:text="39"/>
 
         <ImageView
             android:id="@+id/layout_comment_item_vote_down"
@@ -102,5 +103,16 @@
             tools:ignore="ContentDescription,RtlSymmetry" />
 
     </LinearLayout>
+
+    <TextView
+        style="@style/Habrachan.Text.Main"
+        android:id="@+id/layout_comment_item_body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimenXS"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_barrier_horizontal"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_level"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Multilined rendered from html comment body placed here"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

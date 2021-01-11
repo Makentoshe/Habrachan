@@ -6,10 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
@@ -46,10 +43,6 @@ class ArticleCommentsFragment : CoreFragment() {
             Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
         }
 
-        val dividerItemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
-        val dividerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.drawable_divider)
-        dividerItemDecoration.setDrawable(dividerDrawable!!)
-        fragment_comments_article_recycler.addItemDecoration(dividerItemDecoration)
         fragment_comments_article_recycler.adapter = adapter
 
         lifecycleScope.launch {
