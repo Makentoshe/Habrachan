@@ -26,7 +26,9 @@ class ArticleCommentsFragment : CoreFragment() {
             Log.println(level, "ArticleCommentsFragment", message())
         }
 
-        fun build() = ArticleCommentsFragment()
+        fun build(articleId: Int) = ArticleCommentsFragment().apply {
+            arguments.articleId = articleId
+        }
     }
 
     override val arguments = Arguments(this)
@@ -60,8 +62,13 @@ class ArticleCommentsFragment : CoreFragment() {
             get() = fragmentArguments.getInt(ARTICLE_ID)
             set(value) = fragmentArguments.putInt(ARTICLE_ID, value)
 
+        var articleTitle: String
+            get() = fragmentArguments.getString(ARTICLE_TITLE, "")
+            set(value) = fragmentArguments.putString(ARTICLE_TITLE, value)
+
         companion object {
             private const val ARTICLE_ID = "ArticleId"
+            private const val ARTICLE_TITLE = "ArticleTitle"
         }
     }
 }
