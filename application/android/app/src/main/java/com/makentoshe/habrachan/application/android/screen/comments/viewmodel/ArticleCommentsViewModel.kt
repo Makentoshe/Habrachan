@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapterModel
-import com.makentoshe.habrachan.application.android.screen.comments.model.composeModels
 import com.makentoshe.habrachan.application.core.arena.Arena
 import com.makentoshe.habrachan.entity.Comment
 import com.makentoshe.habrachan.network.UserSession
@@ -18,12 +17,13 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.plus
 
 class ArticleCommentsViewModel(
-    private val session: UserSession, private val arena: Arena<GetCommentsRequest, List<Comment>>
+    private val session: UserSession,
+    private val arena: Arena<GetCommentsRequest, List<Comment>>
 ) : ViewModel() {
 
     val comments: Flow<PagingData<CommentAdapterModel>> = flow<PagingData<CommentAdapterModel>> {
         arena.suspendFetch(GetCommentsRequest(session, 536604)).fold({
-            emit(PagingData.from(composeModels(it, 3)))
+            emit(PagingData.from(CommentAdapterModel.compose(it, 3)))
         }, { throw it })
     }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
 
