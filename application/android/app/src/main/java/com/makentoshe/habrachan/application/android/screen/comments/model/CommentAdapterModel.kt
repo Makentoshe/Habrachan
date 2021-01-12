@@ -24,11 +24,11 @@ sealed class CommentAdapterModel {
          * */
         fun compose(
             comments: List<com.makentoshe.habrachan.entity.Comment>,
-            maxLevelIncluded: Int
+            levelRange: IntRange
         ): List<CommentAdapterModel> {
             val adapterModels = ArrayList<CommentAdapterModel>()
             val blocks = ArrayList<Block>()
-            comments.map { comment -> buildModels(comment, maxLevelIncluded) }.forEach { model ->
+            comments.map { comment -> buildModels(comment, levelRange.last) }.forEach { model ->
                 if (model is Block) {
                     blocks.add(model)
                 } else {

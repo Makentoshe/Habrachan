@@ -9,17 +9,17 @@ import com.makentoshe.habrachan.network.request.GetCommentsRequest
 class CommentsDataSource(
     private val session: UserSession,
     private val arena: Arena<GetCommentsRequest, List<Comment>>,
-    private val maxLevelIncluded: Int
+    private val levelRange: IntRange
 ) : PagingSource<CommentsDataSource.CommentsSpec, CommentAdapterModel>() {
 
     override suspend fun load(params: LoadParams<CommentsSpec>): LoadResult<CommentsSpec, CommentAdapterModel> {
         return arena.suspendFetch(GetCommentsRequest(session, params.key!!.articleId)).fold({ comments ->
-            LoadResult.Page(CommentAdapterModel.compose(comments, maxLevelIncluded), null, null, 0, 0)
+            LoadResult.Page(CommentAdapterModel.compose(comments, levelRange), null, null, 0, 0)
         }, {
             LoadResult.Error(it)
         })
     }
 
     /** Spec for requesting comments for article by [articleId] */
-    data class CommentsSpec(val articleId: Int)
+    data class CommentsSpec(val articleId: Int, val commentId: Int)
 }

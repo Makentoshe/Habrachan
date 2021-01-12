@@ -28,8 +28,8 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment): Module() {
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
 
-        val adapter = CommentAdapter(fragment.childFragmentManager)
-        bind<CommentAdapter>().toInstance(adapter)
+        val commentAdapter = CommentAdapter(fragment.childFragmentManager)
+        bind<CommentAdapter>().toInstance(commentAdapter)
 
         val viewModel = getArticleCommentsViewModel(fragment)
         bind<ArticleCommentsViewModel>().toInstance(viewModel)

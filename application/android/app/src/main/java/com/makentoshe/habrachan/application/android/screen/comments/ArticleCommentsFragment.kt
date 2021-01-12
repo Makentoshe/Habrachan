@@ -26,8 +26,17 @@ class ArticleCommentsFragment : CoreFragment() {
             Log.println(level, "ArticleCommentsFragment", message())
         }
 
-        fun build(articleId: Int) = ArticleCommentsFragment().apply {
+        fun build(
+            /** Comments will be downloaded for selected article. */
+            articleId: Int,
+            /** String that will be placed at the toolbar */
+            articleTitle: String,
+            /** Parent comment that may be displayed at the top. If 0 nothing will be displayed */
+            commentId: Int = 0
+        ) = ArticleCommentsFragment().apply {
             arguments.articleId = articleId
+            arguments.articleTitle = articleTitle
+            arguments.commentId = commentId
         }
     }
 
@@ -42,10 +51,11 @@ class ArticleCommentsFragment : CoreFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launch {
             if (savedInstanceState != null) return@launch
-            val spec = CommentsDataSource.CommentsSpec(arguments.articleId)
+            val spec = CommentsDataSource.CommentsSpec(arguments.articleId, arguments.commentId)
             viewModel.sendSpecChannel.send(spec)
         }
 
+        fragment_comments_article_toolbar.title = arguments.articleTitle
         fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         fragment_comments_article_toolbar.setNavigationOnClickListener {
             Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
@@ -72,7 +82,12 @@ class ArticleCommentsFragment : CoreFragment() {
             get() = fragmentArguments.getString(ARTICLE_TITLE, "")
             set(value) = fragmentArguments.putString(ARTICLE_TITLE, value)
 
+        var commentId: Int
+            get() = fragmentArguments.getInt(COMMENT_ID)
+            set(value) = fragmentArguments.putInt(COMMENT_ID, value)
+
         companion object {
+            private const val COMMENT_ID = "CommentId"
             private const val ARTICLE_ID = "ArticleId"
             private const val ARTICLE_TITLE = "ArticleTitle"
         }
