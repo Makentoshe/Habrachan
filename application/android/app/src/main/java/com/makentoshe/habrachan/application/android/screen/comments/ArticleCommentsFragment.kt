@@ -11,10 +11,10 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_article.*
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
@@ -40,6 +40,12 @@ class ArticleCommentsFragment : CoreFragment() {
     ): View? = inflater.inflate(R.layout.fragment_comments_article, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        lifecycleScope.launch {
+            if (savedInstanceState != null) return@launch
+            val spec = CommentsDataSource.CommentsSpec(arguments.articleId)
+            viewModel.sendSpecChannel.send(spec)
+        }
+
         fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         fragment_comments_article_toolbar.setNavigationOnClickListener {
             Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
@@ -48,11 +54,11 @@ class ArticleCommentsFragment : CoreFragment() {
         fragment_comments_article_recycler.adapter = adapter
 
         lifecycleScope.launch {
-            viewModel.comments.catch {
-                println(it)
-            }.collect {
-                adapter.submitData(it)
-            }
+            viewModel.comments.collectLatest { adapter.submitData(it) }
+        }
+
+        adapter.addLoadStateListener {
+            println(it)
         }
     }
 

@@ -3,28 +3,36 @@ package com.makentoshe.habrachan.application.android.screen.comments.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapterModel
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.core.arena.Arena
 import com.makentoshe.habrachan.entity.Comment
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetCommentsRequest
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.plus
 
 class ArticleCommentsViewModel(
-    private val session: UserSession,
-    private val arena: Arena<GetCommentsRequest, List<Comment>>
+    private val session: UserSession, private val arena: Arena<GetCommentsRequest, List<Comment>>
 ) : ViewModel() {
 
-    val comments: Flow<PagingData<CommentAdapterModel>> = flow<PagingData<CommentAdapterModel>> {
-        arena.suspendFetch(GetCommentsRequest(session, 536604)).fold({
-            emit(PagingData.from(CommentAdapterModel.compose(it, 3)))
-        }, { throw it })
+    /** Channel for requesting a batch of comments by article id */
+    private val specChannel = Channel<CommentsDataSource.CommentsSpec>()
+    val sendSpecChannel: SendChannel<CommentsDataSource.CommentsSpec> = specChannel
+
+    /** Flow returns a prepared list comments for the recycler view */
+    @FlowPreview
+    val comments = specChannel.consumeAsFlow().flatMapConcat { spec ->
+        // TODO put maxLevelIncluded in settings
+        Pager(PagingConfig(0), initialKey = spec) { CommentsDataSource(session, arena, 3) }.flow
     }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
 
     class Factory(
@@ -35,3 +43,4 @@ class ArticleCommentsViewModel(
         }
     }
 }
+

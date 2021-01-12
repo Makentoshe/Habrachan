@@ -27,7 +27,7 @@ class AppActivity : AppCompatActivity() {
 
         when (intent.action) {
             Intent.ACTION_MAIN -> {
-                val screen = ArticleCommentsScreen()
+                val screen = ArticleCommentsScreen(536604)
                 router.newRootScreen(screen)
             }
         }
