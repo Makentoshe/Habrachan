@@ -4,10 +4,14 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
+import kotlinx.android.synthetic.main.fragment_comments_discussion.*
+import toothpick.ktp.delegate.inject
 
 class DiscussionCommentsFragment : CoreFragment() {
 
@@ -34,9 +38,19 @@ class DiscussionCommentsFragment : CoreFragment() {
 
     override val arguments = Arguments(this)
 
+    private val navigation by inject<ArticleCommentsNavigation>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ) = TextView(requireContext()).apply { text = "Anus" }
+    ) : View = inflater.inflate(R.layout.fragment_comments_discussion, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        fragment_comments_discussion_toolbar.title = arguments.articleTitle
+        fragment_comments_discussion_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        fragment_comments_discussion_toolbar.setNavigationOnClickListener { navigation.back() }
+
+
+    }
 
     class Arguments(fragment: DiscussionCommentsFragment) : CoreFragment.Arguments(fragment) {
 
