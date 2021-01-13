@@ -9,12 +9,13 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
+import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.BlockViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
 import com.makentoshe.habrachan.entity.Comment
 
 class CommentAdapter(
-    private val fragmentManager: FragmentManager
+    private val navigation: ArticleCommentsNavigation
 ) : PagingDataAdapter<CommentAdapterModel, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
 
     companion object {
@@ -63,7 +64,7 @@ class CommentAdapter(
 
     private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentAdapterModel.Block) {
         BlockViewController(holder).setLevel(model.level).setBody(model.count, model.parent) {
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            navigation.toDiscussionCommentsFragment(it)
         }
     }
 }

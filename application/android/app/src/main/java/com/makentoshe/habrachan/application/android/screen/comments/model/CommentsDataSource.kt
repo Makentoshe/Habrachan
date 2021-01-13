@@ -21,5 +21,5 @@ class CommentsDataSource(
     }
 
     /** Spec for requesting comments for article by [articleId] */
-    data class CommentsSpec(val articleId: Int, val commentId: Int)
+    data class CommentsSpec(val articleId: Int)
 }

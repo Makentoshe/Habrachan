@@ -7,13 +7,13 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class ArticleCommentsScreen(
     private val articleId: Int,
-    private val articleTitle: String,
-    private val commentId: Int = 0
+    private val articleTitle: String
 ) : SupportAppScreen() {
 
-    constructor(article: Article, commentId: Int = 0): this(article.id, article.title, commentId)
+    constructor(article: Article): this(article.id, article.title)
 
     override fun getFragment(): Fragment {
-        return ArticleCommentsFragment.build(articleId, articleTitle, commentId)
+        return ArticleCommentsFragment.build(articleId, articleTitle)
     }
 }
+
