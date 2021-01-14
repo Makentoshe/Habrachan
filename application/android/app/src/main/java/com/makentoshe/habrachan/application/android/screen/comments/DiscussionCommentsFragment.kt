@@ -6,11 +6,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
+import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsSpec
+import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_discussion.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
 class DiscussionCommentsFragment : CoreFragment() {
@@ -39,17 +45,26 @@ class DiscussionCommentsFragment : CoreFragment() {
     override val arguments = Arguments(this)
 
     private val navigation by inject<ArticleCommentsNavigation>()
+    private val viewModel by inject<DiscussionCommentsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ) : View = inflater.inflate(R.layout.fragment_comments_discussion, container, false)
+    ): View = inflater.inflate(R.layout.fragment_comments_discussion, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.sendSpecChannel.send(CommentsSpec(arguments.articleId, arguments.commentId))
+        }
+
         fragment_comments_discussion_toolbar.title = arguments.articleTitle
         fragment_comments_discussion_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         fragment_comments_discussion_toolbar.setNavigationOnClickListener { navigation.back() }
 
-
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.comments.collectLatest {
+                println(it)
+            }
+        }
     }
 
     class Arguments(fragment: DiscussionCommentsFragment) : CoreFragment.Arguments(fragment) {

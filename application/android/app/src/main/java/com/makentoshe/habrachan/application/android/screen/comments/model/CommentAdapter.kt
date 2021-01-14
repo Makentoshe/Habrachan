@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
@@ -63,7 +62,7 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentAdapterModel.Block) {
-        BlockViewController(holder).setLevel(model.level).setBody(model.count, model.parent) {
+        BlockViewController(holder).setLevel(model.actualLevel).setBody(model.count, model.parent) {
             navigation.toDiscussionCommentsFragment(it)
         }
     }

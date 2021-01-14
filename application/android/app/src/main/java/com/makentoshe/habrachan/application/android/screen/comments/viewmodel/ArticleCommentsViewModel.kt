@@ -25,10 +25,10 @@ class ArticleCommentsViewModel(
     private val session: UserSession, private val arena: Arena<GetCommentsRequest, List<Comment>>
 ) : ViewModel() {
 
-    private val specChannel = Channel<CommentsDataSource.CommentsSpec>()
+    private val specChannel = Channel<CommentsSpec>()
 
     /** Channel for requesting a batch of comments by article id */
-    val sendSpecChannel: SendChannel<CommentsDataSource.CommentsSpec> = specChannel
+    val sendSpecChannel: SendChannel<CommentsSpec> = specChannel
 
     private val commentsChannel = Channel<Flow<PagingData<CommentAdapterModel>>>()
 
@@ -43,7 +43,7 @@ class ArticleCommentsViewModel(
             specChannel.receiveAsFlow().collect { spec ->
                 Pager(PagingConfig(0), initialKey = spec) {
                     // TODO put maxLevelIncluded in settings
-                    CommentsDataSource(session, arena, IntRange(1, 3))
+                    CommentsDataSource(session, arena, 3)
                 }.flow.let { commentsChannel.send(it) }
             }
         }

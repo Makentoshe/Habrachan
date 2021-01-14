@@ -5,15 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
+import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsSpec
 import kotlinx.android.synthetic.main.fragment_comments_article.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -45,7 +44,7 @@ class ArticleCommentsFragment : CoreFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launch {
             if (savedInstanceState != null) return@launch
-            val spec = CommentsDataSource.CommentsSpec(arguments.articleId)
+            val spec = CommentsSpec(arguments.articleId)
             viewModel.sendSpecChannel.send(spec)
         }
 
