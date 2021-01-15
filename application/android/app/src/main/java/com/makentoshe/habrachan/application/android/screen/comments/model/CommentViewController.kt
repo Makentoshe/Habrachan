@@ -16,7 +16,7 @@ class CommentViewController(private val holder: CommentViewHolder) {
     }
 
     fun render(comment: Comment): CommentViewController {
-        holder.authorView.text = comment.author.login
+        holder.authorView.text = comment.author.login.plus(" ${comment.level}")
         holder.timestampView.text = comment.timePublished
         holder.bodyView.text = comment.message
         return this

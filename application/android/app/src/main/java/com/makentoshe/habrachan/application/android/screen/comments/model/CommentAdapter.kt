@@ -53,7 +53,7 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
-        CommentViewController(holder).setLevel(model.comment.level).render(model.comment).setVoteListener({
+        CommentViewController(holder).setLevel(model.level).render(model.comment).setVoteListener({
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
         }, {
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
@@ -61,8 +61,8 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentModelBlank) {
-        BlockViewController(holder).setLevel(model.comment.level + 1).setBody(model.repliesCountForParentComment, 0) {
-//            navigation.toDiscussionCommentsFragment(it)
+        BlockViewController(holder).setLevel(model.level).setBody(model.count, model.comment.id) {
+            navigation.toDiscussionCommentsFragment(it)
         }
     }
 }

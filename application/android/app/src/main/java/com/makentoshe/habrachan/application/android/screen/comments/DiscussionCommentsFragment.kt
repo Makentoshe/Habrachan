@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsSpec
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
@@ -44,6 +46,8 @@ class DiscussionCommentsFragment : CoreFragment() {
 
     override val arguments = Arguments(this)
 
+    private val adapter by inject<CommentAdapter>()
+
     private val navigation by inject<ArticleCommentsNavigation>()
     private val viewModel by inject<DiscussionCommentsViewModel>()
 
@@ -60,9 +64,11 @@ class DiscussionCommentsFragment : CoreFragment() {
         fragment_comments_discussion_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         fragment_comments_discussion_toolbar.setNavigationOnClickListener { navigation.back() }
 
+        fragment_comments_discussion_recycler.adapter = adapter
+
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.comments.collectLatest {
-                println(it)
+                adapter.submitData(PagingData.from(it))
             }
         }
     }

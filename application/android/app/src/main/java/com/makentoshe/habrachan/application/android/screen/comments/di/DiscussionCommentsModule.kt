@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
@@ -34,6 +35,8 @@ class DiscussionCommentsModule(fragment: DiscussionCommentsFragment): Module() {
         val navigation =
             ArticleCommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle)
         bind<ArticleCommentsNavigation>().toInstance(navigation)
+
+        bind<CommentAdapter>().toInstance(CommentAdapter(navigation))
 
         val viewModel = getDiscussionCommentsViewModel(fragment)
         bind<DiscussionCommentsViewModel>().toInstance(viewModel)
