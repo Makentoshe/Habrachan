@@ -7,7 +7,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapterModel
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelElement
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.core.arena.Arena
 import com.makentoshe.habrachan.entity.Comment
@@ -30,7 +30,7 @@ class ArticleCommentsViewModel(
     /** Channel for requesting a batch of comments by article id */
     val sendSpecChannel: SendChannel<CommentsSpec> = specChannel
 
-    private val commentsChannel = Channel<Flow<PagingData<CommentAdapterModel>>>()
+    private val commentsChannel = Channel<Flow<PagingData<CommentModelElement>>>()
 
     /** Flow returns a prepared list comments for the recycler view */
     @FlowPreview

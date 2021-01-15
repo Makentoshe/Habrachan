@@ -11,11 +11,10 @@ import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.BlockViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
-import com.makentoshe.habrachan.entity.Comment
 
 class CommentAdapter(
     private val navigation: ArticleCommentsNavigation
-) : PagingDataAdapter<CommentAdapterModel, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
+) : PagingDataAdapter<CommentModelElement, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
 
     companion object {
         inline fun capture(level: Int, message: () -> String) {
@@ -25,9 +24,9 @@ class CommentAdapter(
     }
 
     override fun getItemViewType(position: Int): Int = when (peek(position)) {
-        is CommentAdapterModel.Comment -> super.getItemViewType(position)
-        is CommentAdapterModel.Block -> 1
-        null -> super.getItemViewType(position)
+        is CommentModelNode -> super.getItemViewType(position)
+        is CommentModelBlank -> 1
+        else -> super.getItemViewType(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -44,26 +43,26 @@ class CommentAdapter(
         }
 
         when (model) {
-            is CommentAdapterModel.Comment -> {
-                onBindViewHolderComment(holder as CommentViewHolder, position, model.comment)
+            is CommentModelNode-> {
+                onBindViewHolderComment(holder as CommentViewHolder, position, model)
             }
-            is CommentAdapterModel.Block -> {
+            is CommentModelBlank -> {
                 onBindViewHolderBlock(holder as BlockViewHolder, position, model)
             }
         }
     }
 
-    private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, comment: Comment) {
-        CommentViewController(holder).setLevel(comment.level).render(comment).setVoteListener({
+    private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
+        CommentViewController(holder).setLevel(model.comment.level).render(model.comment).setVoteListener({
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
         }, {
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-        }).setVoteScore(comment.score)
+        }).setVoteScore(model.comment.score)
     }
 
-    private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentAdapterModel.Block) {
-        BlockViewController(holder).setLevel(model.actualLevel).setBody(model.count, model.parent) {
-            navigation.toDiscussionCommentsFragment(it)
+    private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentModelBlank) {
+        BlockViewController(holder).setLevel(model.comment.level + 1).setBody(model.repliesCountForParentComment, 0) {
+//            navigation.toDiscussionCommentsFragment(it)
         }
     }
 }

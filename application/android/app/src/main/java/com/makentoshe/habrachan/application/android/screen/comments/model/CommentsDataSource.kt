@@ -11,11 +11,11 @@ class CommentsDataSource(
     private val session: UserSession,
     private val arena: Arena<GetCommentsRequest, List<Comment>>,
     private val levelRange: Int
-) : PagingSource<CommentsSpec, CommentAdapterModel>() {
+) : PagingSource<CommentsSpec, CommentModelElement>() {
 
-    override suspend fun load(params: LoadParams<CommentsSpec>): LoadResult<CommentsSpec, CommentAdapterModel> {
+    override suspend fun load(params: LoadParams<CommentsSpec>): LoadResult<CommentsSpec, CommentModelElement> {
         return arena.suspendFetch(GetCommentsRequest(session, params.key!!.articleId)).fold({ comments ->
-            LoadResult.Page(CommentAdapterModel.composeArticleComments(comments, levelRange), null, null, 0, 0)
+            LoadResult.Page(CommentModelForest.build(comments).collect(levelRange), null, null, 0, 0)
         }, {
             LoadResult.Error(it)
         })

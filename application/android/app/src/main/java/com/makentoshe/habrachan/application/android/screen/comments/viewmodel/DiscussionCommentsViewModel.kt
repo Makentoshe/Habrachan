@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.application.android.screen.comments.model.buildCommentModelForest
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelForest
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetCommentsRequest
@@ -22,7 +22,7 @@ class DiscussionCommentsViewModel(
 
     val comments = specChannel.consumeAsFlow().map { spec ->
         val result = arena.suspendFetch(GetCommentsRequest(session, spec.articleId))
-        return@map buildCommentModelForest(result.getOrNull()!!)
+        return@map CommentModelForest.build(result.getOrNull()!!)
     }
 
     class Factory(
