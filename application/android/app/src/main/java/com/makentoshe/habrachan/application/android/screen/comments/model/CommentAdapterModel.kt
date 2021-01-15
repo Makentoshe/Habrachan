@@ -9,6 +9,7 @@ interface CommentModelElement {
     val comment: Comment
 }
 
+/** Contains parent comment and reference to a parent node */
 data class CommentModelBlank(
     override val comment: Comment, val repliesCountForParentComment: Int
 ) : CommentModelElement {
@@ -42,22 +43,22 @@ class CommentModelForest private constructor(val nodes: List<CommentModelNode>) 
      * */
     fun collect(level: Int): List<CommentModelElement> {
         // Changes that will be applied to nodes at the end
-        // Map<position_in_nodes_list, element_to_insert>
+        // Map<parent_comment_id, element_to_insert>
         val changes = HashMap<Int, CommentModelBlank>()
         // Here we filter all nodes that level is bigger that we requires
         val nodes = nodes.filter { node -> node.comment.level <= level }
         // check last level nodes for having a childs
         // if they have - add to changes map
-        nodes.forEachIndexed { index, node ->
+        nodes.forEach { node ->
             if (node.comment.level == level && node.childs.isNotEmpty()) {
-                changes[index + 1] = CommentModelBlank(node.comment, node.count())
+                changes[node.comment.id] = CommentModelBlank(node.comment, node.count())
             }
         }
         // joining nodes and changes together
         val elements = LinkedList<CommentModelElement>(nodes)
-        // index helps to correct position
-        changes.entries.forEachIndexed { index, entry ->
-            elements.add(entry.key + index, entry.value)
+        changes.entries.forEach { entry ->
+            val index = elements.indexOf(elements.find { it.comment.id == entry.key })
+            elements.add(index + 1, entry.value)
         }
         return elements
     }
