@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelElement
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelForest
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelNode
 import com.makentoshe.habrachan.application.android.screen.comments.model.DISCUSSION_COMMENT_LEVEL_DEPTH
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
 import com.makentoshe.habrachan.network.UserSession
@@ -29,11 +30,11 @@ class DiscussionCommentsViewModel(
     /** Channel for requesting a batch of comments by article id */
     val sendSpecChannel: SendChannel<CommentsSpec> = specChannel
 
-    val commentChannel = Channel<CommentModelElement>()
+    private val commentChannel = Channel<CommentModelNode>()
 
     /** Parent comment for the [comments] */
-    val comment = commentChannel.consumeAsFlow().map { element ->
-        PagingData.from(listOf(element))
+    val comment = commentChannel.consumeAsFlow().map { node ->
+        PagingData.from(listOf<CommentModelElement>(node.copy(level = 0)))
     }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
 
     /** Replies for the [comment] */
