@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.di
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ConcatAdapter
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
@@ -22,6 +23,11 @@ import javax.inject.Qualifier
 
 @Qualifier
 annotation class DiscussionCommentsScope
+
+internal const val TitleAdapterQualifier = "TitleAdapter"
+
+internal const val CommentsAdapterQualifier = "CommentsAdapter"
+
 class DiscussionCommentsModule(fragment: DiscussionCommentsFragment): Module() {
 
     private val router by inject<Router>()
@@ -36,7 +42,13 @@ class DiscussionCommentsModule(fragment: DiscussionCommentsFragment): Module() {
             ArticleCommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle)
         bind<ArticleCommentsNavigation>().toInstance(navigation)
 
-        bind<CommentAdapter>().toInstance(CommentAdapter(navigation))
+        val commentsAdapter = CommentAdapter(navigation)
+        bind<CommentAdapter>().withName(CommentsAdapterQualifier).toInstance(commentsAdapter)
+
+        val titleAdapter = CommentAdapter(navigation)
+        bind<CommentAdapter>().withName(TitleAdapterQualifier).toInstance(titleAdapter)
+
+        bind<ConcatAdapter>().toInstance(ConcatAdapter(titleAdapter, commentsAdapter))
 
         val viewModel = getDiscussionCommentsViewModel(fragment)
         bind<DiscussionCommentsViewModel>().toInstance(viewModel)

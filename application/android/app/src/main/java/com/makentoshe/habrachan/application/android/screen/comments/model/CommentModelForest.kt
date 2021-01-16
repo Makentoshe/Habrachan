@@ -11,7 +11,7 @@ import kotlin.collections.HashMap
 const val ARTICLE_COMMENT_LEVEL_DEPTH = 3
 
 // TODO put value in android settings, so any user will be able to configure them
-const val DISCUSSION_COMMENT_LEVEL_DEPTH = 4 + 1 /* correction value */
+const val DISCUSSION_COMMENT_LEVEL_DEPTH = 3 + 1 /* correction value */
 
 interface CommentModelElement {
     val comment: Comment

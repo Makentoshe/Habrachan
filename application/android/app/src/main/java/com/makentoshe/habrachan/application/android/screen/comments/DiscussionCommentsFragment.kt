@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ConcatAdapter
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsAdapterQualifier
+import com.makentoshe.habrachan.application.android.screen.comments.di.TitleAdapterQualifier
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsSpec
@@ -45,7 +48,9 @@ class DiscussionCommentsFragment : CoreFragment() {
 
     override val arguments = Arguments(this)
 
-    private val commentAdapter by inject<CommentAdapter>()
+    private val commentAdapter by inject<CommentAdapter>(CommentsAdapterQualifier)
+    private val titleAdapter by inject<CommentAdapter>(TitleAdapterQualifier)
+    private val adapter by inject<ConcatAdapter>()
 
     private val navigation by inject<ArticleCommentsNavigation>()
     private val viewModel by inject<DiscussionCommentsViewModel>()
@@ -63,15 +68,15 @@ class DiscussionCommentsFragment : CoreFragment() {
         fragment_comments_discussion_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         fragment_comments_discussion_toolbar.setNavigationOnClickListener { navigation.back() }
 
-        fragment_comments_discussion_recycler.adapter = commentAdapter
+        fragment_comments_discussion_recycler.adapter = adapter
 
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.comments.collectLatest { commentAdapter.submitData(it) }
-            viewModel.comment.collectLatest {
-                println("Comment")
-            }
         }
 
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.comment.collectLatest { titleAdapter.submitData(it) }
+        }
     }
 
     class Arguments(fragment: DiscussionCommentsFragment) : CoreFragment.Arguments(fragment) {
