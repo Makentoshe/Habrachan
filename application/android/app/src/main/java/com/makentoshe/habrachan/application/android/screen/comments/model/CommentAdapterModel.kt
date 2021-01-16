@@ -20,15 +20,22 @@ data class CommentModelBlank(
 }
 
 data class CommentModelNode(
-    override val comment: Comment, override val level: Int
+    override val comment: Comment,
+    /** Contains a local level depth in the current tree */
+    override val level: Int
 ) : CommentModelElement {
+    /** Reference to a parent node. If null - this node is a root of a tree */
     var parent: CommentModelNode? = null
+    /** References to a child nodes. If empty - this node is a leaf of a tree */
     val childs = ArrayList<CommentModelNode>()
 
     /** Counts all childes in this subtree recursively */
     fun count(): Int = childs.fold(childs.count()) { count, node -> count + node.count() }
 }
 
+/**
+ * [nodes] all nodes in this forest
+ */
 class CommentModelForest private constructor(val nodes: List<CommentModelNode>) {
 
     val roots = nodes.filter { model -> model.comment.parentId == 0 }
@@ -48,31 +55,42 @@ class CommentModelForest private constructor(val nodes: List<CommentModelNode>) 
         return cutoffByMaxLevel(nodes, levelDepth)
     }
 
-    /** [levelDepth] is a local depth */
+    /**
+     * Collects all nodes that not exceeds given [levelDepth] and are children
+     * of given node by comment [id].
+     *
+     * If comment could not be find - the [NoSuchElementException] will be thrown.
+     *
+     * [id] comment id.
+     * [levelDepth] local depth. The 0 equals the comment's level value.
+     */
     fun collect(id: Int, levelDepth: Int): List<CommentModelElement> {
         val node = nodes.find { it.comment.id == id } ?: throw NoSuchElementException()
 
         val minLevel = node.comment.level
         val minLevelCollect = collectRecursive(node, minLevel)
 
-        return minLevelCollect
-        // TODO add cutoff by max level
-
-        println("Root: $minLevel\nDepth: $levelDepth\nMaxLevel: ${minLevel + levelDepth}")
-
-        // Here we filter all nodes that level is bigger that we requires
-        val nodes = minLevelCollect.filter { node ->
-            node.comment.level <= minLevel + levelDepth
-        }
-
-        return nodes
+        return cutoffByMaxLevel(minLevelCollect, minLevel + levelDepth)
     }
 
     // TODO we can make this function as a main sort function if we does not trust the source
+    /**
+     * Collects all [node] childs using DFS.
+     * Method returns a list of copied nodes, so, after their modification
+     * the original tree will not being corrupted.
+     *
+     * [node] node for which children will be gathered.
+     * [minLevel] the level of resulting nodes will be recalculated with
+     * this value using equation: node_level - min_level - 1(correction value).
+     * // todo check minLevel value when it comes < 0
+     */
     private fun collectRecursive(node: CommentModelNode, minLevel: Int): ArrayList<CommentModelNode> {
         val list = ArrayList<CommentModelNode>()
         node.childs.forEach { node ->
-            list.add(node.copy(comment = node.comment, level = node.level - minLevel - 1))
+            val copied = node.copy(comment = node.comment, level = node.level - minLevel - 1)
+            copied.childs.addAll(node.childs)
+            copied.parent = node.parent
+            list.add(copied)
             list.addAll(collectRecursive(node, minLevel))
         }
         return list
@@ -91,7 +109,7 @@ class CommentModelForest private constructor(val nodes: List<CommentModelNode>) 
         // if they have - add to changes map
         nodes.forEach { node ->
             if (node.comment.level == maxLevelDepth && node.childs.isNotEmpty()) {
-                changes[node.comment.id] = CommentModelBlank(node.comment, node.count(), node.comment.level + 1)
+                changes[node.comment.id] = CommentModelBlank(node.comment, node.count(), node.level + 1)
             }
         }
 
