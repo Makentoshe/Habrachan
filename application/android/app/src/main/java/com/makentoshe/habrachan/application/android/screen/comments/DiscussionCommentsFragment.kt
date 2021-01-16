@@ -15,6 +15,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsA
 import com.makentoshe.habrachan.application.android.screen.comments.di.TitleAdapterQualifier
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
+import com.makentoshe.habrachan.application.android.screen.comments.view.DiscussionCommentSeparatorItemDecoration
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsSpec
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_discussion.*
@@ -22,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
+
 
 class DiscussionCommentsFragment : CoreFragment() {
 
@@ -67,6 +69,9 @@ class DiscussionCommentsFragment : CoreFragment() {
         fragment_comments_discussion_toolbar.title = arguments.articleTitle
         fragment_comments_discussion_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         fragment_comments_discussion_toolbar.setNavigationOnClickListener { navigation.back() }
+
+        val separateDecoration = DiscussionCommentSeparatorItemDecoration(requireContext())
+        fragment_comments_discussion_recycler.addItemDecoration(separateDecoration)
 
         fragment_comments_discussion_recycler.adapter = adapter
 
