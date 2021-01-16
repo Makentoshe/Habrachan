@@ -7,6 +7,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.makentoshe.habrachan.application.android.screen.comments.model.ARTICLE_COMMENT_LEVEL_DEPTH
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelElement
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.core.arena.Arena
@@ -42,8 +43,7 @@ class ArticleCommentsViewModel(
         viewModelScope.launch {
             specChannel.receiveAsFlow().collect { spec ->
                 Pager(PagingConfig(0), initialKey = spec) {
-                    // TODO put maxLevelIncluded in settings
-                    CommentsDataSource(session, arena, 3)
+                    CommentsDataSource(session, arena, ARTICLE_COMMENT_LEVEL_DEPTH)
                 }.flow.let { commentsChannel.send(it) }
             }
         }
