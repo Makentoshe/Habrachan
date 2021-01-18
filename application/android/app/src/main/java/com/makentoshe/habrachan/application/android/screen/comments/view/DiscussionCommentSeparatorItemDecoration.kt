@@ -4,12 +4,13 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.dp2px
 import kotlin.math.roundToInt
 
-// TODO add top margin for separator
 class DiscussionCommentSeparatorItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
 
     private var mDivider = ContextCompat.getDrawable(context, R.drawable.drawable_divider)!!
@@ -19,10 +20,10 @@ class DiscussionCommentSeparatorItemDecoration(context: Context) : RecyclerView.
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         if (parent.layoutManager == null) return
         super.onDraw(c, parent, state)
-        drawVertical(c, parent)
+        drawHorizontal(c, parent)
     }
 
-    private fun drawVertical(canvas: Canvas, parent: RecyclerView) {
+    private fun drawHorizontal(canvas: Canvas, parent: RecyclerView) {
         canvas.save()
         val left: Int
         val right: Int
@@ -36,7 +37,16 @@ class DiscussionCommentSeparatorItemDecoration(context: Context) : RecyclerView.
             left = 0
             right = parent.width
         }
+
+        // get first element view
         val child = parent.getChildAt(0) ?: return
+        if (parent.getChildAdapterPosition(child) != 0) return
+
+        // appends margin to bottom for the child view
+        val params = child.layoutParams as ViewGroup.MarginLayoutParams
+        params.bottomMargin = child.context.dp2px(6f).roundToInt()
+        child.layoutParams = params
+
         parent.getDecoratedBoundsWithMargins(child, mBounds)
         val bottom = mBounds.bottom + child.translationY.roundToInt()
         val top = bottom - mDivider.intrinsicHeight
