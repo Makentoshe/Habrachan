@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.BuildConfig
-import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
@@ -36,17 +37,22 @@ class ArticleCommentsFragment : CoreFragment() {
     private val adapter by inject<CommentAdapter>()
     private val viewModel by inject<ArticleCommentsViewModel>()
     private val navigation by inject<ArticleCommentsNavigation>()
+    private val exceptionHandler by inject<ExceptionHandler>()
+
+    private lateinit var exceptionController: ExceptionController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_comments_article, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        lifecycleScope.launch {
-            if (savedInstanceState != null) return@launch
+        if (savedInstanceState == null) lifecycleScope.launch {
             val spec = CommentsSpec(arguments.articleId)
             viewModel.sendSpecChannel.send(spec)
         }
+
+        exceptionController = ExceptionController(ExceptionViewHolder(fragment_comments_article_exception))
+        exceptionController.setRetryButton { adapter.retry() }
 
         fragment_comments_article_toolbar.title = arguments.articleTitle
         fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
@@ -55,11 +61,29 @@ class ArticleCommentsFragment : CoreFragment() {
         fragment_comments_article_recycler.adapter = adapter
 
         lifecycleScope.launch {
-            viewModel.comments.collectLatest { adapter.submitData(it) }
+            viewModel.comments.collectLatest {
+                adapter.submitData(it)
+            }
         }
 
-        adapter.addLoadStateListener {
-            println(it)
+        adapter.addLoadStateListener(::loadStateListener)
+    }
+
+    private fun loadStateListener(state: CombinedLoadStates) = when (val refresh = state.refresh) {
+        is LoadState.NotLoading -> {
+            exceptionController.disable()
+            fragment_comments_article_progress.visibility = View.GONE
+            fragment_comments_article_recycler.visibility = View.VISIBLE
+        }
+        is LoadState.Loading -> {
+            exceptionController.disable()
+            fragment_comments_article_progress.visibility = View.VISIBLE
+            fragment_comments_article_recycler.visibility = View.GONE
+        }
+        is LoadState.Error -> {
+            exceptionController.render(exceptionHandler.handleException(refresh.error))
+            fragment_comments_article_progress.visibility = View.GONE
+            fragment_comments_article_recycler.visibility = View.VISIBLE
         }
     }
 
