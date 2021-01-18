@@ -52,7 +52,9 @@ class ArticleCommentsFragment : CoreFragment() {
         }
 
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_comments_article_exception))
-        exceptionController.setRetryButton { adapter.retry() }
+        exceptionController.setRetryButton {
+            adapter.retry()
+        }
 
         fragment_comments_article_toolbar.title = arguments.articleTitle
         fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
