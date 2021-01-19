@@ -14,6 +14,7 @@ const val ARTICLE_COMMENT_LEVEL_DEPTH = 3
 const val DISCUSSION_COMMENT_LEVEL_DEPTH = 3 + 1 /* correction value */
 
 interface CommentModelElement {
+
     val comment: Comment
 
     val level: Int

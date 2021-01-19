@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.application.android
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.View
@@ -61,6 +62,7 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
         return ExceptionHandler.Entry(title, description)
     }
 
+    @SuppressLint("LongLogTag")
     private fun handleUnknownException(exception: Throwable?): ExceptionHandler.Entry {
         Log.e("ExceptionHandler#Unknown", exception.toString())
 
