@@ -9,8 +9,20 @@ import android.view.View
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
 import com.makentoshe.habrachan.entity.Comment
+import io.noties.markwon.Markwon
+import io.noties.markwon.html.HtmlPlugin
+import io.noties.markwon.image.ImagesPlugin
+import io.noties.markwon.image.network.OkHttpNetworkSchemeHandler
+import okhttp3.OkHttpClient
 
 class CommentViewController(private val holder: CommentViewHolder) {
+
+    // TODO optimize image loading using image arena
+    private val markwon = Markwon.builder(holder.context)
+        .usePlugin(HtmlPlugin.create())
+        .usePlugin(ImagesPlugin.create {
+            it.addSchemeHandler(OkHttpNetworkSchemeHandler.create(OkHttpClient()))
+        }).build()
 
     init {
         holder.levelView.removeAllViews()
@@ -28,7 +40,7 @@ class CommentViewController(private val holder: CommentViewHolder) {
     }
 
     fun render(comment: Comment): CommentViewController {
-        holder.bodyView.text = comment.message
+        markwon.setMarkdown(holder.bodyView, comment.message)
         return this
     }
 
