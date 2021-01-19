@@ -8,12 +8,21 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
+import com.makentoshe.habrachan.application.android.dp2px
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.BlockViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
+import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
+import com.makentoshe.habrachan.application.android.toRoundedDrawable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class CommentAdapter(
-    private val navigation: ArticleCommentsNavigation
+    private val navigation: ArticleCommentsNavigation,
+    private val lifecycleScope: CoroutineScope,
+    private val viewModel: CommentsViewModel
 ) : PagingDataAdapter<CommentModelElement, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
 
     companion object {
@@ -53,11 +62,21 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
-        CommentViewController(holder).setLevel(model.level).render(model.comment).setVoteListener({
+        val controller = CommentViewController(holder).install(model.comment).setVoteListener({
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
         }, {
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-        }).setVoteScore(model.comment.score)
+        }).setStubAvatar().setLevel(model.level)
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.requestAvatar(model.comment.avatar).collectLatest { result ->
+                result.onFailure { controller.setStubAvatar() }.onSuccess {
+                    val resources = holder.context.resources
+                    val radius = holder.context.dp2px(R.dimen.radiusS)
+                    controller.setAvatar(it.bytes.toRoundedDrawable(resources, radius))
+                }
+            }
+        }
     }
 
     private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentModelBlank) {

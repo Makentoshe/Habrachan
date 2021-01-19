@@ -5,11 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelElement
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelForest
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelNode
-import com.makentoshe.habrachan.application.android.screen.comments.model.DISCUSSION_COMMENT_LEVEL_DEPTH
+import com.makentoshe.habrachan.application.android.screen.comments.model.*
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
+import com.makentoshe.habrachan.application.core.arena.image.AvatarArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetCommentsRequest
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +20,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 class DiscussionCommentsViewModel(
-    private val session: UserSession, private val arena: CommentsCacheFirstArena
-) : ViewModel() {
+    private val session: UserSession,
+    private val arena: CommentsCacheFirstArena,
+    avatarArena: AvatarArena
+) : CommentsViewModel(avatarArena) {
 
     private val specChannel = Channel<CommentsSpec>()
 
@@ -51,13 +51,12 @@ class DiscussionCommentsViewModel(
     }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
 
     class Factory(
-        private val session: UserSession, private val arena: CommentsCacheFirstArena
+        private val session: UserSession,
+        private val arena: CommentsCacheFirstArena,
+        private val avatarArena: AvatarArena
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return DiscussionCommentsViewModel(session, arena) as T
+            return DiscussionCommentsViewModel(session, arena, avatarArena) as T
         }
     }
 }
-
-/** Spec for requesting replies for [commentId] in [articleId] */
-data class CommentsSpec(val articleId: Int, val commentId: Int = 0)

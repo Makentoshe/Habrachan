@@ -11,9 +11,9 @@ import androidx.paging.LoadState
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
-import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsSpec
 import kotlinx.android.synthetic.main.fragment_comments_article.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
