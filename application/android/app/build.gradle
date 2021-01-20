@@ -148,7 +148,7 @@ dependencies {
 
     // Pagination library
     // https://developer.android.com/topic/libraries/architecture/paging
-    def pagination = "2.1.2"
+    def pagination = "3.0.0-alpha11"
     implementation "androidx.paging:paging-runtime-ktx:$pagination"
     implementation "androidx.paging:paging-rxjava2:$pagination"
 

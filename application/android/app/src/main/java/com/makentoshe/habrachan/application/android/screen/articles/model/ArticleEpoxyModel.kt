@@ -80,7 +80,6 @@ abstract class ArticleEpoxyModel : EpoxyModelWithHolder<ArticleEpoxyModel.ViewHo
             scoreView = itemView.findViewById(R.id.score_textview)
             readingView = itemView.findViewById(R.id.reading_count_textview)
             commentsView = itemView.findViewById(R.id.comments_count_textview)
-            divideView = itemView.findViewById<View>(R.id.divider)
             baseView = itemView
             context = itemView.context
         }

@@ -5,17 +5,21 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
+import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticleAdapter
+import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesSpec
+import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel2
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_articles.*
 import kotlinx.android.synthetic.main.fragment_articles_content.*
 import kotlinx.android.synthetic.main.fragment_articles_panel.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
 class ArticlesFragment : CoreFragment() {
@@ -29,72 +33,86 @@ class ArticlesFragment : CoreFragment() {
     }
 
     override val arguments = Arguments(this)
-    private val viewModel by inject<ArticlesViewModel>()
-    private val disposables by inject<CompositeDisposable>()
+    private val viewModel by inject<ArticlesViewModel2>()
     private val exceptionHandler by inject<ExceptionHandler>()
+
+    private val adapter = ArticleAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_articles, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        onViewCreatedContent()
+        if (savedInstanceState == null) lifecycleScope.launch {
+            val requestSpec = GetArticlesRequest.Spec.All()
+            val articlesSpec = ArticlesSpec(arguments.page, requestSpec)
+            viewModel.sendSpecChannel.send(articlesSpec)
+        }
+
+        fragment_articles_recycler.adapter = adapter
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.articles.collectLatest {
+                adapter.submitData(it)
+            }
+        }
+
         onViewCreatedPanel()
 
         fragment_articles_flow_panel.isTouchEnabled = false
         fragment_articles_flow_collapsing.isTitleEnabled = false
         fragment_articles_flow_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
 
-        viewModel.searchSubject.subscribe {
-            fragment_articles_flow_toolbar.title = deserializeSpec(it)
-        }.let(disposables::add)
+//        viewModel.searchSubject.subscribe {
+//            fragment_articles_flow_toolbar.title = deserializeSpec(it)
+//        }.let(disposables::add)
     }
 
     private fun onViewCreatedContent() {
-        viewModel.adapterObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            fragment_articles_recycler.adapter = it
-        }.let(disposables::add)
-
-        viewModel.searchSubject.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            onRetryClickView()
-        }.let(disposables::add)
-
-        viewModel.initialObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            it.onFailure(::onInitialFailure).onSuccess { onInitialSuccessView() }
-        }.let(disposables::add)
-
-        fragment_articles_retry.setOnClickListener {
-            onRetryClickView()
-            viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return@setOnClickListener)
-        }
-
-        fragment_articles_swipe.setOnRefreshListener {
-            viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return@setOnRefreshListener)
-        }
+//        viewModel.adapterObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+//            fragment_articles_recycler.adapter = it
+//        }.let(disposables::add)
+//
+//        viewModel.searchSubject.observeOn(AndroidSchedulers.mainThread()).subscribe {
+//            onRetryClickView()
+//        }.let(disposables::add)
+//
+//        viewModel.initialObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+//            it.onFailure(::onInitialFailure).onSuccess { onInitialSuccessView() }
+//        }.let(disposables::add)
+//
+//        fragment_articles_retry.setOnClickListener {
+//            onRetryClickView()
+//            viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return@setOnClickListener)
+//        }
+//
+//        fragment_articles_swipe.setOnRefreshListener {
+//            viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return@setOnRefreshListener)
+//        }
     }
 
     private fun onViewCreatedPanel() {
         fragment_articles_category_toggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (!isChecked) return@addOnButtonCheckedListener // ignore uncheck call
             closeSearchPanel()
-            onCategoryChecked(checkedId)
+//            onCategoryChecked(checkedId)
         }
         fragment_articles_category_toggle.check(R.id.fragment_articles_category_all)
     }
 
-    private fun onCategoryChecked(checkedId: Int) = when (checkedId) {
-        R.id.fragment_articles_category_all -> {
-            val spec = GetArticlesRequest.Spec.All(include = "text_html")
-            viewModel.searchSubject.onNext(spec)
-        }
-        R.id.fragment_articles_category_interesting -> {
-            val spec = GetArticlesRequest.Spec.Interesting(include = "text_html")
-            viewModel.searchSubject.onNext(spec)
-        }
-        R.id.fragment_articles_category_top -> {
-            val spec = GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily, include = "text_html")
-            viewModel.searchSubject.onNext(spec)
-        }
+    private fun onCategoryChecked(checkedId: Int): Unit = when (checkedId) {
+//        R.id.fragment_articles_category_all -> {
+//            val spec = GetArticlesRequest.Spec.All(include = "text_html")
+//            viewModel.searchSubject.onNext(spec)
+//        }
+//        R.id.fragment_articles_category_interesting -> {
+//            val spec = GetArticlesRequest.Spec.Interesting(include = "text_html")
+//            viewModel.searchSubject.onNext(spec)
+//        }
+//        R.id.fragment_articles_category_top -> {
+//            val spec = GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily, include = "text_html")
+//            viewModel.searchSubject.onNext(spec)
+//        }
         else -> throw IllegalArgumentException(checkedId.toString())
     }
 
