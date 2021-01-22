@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- TODO refactor layout -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,7 +9,8 @@
     android:focusable="true"
     android:paddingTop="10dp"
     android:paddingStart="8dp"
-    android:paddingEnd="8dp">
+    android:paddingEnd="8dp"
+    android:paddingBottom="4dp">
 
     <TextView
         android:id="@+id/time_published"
@@ -21,7 +22,7 @@
 
     <TextView
         android:id="@+id/author_login"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,8 +38,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/time_published"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/time_published" />
 
     <TextView
         android:id="@+id/hubs_titles"

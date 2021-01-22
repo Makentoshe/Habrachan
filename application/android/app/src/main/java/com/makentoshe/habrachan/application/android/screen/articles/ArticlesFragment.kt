@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.articles
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -9,11 +10,13 @@ import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticleAdapter
+import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleAdapter
+import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleItemDecoration
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesSpec
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel2
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlinx.android.synthetic.main.articles_fragment.view.*
 import kotlinx.android.synthetic.main.fragment_articles.*
 import kotlinx.android.synthetic.main.fragment_articles_content.*
 import kotlinx.android.synthetic.main.fragment_articles_panel.*
@@ -36,19 +39,27 @@ class ArticlesFragment : CoreFragment() {
     private val viewModel by inject<ArticlesViewModel2>()
     private val exceptionHandler by inject<ExceptionHandler>()
 
+    // TODO move adapter to di
     private val adapter = ArticleAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_articles, container, false)
 
+    // TODO add retrying on click
+    // TODO add refresh on swipe
+    // TODO add starting new search
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // TODO add toolbar spec displaying
         if (savedInstanceState == null) lifecycleScope.launch {
             val requestSpec = GetArticlesRequest.Spec.All()
             val articlesSpec = ArticlesSpec(arguments.page, requestSpec)
             viewModel.sendSpecChannel.send(articlesSpec)
         }
 
+        // TODO fix decoration color
+        val itemDecoration = ArticleItemDecoration.Builder(requireContext()).color(Color.MAGENTA).build()
+        fragment_articles_recycler.addItemDecoration(itemDecoration)
         fragment_articles_recycler.adapter = adapter
 
         lifecycleScope.launch(Dispatchers.IO) {
@@ -163,7 +174,7 @@ class ArticlesFragment : CoreFragment() {
         closeSoftKeyboard()
     }
 
-    private fun deserializeSpec(spec: GetArticlesRequest.Spec): String = when(spec) {
+    private fun deserializeSpec(spec: GetArticlesRequest.Spec): String = when (spec) {
         is GetArticlesRequest.Spec.All -> {
             requireContext().getString(R.string.articles_type_all)
         }
@@ -171,7 +182,7 @@ class ArticlesFragment : CoreFragment() {
             requireContext().getString(R.string.articles_type_interesting)
         }
         is GetArticlesRequest.Spec.Top -> {
-            val type = when(spec.type) {
+            val type = when (spec.type) {
                 GetArticlesRequest.Spec.Top.Type.AllTime -> {
                     requireContext().getString(R.string.articles_top_type_alltime)
                 }
@@ -192,6 +203,7 @@ class ArticlesFragment : CoreFragment() {
         }
     }
 
+    // TODO add initial spec as argument
     class Arguments(fragment: ArticlesFragment) : CoreFragment.Arguments(fragment) {
 
         var page: Int
