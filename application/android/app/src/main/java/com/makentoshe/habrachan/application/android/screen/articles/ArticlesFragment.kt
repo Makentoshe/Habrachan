@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.application.android.screen.articles
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -11,7 +10,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleAdapter
-import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleItemDecoration
+import com.makentoshe.habrachan.application.android.screen.articles.view.PagedArticleItemDecoration
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesSpec
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel2
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
@@ -57,8 +56,7 @@ class ArticlesFragment : CoreFragment() {
             viewModel.sendSpecChannel.send(articlesSpec)
         }
 
-        // TODO fix decoration color
-        val itemDecoration = ArticleItemDecoration.Builder(requireContext()).color(Color.MAGENTA).build()
+        val itemDecoration = PagedArticleItemDecoration.from(requireContext())
         fragment_articles_recycler.addItemDecoration(itemDecoration)
         fragment_articles_recycler.adapter = adapter
 
