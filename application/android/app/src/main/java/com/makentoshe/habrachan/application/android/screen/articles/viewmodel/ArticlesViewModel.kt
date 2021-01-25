@@ -12,7 +12,6 @@ import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.response.ArticlesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -22,9 +21,7 @@ class ArticlesViewModel2(
     private val session: UserSession, private val arena: Arena<GetArticlesRequest, ArticlesResponse>
 ) : ViewModel() {
 
-    private val specChannel = Channel<ArticlesSpec>()
-
-    val sendSpecChannel: SendChannel<ArticlesSpec> = specChannel
+    val specChannel = Channel<ArticlesSpec>()
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     val articles = specChannel.receiveAsFlow().flatMapConcat {
@@ -32,6 +29,11 @@ class ArticlesViewModel2(
             ArticlesDataSource(session, arena)
         }.flow
     }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
+
+    /** Returns flow with paging data for selected tags */
+    fun articles(spec: ArticlesSpec) = Pager(PagingConfig(ArticlesSpec.PAGE_SIZE), spec) {
+        ArticlesDataSource(session, arena)
+    }.flow.cachedIn(viewModelScope.plus(Dispatchers.IO))
 
     class Factory(
         private val session: UserSession, private val arena: Arena<GetArticlesRequest, ArticlesResponse>

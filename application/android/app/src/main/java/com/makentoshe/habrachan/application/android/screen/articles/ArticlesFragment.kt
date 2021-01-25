@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.fragment_article_toolbar.*
 import kotlinx.android.synthetic.main.fragment_articles.*
 import kotlinx.android.synthetic.main.fragment_articles_content.*
 import kotlinx.android.synthetic.main.fragment_articles_panel.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
@@ -48,33 +47,27 @@ class ArticlesFragment : CoreFragment() {
 
     // TODO add retrying on click
     // TODO add refresh on swipe
-    // TODO add starting new search
+    // TODO add scrolling to top of the recycler view on new search
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (savedInstanceState == null) lifecycleScope.launch {
-            val requestSpec = GetArticlesRequest.Spec.All()
-            val articlesSpec = ArticlesSpec(arguments.page, requestSpec)
-            viewModel.sendSpecChannel.send(articlesSpec)
+            val requestSpec = GetArticlesRequest.Spec.All(include = "text_html")
             updateArticleRequestSpecViews(requestSpec)
+            viewModel.articles(ArticlesSpec(arguments.page, requestSpec)).collectLatest {
+                adapter.submitData(it)
+            }
         }
-
-        fragment_articles_category_toggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (!isChecked) return@addOnButtonCheckedListener // ignore uncheck call
-            closeSearchPanel()
-//            onCategoryChecked(checkedId)
-        }
-
-        fragment_articles_panel.isTouchEnabled = false
-        fragment_articles_collapsing.isTitleEnabled = false
-        fragment_articles_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
 
         val itemDecoration = PagedArticleItemDecoration.from(requireContext())
         fragment_articles_recycler.addItemDecoration(itemDecoration)
         fragment_articles_recycler.adapter = adapter
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.articles.collectLatest {
-                adapter.submitData(it)
-            }
+        fragment_articles_panel.isTouchEnabled = false
+        fragment_articles_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
+        fragment_articles_collapsing.isTitleEnabled = false
+        fragment_articles_category_toggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener // ignore uncheck call
+            closeSearchPanel()
+            onCategoryChecked(checkedId)
         }
     }
 
@@ -105,7 +98,8 @@ class ArticlesFragment : CoreFragment() {
                     requireContext().getString(R.string.articles_top_type_daily)
                 }
             }
-            fragment_articles_toolbar.title = requireContext().getString(R.string.articles_top_preposition, type)
+            fragment_articles_toolbar.title =
+                requireContext().getString(R.string.articles_top_preposition, type)
             fragment_articles_category_toggle.check(R.id.fragment_articles_category_top)
         }
     }
@@ -133,20 +127,32 @@ class ArticlesFragment : CoreFragment() {
 //        }
     }
 
-    private fun onCategoryChecked(checkedId: Int): Unit = when (checkedId) {
-//        R.id.fragment_articles_category_all -> {
-//            val spec = GetArticlesRequest.Spec.All(include = "text_html")
-//            viewModel.searchSubject.onNext(spec)
-//        }
-//        R.id.fragment_articles_category_interesting -> {
-//            val spec = GetArticlesRequest.Spec.Interesting(include = "text_html")
-//            viewModel.searchSubject.onNext(spec)
-//        }
-//        R.id.fragment_articles_category_top -> {
-//            val spec = GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily, include = "text_html")
-//            viewModel.searchSubject.onNext(spec)
-//        }
+    private fun onCategoryChecked(checkedId: Int) = when (checkedId) {
+        R.id.fragment_articles_category_all -> {
+            val requestSpec = GetArticlesRequest.Spec.All(include = "text_html")
+            updateAdapterContent(requestSpec)
+        }
+        R.id.fragment_articles_category_interesting -> {
+            val requestSpec = GetArticlesRequest.Spec.Interesting(include = "text_html")
+            updateAdapterContent(requestSpec)
+        }
+        R.id.fragment_articles_category_top -> {
+            val requestSpec = GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily, include = "text_html")
+            updateAdapterContent(requestSpec)
+        }
         else -> throw IllegalArgumentException(checkedId.toString())
+    }
+
+    private fun updateAdapterContent(spec: GetArticlesRequest.Spec) = lifecycleScope.launch {
+//        fragment_articles_recycler.scrollToPosition(0)
+//        fragment_articles_recycler.smoothScrollToPosition(0)
+//        fragment_articles_recycler.layoutManager?.scrollToPosition(0)
+        updateArticleRequestSpecViews(spec)
+
+        val articlesSpec = ArticlesSpec(arguments.page, spec)
+        viewModel.articles(articlesSpec).collectLatest {
+            adapter.submitData(it)
+        }
     }
 
     private fun onInitialFailure(throwable: Throwable) {
