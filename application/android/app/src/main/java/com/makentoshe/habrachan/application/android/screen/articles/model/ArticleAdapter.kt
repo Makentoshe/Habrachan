@@ -49,7 +49,7 @@ class ArticleAdapter(
     }
 
     // todo move articles in controller
-    private fun Date.time(context: Context) : String{
+    private fun Date.time(context: Context): String {
         val date = SimpleDateFormat("dd MMMM yyyy").format(this)
         val time = SimpleDateFormat("HH:mm").format(this)
         return context.getString(R.string.articles_time_format, date, time)

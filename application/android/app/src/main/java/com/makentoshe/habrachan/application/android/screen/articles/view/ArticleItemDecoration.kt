@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.makentoshe.habrachan.R
 
-class PagedArticleItemDecoration(
+class ArticleItemDecoration(
     @ColorInt
     color: Int
 ) : ItemDecoration() {
@@ -20,8 +20,8 @@ class PagedArticleItemDecoration(
     companion object {
         private const val itemWidth = 2
 
-        fun from(context: Context): PagedArticleItemDecoration {
-            return PagedArticleItemDecoration(ContextCompat.getColor(context, R.color.brand_dark))
+        fun from(context: Context): ArticleItemDecoration {
+            return ArticleItemDecoration(ContextCompat.getColor(context, R.color.brand_dark))
         }
     }
 

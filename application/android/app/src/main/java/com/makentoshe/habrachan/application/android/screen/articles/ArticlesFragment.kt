@@ -6,11 +6,14 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
+import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleAdapter
-import com.makentoshe.habrachan.application.android.screen.articles.view.PagedArticleItemDecoration
+import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleItemDecoration
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesSpec
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel2
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
@@ -38,8 +41,8 @@ class ArticlesFragment : CoreFragment() {
     private val viewModel by inject<ArticlesViewModel2>()
     private val exceptionHandler by inject<ExceptionHandler>()
 
-    // TODO move adapter to di
-    private val adapter = ArticleAdapter()
+    private val adapter by inject<ArticleAdapter>()
+    private val appendAdapter by inject<AppendArticleAdapter>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -57,9 +60,10 @@ class ArticlesFragment : CoreFragment() {
             }
         }
 
-        val itemDecoration = PagedArticleItemDecoration.from(requireContext())
+        val itemDecoration = ArticleItemDecoration.from(requireContext())
         fragment_articles_recycler.addItemDecoration(itemDecoration)
-        fragment_articles_recycler.adapter = adapter
+        fragment_articles_recycler.adapter = adapter.withLoadStateFooter(appendAdapter)
+        adapter.addLoadStateListener(::onLoadStateChanged)
 
         fragment_articles_panel.isTouchEnabled = false
         fragment_articles_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
@@ -104,11 +108,21 @@ class ArticlesFragment : CoreFragment() {
         }
     }
 
+    private fun onLoadStateChanged(combinedStates: CombinedLoadStates) {
+        when(val refresh = combinedStates.refresh) {
+            is LoadState.Loading -> {
+                println("Show progress bar")
+            }
+            is LoadState.NotLoading -> {
+                println("Show content")
+            }
+            is LoadState.Error -> {
+                println("Show retry button")
+            }
+        }
+    }
+
     private fun onViewCreatedContent() {
-//        viewModel.adapterObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
-//            fragment_articles_recycler.adapter = it
-//        }.let(disposables::add)
-//
 //        viewModel.searchSubject.observeOn(AndroidSchedulers.mainThread()).subscribe {
 //            onRetryClickView()
 //        }.let(disposables::add)
