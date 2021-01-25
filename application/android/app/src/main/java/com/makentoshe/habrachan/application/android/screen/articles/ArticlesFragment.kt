@@ -16,6 +16,7 @@ import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.Ar
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.articles_fragment.view.*
+import kotlinx.android.synthetic.main.fragment_article_toolbar.*
 import kotlinx.android.synthetic.main.fragment_articles.*
 import kotlinx.android.synthetic.main.fragment_articles_content.*
 import kotlinx.android.synthetic.main.fragment_articles_panel.*
@@ -49,12 +50,22 @@ class ArticlesFragment : CoreFragment() {
     // TODO add refresh on swipe
     // TODO add starting new search
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // TODO add toolbar spec displaying
         if (savedInstanceState == null) lifecycleScope.launch {
             val requestSpec = GetArticlesRequest.Spec.All()
             val articlesSpec = ArticlesSpec(arguments.page, requestSpec)
             viewModel.sendSpecChannel.send(articlesSpec)
+            updateArticleRequestSpecViews(requestSpec)
         }
+
+        fragment_articles_category_toggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener // ignore uncheck call
+            closeSearchPanel()
+//            onCategoryChecked(checkedId)
+        }
+
+        fragment_articles_panel.isTouchEnabled = false
+        fragment_articles_collapsing.isTitleEnabled = false
+        fragment_articles_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
 
         val itemDecoration = PagedArticleItemDecoration.from(requireContext())
         fragment_articles_recycler.addItemDecoration(itemDecoration)
@@ -65,16 +76,38 @@ class ArticlesFragment : CoreFragment() {
                 adapter.submitData(it)
             }
         }
+    }
 
-        onViewCreatedPanel()
-
-        fragment_articles_flow_panel.isTouchEnabled = false
-        fragment_articles_flow_collapsing.isTitleEnabled = false
-        fragment_articles_flow_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
-
-//        viewModel.searchSubject.subscribe {
-//            fragment_articles_flow_toolbar.title = deserializeSpec(it)
-//        }.let(disposables::add)
+    private fun updateArticleRequestSpecViews(spec: GetArticlesRequest.Spec) = when (spec) {
+        is GetArticlesRequest.Spec.All -> {
+            fragment_articles_toolbar.setTitle(R.string.articles_type_all)
+            fragment_articles_category_toggle.check(R.id.fragment_articles_category_all)
+        }
+        is GetArticlesRequest.Spec.Interesting -> {
+            fragment_articles_toolbar.setTitle(R.string.articles_type_interesting)
+            fragment_articles_category_toggle.check(R.id.fragment_articles_category_interesting)
+        }
+        is GetArticlesRequest.Spec.Top -> {
+            val type = when (spec.type) {
+                GetArticlesRequest.Spec.Top.Type.AllTime -> {
+                    requireContext().getString(R.string.articles_top_type_alltime)
+                }
+                GetArticlesRequest.Spec.Top.Type.Yearly -> {
+                    requireContext().getString(R.string.articles_top_type_yearly)
+                }
+                GetArticlesRequest.Spec.Top.Type.Monthly -> {
+                    requireContext().getString(R.string.articles_top_type_monthly)
+                }
+                GetArticlesRequest.Spec.Top.Type.Weekly -> {
+                    requireContext().getString(R.string.articles_top_type_weekly)
+                }
+                GetArticlesRequest.Spec.Top.Type.Daily -> {
+                    requireContext().getString(R.string.articles_top_type_daily)
+                }
+            }
+            fragment_articles_toolbar.title = requireContext().getString(R.string.articles_top_preposition, type)
+            fragment_articles_category_toggle.check(R.id.fragment_articles_category_top)
+        }
     }
 
     private fun onViewCreatedContent() {
@@ -98,15 +131,6 @@ class ArticlesFragment : CoreFragment() {
 //        fragment_articles_swipe.setOnRefreshListener {
 //            viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return@setOnRefreshListener)
 //        }
-    }
-
-    private fun onViewCreatedPanel() {
-        fragment_articles_category_toggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (!isChecked) return@addOnButtonCheckedListener // ignore uncheck call
-            closeSearchPanel()
-//            onCategoryChecked(checkedId)
-        }
-        fragment_articles_category_toggle.check(R.id.fragment_articles_category_all)
     }
 
     private fun onCategoryChecked(checkedId: Int): Unit = when (checkedId) {
@@ -157,9 +181,9 @@ class ArticlesFragment : CoreFragment() {
 
     private fun onSearchMenuItemClick(item: MenuItem): Boolean {
         if (item.itemId != R.id.action_search) return false
-        when (fragment_articles_flow_panel?.panelState) {
+        when (fragment_articles_panel?.panelState) {
             SlidingUpPanelLayout.PanelState.COLLAPSED, SlidingUpPanelLayout.PanelState.HIDDEN -> {
-                fragment_articles_flow_panel?.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+                fragment_articles_panel?.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
             }
             SlidingUpPanelLayout.PanelState.EXPANDED -> closeSearchPanel()
             else -> return false
@@ -168,37 +192,8 @@ class ArticlesFragment : CoreFragment() {
     }
 
     private fun closeSearchPanel() {
-        fragment_articles_flow_panel?.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        fragment_articles_panel?.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         closeSoftKeyboard()
-    }
-
-    private fun deserializeSpec(spec: GetArticlesRequest.Spec): String = when (spec) {
-        is GetArticlesRequest.Spec.All -> {
-            requireContext().getString(R.string.articles_type_all)
-        }
-        is GetArticlesRequest.Spec.Interesting -> {
-            requireContext().getString(R.string.articles_type_interesting)
-        }
-        is GetArticlesRequest.Spec.Top -> {
-            val type = when (spec.type) {
-                GetArticlesRequest.Spec.Top.Type.AllTime -> {
-                    requireContext().getString(R.string.articles_top_type_alltime)
-                }
-                GetArticlesRequest.Spec.Top.Type.Yearly -> {
-                    requireContext().getString(R.string.articles_top_type_yearly)
-                }
-                GetArticlesRequest.Spec.Top.Type.Monthly -> {
-                    requireContext().getString(R.string.articles_top_type_monthly)
-                }
-                GetArticlesRequest.Spec.Top.Type.Weekly -> {
-                    requireContext().getString(R.string.articles_top_type_weekly)
-                }
-                GetArticlesRequest.Spec.Top.Type.Daily -> {
-                    requireContext().getString(R.string.articles_top_type_daily)
-                }
-            }
-            requireContext().getString(R.string.articles_top_preposition, type)
-        }
     }
 
     // TODO add initial spec as argument
