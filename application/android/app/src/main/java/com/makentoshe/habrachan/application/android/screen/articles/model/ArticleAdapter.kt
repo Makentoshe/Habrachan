@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesNavigation
 import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleViewHolder
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticleDiffUtilItemCallback
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticleModelElement
@@ -15,7 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ArticleAdapter(
-
+    private val navigation: ArticlesNavigation
 ) : PagingDataAdapter<ArticleModelElement, ArticleViewHolder>(ArticleDiffUtilItemCallback()) {
 
     companion object {
@@ -44,7 +45,7 @@ class ArticleAdapter(
         holder.readingCount.text = model.article.readingCount.toString()
         holder.commentsCount.text = model.article.commentsCount.toString()
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.context, "Not implemented", Toast.LENGTH_LONG).show()
+            navigation.navigateToArticle(model.article)
         }
     }
 
