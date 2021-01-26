@@ -48,8 +48,7 @@ class ArticlesFragment : CoreFragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_articles, container, false)
 
-    // TODO add retrying on click
-    // TODO add refresh on swipe
+    // TODO move exception handling to the exception controller
     // TODO add scrolling to top of the recycler view on new search
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (savedInstanceState == null) lifecycleScope.launch {
@@ -64,6 +63,9 @@ class ArticlesFragment : CoreFragment() {
         fragment_articles_recycler.addItemDecoration(itemDecoration)
         fragment_articles_recycler.adapter = adapter.withLoadStateFooter(appendAdapter)
         adapter.addLoadStateListener(::onLoadStateChanged)
+
+        fragment_articles_swipe.setOnRefreshListener { adapter.refresh() }
+        fragment_articles_retry.setOnClickListener { onLoadStateLoading() }
 
         fragment_articles_panel.isTouchEnabled = false
         fragment_articles_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
@@ -110,51 +112,9 @@ class ArticlesFragment : CoreFragment() {
 
     private fun onLoadStateChanged(combinedStates: CombinedLoadStates) {
         when(val refresh = combinedStates.refresh) {
-            is LoadState.Loading -> {
-                println("Show progress bar")
-            }
-            is LoadState.NotLoading -> {
-                println("Show content")
-            }
-            is LoadState.Error -> {
-                println("Show retry button")
-            }
+            is LoadState.NotLoading -> onLoadStateNotLoading()
+            is LoadState.Error -> onLoadStateError(refresh.error)
         }
-    }
-
-    private fun onViewCreatedContent() {
-//        viewModel.searchSubject.observeOn(AndroidSchedulers.mainThread()).subscribe {
-//            onRetryClickView()
-//        }.let(disposables::add)
-//
-//        viewModel.initialObservable.observeOn(AndroidSchedulers.mainThread()).subscribe {
-//            it.onFailure(::onInitialFailure).onSuccess { onInitialSuccessView() }
-//        }.let(disposables::add)
-//
-//        fragment_articles_retry.setOnClickListener {
-//            onRetryClickView()
-//            viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return@setOnClickListener)
-//        }
-//
-//        fragment_articles_swipe.setOnRefreshListener {
-//            viewModel.searchSubject.onNext(viewModel.searchSubject.value ?: return@setOnRefreshListener)
-//        }
-    }
-
-    private fun onCategoryChecked(checkedId: Int) = when (checkedId) {
-        R.id.fragment_articles_category_all -> {
-            val requestSpec = GetArticlesRequest.Spec.All(include = "text_html")
-            updateAdapterContent(requestSpec)
-        }
-        R.id.fragment_articles_category_interesting -> {
-            val requestSpec = GetArticlesRequest.Spec.Interesting(include = "text_html")
-            updateAdapterContent(requestSpec)
-        }
-        R.id.fragment_articles_category_top -> {
-            val requestSpec = GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily, include = "text_html")
-            updateAdapterContent(requestSpec)
-        }
-        else -> throw IllegalArgumentException(checkedId.toString())
     }
 
     private fun updateAdapterContent(spec: GetArticlesRequest.Spec) = lifecycleScope.launch {
@@ -169,7 +129,13 @@ class ArticlesFragment : CoreFragment() {
         }
     }
 
-    private fun onInitialFailure(throwable: Throwable) {
+    private fun onLoadStateNotLoading() {
+        fragment_articles_swipe.isRefreshing = false
+        fragment_articles_swipe.visibility = View.VISIBLE
+        fragment_articles_progress.visibility = View.GONE
+    }
+
+    private fun onLoadStateError(throwable: Throwable) {
         fragment_articles_swipe.isRefreshing = false
         fragment_articles_progress.visibility = View.GONE
         fragment_articles_swipe.visibility = View.GONE
@@ -184,19 +150,14 @@ class ArticlesFragment : CoreFragment() {
         fragment_articles_retry.visibility = View.VISIBLE
     }
 
-    private fun onInitialSuccessView() {
-        fragment_articles_recycler.post { fragment_articles_recycler.scrollToPosition(0) }
-        fragment_articles_swipe.isRefreshing = false
-        fragment_articles_swipe.visibility = View.VISIBLE
-        fragment_articles_progress.visibility = View.GONE
-    }
-
-    private fun onRetryClickView() {
+    private fun onLoadStateLoading() {
         fragment_articles_retry.visibility = View.GONE
         fragment_articles_message.visibility = View.GONE
         fragment_articles_title.visibility = View.GONE
         fragment_articles_progress.visibility = View.VISIBLE
         fragment_articles_swipe.visibility = View.GONE
+
+        adapter.retry()
     }
 
     private fun onSearchMenuItemClick(item: MenuItem): Boolean {
@@ -214,6 +175,22 @@ class ArticlesFragment : CoreFragment() {
     private fun closeSearchPanel() {
         fragment_articles_panel?.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         closeSoftKeyboard()
+    }
+
+    private fun onCategoryChecked(checkedId: Int) = when (checkedId) {
+        R.id.fragment_articles_category_all -> {
+            val requestSpec = GetArticlesRequest.Spec.All(include = "text_html")
+            updateAdapterContent(requestSpec)
+        }
+        R.id.fragment_articles_category_interesting -> {
+            val requestSpec = GetArticlesRequest.Spec.Interesting(include = "text_html")
+            updateAdapterContent(requestSpec)
+        }
+        R.id.fragment_articles_category_top -> {
+            val requestSpec = GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily, include = "text_html")
+            updateAdapterContent(requestSpec)
+        }
+        else -> throw IllegalArgumentException(checkedId.toString())
     }
 
     // TODO add initial spec as argument
