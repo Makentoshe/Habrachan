@@ -10,7 +10,9 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.ExceptionController
 import com.makentoshe.habrachan.application.android.ExceptionHandler
+import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleItemDecoration
@@ -44,13 +46,21 @@ class ArticlesFragment : CoreFragment() {
     private val adapter by inject<ArticleAdapter>()
     private val appendAdapter by inject<AppendArticleAdapter>()
 
+    private lateinit var exceptionController: ExceptionController
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_articles, container, false)
 
-    // TODO move exception handling to the exception controller
     // TODO add controller for the panel view
+    // TODO(high) fix toggle group displaying on low-width screens
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        exceptionController = ExceptionController(ExceptionViewHolder(fragment_articles_exception))
+        exceptionController.setRetryButton {
+            adapter.retry()
+            showLoadingState()
+        }
+
         if (savedInstanceState == null) lifecycleScope.launch {
             val requestSpec = GetArticlesRequest.Spec.All(include = "text_html")
             updateArticleRequestSpecViews(requestSpec)
@@ -66,11 +76,6 @@ class ArticlesFragment : CoreFragment() {
 
         fragment_articles_swipe.setOnRefreshListener {
             adapter.refresh()
-        }
-
-        fragment_articles_retry.setOnClickListener {
-            showLoadingState()
-            adapter.retry()
         }
 
         fragment_articles_panel.isTouchEnabled = false
@@ -118,10 +123,11 @@ class ArticlesFragment : CoreFragment() {
     }
 
     private fun onLoadStateChanged(combinedStates: CombinedLoadStates) {
+        println(combinedStates)
         when (val refresh = combinedStates.refresh) {
-            is LoadState.Loading -> fragment_articles_recycler.scrollToPosition(0)
+            is LoadState.Loading -> showContentLoading()
             is LoadState.NotLoading -> showContentState()
-            is LoadState.Error -> showLoadingError(refresh.error)
+            is LoadState.Error -> showContentError(refresh.error)
         }
     }
 
@@ -140,25 +146,22 @@ class ArticlesFragment : CoreFragment() {
         fragment_articles_progress.visibility = View.GONE
     }
 
-    private fun showLoadingError(throwable: Throwable) {
+    private fun showContentLoading() {
+        exceptionController.hide()
+        if (adapter.itemCount <= 0) {
+            fragment_articles_progress.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showContentError(throwable: Throwable) {
         fragment_articles_swipe.isRefreshing = false
         fragment_articles_progress.visibility = View.GONE
         fragment_articles_swipe.visibility = View.GONE
-
-        val entry = exceptionHandler.handleException(throwable)
-        fragment_articles_title.text = entry.title
-        fragment_articles_title.visibility = View.VISIBLE
-
-        fragment_articles_message.text = entry.message
-        fragment_articles_message.visibility = View.VISIBLE
-
-        fragment_articles_retry.visibility = View.VISIBLE
+        exceptionController.render(exceptionHandler.handleException(throwable))
     }
 
     private fun showLoadingState() {
-        fragment_articles_retry.visibility = View.GONE
-        fragment_articles_message.visibility = View.GONE
-        fragment_articles_title.visibility = View.GONE
+        exceptionController.hide()
         fragment_articles_progress.visibility = View.VISIBLE
         fragment_articles_swipe.visibility = View.GONE
     }
@@ -190,7 +193,8 @@ class ArticlesFragment : CoreFragment() {
             updateAdapterContent(requestSpec)
         }
         R.id.fragment_articles_category_top -> {
-            val requestSpec = GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily, include = "text_html")
+            val requestSpec =
+                GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily, include = "text_html")
             updateAdapterContent(requestSpec)
         }
         else -> throw IllegalArgumentException(checkedId.toString())

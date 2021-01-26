@@ -86,9 +86,7 @@ class ExceptionController(private val holder: ExceptionViewHolder) {
         holder.messageView.text = entry.message
     }
 
-    fun disable() {
-        holder.root.visibility = View.GONE
-    }
+    fun hide() = holder.root.setVisibility(View.GONE)
 
     fun setRetryButton(listener: (View) -> Unit) {
         holder.retryButton.setOnClickListener(listener)

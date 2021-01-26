@@ -73,12 +73,12 @@ class ArticleCommentsFragment : CoreFragment() {
 
     private fun loadStateListener(state: CombinedLoadStates) = when (val refresh = state.refresh) {
         is LoadState.NotLoading -> {
-            exceptionController.disable()
+            exceptionController.hide()
             fragment_comments_article_progress.visibility = View.GONE
             fragment_comments_article_recycler.visibility = View.VISIBLE
         }
         is LoadState.Loading -> {
-            exceptionController.disable()
+            exceptionController.hide()
             fragment_comments_article_progress.visibility = View.VISIBLE
             fragment_comments_article_recycler.visibility = View.GONE
         }

@@ -4,50 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:visibility="gone"
-        style="@style/Habrachan.Text.Main"
-        android:id="@+id/fragment_articles_title"
+    <include
+        layout="@layout/layout_exception"
+        android:id="@+id/fragment_articles_exception"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginHorizontal="@dimen/dimenM"
-        app:layout_constraintBottom_toTopOf="@id/fragment_articles_message" />
-
-    <TextView
-        android:visibility="gone"
-        style="@style/Habrachan.Text.Support"
-        android:id="@+id/fragment_articles_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginHorizontal="@dimen/dimenM"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/fragment_articles_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:translationZ="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:visibility="gone"
-        android:id="@+id/fragment_articles_retry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/retry"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_articles_message" />
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:visibility="gone"
         android:id="@+id/fragment_articles_swipe"
         android:layout_width="0dp"
         android:layout_height="0dp"
