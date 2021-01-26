@@ -123,7 +123,6 @@ class ArticlesFragment : CoreFragment() {
     }
 
     private fun onLoadStateChanged(combinedStates: CombinedLoadStates) {
-        println(combinedStates)
         when (val refresh = combinedStates.refresh) {
             is LoadState.Loading -> showContentLoading()
             is LoadState.NotLoading -> showContentState()
