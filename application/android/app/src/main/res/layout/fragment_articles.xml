@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|snap"
+            app:layout_scrollFlags="scroll|snap|enterAlways"
             app:toolbarId="@id/fragment_articles_toolbar">
 
             <androidx.appcompat.widget.Toolbar

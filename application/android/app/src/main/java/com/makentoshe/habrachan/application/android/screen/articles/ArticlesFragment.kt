@@ -49,7 +49,7 @@ class ArticlesFragment : CoreFragment() {
     ): View? = inflater.inflate(R.layout.fragment_articles, container, false)
 
     // TODO move exception handling to the exception controller
-    // TODO add scrolling to top of the recycler view on new search
+    // TODO add controller for the panel view
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (savedInstanceState == null) lifecycleScope.launch {
             val requestSpec = GetArticlesRequest.Spec.All(include = "text_html")
@@ -64,8 +64,14 @@ class ArticlesFragment : CoreFragment() {
         fragment_articles_recycler.adapter = adapter.withLoadStateFooter(appendAdapter)
         adapter.addLoadStateListener(::onLoadStateChanged)
 
-        fragment_articles_swipe.setOnRefreshListener { adapter.refresh() }
-        fragment_articles_retry.setOnClickListener { onLoadStateLoading() }
+        fragment_articles_swipe.setOnRefreshListener {
+            adapter.refresh()
+        }
+
+        fragment_articles_retry.setOnClickListener {
+            showLoadingState()
+            adapter.retry()
+        }
 
         fragment_articles_panel.isTouchEnabled = false
         fragment_articles_toolbar.setOnMenuItemClickListener(::onSearchMenuItemClick)
@@ -74,6 +80,7 @@ class ArticlesFragment : CoreFragment() {
             if (!isChecked) return@addOnButtonCheckedListener // ignore uncheck call
             closeSearchPanel()
             onCategoryChecked(checkedId)
+            showLoadingState()
         }
     }
 
@@ -111,16 +118,14 @@ class ArticlesFragment : CoreFragment() {
     }
 
     private fun onLoadStateChanged(combinedStates: CombinedLoadStates) {
-        when(val refresh = combinedStates.refresh) {
-            is LoadState.NotLoading -> onLoadStateNotLoading()
-            is LoadState.Error -> onLoadStateError(refresh.error)
+        when (val refresh = combinedStates.refresh) {
+            is LoadState.Loading -> fragment_articles_recycler.scrollToPosition(0)
+            is LoadState.NotLoading -> showContentState()
+            is LoadState.Error -> showLoadingError(refresh.error)
         }
     }
 
     private fun updateAdapterContent(spec: GetArticlesRequest.Spec) = lifecycleScope.launch {
-//        fragment_articles_recycler.scrollToPosition(0)
-//        fragment_articles_recycler.smoothScrollToPosition(0)
-//        fragment_articles_recycler.layoutManager?.scrollToPosition(0)
         updateArticleRequestSpecViews(spec)
 
         val articlesSpec = ArticlesSpec(arguments.page, spec)
@@ -129,13 +134,13 @@ class ArticlesFragment : CoreFragment() {
         }
     }
 
-    private fun onLoadStateNotLoading() {
+    private fun showContentState() {
         fragment_articles_swipe.isRefreshing = false
         fragment_articles_swipe.visibility = View.VISIBLE
         fragment_articles_progress.visibility = View.GONE
     }
 
-    private fun onLoadStateError(throwable: Throwable) {
+    private fun showLoadingError(throwable: Throwable) {
         fragment_articles_swipe.isRefreshing = false
         fragment_articles_progress.visibility = View.GONE
         fragment_articles_swipe.visibility = View.GONE
@@ -150,14 +155,12 @@ class ArticlesFragment : CoreFragment() {
         fragment_articles_retry.visibility = View.VISIBLE
     }
 
-    private fun onLoadStateLoading() {
+    private fun showLoadingState() {
         fragment_articles_retry.visibility = View.GONE
         fragment_articles_message.visibility = View.GONE
         fragment_articles_title.visibility = View.GONE
         fragment_articles_progress.visibility = View.VISIBLE
         fragment_articles_swipe.visibility = View.GONE
-
-        adapter.retry()
     }
 
     private fun onSearchMenuItemClick(item: MenuItem): Boolean {
