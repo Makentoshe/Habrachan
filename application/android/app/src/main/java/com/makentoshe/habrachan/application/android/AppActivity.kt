@@ -14,9 +14,7 @@ import toothpick.ktp.delegate.inject
 
 class AppActivity : AppCompatActivity() {
 
-    private val navigator = StackSupportAppNavigator(this, supportFragmentManager,
-        R.id.fragment_main_container
-    )
+    private val navigator = StackSupportAppNavigator(this, supportFragmentManager, R.id.fragment_main_container)
 
     private val navigatorHolder by inject<NavigatorHolder>()
     private val router by inject<Router>()

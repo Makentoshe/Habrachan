@@ -26,10 +26,10 @@ class Habrachan : Application() {
         val injectActivityLifecycleCallback = InjectionActivityLifecycleCallback()
         registerActivityLifecycleCallbacks(injectActivityLifecycleCallback)
 
-//        Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
-//            println(paramThrowable.printStackTrace())
-//            throw paramThrowable
-//        }
+        Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
+            println(paramThrowable.printStackTrace())
+            throw paramThrowable
+        }
     }
 
     // Using composite disposable is just formality to avoid lint warnings

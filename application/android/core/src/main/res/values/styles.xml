@@ -1,0 +1,31 @@
+<resources>
+
+    <style name="Habrachan.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#ff9cc2ce</item>
+        <item name="colorAccent">#ff9cc2ce</item>
+        <item name="colorPrimaryDark">#ff728e96</item>
+    </style>
+
+    <style name="Habrachan.Text" parent="Habrachan.Light">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="Habrachan.Text.Main">
+        <item name="android:textSize">@dimen/main_text_size</item>
+    </style>
+
+    <style name="Habrachan.Text.Main.Bold">
+        <item name="android:textSize">@dimen/main_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Habrachan.Text.Support">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/dimmed</item>
+    </style>
+
+    <style name="Habrachan.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+</resources>

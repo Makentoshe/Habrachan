@@ -18,9 +18,6 @@ interface AvatarDao {
     @Query("SELECT * FROM AvatarRecord WHERE history IN (SELECT history FROM AvatarRecord ORDER BY history ASC LIMIT :n)")
     fun last(n: Int): List<AvatarRecord>
 
-    @Query("DELETE FROM AvatarRecord WHERE history IN (SELECT history FROM AvatarRecord ORDER BY history ASC LIMIT :n)")
-    fun dropLast(n: Int)
-
     @Delete
     fun delete(record: AvatarRecord)
 

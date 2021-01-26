@@ -1,5 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.article.navigation
 
+import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
+import com.makentoshe.habrachan.entity.Article
 import ru.terrakok.cicerone.Router
 
 class ArticleNavigation(private val router: Router) {
@@ -9,13 +11,14 @@ class ArticleNavigation(private val router: Router) {
         router.exit()
     }
 
+    fun toArticleCommentsScreen(article: Article) {
+        router.navigateTo(ArticleCommentsScreen(article))
+    }
+
+
 //    /** Navigates to [OverlayImageScreen] */
 //    fun toArticleResourceScreen(resource: String) {
 //        router.navigateTo(OverlayImageScreen(resource))
-//    }
-//
-//    fun toArticleCommentsScreen(articleId: Int) {
-//        router.navigateTo(CommentsScreen(articleId))
 //    }
 //
 //    fun toArticleCommentsScreen(article: Article) {

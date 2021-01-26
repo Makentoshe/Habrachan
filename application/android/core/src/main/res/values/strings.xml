@@ -5,4 +5,6 @@
     <string name="exception_handler_network">Network error</string>
     <string name="exception_handler_network_unknown_host">Internet connection disabled</string>
     <string name="exception_handler_network_sslpeer_unverified">Provider blocks the host</string>
+
+    <string name="layout_exception_retry">Retry</string>
 </resources>

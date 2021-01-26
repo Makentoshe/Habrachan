@@ -33,6 +33,11 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofit")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit")
     implementation("com.squareup.okhttp3:logging-interceptor:3.12.1")
+
+    // Kotlin coroutines
+    // https://github.com/Kotlin/kotlinx.coroutines
+    val coroutines = "1.3.7"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
 }
 
 // Allows to use kotlin.Result type as a return

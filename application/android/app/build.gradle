@@ -43,6 +43,7 @@ android {
             applicationIdSuffix ".debug"
         }
         release {
+            applicationIdSuffix ".release"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -119,6 +120,11 @@ dependencies {
     // Coroutines for android ViewModel
     def coroutinesViewModel = "2.3.0-beta01"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutinesViewModel")
+
+    // Recycler view additional classes such as ConcatAdapter
+    // https://developer.android.com/jetpack/androidx/releases/recyclerview
+    def recyclerview = "1.2.0-beta01"
+    implementation("androidx.recyclerview:recyclerview:$recyclerview")
 
     // RxJava2
     // https://github.com/ReactiveX/RxJava

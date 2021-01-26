@@ -3,16 +3,19 @@ package com.makentoshe.habrachan.application.android.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.makentoshe.habrachan.application.android.database.dao.BadgeDao
+import com.makentoshe.habrachan.application.android.database.dao.CommentDao
 import com.makentoshe.habrachan.application.android.database.dao.FlowDao
 import com.makentoshe.habrachan.application.android.database.dao.HubDao
 import com.makentoshe.habrachan.application.android.database.record.*
 
 /**
- * This is main cache database used in Android application.
+ * This is a cache database used in the Android application.
+ * Caches means that if it will be disposed - there aren't a great problem.
+ *
  * entities - array of object types that database contains.
  */
 @Database(
-    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class],
+    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class],
     version = 1
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
@@ -43,4 +46,10 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * so we do not care of releasing cache memory
      */
     abstract fun badgeDao(): BadgeDao
+
+    /**
+     * Stores comments for articles. Potential infinite.
+     * That means that the cache should be released occasionally.
+     */
+    abstract fun commentDao(): CommentDao
 }
