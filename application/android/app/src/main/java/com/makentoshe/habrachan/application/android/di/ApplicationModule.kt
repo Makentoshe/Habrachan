@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.ExceptionHandlerImpl
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
-import com.makentoshe.habrachan.application.android.database.migration.AndroidCacheDatabaseMigration12
+import com.makentoshe.habrachan.application.android.database.migration.AndroidCacheDatabaseMigrationF1T2
 import com.makentoshe.habrachan.application.android.network.AndroidUserSession
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.SchedulersProvider
 import com.makentoshe.habrachan.application.android.viewmodel.ExecutorsProvider
@@ -34,7 +34,7 @@ class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module()
 
     private val cacheDatabase = Room.databaseBuilder(
         context, AndroidCacheDatabase::class.java, "HabrachanCache"
-    ).addMigrations(AndroidCacheDatabaseMigration12()).build()
+    ).addMigrations(AndroidCacheDatabaseMigrationF1T2()).build()
 
     private val executorsProvider = object : ExecutorsProvider {
         override val fetchExecutor = Executors.newCachedThreadPool()
