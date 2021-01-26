@@ -24,6 +24,6 @@ interface AvatarDao {
     @Delete
     fun delete(record: AvatarRecord)
 
-    @Query("DELETE FROM ArticleRecord")
+    @Query("DELETE FROM AvatarRecord")
     fun clear()
 }

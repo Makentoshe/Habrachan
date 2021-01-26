@@ -36,6 +36,7 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="menu_search">Search</string>
 
     <string name="articles_time_format">%1$s in %2$s</string>
+    <string name="articles_footer_content_end">This is the end of the content</string>
 
     <string name="articles_type_all">All articles</string>
     <string name="articles_type_interesting">Interesting</string>
