@@ -13,7 +13,7 @@ import com.makentoshe.habrachan.application.android.database.record.*
  */
 @Database(
     entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class],
-    version = 1
+    version = 2
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
