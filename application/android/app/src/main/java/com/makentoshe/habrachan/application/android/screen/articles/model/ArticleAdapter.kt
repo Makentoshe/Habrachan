@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.R
@@ -28,8 +27,7 @@ class ArticleAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        // TODO rename layout
-        return ArticleViewHolder(inflater.inflate(R.layout.main_articles_element, parent, false))
+        return ArticleViewHolder(inflater.inflate(R.layout.layout_article_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
