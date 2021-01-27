@@ -11,11 +11,11 @@
     </style>
 
     <style name="Habrachan.Text.Main">
-        <item name="android:textSize">@dimen/main_text_size</item>
+        <item name="android:textSize">@dimen/textML</item>
     </style>
 
     <style name="Habrachan.Text.Main.Bold">
-        <item name="android:textSize">@dimen/main_text_size</item>
+        <item name="android:textSize">@dimen/textML</item>
         <item name="android:textStyle">bold</item>
     </style>
 

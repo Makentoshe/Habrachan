@@ -53,7 +53,6 @@ class ArticlesFragment : CoreFragment() {
     ): View? = inflater.inflate(R.layout.fragment_articles, container, false)
 
     // TODO add controller for the panel view
-    // TODO(high) fix toggle group displaying on low-width screens
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_articles_exception))
         exceptionController.setRetryButton {
