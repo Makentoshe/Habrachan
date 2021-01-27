@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.application.android.screen.main.navigation
 
 import com.makentoshe.habrachan.application.android.screen.main.MainFlowFragment
-import com.makentoshe.habrachan.navigation.Screen
+import ru.terrakok.cicerone.android.support.SupportAppScreen
 
-class MainFlowScreen : Screen() {
+class MainFlowScreen : SupportAppScreen() {
     override fun getFragment() = MainFlowFragment()
 }

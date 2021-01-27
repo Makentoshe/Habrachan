@@ -12,8 +12,6 @@ class ArticlesInjectingFragmentLifecycleCallback : FragmentManager.FragmentLifec
 
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) = when (f) {
         is ArticlesFragment -> injectArticlesFragment2(f)
-//        is ArticlesFragment -> injectArticlesFragment(f)
-//        is ArticlesSearchFragment -> injectArticlesSearchFragment(f)
         else -> Unit
     }
 
@@ -22,16 +20,4 @@ class ArticlesInjectingFragmentLifecycleCallback : FragmentManager.FragmentLifec
         val scope = Toothpick.openScopes(ApplicationScope::class, ArticlesScope::class)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
-
-//    private fun injectArticlesFragment(fragment: ArticlesFragment) {
-//        val module = ArticlesFragmentModule(fragment)
-//        val scope = Toothpick.openScopes(ArticlesFlowFragmentScope::class.java, ArticlesFragmentScope::class.java)
-//        scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
-//    }
-//
-//    private fun injectArticlesSearchFragment(fragment: ArticlesSearchFragment) {
-//        val scope = Toothpick.openScopes(ArticlesFlowFragmentScope::class.java, ArticlesSearchFragmentScope::class.java)
-//        scope.closeOnDestroy(fragment).inject(fragment)
-//    }
-
 }
