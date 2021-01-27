@@ -74,11 +74,11 @@
     </style>
 
     <style name="Habrachan.Light.TextAppearance.Small" parent="Habrachan.Light.TextAppearance">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/textM</item>
     </style>
 
     <style name="Habrachan.TextAppearance.CollapsingToolbar.Collapsed" parent="Theme.MaterialComponents">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/textM</item>
     </style>
 
     <style name="Habrachan.TextAppearance.CollapsingToolbar.Expanded" parent="Theme.MaterialComponents">
@@ -90,7 +90,7 @@
         <item name="android:tint">@android:color/black</item>
         <item name="android:tintMode">src_atop</item>
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/textML</item>
     </style>
 
     <style name="Habrachan.Light.Default" parent="Habrachan.Light">
@@ -111,11 +111,16 @@
     </style>
 
     <style name="Habrachan.Text.Main">
-        <item name="android:textSize">@dimen/main_text_size</item>
+        <item name="android:textSize">@dimen/textML</item>
+    </style>
+
+    <style name="Habrachan.Text.Main.Bold">
+        <item name="android:textSize">@dimen/textML</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Habrachan.Text.Support">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/textM</item>
         <item name="android:textColor">@color/dimmed</item>
     </style>
 
@@ -127,6 +132,7 @@
         <item name="android:textColor">@color/button_toggle_toolbar_foreground_color</item>
         <item name="backgroundTint">@color/button_toggle_toolbar_background_color</item>
         <item name="strokeColor">@color/title</item>
+        <item name="android:textSize">@dimen/textMS</item>
     </style>
 
 </resources>

@@ -5,23 +5,23 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/articles_flow_fragment_appbar"
+        android:id="@+id/fragment_articles_appbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/fragment_articles_flow_collapsing"
+            android:id="@+id/fragment_articles_collapsing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|snap"
-            app:toolbarId="@id/fragment_articles_flow_toolbar">
+            app:layout_scrollFlags="scroll|snap|enterAlways"
+            app:toolbarId="@id/fragment_articles_toolbar">
 
             <androidx.appcompat.widget.Toolbar
                 android:theme="@style/Habrachan.Light.Toolbar"
-                android:id="@+id/fragment_articles_flow_toolbar"
+                android:id="@+id/fragment_articles_toolbar"
                 app:menu="@menu/main_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -30,7 +30,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/fragment_articles_flow_panel"
+        android:id="@+id/fragment_articles_panel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="false"

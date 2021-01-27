@@ -21,32 +21,37 @@
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/fragment_articles_category_toggle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/heightL"
         app:singleSelection="true"
         app:selectionRequired="true"
         android:layout_marginHorizontal="@dimen/dimenS"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            style="?attr/habrachanButtonToggleToolbar"
+            style="@style/Habrachan.Button.Toggle.Toolbar"
             android:id="@+id/fragment_articles_category_all"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/articles_type_all" />
 
         <com.google.android.material.button.MaterialButton
-            style="?attr/habrachanButtonToggleToolbar"
+            style="@style/Habrachan.Button.Toggle.Toolbar"
             android:id="@+id/fragment_articles_category_interesting"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/articles_type_interesting" />
 
         <com.google.android.material.button.MaterialButton
-            style="?attr/habrachanButtonToggleToolbar"
+            style="@style/Habrachan.Button.Toggle.Toolbar"
             android:id="@+id/fragment_articles_category_top"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/articles_type_top" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>

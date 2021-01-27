@@ -61,6 +61,11 @@ dependencies {
     val gson = "2.8.6"
     implementation("com.google.code.gson:gson:$gson")
 
+    // Material components
+    // https://github.com/material-components/material-components-android
+    val material = properties["version.androidx.material"]
+    implementation("com.google.android.material:material:$material")
+
     val core = properties["version.androidx.core"]
     implementation("androidx.core:core-ktx:$core")
 
