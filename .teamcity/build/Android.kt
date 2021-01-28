@@ -30,7 +30,7 @@ object AndroidBuild : VcsBaseBuild("Android build", {
         gradle {
             name = "Android application build"
             tasks = "clean :application:android:app:build"
-            buildFile = "build.gradle"
+            buildFile = "build.gradle.kts"
         }
     }
 })
@@ -78,7 +78,7 @@ object AndroidRelease : BaseBuild("Android release", {
         gradle {
             name = "Assemble unsigned release apk"
             tasks = "clean application:android:app:assembleRelease"
-            buildFile = "build.gradle"
+            buildFile = "build.gradle.kts"
             jdkHome = "%env.JDK_18_x64%"
         }
         script {

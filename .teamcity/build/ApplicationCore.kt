@@ -7,7 +7,7 @@ object ApplicationCore: VcsBaseBuild("Application core", {
         gradle {
             name = "Build application core module"
             tasks = "application:core:build --info"
-            buildFile = "build.gradle"
+            buildFile = "build.gradle.kts"
         }
     }
 })

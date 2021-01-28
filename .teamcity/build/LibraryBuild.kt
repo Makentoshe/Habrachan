@@ -7,7 +7,7 @@ object LibraryBuild : VcsBaseBuild("Build library", {
         gradle {
             name = "Build full library"
             tasks = "library:build --info"
-            buildFile = "build.gradle"
+            buildFile = "build.gradle.kts"
         }
     }
 })
