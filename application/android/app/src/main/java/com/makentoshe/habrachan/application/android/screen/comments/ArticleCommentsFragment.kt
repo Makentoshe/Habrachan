@@ -5,14 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsEmptyStateController
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
+import com.makentoshe.habrachan.application.android.screen.comments.view.CommentsEmptyStateViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_article.*
 import kotlinx.coroutines.flow.collectLatest
@@ -40,6 +43,7 @@ class ArticleCommentsFragment : CoreFragment() {
     private val exceptionHandler by inject<ExceptionHandler>()
 
     private lateinit var exceptionController: ExceptionController
+    private lateinit var emptyStateController: CommentsEmptyStateController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -52,8 +56,11 @@ class ArticleCommentsFragment : CoreFragment() {
         }
 
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_comments_article_exception))
-        exceptionController.setRetryButton {
-            adapter.retry()
+        exceptionController.setRetryButton { adapter.retry() }
+
+        emptyStateController = CommentsEmptyStateController(CommentsEmptyStateViewHolder(fragment_comments_article_empty_state))
+        emptyStateController.buttonOnClickListener {
+            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
         }
 
         fragment_comments_article_toolbar.title = arguments.articleTitle
@@ -75,15 +82,22 @@ class ArticleCommentsFragment : CoreFragment() {
         is LoadState.NotLoading -> {
             exceptionController.hide()
             fragment_comments_article_progress.visibility = View.GONE
-            fragment_comments_article_recycler.visibility = View.VISIBLE
+            if (state.append.endOfPaginationReached && adapter.itemCount <= 0) {
+                emptyStateController.show()
+                fragment_comments_article_recycler.visibility = View.GONE
+            } else {
+                fragment_comments_article_recycler.visibility = View.VISIBLE
+            }
         }
         is LoadState.Loading -> {
             exceptionController.hide()
+            emptyStateController.hide()
             fragment_comments_article_progress.visibility = View.VISIBLE
             fragment_comments_article_recycler.visibility = View.GONE
         }
         is LoadState.Error -> {
             exceptionController.render(exceptionHandler.handleException(refresh.error))
+            emptyStateController.hide()
             fragment_comments_article_progress.visibility = View.GONE
             fragment_comments_article_recycler.visibility = View.VISIBLE
         }

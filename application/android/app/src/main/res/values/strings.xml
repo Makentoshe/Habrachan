@@ -61,6 +61,9 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
 
     <string name="comments_reply_empty">Reply on this comment</string>
     <string name="comments_reply_count">Show replies(%1$d)</string>
+    <string name="layout_comments_empty_state_title">Such empty…</string>
+    <string name="layout_comments_empty_state_message">There are no comments for this article yet</string>
+    <string name="layout_comments_empty_state_button">Be the first one</string>
 
     <string name="user_content_profile_badges">Badges</string>
     <string name="user_content_profile_location">Location</string>
