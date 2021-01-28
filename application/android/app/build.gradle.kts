@@ -80,8 +80,8 @@ dependencies {
     implementation(project(":application:core"))
     implementation(project(":application:android:core"))
 
-    implementation(project(":library:core"))
-    implementation(project(":library:network"))
+    implementation(project(":core"))
+    implementation(project(":network"))
 
     // OkHttp
     // https://github.com/square/okhttp/

@@ -45,8 +45,8 @@ dependencies {
 
     implementation(kotlin("stdlib"))
 
-    implementation(project(":library:core"))
-    implementation(project(":library:network"))
+    implementation(project(":core"))
+    implementation(project(":network"))
     implementation(project(":application:core"))
 
     // Room (sql database library)

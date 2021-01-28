@@ -1,8 +1,8 @@
 rootProject.name = "Habrachan"
 
 include(":library")
-include(":library:core")
-include(":library:network")
+include(":core")
+include(":network")
 
 include(":application")
 include(":application:core")
