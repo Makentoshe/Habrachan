@@ -82,10 +82,12 @@ class ArticleCommentsFragment : CoreFragment() {
         is LoadState.NotLoading -> {
             exceptionController.hide()
             fragment_comments_article_progress.visibility = View.GONE
-            fragment_comments_article_recycler.visibility = View.VISIBLE
             if (state.append.endOfPaginationReached && adapter.itemCount <= 0) {
                 emptyStateController.show()
-            } else Unit
+                fragment_comments_article_recycler.visibility = View.GONE
+            } else {
+                fragment_comments_article_recycler.visibility = View.VISIBLE
+            }
         }
         is LoadState.Loading -> {
             exceptionController.hide()

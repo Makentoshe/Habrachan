@@ -26,7 +26,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/layout_exception_retry"
         android:layout_marginTop="8dp" />
 
 </LinearLayout>
