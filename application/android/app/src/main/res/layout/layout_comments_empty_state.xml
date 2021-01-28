@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/Habrachan.Text.Main"
+        android:id="@+id/layout_empty_state_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        style="@style/Habrachan.Text.Support"
+        android:id="@+id/layout_empty_state_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/dimen2XL" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Habrachan.Button.Text"
+        android:id="@+id/layout_empty_state_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/layout_exception_retry"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>
