@@ -9,8 +9,6 @@ import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesNavigation
 import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleViewHolder
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticleDiffUtilItemCallback
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticleModelElement
 import com.makentoshe.habrachan.entity.timePublished
 import java.text.SimpleDateFormat
 import java.util.*

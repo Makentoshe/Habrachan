@@ -187,7 +187,7 @@ data class ArticleRecord(
         isCanComment
     )
 
-    fun toArticle2(userDao: UserDao, hubDao: HubDao, flowDao: FlowDao) = article(id,
+    fun toArticle2(hubDao: HubDao, flowDao: FlowDao, userDao: UserDao) = article(id,
         title,
         timePublishedRaw,
         postType.toString(),

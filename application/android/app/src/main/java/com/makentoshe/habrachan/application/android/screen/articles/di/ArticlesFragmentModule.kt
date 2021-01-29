@@ -9,7 +9,7 @@ import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFrag
 import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesNavigation
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel2
+import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
 import com.makentoshe.habrachan.application.core.arena.articles.ArticlesArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.ArticlesManager
@@ -36,9 +36,9 @@ class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
 
         val articlesArenaCache = ArticlesArenaCache(androidCacheDatabase)
         val articlesArena = ArticlesArena(ArticlesManager.Builder(client).native(), articlesArenaCache)
-        val factory = ArticlesViewModel2.Factory(session, articlesArena)
-        val viewModel = ViewModelProviders.of(fragment, factory)[ArticlesViewModel2::class.java]
-        bind<ArticlesViewModel2>().toInstance(viewModel)
+        val factory = ArticlesViewModel.Factory(session, articlesArena)
+        val viewModel = ViewModelProviders.of(fragment, factory)[ArticlesViewModel::class.java]
+        bind<ArticlesViewModel>().toInstance(viewModel)
 
         val adapter = ArticleAdapter(ArticlesNavigation(router))
         bind<ArticleAdapter>().toInstance(adapter)

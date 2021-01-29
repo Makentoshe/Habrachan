@@ -9,7 +9,6 @@ interface GetArticlesResponse {
 
     val articles: List<com.makentoshe.habrachan.entity.Article>
 
-    val pages: Int
 }
 
 data class ArticlesResponse(
@@ -18,7 +17,7 @@ data class ArticlesResponse(
     @SerializedName("next_page")
     val nextPage: NextPage,
     @SerializedName("pages")
-    override val pages: Int,
+    val pages: Int,
     @SerializedName("server_time")
     val serverTime: String,
     @SerializedName("sorted_by")
@@ -30,3 +29,6 @@ data class ArticlesResponse(
         get() = data
 }
 
+fun getArticlesResponse(articles: List<com.makentoshe.habrachan.entity.Article>) = object: GetArticlesResponse {
+    override val articles: List<com.makentoshe.habrachan.entity.Article> = articles
+}

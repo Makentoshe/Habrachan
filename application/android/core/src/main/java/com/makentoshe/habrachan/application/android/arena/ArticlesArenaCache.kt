@@ -9,13 +9,13 @@ import com.makentoshe.habrachan.application.android.database.record.HubRecord
 import com.makentoshe.habrachan.application.android.database.record.UserRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.entity.natives.NextPage
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
-import com.makentoshe.habrachan.network.response.ArticlesResponse
+import com.makentoshe.habrachan.network.response.GetArticlesResponse
+import com.makentoshe.habrachan.network.response.getArticlesResponse
 
 class ArticlesArenaCache(
     private val cacheDatabase: AndroidCacheDatabase
-) : ArenaCache<GetArticlesRequest, ArticlesResponse> {
+) : ArenaCache<GetArticlesRequest, GetArticlesResponse> {
 
     companion object {
         fun capture(priority: Int, string: String) {
@@ -23,19 +23,19 @@ class ArticlesArenaCache(
         }
     }
 
-    override fun fetch(key: GetArticlesRequest): Result<ArticlesResponse> {
+    override fun fetch(key: GetArticlesRequest): Result<GetArticlesResponse> {
         capture(Log.INFO, "Fetch search articles from cache by key: $key")
         return try {
             val offset = (key.page - 1) * key.count
             val articleRecords = cacheDatabase.articlesSearchDao().getTimePublishedDescSorted(offset, key.count)
             val articles = articleRecords.map { record ->
-                record.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao())
+                record.toArticle2(cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao())
             }
             capture(Log.INFO, "Fetched ${articles.size} articles with offset: $offset")
             if (articles.isEmpty()) {
                 Result.failure(ArenaStorageException("ArticlesArenaCache"))
             } else {
-                Result.success(ArticlesResponse(articles, NextPage(key.page + 1, ""), -1, "", "", null))
+                Result.success(getArticlesResponse(articles))
             }
         } catch (exception: Exception) {
             capture(Log.INFO, "Could not fetch articles: $exception")
@@ -44,7 +44,7 @@ class ArticlesArenaCache(
     }
 
     // TODO add separate caches for separate specs (All posts, Interesting, Top and Search)
-    override fun carry(key: GetArticlesRequest, value: ArticlesResponse) {
+    override fun carry(key: GetArticlesRequest, value: GetArticlesResponse) {
         // clear cache on new search (each search starts from page 1)
         if (key.page == 1) {
             capture(Log.INFO, "Clear search articles cache")
@@ -53,16 +53,13 @@ class ArticlesArenaCache(
         }
 
         capture(Log.INFO, "Carry search articles to cache with key: $key")
-        value.data.forEachIndexed { index, article ->
+        value.articles.forEachIndexed { index, article ->
             capture(Log.INFO, "Carry ${(key.page - 1) * key.count + index} article to cache")
             cacheDatabase.articlesSearchDao().insert(ArticleRecord(article))
             cacheDatabase.userDao().insert(UserRecord(article.author))
 
             article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
-            article.hubs.forEach { hub ->
-                cacheDatabase.hubDao().insert(HubRecord(hub))
-                hub.flow?.let(::FlowRecord)?.let(cacheDatabase.flowDao()::insert)
-            }
+            article.hubs.forEach { hub -> cacheDatabase.hubDao().insert(HubRecord(hub)) }
         }
     }
 }

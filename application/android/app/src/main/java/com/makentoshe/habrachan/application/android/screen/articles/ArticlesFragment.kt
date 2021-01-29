@@ -15,9 +15,9 @@ import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleAdapter
+import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesSpec
 import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleItemDecoration
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesSpec
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel2
+import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.articles_fragment.view.*
@@ -40,7 +40,7 @@ class ArticlesFragment : CoreFragment() {
     }
 
     override val arguments = Arguments(this)
-    private val viewModel by inject<ArticlesViewModel2>()
+    private val viewModel by inject<ArticlesViewModel>()
     private val exceptionHandler by inject<ExceptionHandler>()
 
     private val adapter by inject<ArticleAdapter>()

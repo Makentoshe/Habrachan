@@ -11,13 +11,14 @@ import com.makentoshe.habrachan.network.request.UserArticlesRequest
 import com.makentoshe.habrachan.network.request.VoteArticleRequest
 import com.makentoshe.habrachan.network.response.ArticleResponse
 import com.makentoshe.habrachan.network.response.ArticlesResponse
+import com.makentoshe.habrachan.network.response.GetArticlesResponse
 import com.makentoshe.habrachan.network.response.VoteArticleResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
 interface ArticlesManager {
 
-    suspend fun getArticles(request: GetArticlesRequest): Result<ArticlesResponse>
+    suspend fun getArticles(request: GetArticlesRequest): Result<GetArticlesResponse>
 
     suspend fun getUserArticles(request: UserArticlesRequest): Result<ArticlesResponse>
 
@@ -40,7 +41,7 @@ interface ArticlesManager {
 @Suppress("BlockingMethodInNonBlockingContext")
 class NativeArticlesManager(private val api: NativeArticlesApi) : ArticlesManager {
 
-    override suspend fun getArticles(request: GetArticlesRequest): Result<ArticlesResponse> {
+    override suspend fun getArticles(request: GetArticlesRequest): Result<GetArticlesResponse> {
         return api.getArticles(
             request.session.client,
             request.session.api,
