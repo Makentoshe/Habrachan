@@ -14,7 +14,7 @@ data class User(
     @SerializedName("geo")
     val geo: Geo? = null,
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("is_can_vote")
     val isCanVote: Boolean,
     @SerializedName("is_rc")

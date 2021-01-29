@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabas
 import com.makentoshe.habrachan.application.android.database.record.ArticleRecord
 import com.makentoshe.habrachan.application.android.database.record.FlowRecord
 import com.makentoshe.habrachan.application.android.database.record.HubRecord
+import com.makentoshe.habrachan.application.android.database.record.UserRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.entity.NextPage
@@ -28,7 +29,7 @@ class ArticlesArenaCache(
             val offset = (key.page - 1) * key.count
             val articleRecords = cacheDatabase.articlesSearchDao().getTimePublishedDescSorted(offset, key.count)
             val articles = articleRecords.map { record ->
-                record.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao())
+                record.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao())
             }
             capture(Log.INFO, "Fetched ${articles.size} articles with offset: $offset")
             if (articles.isEmpty()) {
@@ -48,12 +49,14 @@ class ArticlesArenaCache(
         if (key.page == 1) {
             capture(Log.INFO, "Clear search articles cache")
             cacheDatabase.articlesSearchDao().clear()
+            cacheDatabase.userDao().clear()
         }
 
         capture(Log.INFO, "Carry search articles to cache with key: $key")
         value.data.forEachIndexed { index, article ->
             capture(Log.INFO, "Carry ${(key.page - 1) * key.count + index} article to cache")
             cacheDatabase.articlesSearchDao().insert(ArticleRecord(article))
+            cacheDatabase.userDao().insert(UserRecord(article.author))
 
             article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
             article.hubs.forEach { hub ->

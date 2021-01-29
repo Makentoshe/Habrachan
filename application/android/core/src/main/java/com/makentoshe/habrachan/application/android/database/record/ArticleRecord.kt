@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import com.makentoshe.habrachan.application.android.database.dao.BadgeDao
 import com.makentoshe.habrachan.application.android.database.dao.FlowDao
 import com.makentoshe.habrachan.application.android.database.dao.HubDao
+import com.makentoshe.habrachan.application.android.database.dao.UserDao
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.Metadata
 
@@ -13,8 +14,7 @@ import com.makentoshe.habrachan.entity.Metadata
 data class ArticleRecord(
     @PrimaryKey
     val id: Int,
-    @Embedded(prefix = "author_")
-    val authorRecord: UserRecord,
+    val authorId: Int,
     val commentsCount: Int,
     val commentsNew: Int,
     val editorVersion: Int? = null,
@@ -62,7 +62,7 @@ data class ArticleRecord(
 
     constructor(article: Article) : this(
         article.id,
-        UserRecord(article.author),
+        article.author.id,
         article.commentsCount,
         article.commentsNew,
         article.editorVersion,
@@ -101,9 +101,9 @@ data class ArticleRecord(
         article.isCanComment
     )
 
-    fun toArticle(badgeDao: BadgeDao, hubDao: HubDao, flowDao: FlowDao) = Article(
+    fun toArticle(badgeDao: BadgeDao, hubDao: HubDao, flowDao: FlowDao, userDao: UserDao) = Article(
         id,
-        authorRecord.toUser(badgeDao),
+        userDao.getById(authorId)!!.toUser(badgeDao),
         commentsCount,
         commentsNew,
         editorVersion,

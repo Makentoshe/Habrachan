@@ -12,7 +12,7 @@ import com.makentoshe.habrachan.entity.User
 @Entity
 data class UserRecord(
     @PrimaryKey
-    val id: String,
+    val id: Int,
     val avatar: String,
     /** List of badges ids joined as string */
     // TODO mb add type converter
