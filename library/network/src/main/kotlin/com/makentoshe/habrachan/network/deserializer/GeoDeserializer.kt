@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.network.deserializer
 
 import com.google.gson.*
-import com.makentoshe.habrachan.entity.Geo
+import com.makentoshe.habrachan.entity.natives.Geo
 import java.lang.reflect.Type
 
 class GeoDeserializer : JsonDeserializer<Geo> {

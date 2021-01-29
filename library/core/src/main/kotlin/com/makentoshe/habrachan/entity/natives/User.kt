@@ -1,20 +1,21 @@
-package com.makentoshe.habrachan.entity
+package com.makentoshe.habrachan.entity.natives
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.entity.ArticleAuthor
 
 data class User(
     @SerializedName("avatar")
-    val avatar: String,
+    override val avatar: String,
     @SerializedName("badges")
     val badges: List<Badge>,
     @SerializedName("counters")
     val counters: Counters,
     @SerializedName("fullname")
-    val fullname: String? = null,
+    override val fullname: String? = null,
     @SerializedName("geo")
     val geo: Geo? = null,
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("is_can_vote")
     val isCanVote: Boolean,
     @SerializedName("is_rc")
@@ -24,7 +25,7 @@ data class User(
     @SerializedName("is_subscribed")
     val isSubscribed: Boolean? = null,
     @SerializedName("login")
-    val login: String,
+    override val login: String,
     @SerializedName("path")
     val path: String,
     @SerializedName("rating")
@@ -47,4 +48,7 @@ data class User(
 //    val commonTags: List<Any>,
 //    @SerializedName("contacts")
 //    val contacts: List<Any>,
-)
+): ArticleAuthor {
+    override val userId: Int
+        get() = id
+}

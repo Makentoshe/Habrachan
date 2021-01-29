@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.application.android.database.record
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.makentoshe.habrachan.entity.Badge
+import com.makentoshe.habrachan.entity.natives.Badge
 
 @Entity()
 class BadgeRecord(

@@ -1,14 +1,15 @@
-package com.makentoshe.habrachan.entity
+package com.makentoshe.habrachan.entity.natives
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.entity.ArticleHub
 
 data class Hub(
     @SerializedName("id")
     val id: Int,
     @SerializedName("alias")
-    val alias: String,
+    override val alias: String,
     @SerializedName("title")
-    val title: String,
+    override val title: String,
     @SerializedName("icon")
     val icon: String,
     @SerializedName("is_company")
@@ -33,15 +34,7 @@ data class Hub(
     val rating: Double?,
     @SerializedName("tags_string")
     val tagsString: String?
-) {
-
-//    fun toJson(): String {
-//        return Gson().toJson(this)
-//    }
-//
-//    companion object {
-//        fun fromJson(json: String): Hub {
-//            return Gson().fromJson(json, Hub::class.java)
-//        }
-//    }
+): ArticleHub {
+    override val hubId: Int
+        get() = id
 }

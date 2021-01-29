@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.network.response
 
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.entity.Article
+import com.makentoshe.habrachan.entity.natives.Article
 
 // todo add secondary constructor with defined serverTime from now()
 data class ArticleResponse(

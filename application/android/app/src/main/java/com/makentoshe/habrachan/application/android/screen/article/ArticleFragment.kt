@@ -22,7 +22,7 @@ import com.makentoshe.habrachan.application.android.screen.article.model.html.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
-import com.makentoshe.habrachan.entity.Article
+import com.makentoshe.habrachan.entity.natives.Article
 import com.makentoshe.habrachan.network.response.ArticleResponse
 import com.makentoshe.habrachan.network.response.ImageResponse
 import io.reactivex.android.schedulers.AndroidSchedulers

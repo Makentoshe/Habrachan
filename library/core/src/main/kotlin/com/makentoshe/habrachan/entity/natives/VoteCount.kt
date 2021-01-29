@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.entity
+package com.makentoshe.habrachan.entity.natives
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,7 +1,8 @@
-package com.makentoshe.habrachan.entity
+package com.makentoshe.habrachan.entity.natives
 
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.entity.ArticleFlow
 
 data class Flow(
     @SerializedName("id")
@@ -9,22 +10,19 @@ data class Flow(
     @SerializedName("name")
     val name: String,
     @SerializedName("alias")
-    val alias: String,
+    override val alias: String,
     @SerializedName("url")
     val url: String,
     @SerializedName("path")
     val path: String,
     @SerializedName("hubs_count")
     val hubsCount: Int?
-) {
-//
-//    fun toJson(): String {
-//        return Gson().toJson(this)
-//    }
-//
-//    companion object {
-//        fun fromJson(json: String): Flow {
-//            return Gson().fromJson(json, Flow::class.java)
-//        }
-//    }
+) : ArticleFlow {
+
+    override val title: String
+        get() = name
+
+    override val flowId: Int
+        get() = id
+
 }

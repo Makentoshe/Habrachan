@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.network.deserializer
 
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import com.makentoshe.habrachan.entity.Badge
-import com.makentoshe.habrachan.entity.Badges
+import com.makentoshe.habrachan.entity.natives.Badge
+import com.makentoshe.habrachan.entity.natives.Badges
 import java.lang.reflect.Type
 
 class BadgesDeserializer : JsonDeserializer<Badges> {

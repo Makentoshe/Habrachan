@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.application.android.database.record.FlowRecord
 import com.makentoshe.habrachan.application.android.database.record.HubRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.entity.NextPage
+import com.makentoshe.habrachan.entity.natives.NextPage
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.response.ArticlesResponse
 

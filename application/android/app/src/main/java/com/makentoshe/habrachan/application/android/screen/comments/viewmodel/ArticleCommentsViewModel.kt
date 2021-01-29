@@ -13,7 +13,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.Commen
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
 import com.makentoshe.habrachan.application.core.arena.Arena
 import com.makentoshe.habrachan.application.core.arena.image.AvatarArena
-import com.makentoshe.habrachan.entity.Comment
+import com.makentoshe.habrachan.entity.natives.Comment
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetCommentsRequest
 import com.makentoshe.habrachan.network.request.ImageRequest

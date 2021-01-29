@@ -4,15 +4,15 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.makentoshe.habrachan.application.android.database.dao.BadgeDao
-import com.makentoshe.habrachan.entity.Badge
-import com.makentoshe.habrachan.entity.Counters
-import com.makentoshe.habrachan.entity.Geo
-import com.makentoshe.habrachan.entity.User
+import com.makentoshe.habrachan.entity.natives.Badge
+import com.makentoshe.habrachan.entity.natives.Counters
+import com.makentoshe.habrachan.entity.natives.Geo
+import com.makentoshe.habrachan.entity.natives.User
 
 @Entity
 data class UserRecord(
     @PrimaryKey
-    val id: String,
+    val id: Int,
     val avatar: String,
     /** List of badges ids joined as string */
     // TODO mb add type converter

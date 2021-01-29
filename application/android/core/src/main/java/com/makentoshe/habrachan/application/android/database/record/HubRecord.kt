@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.application.android.database.dao.FlowDao
-import com.makentoshe.habrachan.entity.Hub
+import com.makentoshe.habrachan.entity.natives.Hub
 
 @Entity
 data class HubRecord(

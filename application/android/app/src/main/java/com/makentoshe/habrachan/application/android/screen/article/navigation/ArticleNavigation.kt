@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.article.navigation
 
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
-import com.makentoshe.habrachan.entity.Article
+import com.makentoshe.habrachan.entity.natives.Article
 import ru.terrakok.cicerone.Router
 
 class ArticleNavigation(private val router: Router) {

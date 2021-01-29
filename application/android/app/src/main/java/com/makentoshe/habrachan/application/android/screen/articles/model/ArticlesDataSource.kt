@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.articles.model
 
 import androidx.paging.PageKeyedDataSource
 import com.makentoshe.habrachan.application.core.arena.articles.ArticlesArena
-import com.makentoshe.habrachan.entity.Article
+import com.makentoshe.habrachan.entity.natives.Article
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.response.ArticlesResponse

@@ -1,9 +1,9 @@
 package com.makentoshe.habrachan.network.response
 
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.entity.Article
-import com.makentoshe.habrachan.entity.NextPage
-import com.makentoshe.habrachan.entity.User
+import com.makentoshe.habrachan.entity.natives.Article
+import com.makentoshe.habrachan.entity.natives.NextPage
+import com.makentoshe.habrachan.entity.natives.User
 
 data class ArticlesResponse(
     @SerializedName("data")

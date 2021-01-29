@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 import com.makentoshe.habrachan.application.android.database.dao.BadgeDao
 import com.makentoshe.habrachan.application.android.database.dao.FlowDao
 import com.makentoshe.habrachan.application.android.database.dao.HubDao
-import com.makentoshe.habrachan.entity.Article
-import com.makentoshe.habrachan.entity.Metadata
+import com.makentoshe.habrachan.entity.natives.Article
+import com.makentoshe.habrachan.entity.natives.Metadata
 
 @Entity
 data class ArticleRecord(

@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.article.navigation
 
 import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
-import com.makentoshe.habrachan.entity.Article
+import com.makentoshe.habrachan.entity.natives.Article
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class ArticleScreen(private val articleId: Int, private val article: Article? = null) : SupportAppScreen() {

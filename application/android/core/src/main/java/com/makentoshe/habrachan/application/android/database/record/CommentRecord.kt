@@ -4,8 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.entity.Article
-import com.makentoshe.habrachan.entity.Comment
+import com.makentoshe.habrachan.entity.natives.Article
+import com.makentoshe.habrachan.entity.natives.Comment
 
 @Entity
 data class CommentRecord(

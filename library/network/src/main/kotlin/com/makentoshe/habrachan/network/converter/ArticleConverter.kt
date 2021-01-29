@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.network.converter
 
 import com.google.gson.GsonBuilder
-import com.makentoshe.habrachan.entity.Badges
+import com.makentoshe.habrachan.entity.natives.Badges
 import com.makentoshe.habrachan.network.deserializer.BadgesDeserializer
 import com.makentoshe.habrachan.network.response.ArticleResponse
 import okhttp3.ResponseBody
