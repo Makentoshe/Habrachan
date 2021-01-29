@@ -9,37 +9,37 @@ data class User(
     @SerializedName("badges")
     val badges: List<Badge>,
     @SerializedName("counters")
-    val counters: Counters,
+    val counters: Counters?,
     @SerializedName("fullname")
-    override val fullname: String? = null,
+    override val fullname: String?,
     @SerializedName("geo")
-    val geo: Geo? = null,
+    val geo: Geo?,
     @SerializedName("id")
     val id: Int,
     @SerializedName("is_can_vote")
-    val isCanVote: Boolean,
+    val isCanVote: Boolean?,
     @SerializedName("is_rc")
-    val isRc: Boolean,
+    val isRc: Boolean?,
     @SerializedName("is_readonly")
-    val isReadonly: Boolean,
+    val isReadonly: Boolean?,
     @SerializedName("is_subscribed")
-    val isSubscribed: Boolean? = null,
+    val isSubscribed: Boolean?,
     @SerializedName("login")
     override val login: String,
     @SerializedName("path")
-    val path: String,
+    val path: String?,
     @SerializedName("rating")
-    val rating: Float,
+    val rating: Float?,
     @SerializedName("rating_position")
-    val ratingPosition: Int,
+    val ratingPosition: Int?,
     @SerializedName("score")
-    val score: Float,
+    val score: Float?,
     @SerializedName("sex")
-    val sex: String,
+    val sex: String?,
     @SerializedName("specializm")
-    val specializm: String? = null,
+    val specializm: String?,
     @SerializedName("time_registered")
-    val timeRegistered: String
+    val timeRegistered: String?
 //    @SerializedName("vote")
 //    val vote: Int = 0
 //    @SerializedName("payment_methods")

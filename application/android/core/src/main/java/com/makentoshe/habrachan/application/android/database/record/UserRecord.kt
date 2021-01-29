@@ -4,6 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.makentoshe.habrachan.application.android.database.dao.BadgeDao
+import com.makentoshe.habrachan.entity.ArticleAuthor
+import com.makentoshe.habrachan.entity.articleAuthor
 import com.makentoshe.habrachan.entity.natives.Badge
 import com.makentoshe.habrachan.entity.natives.Counters
 import com.makentoshe.habrachan.entity.natives.Geo
@@ -15,25 +17,25 @@ data class UserRecord(
     val id: Int,
     val avatar: String,
     /** List of badges ids joined as string */
-    // TODO mb add type converter
-    val badges: String,
+    // TODO make Relation
+    val badges: String?,
     @Embedded(prefix = "counters_")
-    val counters: Counters,
-    val fullname: String? = null,
+    val counters: Counters?,
+    val fullname: String?,
     @Embedded(prefix = "geo_")
     val geo: Geo?,
-    val isCanVote: Boolean,
-    val isRc: Boolean,
-    val isReadonly: Boolean,
-    val isSubscribed: Boolean? = null,
+    val isCanVote: Boolean?,
+    val isRc: Boolean?,
+    val isReadonly: Boolean?,
+    val isSubscribed: Boolean?,
     val login: String,
-    val path: String,
-    val rating: Float,
-    val ratingPosition: Int,
-    val score: Float,
-    val sex: String,
-    val specializm: String? = null,
-    val timeRegistered: String
+    val path: String?,
+    val rating: Float?,
+    val ratingPosition: Int?,
+    val score: Float?,
+    val sex: String?,
+    val specializm: String?,
+    val timeRegistered: String?
 ) {
 
     companion object {
@@ -61,8 +63,29 @@ data class UserRecord(
         user.timeRegistered
     )
 
+    constructor(author: ArticleAuthor) : this(
+        author.userId,
+        author.avatar,
+        null,
+        null,
+        author.fullname,
+        null,
+        null,
+        null,
+        null,
+        null,
+        author.login,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    )
+
     private fun badges(badgeDao: BadgeDao): List<Badge> {
-        if (badges.isEmpty()) return emptyList()
+        if (badges == null || badges.isEmpty()) return emptyList()
 
         return badges.split(delimiter).mapNotNull {
             val id = it.toIntOrNull() ?: return@mapNotNull null
@@ -90,4 +113,6 @@ data class UserRecord(
         specializm,
         timeRegistered
     )
+
+    fun toArticleAuthor() = articleAuthor(id, avatar, login, fullname)
 }

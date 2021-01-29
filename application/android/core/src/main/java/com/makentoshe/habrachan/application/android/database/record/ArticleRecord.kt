@@ -14,16 +14,17 @@ import com.makentoshe.habrachan.entity.natives.Metadata
 data class ArticleRecord(
     @PrimaryKey
     val id: Int,
+    // TODO make Relation
     val authorId: Int,
     val commentsCount: Int,
     val commentsNew: Int,
     val editorVersion: Int? = null,
     val favoritesCount: Int,
-    // TODO add Flows converter
+    // TODO make Relation
     val flows: String,
     val fullUrl: String,
     val hasPolls: Boolean,
-    // TODO add Hubs converter
+    // TODO make Relation
     val hubs: String,
     val isCanVote: Boolean,
     val isCommentsHide: Int,
