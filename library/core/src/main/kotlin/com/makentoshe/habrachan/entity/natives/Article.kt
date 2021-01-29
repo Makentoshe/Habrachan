@@ -2,8 +2,6 @@ package com.makentoshe.habrachan.entity.natives
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.Article
-import java.text.SimpleDateFormat
-import java.util.*
 
 data class Article(
     @SerializedName("id")
@@ -13,7 +11,7 @@ data class Article(
     @SerializedName("comments_count")
     override val commentsCount: Int,
     @SerializedName("comments_new")
-    val commentsNew: Int,
+    val commentsNew: Int?,
     @SerializedName("editor_version")
     val editorVersion: Int? = null,
     @SerializedName("favorites_count")
@@ -21,74 +19,71 @@ data class Article(
     @SerializedName("flows")
     override val flows: List<Flow> = listOf(),
     @SerializedName("full_url")
-    val fullUrl: String,
+    val fullUrl: String?,
     @SerializedName("has_polls")
-    val hasPolls: Boolean,
+    val hasPolls: Boolean?,
     @SerializedName("hubs")
     override val hubs: List<Hub> = listOf(),
     @SerializedName("is_can_vote")
-    val isCanVote: Boolean,
+    val isCanVote: Boolean?,
     @SerializedName("is_comments_hide")
-    val isCommentsHide: Int,
+    val isCommentsHide: Int?,
     @SerializedName("is_corporative")
-    val isCorporative: Int,
+    val isCorporative: Int?,
     @SerializedName("is_favorite")
-    val isFavorite: Boolean,
+    val isFavorite: Boolean?,
     @SerializedName("is_habred")
-    val isHabred: Boolean,
+    val isHabred: Boolean?,
     @SerializedName("is_interesting")
-    val isInteresting: Boolean,
+    val isInteresting: Boolean?,
     @SerializedName("is_recovery_mode")
-    val isRecoveryMode: Boolean,
+    val isRecoveryMode: Boolean?,
     @SerializedName("is_tutorial")
-    val isTutorial: Boolean,
+    val isTutorial: Boolean?,
     @SerializedName("lang")
-    val lang: String,
+    val lang: String?,
     @SerializedName("metadata")
-    val metadata: Metadata? = null,
+    val metadata: Metadata?,
     @SerializedName("path")
-    val path: String,
+    val path: String?,
     @SerializedName("post_type")
     override val postType: Int,
     @SerializedName("post_type_str")
     val postTypeStr: String,
     @SerializedName("preview_html")
-    val previewHtml: String,
+    val previewHtml: String?,
     @SerializedName("text_html")
-    val textHtml: String? = null,
+    val textHtml: String?,
     @SerializedName("reading_count")
     override val readingCount: Int,
     @SerializedName("score")
     override val score: Int,
     @SerializedName("source_author")
-    val sourceAuthor: String? = null,
+    val sourceAuthor: String? ,
     @SerializedName("source_link")
-    val sourceLink: String? = null,
+    val sourceLink: String? ,
     @SerializedName("tags_string")
-    val tagsString: String,
+    val tagsString: String?,
     @SerializedName("text_cut")
-    val textCut: String? = null,
+    val textCut: String? ,
     @SerializedName("time_interesting")
-    val timeInteresting: String? = null,
+    val timeInteresting: String? ,
     @SerializedName("time_published")
     override val timePublishedRaw: String,
     @SerializedName("title")
     override val title: String,
     @SerializedName("url")
-    val url: String,
+    val url: String?,
     @SerializedName("vote")
-    val vote: Double? = null,
+    val vote: Double?,
     @SerializedName("votes_count")
-    val votesCount: Int,
+    val votesCount: Int?,
     @SerializedName("is_can_comment")
-    val isCanComment: Boolean? = null
+    val isCanComment: Boolean?
 //    @SerializedName("voting")
 //    val voting: Voting? = null
 ) : Article {
 
     override val articleId: Int
         get() = id
-
-    override val timePublished: Date
-        get() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(timePublishedRaw)
 }
