@@ -5,6 +5,7 @@ import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabas
 import com.makentoshe.habrachan.application.android.database.record.ArticleRecord
 import com.makentoshe.habrachan.application.android.database.record.FlowRecord
 import com.makentoshe.habrachan.application.android.database.record.HubRecord
+import com.makentoshe.habrachan.application.android.database.record.UserRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.request.GetArticleRequest
@@ -26,7 +27,7 @@ class ArticleArenaCache(
             val record = cacheDatabase.articlesSearchDao().getById(key.id)
             capture(Log.INFO) { "Article(${record?.id}) fetched from cache" }
             if (record != null) {
-                val article = record.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao())
+                val article = record.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao())
                 Result.success(ArticleResponse(article, ""))
             } else {
                 Result.failure(ArenaStorageException("ArticleArenaCache: ArticleRecord is null"))
@@ -41,6 +42,7 @@ class ArticleArenaCache(
         capture(Log.INFO) { "Carry search articles to cache with key: $key" }
 
         cacheDatabase.articlesSearchDao().insert(ArticleRecord(value.article))
+        cacheDatabase.userDao().insert(UserRecord(value.article.author))
         value.article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
         value.article.hubs.forEach { hub ->
             cacheDatabase.hubDao().insert(HubRecord(hub))

@@ -2,10 +2,7 @@ package com.makentoshe.habrachan.application.android.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.makentoshe.habrachan.application.android.database.dao.BadgeDao
-import com.makentoshe.habrachan.application.android.database.dao.CommentDao
-import com.makentoshe.habrachan.application.android.database.dao.FlowDao
-import com.makentoshe.habrachan.application.android.database.dao.HubDao
+import com.makentoshe.habrachan.application.android.database.dao.*
 import com.makentoshe.habrachan.application.android.database.record.*
 
 /**
@@ -15,8 +12,8 @@ import com.makentoshe.habrachan.application.android.database.record.*
  * entities - array of object types that database contains.
  */
 @Database(
-    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class],
-    version = 2
+    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, UserRecord::class],
+    version = 3
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
@@ -52,4 +49,10 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * That means that the cache should be released occasionally.
      */
     abstract fun commentDao(): CommentDao
+
+    /**
+     * Stores comments for articles. Potential infinite.
+     * That means that the cache should be released occasionally.
+     */
+    abstract fun userDao(): UserDao
 }
