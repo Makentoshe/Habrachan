@@ -11,15 +11,15 @@ data class Hub(
     @SerializedName("title")
     override val title: String,
     @SerializedName("icon")
-    val icon: String,
+    val icon: String?,
     @SerializedName("is_company")
-    val isCompany: Boolean,
+    val isCompany: Boolean?,
     @SerializedName("is_membership")
-    val isMembership: Boolean,
+    val isMembership: Boolean?,
     @SerializedName("is_profiled")
-    val isProfiled: Boolean,
+    val isProfiled: Boolean?,
     @SerializedName("path")
-    val path: String,
+    val path: String?,
     @SerializedName("about")
     val about: String?,
     @SerializedName("about_small")

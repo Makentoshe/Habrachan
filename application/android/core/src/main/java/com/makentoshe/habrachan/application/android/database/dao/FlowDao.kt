@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.application.android.database.dao
 import androidx.room.*
 import com.makentoshe.habrachan.application.android.database.record.FlowRecord
 
+// TODO add update method that creates row if it does not exists or update fields instead
 @Dao
 interface FlowDao {
 

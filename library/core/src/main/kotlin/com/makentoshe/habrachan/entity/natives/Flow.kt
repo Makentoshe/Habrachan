@@ -12,9 +12,9 @@ data class Flow(
     @SerializedName("alias")
     override val alias: String,
     @SerializedName("url")
-    val url: String,
+    val url: String?,
     @SerializedName("path")
-    val path: String,
+    val path: String?,
     @SerializedName("hubs_count")
     val hubsCount: Int?
 ) : ArticleFlow {
@@ -24,5 +24,4 @@ data class Flow(
 
     override val flowId: Int
         get() = id
-
 }
