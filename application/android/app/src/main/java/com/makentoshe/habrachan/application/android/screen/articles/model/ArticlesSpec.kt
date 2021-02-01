@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.articles.model
 
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.natives.network.request.GetArticlesRequest
 
 data class ArticlesSpec(val page: Int, val spec: GetArticlesRequest.Spec) {
     companion object {

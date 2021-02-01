@@ -9,8 +9,8 @@ import androidx.paging.cachedIn
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesDataSource
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesSpec
 import com.makentoshe.habrachan.application.core.arena.Arena
+import com.makentoshe.habrachan.natives.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.response.GetArticlesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel

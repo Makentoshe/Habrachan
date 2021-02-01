@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.network
 
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.natives.network.request.GetArticlesRequest
 
 interface UserSession {
 

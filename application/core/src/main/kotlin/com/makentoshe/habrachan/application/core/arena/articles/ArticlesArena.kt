@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.application.core.arena.articles
 
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.SourceFirstArena
+import com.makentoshe.habrachan.natives.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.manager.ArticlesManager
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.response.GetArticlesResponse
 
 class ArticlesArena(

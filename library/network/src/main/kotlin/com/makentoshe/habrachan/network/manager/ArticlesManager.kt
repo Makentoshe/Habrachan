@@ -1,26 +1,25 @@
 package com.makentoshe.habrachan.network.manager
 
+import com.makentoshe.habrachan.natives.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.natives.network.response.GetArticlesResponse
 import com.makentoshe.habrachan.network.api.NativeArticlesApi
 import com.makentoshe.habrachan.network.converter.ArticleConverter
 import com.makentoshe.habrachan.network.converter.ArticlesConverter
 import com.makentoshe.habrachan.network.converter.VoteUpArticleConverter
 import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.GetArticleRequest
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.request.UserArticlesRequest
 import com.makentoshe.habrachan.network.request.VoteArticleRequest
 import com.makentoshe.habrachan.network.response.ArticleResponse
-import com.makentoshe.habrachan.network.response.ArticlesResponse
-import com.makentoshe.habrachan.network.response.GetArticlesResponse
 import com.makentoshe.habrachan.network.response.VoteArticleResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
 interface ArticlesManager {
 
-    suspend fun getArticles(request: GetArticlesRequest): Result<GetArticlesResponse>
+    suspend fun getArticles(request: GetArticlesRequest): Result<com.makentoshe.habrachan.network.response.GetArticlesResponse>
 
-    suspend fun getUserArticles(request: UserArticlesRequest): Result<ArticlesResponse>
+    suspend fun getUserArticles(request: UserArticlesRequest): Result<com.makentoshe.habrachan.network.response.GetArticlesResponse>
 
     suspend fun getArticle(request: GetArticleRequest): Result<ArticleResponse>
 
@@ -58,7 +57,7 @@ class NativeArticlesManager(private val api: NativeArticlesApi) : ArticlesManage
         })
     }
 
-    override suspend fun getUserArticles(request: UserArticlesRequest): Result<ArticlesResponse> {
+    override suspend fun getUserArticles(request: UserArticlesRequest): Result<com.makentoshe.habrachan.natives.network.response.GetArticlesResponse> {
         return api.getUserArticles(
             request.session.client,
             request.session.token,

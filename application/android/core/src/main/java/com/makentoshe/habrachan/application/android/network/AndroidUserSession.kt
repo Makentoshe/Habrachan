@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.application.android.network
 
+import com.makentoshe.habrachan.natives.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
 
 class AndroidUserSession(
     override val client: String,

@@ -1,6 +1,7 @@
-package com.makentoshe.habrachan.entity.mobiles
+package com.makentoshe.habrachan.mobiles.network.response
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.entity.mobiles.Article
 
 data class GetArticlesResponse(
     @SerializedName("articleIds")
