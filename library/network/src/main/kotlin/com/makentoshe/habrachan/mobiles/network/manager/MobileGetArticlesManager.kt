@@ -1,9 +1,10 @@
 package com.makentoshe.habrachan.mobiles.network.manager
 
 import com.makentoshe.habrachan.mobiles.network.api.MobileArticlesApi
+import com.makentoshe.habrachan.mobiles.network.deserializer.MobileGetArticlesDeserializer
 import com.makentoshe.habrachan.mobiles.network.request.MobileGetArticlesRequest
 import com.makentoshe.habrachan.mobiles.network.request.MobileGetArticlesSpec
-import com.makentoshe.habrachan.mobiles.network.response.MobileGetArticlesResponse
+import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.manager.GetArticlesManager
 import com.makentoshe.habrachan.network.request.SpecType
 import com.makentoshe.habrachan.network.request.TopSpecType
@@ -12,7 +13,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
 class MobileGetArticlesManager(
-    private val api: MobileArticlesApi
+    private val api: MobileArticlesApi,
+    private val deserializer: MobileGetArticlesDeserializer
 ): GetArticlesManager<MobileGetArticlesRequest, MobileGetArticlesSpec> {
 
     override val specs = listOf(
@@ -24,25 +26,30 @@ class MobileGetArticlesManager(
         MobileGetArticlesSpec(SpecType.Top(TopSpecType.Alltime), mapOf("sort" to "date", "period" to "alltime"))
     )
 
+    override fun spec(type: SpecType): MobileGetArticlesSpec? {
+        return specs.find { it.type  == type }
+    }
+
     override fun request(page: Int, spec: MobileGetArticlesSpec) : MobileGetArticlesRequest{
         return MobileGetArticlesRequest(page, spec)
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun articles(request: MobileGetArticlesRequest): GetArticlesResponse {
-        val sas = api.getArticles(request.page, request.spec.query).execute()
-        println(sas)
-        // TODO add json parser
-        return MobileGetArticlesResponse(emptyList(), emptyMap(), 0)
+    override suspend fun articles(request: MobileGetArticlesRequest): Result<GetArticlesResponse> {
+        return api.getArticles(request.page, request.spec.query).execute().fold({ body ->
+            deserializer.body(body.string())
+        }, { error ->
+            deserializer.error(error.string())
+        })
     }
 
 
-    class Builder(private val client: OkHttpClient) {
+    class Builder(private val client: OkHttpClient, private val deserializer: MobileGetArticlesDeserializer) {
 
         private val baseUrl = "https://m.habr.com/"
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
 
-        fun build() = MobileGetArticlesManager(getRetrofit().create(MobileArticlesApi::class.java))
+        fun build() = MobileGetArticlesManager(getRetrofit().create(MobileArticlesApi::class.java), deserializer)
     }
 }

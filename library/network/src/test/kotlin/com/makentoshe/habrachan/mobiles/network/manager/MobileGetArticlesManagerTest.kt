@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.mobiles.network.manager
 
+import com.makentoshe.habrachan.mobiles.network.deserializer.MobileGetArticlesDeserializer
 import com.makentoshe.habrachan.network.request.SpecType
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -11,9 +12,10 @@ class MobileGetArticlesManagerTest {
     @Test
     @Ignore
     fun network() = runBlocking {
-        val manager = MobileGetArticlesManager.Builder(OkHttpClient()).build()
+        val manager = MobileGetArticlesManager.Builder(OkHttpClient(), MobileGetArticlesDeserializer()).build()
         val request = manager.request(2, manager.specs.find { it.type == SpecType.All }!!)
         val response = manager.articles(request)
+        println(response)
     }
 
 }
