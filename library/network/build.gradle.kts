@@ -38,6 +38,8 @@ dependencies {
     // https://github.com/Kotlin/kotlinx.coroutines
     val coroutines = "1.3.7"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
+
+    testImplementation("junit:junit:4.12")
 }
 
 // Allows to use kotlin.Result type as a return
