@@ -1,15 +1,18 @@
 package com.makentoshe.habrachan.application.android.screen.article
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.Toast
+import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
@@ -38,7 +41,6 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
         fun build(articleId: Int) = ArticleFragment().apply {
             arguments.articleId = articleId
-//            arguments.article = article
         }
     }
 
@@ -51,7 +53,9 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private val exceptionHandler by inject<ExceptionHandler>()
     private val navigator by inject<ArticleNavigation>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_article, container, false)
     }
 
@@ -87,9 +91,25 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
             Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
         }
 
+        fragment_article_toolbar.overflowIcon =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_overflow)
+        fragment_article_toolbar.inflateMenu(R.menu.menu_article_overflow)
+        fragment_article_toolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
 //        javaScriptInterface.imageObservable.subscribe{
 //            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
 //        }.let(disposables::add)
+    }
+
+    // TODO make separate class for creating html urls
+    // TODO move sharing to another class
+    private fun onOverflowMenuItemClick(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_share -> {
+            val builder = ShareCompat.IntentBuilder.from(requireActivity())
+            builder.setType(Intent.ACTION_SEND).setText("https://habr.com/post/${arguments.articleId}/")
+            builder.setType("text/plain").startChooser()
+            true
+        }
+        else -> false
     }
 
     private fun onArticleReceivedSuccess(response: ArticleResponse) {
@@ -108,7 +128,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
         fragment_article_progress.visibility = View.GONE
         fragment_article_scroll.visibility = View.VISIBLE
-        val base64content = Base64.encodeToString(response.article.buildHtml(resources).toByteArray(), Base64.DEFAULT)
+        val base64content =
+            Base64.encodeToString(response.article.buildHtml(resources).toByteArray(), Base64.DEFAULT)
         fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
     }
 
@@ -156,7 +177,12 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_bottom?.visibility = View.VISIBLE
     }
 
-    override fun onWebReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
+    override fun onWebReceivedError(
+        view: WebView?,
+        errorCode: Int,
+        description: String?,
+        failingUrl: String?
+    ) {
         onArticleReceivedFailure(Exception(description))
     }
 
@@ -171,13 +197,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
             set(value) = fragmentArguments.putInt(ID, value)
             get() = fragmentArguments.getInt(ID, -1)
 
-//        var article: Article?
-//            set(value) = fragmentArguments.putString(ARTICLE, value?.toJson())
-//            get() = fragmentArguments.getString(ARTICLE)?.let(Article.Companion::fromJson)
-
         companion object {
             private const val ID = "Id"
-//            private const val ARTICLE = "Article"
         }
     }
 }

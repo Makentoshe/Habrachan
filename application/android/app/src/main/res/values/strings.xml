@@ -59,6 +59,8 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="articles_top_type_weekly">Weekly</string>
     <string name="articles_top_type_daily">Daily</string>
 
+    <string name="menu_article_share">Share article</string>
+
     <string name="comments_reply_empty">Reply on this comment</string>
     <string name="comments_reply_count">Show replies(%1$d)</string>
 
