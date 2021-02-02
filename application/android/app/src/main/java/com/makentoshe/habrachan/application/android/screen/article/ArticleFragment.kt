@@ -1,8 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.article
 
-import android.content.Intent
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Base64
@@ -12,27 +10,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.Toast
-import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.dp2px
+import com.makentoshe.habrachan.application.android.screen.article.model.ArticleShareController
 import com.makentoshe.habrachan.application.android.screen.article.model.HabrachanWebViewClient
 import com.makentoshe.habrachan.application.android.screen.article.model.HabrachanWebViewClientListener
 import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
 import com.makentoshe.habrachan.application.android.screen.article.model.html.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
-import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel
+import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
-import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.network.response.ArticleResponse
 import com.makentoshe.habrachan.network.response.ImageResponse
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article_content.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
 class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
@@ -48,10 +46,11 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private val javaScriptInterface = JavaScriptInterface()
     private val webViewClient = HabrachanWebViewClient(this)
 
-    private val viewModel by inject<ArticleViewModel>()
-    private val disposables by inject<CompositeDisposable>()
+    private val viewModel2 by inject<ArticleViewModel2>()
     private val exceptionHandler by inject<ExceptionHandler>()
     private val navigator by inject<ArticleNavigation>()
+
+    private val articleShareController by inject<ArticleShareController>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -60,24 +59,36 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // TODO optimize html building
-        viewModel.articleObservable.observeOn(AndroidSchedulers.mainThread()).subscribe { response ->
-            response.fold(::onArticleReceivedSuccess, ::onArticleReceivedFailure)
-        }.let(disposables::add)
+        if (savedInstanceState == null) lifecycleScope.launch {
+            viewModel2.articleSpecChannel.send(ArticleViewModel2.ArticleSpec(arguments.articleId))
+        }
+        lifecycleScope.launch {
+            viewModel2.avatar.collectLatest { response ->
+                response.fold(::onAvatarReceivedSuccess, ::onAvatarReceivedFailure)
+            }
+        }
+        lifecycleScope.launch {
+            viewModel2.article.collectLatest { response ->
+                response.fold(::onArticleReceivedSuccess, ::onArticleReceivedFailure)
+            }
+        }
 
-        viewModel.avatarObservable.observeOn(AndroidSchedulers.mainThread()).subscribe { response ->
-            response.fold(::onAvatarReceivedSuccess, ::onAvatarReceivedFailure)
-        }.let(disposables::add)
+        fragment_article_retry.setOnClickListener {
+            fragment_article_failure.visibility = View.GONE
+            fragment_article_progress.visibility = View.VISIBLE
+            lifecycleScope.launch {
+                viewModel2.articleSpecChannel.send(ArticleViewModel2.ArticleSpec(arguments.articleId))
+            }
+        }
 
         fragment_article_webview.webViewClient = webViewClient
         fragment_article_webview.settings.javaScriptEnabled = true
         fragment_article_webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
 
-        fragment_article_retry.setOnClickListener {
-            viewModel.requestObserver.onNext(arguments.articleId)
-            fragment_article_failure.visibility = View.GONE
-            fragment_article_progress.visibility = View.VISIBLE
-        }
+        fragment_article_toolbar.overflowIcon =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_overflow)
+        fragment_article_toolbar.inflateMenu(R.menu.menu_article_overflow)
+        fragment_article_toolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
 
         fragment_article_bottom_voteup.setOnClickListener {
             Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
@@ -91,46 +102,45 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
             Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
         }
 
-        fragment_article_toolbar.overflowIcon =
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_overflow)
-        fragment_article_toolbar.inflateMenu(R.menu.menu_article_overflow)
-        fragment_article_toolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
 //        javaScriptInterface.imageObservable.subscribe{
 //            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
 //        }.let(disposables::add)
     }
 
     // TODO make separate class for creating html urls
-    // TODO move sharing to another class
     private fun onOverflowMenuItemClick(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.action_share -> {
-            val builder = ShareCompat.IntentBuilder.from(requireActivity())
-            builder.setType(Intent.ACTION_SEND).setText("https://habr.com/post/${arguments.articleId}/")
-            builder.setType("text/plain").startChooser()
-            true
-        }
+        R.id.action_share -> articleShareController.share(requireActivity())
         else -> false
     }
 
     private fun onArticleReceivedSuccess(response: ArticleResponse) {
+        onArticleReceivedToolbar(response)
+        onArticleReceivedBottomBar(response)
+        articleShareController.setUrl(response.article)
+
+        fragment_article_progress.visibility = View.GONE
+        fragment_article_scroll.visibility = View.VISIBLE
+        val articleHtml = HtmlBuilder(response.article).addAddon(TableAddon()).addAddon(StyleAddon(resources))
+            .addAddon(DisplayScriptAddon(resources)).addAddon(SpoilerAddon()).addAddon(ImageAddon()).build()
+        val base64content = Base64.encodeToString(articleHtml.toByteArray(), Base64.DEFAULT)
+        fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
+    }
+
+    private fun onArticleReceivedToolbar(response: ArticleResponse) {
         fragment_article_toolbar.setNavigationOnClickListener { navigator.back() }
         fragment_article_toolbar.title = response.article.title
         fragment_article_calculator.text = response.article.title
         fragment_article_login.text = response.article.author.login
         fragment_article_appbar.setExpanded(true, true)
+    }
 
+    private fun onArticleReceivedBottomBar(response: ArticleResponse) {
         fragment_article_bottom_voteview.text = response.article.score.toString()
         fragment_article_bottom_reading_count.text = response.article.readingCount.toString()
         fragment_article_bottom_comments_count.text = response.article.commentsCount.toString()
         fragment_article_bottom_comments.setOnClickListener {
             navigator.toArticleCommentsScreen(response.article)
         }
-
-        fragment_article_progress.visibility = View.GONE
-        fragment_article_scroll.visibility = View.VISIBLE
-        val base64content =
-            Base64.encodeToString(response.article.buildHtml(resources).toByteArray(), Base64.DEFAULT)
-        fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
     }
 
     private fun onArticleReceivedFailure(exception: Throwable) {
@@ -140,16 +150,6 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_title.text = entry.title
         fragment_article_message.text = entry.message
         fragment_article_failure.visibility = View.VISIBLE
-    }
-
-    private fun Article.buildHtml(resources: Resources): String {
-        val builder = HtmlBuilder(this)
-        builder.addAddon(DisplayScriptAddon(resources))
-        builder.addAddon(StyleAddon(resources))
-        builder.addAddon(SpoilerAddon())
-        builder.addAddon(ImageAddon())
-        builder.addAddon(TableAddon())
-        return builder.build()
     }
 
     private fun onAvatarReceivedSuccess(response: ImageResponse) {
@@ -178,17 +178,9 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     }
 
     override fun onWebReceivedError(
-        view: WebView?,
-        errorCode: Int,
-        description: String?,
-        failingUrl: String?
+        view: WebView?, errorCode: Int, description: String?, failingUrl: String?
     ) {
         onArticleReceivedFailure(Exception(description))
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposables.clear()
     }
 
     class Arguments(articleFragment: ArticleFragment) : CoreFragment.Arguments(articleFragment) {
@@ -198,8 +190,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
             get() = fragmentArguments.getInt(ID, -1)
 
         companion object {
-            private const val ID = "Id"
+            private const val ID = "ArticleId"
         }
     }
 }
-

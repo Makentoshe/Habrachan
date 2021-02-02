@@ -11,7 +11,6 @@ import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 // TODO - rework resources access in the modules
-
 class AppActivity : AppCompatActivity() {
 
     private val navigator = StackSupportAppNavigator(this, supportFragmentManager, R.id.fragment_main_container)
