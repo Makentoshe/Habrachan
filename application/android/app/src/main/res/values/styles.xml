@@ -115,12 +115,24 @@
     </style>
 
     <style name="Habrachan.Text.Main.Bold">
-        <item name="android:textSize">@dimen/textML</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Habrachan.Text.Support">
         <item name="android:textSize">@dimen/textM</item>
+        <item name="android:textColor">@color/dimmed</item>
+    </style>
+
+    <style name="Habrachan.Text.Title">
+        <item name="android:textSize">@dimen/textLL</item>
+    </style>
+
+    <style name="Habrachan.Text.Title.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Habrachan.Text.Small">
+        <item name="android:textSize">@dimen/textMS</item>
         <item name="android:textColor">@color/dimmed</item>
     </style>
 

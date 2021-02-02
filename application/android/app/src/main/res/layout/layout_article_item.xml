@@ -1,86 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?><!-- TODO refactor layout -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:paddingTop="10dp"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp"
-    android:paddingBottom="4dp">
+    android:paddingStart="@dimen/dimenM"
+    android:paddingTop="@dimen/dimenS"
+    android:paddingEnd="@dimen/dimenM"
+    android:paddingBottom="@dimen/dimenS">
 
     <TextView
         android:id="@+id/time_published"
+        style="@style/Habrachan.Text.Support"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/author_login"
+        style="@style/Habrachan.Text.Support"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title"
+        style="@style/Habrachan.Text.Title.Bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:textSize="22sp"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/time_published" />
 
     <TextView
         android:id="@+id/hubs_titles"
+        style="@style/Habrachan.Text.Support"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/dimenS"
         app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:barrierMargin="@dimen/dimenS"
+        app:constraint_referenced_ids="hubs_titles" />
 
     <ImageView
         android:id="@+id/score_imageview"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:background="@android:color/transparent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:tint="@color/colorPrimaryDark"
-        android:tintMode="src_atop"
+        android:layout_width="@dimen/heightXS"
+        android:layout_height="@dimen/heightXS"
         app:srcCompat="@drawable/ic_equalizer"
+        app:tintMode="src_atop"
+        app:tint="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hubs_titles" />
+        app:layout_constraintTop_toTopOf="@id/barrier" />
 
     <TextView
         android:id="@+id/score_textview"
+        style="@style/Habrachan.Text.Small"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@android:color/transparent"
-        android:layout_marginStart="4dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimenXS"
         android:gravity="center"
-        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/score_imageview"
-        app:layout_constraintStart_toEndOf="@+id/score_imageview"
-        tools:ignore="SmallSp" />
+        app:layout_constraintStart_toEndOf="@+id/score_imageview" />
 
     <ImageView
         android:id="@+id/reading_count_imageview"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="@dimen/heightXS"
+        android:layout_height="@dimen/heightXS"
+        android:layout_marginStart="@dimen/dimenL"
         android:background="@android:color/transparent"
-        android:layout_marginStart="16dp"
         app:srcCompat="@drawable/ic_eye"
         app:tint="@color/colorPrimaryDark"
         app:tintMode="src_atop"
@@ -90,22 +87,20 @@
 
     <TextView
         android:id="@+id/reading_count_textview"
+        style="@style/Habrachan.Text.Small"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@android:color/transparent"
-        android:layout_marginStart="4dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimenXS"
         android:gravity="center"
-        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/reading_count_imageview"
-        app:layout_constraintStart_toEndOf="@+id/reading_count_imageview"
-        tools:ignore="SmallSp" />
+        app:layout_constraintStart_toEndOf="@+id/reading_count_imageview" />
 
     <ImageView
         android:id="@+id/comments_count_imageview"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="@dimen/heightXS"
+        android:layout_height="@dimen/heightXS"
+        android:layout_marginStart="@dimen/dimenL"
         android:background="@android:color/transparent"
-        android:layout_marginStart="16dp"
         app:srcCompat="@drawable/ic_comment"
         app:tint="@color/colorPrimaryDark"
         app:tintMode="src_atop"
@@ -115,14 +110,12 @@
 
     <TextView
         android:id="@+id/comments_count_textview"
+        style="@style/Habrachan.Text.Small"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@android:color/transparent"
-        android:layout_marginStart="4dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimenS"
         android:gravity="center"
-        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/comments_count_imageview"
-        app:layout_constraintStart_toEndOf="@+id/comments_count_imageview"
-        tools:ignore="SmallSp" />
+        app:layout_constraintStart_toEndOf="@+id/comments_count_imageview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
