@@ -72,8 +72,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         }
         lifecycleScope.launch {
             javaScriptInterface.imageSourceChannel.receiveAsFlow().collectLatest {
-                println(it)
-                Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+                navigator.toArticleContentScreen(it)
             }
         }
 
