@@ -16,11 +16,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.dp2px
-import com.makentoshe.habrachan.application.android.screen.article.model.ArticleShareController
-import com.makentoshe.habrachan.application.android.screen.article.model.HabrachanWebViewClient
-import com.makentoshe.habrachan.application.android.screen.article.model.HabrachanWebViewClientListener
-import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
-import com.makentoshe.habrachan.application.android.screen.article.model.html.*
+import com.makentoshe.habrachan.application.android.screen.article.model.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
@@ -51,6 +47,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private val navigator by inject<ArticleNavigation>()
 
     private val articleShareController by inject<ArticleShareController>()
+    private val articleHtmlController by inject<ArticleHtmlController>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -120,8 +117,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
         fragment_article_progress.visibility = View.GONE
         fragment_article_scroll.visibility = View.VISIBLE
-        val articleHtml = HtmlBuilder(response.article).addAddon(TableAddon()).addAddon(StyleAddon(resources))
-            .addAddon(DisplayScriptAddon(resources)).addAddon(SpoilerAddon()).addAddon(ImageAddon()).build()
+
+        val articleHtml = articleHtmlController.render(response.article)
         val base64content = Base64.encodeToString(articleHtml.toByteArray(), Base64.DEFAULT)
         fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
     }

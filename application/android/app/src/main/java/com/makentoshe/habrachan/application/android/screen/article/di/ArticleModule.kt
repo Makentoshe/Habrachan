@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
+import com.makentoshe.habrachan.application.android.screen.article.model.ArticleHtmlController
 import com.makentoshe.habrachan.application.android.screen.article.model.ArticleShareController
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
@@ -47,5 +48,8 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
 
         val articleShareController = ArticleShareController(fragment.arguments.articleId)
         bind<ArticleShareController>().toInstance(articleShareController)
+
+        val articleHtmlController = ArticleHtmlController(fragment.resources)
+        bind<ArticleHtmlController>().toInstance(articleHtmlController)
     }
 }
