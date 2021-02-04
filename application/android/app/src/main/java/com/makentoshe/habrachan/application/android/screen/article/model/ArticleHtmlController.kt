@@ -7,6 +7,8 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import kotlin.math.roundToInt
 
+// TODO add twitter oembed processing without network
+// TODO add images processing without network
 class ArticleHtmlController(private val resources: Resources) {
 
     fun render(article: Article): String {
@@ -16,15 +18,14 @@ class ArticleHtmlController(private val resources: Resources) {
     fun render(string: String) = render(Jsoup.parse(string))
 
     private fun render(document: Document): String {
-        val body = document.body()
-            .prependChild(habrJsBundleNode())
-            .prependChild(jqueryJsBundleNode())
-            .prependChild(customJsBundle())
-            .prependChild(customCssBundleNode())
+        val body = document.body().prependChild(customJsBundle()).prependChild(customCssBundleNode())
 
         // Tables processing
-        val tables = body.select("table")
-        tables.filter { it.select("img").isNotEmpty() }.forEach { it.addClass("table_img") }
+        body.select("table").filter {
+            it.select("img").isNotEmpty()
+        }.forEach {
+            it.addClass("table_img")
+        }
 
         // Spoilers processing
         body.select(".spoiler").forEach { spoiler ->
@@ -34,12 +35,12 @@ class ArticleHtmlController(private val resources: Resources) {
 
         // Images processing
         body.select("img").forEach { image ->
-            image.attr("onclick", "onImageClickedListener(this)")
-            // TODO replace with takeIf
-            val parent = image.parent()
-            if (parent.`is`("a")) {
-                parent.replaceWith(image)
-            }
+            // TODO check case when image placed in <a> tag and implement dialog for making decision
+            image.attr("onclick", "onImageClickedListener(this);")
+//            val parent = image.parent()
+//            if (parent.`is`("a")) {
+//                parent.replaceWith(image)
+//            }
         }
 
         return body.toString()
@@ -54,21 +55,6 @@ class ArticleHtmlController(private val resources: Resources) {
         val css = String(cssBytes).replace("${'$'}ANDROID_YOUTUBE_EMBED${'$'}", "${height}px")
 
         return Element("style").text(css)
-    }
-
-    private fun habrCssBundleNode(): Element {
-        val jsBytes = resources.openRawResource(com.makentoshe.habrachan.R.raw.habr_bundle_css).readBytes()
-        return Element("style").text(String(jsBytes))
-    }
-
-    private fun habrJsBundleNode(): Element {
-        val jsBytes = resources.openRawResource(com.makentoshe.habrachan.R.raw.habr_bundle_js).readBytes()
-        return Element("script").attr("type", "text/javascript").text(String(jsBytes))
-    }
-
-    private fun jqueryJsBundleNode(): Element {
-        val jsBytes = resources.openRawResource(com.makentoshe.habrachan.R.raw.jquery_183_min).readBytes()
-        return Element("script").attr("type", "text/javascript").text(String(jsBytes))
     }
 
     private fun customJsBundle(): Element {

@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article_content.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
@@ -39,7 +40,6 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     }
 
     override val arguments = Arguments(this)
-    private val javaScriptInterface = JavaScriptInterface()
     private val webViewClient = HabrachanWebViewClient(this)
 
     private val viewModel2 by inject<ArticleViewModel2>()
@@ -48,6 +48,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
     private val articleShareController by inject<ArticleShareController>()
     private val articleHtmlController by inject<ArticleHtmlController>()
+    private val javaScriptInterface by inject<JavaScriptInterface>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -69,6 +70,12 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
                 response.fold(::onArticleReceivedSuccess, ::onArticleReceivedFailure)
             }
         }
+        lifecycleScope.launch {
+            javaScriptInterface.imageSourceChannel.receiveAsFlow().collectLatest {
+                println(it)
+                Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+            }
+        }
 
         fragment_article_retry.setOnClickListener {
             fragment_article_failure.visibility = View.GONE
@@ -82,8 +89,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_webview.settings.javaScriptEnabled = true
         fragment_article_webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
 
-        fragment_article_toolbar.overflowIcon =
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_overflow)
+        fragment_article_toolbar.overflowIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_overflow)
         fragment_article_toolbar.inflateMenu(R.menu.menu_article_overflow)
         fragment_article_toolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
 
@@ -98,10 +104,6 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_author.setOnClickListener {
             Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
         }
-
-//        javaScriptInterface.imageObservable.subscribe{
-//            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
-//        }.let(disposables::add)
     }
 
     // TODO make separate class for creating html urls
