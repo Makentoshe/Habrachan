@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.application.android.AppActivity
 import com.makentoshe.habrachan.application.android.screen.article.di.ArticleInjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesInjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.application.android.screen.comments.di.ArticleCommentsInjectingFragmentLifecycleCallback
+import com.makentoshe.habrachan.application.android.screen.content.di.ContentInjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowInjectingFragmentLifecycleCallback
 import toothpick.Toothpick
 
@@ -27,6 +28,9 @@ class InjectionActivityLifecycleCallback : Application.ActivityLifecycleCallback
 
         val articleCommentsCallback = ArticleCommentsInjectingFragmentLifecycleCallback()
         activity.supportFragmentManager.registerFragmentLifecycleCallbacks(articleCommentsCallback, true)
+
+        val contentCallback = ContentInjectingFragmentLifecycleCallback()
+        activity.supportFragmentManager.registerFragmentLifecycleCallbacks(contentCallback, true)
     }
 
 

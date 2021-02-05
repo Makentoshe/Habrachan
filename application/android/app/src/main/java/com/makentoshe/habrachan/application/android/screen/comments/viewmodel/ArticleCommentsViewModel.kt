@@ -12,7 +12,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.Commen
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
 import com.makentoshe.habrachan.application.core.arena.Arena
-import com.makentoshe.habrachan.application.core.arena.image.AvatarArena
+import com.makentoshe.habrachan.application.core.arena.image.ImageArena
 import com.makentoshe.habrachan.entity.Comment
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetCommentsRequest
@@ -29,7 +29,7 @@ import kotlinx.coroutines.plus
 class ArticleCommentsViewModel(
     private val session: UserSession,
     private val arena: Arena<GetCommentsRequest, List<Comment>>,
-    avatarArena: AvatarArena
+    avatarArena: ImageArena
 ) : CommentsViewModel(avatarArena) {
 
     private val specChannel = Channel<CommentsSpec>()
@@ -58,7 +58,7 @@ class ArticleCommentsViewModel(
     class Factory(
         private val session: UserSession,
         private val commentsArena: Arena<GetCommentsRequest, List<Comment>>,
-        private val avatarArena: AvatarArena
+        private val avatarArena: ImageArena
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return ArticleCommentsViewModel(session, commentsArena, avatarArena) as T
@@ -66,7 +66,7 @@ class ArticleCommentsViewModel(
     }
 }
 
-abstract class CommentsViewModel(private val avatarArena: AvatarArena): ViewModel() {
+abstract class CommentsViewModel(private val avatarArena: ImageArena): ViewModel() {
 
     private val avatars = HashMap<String, Flow<Result<ImageResponse>>>()
 

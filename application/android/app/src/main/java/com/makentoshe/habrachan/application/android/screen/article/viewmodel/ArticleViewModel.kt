@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.application.core.arena.Arena
 import com.makentoshe.habrachan.application.core.arena.articles.ArticleArena
-import com.makentoshe.habrachan.application.core.arena.image.AvatarArena
+import com.makentoshe.habrachan.application.core.arena.image.ImageArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticleRequest
 import com.makentoshe.habrachan.network.request.ImageRequest
@@ -38,7 +38,7 @@ class ArticleViewModel2(
     class Factory(
         private val session: UserSession,
         private val articleArena: ArticleArena,
-        private val avatarArena: AvatarArena
+        private val avatarArena: ImageArena
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return ArticleViewModel2(session, articleArena, avatarArena) as T

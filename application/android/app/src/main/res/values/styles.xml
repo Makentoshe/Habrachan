@@ -106,6 +106,10 @@
         <item name="android:indeterminateTint">@color/colorPrimary</item>
     </style>
 
+    <style name="Habrachan.Progress.Light" parent="Habrachan.Light">
+        <item name="android:indeterminateTint">@color/title</item>
+    </style>
+
     <style name="Habrachan.Text" parent="Habrachan.Light">
         <item name="android:textColor">@color/text</item>
     </style>

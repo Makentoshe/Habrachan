@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.network.manager.ImageManager
 import com.makentoshe.habrachan.network.request.ImageRequest
 import com.makentoshe.habrachan.network.response.ImageResponse
 
-class AvatarArena(
+class ImageArena(
     private val imageManager: ImageManager,
     avatarsCache: ArenaCache<ImageRequest, ImageResponse>
 ): CacheFirstArena<ImageRequest, ImageResponse>(avatarsCache) {

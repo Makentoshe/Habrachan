@@ -13,7 +13,7 @@ import com.makentoshe.habrachan.application.android.screen.article.model.JavaScr
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
 import com.makentoshe.habrachan.application.core.arena.articles.ArticleArena
-import com.makentoshe.habrachan.application.core.arena.image.AvatarArena
+import com.makentoshe.habrachan.application.core.arena.image.ImageArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.ArticlesManager
 import com.makentoshe.habrachan.network.manager.ImageManager
@@ -39,7 +39,7 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
         bind<ArticleNavigation>().toInstance(ArticleNavigation(router))
 
         val avatarCache = AvatarArenaCache(cacheDatabase.avatarDao(), fragment.requireContext().cacheDir)
-        val avatarArena = AvatarArena(ImageManager.Builder(client).build(), avatarCache)
+        val avatarArena = ImageArena(ImageManager.Builder(client).build(), avatarCache)
 
         val articleCache = ArticleArenaCache(cacheDatabase)
         val articleArena = ArticleArena(ArticlesManager.Builder(client).native(), articleCache)
