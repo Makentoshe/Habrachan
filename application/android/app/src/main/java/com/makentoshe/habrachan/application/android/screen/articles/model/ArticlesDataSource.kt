@@ -2,12 +2,12 @@ package com.makentoshe.habrachan.application.android.screen.articles.model
 
 import androidx.paging.PagingSource
 import com.makentoshe.habrachan.application.core.arena.Arena
-import com.makentoshe.habrachan.natives.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.response.GetArticlesResponse
+import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.network.response.GetArticlesResponse2
 
 class ArticlesDataSource(
-    private val session: UserSession, private val arena: Arena<GetArticlesRequest, GetArticlesResponse>
+    private val session: UserSession, private val arena: Arena<GetArticlesRequest, GetArticlesResponse2>
 ) : PagingSource<ArticlesSpec, ArticleModelElement>() {
     override suspend fun load(params: LoadParams<ArticlesSpec>): LoadResult<ArticlesSpec, ArticleModelElement> {
         return arena.suspendFetch(GetArticlesRequest(session, params.key!!.page, params.key!!.spec)).fold({

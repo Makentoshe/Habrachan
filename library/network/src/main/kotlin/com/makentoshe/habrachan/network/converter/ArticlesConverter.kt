@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.network.converter
 
 import com.google.gson.GsonBuilder
 import com.makentoshe.habrachan.entity.natives.Badges
-import com.makentoshe.habrachan.natives.network.response.GetArticlesResponse
 import com.makentoshe.habrachan.network.deserializer.BadgesDeserializer
+import com.makentoshe.habrachan.network.response.GetArticlesResponse
 import okhttp3.ResponseBody
 
 class ArticlesConverter: Converter<GetArticlesResponse> {

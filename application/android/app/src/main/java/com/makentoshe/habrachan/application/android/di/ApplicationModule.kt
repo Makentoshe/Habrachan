@@ -12,8 +12,8 @@ import com.makentoshe.habrachan.application.android.database.migration.AndroidCa
 import com.makentoshe.habrachan.application.android.network.AndroidUserSession
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.SchedulersProvider
 import com.makentoshe.habrachan.application.android.viewmodel.ExecutorsProvider
-import com.makentoshe.habrachan.natives.network.request.GetArticlesRequest
 import com.makentoshe.habrachan.network.UserSession
+import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

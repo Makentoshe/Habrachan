@@ -18,7 +18,7 @@ import com.makentoshe.habrachan.application.android.screen.articles.model.Articl
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesSpec
 import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleItemDecoration
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
-import com.makentoshe.habrachan.natives.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.articles_fragment.view.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*

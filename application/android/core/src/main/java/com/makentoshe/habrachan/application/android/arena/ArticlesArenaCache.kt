@@ -9,13 +9,13 @@ import com.makentoshe.habrachan.application.android.database.record.HubRecord
 import com.makentoshe.habrachan.application.android.database.record.UserRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.natives.network.request.GetArticlesRequest
-import com.makentoshe.habrachan.network.response.GetArticlesResponse
+import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.network.response.GetArticlesResponse2
 import com.makentoshe.habrachan.network.response.getArticlesResponse
 
 class ArticlesArenaCache(
     private val cacheDatabase: AndroidCacheDatabase
-) : ArenaCache<GetArticlesRequest, GetArticlesResponse> {
+) : ArenaCache<GetArticlesRequest, GetArticlesResponse2> {
 
     companion object {
         fun capture(priority: Int, string: String) {
@@ -23,7 +23,7 @@ class ArticlesArenaCache(
         }
     }
 
-    override fun fetch(key: GetArticlesRequest): Result<GetArticlesResponse> {
+    override fun fetch(key: GetArticlesRequest): Result<GetArticlesResponse2> {
         capture(Log.INFO, "Fetch search articles from cache by key: $key")
         return try {
             val offset = (key.page - 1) * key.count
@@ -44,7 +44,7 @@ class ArticlesArenaCache(
     }
 
     // TODO add separate caches for separate specs (All posts, Interesting, Top and Search)
-    override fun carry(key: GetArticlesRequest, value: GetArticlesResponse) {
+    override fun carry(key: GetArticlesRequest, value: GetArticlesResponse2) {
         // clear cache on new search (each search starts from page 1)
         if (key.page == 1) {
             capture(Log.INFO, "Clear search articles cache")

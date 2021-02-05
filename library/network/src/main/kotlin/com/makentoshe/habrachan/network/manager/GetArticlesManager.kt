@@ -1,11 +1,11 @@
 package com.makentoshe.habrachan.network.manager
 
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.network.request.GetArticlesSpec
 import com.makentoshe.habrachan.network.request.SpecType
-import com.makentoshe.habrachan.network.response.GetArticlesResponse
+import com.makentoshe.habrachan.network.response.GetArticlesResponse2
 
-interface GetArticlesManager<Request: GetArticlesRequest, Spec: GetArticlesSpec> {
+interface GetArticlesManager<Request : GetArticlesRequest2, Spec : GetArticlesSpec> {
 
     // TODO replace to tree
     /** Contains all available specs for current manager implementation */
@@ -23,8 +23,19 @@ interface GetArticlesManager<Request: GetArticlesRequest, Spec: GetArticlesSpec>
      * */
     fun request(page: Int, spec: Spec): Request
 
+    /**
+     * Factory method creates request
+     *
+     * @param page starts from 1
+     * @param type will be uses for searching in available [specs].
+     * @return a request for performing network operation
+     * */
+    fun request(page: Int, type: SpecType): Request? {
+        return request(page, spec(type) ?: return null)
+    }
+
     /** Main network method returns articles by [request] */
-    suspend fun articles(request: Request): Result<GetArticlesResponse>
+    suspend fun articles(request: Request): Result<GetArticlesResponse2>
 }
 
 data class NativeGetArticlesSpec(

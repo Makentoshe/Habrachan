@@ -5,7 +5,7 @@ import com.makentoshe.habrachan.entity.natives.Article
 import com.makentoshe.habrachan.entity.natives.NextPage
 import com.makentoshe.habrachan.entity.natives.User
 
-data class GetArticlesResponse(
+data class NativeGetArticlesResponse(
     @SerializedName("data")
     val data: List<Article>,
     @SerializedName("next_page")
