@@ -49,7 +49,7 @@ class NativeGetArticlesManager(
 
     class Builder(private val client: OkHttpClient, private val deserializer: NativeGetArticlesDeserializer) {
 
-        private val baseUrl = "https://m.habr.com/"
+        private val baseUrl = "https://habr.com/"
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
 
