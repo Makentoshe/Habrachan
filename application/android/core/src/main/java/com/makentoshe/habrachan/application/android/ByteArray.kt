@@ -4,7 +4,10 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
+import android.graphics.Movie
+import android.graphics.drawable.Drawable
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import java.nio.ByteBuffer
@@ -21,3 +24,10 @@ fun ByteArray.toRoundedDrawable(resources: Resources, px: Float): RoundedBitmapD
     bitmap.cornerRadius = px
     return bitmap
 }
+
+@RequiresApi(Build.VERSION_CODES.P)
+fun ByteArray.toAnimatedDrawable(): Drawable {
+    return ImageDecoder.decodeDrawable(ImageDecoder.createSource(ByteBuffer.wrap(this)))
+}
+
+fun ByteArray.toMovie(): Movie? = Movie.decodeByteArray(this, 0, size)

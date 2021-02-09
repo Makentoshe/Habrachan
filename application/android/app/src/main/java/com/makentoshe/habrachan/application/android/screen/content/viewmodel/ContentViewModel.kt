@@ -14,7 +14,7 @@ class ContentViewModel(private val imageArena: ImageArena) : ViewModel(){
 
     val sourceChannel = Channel<ImageSpec>()
 
-    val image = sourceChannel.receiveAsFlow().map { spec ->
+    val content = sourceChannel.receiveAsFlow().map { spec ->
         imageArena.suspendFetch(ImageRequest(spec.source))
     }.flowOn(Dispatchers.IO)
 

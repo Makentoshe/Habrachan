@@ -11,6 +11,7 @@ import com.makentoshe.habrachan.application.android.screen.content.model.Content
 import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentNavigation
 import kotlinx.android.synthetic.main.fragment_content.*
 import toothpick.ktp.delegate.inject
+import kotlin.math.pow
 
 class ContentFragment : CoreFragment() {
 
@@ -29,6 +30,11 @@ class ContentFragment : CoreFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        fragment_content_toolbar.inflateMenu(R.menu.menu_content)
+        fragment_content_toolbar.setOnMenuItemClickListener { item ->
+            return@setOnMenuItemClickListener false
+        }
+
         fragment_content_viewpager.adapter = ContentViewPagerAdapter(this)
         fragment_content_viewpager.setCurrentItem(1, false)
         fragment_content_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -39,13 +45,13 @@ class ContentFragment : CoreFragment() {
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                if (position == 0) {
-                    fragment_content_viewpager.alpha = positionOffset * positionOffset
+                if (position == 0) { // x^2
+                    view.alpha = positionOffset * positionOffset
                 }
-                if (position == 1) {
-                    fragment_content_viewpager.alpha = -(positionOffset * positionOffset) + 1
+                if (position == 1) { // (x - 1)^2
+                    view.alpha = (positionOffset - 1.0).pow(2).toFloat()
                 }
-                if (fragment_content_viewpager.alpha <= 0.1) {
+                if (view.alpha <= 0.1) {
                     navigation.back()
                 }
             }
@@ -59,7 +65,7 @@ class ContentFragment : CoreFragment() {
             get() = fragmentArguments.getString(SOURCE)!!
 
         companion object {
-            private const val SOURCE = "ImageSource"
+            private const val SOURCE = "ContentSource"
         }
     }
 }

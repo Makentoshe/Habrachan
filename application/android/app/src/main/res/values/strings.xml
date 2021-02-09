@@ -61,6 +61,9 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
 
     <string name="menu_article_share">Share article</string>
 
+    <string name="menu_content_share">Share content url</string>
+    <string name="menu_content_download">Download content</string>
+
     <string name="comments_reply_empty">Reply on this comment</string>
     <string name="comments_reply_count">Show replies(%1$d)</string>
 

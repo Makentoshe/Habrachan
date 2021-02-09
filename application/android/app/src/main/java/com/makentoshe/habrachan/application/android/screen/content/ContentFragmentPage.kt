@@ -13,6 +13,8 @@ import com.makentoshe.habrachan.network.response.ImageResponse
 import kotlinx.android.synthetic.main.fragment_content_page.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import pl.droidsonroids.gif.GifDrawable
+import pl.droidsonroids.gif.GifIOException
 import toothpick.ktp.delegate.inject
 
 class ContentFragmentPage : CoreFragment() {
@@ -42,27 +44,49 @@ class ContentFragmentPage : CoreFragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.image.collectLatest { response ->
-                response.fold({ onImageLoadingSuccess(it) }, { onImageLoadingFailure(it) })
+            viewModel.content.collectLatest { response ->
+                response.fold({ onContentLoadingSuccess(it) }, { onContentLoadingFailure(it) })
             }
         }
 
         exceptionController.setRetryButton {
-            println("Retry")
+            fragment_content_progress.visibility = View.VISIBLE
+            exceptionController.hide()
+            lifecycleScope.launch {
+                viewModel.sourceChannel.send(ContentViewModel.ImageSpec(arguments.source))
+            }
+        }
+
+        fragment_content_image.maxScale = 10f
+    }
+
+    private fun onContentLoadingSuccess(response: ImageResponse) {
+        exceptionController.hide()
+        fragment_content_progress.visibility = View.GONE
+
+        try {
+            onGifLoadingSuccess(response)
+        } catch (gioe: GifIOException) { // not a gif
+            onImageLoadingSuccess(response)
         }
     }
 
-    private fun onImageLoadingSuccess(response: ImageResponse) {
-        exceptionController.hide()
-        fragment_content_image.visibility = View.VISIBLE
-        fragment_content_progress.visibility = View.GONE
-
-        fragment_content_image.setImage(ImageSource.bitmap(response.bytes.toBitmap()))
+    private fun onGifLoadingSuccess(response: ImageResponse) {
+        fragment_content_gif.setImageDrawable(GifDrawable(response.bytes).apply { start() })
+        fragment_content_image.visibility = View.GONE
+        fragment_content_gif.visibility = View.VISIBLE
     }
 
-    private fun onImageLoadingFailure(failure: Throwable) {
+    private fun onImageLoadingSuccess(response: ImageResponse) {
+        fragment_content_image.setImage(ImageSource.bitmap(response.bytes.toBitmap()))
+        fragment_content_image.visibility = View.VISIBLE
+        fragment_content_gif.visibility = View.GONE
+    }
+
+    private fun onContentLoadingFailure(failure: Throwable) {
         exceptionController.render(exceptionHandler.handleException(failure))
         fragment_content_image.visibility = View.GONE
+        fragment_content_gif.visibility = View.GONE
         fragment_content_progress.visibility = View.GONE
     }
 
