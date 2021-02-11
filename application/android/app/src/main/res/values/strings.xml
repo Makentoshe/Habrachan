@@ -61,6 +61,7 @@
     <string name="content_error_loading">Content not loaded yet</string>
     <string name="content_error_file_exists">File already exists</string>
     <string name="content_error_file_parent">Couldn\'t create parent directories</string>
+    <string name="content_error_stream">Couldn\'t create stream for writing in the file</string>
     <string name="content_loading_finish">Content was successfully loaded</string>
 
     <string name="comments_reply_empty">Reply on this comment</string>
@@ -89,5 +90,6 @@
     <string name="comments_fragment_subtitle">Comments</string>
     <string name="comment_popup_inspect_user">Inspect user</string>
     <string name="login_fragment_oauth_separator">or log in with</string>
+    <string name="content_error_uri">Couldn\'t handle content provider</string>
 
 </resources>
