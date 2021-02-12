@@ -1,15 +1,12 @@
 package com.makentoshe.habrachan.application.android.screen.content.di
 
-import android.os.Build
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.arena.ContentImageArenaCache
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
+import com.makentoshe.habrachan.application.android.filesystem.FileSystem
 import com.makentoshe.habrachan.application.android.screen.content.model.ContentActionBroadcastReceiver
-import com.makentoshe.habrachan.application.android.screen.content.model.ContentFilesystem
-import com.makentoshe.habrachan.application.android.screen.content.model.ContentFilesystemDefault
-import com.makentoshe.habrachan.application.android.screen.content.model.ContentFilesystemQ
 import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentNavigation
 import com.makentoshe.habrachan.application.android.screen.content.viewmodel.ContentViewModel
 import com.makentoshe.habrachan.application.core.arena.image.ImageArena
@@ -38,10 +35,7 @@ class ContentModule(fragment: CoreFragment) : Module() {
         val viewModel = ViewModelProviders.of(fragment, factory)[ContentViewModel::class.java]
         bind<ContentViewModel>().toInstance(viewModel)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bind<ContentFilesystem>().toInstance(ContentFilesystemQ(fragment.requireContext(), fragment.lifecycleScope))
-        } else {
-            bind<ContentFilesystem>().toInstance(ContentFilesystemDefault(fragment.requireContext(), fragment.lifecycleScope))
-        }
+        val filesystem = FileSystem.pictures(fragment.requireContext()).also(::println)
+        bind<FileSystem>().toInstance(filesystem)
     }
 }

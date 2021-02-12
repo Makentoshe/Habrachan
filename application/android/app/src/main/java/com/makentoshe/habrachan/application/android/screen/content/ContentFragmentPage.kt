@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.content
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +8,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.davemorrissey.labs.subscaleview.ImageSource
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.listener.multi.BaseMultiplePermissionsListener
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
+import com.makentoshe.habrachan.application.android.filesystem.FileSystem
+import com.makentoshe.habrachan.application.android.filesystem.PicturesFileSystem
 import com.makentoshe.habrachan.application.android.screen.content.model.ContentActionBroadcastReceiver
-import com.makentoshe.habrachan.application.android.screen.content.model.ContentFilesystem
 import com.makentoshe.habrachan.application.android.screen.content.viewmodel.ContentViewModel
 import com.makentoshe.habrachan.network.response.ImageResponse
 import kotlinx.android.synthetic.main.fragment_content_page.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -21,12 +27,11 @@ import kotlinx.coroutines.launch
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifIOException
 import toothpick.ktp.delegate.inject
+import java.io.File
 
 class ContentFragmentPage : CoreFragment() {
 
     companion object {
-
-        private const val EXTERNAL_STORAGE_REQUEST_CODE = 1
 
         fun build(source: String) = ContentFragmentPage().apply {
             arguments.source = source
@@ -39,7 +44,7 @@ class ContentFragmentPage : CoreFragment() {
 
     private val viewModel by inject<ContentViewModel>()
     private val exceptionHandler by inject<ExceptionHandler>()
-    private val contentFilesystem by inject<ContentFilesystem>()
+    private val picturesFilesystem by inject<FileSystem>()
     private val contentActionBroadcastReceiver by inject<ContentActionBroadcastReceiver>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,8 +100,12 @@ class ContentFragmentPage : CoreFragment() {
         }
     }
 
-    private fun onActionDownload(imageResponse: ImageResponse) {
-        contentFilesystem.saveContent(imageResponse)
+    private fun onActionDownload(imageResponse: ImageResponse) = lifecycleScope.launch(Dispatchers.IO) {
+        val permissions = listOf(
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        val listener = CustomBaseMultiplePermissionsListener(requireContext(), picturesFilesystem, imageResponse, lifecycleScope)
+        Dexter.withContext(context).withPermissions(permissions).withListener(listener).check()
     }
 
     private fun onActionShare(response: ImageResponse) {
@@ -131,6 +140,39 @@ class ContentFragmentPage : CoreFragment() {
         fragment_content_image.visibility = View.GONE
         fragment_content_gif.visibility = View.GONE
         fragment_content_progress.visibility = View.GONE
+    }
+
+    private class CustomBaseMultiplePermissionsListener(
+        private val context: Context,
+        private val filesystem: FileSystem,
+        private val response: ImageResponse,
+        private val scope: CoroutineScope
+    ) : BaseMultiplePermissionsListener() {
+
+        override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+            if (report.areAllPermissionsGranted()) {
+                onAllPermissionsGranted()
+            } else {
+                // TODO show rationale
+            }
+        }
+
+        private fun onAllPermissionsGranted() = try {
+            val applicationTitle = context.getString(R.string.app_name)
+            println(File(applicationTitle, File(response.request.imageUrl).name).path)
+            filesystem.push(File(applicationTitle, File(response.request.imageUrl).name).path, response.bytes)
+            scope.launch(Dispatchers.Main) {
+                Toast.makeText(context, context.getString(R.string.content_loading_finish), Toast.LENGTH_LONG).show()
+            }
+        } catch (fae: FileAlreadyExistsException) {
+            scope.launch(Dispatchers.Main) {
+                Toast.makeText(context, fae.message, Toast.LENGTH_LONG).show()
+            }
+        } catch (fse: FileSystemException) {
+            scope.launch {
+                Toast.makeText(context, fse.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     class Arguments(fragment: ContentFragmentPage) : CoreFragment.Arguments(fragment) {
