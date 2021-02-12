@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:visible="false"
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share"
         app:iconTint="@color/title"

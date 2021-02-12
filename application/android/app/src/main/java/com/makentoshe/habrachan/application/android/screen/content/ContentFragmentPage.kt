@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.content
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,13 +9,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.davemorrissey.labs.subscaleview.ImageSource
+import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.listener.multi.BaseMultiplePermissionsListener
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.filesystem.FileSystem
-import com.makentoshe.habrachan.application.android.filesystem.PicturesFileSystem
 import com.makentoshe.habrachan.application.android.screen.content.model.ContentActionBroadcastReceiver
 import com.makentoshe.habrachan.application.android.screen.content.viewmodel.ContentViewModel
 import com.makentoshe.habrachan.network.response.ImageResponse
@@ -109,7 +110,7 @@ class ContentFragmentPage : CoreFragment() {
     }
 
     private fun onActionShare(response: ImageResponse) {
-        println("Share")
+        Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
     }
 
     private fun onContentLoadingSuccess(response: ImageResponse) {
@@ -153,13 +154,12 @@ class ContentFragmentPage : CoreFragment() {
             if (report.areAllPermissionsGranted()) {
                 onAllPermissionsGranted()
             } else {
-                // TODO show rationale
+                Toast.makeText(context, context.getString(R.string.content_error_permissions), Toast.LENGTH_LONG).show()
             }
         }
 
         private fun onAllPermissionsGranted() = try {
             val applicationTitle = context.getString(R.string.app_name)
-            println(File(applicationTitle, File(response.request.imageUrl).name).path)
             filesystem.push(File(applicationTitle, File(response.request.imageUrl).name).path, response.bytes)
             scope.launch(Dispatchers.Main) {
                 Toast.makeText(context, context.getString(R.string.content_loading_finish), Toast.LENGTH_LONG).show()
