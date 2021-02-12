@@ -7,4 +7,10 @@
     <string name="exception_handler_network_sslpeer_unverified">Provider blocks the host</string>
 
     <string name="layout_exception_retry">Retry</string>
+
+    <string name="content_error_loading">Content not loaded yet</string>
+    <string name="content_error_file_exists">File already exists</string>
+    <string name="content_error_file_parent">Couldn\'t create parent directories</string>
+    <string name="content_error_stream">Couldn\'t create stream for writing in the file</string>
+    <string name="content_error_uri">Couldn\'t handle content provider</string>
 </resources>

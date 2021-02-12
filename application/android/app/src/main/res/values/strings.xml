@@ -21,11 +21,6 @@
     <string name="email">Email</string>
     <string name="cant_sign_in">Can\'t sign in</string>
     <string name="invalid_email_or_password">Invalid email or password</string>
-    <string name="sas">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper. Semper quis lectus nulla at volutpat diam ut. Massa placerat duis ultricies lacus sed turpis tincidunt id. Eu consequat ac felis donec et odio. Tempor orci eu lobortis elementum nibh tellus. Lacus sed turpis tincidunt id aliquet risus feugiat. Risus commodo viverra maecenas accumsan lacus vel facilisis. Aenean pharetra magna ac placerat. Sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus. Lectus arcu bibendum at varius vel pharetra vel.
-In aliquam sem fringilla ut. A iaculis at erat pellentesque adipiscing commodo elit. Arcu cursus euismod quis viverra nibh cras pulvinar. Eget sit amet tellus cras. Nisi porta lorem mollis aliquam ut porttitor leo. Scelerisque purus semper eget duis at. Sapien et ligula ullamcorper malesuada proin libero nunc consequat interdum. Consectetur purus ut faucibus pulvinar elementum integer. Quam elementum pulvinar etiam non quam. Malesuada fames ac turpis egestas sed tempus urna et. Proin sagittis nisl rhoncus mattis. Cras pulvinar mattis nunc sed.
-Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar. At tellus at urna condimentum. Ridiculus mus mauris vitae ultricies leo integer malesuada. Vel quam elementum pulvinar etiam. Amet consectetur adipiscing elit duis tristique sollicitudin nibh sit. Porta nibh venenatis cras sed felis eget. Enim blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Egestas fringilla phasellus faucibus scelerisque. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Scelerisque purus semper eget duis at. Felis imperdiet proin fermentum leo vel. Vivamus arcu felis bibendum ut tristique. Nulla aliquet enim tortor at auctor.
-    </string>
     <string name="badges">Bages</string>
     <string name="registered">Registered</string>
     <string name="karma">Karma</string>
@@ -58,6 +53,18 @@ Mi in nulla posuere sollicitudin aliquam. Consectetur purus ut faucibus pulvinar
     <string name="articles_top_type_monthly">Monthly</string>
     <string name="articles_top_type_weekly">Weekly</string>
     <string name="articles_top_type_daily">Daily</string>
+
+    <string name="menu_article_share">Share article</string>
+
+    <string name="menu_content_share">Share content url</string>
+    <string name="menu_content_download">Download content</string>
+    <string name="content_error_loading">Content not loaded yet</string>
+    <string name="content_error_file_exists">File already exists</string>
+    <string name="content_error_file_parent">Couldn\'t create parent directories</string>
+    <string name="content_error_stream">Couldn\'t create stream for writing in the file</string>
+    <string name="content_loading_finish">Content was successfully loaded</string>
+    <string name="content_error_uri">Couldn\'t handle content provider</string>
+    <string name="content_error_permissions">Cancel download: not all permissions were granted</string>
 
     <string name="comments_reply_empty">Reply on this comment</string>
     <string name="comments_reply_count">Show replies(%1$d)</string>

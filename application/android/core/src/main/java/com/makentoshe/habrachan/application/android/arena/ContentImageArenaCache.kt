@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.application.android.arena
 
 import android.util.Log
-import com.makentoshe.habrachan.application.android.database.AvatarDao
-import com.makentoshe.habrachan.application.android.database.record.AvatarRecord
+import com.makentoshe.habrachan.application.android.database.dao.ContentDao
+import com.makentoshe.habrachan.application.android.database.record.ContentRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.request.ImageRequest
@@ -10,22 +10,18 @@ import com.makentoshe.habrachan.network.response.ImageResponse
 import java.io.File
 import java.io.FileNotFoundException
 
-// TODO think about alternative caching variant
-// Avatar url can be https://hsto.org/getpro/habr/avatars/190/64d/c63/19064dc635c410289299504131316a76.jpg
-// So it is a good point to get /avatars/190/64d/c63/19064dc635c410289299504131316a76.jpg as location path
-// But https://hsto.org/getpro/habr/ may change in future and we couldn't hardcode it
-class AvatarArenaCache(
-    private val avatarDao: AvatarDao, private val cacheRoot: File
+class ContentImageArenaCache(
+    private val contentDao: ContentDao, private val cacheRoot: File
 ) : ArenaCache<ImageRequest, ImageResponse> {
 
     companion object {
         private inline fun capture(level: Int, message: () -> String) {
-            Log.println(level, "AvatarArenaCache", message())
+            Log.println(level, "ContentImageArenaCache", message())
         }
     }
 
-    private val directory = "avatar"
-    private val limit = 500
+    private val directory = "content"
+    private val limit = 200
     private val clearStep = 50
 
     override fun fetch(key: ImageRequest): Result<ImageResponse> = try {
@@ -43,17 +39,17 @@ class AvatarArenaCache(
     }
 
     override fun carry(key: ImageRequest, value: ImageResponse) {
-        if (avatarDao.count() > limit) {
+        if (contentDao.count() > limit) {
             capture(Log.INFO) { "Removing oldest $clearStep elements from cache" }
-            avatarDao.last(clearStep).forEach { record ->
-                avatarDao.delete(record)
-                File(cacheRoot, record.location).delete()
+            contentDao.last(clearStep).forEach { record ->
+                contentDao.delete(record)
+                File(cacheRoot, record.path).delete()
             }
         }
 
-        val avatarFile = fileSystemCarry(key, value)
-        avatarDao.insert(AvatarRecord(avatarFile.relativeTo(cacheRoot).path, key.imageUrl))
-        capture(Log.INFO) { "Store avatar with path ${avatarFile.relativeTo(cacheRoot).path}" }
+        val contentFile = fileSystemCarry(key, value)
+        contentDao.insert(ContentRecord(key.imageUrl, contentFile.relativeTo(cacheRoot).path))
+        capture(Log.INFO) { "Store avatar with path ${contentFile.relativeTo(cacheRoot).path}" }
     }
 
     private fun fileSystemCarry(key: ImageRequest, value: ImageResponse): File {

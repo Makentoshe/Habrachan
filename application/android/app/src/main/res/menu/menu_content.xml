@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:visible="false"
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share"
+        app:iconTint="@color/title"
+        app:iconTintMode="src_atop"
+        android:title="@string/menu_content_share"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_download"
+        android:icon="@drawable/ic_download"
+        app:iconTint="@color/title"
+        app:iconTintMode="src_atop"
+        android:title="@string/menu_content_download"
+        app:showAsAction="ifRoom" />
+
+</menu>

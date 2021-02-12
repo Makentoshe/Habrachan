@@ -10,6 +10,9 @@
     <dimen name="toolbar_separator_height">0px</dimen>
 
     <!-- Text -->
+    <dimen name="textLL">22sp</dimen>
+    <dimen name="textLM">20sp</dimen>
+    <dimen name="textLS">18sp</dimen>
     <dimen name="textML">16sp</dimen>
     <dimen name="textM">14sp</dimen>
     <dimen name="textMS">12sp</dimen>
@@ -30,6 +33,8 @@
     <dimen name="heightM">32dp</dimen>
     <dimen name="heightML">36dp</dimen>
     <dimen name="heightL">48dp</dimen>
+    <!-- Used at most for toolbars -->
+    <dimen name="heightLL">56dp</dimen>
     <dimen name="separator_height">1dp</dimen>
 
     <!-- Radius -->

@@ -12,7 +12,7 @@ import com.makentoshe.habrachan.application.android.database.record.*
  * entities - array of object types that database contains.
  */
 @Database(
-    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, UserRecord::class],
+    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, ContentRecord::class],
     version = 3
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
@@ -55,4 +55,10 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * That means that the cache should be released occasionally.
      */
     abstract fun userDao(): UserDao
+
+    /**
+     * Stores indexed contents paths, images as usual. The real files stores in file system cache.
+     * Cache should be released occasionally with file system.
+     */
+    abstract fun contentDao(): ContentDao
 }
