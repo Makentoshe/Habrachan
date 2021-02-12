@@ -150,6 +150,11 @@ dependencies {
     val jsoup = "1.11.3"
     implementation("org.jsoup:jsoup:$jsoup")
 
+    // Dexter (request permissions)
+    // https://github.com/Karumi/Dexter/
+    val dexter = "6.2.2"
+    implementation("com.karumi:dexter:$dexter")
+
     // Room
     val room = "1.1.1"
     implementation("android.arch.persistence.room:runtime:$room")
