@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.arena.ContentImageArenaCache
+import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.filesystem.FileSystem
 import com.makentoshe.habrachan.application.android.screen.content.model.ContentActionBroadcastReceiver
@@ -25,12 +26,15 @@ class ContentModule(fragment: CoreFragment) : Module() {
     private val client by inject<OkHttpClient>()
     private val router by inject<Router>()
 
+    private val cacheDatabase by inject<AndroidCacheDatabase>()
+
     init {
         Toothpick.openScope(ApplicationScope::class).inject(this)
         bind<ContentActionBroadcastReceiver>().toInstance(ContentActionBroadcastReceiver(fragment.lifecycleScope))
         bind<ContentNavigation>().toInstance(ContentNavigation(router))
 
-        val imageArena = ImageArena(ImageManager.Builder(client).build(), ContentImageArenaCache())
+        val contentArenaCache = ContentImageArenaCache(cacheDatabase.contentDao(), fragment.requireContext().cacheDir)
+        val imageArena = ImageArena(ImageManager.Builder(client).build(), contentArenaCache)
         val factory = ContentViewModel.Factory(imageArena)
         val viewModel = ViewModelProviders.of(fragment, factory)[ContentViewModel::class.java]
         bind<ContentViewModel>().toInstance(viewModel)
