@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
+import com.makentoshe.habrachan.network.manager.ImageManagerException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 import javax.net.ssl.SSLPeerUnverifiedException
@@ -24,6 +25,7 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
 
     override fun handleException(exception: Throwable?): ExceptionHandler.Entry = when (exception) {
         is ArenaStorageException -> handleArenaStorageException(exception)
+        is ImageManagerException -> handleImageManagerException(exception)
         else -> handleUnknownException(exception)
     }
 
@@ -60,6 +62,13 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
         val title = context.getString(R.string.exception_handler_unknown_cache)
         val description = exception.toString()
         return ExceptionHandler.Entry(title, description)
+    }
+
+    private fun handleImageManagerException(exception: ImageManagerException) = when (val cause = exception.cause) {
+        is SSLPeerUnverifiedException -> handleArenaStorageSSlPeerUnverifiedException(cause)
+        is UnknownHostException -> handleArenaStorageUnknownHostException(cause)
+        is SSLHandshakeException -> handleSSLHandshakeArenaStorageException(cause)
+        else -> handleUnknownException(exception)
     }
 
     @SuppressLint("LongLogTag")
