@@ -12,7 +12,7 @@ import com.makentoshe.habrachan.application.android.database.record.*
  * entities - array of object types that database contains.
  */
 @Database(
-    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, ContentRecord::class],
+    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, UserRecord::class, ContentRecord::class],
     version = 3
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
