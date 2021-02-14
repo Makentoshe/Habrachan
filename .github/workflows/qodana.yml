@@ -28,3 +28,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run Qodana analysis
         uses: JetBrains/qodana-action@v1.0-eap
+      
+      - name: Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: qodana-report
+          path: qodana/report/results
