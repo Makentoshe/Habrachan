@@ -1,6 +1,8 @@
 package com.makentoshe.habrachan.entity
 
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class Comment(
     @SerializedName("id")
@@ -28,9 +30,13 @@ data class Comment(
     @SerializedName("time_changed")
     val timeChanged: String?,
     @SerializedName("time_published")
-    val timePublished: String
+    val timePublishedRaw: String
 
 //    @Embedded(prefix = "any_")
 //    @SerializedName("vote")
 //    val vote: Any?,
-)
+) {
+
+    val timePublished: Date
+        get() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(timePublishedRaw)
+}

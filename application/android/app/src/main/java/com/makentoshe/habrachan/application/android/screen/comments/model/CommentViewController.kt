@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
+import com.makentoshe.habrachan.application.android.time
 import com.makentoshe.habrachan.entity.Comment
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
@@ -35,7 +36,7 @@ class CommentViewController(private val holder: CommentViewHolder) {
         render(comment)
         setVoteScore(comment.score)
         setAuthor(comment.author.login)
-        setTimestamp(comment.timePublished)
+        setTimestamp(comment.timePublished.time(holder.context, R.string.comments_time_format))
         return this
     }
 

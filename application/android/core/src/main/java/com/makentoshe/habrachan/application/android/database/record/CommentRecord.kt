@@ -57,7 +57,7 @@ data class CommentRecord(
         comment.score,
         comment.thread,
         comment.timeChanged,
-        comment.timePublished,
+        comment.timePublishedRaw,
         articleId
     )
 
