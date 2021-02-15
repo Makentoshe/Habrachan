@@ -17,7 +17,7 @@ interface UserSession {
         get() = token != null
 }
 
-internal fun userSession(client: String, api: String) = object: UserSession {
+fun userSession(client: String, api: String) = object: UserSession {
     override val api = api
     override val client = client
     override val token: String? = null
