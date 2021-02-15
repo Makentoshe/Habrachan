@@ -8,4 +8,11 @@ class AndroidUserSession(
     override val api: String,
     override val token: String?,
     val articlesRequestSpec: GetArticlesRequest.Spec
-) : UserSession
+) : UserSession {
+
+    override val filterLanguage: String
+        get() = ""
+
+    override val habrLanguage: String
+        get() = ""
+}
