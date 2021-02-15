@@ -5,6 +5,7 @@ import com.makentoshe.habrachan.network.api.NativeArticlesApi
 import com.makentoshe.habrachan.network.deserializer.NativeGetArticlesDeserializer
 import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.NativeGetArticlesRequest
+import com.makentoshe.habrachan.network.request.NativeGetArticlesSpec
 import com.makentoshe.habrachan.network.request.SpecType
 import com.makentoshe.habrachan.network.request.TopSpecType
 import com.makentoshe.habrachan.network.response.GetArticlesResponse2

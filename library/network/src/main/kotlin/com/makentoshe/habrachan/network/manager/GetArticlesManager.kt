@@ -37,9 +37,3 @@ interface GetArticlesManager<Request : GetArticlesRequest2, Spec : GetArticlesSp
     /** Main network method returns articles by [request] */
     suspend fun articles(request: Request): Result<GetArticlesResponse2>
 }
-
-data class NativeGetArticlesSpec(
-    override val type: SpecType, override val path: String
-) : GetArticlesSpec {
-    override val query: Map<String, String> = emptyMap()
-}
