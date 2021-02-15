@@ -14,7 +14,7 @@ import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsEmptyStateController
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
+import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentsEmptyStateViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_article.*
@@ -37,9 +37,10 @@ class ArticleCommentsFragment : CoreFragment() {
     }
 
     override val arguments = Arguments(this)
+
     private val adapter by inject<CommentAdapter>()
     private val viewModel by inject<ArticleCommentsViewModel>()
-    private val navigation by inject<ArticleCommentsNavigation>()
+    private val navigation by inject<CommentsNavigation>()
     private val exceptionHandler by inject<ExceptionHandler>()
 
     private lateinit var exceptionController: ExceptionController
