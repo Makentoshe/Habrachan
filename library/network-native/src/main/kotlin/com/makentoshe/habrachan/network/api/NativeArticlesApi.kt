@@ -35,9 +35,9 @@ interface NativeArticlesApi {
         @Header("apiKey") apiKey: String,
         @Header("token") token: String?,
         @Path("id") id: Int,
-        @Query("include") include: String? = "text_html"
-//        @Query("get_article") getArticle: Boolean? = null,
-//        @Query("exclude") exclude: String? = null
+        @Query("include") include: String? = "text_html",
+        @Query("get_article") getArticle: Boolean? = null,
+        @Query("exclude") exclude: String? = null
     ): Call<ResponseBody>
 
     @PUT("api/v1/post/{id}/vote?vote=-1")
