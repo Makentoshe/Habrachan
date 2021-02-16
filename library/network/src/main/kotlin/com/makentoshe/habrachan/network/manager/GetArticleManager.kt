@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.network.manager
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticleRequest2
+import com.makentoshe.habrachan.network.response.GetArticleResponse2
 
 interface GetArticleManager<Request: GetArticleRequest2> {
 
@@ -15,5 +16,5 @@ interface GetArticleManager<Request: GetArticleRequest2> {
     fun request(userSession: UserSession, articleId: ArticleId): Request
 
     /** Main network method returns article by [request] */
-    suspend fun article(request: Request)
+    suspend fun article(request: Request): Result<GetArticleResponse2>
 }
