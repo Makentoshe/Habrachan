@@ -12,13 +12,12 @@ import org.junit.Test
 class MobileGetArticleManagerTest {
 
     @Test
-    @Ignore
-    fun network() = runBlocking {
+    fun networkSuccess() = runBlocking {
         val userSession = userSession("", "")
         val deserializer = MobileGetArticleDeserializer()
 
         val manager = MobileGetArticleManager.Builder(OkHttpClient(), deserializer).build()
-        val request = manager.request(userSession, articleId(442440))
+        val request = manager.request(userSession, articleId(442441230))
         val response = manager.article(request)
         println(response)
     }
