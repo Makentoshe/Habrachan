@@ -1,7 +1,6 @@
-package com.makentoshe.habrachan.mobiles.network.manager
+package com.makentoshe.habrachan.network.manager
 
 import com.makentoshe.habrachan.network.deserializer.MobileGetArticlesDeserializer
-import com.makentoshe.habrachan.network.manager.MobileGetArticlesManager
 import com.makentoshe.habrachan.network.request.SpecType
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
