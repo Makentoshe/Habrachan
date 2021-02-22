@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.application.android.screen.main.navigation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesScreen
 //import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
 //import com.makentoshe.habrachan.navigation.main.menu.MenuScreen
@@ -13,8 +14,8 @@ class MainFlowNavigation(private val fragmentManager: FragmentManager) {
     // TODO add stack for navigating back
     private var currentScreen: SupportAppScreen? = null
 
-    fun navigateToArticlesScreen(page: Int) {
-        val newScreen = ArticlesScreen(page)
+    fun navigateToArticlesFlowScreen() {
+        val newScreen = ArticlesFlowScreen()
         navigateToScreen(newScreen)
     }
 

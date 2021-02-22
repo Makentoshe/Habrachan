@@ -28,9 +28,9 @@ class MainFlowFragment : CoreFragment() {
     }
 
     private fun onNavigationItemSelected(item: MenuItem) = when (item.itemId) {
-//        R.id.action_account -> onAccountClick()
+        R.id.action_account -> onAccountClick()
         R.id.action_articles -> onArticlesClick()
-//        R.id.action_menu -> onMenuClick()
+        R.id.action_menu -> onMenuClick()
         else -> false
     }
 
@@ -40,7 +40,7 @@ class MainFlowFragment : CoreFragment() {
     }
 
     private fun onArticlesClick(): Boolean {
-        navigator.navigateToArticlesScreen(arguments.page)
+        navigator.navigateToArticlesFlowScreen()
         return true
     }
 

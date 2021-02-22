@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.navigation.StackSupportAppNavigator
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesScreen
+import com.makentoshe.habrachan.application.android.screen.main.navigation.MainFlowScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
@@ -27,7 +29,7 @@ class AppActivity : AppCompatActivity() {
 
         when (intent.action) {
             Intent.ACTION_MAIN -> {
-                val screen = ArticlesScreen(1)
+                val screen = ArticlesFlowScreen()
                 router.newRootScreen(screen)
             }
         }
