@@ -5,6 +5,7 @@ import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.arena.ArticlesArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
+import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment
 import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleAdapter
@@ -25,7 +26,7 @@ import javax.inject.Qualifier
 annotation class ArticlesScope
 class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
 
-    private val router by inject<Router>()
+    private val router by inject<StackRouter>()
     private val client by inject<OkHttpClient>()
     private val session by inject<UserSession>()
     private val exceptionHandler by inject<ExceptionHandler>()
