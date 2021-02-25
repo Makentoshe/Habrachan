@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.application.android.screen.articles.model
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,10 +11,8 @@ import com.makentoshe.habrachan.application.android.screen.articles.view.Article
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticleDiffUtilItemCallback
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticleModelElement
 import com.makentoshe.habrachan.application.android.time
-import java.text.SimpleDateFormat
-import java.util.*
 
-class ArticleAdapter(
+class ArticlesAdapter(
     private val navigation: ArticlesNavigation
 ) : PagingDataAdapter<ArticleModelElement, ArticleViewHolder>(ArticleDiffUtilItemCallback()) {
 

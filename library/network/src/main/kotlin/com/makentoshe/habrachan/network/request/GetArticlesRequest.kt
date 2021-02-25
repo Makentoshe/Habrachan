@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.network.UserSession
 import java.io.Serializable
 
 /** Request a batch of articles, on selected [page] with selected [spec] */
-data class GetArticlesRequest(val session: UserSession, val page: Int, val spec: Spec): Serializable {
+data class GetArticlesRequest(val session: UserSession, val page: Int, val spec: Spec) : Serializable {
 
     val count = 20
 
@@ -43,6 +43,19 @@ data class GetArticlesRequest(val session: UserSession, val page: Int, val spec:
                 object Weekly : Type("weekly")
 
                 object Daily : Type("daily")
+            }
+        }
+
+        companion object {
+            fun build(request: String?): Spec? = when (request) {
+                All().request -> All()
+                Interesting().request -> Interesting()
+                Top(Top.Type.AllTime).request -> Top(Top.Type.AllTime)
+                Top(Top.Type.Yearly).request -> Top(Top.Type.Yearly)
+                Top(Top.Type.Monthly).request -> Top(Top.Type.Monthly)
+                Top(Top.Type.Weekly).request -> Top(Top.Type.Weekly)
+                Top(Top.Type.Daily).request -> Top(Top.Type.Daily)
+                else -> null
             }
         }
     }

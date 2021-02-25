@@ -7,7 +7,7 @@ import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabas
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment
 import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
-import com.makentoshe.habrachan.application.android.screen.articles.model.ArticleAdapter
+import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesNavigation
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel2
 import com.makentoshe.habrachan.application.core.arena.articles.ArticlesArena
@@ -23,7 +23,8 @@ import javax.inject.Qualifier
 
 @Qualifier
 annotation class ArticlesScope
-class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
+
+class ArticlesModule(fragment: ArticlesFragment) : Module() {
 
     private val router by inject<Router>()
     private val client by inject<OkHttpClient>()
@@ -40,8 +41,8 @@ class ArticlesFragmentModule(fragment: ArticlesFragment) : Module() {
         val viewModel = ViewModelProviders.of(fragment, factory)[ArticlesViewModel2::class.java]
         bind<ArticlesViewModel2>().toInstance(viewModel)
 
-        val adapter = ArticleAdapter(ArticlesNavigation(router))
-        bind<ArticleAdapter>().toInstance(adapter)
+        val adapter = ArticlesAdapter(ArticlesNavigation(router))
+        bind<ArticlesAdapter>().toInstance(adapter)
 
         val appendAdapter = AppendArticleAdapter(adapter, exceptionHandler)
         bind<AppendArticleAdapter>().toInstance(appendAdapter)
