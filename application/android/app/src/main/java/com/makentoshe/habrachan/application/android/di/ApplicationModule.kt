@@ -28,7 +28,7 @@ class ApplicationModule(context: Context, cicerone: Cicerone<StackRouter>) : Mod
 
     private val cacheDatabase = Room.databaseBuilder(
         context, AndroidCacheDatabase::class.java, "HabrachanCache"
-    ).addMigrations(AndroidCacheDatabaseMigration_1_2()).build()
+    ).addMigrations(AndroidCacheDatabaseMigration_1_2()).fallbackToDestructiveMigration().build()
 
     init {
         bind<OkHttpClient>().toInstance(client)
