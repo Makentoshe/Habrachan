@@ -24,9 +24,17 @@ class ArticlesArenaCache(
 
     override fun fetch(key: GetArticlesRequest): Result<ArticlesResponse> {
         capture(Log.INFO, "Fetch search articles from cache by key: $key")
+        return when(key.spec) {
+            is GetArticlesRequest.Spec.All -> fetch(cacheDatabase.newArticlesDao(), key)
+            is GetArticlesRequest.Spec.Interesting -> fetch(cacheDatabase.interestingArticlesDao(), key)
+            is GetArticlesRequest.Spec.Top -> fetch(cacheDatabase.topArticlesDao(), key)
+        }
+    }
+
+    private fun <T: ArticleRecord2> fetch(articlesDao: ArticlesDao2<T>, key: GetArticlesRequest): Result<ArticlesResponse> {
         return try {
             val offset = (key.page - 1) * key.count
-            val articleRecords = cacheDatabase.articlesSearchDao().getTimePublishedDescSorted(offset, key.count)
+            val articleRecords = articlesDao.getTimePublishedDescSorted(offset, key.count)
             val articles = articleRecords.map { record ->
                 record.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao())
             }
@@ -42,7 +50,6 @@ class ArticlesArenaCache(
         }
     }
 
-    // TODO add dao for all articles
     override fun carry(key: GetArticlesRequest, value: ArticlesResponse) {
         when(key.spec) {
             is GetArticlesRequest.Spec.All -> carry(cacheDatabase.newArticlesDao(), key, value) {
@@ -55,9 +62,6 @@ class ArticlesArenaCache(
                 TopArticleRecord(it)
             }
         }
-        println("NEW: ${cacheDatabase.newArticlesDao().getAll().size}")
-        println("TOP: ${cacheDatabase.topArticlesDao().getAll().size}")
-        println("INT: ${cacheDatabase.interestingArticlesDao().getAll().size}")
     }
 
     private fun <T: ArticleRecord2> carry(articlesDao: ArticlesDao2<T>, key: GetArticlesRequest, value: ArticlesResponse, factory: (Article) -> T) {

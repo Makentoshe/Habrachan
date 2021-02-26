@@ -7,6 +7,11 @@ import com.makentoshe.habrachan.application.android.database.dao.UserDao
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.Metadata
 
+// TODO add order: Int value for containing correct value position in search
+/**
+ * Abstract record for articles. This required for keeping several tables with one common class.
+ * Each table used for cache for different types.
+ */
 abstract class ArticleRecord2 {
 
     companion object {
@@ -52,7 +57,9 @@ abstract class ArticleRecord2 {
     abstract val votesCount: Int
     abstract val isCanComment: Boolean?
 
-
+    /**
+     * Creates instance of [Article] from record.
+     */
     fun toArticle(badgeDao: BadgeDao, hubDao: HubDao, flowDao: FlowDao, userDao: UserDao) = Article(
         id,
         userDao.getById(authorId)!!.toUser(badgeDao),
