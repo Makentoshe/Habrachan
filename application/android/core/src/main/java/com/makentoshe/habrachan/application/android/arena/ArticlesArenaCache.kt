@@ -24,19 +24,27 @@ class ArticlesArenaCache(
 
     override fun fetch(key: GetArticlesRequest): Result<ArticlesResponse> {
         capture(Log.INFO, "Fetch search articles from cache by key: $key")
-        return when(key.spec) {
+        return when (key.spec) {
             is GetArticlesRequest.Spec.All -> fetch(cacheDatabase.newArticlesDao(), key)
             is GetArticlesRequest.Spec.Interesting -> fetch(cacheDatabase.interestingArticlesDao(), key)
             is GetArticlesRequest.Spec.Top -> fetch(cacheDatabase.topArticlesDao(), key)
         }
     }
 
-    private fun <T: ArticleRecord2> fetch(articlesDao: ArticlesDao2<T>, key: GetArticlesRequest): Result<ArticlesResponse> {
+    private fun <T : ArticleRecord2> fetch(
+        articlesDao: ArticlesDao2<T>,
+        key: GetArticlesRequest
+    ): Result<ArticlesResponse> {
         return try {
             val offset = (key.page - 1) * key.count
             val articleRecords = articlesDao.getTimePublishedDescSorted(offset, key.count)
             val articles = articleRecords.map { record ->
-                record.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao())
+                record.toArticle(
+                    cacheDatabase.badgeDao(),
+                    cacheDatabase.hubDao(),
+                    cacheDatabase.flowDao(),
+                    cacheDatabase.userDao()
+                )
             }
             capture(Log.INFO, "Fetched ${articles.size} articles with offset: $offset")
             if (articles.isEmpty()) {
@@ -64,7 +72,12 @@ class ArticlesArenaCache(
         }
     }
 
-    private fun <T: ArticleRecord2> carry(articlesDao: ArticlesDao2<T>, key: GetArticlesRequest, value: ArticlesResponse, factory: (Article) -> T) {
+    private fun <T : ArticleRecord2> carry(
+        articlesDao: ArticlesDao2<T>,
+        key: GetArticlesRequest,
+        value: ArticlesResponse,
+        factory: (Article) -> T
+    ) {
         // clear cache on new search (each search starts from page 1)
         if (key.page == 1) {
             capture(Log.INFO, "Clear ${articlesDao.title} articles cache")

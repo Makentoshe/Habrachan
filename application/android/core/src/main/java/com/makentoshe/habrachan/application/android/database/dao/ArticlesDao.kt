@@ -1,10 +1,7 @@
 package com.makentoshe.habrachan.application.android.database.dao
 
 import androidx.room.*
-import com.makentoshe.habrachan.application.android.database.record.ArticleRecord2
-import com.makentoshe.habrachan.application.android.database.record.InterestingArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.NewArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.TopArticleRecord
+import com.makentoshe.habrachan.application.android.database.record.*
 
 interface ArticlesDao2<T: ArticleRecord2> {
 
@@ -94,5 +91,30 @@ interface TopArticlesDao: ArticlesDao2<TopArticleRecord> {
     override fun delete(employee: TopArticleRecord)
 
     @Query("DELETE FROM TopArticleRecord")
+    override fun clear()
+}
+
+@Dao
+interface TempArticlesDao: ArticlesDao2<TempArticleRecord> {
+
+    override val title: String
+        get() = "TEMP"
+
+    @Query("SELECT * FROM TempArticleRecord")
+    override fun getAll(): List<TempArticleRecord>
+
+    @Query("SELECT * FROM TempArticleRecord ORDER BY timePublishedRaw DESC LIMIT :count OFFSET :offset")
+    override fun getTimePublishedDescSorted(offset: Int, count: Int): List<TempArticleRecord>
+
+    @Query("SELECT * FROM TopArticleRecord WHERE id = :id")
+    override fun getById(id: Int): TempArticleRecord?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    override fun insert(employee: TempArticleRecord)
+
+    @Delete
+    override fun delete(employee: TempArticleRecord)
+
+    @Query("DELETE FROM TempArticleRecord")
     override fun clear()
 }

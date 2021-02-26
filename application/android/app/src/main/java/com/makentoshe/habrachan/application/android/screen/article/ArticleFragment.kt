@@ -13,18 +13,16 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.CoreFragment
-import com.makentoshe.habrachan.application.android.ExceptionHandler
-import com.makentoshe.habrachan.application.android.dp2px
+import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.screen.article.model.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
-import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import com.makentoshe.habrachan.network.response.ArticleResponse
 import com.makentoshe.habrachan.network.response.ImageResponse
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article_content.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -43,8 +41,10 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private val webViewClient = HabrachanWebViewClient(this)
 
     private val viewModel2 by inject<ArticleViewModel2>()
-    private val exceptionHandler by inject<ExceptionHandler>()
     private val navigator by inject<ArticleNavigation>()
+
+    private val exceptionHandler by inject<ExceptionHandler>()
+    private lateinit var exceptionController: ExceptionController
 
     private val articleShareController by inject<ArticleShareController>()
     private val articleHtmlController by inject<ArticleHtmlController>()
@@ -57,6 +57,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        exceptionController = ExceptionController(ExceptionViewHolder(fragment_article_exception))
+
         if (savedInstanceState == null) lifecycleScope.launch {
             viewModel2.articleSpecChannel.send(ArticleViewModel2.ArticleSpec(arguments.articleId))
         }
@@ -76,8 +78,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
             }
         }
 
-        fragment_article_retry.setOnClickListener {
-            fragment_article_failure.visibility = View.GONE
+        exceptionController.setRetryButton {
+            exceptionController.hide()
             fragment_article_progress.visibility = View.VISIBLE
             lifecycleScope.launch {
                 viewModel2.articleSpecChannel.send(ArticleViewModel2.ArticleSpec(arguments.articleId))
@@ -111,6 +113,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         else -> false
     }
 
+    // TODO disable appbar collapse on error
     private fun onArticleReceivedSuccess(response: ArticleResponse) {
         onArticleReceivedToolbar(response)
         onArticleReceivedBottomBar(response)
@@ -119,9 +122,14 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_progress.visibility = View.GONE
         fragment_article_scroll.visibility = View.VISIBLE
 
-        val articleHtml = articleHtmlController.render(response.article)
-        val base64content = Base64.encodeToString(articleHtml.toByteArray(), Base64.DEFAULT)
-        fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
+        try {
+            val articleHtml = articleHtmlController.render(response.article)
+            val base64content = Base64.encodeToString(articleHtml.toByteArray(), Base64.DEFAULT)
+            fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
+        } catch (e: Exception) {
+            exceptionController.render(exceptionHandler.handleException(e))
+            fragment_article_appbar.isEnabled = false
+        }
     }
 
     private fun onArticleReceivedToolbar(response: ArticleResponse) {
@@ -142,12 +150,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     }
 
     private fun onArticleReceivedFailure(exception: Throwable) {
-        val entry = exceptionHandler.handleException(exception)
-
         fragment_article_progress.visibility = View.GONE
-        fragment_article_title.text = entry.title
-        fragment_article_message.text = entry.message
-        fragment_article_failure.visibility = View.VISIBLE
+        exceptionController.render(exceptionHandler.handleException(exception))
     }
 
     private fun onAvatarReceivedSuccess(response: ImageResponse) {

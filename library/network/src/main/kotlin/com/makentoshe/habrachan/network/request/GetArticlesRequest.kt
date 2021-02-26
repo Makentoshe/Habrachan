@@ -15,20 +15,20 @@ data class GetArticlesRequest(val session: UserSession, val page: Int, val spec:
 
         data class All(
             override val sort: String? = null,
-            override val include: String? = null,
+            override val include: String? = "text_html",
             override val exclude: String? = null
         ) : Spec("posts/all")
 
         data class Interesting(
             override val sort: String? = null,
-            override val include: String? = null,
+            override val include: String? = "text_html",
             override val exclude: String? = null
         ) : Spec("posts/interesting")
 
         data class Top(
             val type: Type,
             override val sort: String? = null,
-            override val include: String? = null,
+            override val include: String? = "text_html",
             override val exclude: String? = null
         ) : Spec("top/${type.value}"), Serializable {
 

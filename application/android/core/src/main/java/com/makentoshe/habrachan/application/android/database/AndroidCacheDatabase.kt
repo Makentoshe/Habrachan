@@ -12,14 +12,16 @@ import com.makentoshe.habrachan.application.android.database.record.*
  * entities - array of object types that database contains.
  */
 @Database(
-    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, UserRecord::class, ContentRecord::class, TopArticleRecord::class, InterestingArticleRecord::class, NewArticleRecord::class],
+    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, UserRecord::class, ContentRecord::class, TopArticleRecord::class, InterestingArticleRecord::class, NewArticleRecord::class, TempArticleRecord::class],
     version = 4
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
-    /** Contains articles from last search. Potential infinite.
-     * That means that the cache should be released occasionally */
-    abstract fun articlesSearchDao(): ArticlesDao
+    /**
+     * Contains articles from direct load. Potential infinite.
+     * That means that the cache should be released occasionally
+     * */
+    abstract fun tempArticlesDao(): TempArticlesDao
 
     /**
      * Contains articles from last search. Potential infinite.
