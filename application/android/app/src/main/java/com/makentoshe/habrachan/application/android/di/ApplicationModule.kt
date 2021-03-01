@@ -10,11 +10,9 @@ import com.makentoshe.habrachan.application.android.ExceptionHandlerImpl
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.database.migration.AndroidCacheDatabaseMigration_1_2
 import com.makentoshe.habrachan.application.android.network.AndroidUserSession
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.SchedulersProvider
 import com.makentoshe.habrachan.application.android.viewmodel.ExecutorsProvider
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
-import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import ru.terrakok.cicerone.Cicerone
@@ -41,17 +39,12 @@ class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module()
         override val notifyExecutor = Executor { Handler(Looper.getMainLooper()).post(it) }
     }
 
-    private val schedulersProvider = object : SchedulersProvider {
-        override val ioScheduler = Schedulers.io()
-    }
-
     init {
         bind<OkHttpClient>().toInstance(client)
         bind<AndroidCacheDatabase>().toInstance(cacheDatabase)
         bind<Router>().toInstance(cicerone.router)
         bind<NavigatorHolder>().toInstance(cicerone.navigatorHolder)
         bind<ExecutorsProvider>().toInstance(executorsProvider)
-        bind<SchedulersProvider>().toInstance(schedulersProvider)
 
         val articlesRequestSpec = GetArticlesRequest.Spec.All(include = "text_html")
         val userSession = AndroidUserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, null, articlesRequestSpec)
