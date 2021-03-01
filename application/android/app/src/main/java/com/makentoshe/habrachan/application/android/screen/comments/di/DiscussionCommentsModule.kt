@@ -17,7 +17,6 @@ import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.CommentsManager
 import com.makentoshe.habrachan.network.manager.GetContentManager
-import com.makentoshe.habrachan.network.manager.ImageManager
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick

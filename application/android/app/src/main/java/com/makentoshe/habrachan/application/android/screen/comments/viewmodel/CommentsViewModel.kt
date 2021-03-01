@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetContentRequest
-import com.makentoshe.habrachan.network.request.ImageRequest
 import com.makentoshe.habrachan.network.response.GetContentResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -28,7 +27,7 @@ abstract class CommentsViewModel(
     }.flowOn(Dispatchers.IO).also { flow -> avatars[avatar] = flow }
 
     private fun buildImageRequest(avatar: String): GetContentRequest {
-        if (ImageRequest.stubs.contains(avatar)) {
+        if (GetContentRequest.Avatar.stubs.contains(avatar)) {
             return avatarArena.manager.request(userSession, avatar)
         }
         return avatarArena.manager.request(userSession, "https:$avatar")

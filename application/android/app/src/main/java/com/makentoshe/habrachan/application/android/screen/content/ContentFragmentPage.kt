@@ -17,7 +17,6 @@ import com.makentoshe.habrachan.application.android.filesystem.FileSystem
 import com.makentoshe.habrachan.application.android.screen.content.model.ContentActionBroadcastReceiver
 import com.makentoshe.habrachan.application.android.screen.content.viewmodel.ContentViewModel
 import com.makentoshe.habrachan.network.response.GetContentResponse
-import com.makentoshe.habrachan.network.response.ImageResponse
 import kotlinx.android.synthetic.main.fragment_content_page.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

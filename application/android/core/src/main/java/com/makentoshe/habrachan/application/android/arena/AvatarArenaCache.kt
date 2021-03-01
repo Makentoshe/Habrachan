@@ -6,9 +6,7 @@ import com.makentoshe.habrachan.application.android.database.record.AvatarRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.request.GetContentRequest
-import com.makentoshe.habrachan.network.request.ImageRequest
 import com.makentoshe.habrachan.network.response.GetContentResponse
-import com.makentoshe.habrachan.network.response.ImageResponse
 import java.io.File
 import java.io.FileNotFoundException
 

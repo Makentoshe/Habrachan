@@ -20,10 +20,8 @@ import com.makentoshe.habrachan.application.android.screen.article.model.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
-import com.makentoshe.habrachan.entity.natives.Article
 import com.makentoshe.habrachan.network.response.ArticleResponse
 import com.makentoshe.habrachan.network.response.GetContentResponse
-import com.makentoshe.habrachan.network.response.ImageResponse
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article_content.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*
