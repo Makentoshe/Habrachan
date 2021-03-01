@@ -19,8 +19,8 @@ android {
         applicationId = "com.makentoshe.habrachan"
         minSdkVersion(21)
         targetSdkVersion(29)
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 4
+        versionName = "0.3.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         var token = ""
@@ -149,6 +149,11 @@ dependencies {
     // https://github.com/jhy/jsoup
     val jsoup = "1.11.3"
     implementation("org.jsoup:jsoup:$jsoup")
+
+    // Dexter (request permissions)
+    // https://github.com/Karumi/Dexter/
+    val dexter = "6.2.2"
+    implementation("com.karumi:dexter:$dexter")
 
     // Room
     val room = "1.1.1"

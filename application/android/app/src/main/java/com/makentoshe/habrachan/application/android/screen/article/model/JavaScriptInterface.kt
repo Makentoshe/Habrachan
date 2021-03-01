@@ -1,14 +1,12 @@
 package com.makentoshe.habrachan.application.android.screen.article.model
 
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.launch
 
-class JavaScriptInterface {
+class JavaScriptInterface(private val coroutineScope: CoroutineScope) {
 
-    private val imageSubject = PublishSubject.create<String>()
-    val imageObservable: Observable<String>
-        get() = imageSubject.observeOn(AndroidSchedulers.mainThread())
+    val imageSourceChannel = Channel<String>()
 
     @android.webkit.JavascriptInterface
     fun showToast() {
@@ -16,7 +14,7 @@ class JavaScriptInterface {
     }
 
     @android.webkit.JavascriptInterface
-    fun onImageClickedListener(imageSource: String) {
-        imageSubject.onNext(imageSource)
+    fun onImageClickedListener(imageSource: String) = coroutineScope.launch {
+        imageSourceChannel.send(imageSource)
     }
 }

@@ -14,14 +14,17 @@ import com.makentoshe.habrachan.R
 
 class ArticleItemDecoration(
     @ColorInt
-    color: Int
+    color: Int,
+    private val margin: Float
 ) : ItemDecoration() {
 
     companion object {
         private const val itemWidth = 2
 
         fun from(context: Context): ArticleItemDecoration {
-            return ArticleItemDecoration(ContextCompat.getColor(context, R.color.brand_dark))
+            val margin = context.resources.getDimension(R.dimen.dimenS)
+            val color = ContextCompat.getColor(context, R.color.brand_dark)
+            return ArticleItemDecoration(color, margin)
         }
     }
 
@@ -42,9 +45,9 @@ class ArticleItemDecoration(
     }
 
     private fun drawItemSeparator(canvas: Canvas, view: View) = canvas.drawLine(
-        view.left.toFloat(),
+        view.left + margin,
         (view.bottom + itemWidth).toFloat(),
-        view.right.toFloat(),
+        view.right - margin,
         (view.bottom + itemWidth).toFloat(),
         paint
     )

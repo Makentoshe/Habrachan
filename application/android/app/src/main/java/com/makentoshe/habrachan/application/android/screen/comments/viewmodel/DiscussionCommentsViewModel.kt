@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.makentoshe.habrachan.application.android.screen.comments.model.*
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
-import com.makentoshe.habrachan.application.core.arena.image.AvatarArena
+import com.makentoshe.habrachan.application.core.arena.image.ImageArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetCommentsRequest
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ import kotlinx.coroutines.plus
 class DiscussionCommentsViewModel(
     private val session: UserSession,
     private val arena: CommentsCacheFirstArena,
-    avatarArena: AvatarArena
+    avatarArena: ImageArena
 ) : CommentsViewModel(avatarArena) {
 
     private val specChannel = Channel<CommentsSpec>()
@@ -53,7 +53,7 @@ class DiscussionCommentsViewModel(
     class Factory(
         private val session: UserSession,
         private val arena: CommentsCacheFirstArena,
-        private val avatarArena: AvatarArena
+        private val avatarArena: ImageArena
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return DiscussionCommentsViewModel(session, arena, avatarArena) as T

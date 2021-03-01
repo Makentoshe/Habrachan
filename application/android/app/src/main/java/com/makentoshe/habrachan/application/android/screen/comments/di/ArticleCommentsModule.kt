@@ -8,10 +8,10 @@ import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabas
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
+import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsSourceFirstArena
-import com.makentoshe.habrachan.application.core.arena.image.AvatarArena
+import com.makentoshe.habrachan.application.core.arena.image.ImageArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.CommentsManager
 import com.makentoshe.habrachan.network.manager.ImageManager
@@ -39,8 +39,8 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : Module() {
         bind<ArticleCommentsViewModel>().toInstance(viewModel)
 
         val navigation =
-            ArticleCommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle)
-        bind<ArticleCommentsNavigation>().toInstance(navigation)
+            CommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle)
+        bind<CommentsNavigation>().toInstance(navigation)
 
         val commentAdapter = CommentAdapter(navigation, fragment.lifecycleScope, viewModel)
         bind<CommentAdapter>().toInstance(commentAdapter)
@@ -49,7 +49,7 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : Module() {
 
     private fun getArticleCommentsViewModel(fragment: ArticleCommentsFragment): ArticleCommentsViewModel {
         val avatarCache = AvatarArenaCache(database.avatarDao(), fragment.requireContext().cacheDir)
-        val avatarArena = AvatarArena(ImageManager.Builder(client).build(), avatarCache)
+        val avatarArena = ImageArena(ImageManager.Builder(client).build(), avatarCache)
 
         val commentsManager = CommentsManager.Factory(client).native()
         val commentsArena = CommentsSourceFirstArena(commentsManager, CommentsArenaCache(database.commentDao()))

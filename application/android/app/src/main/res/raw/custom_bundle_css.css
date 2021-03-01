@@ -74,3 +74,10 @@ table {
 .table_img {
     white-space: normal;
 }
+
+body iframe.embed_video {
+    border: 0;
+    width: 100%;
+    max-width: 100%;
+    height: $ANDROID_YOUTUBE_EMBED$;
+}

@@ -23,9 +23,11 @@ internal class ImageManagerImpl(private val client: OkHttpClient) : ImageManager
             Result.failure(ImageManagerException(response.body!!.string(), request))
         }
     } catch (exception: Exception) {
-        Result.failure(ImageManagerException(exception.toString(), request))
+        Result.failure(ImageManagerException(exception.toString(), request, exception))
     }
 }
 
 // TODO make special exception for whole manager exceptions
-data class ImageManagerException(override val message: String, val request: ImageRequest): Throwable()
+data class ImageManagerException(
+    override val message: String, val request: ImageRequest, override val cause: Throwable? = null
+) : Throwable()

@@ -1,10 +1,11 @@
 package com.makentoshe.habrachan.application.android.screen.article.navigation
 
+import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
+import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentScreen
 import com.makentoshe.habrachan.entity.natives.Article
-import ru.terrakok.cicerone.Router
 
-class ArticleNavigation(private val router: Router) {
+class ArticleNavigation(private val router: StackRouter) {
 
     /** Returns to MainScreen */
     fun back() {
@@ -12,7 +13,11 @@ class ArticleNavigation(private val router: Router) {
     }
 
     fun toArticleCommentsScreen(article: Article) {
-        router.navigateTo(ArticleCommentsScreen(article))
+        router.stack(ArticleCommentsScreen(article))
+    }
+
+    fun toArticleContentScreen(source: String) {
+        router.stack(ContentScreen(source))
     }
 
 

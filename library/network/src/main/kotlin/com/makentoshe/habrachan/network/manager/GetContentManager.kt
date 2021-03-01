@@ -25,6 +25,7 @@ class GetContentManager(private val client: OkHttpClient) {
 
 }
 
+// TODO make special exception for whole manager exceptions
 class GetContentManagerException(
     val request: GetContentRequest, override val message: String
 ) : Exception()

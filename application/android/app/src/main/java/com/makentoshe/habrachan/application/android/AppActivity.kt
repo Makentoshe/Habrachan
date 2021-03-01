@@ -5,13 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.navigation.StackSupportAppNavigator
+import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 // TODO - rework resources access in the modules
-
 class AppActivity : AppCompatActivity() {
 
     private val navigator = StackSupportAppNavigator(this, supportFragmentManager, R.id.fragment_main_container)

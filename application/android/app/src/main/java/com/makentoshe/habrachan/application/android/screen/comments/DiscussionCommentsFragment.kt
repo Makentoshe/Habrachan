@@ -15,7 +15,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsA
 import com.makentoshe.habrachan.application.android.screen.comments.di.TitleAdapterQualifier
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsNavigation
+import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.DiscussionCommentSeparatorItemDecoration
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_discussion.*
@@ -54,7 +54,7 @@ class DiscussionCommentsFragment : CoreFragment() {
     private val titleAdapter by inject<CommentAdapter>(TitleAdapterQualifier)
     private val adapter by inject<ConcatAdapter>()
 
-    private val navigation by inject<ArticleCommentsNavigation>()
+    private val navigation by inject<CommentsNavigation>()
     private val viewModel by inject<DiscussionCommentsViewModel>()
 
     override fun onCreateView(
