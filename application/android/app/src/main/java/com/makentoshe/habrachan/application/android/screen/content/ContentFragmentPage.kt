@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.content
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.davemorrissey.labs.subscaleview.ImageSource
-import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.listener.multi.BaseMultiplePermissionsListener
@@ -18,6 +16,7 @@ import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.filesystem.FileSystem
 import com.makentoshe.habrachan.application.android.screen.content.model.ContentActionBroadcastReceiver
 import com.makentoshe.habrachan.application.android.screen.content.viewmodel.ContentViewModel
+import com.makentoshe.habrachan.network.response.GetContentResponse
 import com.makentoshe.habrachan.network.response.ImageResponse
 import kotlinx.android.synthetic.main.fragment_content_page.*
 import kotlinx.coroutines.CoroutineScope
@@ -62,7 +61,7 @@ class ContentFragmentPage : CoreFragment() {
         fragment_content_image.maxScale = 10f
 
         if (savedInstanceState == null) lifecycleScope.launch {
-            viewModel.sourceChannel.send(ContentViewModel.ImageSpec(arguments.source))
+            viewModel.sourceChannel.send(ContentViewModel.ContentSpec(arguments.source))
         }
 
         lifecycleScope.launch {
@@ -75,7 +74,7 @@ class ContentFragmentPage : CoreFragment() {
             fragment_content_progress.visibility = View.VISIBLE
             exceptionController.hide()
             lifecycleScope.launch {
-                viewModel.sourceChannel.send(ContentViewModel.ImageSpec(arguments.source))
+                viewModel.sourceChannel.send(ContentViewModel.ContentSpec(arguments.source))
             }
         }
 
@@ -88,7 +87,7 @@ class ContentFragmentPage : CoreFragment() {
 
     private fun onActionReceive(action: ContentActionBroadcastReceiver.Action) {
         // Idk how it works, but it works
-        val response = viewModel.response.valueOrNull as? ImageResponse
+        val response = viewModel.response.valueOrNull as? GetContentResponse
         if (response == null) {
             lifecycleScope.launch(Dispatchers.Main) {
                 Toast.makeText(requireContext(), R.string.content_error_loading, Toast.LENGTH_LONG).show()
@@ -101,7 +100,7 @@ class ContentFragmentPage : CoreFragment() {
         }
     }
 
-    private fun onActionDownload(imageResponse: ImageResponse) = lifecycleScope.launch(Dispatchers.IO) {
+    private fun onActionDownload(imageResponse: GetContentResponse) = lifecycleScope.launch(Dispatchers.IO) {
         val permissions = listOf(
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE
         )
@@ -109,11 +108,11 @@ class ContentFragmentPage : CoreFragment() {
         Dexter.withContext(context).withPermissions(permissions).withListener(listener).check()
     }
 
-    private fun onActionShare(response: ImageResponse) {
+    private fun onActionShare(response: GetContentResponse) {
         Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
     }
 
-    private fun onContentLoadingSuccess(response: ImageResponse) {
+    private fun onContentLoadingSuccess(response: GetContentResponse) {
         exceptionController.hide()
         fragment_content_progress.visibility = View.GONE
 
@@ -124,13 +123,13 @@ class ContentFragmentPage : CoreFragment() {
         }
     }
 
-    private fun onGifLoadingSuccess(response: ImageResponse) {
+    private fun onGifLoadingSuccess(response: GetContentResponse) {
         fragment_content_gif.setImageDrawable(GifDrawable(response.bytes).apply { start() })
         fragment_content_image.visibility = View.GONE
         fragment_content_gif.visibility = View.VISIBLE
     }
 
-    private fun onImageLoadingSuccess(response: ImageResponse) {
+    private fun onImageLoadingSuccess(response: GetContentResponse) {
         fragment_content_image.setImage(ImageSource.bitmap(response.bytes.toBitmap()))
         fragment_content_image.visibility = View.VISIBLE
         fragment_content_gif.visibility = View.GONE
@@ -146,7 +145,7 @@ class ContentFragmentPage : CoreFragment() {
     private class CustomBaseMultiplePermissionsListener(
         private val context: Context,
         private val filesystem: FileSystem,
-        private val response: ImageResponse,
+        private val response: GetContentResponse,
         private val scope: CoroutineScope
     ) : BaseMultiplePermissionsListener() {
 
@@ -160,7 +159,7 @@ class ContentFragmentPage : CoreFragment() {
 
         private fun onAllPermissionsGranted() = try {
             val applicationTitle = context.getString(R.string.app_name)
-            filesystem.push(File(applicationTitle, File(response.request.imageUrl).name).path, response.bytes)
+            filesystem.push(File(applicationTitle, File(response.request.url).name).path, response.bytes)
             scope.launch(Dispatchers.Main) {
                 Toast.makeText(context, context.getString(R.string.content_loading_finish), Toast.LENGTH_LONG).show()
             }

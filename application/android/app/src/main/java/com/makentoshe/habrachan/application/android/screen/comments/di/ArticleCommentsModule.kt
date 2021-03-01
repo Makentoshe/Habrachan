@@ -11,9 +11,10 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.Commen
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsSourceFirstArena
-import com.makentoshe.habrachan.application.core.arena.image.ImageArena
+import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.CommentsManager
+import com.makentoshe.habrachan.network.manager.GetContentManager
 import com.makentoshe.habrachan.network.manager.ImageManager
 import okhttp3.OkHttpClient
 import ru.terrakok.cicerone.Router
@@ -32,6 +33,8 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : Module() {
     private val session by inject<UserSession>()
     private val database by inject<AndroidCacheDatabase>()
 
+    private val getContentManager by inject<GetContentManager>()
+
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
 
@@ -49,7 +52,7 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : Module() {
 
     private fun getArticleCommentsViewModel(fragment: ArticleCommentsFragment): ArticleCommentsViewModel {
         val avatarCache = AvatarArenaCache(database.avatarDao(), fragment.requireContext().cacheDir)
-        val avatarArena = ImageArena(ImageManager.Builder(client).build(), avatarCache)
+        val avatarArena = ContentArena(getContentManager, avatarCache)
 
         val commentsManager = CommentsManager.Factory(client).native()
         val commentsArena = CommentsSourceFirstArena(commentsManager, CommentsArenaCache(database.commentDao()))

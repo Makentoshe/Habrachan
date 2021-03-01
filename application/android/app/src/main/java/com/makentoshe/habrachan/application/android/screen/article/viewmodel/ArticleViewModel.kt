@@ -4,12 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.application.core.arena.Arena
 import com.makentoshe.habrachan.application.core.arena.articles.ArticleArena
-import com.makentoshe.habrachan.application.core.arena.image.ImageArena
+import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticleRequest
-import com.makentoshe.habrachan.network.request.ImageRequest
 import com.makentoshe.habrachan.network.response.ArticleResponse
-import com.makentoshe.habrachan.network.response.ImageResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -17,7 +15,7 @@ import kotlinx.coroutines.flow.*
 class ArticleViewModel2(
     private val userSession: UserSession,
     private val articleArena: Arena<GetArticleRequest, ArticleResponse>,
-    private val avatarArena: Arena<ImageRequest, ImageResponse>
+    private val avatarArena: ContentArena
 ) : ViewModel() {
 
     val articleSpecChannel = Channel<ArticleSpec>()
@@ -32,13 +30,13 @@ class ArticleViewModel2(
     }.flowOn(Dispatchers.IO)
 
     val avatar = avatarSpecChannel.receiveAsFlow().map { spec ->
-        avatarArena.suspendFetch(ImageRequest(spec.url))
+        avatarArena.suspendFetch(avatarArena.manager.request(userSession, spec.url))
     }.flowOn(Dispatchers.IO)
 
     class Factory(
         private val session: UserSession,
         private val articleArena: ArticleArena,
-        private val avatarArena: ImageArena
+        private val avatarArena: ContentArena
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return ArticleViewModel2(session, articleArena, avatarArena) as T

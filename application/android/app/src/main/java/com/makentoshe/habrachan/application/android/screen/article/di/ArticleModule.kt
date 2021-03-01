@@ -14,12 +14,11 @@ import com.makentoshe.habrachan.application.android.screen.article.model.JavaScr
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
 import com.makentoshe.habrachan.application.core.arena.articles.ArticleArena
-import com.makentoshe.habrachan.application.core.arena.image.ImageArena
+import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.ArticlesManager
-import com.makentoshe.habrachan.network.manager.ImageManager
+import com.makentoshe.habrachan.network.manager.GetContentManager
 import okhttp3.OkHttpClient
-import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -35,12 +34,14 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
 
     private val cacheDatabase by inject<AndroidCacheDatabase>()
 
+    private val getContentManager by inject<GetContentManager>()
+
     init {
         Toothpick.openScope(ApplicationScope::class).inject(this)
         bind<ArticleNavigation>().toInstance(ArticleNavigation(router))
 
         val avatarCache = AvatarArenaCache(cacheDatabase.avatarDao(), fragment.requireContext().cacheDir)
-        val avatarArena = ImageArena(ImageManager.Builder(client).build(), avatarCache)
+        val avatarArena = ContentArena(getContentManager, avatarCache)
 
         val articleCache = ArticleArenaCache(cacheDatabase)
         val articleArena = ArticleArena(ArticlesManager.Builder(client).native(), articleCache)

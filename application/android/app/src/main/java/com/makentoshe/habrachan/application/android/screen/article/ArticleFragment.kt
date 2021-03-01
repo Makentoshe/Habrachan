@@ -22,6 +22,7 @@ import com.makentoshe.habrachan.application.android.screen.article.viewmodel.Art
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import com.makentoshe.habrachan.entity.natives.Article
 import com.makentoshe.habrachan.network.response.ArticleResponse
+import com.makentoshe.habrachan.network.response.GetContentResponse
 import com.makentoshe.habrachan.network.response.ImageResponse
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article_content.*
@@ -151,7 +152,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_failure.visibility = View.VISIBLE
     }
 
-    private fun onAvatarReceivedSuccess(response: ImageResponse) {
+    private fun onAvatarReceivedSuccess(response: GetContentResponse) {
         val bitmap = response.bytes.toRoundedDrawable(resources, dp2px(R.dimen.radiusS))
         fragment_article_avatar_image.setImageDrawable(bitmap)
         fragment_article_avatar_image.visibility = View.VISIBLE
