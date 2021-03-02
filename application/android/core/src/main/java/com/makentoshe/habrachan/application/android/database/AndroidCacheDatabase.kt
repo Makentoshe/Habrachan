@@ -16,15 +16,15 @@ import com.makentoshe.habrachan.application.android.database.record.*
         AvatarRecord::class,
         ContentRecord::class,
 
-        FlowRecord::class,
         BadgeRecord::class,
         CommentRecord::class,
-        UserRecord::class,
 
         ArticleRecord2::class,
         HubRecord2::class,
+        FlowRecord2::class,
         ArticleHubCrossRef::class,
-        ArticleAuthorRecord::class
+        ArticleFlowCrossRef::class,
+        ArticleAuthorRecord::class,
                ],
     version = 5
 )
@@ -51,7 +51,7 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * Stores flows from different sources. Do not infinite,
      * so we do not care of releasing cache memory
      */
-    abstract fun flowDao(): FlowDao
+    abstract fun flowDao2(): FlowDao2
 
     /**
      * Stores different user badges. Do not infinite,
@@ -64,12 +64,6 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * That means that the cache should be released occasionally.
      */
     abstract fun commentDao(): CommentDao
-
-    /**
-     * Stores comments for articles. Potential infinite.
-     * That means that the cache should be released occasionally.
-     */
-    abstract fun userDao(): UserDao
 
     /**
      * Stores indexed contents paths, images as usual. The real files stores in file system cache.

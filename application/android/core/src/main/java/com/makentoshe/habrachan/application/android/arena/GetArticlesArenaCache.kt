@@ -25,7 +25,7 @@ class GetArticlesArenaCache(
         return try {
             val offset = (key.page - 1) * GetArticlesRequest2.DEFAULT_PAGE_SIZE
             val records = cacheDatabase.articlesDao2()
-                .getTimePublishedDescSortedWithHubs(offset, GetArticlesRequest2.DEFAULT_PAGE_SIZE)
+                .getTimePublishedDescSorted(offset, GetArticlesRequest2.DEFAULT_PAGE_SIZE)
             val articles = records.map { it.toArticle() }
             capture(Log.INFO, "Fetched ${articles.size} articles with offset: $offset")
             if (articles.isEmpty()) {
@@ -51,14 +51,14 @@ class GetArticlesArenaCache(
 
         capture(Log.INFO, "Carry search articles to cache with key: $key")
         value.articles.forEachIndexed { index, article ->
-            capture(
-                Log.INFO,
-                "Carry ${(key.page - 1) * GetArticlesRequest2.DEFAULT_PAGE_SIZE + index} article to cache"
-            )
+            capture(Log.INFO, "Carry ${(key.page - 1) * GetArticlesRequest2.DEFAULT_PAGE_SIZE + index} article to cache")
             cacheDatabase.articlesDao2().insert(ArticleRecord2(article))
             cacheDatabase.articleAuthorDao().insert(ArticleAuthorRecord(article.author))
 
-            article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
+            article.flows.forEach { flow ->
+                cacheDatabase.flowDao2().insert(FlowRecord2(flow))
+                cacheDatabase.articlesDao2().insert(ArticleFlowCrossRef(article.articleId, flow.flowId))
+            }
             article.hubs.forEach { hub ->
                 cacheDatabase.hubDao2().insert(HubRecord2(hub))
                 cacheDatabase.articlesDao2().insert(ArticleHubCrossRef(article.articleId, hub.hubId))
