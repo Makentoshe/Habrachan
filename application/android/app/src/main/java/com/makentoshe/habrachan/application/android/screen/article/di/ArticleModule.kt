@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.application.android.screen.article.di
 
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import com.makentoshe.habrachan.application.android.arena.ArticleArenaCache
 import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
+import com.makentoshe.habrachan.application.android.arena.GetArticleArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
@@ -13,11 +13,12 @@ import com.makentoshe.habrachan.application.android.screen.article.model.Article
 import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
-import com.makentoshe.habrachan.application.core.arena.articles.ArticleArena
+import com.makentoshe.habrachan.application.core.arena.articles.GetArticleArena
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.manager.ArticlesManager
+import com.makentoshe.habrachan.network.manager.GetArticleManager
 import com.makentoshe.habrachan.network.manager.GetContentManager
+import com.makentoshe.habrachan.network.request.GetArticleRequest2
 import okhttp3.OkHttpClient
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -35,6 +36,7 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
     private val cacheDatabase by inject<AndroidCacheDatabase>()
 
     private val getContentManager by inject<GetContentManager>()
+    private val getArticleManager by inject<GetArticleManager<GetArticleRequest2>>()
 
     init {
         Toothpick.openScope(ApplicationScope::class).inject(this)
@@ -43,8 +45,8 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
         val avatarCache = AvatarArenaCache(cacheDatabase.avatarDao(), fragment.requireContext().cacheDir)
         val avatarArena = ContentArena(getContentManager, avatarCache)
 
-        val articleCache = ArticleArenaCache(cacheDatabase)
-        val articleArena = ArticleArena(ArticlesManager.Builder(client).native(), articleCache)
+        val articleCache = GetArticleArenaCache(cacheDatabase)
+        val articleArena = GetArticleArena(getArticleManager, articleCache)
 
         val viewModelFactory2 = ArticleViewModel2.Factory(session, articleArena, avatarArena)
         val viewModel2 = ViewModelProviders.of(fragment, viewModelFactory2)[ArticleViewModel2::class.java]

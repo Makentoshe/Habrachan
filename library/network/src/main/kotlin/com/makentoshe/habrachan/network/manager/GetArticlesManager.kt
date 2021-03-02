@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.network.manager
 
+import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.network.request.GetArticlesSpec
 import com.makentoshe.habrachan.network.request.SpecType
@@ -21,7 +22,7 @@ interface GetArticlesManager<Request : GetArticlesRequest2, Spec : GetArticlesSp
      * @param spec may be created separately or taken from [specs] collection
      * @return a request for performing network operation
      * */
-    fun request(page: Int, spec: Spec): Request
+    fun request(userSession: UserSession, page: Int, spec: Spec): Request
 
     /**
      * Factory method creates request
@@ -30,8 +31,8 @@ interface GetArticlesManager<Request : GetArticlesRequest2, Spec : GetArticlesSp
      * @param type will be uses for searching in available [specs].
      * @return a request for performing network operation
      * */
-    fun request(page: Int, type: SpecType): Request? {
-        return request(page, spec(type) ?: return null)
+    fun request(userSession: UserSession, page: Int, type: SpecType): Request? {
+        return request(userSession, page, spec(type) ?: return null)
     }
 
     /** Main network method returns articles by [request] */

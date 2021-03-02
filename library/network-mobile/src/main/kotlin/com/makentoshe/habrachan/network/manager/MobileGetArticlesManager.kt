@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.network.manager
 
+import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.MobileArticlesApi
 import com.makentoshe.habrachan.network.deserializer.MobileGetArticlesDeserializer
 import com.makentoshe.habrachan.network.fold
@@ -29,7 +30,7 @@ class MobileGetArticlesManager(
         return specs.find { it.type  == type }
     }
 
-    override fun request(page: Int, spec: MobileGetArticlesSpec) : MobileGetArticlesRequest{
+    override fun request(userSession: UserSession, page: Int, spec: MobileGetArticlesSpec) : MobileGetArticlesRequest{
         return MobileGetArticlesRequest(page, spec)
     }
 

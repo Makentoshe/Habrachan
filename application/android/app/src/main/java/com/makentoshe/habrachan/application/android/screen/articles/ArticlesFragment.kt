@@ -18,7 +18,8 @@ import com.makentoshe.habrachan.application.android.screen.articles.model.Articl
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesSpec
 import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleItemDecoration
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.network.request.SpecType
+import com.makentoshe.habrachan.network.request.TopSpecType
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.articles_fragment.view.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*
@@ -61,7 +62,7 @@ class ArticlesFragment : CoreFragment() {
         }
 
         if (savedInstanceState == null) lifecycleScope.launch {
-            val requestSpec = GetArticlesRequest.Spec.All(include = "text_html")
+            val requestSpec = SpecType.All
             updateArticleRequestSpecViews(requestSpec)
             viewModel.articles(ArticlesSpec(arguments.page, requestSpec)).collectLatest {
                 adapter.submitData(it)
@@ -88,30 +89,30 @@ class ArticlesFragment : CoreFragment() {
         }
     }
 
-    private fun updateArticleRequestSpecViews(spec: GetArticlesRequest.Spec) = when (spec) {
-        is GetArticlesRequest.Spec.All -> {
+    private fun updateArticleRequestSpecViews(spec: SpecType) = when (spec) {
+        is SpecType.All -> {
             fragment_articles_toolbar.setTitle(R.string.articles_type_all)
             fragment_articles_category_toggle.check(R.id.fragment_articles_category_all)
         }
-        is GetArticlesRequest.Spec.Interesting -> {
+        is SpecType.Interesting -> {
             fragment_articles_toolbar.setTitle(R.string.articles_type_interesting)
             fragment_articles_category_toggle.check(R.id.fragment_articles_category_interesting)
         }
-        is GetArticlesRequest.Spec.Top -> {
+        is SpecType.Top -> {
             val type = when (spec.type) {
-                GetArticlesRequest.Spec.Top.Type.AllTime -> {
+                TopSpecType.Alltime -> {
                     requireContext().getString(R.string.articles_top_type_alltime)
                 }
-                GetArticlesRequest.Spec.Top.Type.Yearly -> {
+                TopSpecType.Yearly -> {
                     requireContext().getString(R.string.articles_top_type_yearly)
                 }
-                GetArticlesRequest.Spec.Top.Type.Monthly -> {
+                TopSpecType.Monthly -> {
                     requireContext().getString(R.string.articles_top_type_monthly)
                 }
-                GetArticlesRequest.Spec.Top.Type.Weekly -> {
+                TopSpecType.Weekly -> {
                     requireContext().getString(R.string.articles_top_type_weekly)
                 }
-                GetArticlesRequest.Spec.Top.Type.Daily -> {
+                TopSpecType.Daily -> {
                     requireContext().getString(R.string.articles_top_type_daily)
                 }
             }
@@ -129,7 +130,7 @@ class ArticlesFragment : CoreFragment() {
         }
     }
 
-    private fun updateAdapterContent(spec: GetArticlesRequest.Spec) = lifecycleScope.launch {
+    private fun updateAdapterContent(spec: SpecType) = lifecycleScope.launch {
         updateArticleRequestSpecViews(spec)
 
         val articlesSpec = ArticlesSpec(arguments.page, spec)
@@ -183,17 +184,13 @@ class ArticlesFragment : CoreFragment() {
 
     private fun onCategoryChecked(checkedId: Int) = when (checkedId) {
         R.id.fragment_articles_category_all -> {
-            val requestSpec = GetArticlesRequest.Spec.All(include = "text_html")
-            updateAdapterContent(requestSpec)
+            updateAdapterContent(SpecType.All)
         }
         R.id.fragment_articles_category_interesting -> {
-            val requestSpec = GetArticlesRequest.Spec.Interesting(include = "text_html")
-            updateAdapterContent(requestSpec)
+            updateAdapterContent(SpecType.Interesting)
         }
         R.id.fragment_articles_category_top -> {
-            val requestSpec =
-                GetArticlesRequest.Spec.Top(GetArticlesRequest.Spec.Top.Type.Daily, include = "text_html")
-            updateAdapterContent(requestSpec)
+            updateAdapterContent(SpecType.Top(TopSpecType.Daily))
         }
         else -> throw IllegalArgumentException(checkedId.toString())
     }

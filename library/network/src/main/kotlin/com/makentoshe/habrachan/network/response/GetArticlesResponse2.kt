@@ -1,11 +1,11 @@
 package com.makentoshe.habrachan.network.response
 
+import com.makentoshe.habrachan.entity.Article
+
 interface GetArticlesResponse2 {
-
-    val articles: List<com.makentoshe.habrachan.entity.Article>
-
+    val articles: List<Article>
 }
 
-fun getArticlesResponse(articles: List<com.makentoshe.habrachan.entity.Article>) = object: GetArticlesResponse2 {
-    override val articles: List<com.makentoshe.habrachan.entity.Article> = articles
+fun getArticlesResponse(articles: List<Article>) = object: GetArticlesResponse2 {
+    override val articles: List<Article> = articles
 }

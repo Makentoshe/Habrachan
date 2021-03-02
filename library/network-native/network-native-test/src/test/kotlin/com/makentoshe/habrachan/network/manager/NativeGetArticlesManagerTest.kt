@@ -14,8 +14,8 @@ class NativeGetArticlesManagerTest {
     @Ignore
     fun network() = runBlocking {
         val userSession = userSession("", "")
-        val manager = NativeGetArticlesManager.Builder(OkHttpClient(), NativeGetArticlesDeserializer()).build(userSession)
-        val request = manager.request(2, manager.specs.find { it.type == SpecType.All }!!)
+        val manager = NativeGetArticlesManager.Builder(OkHttpClient(), NativeGetArticlesDeserializer()).build()
+        val request = manager.request(userSession, 2, manager.specs.find { it.type == SpecType.All }!!)
         val response = manager.articles(request)
         println(response)
     }

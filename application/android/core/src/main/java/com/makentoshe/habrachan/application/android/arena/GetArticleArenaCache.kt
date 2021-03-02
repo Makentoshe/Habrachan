@@ -8,27 +8,28 @@ import com.makentoshe.habrachan.application.android.database.record.HubRecord
 import com.makentoshe.habrachan.application.android.database.record.UserRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.network.request.GetArticleRequest
-import com.makentoshe.habrachan.network.response.ArticleResponse
+import com.makentoshe.habrachan.network.request.GetArticleRequest2
+import com.makentoshe.habrachan.network.response.GetArticleResponse2
+import com.makentoshe.habrachan.network.response.getArticleResponse
 
-class ArticleArenaCache(
+class GetArticleArenaCache(
     private val cacheDatabase: AndroidCacheDatabase
-) : ArenaCache<GetArticleRequest, ArticleResponse> {
+) : ArenaCache<GetArticleRequest2, GetArticleResponse2> {
 
     companion object {
         private inline fun capture(level: Int, message: () -> String) {
-            Log.println(level, "ArticleArenaCache", message())
+            Log.println(level, "GetArticleArenaCache", message())
         }
     }
 
-    override fun fetch(key: GetArticleRequest): Result<ArticleResponse> {
+    override fun fetch(key: GetArticleRequest2): Result<GetArticleResponse2> {
         capture(Log.DEBUG) { "Fetch article from cache by key: $key" }
         return try {
-            val record = cacheDatabase.articlesSearchDao().getById(key.id)
+            val record = cacheDatabase.articlesSearchDao().getById(key.articleId.articleId)
             capture(Log.INFO) { "Article(${record?.id}) fetched from cache" }
             if (record != null) {
                 val article = record.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao())
-                Result.success(ArticleResponse(article, ""))
+                Result.success(getArticleResponse(key, article))
             } else {
                 Result.failure(ArenaStorageException("ArticleArenaCache: ArticleRecord is null"))
             }
@@ -38,7 +39,7 @@ class ArticleArenaCache(
         }
     }
 
-    override fun carry(key: GetArticleRequest, value: ArticleResponse) {
+    override fun carry(key: GetArticleRequest2, value: GetArticleResponse2) {
         capture(Log.INFO) { "Carry search articles to cache with key: $key" }
 
         cacheDatabase.articlesSearchDao().insert(ArticleRecord(value.article))
@@ -46,7 +47,7 @@ class ArticleArenaCache(
         value.article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
         value.article.hubs.forEach { hub ->
             cacheDatabase.hubDao().insert(HubRecord(hub))
-            hub.flow?.let(::FlowRecord)?.let(cacheDatabase.flowDao()::insert)
+//            hub.flow?.let(::FlowRecord)?.let(cacheDatabase.flowDao()::insert)
         }
     }
 }

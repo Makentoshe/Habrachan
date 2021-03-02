@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.article.model
 
 import android.content.res.Resources
-import com.makentoshe.habrachan.entity.natives.Article
+import com.makentoshe.habrachan.entity.Article
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element

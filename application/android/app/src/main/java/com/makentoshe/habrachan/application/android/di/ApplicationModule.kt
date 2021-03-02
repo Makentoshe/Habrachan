@@ -8,9 +8,8 @@ import com.makentoshe.habrachan.application.android.ExceptionHandlerImpl
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.database.migration.AndroidCacheDatabaseMigration_1_2
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
-import com.makentoshe.habrachan.application.android.network.AndroidUserSession
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.network.userSession
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -30,8 +29,7 @@ class ApplicationModule(context: Context, cicerone: Cicerone<StackRouter>) : Mod
         bind<Router>().toInstance(cicerone.router)
         bind<NavigatorHolder>().toInstance(cicerone.navigatorHolder)
 
-        val articlesRequestSpec = GetArticlesRequest.Spec.All(include = "text_html")
-        val userSession = AndroidUserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, null, articlesRequestSpec)
+        val userSession = userSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY)
         bind<UserSession>().toInstance(userSession)
 
         bind<ExceptionHandler>().toInstance(ExceptionHandlerImpl(context))

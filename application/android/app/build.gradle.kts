@@ -82,6 +82,7 @@ dependencies {
 
     implementation(project(":library:core"))
     implementation(project(":library:network"))
+    implementation(project(":library:network-native"))
 
     // OkHttp
     // https://github.com/square/okhttp/

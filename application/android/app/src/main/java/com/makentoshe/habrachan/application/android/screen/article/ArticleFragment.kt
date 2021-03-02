@@ -20,7 +20,7 @@ import com.makentoshe.habrachan.application.android.screen.article.model.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
-import com.makentoshe.habrachan.network.response.ArticleResponse
+import com.makentoshe.habrachan.network.response.GetArticleResponse2
 import com.makentoshe.habrachan.network.response.GetContentResponse
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article_content.*
@@ -111,10 +111,9 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         else -> false
     }
 
-    private fun onArticleReceivedSuccess(response: ArticleResponse) {
+    private fun onArticleReceivedSuccess(response: GetArticleResponse2) {
         onArticleReceivedToolbar(response)
         onArticleReceivedBottomBar(response)
-        articleShareController.setUrl(response.article)
 
         fragment_article_progress.visibility = View.GONE
         fragment_article_scroll.visibility = View.VISIBLE
@@ -124,7 +123,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
     }
 
-    private fun onArticleReceivedToolbar(response: ArticleResponse) {
+    private fun onArticleReceivedToolbar(response: GetArticleResponse2) {
         fragment_article_toolbar.setNavigationOnClickListener { navigator.back() }
         fragment_article_toolbar.title = response.article.title
         fragment_article_calculator.text = response.article.title
@@ -132,7 +131,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_appbar.setExpanded(true, true)
     }
 
-    private fun onArticleReceivedBottomBar(response: ArticleResponse) {
+    private fun onArticleReceivedBottomBar(response: GetArticleResponse2) {
         fragment_article_bottom_voteview.text = response.article.score.toString()
         fragment_article_bottom_reading_count.text = response.article.readingCount.toString()
         fragment_article_bottom_comments_count.text = response.article.commentsCount.toString()

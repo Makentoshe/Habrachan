@@ -9,13 +9,13 @@ import com.makentoshe.habrachan.application.android.database.record.HubRecord
 import com.makentoshe.habrachan.application.android.database.record.UserRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.network.response.GetArticlesResponse2
 import com.makentoshe.habrachan.network.response.getArticlesResponse
 
-class ArticlesArenaCache(
+class GetArticlesArenaCache(
     private val cacheDatabase: AndroidCacheDatabase
-) : ArenaCache<GetArticlesRequest, GetArticlesResponse2> {
+) : ArenaCache<GetArticlesRequest2, GetArticlesResponse2> {
 
     companion object {
         fun capture(priority: Int, string: String) {
@@ -23,11 +23,11 @@ class ArticlesArenaCache(
         }
     }
 
-    override fun fetch(key: GetArticlesRequest): Result<GetArticlesResponse2> {
+    override fun fetch(key: GetArticlesRequest2): Result<GetArticlesResponse2> {
         capture(Log.INFO, "Fetch search articles from cache by key: $key")
         return try {
-            val offset = (key.page - 1) * key.count
-            val articleRecords = cacheDatabase.articlesSearchDao().getTimePublishedDescSorted(offset, key.count)
+            val offset = (key.page - 1) * GetArticlesRequest2.DEFAULT_PAGE_SIZE
+            val articleRecords = cacheDatabase.articlesSearchDao().getTimePublishedDescSorted(offset, GetArticlesRequest2.DEFAULT_PAGE_SIZE)
             val articles = articleRecords.map { record ->
                 record.toArticle2(cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao())
             }
@@ -44,7 +44,7 @@ class ArticlesArenaCache(
     }
 
     // TODO add separate caches for separate specs (All posts, Interesting, Top and Search)
-    override fun carry(key: GetArticlesRequest, value: GetArticlesResponse2) {
+    override fun carry(key: GetArticlesRequest2, value: GetArticlesResponse2) {
         // clear cache on new search (each search starts from page 1)
         if (key.page == 1) {
             capture(Log.INFO, "Clear search articles cache")
@@ -54,7 +54,7 @@ class ArticlesArenaCache(
 
         capture(Log.INFO, "Carry search articles to cache with key: $key")
         value.articles.forEachIndexed { index, article ->
-            capture(Log.INFO, "Carry ${(key.page - 1) * key.count + index} article to cache")
+            capture(Log.INFO, "Carry ${(key.page - 1) * GetArticlesRequest2.DEFAULT_PAGE_SIZE + index} article to cache")
             cacheDatabase.articlesSearchDao().insert(ArticleRecord(article))
             cacheDatabase.userDao().insert(UserRecord(article.author))
 

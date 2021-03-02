@@ -14,7 +14,6 @@ import retrofit2.Retrofit
 
 // TODO replace by UserSessionProvider
 class NativeGetArticlesManager(
-    private val userSession: UserSession,
     private val api: NativeArticlesApi,
     private val deserializer: NativeGetArticlesDeserializer
 ) : GetArticlesManager<NativeGetArticlesRequest, NativeGetArticlesSpec> {
@@ -33,7 +32,7 @@ class NativeGetArticlesManager(
         return specs.find { it.type == type }
     }
 
-    override fun request(page: Int, spec: NativeGetArticlesSpec): NativeGetArticlesRequest {
+    override fun request(userSession: UserSession, page: Int, spec: NativeGetArticlesSpec): NativeGetArticlesRequest {
         return NativeGetArticlesRequest(userSession, page, spec)
     }
 
@@ -54,7 +53,7 @@ class NativeGetArticlesManager(
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
 
-        fun build(userSession: UserSession) =
-            NativeGetArticlesManager(userSession, getRetrofit().create(NativeArticlesApi::class.java), deserializer)
+        fun build() =
+            NativeGetArticlesManager(getRetrofit().create(NativeArticlesApi::class.java), deserializer)
     }
 }
