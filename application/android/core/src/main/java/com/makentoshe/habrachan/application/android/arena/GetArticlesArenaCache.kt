@@ -3,10 +3,7 @@ package com.makentoshe.habrachan.application.android.arena
 import android.util.Log
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
-import com.makentoshe.habrachan.application.android.database.record.ArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.FlowRecord
-import com.makentoshe.habrachan.application.android.database.record.HubRecord
-import com.makentoshe.habrachan.application.android.database.record.UserRecord
+import com.makentoshe.habrachan.application.android.database.record.*
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.request.GetArticlesRequest2
@@ -27,10 +24,9 @@ class GetArticlesArenaCache(
         capture(Log.INFO, "Fetch search articles from cache by key: $key")
         return try {
             val offset = (key.page - 1) * GetArticlesRequest2.DEFAULT_PAGE_SIZE
-            val articleRecords = cacheDatabase.articlesSearchDao().getTimePublishedDescSorted(offset, GetArticlesRequest2.DEFAULT_PAGE_SIZE)
-            val articles = articleRecords.map { record ->
-                record.toArticle2(cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao())
-            }
+            val records = cacheDatabase.articlesDao2()
+                .getTimePublishedDescSortedWithHubs(offset, GetArticlesRequest2.DEFAULT_PAGE_SIZE)
+            val articles = records.map { it.toArticle() }
             capture(Log.INFO, "Fetched ${articles.size} articles with offset: $offset")
             if (articles.isEmpty()) {
                 Result.failure(ArenaStorageException("ArticlesArenaCache"))
@@ -43,23 +39,30 @@ class GetArticlesArenaCache(
         }
     }
 
+    // TODO refactor cleaning articleAuthor table
     // TODO add separate caches for separate specs (All posts, Interesting, Top and Search)
     override fun carry(key: GetArticlesRequest2, value: GetArticlesResponse2) {
         // clear cache on new search (each search starts from page 1)
         if (key.page == 1) {
             capture(Log.INFO, "Clear search articles cache")
-            cacheDatabase.articlesSearchDao().clear()
-            cacheDatabase.userDao().clear()
+            cacheDatabase.articlesDao2().clear()
+            cacheDatabase.articleAuthorDao().clear()
         }
 
         capture(Log.INFO, "Carry search articles to cache with key: $key")
         value.articles.forEachIndexed { index, article ->
-            capture(Log.INFO, "Carry ${(key.page - 1) * GetArticlesRequest2.DEFAULT_PAGE_SIZE + index} article to cache")
-            cacheDatabase.articlesSearchDao().insert(ArticleRecord(article))
-            cacheDatabase.userDao().insert(UserRecord(article.author))
+            capture(
+                Log.INFO,
+                "Carry ${(key.page - 1) * GetArticlesRequest2.DEFAULT_PAGE_SIZE + index} article to cache"
+            )
+            cacheDatabase.articlesDao2().insert(ArticleRecord2(article))
+            cacheDatabase.articleAuthorDao().insert(ArticleAuthorRecord(article.author))
 
             article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
-            article.hubs.forEach { hub -> cacheDatabase.hubDao().insert(HubRecord(hub)) }
+            article.hubs.forEach { hub ->
+                cacheDatabase.hubDao2().insert(HubRecord2(hub))
+                cacheDatabase.articlesDao2().insert(ArticleHubCrossRef(article.articleId, hub.hubId))
+            }
         }
     }
 }

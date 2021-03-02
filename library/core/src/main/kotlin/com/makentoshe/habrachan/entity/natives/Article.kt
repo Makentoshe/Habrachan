@@ -46,8 +46,8 @@ data class Article(
     val metadata: Metadata?,
     @SerializedName("path")
     val path: String?,
-    @SerializedName("post_type")
-    override val postType: Int,
+//    @SerializedName("post_type")
+//    override val postType: Int,
     @SerializedName("post_type_str")
     val postTypeStr: String,
     @SerializedName("preview_html")

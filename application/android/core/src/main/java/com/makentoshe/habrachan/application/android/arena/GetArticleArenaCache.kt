@@ -2,10 +2,7 @@ package com.makentoshe.habrachan.application.android.arena
 
 import android.util.Log
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
-import com.makentoshe.habrachan.application.android.database.record.ArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.FlowRecord
-import com.makentoshe.habrachan.application.android.database.record.HubRecord
-import com.makentoshe.habrachan.application.android.database.record.UserRecord
+import com.makentoshe.habrachan.application.android.database.record.*
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.request.GetArticleRequest2
@@ -25,11 +22,10 @@ class GetArticleArenaCache(
     override fun fetch(key: GetArticleRequest2): Result<GetArticleResponse2> {
         capture(Log.DEBUG) { "Fetch article from cache by key: $key" }
         return try {
-            val record = cacheDatabase.articlesSearchDao().getById(key.articleId.articleId)
-            capture(Log.INFO) { "Article(${record?.id}) fetched from cache" }
+            val record = cacheDatabase.articlesDao2().getByIdWithHubs(key.articleId.articleId)
+            capture(Log.INFO) { "Article(${record?.article?.articleId}) fetched from cache" }
             if (record != null) {
-                val article = record.toArticle(cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao())
-                Result.success(getArticleResponse(key, article))
+                Result.success(getArticleResponse(key, record.toArticle()))
             } else {
                 Result.failure(ArenaStorageException("ArticleArenaCache: ArticleRecord is null"))
             }
@@ -42,12 +38,12 @@ class GetArticleArenaCache(
     override fun carry(key: GetArticleRequest2, value: GetArticleResponse2) {
         capture(Log.INFO) { "Carry search articles to cache with key: $key" }
 
-        cacheDatabase.articlesSearchDao().insert(ArticleRecord(value.article))
-        cacheDatabase.userDao().insert(UserRecord(value.article.author))
+        cacheDatabase.articlesDao2().insert(ArticleRecord2(value.article))
+        cacheDatabase.articleAuthorDao().insert(ArticleAuthorRecord(value.article.author))
         value.article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
         value.article.hubs.forEach { hub ->
-            cacheDatabase.hubDao().insert(HubRecord(hub))
-//            hub.flow?.let(::FlowRecord)?.let(cacheDatabase.flowDao()::insert)
+            cacheDatabase.hubDao2().insert(HubRecord2(hub))
+            cacheDatabase.articlesDao2().insert(ArticleHubCrossRef(value.article.articleId, hub.hubId))
         }
     }
 }

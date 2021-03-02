@@ -8,14 +8,14 @@ interface Article : ArticleId {
     val timePublishedRaw: String
     val hubs: List<ArticleHub>
     val flows: List<ArticleFlow>
-    val postType: Any // TODO string or int, so it is time to create a enum later
+//    val postType: Any // TODO string or int, so it is time to create a enum later
     val author: ArticleAuthor
     val score: Int
     val commentsCount: Int
     val readingCount: Int
     val favoritesCount: Int
     val votesCount: Int
-    val textHtml: String
+    val textHtml: String?
 }
 
 val Article.timePublished: Date
@@ -25,7 +25,7 @@ fun article(
     id: Int,
     title: String,
     timePublishedRaw: String,
-    postType: Any,
+//    postType: Any,
     score: Int,
     commentsCount: Int,
     readingCount: Int,
@@ -34,12 +34,12 @@ fun article(
     author: ArticleAuthor,
     hubs: List<ArticleHub>,
     flows: List<ArticleFlow>,
-    textHtml: String
+    textHtml: String?
 ) = object : Article {
     override val articleId: Int = id
     override val title: String = title
     override val timePublishedRaw: String = timePublishedRaw
-    override val postType: Any = postType
+//    override val postType: Any = postType
     override val score: Int = score
     override val readingCount: Int = readingCount
     override val favoritesCount: Int = favoritesCount

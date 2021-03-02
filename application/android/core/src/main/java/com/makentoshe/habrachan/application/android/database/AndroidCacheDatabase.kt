@@ -12,14 +12,35 @@ import com.makentoshe.habrachan.application.android.database.record.*
  * entities - array of object types that database contains.
  */
 @Database(
-    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, UserRecord::class, ContentRecord::class],
-    version = 3
+    entities = [
+        AvatarRecord::class,
+        ContentRecord::class,
+
+        FlowRecord::class,
+        BadgeRecord::class,
+        CommentRecord::class,
+        UserRecord::class,
+
+        ArticleRecord2::class,
+        HubRecord2::class,
+        ArticleHubCrossRef::class,
+        ArticleAuthorRecord::class
+               ],
+    version = 5
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
     /** Contains articles from last search. Potential infinite.
      * That means that the cache should be released occasionally */
-    abstract fun articlesSearchDao(): ArticlesDao
+    abstract fun articlesDao2(): ArticlesDao2
+
+    abstract fun articleAuthorDao(): ArticleAuthorDao
+
+    /**
+     * Stores different articles hubs. Do not infinite,
+     * so we do not care of releasing cache memory
+     */
+    abstract fun hubDao2(): HubDao2
 
     /** Stores indexed avatars paths. The real files stores in file system cache.
      * Cache should be released occasionally with file system.
@@ -31,12 +52,6 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * so we do not care of releasing cache memory
      */
     abstract fun flowDao(): FlowDao
-
-    /**
-     * Stores different articles hubs. Do not infinite,
-     * so we do not care of releasing cache memory
-     */
-    abstract fun hubDao(): HubDao
 
     /**
      * Stores different user badges. Do not infinite,

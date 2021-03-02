@@ -28,8 +28,8 @@ data class Article(
     val plannedPublishTime: Any?, // null
     @SerializedName("postLabels")
     val postLabels: List<String>,
-    @SerializedName("postType")
-    override val postType: Any, // article
+//    @SerializedName("postType")
+//    override val postType: Any, // article
     @SerializedName("relatedData")
     val relatedData: RelatedData,
     @SerializedName("statistics")
