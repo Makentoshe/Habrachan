@@ -53,21 +53,21 @@ data class Article(
     @SerializedName("preview_html")
     val previewHtml: String?,
     @SerializedName("text_html")
-    val textHtml: String?,
+    override val textHtml: String,
     @SerializedName("reading_count")
     override val readingCount: Int,
     @SerializedName("score")
     override val score: Int,
     @SerializedName("source_author")
-    val sourceAuthor: String? ,
+    val sourceAuthor: String?,
     @SerializedName("source_link")
-    val sourceLink: String? ,
+    val sourceLink: String?,
     @SerializedName("tags_string")
     val tagsString: String?,
     @SerializedName("text_cut")
-    val textCut: String? ,
+    val textCut: String?,
     @SerializedName("time_interesting")
-    val timeInteresting: String? ,
+    val timeInterestingRaw: String?,
     @SerializedName("time_published")
     override val timePublishedRaw: String,
     @SerializedName("title")
@@ -77,7 +77,7 @@ data class Article(
     @SerializedName("vote")
     val vote: Double?,
     @SerializedName("votes_count")
-    val votesCount: Int?,
+    override val votesCount: Int  = 0,
     @SerializedName("is_can_comment")
     val isCanComment: Boolean?
 //    @SerializedName("voting")

@@ -51,4 +51,10 @@ data class Article(
 
     override val favoritesCount: Int
         get() = statistics.favoritesCount
+
+    override val textHtml: String
+        get() = leadData.textHtml
+
+    override val votesCount: Int
+        get() = statistics.votesCount
 }

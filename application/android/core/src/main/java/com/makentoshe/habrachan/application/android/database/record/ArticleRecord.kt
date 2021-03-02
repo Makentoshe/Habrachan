@@ -42,7 +42,7 @@ data class ArticleRecord(
     val postType: Int?,
     val postTypeStr: String,
     val previewHtml: String?,
-    val textHtml: String?,
+    val textHtml: String = "",
     val readingCount: Int,
     val score: Int,
     val sourceAuthor: String?,
@@ -54,7 +54,7 @@ data class ArticleRecord(
     val title: String,
     val url: String?,
     val vote: Double?,
-    val votesCount: Int?,
+    val votesCount: Int = 0,
     val isCanComment: Boolean?
 ) {
 
@@ -94,7 +94,7 @@ data class ArticleRecord(
         article.sourceLink,
         article.tagsString,
         article.textCut,
-        article.timeInteresting,
+        article.timeInterestingRaw,
         article.timePublishedRaw,
         article.title,
         article.url,
@@ -128,7 +128,7 @@ data class ArticleRecord(
         article.postType.toString().toIntOrNull(),
         article.postType.toString(),
         null,
-        null,
+        article.textHtml,
         article.readingCount,
         article.score,
         null,
@@ -140,7 +140,7 @@ data class ArticleRecord(
         article.title,
         null,
         null,
-        null,
+        article.votesCount,
         null
     )
 
@@ -151,12 +151,10 @@ data class ArticleRecord(
         commentsNew,
         editorVersion,
         favoritesCount,
-        flows.split(delimiter)
-            .mapNotNull { flowDao.getById(it.toIntOrNull() ?: return@mapNotNull null)?.toFlow() },
+        flows.split(delimiter).mapNotNull { flowDao.getById(it.toIntOrNull() ?: return@mapNotNull null)?.toFlow() },
         fullUrl,
         hasPolls,
-        hubs.split(delimiter)
-            .mapNotNull { hubDao.getById(it.toIntOrNull() ?: return@mapNotNull null)?.toHub(flowDao) },
+        hubs.split(delimiter).mapNotNull { hubDao.getById(it.toIntOrNull() ?: return@mapNotNull null)?.toHub(flowDao) },
         isCanVote,
         isCommentsHide,
         isCorporative,
@@ -195,9 +193,10 @@ data class ArticleRecord(
         commentsCount,
         readingCount,
         favoritesCount,
+        votesCount,
         userDao.getById(authorId)!!.toArticleAuthor(),
-        hubs.split(delimiter)
-            .mapNotNull { hubDao.getById(it.toIntOrNull() ?: return@mapNotNull null)?.toHub(flowDao) },
-        flows.split(delimiter)
-            .mapNotNull { flowDao.getById(it.toIntOrNull() ?: return@mapNotNull null)?.toFlow() })
+        hubs.split(delimiter).mapNotNull { hubDao.getById(it.toIntOrNull() ?: return@mapNotNull null)?.toHub(flowDao) },
+        flows.split(delimiter).mapNotNull { flowDao.getById(it.toIntOrNull() ?: return@mapNotNull null)?.toFlow() },
+        textHtml
+    )
 }
