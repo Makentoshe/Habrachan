@@ -1,12 +1,8 @@
 package com.makentoshe.habrachan.network.manager
 
 import com.makentoshe.habrachan.common.network.response.LoginResponse
-import com.makentoshe.habrachan.network.api.NativeLoginApi
-import com.makentoshe.habrachan.network.converter.LoginConverter
-import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.LoginRequest
 import okhttp3.OkHttpClient
-import retrofit2.Retrofit
 
 interface LoginManager {
 
@@ -36,25 +32,9 @@ interface LoginManager {
 //                }
 //            }
 //        }
-
-        fun native() = NativeLoginManager(client)
     }
 }
 
-class NativeLoginManager(client: OkHttpClient) : LoginManager {
-
-    private val baseUrl = "https://habr.com/"
-    private val retrofit = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
-    private val api = retrofit.create(NativeLoginApi::class.java)
-
-    override suspend fun login(request: LoginRequest): Result<LoginResponse> {
-        return api.login(request.client, request.api, request.email, request.password).execute().fold({
-            LoginConverter().convertBody(it)
-        }, {
-            LoginConverter().convertError(it)
-        })
-    }
-}
 //
 //    override fun oauth(oAuthRequest: OAuthRequest): Single<OAuthResponse> {
 //        return requestOauthAction(oAuthRequest).map { response ->
