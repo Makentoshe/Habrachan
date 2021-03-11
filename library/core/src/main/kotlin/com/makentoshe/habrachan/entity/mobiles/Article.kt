@@ -31,7 +31,7 @@ data class Article(
 //    @SerializedName("postType")
 //    override val postType: Any, // article
     @SerializedName("relatedData")
-    val relatedData: RelatedData,
+    val relatedData: ArticleRelatedData,
     @SerializedName("statistics")
     val statistics: Statistics,
     @SerializedName("status")

@@ -7,7 +7,7 @@ data class Article(
     @SerializedName("id")
     val id: Int,
     @SerializedName("author")
-    override val author: User,
+    override val author: ArticleAuthor,
     @SerializedName("comments_count")
     override val commentsCount: Int,
     @SerializedName("comments_new")

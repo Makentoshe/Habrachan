@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.network.response
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.natives.Article
 import com.makentoshe.habrachan.entity.natives.NextPage
-import com.makentoshe.habrachan.entity.natives.User
+import com.makentoshe.habrachan.entity.natives.ArticleAuthor
 
 data class NativeGetArticlesResponse(
     @SerializedName("data")
@@ -17,7 +17,7 @@ data class NativeGetArticlesResponse(
     @SerializedName("sorted_by")
     val sortedBy: String,
     @SerializedName("author")
-    val author: User? = null
+    val author: ArticleAuthor? = null
 ): GetArticlesResponse2 {
     override val articles: List<com.makentoshe.habrachan.entity.Article>
         get() = data

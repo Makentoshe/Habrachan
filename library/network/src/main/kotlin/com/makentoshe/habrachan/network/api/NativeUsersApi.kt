@@ -22,7 +22,7 @@ interface NativeUsersApi {
         @Header("client") clientKey: String,
         @Header("token") token: String,
         @Path("name") name: String,
-        @Query("include") include: String?,
-        @Query("exclude") exclude: String?
+        @Query("include") include: String? = null,
+        @Query("exclude") exclude: String? = null
     ): Call<ResponseBody>
 }

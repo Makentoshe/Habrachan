@@ -1,45 +1,71 @@
 package com.makentoshe.habrachan.entity.natives
 
+
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.entity.ArticleAuthor
+import com.makentoshe.habrachan.entity.User
+import com.makentoshe.habrachan.entity.UserId
 
 data class User(
     @SerializedName("avatar")
-    override val avatar: String,
+    override val avatar: String, // https://habr.com/images/avatars/stub-user-middle.gif
     @SerializedName("badges")
     val badges: List<Badge>,
+    @SerializedName("common_tags")
+    val commonTags: List<Any>,
+    @SerializedName("contacts")
+    val contacts: List<Contact>, // may be empty
     @SerializedName("counters")
-    val counters: Counters?,
+    val counters: Counters,
     @SerializedName("fullname")
-    override val fullname: String?,
+    override val fullname: String, // Хвостов Максим
     @SerializedName("geo")
-    val geo: Geo?,
+    val geo: Geo,
     @SerializedName("id")
-    val id: Int,
+    override val userId: Int, // 1961555
     @SerializedName("is_can_vote")
-    val isCanVote: Boolean?,
+    override val isCanVote: Boolean, // false
     @SerializedName("is_rc")
-    val isRc: Boolean?,
+    val isRc: Boolean, // false
     @SerializedName("is_readonly")
-    val isReadonly: Boolean?,
+    override val isReadOnly: Boolean, // false
     @SerializedName("is_subscribed")
-    val isSubscribed: Boolean?,
+    override val isSubscribed: Boolean, // false
     @SerializedName("login")
-    override val login: String,
+    override val login: String, // Makentoshe
     @SerializedName("path")
-    val path: String?,
+    val path: String, // /users/makentoshe/
     @SerializedName("rating")
-    val rating: Float?,
+    override val rating: Int, // 0
     @SerializedName("rating_position")
-    val ratingPosition: Int?,
+    override val ratingPosition: Int, // 0
     @SerializedName("score")
-    val score: Float?,
+    override val score: Int, // 7
     @SerializedName("sex")
-    val sex: String?,
+    val sex: Int, // 0
     @SerializedName("specializm")
-    val specializm: String?,
+    override val speciality: String, // Неполноценный разработчик
     @SerializedName("time_registered")
-    val timeRegistered: String?
+    override val timeRegisteredRaw: String // 2019-02-05T23:34:19+03:00
+): User, UserId {
+
+    override val commentsCount: Int
+        get() = counters.comments
+
+    override val favoritesCount: Int
+        get() = counters.favorites
+
+    override val followersCount: Int
+        get() = counters.followers
+
+    override val followsCount: Int
+        get() = counters.followed
+
+    override val postsCount: Int
+        get() = counters.posts
+}
+
+// TODO define properties
+
 //    @SerializedName("vote")
 //    val vote: Int = 0
 //    @SerializedName("payment_methods")
@@ -48,7 +74,3 @@ data class User(
 //    val commonTags: List<Any>,
 //    @SerializedName("contacts")
 //    val contacts: List<Any>,
-): ArticleAuthor {
-    override val userId: Int
-        get() = id
-}

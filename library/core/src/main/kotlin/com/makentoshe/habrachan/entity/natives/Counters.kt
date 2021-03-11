@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 
 data class Counters(
     @SerializedName("comments")
-    val comments: Int,
+    val comments: Int, // 8
     @SerializedName("favorites")
-    val favorites: Int,
+    val favorites: Int, // 14
     @SerializedName("followed")
-    val followed: Int,
+    val followed: Int, // 1
     @SerializedName("followers")
-    val followers: Int,
+    val followers: Int, // 0
     @SerializedName("posts")
-    val posts: Int
+    val posts: Int // 1
 )

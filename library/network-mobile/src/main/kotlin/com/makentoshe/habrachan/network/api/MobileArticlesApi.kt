@@ -11,27 +11,28 @@ interface MobileArticlesApi {
 
     @GET("kek/v2/articles/")
     fun getArticles(
-
-        @Query("page") page: Int,
-
-        @QueryMap queries: Map<String, String>,
-
+        @Query("page")
+        page: Int,
+        @QueryMap
+        queries: Map<String, String>,
         /** articles languages. Default: ru and en */
-        @Query("fl") fl: String = "ru%2Cen",
-
+        @Query("fl")
+        fl: String = "ru%2Cen",
         /** ui language. Default: en */
-        @Query("hl") hl: String = "en"
+        @Query("hl")
+        hl: String = "en"
 
     ): Call<ResponseBody>
 
     @GET("kek/v2/articles/{id}")
     fun getArticle(
-        @Path("id") articleId: Int,
-
+        @Path("id")
+        articleId: Int,
         /** articles languages. Default: ru and en */
-        @Query("fl") fl: String = "ru%2Cen",
-
+        @Query("fl")
+        fl: String = "ru%2Cen",
         /** ui language. Default: en */
-        @Query("hl") hl: String = "en"
+        @Query("hl")
+        hl: String = "en"
     ): Call<ResponseBody>
 }

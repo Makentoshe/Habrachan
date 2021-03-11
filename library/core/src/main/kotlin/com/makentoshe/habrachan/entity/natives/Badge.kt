@@ -4,28 +4,17 @@ import com.google.gson.annotations.SerializedName
 
 data class Badge(
     @SerializedName("alias")
-    val alias: String,
+    val alias: String, // habred
     @SerializedName("description")
-    val description: String,
+    val description: String, // Пользователь с кармой >0
     @SerializedName("id")
-    val id: Int,
+    val id: Int, // 1
     @SerializedName("is_disabled")
-    val isDisabled: Boolean,
+    val isDisabled: Boolean, // false
     @SerializedName("is_removable")
-    val isRemovable: Boolean,
+    val isRemovable: Boolean, // false
     @SerializedName("title")
-    val title: String
-//    @SerializedName("url")
-//    val url: Any
-) {
-
-//    fun toJson(): String {
-//        return Gson().toJson(this)
-//    }
-//
-//    companion object {
-//        fun fromJson(json: String): Badge {
-//            return Gson().fromJson(json, Badge::class.java)
-//        }
-//    }
-}
+    val title: String, // Захабренный
+    @SerializedName("url")
+    val url: Any? // null
+)

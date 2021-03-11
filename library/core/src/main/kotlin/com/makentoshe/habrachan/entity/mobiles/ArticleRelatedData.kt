@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.entity.mobiles
 
 import com.google.gson.annotations.SerializedName
 
-data class RelatedData(
+data class ArticleRelatedData(
     @SerializedName("bookmarked")
     val bookmarked: Boolean, // false
     @SerializedName("canViewVotes")
@@ -12,7 +12,7 @@ data class RelatedData(
     @SerializedName("unreadCommentsCount")
     val unreadCommentsCount: Int, // 1
     @SerializedName("vote")
-    val vote: Vote,
+    val vote: ArticleVote,
     @SerializedName("сanComment") // Attention: Cyrillic symbols
     val canComment: Boolean, // true
     @SerializedName("сanEdit") // Attention: Cyrillic symbols

@@ -23,5 +23,6 @@ class BadgeRecord(
         badge.title
     )
 
-    fun toBadge() = Badge(alias, description, id, isDisabled, isRemovable, title)
+    // TODO(high) fix unknown property
+    fun toBadge() = Badge(alias, description, id, isDisabled, isRemovable, title, null)
 }

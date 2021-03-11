@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.entity.mobiles
 
 import com.google.gson.annotations.SerializedName
 
-data class Vote(
+data class ArticleVote(
     @SerializedName("value")
     val value: Any?, // null
     @SerializedName("voteTimeExpired")
