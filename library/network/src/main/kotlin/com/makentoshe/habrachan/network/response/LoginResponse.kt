@@ -1,15 +1,18 @@
 package com.makentoshe.habrachan.network.response
 
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.network.request.LoginRequest2
+import com.makentoshe.habrachan.entity.User
+import com.makentoshe.habrachan.network.request.LoginRequest
 import okhttp3.Cookie
 
-data class LoginResponse2(
-    val request: LoginRequest2,
+data class LoginResponse(
+    val request: LoginRequest,
     /** If login was performed through native manager */
     val nativeResponse: NativeResponse? = null,
     /** If login was performed through mobile manager */
-    val mobileResponse: MobileResponse? = null
+    val mobileResponse: MobileResponse? = null,
+    /** A logged in user info. It may be null when a UserManager was not specified in the LoginManager */
+    val user: User?
 ) {
 
     /**

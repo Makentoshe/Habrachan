@@ -37,6 +37,11 @@ dependencies {
     val coroutines = "1.3.7"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
 
+    // Jsoup (xml parsing)
+    // https://github.com/jhy/jsoup
+    val jsoup = "1.13.1"
+    implementation("org.jsoup:jsoup:$jsoup")
+
     testImplementation("junit:junit:4.12")
 }
 

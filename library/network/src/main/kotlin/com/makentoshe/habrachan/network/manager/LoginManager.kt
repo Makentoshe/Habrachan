@@ -1,14 +1,14 @@
 package com.makentoshe.habrachan.network.manager
 
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.request.LoginRequest2
-import com.makentoshe.habrachan.network.response.LoginResponse2
+import com.makentoshe.habrachan.network.request.LoginRequest
+import com.makentoshe.habrachan.network.response.LoginResponse
 
-interface LoginManager2<Request: LoginRequest2> {
+interface LoginManager<Request: LoginRequest> {
 
     fun request(userSession: UserSession, email: String, password: String): Request
 
-    suspend fun login(request: Request): Result<LoginResponse2>
+    suspend fun login(request: Request): Result<LoginResponse>
 }
 
 //    override fun oauth(oAuthRequest: OAuthRequest): Single<OAuthResponse> {

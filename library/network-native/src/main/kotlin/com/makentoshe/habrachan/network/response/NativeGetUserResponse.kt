@@ -3,9 +3,10 @@ package com.makentoshe.habrachan.network.response
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.natives.User
 import com.makentoshe.habrachan.network.request.GetUserRequest
+import com.makentoshe.habrachan.network.request.NativeGetUserRequest
 
 data class NativeGetUserResponse(
-    override val request: GetUserRequest, override val user: User, val serverTime: String
+    override val request: NativeGetUserRequest, override val user: User, val serverTime: String
 ) : GetUserResponse {
 
     class Factory(
@@ -14,6 +15,6 @@ data class NativeGetUserResponse(
         @SerializedName("server_time")
         val serverTime: String
     ) {
-        fun build(request: GetUserRequest) = NativeGetUserResponse(request, user, serverTime)
+        fun build(request: NativeGetUserRequest) = NativeGetUserResponse(request, user, serverTime)
     }
 }

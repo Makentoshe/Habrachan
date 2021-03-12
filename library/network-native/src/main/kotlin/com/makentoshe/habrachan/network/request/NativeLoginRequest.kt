@@ -4,4 +4,4 @@ import com.makentoshe.habrachan.network.UserSession
 
 class NativeLoginRequest(
     override val userSession: UserSession, override val email: String, override val password: String
-) : NativeRequest(), LoginRequest2
+) : NativeRequest(), LoginRequest

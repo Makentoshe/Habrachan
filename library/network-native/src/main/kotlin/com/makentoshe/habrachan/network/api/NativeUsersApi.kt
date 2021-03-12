@@ -13,8 +13,8 @@ interface NativeUsersApi {
     fun getMe(
         @Header("client") clientKey: String,
         @Header("token") token: String,
-        @Query("include") include: String?,
-        @Query("exclude") exclude: String?
+        @Query("include") include: String? = null,
+        @Query("exclude") exclude: String? = null
     ): Call<ResponseBody>
 
     @GET("/api/v1/users/{name}")
