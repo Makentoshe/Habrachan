@@ -15,7 +15,7 @@ class NativeLoginManagerTest {
     fun networkSuccess() = runBlocking {
         val userSession = userSession("85cab69095196f3.89453480", "173984950848a2d27c0cc1c76ccf3d6d3dc8255b")
         val manager = NativeLoginManager.Builder(OkHttpClient(), NativeLoginDeserializer(), NativeGetUserDeserializer()).build()
-        val request = manager.request(userSession, "mkliverout@gmail.com", "ShuviMakentoshe1243568790")
+        val request = manager.request(userSession, "", "")
         val response = manager.login(request)
         println(response)
     }
