@@ -1,16 +1,14 @@
 package com.makentoshe.habrachan.application.android.di
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import androidx.room.Room
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.ExceptionHandlerImpl
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.database.migration.AndroidCacheDatabaseMigration_1_2
+import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.network.AndroidUserSession
-import com.makentoshe.habrachan.application.android.viewmodel.ExecutorsProvider
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest
 import okhttp3.OkHttpClient
@@ -20,13 +18,11 @@ import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 import javax.net.ssl.HostnameVerifier
 
 annotation class ApplicationScope
 
-class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module() {
+class ApplicationModule(context: Context, cicerone: Cicerone<StackRouter>) : Module() {
 
     private val client = OkHttpClient.Builder().followRedirects(true).addLoggingInterceptor().build()
 
@@ -34,17 +30,12 @@ class ApplicationModule(context: Context, cicerone: Cicerone<Router>) : Module()
         context, AndroidCacheDatabase::class.java, "HabrachanCache"
     ).addMigrations(AndroidCacheDatabaseMigration_1_2()).build()
 
-    private val executorsProvider = object : ExecutorsProvider {
-        override val fetchExecutor = Executors.newCachedThreadPool()
-        override val notifyExecutor = Executor { Handler(Looper.getMainLooper()).post(it) }
-    }
-
     init {
         bind<OkHttpClient>().toInstance(client)
         bind<AndroidCacheDatabase>().toInstance(cacheDatabase)
+        bind<StackRouter>().toInstance(cicerone.router)
         bind<Router>().toInstance(cicerone.router)
         bind<NavigatorHolder>().toInstance(cicerone.navigatorHolder)
-        bind<ExecutorsProvider>().toInstance(executorsProvider)
 
         val articlesRequestSpec = GetArticlesRequest.Spec.All(include = "text_html")
         val userSession = AndroidUserSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY, null, articlesRequestSpec)

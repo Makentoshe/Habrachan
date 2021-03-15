@@ -9,18 +9,20 @@ import ru.terrakok.cicerone.android.support.FragmentParams
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 import ru.terrakok.cicerone.commands.Command
-import ru.terrakok.cicerone.commands.Forward
 
 /** Fragment adds to top of manager instead default replacing */
 class StackSupportAppNavigator(
-    activity: FragmentActivity,
-    fragmentManager: FragmentManager,
-    @IdRes
-    container: Int
+    activity: FragmentActivity, fragmentManager: FragmentManager, @IdRes container: Int
 ) : SupportAppNavigator(activity, fragmentManager, container) {
 
+    override fun applyCommand(command: Command) {
+        if (command is Stack) {
+            fragmentStack(command)
+        } else super.applyCommand(command)
+    }
+
     /** Fragment forward applies screen to the top and does not hides(replaces) previous */
-    override fun fragmentForward(command: Forward) {
+    private fun fragmentStack(command: Stack) {
         val screen = command.screen as SupportAppScreen
 
         val fragmentParams = screen.fragmentParams
@@ -28,7 +30,6 @@ class StackSupportAppNavigator(
 
         forwardFragmentInternal(command, screen, fragmentParams, fragment)
     }
-
 
     private fun forwardFragmentInternal(
         command: Command, screen: SupportAppScreen, fragmentParams: FragmentParams?, fragment: Fragment?
