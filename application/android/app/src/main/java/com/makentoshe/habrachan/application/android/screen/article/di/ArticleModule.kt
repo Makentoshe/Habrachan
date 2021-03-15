@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.application.android.arena.ArticleArenaCache
 import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
+import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
 import com.makentoshe.habrachan.application.android.screen.article.model.ArticleHtmlController
 import com.makentoshe.habrachan.application.android.screen.article.model.ArticleShareController
@@ -28,7 +29,7 @@ annotation class ArticleScope
 
 class ArticleModule(fragment: ArticleFragment) : Module() {
 
-    private val router by inject<Router>()
+    private val router by inject<StackRouter>()
     private val client by inject<OkHttpClient>()
     private val session by inject<UserSession>()
 

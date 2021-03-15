@@ -5,6 +5,7 @@ import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.di.ApplicationModule
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.di.InjectionActivityLifecycleCallback
+import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
@@ -20,7 +21,7 @@ class Habrachan : Application() {
         Toothpick.setConfiguration(getToothpickConfiguration())
 
         val scopes = Toothpick.openScopes(ApplicationScope::class)
-        scopes.installModules(ApplicationModule(applicationContext, Cicerone.create(Router())))
+        scopes.installModules(ApplicationModule(applicationContext, Cicerone.create(StackRouter())))
         scopes.inject(this)
 
         val injectActivityLifecycleCallback = InjectionActivityLifecycleCallback()
