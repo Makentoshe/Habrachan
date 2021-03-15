@@ -37,11 +37,11 @@ data class ArticleAuthor(
     @SerializedName("payment_methods")
     val paymentMethods: List<Any>,
     @SerializedName("rating")
-    val rating: Int, // 0
+    val rating: Float, // 0
     @SerializedName("rating_position")
     val ratingPosition: Int, // 0
     @SerializedName("score")
-    val score: Int, // 7
+    val score: Float, // 7
     @SerializedName("sex")
     val sex: Int, // 0
     @SerializedName("specializm")
