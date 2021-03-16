@@ -10,7 +10,7 @@ class ArticleCommentsScreen(
     private val articleTitle: String
 ) : SupportAppScreen() {
 
-    constructor(article: Article): this(article.id, article.title)
+    constructor(article: Article): this(article.articleId, article.title)
 
     override fun getFragment(): Fragment {
         return ArticleCommentsFragment.build(articleId, articleTitle)

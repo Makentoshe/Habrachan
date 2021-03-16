@@ -5,8 +5,8 @@ import com.makentoshe.habrachan.application.android.database.AvatarDao
 import com.makentoshe.habrachan.application.android.database.record.AvatarRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.network.request.ImageRequest
-import com.makentoshe.habrachan.network.response.ImageResponse
+import com.makentoshe.habrachan.network.request.GetContentRequest
+import com.makentoshe.habrachan.network.response.GetContentResponse
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -16,7 +16,7 @@ import java.io.FileNotFoundException
 // But https://hsto.org/getpro/habr/ may change in future and we couldn't hardcode it
 class AvatarArenaCache(
     private val avatarDao: AvatarDao, private val cacheRoot: File
-) : ArenaCache<ImageRequest, ImageResponse> {
+) : ArenaCache<GetContentRequest, GetContentResponse> {
 
     companion object {
         private inline fun capture(level: Int, message: () -> String) {
@@ -28,7 +28,7 @@ class AvatarArenaCache(
     private val limit = 500
     private val clearStep = 50
 
-    override fun fetch(key: ImageRequest): Result<ImageResponse> = try {
+    override fun fetch(key: GetContentRequest): Result<GetContentResponse> = try {
         val cacheDirectory = File(cacheRoot, directory)
         val file = File(cacheDirectory, filename(key))
 
@@ -36,13 +36,13 @@ class AvatarArenaCache(
             throw FileNotFoundException(file.relativeTo(cacheDirectory).path)
         } else {
             capture(Log.INFO) { "Fetch avatar from path ${file.relativeTo(cacheDirectory).path}" }
-            Result.success(ImageResponse(key, file.readBytes()))
+            Result.success(GetContentResponse(key, file.readBytes()))
         }
     } catch (exception: Exception) {
         Result.failure(ArenaStorageException("Couldn't receive a record by key: $key").initCause(exception))
     }
 
-    override fun carry(key: ImageRequest, value: ImageResponse) {
+    override fun carry(key: GetContentRequest, value: GetContentResponse) {
         if (avatarDao.count() > limit) {
             capture(Log.INFO) { "Removing oldest $clearStep elements from cache" }
             avatarDao.last(clearStep).forEach { record ->
@@ -52,11 +52,11 @@ class AvatarArenaCache(
         }
 
         val avatarFile = fileSystemCarry(key, value)
-        avatarDao.insert(AvatarRecord(avatarFile.relativeTo(cacheRoot).path, key.imageUrl))
+        avatarDao.insert(AvatarRecord(avatarFile.relativeTo(cacheRoot).path, key.url))
         capture(Log.INFO) { "Store avatar with path ${avatarFile.relativeTo(cacheRoot).path}" }
     }
 
-    private fun fileSystemCarry(key: ImageRequest, value: ImageResponse): File {
+    private fun fileSystemCarry(key: GetContentRequest, value: GetContentResponse): File {
         val cacheDirectory = File(cacheRoot, directory)
         return File(cacheDirectory, filename(key)).apply {
             if (!cacheDirectory.exists()) cacheDirectory.mkdirs()
@@ -64,5 +64,5 @@ class AvatarArenaCache(
         }
     }
 
-    private fun filename(key: ImageRequest): String = File(key.imageUrl).name
+    private fun filename(key: GetContentRequest): String = File(key.url).name
 }

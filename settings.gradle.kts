@@ -4,6 +4,12 @@ include(":library")
 include(":library:core")
 include(":library:network")
 
+include(":library:network-mobile")
+include(":library:network-mobile:network-mobile-test")
+
+include(":library:network-native")
+include(":library:network-native:network-native-test")
+
 include(":application")
 include(":application:core")
 

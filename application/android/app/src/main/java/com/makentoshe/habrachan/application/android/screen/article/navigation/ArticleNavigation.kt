@@ -4,7 +4,6 @@ import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentScreen
 import com.makentoshe.habrachan.entity.Article
-import ru.terrakok.cicerone.Router
 
 class ArticleNavigation(private val router: StackRouter) {
 

@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.network.response
 
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.entity.Comment
+import com.makentoshe.habrachan.entity.natives.Comment
 import com.makentoshe.habrachan.network.request.GetCommentsRequest
 
 data class GetCommentsResponse(

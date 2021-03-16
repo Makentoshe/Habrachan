@@ -6,10 +6,10 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class ArticleScreen(private val articleId: Int, private val article: Article? = null) : SupportAppScreen() {
 
-    constructor(article: Article): this(article.id, article)
+    constructor(article: Article): this(article.articleId, article)
 
     init {
-        if (article != null && article.id != articleId) throw IllegalArgumentException("Could not ")
+        if (article != null && article.articleId != articleId) throw IllegalArgumentException()
     }
 
     override fun getFragment() = ArticleFragment.build(articleId)

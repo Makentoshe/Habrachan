@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.network.manager.ImageManagerException
+import com.makentoshe.habrachan.network.manager.GetContentManagerException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 import javax.net.ssl.SSLPeerUnverifiedException
@@ -21,11 +21,12 @@ interface ExceptionHandler {
     data class Entry(val title: String, val message: String)
 }
 
+// TODO rework exception handler
 class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
 
     override fun handleException(exception: Throwable?): ExceptionHandler.Entry = when (exception) {
         is ArenaStorageException -> handleArenaStorageException(exception)
-        is ImageManagerException -> handleImageManagerException(exception)
+        is GetContentManagerException -> handleContentManagerException(exception)
         else -> handleUnknownException(exception)
     }
 
@@ -64,7 +65,7 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
         return ExceptionHandler.Entry(title, description)
     }
 
-    private fun handleImageManagerException(exception: ImageManagerException) = when (val cause = exception.cause) {
+    private fun handleContentManagerException(exception: GetContentManagerException) = when (val cause = exception.cause) {
         is SSLPeerUnverifiedException -> handleArenaStorageSSlPeerUnverifiedException(cause)
         is UnknownHostException -> handleArenaStorageUnknownHostException(cause)
         is SSLHandshakeException -> handleSSLHandshakeArenaStorageException(cause)

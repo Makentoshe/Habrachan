@@ -19,6 +19,9 @@ import com.makentoshe.habrachan.application.android.screen.article.navigation.Ar
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
 import com.makentoshe.habrachan.network.response.ArticleResponse
 import com.makentoshe.habrachan.network.response.ImageResponse
+import com.makentoshe.habrachan.application.android.toRoundedDrawable
+import com.makentoshe.habrachan.network.response.GetArticleResponse2
+import com.makentoshe.habrachan.network.response.GetContentResponse
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article_content.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*
@@ -113,8 +116,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         else -> false
     }
 
-    // TODO disable appbar collapse on error
-    private fun onArticleReceivedSuccess(response: ArticleResponse) {
+    private fun onArticleReceivedSuccess(response: GetArticleResponse2) {
         onArticleReceivedToolbar(response)
         onArticleReceivedBottomBar(response)
         articleShareController.setUrl(response.article)
@@ -132,7 +134,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         }
     }
 
-    private fun onArticleReceivedToolbar(response: ArticleResponse) {
+    private fun onArticleReceivedToolbar(response: GetArticleResponse2) {
         fragment_article_toolbar.setNavigationOnClickListener { navigator.back() }
         fragment_article_toolbar.title = response.article.title
         fragment_article_calculator.text = response.article.title
@@ -140,7 +142,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_appbar.setExpanded(true, true)
     }
 
-    private fun onArticleReceivedBottomBar(response: ArticleResponse) {
+    private fun onArticleReceivedBottomBar(response: GetArticleResponse2) {
         fragment_article_bottom_voteview.text = response.article.score.toString()
         fragment_article_bottom_reading_count.text = response.article.readingCount.toString()
         fragment_article_bottom_comments_count.text = response.article.commentsCount.toString()
@@ -154,7 +156,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         exceptionController.render(exceptionHandler.handleException(exception))
     }
 
-    private fun onAvatarReceivedSuccess(response: ImageResponse) {
+    private fun onAvatarReceivedSuccess(response: GetContentResponse) {
         val bitmap = response.bytes.toRoundedDrawable(resources, dp2px(R.dimen.radiusS))
         fragment_article_avatar_image.setImageDrawable(bitmap)
         fragment_article_avatar_image.visibility = View.VISIBLE

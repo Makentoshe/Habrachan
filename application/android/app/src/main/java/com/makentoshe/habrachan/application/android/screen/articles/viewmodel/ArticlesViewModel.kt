@@ -8,9 +8,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesDataSource
 import com.makentoshe.habrachan.application.core.arena.Arena
+import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesDataSource
+import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesSpec
+import com.makentoshe.habrachan.application.core.arena.articles.GetArticlesArena
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
-import com.makentoshe.habrachan.network.response.ArticlesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.flatMapConcat
@@ -19,7 +20,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.plus
 
 class ArticlesViewModel2(
-    private val session: UserSession, private val arena: Arena<GetArticlesRequest, ArticlesResponse>
+    private val session: UserSession, private val arena: GetArticlesArena
 ) : ViewModel() {
 
     val specChannel = Channel<ArticlesSpec>()
@@ -37,7 +38,7 @@ class ArticlesViewModel2(
     }.flow.cachedIn(viewModelScope.plus(Dispatchers.IO))
 
     class Factory(
-        private val session: UserSession, private val arena: Arena<GetArticlesRequest, ArticlesResponse>
+        private val session: UserSession, private val arena: GetArticlesArena
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
             ArticlesViewModel2(session, arena) as T

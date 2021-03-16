@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.navigation
 
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment
-import com.makentoshe.habrachan.entity.Article
+import com.makentoshe.habrachan.entity.natives.Article
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class DiscussionCommentsScreen(

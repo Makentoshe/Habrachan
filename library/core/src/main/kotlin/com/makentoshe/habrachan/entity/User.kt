@@ -1,50 +1,66 @@
 package com.makentoshe.habrachan.entity
 
-import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
+import java.util.*
 
-data class User(
-    @SerializedName("avatar")
-    val avatar: String,
-    @SerializedName("badges")
-    val badges: List<Badge>,
-    @SerializedName("counters")
-    val counters: Counters,
-    @SerializedName("fullname")
-    val fullname: String? = null,
-    @SerializedName("geo")
-    val geo: Geo? = null,
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("is_can_vote")
-    val isCanVote: Boolean,
-    @SerializedName("is_rc")
-    val isRc: Boolean,
-    @SerializedName("is_readonly")
-    val isReadonly: Boolean,
-    @SerializedName("is_subscribed")
-    val isSubscribed: Boolean? = null,
-    @SerializedName("login")
-    val login: String,
-    @SerializedName("path")
-    val path: String,
-    @SerializedName("rating")
-    val rating: Float,
-    @SerializedName("rating_position")
-    val ratingPosition: Int,
-    @SerializedName("score")
-    val score: Float,
-    @SerializedName("sex")
-    val sex: String,
-    @SerializedName("specializm")
-    val specializm: String? = null,
-    @SerializedName("time_registered")
-    val timeRegistered: String
-//    @SerializedName("vote")
-//    val vote: Int = 0
-//    @SerializedName("payment_methods")
-//    val paymentMethods: List<PaymentMethod>?,
-//    @SerializedName("common_tags")
-//    val commonTags: List<Any>,
-//    @SerializedName("contacts")
-//    val contacts: List<Any>,
-)
+interface User {
+    val avatar: String
+    val fullname: String
+    val login: String
+
+    val speciality: String
+//    val gender: Int TODO make enum later
+    val timeRegisteredRaw: String
+    val rating: Int
+    val ratingPosition: Int
+
+    val score: Int
+    val postsCount: Int
+    val commentsCount: Int
+    val favoritesCount: Int
+    val followsCount: Int
+    val followersCount: Int
+
+    val isReadOnly: Boolean
+    val isSubscribed: Boolean
+    val isCanVote: Boolean
+}
+
+val User.timeRegistered: Date
+    get() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(timeRegisteredRaw)
+
+fun user(
+    login: String,
+    fullname: String,
+    speciality: String,
+    timeRegisteredRaw: String,
+    avatar: String,
+    rating: Int,
+    ratingPosition: Int,
+    score: Int,
+    postsCount: Int,
+    commentsCount: Int,
+    favoritesCount: Int,
+    followsCount: Int,
+    followersCount: Int,
+    isReadOnly: Boolean,
+    isSubscribe: Boolean,
+    isCanVote: Boolean
+) = object: User {
+    override val login = login
+    override val fullname = fullname
+    override val speciality = speciality
+    override val timeRegisteredRaw = timeRegisteredRaw
+    override val avatar = avatar
+    override val rating = rating
+    override val ratingPosition = ratingPosition
+    override val score = score
+    override val postsCount = postsCount
+    override val commentsCount = commentsCount
+    override val favoritesCount = favoritesCount
+    override val followersCount = followersCount
+    override val followsCount = followsCount
+    override val isSubscribed = isSubscribe
+    override val isCanVote = isCanVote
+    override val isReadOnly = isReadOnly
+}

@@ -20,8 +20,28 @@ import com.makentoshe.habrachan.application.android.database.record.article.TopA
  * entities - array of object types that database contains.
  */
 @Database(
-    entities = [AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, UserRecord::class, ContentRecord::class, TopArticleRecord::class, InterestingArticleRecord::class, NewArticleRecord::class, TempArticleRecord::class],
-    version = 4
+    entities = [
+        AvatarRecord::class,
+        ContentRecord::class,
+
+        BadgeRecord::class,
+        CommentRecord::class,
+
+        ArticleRecord2::class,
+        HubRecord2::class,
+        FlowRecord2::class,
+        ArticleHubCrossRef::class,
+        ArticleFlowCrossRef::class,
+        ArticleAuthorRecord::class,
+
+        FlowRecord::class,
+        HubRecord::class,
+
+        TopArticleRecord::class,
+        InterestingArticleRecord::class,
+        NewArticleRecord::class,
+        TempArticleRecord::class
+    version = 6
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
@@ -48,6 +68,17 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * That means that the cache should be released occasionally
      * */
     abstract fun topArticlesDao(): TopArticlesDao
+    /** Contains articles from last search. Potential infinite.
+     * That means that the cache should be released occasionally */
+    abstract fun articlesDao2(): ArticlesDao2
+
+    abstract fun articleAuthorDao(): ArticleAuthorDao
+
+    /**
+     * Stores different articles hubs. Do not infinite,
+     * so we do not care of releasing cache memory
+     */
+    abstract fun hubDao2(): HubDao2
 
     /** Stores indexed avatars paths. The real files stores in file system cache.
      * Cache should be released occasionally with file system.
@@ -65,6 +96,12 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * so we do not care of releasing cache memory
      */
     abstract fun hubDao(): HubDao
+
+    /**
+     * Stores flows from different sources. Do not infinite,
+     * so we do not care of releasing cache memory
+     */
+    abstract fun flowDao2(): FlowDao2
 
     /**
      * Stores different user badges. Do not infinite,
