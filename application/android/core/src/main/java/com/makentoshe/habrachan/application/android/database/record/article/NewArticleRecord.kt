@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.database.record
+package com.makentoshe.habrachan.application.android.database.record.article
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -7,8 +7,9 @@ import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.Metadata
 
 @Entity
-data class InterestingArticleRecord(
-    @PrimaryKey override var id: Int,
+data class NewArticleRecord(
+    @PrimaryKey
+    override var id: Int,
     override var authorId: Int,
     override var commentsCount: Int,
     override var commentsNew: Int,
@@ -29,7 +30,8 @@ data class InterestingArticleRecord(
     override var isRecoveryMode: Boolean,
     override var isTutorial: Boolean,
     override var lang: String,
-    @Embedded(prefix = "metadata_") override var metadata: Metadata? = null,
+    @Embedded(prefix = "metadata_")
+    override var metadata: Metadata? = null,
     override var path: String,
     override var postType: Int,
     override var postTypeStr: String,
@@ -48,7 +50,7 @@ data class InterestingArticleRecord(
     override var vote: Double? = null,
     override var votesCount: Int,
     override var isCanComment: Boolean? = null
-) : ArticleRecord2() {
+): ArticleRecord() {
 
     constructor(article: Article) : this(
         article.id,

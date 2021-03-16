@@ -3,7 +3,15 @@ package com.makentoshe.habrachan.application.android.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.makentoshe.habrachan.application.android.database.dao.*
+import com.makentoshe.habrachan.application.android.database.dao.article.InterestingArticlesDao
+import com.makentoshe.habrachan.application.android.database.dao.article.NewArticlesDao
+import com.makentoshe.habrachan.application.android.database.dao.article.TempArticlesDao
+import com.makentoshe.habrachan.application.android.database.dao.article.TopArticlesDao
 import com.makentoshe.habrachan.application.android.database.record.*
+import com.makentoshe.habrachan.application.android.database.record.article.InterestingArticleRecord
+import com.makentoshe.habrachan.application.android.database.record.article.NewArticleRecord
+import com.makentoshe.habrachan.application.android.database.record.article.TempArticleRecord
+import com.makentoshe.habrachan.application.android.database.record.article.TopArticleRecord
 
 /**
  * This is a cache database used in the Android application.
@@ -12,7 +20,7 @@ import com.makentoshe.habrachan.application.android.database.record.*
  * entities - array of object types that database contains.
  */
 @Database(
-    entities = [ArticleRecord::class, AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, UserRecord::class, ContentRecord::class, TopArticleRecord::class, InterestingArticleRecord::class, NewArticleRecord::class, TempArticleRecord::class],
+    entities = [AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, UserRecord::class, ContentRecord::class, TopArticleRecord::class, InterestingArticleRecord::class, NewArticleRecord::class, TempArticleRecord::class],
     version = 4
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {

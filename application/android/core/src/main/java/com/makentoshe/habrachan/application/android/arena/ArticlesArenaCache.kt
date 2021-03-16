@@ -3,8 +3,12 @@ package com.makentoshe.habrachan.application.android.arena
 import android.util.Log
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
-import com.makentoshe.habrachan.application.android.database.dao.ArticlesDao2
+import com.makentoshe.habrachan.application.android.database.dao.article.ArticlesDao
 import com.makentoshe.habrachan.application.android.database.record.*
+import com.makentoshe.habrachan.application.android.database.record.article.ArticleRecord
+import com.makentoshe.habrachan.application.android.database.record.article.InterestingArticleRecord
+import com.makentoshe.habrachan.application.android.database.record.article.NewArticleRecord
+import com.makentoshe.habrachan.application.android.database.record.article.TopArticleRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.entity.Article
@@ -31,8 +35,8 @@ class ArticlesArenaCache(
         }
     }
 
-    private fun <T : ArticleRecord2> fetch(
-        articlesDao: ArticlesDao2<T>,
+    private fun <T : ArticleRecord> fetch(
+        articlesDao: ArticlesDao<T>,
         key: GetArticlesRequest
     ): Result<ArticlesResponse> {
         return try {
@@ -72,8 +76,8 @@ class ArticlesArenaCache(
         }
     }
 
-    private fun <T : ArticleRecord2> carry(
-        articlesDao: ArticlesDao2<T>,
+    private fun <T : ArticleRecord> carry(
+        articlesDao: ArticlesDao<T>,
         key: GetArticlesRequest,
         value: ArticlesResponse,
         factory: (Article) -> T

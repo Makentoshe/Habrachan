@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.database.record
+package com.makentoshe.habrachan.application.android.database.record.article
 
 import com.makentoshe.habrachan.application.android.database.dao.BadgeDao
 import com.makentoshe.habrachan.application.android.database.dao.FlowDao
@@ -12,7 +12,7 @@ import com.makentoshe.habrachan.entity.Metadata
  * Abstract record for articles. This required for keeping several tables with one common class.
  * Each table used for cache for different types.
  */
-abstract class ArticleRecord2 {
+abstract class ArticleRecord {
 
     companion object {
         const val delimiter = ";"

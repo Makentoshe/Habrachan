@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.database.record
+package com.makentoshe.habrachan.application.android.database.record.article
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -6,13 +6,8 @@ import androidx.room.PrimaryKey
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.Metadata
 
-/**
- * Entity for storing articles in temporary table.
- * Articles will be fall here if they were loaded directly and will be removed
- * if the same article will be cached in the other table.
- */
 @Entity
-data class TempArticleRecord(
+data class InterestingArticleRecord(
     @PrimaryKey override var id: Int,
     override var authorId: Int,
     override var commentsCount: Int,
@@ -39,7 +34,7 @@ data class TempArticleRecord(
     override var postType: Int,
     override var postTypeStr: String,
     override var previewHtml: String,
-    override var textHtml: String?,
+    override var textHtml: String? = null,
     override var readingCount: Int,
     override var score: Int,
     override var sourceAuthor: String? = null,
@@ -53,7 +48,7 @@ data class TempArticleRecord(
     override var vote: Double? = null,
     override var votesCount: Int,
     override var isCanComment: Boolean? = null
-) : ArticleRecord2() {
+) : ArticleRecord() {
 
     constructor(article: Article) : this(
         article.id,

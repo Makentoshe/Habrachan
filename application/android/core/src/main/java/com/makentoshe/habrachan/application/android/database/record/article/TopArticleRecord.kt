@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.database.record
+package com.makentoshe.habrachan.application.android.database.record.article
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -7,7 +7,7 @@ import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.Metadata
 
 @Entity
-data class NewArticleRecord(
+data class TopArticleRecord(
     @PrimaryKey
     override var id: Int,
     override var authorId: Int,
@@ -50,7 +50,7 @@ data class NewArticleRecord(
     override var vote: Double? = null,
     override var votesCount: Int,
     override var isCanComment: Boolean? = null
-): ArticleRecord2() {
+): ArticleRecord() {
 
     constructor(article: Article) : this(
         article.id,

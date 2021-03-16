@@ -3,6 +3,8 @@ package com.makentoshe.habrachan.application.android.arena
 import android.util.Log
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.database.record.*
+import com.makentoshe.habrachan.application.android.database.record.article.ArticleRecord
+import com.makentoshe.habrachan.application.android.database.record.article.TempArticleRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.request.GetArticleRequest
@@ -37,7 +39,7 @@ class ArticleArenaCache(
         }
     }
 
-    private fun fetchRecordById(id: Int): ArticleRecord2? {
+    private fun fetchRecordById(id: Int): ArticleRecord? {
         return cacheDatabase.tempArticlesDao().getById(id) ?: cacheDatabase.newArticlesDao().getById(id)
         ?: cacheDatabase.interestingArticlesDao().getById(id) ?: cacheDatabase.topArticlesDao().getById(id)
     }
