@@ -1,0 +1,35 @@
+{
+  "alias": "Makentoshe",
+  "fullname": "Хвостов Максим",
+  "avatarUrl": null,
+  "speciality": "Неполноценный разработчик",
+  "gender": "0",
+  "rating": 0,
+  "ratingPos": 6054,
+  "scoreStats": {
+    "score": 7,
+    "votesCount": 7
+  },
+  "relatedData": {
+    "vote": {
+      "value": null
+    },
+    "canVote": false,
+    "isSubscribed": false
+  },
+  "followStats": {
+    "followCount": 1,
+    "followersCount": 0
+  },
+  "lastActivityDateTime": "2021-03-10T17:46:20+00:00",
+  "registerDateTime": "2019-02-05T20:34:19+00:00",
+  "birthday": null,
+  "location": null,
+  "workplace": [],
+  "counterStats": {
+    "postCount": 1,
+    "commentCount": 8,
+    "favoriteCount": 14
+  },
+  "isReadonly": false
+}

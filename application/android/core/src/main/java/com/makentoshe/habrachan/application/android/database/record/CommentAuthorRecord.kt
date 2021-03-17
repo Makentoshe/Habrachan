@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.application.android.database.record
 
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.entity.CommentAuthor
+import com.makentoshe.habrachan.entity.natives.CommentAuthor
 
 data class CommentAuthorRecord(
     @SerializedName("login")

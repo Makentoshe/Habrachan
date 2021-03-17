@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.network.response.GetCommentsResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
+// TODO refactor CommentsManager
 interface CommentsManager {
 
     suspend fun getComments(request: GetCommentsRequest): Result<GetCommentsResponse>

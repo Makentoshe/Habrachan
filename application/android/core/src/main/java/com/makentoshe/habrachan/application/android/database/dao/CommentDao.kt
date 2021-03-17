@@ -24,7 +24,7 @@ interface CommentDao {
     @Delete
     fun delete(record: CommentRecord)
 
-    @Query("DELETE FROM FlowRecord")
+    @Query("DELETE FROM CommentRecord")
     fun clear()
 
 }

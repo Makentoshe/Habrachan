@@ -19,8 +19,8 @@ android {
         applicationId = "com.makentoshe.habrachan"
         minSdkVersion(21)
         targetSdkVersion(29)
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 4
+        versionName = "0.3.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         var token = ""
@@ -82,6 +82,7 @@ dependencies {
 
     implementation(project(":library:core"))
     implementation(project(":library:network"))
+    implementation(project(":library:network-native"))
 
     // OkHttp
     // https://github.com/square/okhttp/
