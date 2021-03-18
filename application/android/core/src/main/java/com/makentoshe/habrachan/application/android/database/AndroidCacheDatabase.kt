@@ -3,15 +3,7 @@ package com.makentoshe.habrachan.application.android.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.makentoshe.habrachan.application.android.database.dao.*
-import com.makentoshe.habrachan.application.android.database.dao.article.InterestingArticlesDao
-import com.makentoshe.habrachan.application.android.database.dao.article.NewArticlesDao
-import com.makentoshe.habrachan.application.android.database.dao.article.TempArticlesDao
-import com.makentoshe.habrachan.application.android.database.dao.article.TopArticlesDao
 import com.makentoshe.habrachan.application.android.database.record.*
-import com.makentoshe.habrachan.application.android.database.record.article.InterestingArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.article.NewArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.article.TempArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.article.TopArticleRecord
 
 /**
  * This is a cache database used in the Android application.
@@ -26,56 +18,41 @@ import com.makentoshe.habrachan.application.android.database.record.article.TopA
         CommentRecord::class,
         ContentRecord::class,
 
-        TopArticleRecord::class,
-        InterestingArticleRecord::class,
-        NewArticleRecord::class,
-        TempArticleRecord::class
+        FlowRecord2::class,
+        HubRecord2::class,
+
+        ArticleRecord2::class,
+        ArticleHubCrossRef::class,
+        ArticleFlowCrossRef::class,
+        ArticleAuthorRecord::class,
                ],
     version = 5
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
     /**
-     * Contains articles from direct load. Potential infinite.
-     * That means that the cache should be released occasionally
-     * */
-    abstract fun tempArticlesDao(): TempArticlesDao
-
-    /**
      * Contains articles from last search. Potential infinite.
      * That means that the cache should be released occasionally
      * */
-    abstract fun newArticlesDao(): NewArticlesDao
-
-    /**
-     * Contains articles from last search. Potential infinite.
-     * That means that the cache should be released occasionally
-     * */
-    abstract fun interestingArticlesDao(): InterestingArticlesDao
-
-    /**
-     * Contains articles from last search. Potential infinite.
-     * That means that the cache should be released occasionally
-     * */
-    abstract fun topArticlesDao(): TopArticlesDao
+    abstract fun articlesDao(): ArticlesDao2
 
     /** Stores indexed avatars paths. The real files stores in file system cache.
      * Cache should be released occasionally with file system.
      */
     abstract fun avatarDao(): AvatarDao
 
-//    /**
-//     * Stores flows from different sources. Do not infinite,
-//     * so we do not care of releasing cache memory
-//     */
-//    abstract fun flowDao(): FlowDao
-//
-//    /**
-//     * Stores different articles hubs. Do not infinite,
-//     * so we do not care of releasing cache memory
-//     */
-//    abstract fun hubDao(): HubDao
-//
+    /**
+     * Stores flows from different sources. Do not infinite,
+     * so we do not care of releasing cache memory
+     */
+    abstract fun flowDao(): FlowDao2
+
+    /**
+     * Stores different articles hubs. Do not infinite,
+     * so we do not care of releasing cache memory
+     */
+    abstract fun hubDao(): HubDao2
+
     /**
      * Stores different user badges. Do not infinite,
      * so we do not care of releasing cache memory

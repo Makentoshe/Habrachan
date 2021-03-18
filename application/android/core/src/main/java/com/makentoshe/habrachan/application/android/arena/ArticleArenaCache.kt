@@ -2,14 +2,9 @@ package com.makentoshe.habrachan.application.android.arena
 
 import android.util.Log
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
-import com.makentoshe.habrachan.application.android.database.record.*
-import com.makentoshe.habrachan.application.android.database.record.article.ArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.article.TempArticleRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
-import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.request.GetArticleRequest2
 import com.makentoshe.habrachan.network.response.GetArticleResponse2
-import com.makentoshe.habrachan.network.response.getArticleResponse
 
 class ArticleArenaCache(
     private val cacheDatabase: AndroidCacheDatabase
@@ -40,11 +35,11 @@ class ArticleArenaCache(
 //            Result.failure(ArenaStorageException("ArticlesArenaCache").initCause(exception))
 //        }
     }
-
-    private fun fetchRecordById(id: Int): ArticleRecord? {
-        return cacheDatabase.tempArticlesDao().getById(id) ?: cacheDatabase.newArticlesDao().getById(id)
-        ?: cacheDatabase.interestingArticlesDao().getById(id) ?: cacheDatabase.topArticlesDao().getById(id)
-    }
+//
+//    private fun fetchRecordById(id: Int): ArticleRecord? {
+//        return cacheDatabase.tempArticlesDao().getById(id) ?: cacheDatabase.newArticlesDao().getById(id)
+//        ?: cacheDatabase.interestingArticlesDao().getById(id) ?: cacheDatabase.topArticlesDao().getById(id)
+//    }
 
     // TODO(high) finish
     override fun carry(key: GetArticleRequest2, value: GetArticleResponse2) {

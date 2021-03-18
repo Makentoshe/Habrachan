@@ -3,15 +3,7 @@ package com.makentoshe.habrachan.application.android.arena
 import android.util.Log
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
-import com.makentoshe.habrachan.application.android.database.dao.article.ArticlesDao
-import com.makentoshe.habrachan.application.android.database.record.*
-import com.makentoshe.habrachan.application.android.database.record.article.ArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.article.InterestingArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.article.NewArticleRecord
-import com.makentoshe.habrachan.application.android.database.record.article.TopArticleRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
-import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.network.response.GetArticlesResponse2
 
