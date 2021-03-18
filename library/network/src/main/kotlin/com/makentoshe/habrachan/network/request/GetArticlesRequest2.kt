@@ -8,6 +8,7 @@ interface GetArticlesRequest2 {
     }
 
     val page: Int
+    val spec: GetArticlesSpec
 }
 
 interface GetArticlesSpec {

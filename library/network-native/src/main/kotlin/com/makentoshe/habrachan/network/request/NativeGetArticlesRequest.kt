@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.network.UserSession
 
 /** Request a batch of articles, on selected [page] with selected [spec] */
 data class NativeGetArticlesRequest(
-    val session: UserSession, override val page: Int, val spec: NativeGetArticlesSpec
+    val session: UserSession, override val page: Int, override val spec: NativeGetArticlesSpec
 ) : GetArticlesRequest2
 
 data class NativeGetArticlesSpec(

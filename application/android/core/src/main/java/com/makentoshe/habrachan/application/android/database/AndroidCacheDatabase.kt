@@ -36,7 +36,14 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * */
     abstract fun articlesDao(): ArticlesDao2
 
-    /** Stores indexed avatars paths. The real files stores in file system cache.
+    /**
+     * Stores authors from last searches. Potential infinite.
+     * That means that the cache should be released occasionally.
+     */
+    abstract fun articleAuthorDao(): ArticleAuthorDao
+
+    /**
+     * Stores indexed avatars paths. The real files stores in file system cache.
      * Cache should be released occasionally with file system.
      */
     abstract fun avatarDao(): AvatarDao
@@ -70,4 +77,16 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * Cache should be released occasionally with file system.
      */
     abstract fun contentDao(): ContentDao
+
+    /**
+     * Stores references between articles and flows. Potential infinite.
+     * That means that the cache should be released occasionally.
+     */
+    abstract fun articleFlowCrossRefDao(): ArticleFlowCrossRefDao
+
+    /**
+     * Stores references between articles and hubs. Potential infinite.
+     * That means that the cache should be released occasionally.
+     */
+    abstract fun articleHubCrossRefDao(): ArticleHubCrossRefDao
 }

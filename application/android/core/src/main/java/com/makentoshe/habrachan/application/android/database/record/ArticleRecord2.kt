@@ -26,7 +26,8 @@ data class ArticleRecord2(
     val type: String
 ) {
     constructor(type: String, article: Article) : this(
-        article.articleId, ArticleAuthorRecord(article.author),
+        article.articleId,
+        ArticleAuthorRecord(article.author),
         article.commentsCount,
         article.favoritesCount,
         article.textHtml,
@@ -52,4 +53,12 @@ data class ArticleRecord2(
         flows,
         textHtml
     )
+
+    companion object Types {
+        val ALL = "all"
+        val INTERESTING = "interesting"
+        val TOP = "top"
+        val SUBSCRIBE = "subscribe"
+        val UNDEFINED = ""
+    }
 }

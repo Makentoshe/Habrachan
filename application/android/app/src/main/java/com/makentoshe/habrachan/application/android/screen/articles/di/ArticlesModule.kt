@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.articles.di
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.application.android.ExceptionHandler
-import com.makentoshe.habrachan.application.android.arena.ArticlesArenaCache
+import com.makentoshe.habrachan.application.android.arena.GetArticlesArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
@@ -37,7 +37,7 @@ class ArticlesModule(fragment: ArticlesFragment) : Module() {
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
 
-        val articlesArenaCache = ArticlesArenaCache(androidCacheDatabase)
+        val articlesArenaCache = GetArticlesArenaCache(androidCacheDatabase)
         val articlesArena = GetArticlesArena(getArticlesManager, articlesArenaCache)
         val factory = ArticlesViewModel2.Factory(session, articlesArena)
         val viewModel = ViewModelProviders.of(fragment, factory)[ArticlesViewModel2::class.java]

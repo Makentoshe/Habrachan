@@ -19,36 +19,34 @@ class GetArticleArenaCache(
         }
     }
 
-    // TODO(high): Finish later
     override fun fetch(key: GetArticleRequest2): Result<GetArticleResponse2> {
         capture(Log.DEBUG) { "Fetch article from cache by key: $key" }
-        return Result.failure(Exception("TODO"))
-//        return try {
-//            val record = cacheDatabase.articlesDao2().getByIdWithHubsAndFlows(key.articleId.articleId)
-//            capture(Log.INFO) { "Article(${record?.article?.articleId}) fetched from cache" }
-//            if (record != null) {
-//                Result.success(getArticleResponse(key, record.toArticle()))
-//            } else {
-//                Result.failure(ArenaStorageException("ArticleArenaCache: ArticleRecord is null"))
-//            }
-//        } catch (exception: Exception) {
-//            capture(Log.INFO) { "Couldn't fetch article: $exception" }
-//            Result.failure(ArenaStorageException("ArticlesArenaCache").initCause(exception))
-//        }
+        return try {
+            val record = cacheDatabase.articlesDao().getByIdWithHubsAndFlows(key.articleId.articleId)
+            capture(Log.INFO) { "Article(${record?.article?.articleId}) fetched from cache" }
+            if (record != null) {
+                Result.success(getArticleResponse(key, record.toArticle()))
+            } else {
+                Result.failure(ArenaStorageException("ArticleArenaCache: ArticleRecord is null"))
+            }
+        } catch (exception: Exception) {
+            capture(Log.INFO) { "Couldn't fetch article: $exception" }
+            Result.failure(ArenaStorageException("ArticlesArenaCache").initCause(exception))
+        }
     }
 
     override fun carry(key: GetArticleRequest2, value: GetArticleResponse2) {
         capture(Log.INFO) { "Carry search articles to cache with key: $key" }
-//
-//        cacheDatabase.articlesDao2().insert(ArticleRecord2(value.article))
-//        cacheDatabase.articleAuthorDao().insert(ArticleAuthorRecord(value.article.author))
-//        value.article.flows.forEach { flow ->
-//            cacheDatabase.flowDao2().insert(FlowRecord2(flow))
-//            cacheDatabase.articlesDao2().insert(ArticleFlowCrossRef(value.article.articleId, flow.flowId))
-//        }
-//        value.article.hubs.forEach { hub ->
-//            cacheDatabase.hubDao2().insert(HubRecord2(hub))
-//            cacheDatabase.articlesDao2().insert(ArticleHubCrossRef(value.article.articleId, hub.hubId))
-//        }
+
+        cacheDatabase.articlesDao().insert(ArticleRecord2(ArticleRecord2.UNDEFINED, value.article))
+        cacheDatabase.articleAuthorDao().insert(ArticleAuthorRecord(value.article.author))
+        value.article.flows.forEach { flow ->
+            cacheDatabase.flowDao().insert(FlowRecord2(flow))
+            cacheDatabase.articleFlowCrossRefDao().insert(ArticleFlowCrossRef(value.article.articleId, flow.flowId))
+        }
+        value.article.hubs.forEach { hub ->
+            cacheDatabase.hubDao().insert(HubRecord2(hub))
+            cacheDatabase.articleHubCrossRefDao().insert(ArticleHubCrossRef(value.article.articleId, hub.hubId))
+        }
     }
 }
