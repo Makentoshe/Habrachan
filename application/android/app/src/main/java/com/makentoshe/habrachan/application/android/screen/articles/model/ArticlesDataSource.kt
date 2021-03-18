@@ -16,9 +16,8 @@ class ArticlesDataSource(
             ?: return LoadResult.Error(IllegalArgumentException("GetArticlesRequest is null in ArticlesDataSource"))
 
         return arena.suspendFetch(request).fold({
-            val nextKey = params.key?.copy(page = params.key!!.page + 1)
-            val prevKey = if (params.key?.page == 1) null else params.key!!.copy(page = params.key!!.page - 1)
-            LoadResult.Page(it.articles.map(::ArticleModelElement), prevKey, nextKey)
+            val nextKey = it.pagination.next?.number?.let { articlesSpec.copy(page = it) }
+            LoadResult.Page(it.articles.map(::ArticleModelElement), null, nextKey)
         }, { LoadResult.Error(it) })
     }
 }

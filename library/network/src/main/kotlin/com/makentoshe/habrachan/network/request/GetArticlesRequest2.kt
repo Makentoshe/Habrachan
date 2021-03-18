@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.network.request
 import java.io.Serializable
 
 interface GetArticlesRequest2 {
+
     companion object {
         const val DEFAULT_PAGE_SIZE = 20
     }

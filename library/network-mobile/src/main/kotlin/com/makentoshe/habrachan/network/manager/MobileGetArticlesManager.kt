@@ -37,9 +37,9 @@ class MobileGetArticlesManager(
     @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun articles(request: MobileGetArticlesRequest): Result<GetArticlesResponse2> {
         return api.getArticles(request.page, request.spec.query).execute().fold({ body ->
-            deserializer.body(body.string())
+            deserializer.body(request, body.string())
         }, { error ->
-            deserializer.error(error.string())
+            deserializer.error(request, error.string())
         })
     }
 

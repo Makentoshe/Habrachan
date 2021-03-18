@@ -12,7 +12,6 @@ import com.makentoshe.habrachan.network.response.GetArticlesResponse2
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-// TODO replace by UserSessionProvider
 class NativeGetArticlesManager(
     private val api: NativeArticlesApi,
     private val deserializer: NativeGetArticlesDeserializer
@@ -41,9 +40,9 @@ class NativeGetArticlesManager(
         return api.getArticles(
             request.session.client, request.session.api, request.session.token, request.spec.path, request.page
         ).execute().fold({
-            deserializer.body(it.string())
+            deserializer.body(request, it.string())
         }, {
-            deserializer.error(it.string())
+            deserializer.error(request, it.string())
         })
     }
 

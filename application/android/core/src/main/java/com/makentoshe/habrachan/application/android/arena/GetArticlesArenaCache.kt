@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.network.request.SpecType
 import com.makentoshe.habrachan.network.response.GetArticlesResponse2
+import com.makentoshe.habrachan.network.response.Pagination
 import com.makentoshe.habrachan.network.response.getArticlesResponse
 
 class GetArticlesArenaCache(
@@ -43,7 +44,9 @@ class GetArticlesArenaCache(
             if (articles.isEmpty()) {
                 Result.failure(ArenaStorageException("ArticlesArenaCache"))
             } else {
-                Result.success(getArticlesResponse(articles))
+                // TODO(medium) add check on next page exist
+                val pagination = Pagination(Pagination.Next(key.page + 1, null))
+                Result.success(getArticlesResponse(key, articles, pagination))
             }
         } catch (exception: Exception) {
             capture(Log.INFO) {"Could not fetch articles: $exception" }
