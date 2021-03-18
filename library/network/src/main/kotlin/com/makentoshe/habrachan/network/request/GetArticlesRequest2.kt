@@ -1,5 +1,7 @@
 package com.makentoshe.habrachan.network.request
 
+import java.io.Serializable
+
 interface GetArticlesRequest2 {
     companion object {
         const val DEFAULT_PAGE_SIZE = 20
@@ -14,26 +16,42 @@ interface GetArticlesSpec {
     val path: String
 }
 
-sealed class SpecType {
+sealed class SpecType: Serializable {
 
-    object All : SpecType()
+    object All : SpecType(), Serializable
 
-    object Interesting : SpecType()
+    object Interesting : SpecType(), Serializable
 
-    class Top(val type: TopSpecType) : SpecType()
+    class Top(val type: TopSpecType) : SpecType(), Serializable {
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Top
+
+            if (type != other.type) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return type.hashCode()
+        }
+    }
 }
 
-sealed class TopSpecType {
+sealed class TopSpecType: Serializable {
 
-    object Daily : TopSpecType()
+    object Daily : TopSpecType(), Serializable
 
-    object Weekly : TopSpecType()
+    object Weekly : TopSpecType(), Serializable
 
-    object Monthly : TopSpecType()
+    object Monthly : TopSpecType(), Serializable
 
-    object Yearly : TopSpecType()
+    object Yearly : TopSpecType(), Serializable
 
-    object Alltime : TopSpecType()
+    object Alltime : TopSpecType(), Serializable
 
 }
 
