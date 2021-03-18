@@ -7,12 +7,13 @@ import com.makentoshe.habrachan.application.android.database.record.article.Arti
 import com.makentoshe.habrachan.application.android.database.record.article.TempArticleRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.network.request.GetArticleRequest
-import com.makentoshe.habrachan.network.response.ArticleResponse
+import com.makentoshe.habrachan.network.request.GetArticleRequest2
+import com.makentoshe.habrachan.network.response.GetArticleResponse2
+import com.makentoshe.habrachan.network.response.getArticleResponse
 
 class ArticleArenaCache(
     private val cacheDatabase: AndroidCacheDatabase
-) : ArenaCache<GetArticleRequest, ArticleResponse> {
+) : ArenaCache<GetArticleRequest2, GetArticleResponse2> {
 
     companion object {
         private inline fun capture(level: Int, message: () -> String) {
@@ -20,23 +21,24 @@ class ArticleArenaCache(
         }
     }
 
-    override fun fetch(key: GetArticleRequest): Result<ArticleResponse> {
+    override fun fetch(key: GetArticleRequest2): Result<GetArticleResponse2> {
         capture(Log.DEBUG) { "Fetch article from cache by key: $key" }
-        return try {
-            val record = fetchRecordById(key.id)
-            capture(Log.INFO) { "Article(${record?.id}) fetched from cache" }
-            if (record != null) {
-                val article = record.toArticle(
-                    cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao()
-                )
-                Result.success(ArticleResponse(article, ""))
-            } else {
-                Result.failure(ArenaStorageException("ArticleArenaCache: Could not find ArticleRecord in caches"))
-            }
-        } catch (exception: Exception) {
-            capture(Log.INFO) { "Couldn't fetch article: $exception" }
-            Result.failure(ArenaStorageException("ArticlesArenaCache").initCause(exception))
-        }
+        return Result.failure(Exception("TODO"))
+//        return try {
+//            val record = fetchRecordById(key.articleId.articleId)
+//            capture(Log.INFO) { "Article(${record?.id}) fetched from cache" }
+//            if (record != null) {
+//                val article = record.toArticle(
+//                    cacheDatabase.badgeDao(), cacheDatabase.hubDao(), cacheDatabase.flowDao(), cacheDatabase.userDao()
+//                )
+//                Result.success(getArticleResponse(key, article))
+//            } else {
+//                Result.failure(ArenaStorageException("ArticleArenaCache: Could not find ArticleRecord in caches"))
+//            }
+//        } catch (exception: Exception) {
+//            capture(Log.INFO) { "Couldn't fetch article: $exception" }
+//            Result.failure(ArenaStorageException("ArticlesArenaCache").initCause(exception))
+//        }
     }
 
     private fun fetchRecordById(id: Int): ArticleRecord? {
@@ -44,15 +46,16 @@ class ArticleArenaCache(
         ?: cacheDatabase.interestingArticlesDao().getById(id) ?: cacheDatabase.topArticlesDao().getById(id)
     }
 
-    override fun carry(key: GetArticleRequest, value: ArticleResponse) {
+    // TODO(high) finish
+    override fun carry(key: GetArticleRequest2, value: GetArticleResponse2) {
         capture(Log.INFO) { "Carry search articles to cache with key: $key" }
 
-        cacheDatabase.tempArticlesDao().insert(TempArticleRecord(value.article))
-        cacheDatabase.userDao().insert(UserRecord(value.article.author))
-        value.article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
-        value.article.hubs.forEach { hub ->
-            cacheDatabase.hubDao().insert(HubRecord(hub))
-            hub.flow?.let(::FlowRecord)?.let(cacheDatabase.flowDao()::insert)
-        }
+//        cacheDatabase.tempArticlesDao().insert(TempArticleRecord(value.article))
+//        cacheDatabase.userDao().insert(UserRecord(value.article.author))
+//        value.article.flows.map(::FlowRecord).forEach(cacheDatabase.flowDao()::insert)
+//        value.article.hubs.forEach { hub ->
+//            cacheDatabase.hubDao().insert(HubRecord(hub))
+//            hub.flow?.let(::FlowRecord)?.let(cacheDatabase.flowDao()::insert)
+//        }
     }
 }

@@ -14,10 +14,10 @@ import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesAdapter
+import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesSpec
 import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleItemDecoration
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesSpec
 import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel2
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.network.request.SpecType
 import kotlinx.android.synthetic.main.fragment_articles.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -32,7 +32,7 @@ class ArticlesFragment : CoreFragment() {
             return fragment
         }
 
-        fun build(spec: GetArticlesRequest.Spec) = ArticlesFragment().apply {
+        fun build(spec: SpecType) = ArticlesFragment().apply {
             arguments.spec = spec
         }
     }
@@ -114,9 +114,9 @@ class ArticlesFragment : CoreFragment() {
             get() = fragmentArguments.getInt(PAGE, 1)
             set(value) = fragmentArguments.putInt(PAGE, value)
 
-        var spec: GetArticlesRequest.Spec?
-            get() = GetArticlesRequest.Spec.build(fragmentArguments.getString(SPEC))
-            set(value) = fragmentArguments.putString(SPEC, value?.request)
+        var spec: SpecType?
+            get() = fragmentArguments.get(SPEC) as SpecType
+            set(value) = fragmentArguments.putSerializable(SPEC, value)
 
         companion object {
             private const val PAGE = "Page"

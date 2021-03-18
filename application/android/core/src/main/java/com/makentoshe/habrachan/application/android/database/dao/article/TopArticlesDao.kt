@@ -16,7 +16,7 @@ interface TopArticlesDao: ArticlesDao<TopArticleRecord> {
     @Query("SELECT * FROM TopArticleRecord ORDER BY timePublishedRaw DESC LIMIT :count OFFSET :offset")
     override fun getTimePublishedDescSorted(offset: Int, count: Int): List<TopArticleRecord>
 
-    @Query("SELECT * FROM TopArticleRecord WHERE id = :id")
+    @Query("SELECT * FROM TopArticleRecord WHERE articleId = :id")
     override fun getById(id: Int): TopArticleRecord?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

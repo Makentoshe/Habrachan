@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.articles.di
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.application.android.ExceptionHandler
-import com.makentoshe.habrachan.application.android.arena.GetArticlesArenaCache
+import com.makentoshe.habrachan.application.android.arena.ArticlesArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
@@ -10,7 +10,7 @@ import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFrag
 import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesNavigation
-import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel
+import com.makentoshe.habrachan.application.android.screen.articles.viewmodel.ArticlesViewModel2
 import com.makentoshe.habrachan.application.core.arena.articles.GetArticlesArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.GetArticlesManager
@@ -37,11 +37,11 @@ class ArticlesModule(fragment: ArticlesFragment) : Module() {
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
 
-        val articlesArenaCache = GetArticlesArenaCache(androidCacheDatabase)
+        val articlesArenaCache = ArticlesArenaCache(androidCacheDatabase)
         val articlesArena = GetArticlesArena(getArticlesManager, articlesArenaCache)
-        val factory = ArticlesViewModel.Factory(session, articlesArena)
-        val viewModel = ViewModelProviders.of(fragment, factory)[ArticlesViewModel::class.java]
-        bind<ArticlesViewModel>().toInstance(viewModel)
+        val factory = ArticlesViewModel2.Factory(session, articlesArena)
+        val viewModel = ViewModelProviders.of(fragment, factory)[ArticlesViewModel2::class.java]
+        bind<ArticlesViewModel2>().toInstance(viewModel)
 
         val adapter = ArticlesAdapter(ArticlesNavigation(router))
         bind<ArticlesAdapter>().toInstance(adapter)

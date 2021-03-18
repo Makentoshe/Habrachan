@@ -9,14 +9,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesFlowAdapter
-import com.makentoshe.habrachan.network.request.GetArticlesRequest
+import com.makentoshe.habrachan.network.request.SpecType
+import com.makentoshe.habrachan.network.request.TopSpecType
 import kotlinx.android.synthetic.main.fragment_flow_articles.*
 import toothpick.ktp.delegate.inject
 
 class ArticlesFlowFragment : CoreFragment() {
 
     companion object {
-        fun build(specs: List<GetArticlesRequest.Spec>) = ArticlesFlowFragment().apply {
+        fun build(specs: List<SpecType>) = ArticlesFlowFragment().apply {
             arguments.specs = specs
         }
     }
@@ -40,24 +41,25 @@ class ArticlesFlowFragment : CoreFragment() {
         }
     }
 
-    private fun GetArticlesRequest.Spec.title(): String = when (this) {
-        is GetArticlesRequest.Spec.All -> getString(R.string.articles_type_all)
-        is GetArticlesRequest.Spec.Interesting -> getString(R.string.articles_type_interesting)
-        is GetArticlesRequest.Spec.Top -> when (this.type) {
-            GetArticlesRequest.Spec.Top.Type.AllTime -> getString(R.string.articles_top_type_alltime)
-            GetArticlesRequest.Spec.Top.Type.Yearly -> getString(R.string.articles_top_type_yearly)
-            GetArticlesRequest.Spec.Top.Type.Monthly -> getString(R.string.articles_top_type_monthly)
-            GetArticlesRequest.Spec.Top.Type.Weekly -> getString(R.string.articles_top_type_weekly)
-            GetArticlesRequest.Spec.Top.Type.Daily -> getString(R.string.articles_top_type_daily)
+    private fun SpecType.title(): String = when (this) {
+        is SpecType.All -> getString(R.string.articles_type_all)
+        is SpecType.Interesting -> getString(R.string.articles_type_interesting)
+        is SpecType.Top -> when (this.type) {
+            TopSpecType.Alltime -> getString(R.string.articles_top_type_alltime)
+            TopSpecType.Yearly -> getString(R.string.articles_top_type_yearly)
+            TopSpecType.Monthly -> getString(R.string.articles_top_type_monthly)
+            TopSpecType.Weekly -> getString(R.string.articles_top_type_weekly)
+            TopSpecType.Daily -> getString(R.string.articles_top_type_daily)
+            else -> ""
         }.let { getString(R.string.articles_top_preposition, it) }
+        else -> ""
     }
 
     class Arguments(fragment: ArticlesFlowFragment) : CoreFragment.Arguments(fragment) {
 
-        var specs: List<GetArticlesRequest.Spec>
-            get() = fragmentArguments.getStringArrayList(SPECS)?.mapNotNull { GetArticlesRequest.Spec.build(it) }
-                ?: emptyList()
-            set(value) = fragmentArguments.putStringArrayList(SPECS, ArrayList(value.map { it.request }))
+        var specs: List<SpecType>
+            get() = fragmentArguments.get(SPECS) as? ArrayList<SpecType> ?: emptyList()
+            set(value) = fragmentArguments.putSerializable(SPECS, ArrayList(value))
 
         companion object {
             private const val SPECS = "Specs"

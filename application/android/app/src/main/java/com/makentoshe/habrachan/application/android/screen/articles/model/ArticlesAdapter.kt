@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesNavigation
 import com.makentoshe.habrachan.application.android.screen.articles.view.ArticleViewHolder
 import com.makentoshe.habrachan.application.android.time
+import com.makentoshe.habrachan.entity.timePublished
 
 class ArticlesAdapter(
     private val navigation: ArticlesNavigation

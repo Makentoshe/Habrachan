@@ -20,8 +20,18 @@ import com.makentoshe.habrachan.application.android.database.record.article.TopA
  * entities - array of object types that database contains.
  */
 @Database(
-    entities = [AvatarRecord::class, FlowRecord::class, HubRecord::class, BadgeRecord::class, CommentRecord::class, UserRecord::class, ContentRecord::class, TopArticleRecord::class, InterestingArticleRecord::class, NewArticleRecord::class, TempArticleRecord::class],
-    version = 4
+    entities = [
+        AvatarRecord::class,
+        BadgeRecord::class,
+        CommentRecord::class,
+        ContentRecord::class,
+
+        TopArticleRecord::class,
+        InterestingArticleRecord::class,
+        NewArticleRecord::class,
+        TempArticleRecord::class
+               ],
+    version = 5
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
@@ -54,18 +64,18 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      */
     abstract fun avatarDao(): AvatarDao
 
-    /**
-     * Stores flows from different sources. Do not infinite,
-     * so we do not care of releasing cache memory
-     */
-    abstract fun flowDao(): FlowDao
-
-    /**
-     * Stores different articles hubs. Do not infinite,
-     * so we do not care of releasing cache memory
-     */
-    abstract fun hubDao(): HubDao
-
+//    /**
+//     * Stores flows from different sources. Do not infinite,
+//     * so we do not care of releasing cache memory
+//     */
+//    abstract fun flowDao(): FlowDao
+//
+//    /**
+//     * Stores different articles hubs. Do not infinite,
+//     * so we do not care of releasing cache memory
+//     */
+//    abstract fun hubDao(): HubDao
+//
     /**
      * Stores different user badges. Do not infinite,
      * so we do not care of releasing cache memory
@@ -77,12 +87,6 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * That means that the cache should be released occasionally.
      */
     abstract fun commentDao(): CommentDao
-
-    /**
-     * Stores comments for articles. Potential infinite.
-     * That means that the cache should be released occasionally.
-     */
-    abstract fun userDao(): UserDao
 
     /**
      * Stores indexed contents paths, images as usual. The real files stores in file system cache.
