@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesFlowAdapter
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesNavigation
 import com.makentoshe.habrachan.network.request.SpecType
 import com.makentoshe.habrachan.network.request.TopSpecType
 import kotlinx.android.synthetic.main.fragment_flow_articles.*
@@ -23,7 +24,9 @@ class ArticlesFlowFragment : CoreFragment() {
     }
 
     override val arguments = Arguments(this)
+
     private val adapter by inject<ArticlesFlowAdapter>()
+    private val navigation by inject<ArticlesNavigation>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_flow_articles, container, false)
@@ -37,7 +40,7 @@ class ArticlesFlowFragment : CoreFragment() {
         }.attach()
 
         fragment_flow_articles_toolbar.setNavigationOnClickListener {
-            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
+            navigation.navigateToLogin()
         }
     }
 
