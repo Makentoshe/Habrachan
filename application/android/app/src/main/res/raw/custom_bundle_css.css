@@ -81,3 +81,10 @@ body iframe.embed_video {
     max-width: 100%;
     height: $ANDROID_YOUTUBE_EMBED$;
 }
+
+body div.oembed iframe {
+    border: 0;
+    width: 100%;
+    max-width: 100%;
+    height: $ANDROID_YOUTUBE_EMBED$;
+}
