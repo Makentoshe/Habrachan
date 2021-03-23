@@ -97,6 +97,9 @@
     <string name="comment_popup_inspect_user">Inspect user</string>
 
     <string name="login_toolbar_authorization">Authorization</string>
+    <string name="login_email_hint">E-mail</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">Log in</string>
     <string name="login_fragment_oauth_separator">or log in with</string>
 
 </resources>
