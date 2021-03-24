@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.login.di
 
 import androidx.lifecycle.ViewModelProviders
+import com.makentoshe.habrachan.application.android.AndroidUserSession
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.login.LoginFragment
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.LoginViewModel
@@ -15,14 +16,15 @@ annotation class LoginScope
 
 class LoginModule(fragment: LoginFragment): Module() {
     
-    private val loginManager by inject<LoginManager<out LoginRequest>>()
+    private val loginManager by inject<LoginManager<LoginRequest>>()
+    private val userSession by inject<AndroidUserSession>()
     
     init {
         Toothpick.openScope(ApplicationScope::class).inject(this)
 
 
 
-        val factory = LoginViewModel.Factory()
+        val factory = LoginViewModel.Factory(userSession, loginManager)
         val viewModel = ViewModelProviders.of(fragment, factory)[LoginViewModel::class.java]
         bind<LoginViewModel>().toInstance(viewModel)
     }
