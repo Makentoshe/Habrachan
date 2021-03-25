@@ -10,7 +10,6 @@ import com.makentoshe.habrachan.network.response.LoginResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-// TODO(high) refactor with NativeGetMeManager
 class NativeLoginManager(
     private val api: NativeLoginApi,
     private val deserializer: NativeLoginDeserializer,
@@ -23,12 +22,12 @@ class NativeLoginManager(
 
     @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun login(request: NativeLoginRequest): Result<LoginResponse> {
-        val nativeResponse=  api.login(
+        val nativeResponse = api.login(
             request.userSession.client, request.userSession.api, request.email, request.password
         ).execute().fold({
             deserializer.body(it.string())
         }, {
-            deserializer.error(it.string())
+            return deserializer.error(request, it.string())
         })
 
         return manager?.me(manager.request(request.userSession))?.fold({
