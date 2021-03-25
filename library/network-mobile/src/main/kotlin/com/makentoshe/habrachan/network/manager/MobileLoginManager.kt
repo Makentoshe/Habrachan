@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.MobileLoginApi
 import com.makentoshe.habrachan.network.api.MobileUsersApi
 import com.makentoshe.habrachan.network.deserializer.MobileGetUserDeserializer
+import com.makentoshe.habrachan.network.deserializer.MobileLoginDeserializer
 import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.MobileGetUserRequest
 import com.makentoshe.habrachan.network.request.MobileLoginRequest
@@ -21,6 +22,7 @@ class MobileLoginManager private constructor(
     private val loginApi: MobileLoginApi,
     private val client: OkHttpClient,
     private val cookieJar: CustomCookieJar,
+    private val deserializer: MobileLoginDeserializer,
     private val userManager: MobileGetUserManager?
 ) : LoginManager<MobileLoginRequest> {
 
@@ -42,7 +44,8 @@ class MobileLoginManager private constructor(
         val loginResponseString = loginResponse.body()?.string() ?: ""
 
         // parse window.location.href = 'url_here' string
-        val url = getUrlsFromString(loginResponseString).first()
+        val url = getUrlsFromString(loginResponseString).firstOrNull()
+            ?: return deserializer.error(request, loginResponseString)
 
         // redirect to get more login cookies such as phpsessid and others
         // TODO(low) we can gain and sync some settings or current habr states from response
@@ -114,9 +117,11 @@ class MobileLoginManager private constructor(
         return urls
     }
 
-    // pass user manager for second request that allows to return user in login response
-    // if userManager == null so user is also will be null
-    class Builder(client: OkHttpClient, private val userManager: MobileGetUserManager? = null) {
+    /**
+     * pass user manager for second request that allows to return user in login response
+     * if userManager == null so user is also will be null
+     */
+    class Builder(client: OkHttpClient, private val deserializer: MobileLoginDeserializer, private val userManager: MobileGetUserManager? = null) {
 
         private val baseUrl = "https://account.habr.com"
         private val cookieJar = CustomCookieJar()
@@ -125,7 +130,7 @@ class MobileLoginManager private constructor(
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
 
         fun build() =
-            MobileLoginManager(getRetrofit().create(MobileLoginApi::class.java), client, cookieJar, userManager)
+            MobileLoginManager(getRetrofit().create(MobileLoginApi::class.java), client, cookieJar, deserializer, userManager)
     }
 
     private class CustomCookieJar : CookieJar {
