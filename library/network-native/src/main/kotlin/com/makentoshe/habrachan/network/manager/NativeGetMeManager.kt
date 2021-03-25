@@ -20,7 +20,7 @@ class NativeGetMeManager private constructor(
 
     @Suppress("BlockingMethodInNonBlockingContext")
     suspend fun me(request: NativeGetMeRequest): Result<NativeGetMeResponse> {
-        val token = request.userSession.token ?: throw IllegalStateException("user access token not defined")
+        val token = request.userSession.token
         return api.getMe(request.userSession.client, token).execute().fold({
             deserializer.body(request, it.string())
         }, {

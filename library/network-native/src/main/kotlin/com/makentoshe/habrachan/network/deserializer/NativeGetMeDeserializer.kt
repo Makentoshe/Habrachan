@@ -10,6 +10,7 @@ class NativeGetMeDeserializer {
         return Result.success(Gson().fromJson(json, NativeGetMeResponse.Factory::class.java).build(request))
     }
 
+    // TODO(medium) Add proper deserialization
     fun error(request: NativeGetMeRequest, json: String): Result<NativeGetMeResponse> {
         return Result.failure(Exception(json))
     }
