@@ -35,14 +35,16 @@
         android:id="@+id/fragment_login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/login_password_hint"
+        app:endIconMode="password_toggle"
         android:layout_marginTop="@dimen/dimen2XL"
         android:layout_marginHorizontal="@dimen/dimenL"
         app:layout_constraintTop_toBottomOf="@id/fragment_login_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginSpec
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.LoginViewModel
+import com.makentoshe.habrachan.network.exception.LoginResponseException
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -31,16 +33,39 @@ class LoginFragment : CoreFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.setOnClickListener { /* workaround */ }
 
+        fragment_login_email.editText?.addTextChangedListener {
+            fragment_login_email.isErrorEnabled = false
+        }
+
+        fragment_login_password.editText?.addTextChangedListener {
+            fragment_login_password.isErrorEnabled = false
+        }
+
         fragment_login_button.setOnClickListener {
+            val email = fragment_login_email.editText?.text
+            if (email.isNullOrBlank()) {
+                fragment_login_email.error = getString(R.string.login_email_error_blank)
+            }
+            val password = fragment_login_password.editText?.text
+            if (password.isNullOrBlank()) {
+                fragment_login_password.error = getString(R.string.login_password_error_blank)
+            }
             lifecycleScope.launch {
-                val email = fragment_login_email.editText?.text
-                val password = fragment_login_email.editText?.text
                 viewModel.loginChannel.send(LoginSpec(email.toString(), password.toString()))
             }
         }
 
         lifecycleScope.launch {
             viewModel.loginFlow.collectLatest {
+                it.fold({
+
+                }, { throwable ->
+                    if (throwable is LoginResponseException && throwable.other != null) {
+                        fragment_login_password.error = getString(R.string.login_account_error)
+                    } else {
+                        fragment_login_password.error = getString(R.string.login_unknown_error)
+                    }
+                })
                 println(it)
             }
         }
