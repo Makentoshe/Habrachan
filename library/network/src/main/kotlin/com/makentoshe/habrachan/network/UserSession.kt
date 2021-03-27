@@ -43,3 +43,18 @@ fun userSession(
     override var habrLanguage: String = habrLanguage
     override var filterLanguage: String = filterLanguage
 }
+
+fun userSession(
+    userSession: UserSession,
+    client: String = userSession.client,
+    api: String = userSession.api,
+    token: String = userSession.token,
+    filterLanguage: String = userSession.filterLanguage,
+    habrLanguage: String = userSession.habrLanguage
+) = object: UserSession {
+    override val api = api
+    override val client = client
+    override var token = token
+    override var habrLanguage: String = habrLanguage
+    override var filterLanguage: String = filterLanguage
+}

@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.NativeGetUserRequest
 import com.makentoshe.habrachan.network.request.NativeLoginRequest
 import com.makentoshe.habrachan.network.response.LoginResponse
+import com.makentoshe.habrachan.network.userSession
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
@@ -22,22 +23,41 @@ class NativeLoginManager(
 
     @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun login(request: NativeLoginRequest): Result<LoginResponse> {
-        val nativeResponse = api.login(
+        return api.login(
             request.userSession.client, request.userSession.api, request.email, request.password
-        ).execute().fold({
-            deserializer.body(it.string())
-        }, {
-            return deserializer.error(request, it.string())
-        })
+        ).execute().fold({ nativeResponseBody ->
+            deserializer.body(nativeResponseBody.string()).fold({ nativeResponse ->
+                val userSession = userSession(request.userSession, token = nativeResponse.accessToken)
+                manager?.me(manager.request(userSession))?.fold({
+                    Result.success(LoginResponse(request, nativeResponse = nativeResponse, user = it.user))
+                }, {
+                    Result.failure(it)
+                }) ?: Result.success(LoginResponse(request, nativeResponse = nativeResponse, user = null))
+            }, {
+                // TODO(medium) rebox exception
+                Result.failure(it)
+            })
 
-        return manager?.me(manager.request(request.userSession))?.fold({
-            nativeResponse.map { nativeResponse -> LoginResponse(request, nativeResponse = nativeResponse, user = it.user) }
         }, {
-            Result.failure(it)
-        }) ?: nativeResponse.map { LoginResponse(request, nativeResponse = it, user = null) }
+            deserializer.error(request, it.string())
+        })
+//
+//        return manager?.me(manager.request(request.userSession))?.fold({
+//            nativeResponse.map { nativeResponse ->
+//                LoginResponse(
+//                    request, nativeResponse = nativeResponse, user = it.user
+//                )
+//            }
+//        }, {
+//            Result.failure(it)
+//        }) ?: nativeResponse.map { LoginResponse(request, nativeResponse = it, user = null) }
     }
 
-    class Builder(private val client: OkHttpClient, private val deserializer: NativeLoginDeserializer, private val manager: NativeGetMeManager?) {
+    class Builder(
+        private val client: OkHttpClient,
+        private val deserializer: NativeLoginDeserializer,
+        private val manager: NativeGetMeManager?
+    ) {
 
         private val baseUrl = "https://habr.com/"
 
