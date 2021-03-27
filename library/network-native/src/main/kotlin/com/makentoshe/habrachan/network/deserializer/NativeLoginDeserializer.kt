@@ -9,8 +9,10 @@ import com.makentoshe.habrachan.network.response.LoginResponse
 
 class NativeLoginDeserializer {
 
-    fun body(json: String): Result<LoginResponse.NativeResponse> {
-        return Result.success(Gson().fromJson(json, LoginResponse.NativeResponse::class.java))
+    fun body(json: String): Result<LoginResponse.NativeResponse> = try {
+        Result.success(Gson().fromJson(json, LoginResponse.NativeResponse::class.java))
+    } catch (e: Exception) {
+        Result.failure(e)
     }
 
     fun error(request: NativeLoginRequest, json: String): Result<LoginResponse> {
