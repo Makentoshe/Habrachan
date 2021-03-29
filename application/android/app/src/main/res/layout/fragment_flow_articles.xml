@@ -26,7 +26,6 @@
                 android:id="@+id/fragment_flow_articles_toolbar"
                 app:menu="@menu/main_search"
                 app:title="@string/app_name"
-                app:navigationIcon="@drawable/ic_account_outline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
