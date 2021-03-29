@@ -5,7 +5,7 @@ object GithubVcsRoot : GitVcsRoot({
     url = "git@github.com:Makentoshe/Habrachan.git"
     authMethod = uploadedKey {
         uploadedKey = "id_rsa"
-        passphrase = "credentialsJSON:51c3ef83-e5b1-405a-9573-dbabef655e0c"
+        passphrase = "credentialsJSON:211c06d0-dd07-42a8-8344-211453523bdc\n"
     }
 })
 
@@ -19,6 +19,6 @@ object MetadataVcsRoot : GitVcsRoot({
     url = "ssh://git@git.jetbrains.space/makentoshe/habrachan/Habrachan-metadata.git"
     authMethod = uploadedKey {
         uploadedKey = "id_rsa"
-        passphrase = "credentialsJSON:51c3ef83-e5b1-405a-9573-dbabef655e0c"
+        passphrase = "credentialsJSON:211c06d0-dd07-42a8-8344-211453523bdc\n"
     }
 })
