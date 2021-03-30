@@ -14,10 +14,14 @@ Another purpose is to extend functionality and bring it closer to the main site.
 - Displaying articles
 - Reading articles
 - Searching and filtering articles (planned)
-- Displaying article comments (WIP)
-- Logging into service (planned)
-- Displaying user screen (planned)
-- Displaying article images on another screen (planned)
+- Displaying article comments
+- Logging into service (wip)
+- Displaying user screen (wip)
+- Displaying article images on another screen
 - Articles voting (planned)
 - Comments voting (planned)
-
+- Displaying user screen info (planned)
+- Displaying user screen articles (planned)
+- Displaying user screen comments (planned)
+- Displaying user screen bookmarks (planned)
+- Screen for writing comments for articles (planned)
