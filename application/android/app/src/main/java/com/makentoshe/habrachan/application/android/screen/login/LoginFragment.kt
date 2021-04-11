@@ -32,6 +32,9 @@ class LoginFragment : CoreFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.setOnClickListener { /* workaround */ }
+        fragment_login_toolbar.setNavigationOnClickListener {
+            navigation.back()
+        }
 
         fragment_login_email.editText?.addTextChangedListener {
             fragment_login_email.isErrorEnabled = false
