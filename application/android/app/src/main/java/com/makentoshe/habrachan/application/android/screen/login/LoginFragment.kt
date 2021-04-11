@@ -61,10 +61,9 @@ class LoginFragment : CoreFragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.loginFlow.collectLatest {
-                it.fold({
-                    println(it)
-                    navigation.toUserScreen()
+            viewModel.loginFlow.collectLatest { result ->
+                result.fold({ response ->
+                    navigation.toUserScreen(response.user)
                 }, { throwable ->
                     if (throwable is LoginResponseException && throwable.other != null) {
                         fragment_login_password.error = getString(R.string.login_account_error)
