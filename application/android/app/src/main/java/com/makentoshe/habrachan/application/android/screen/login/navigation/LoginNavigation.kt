@@ -1,11 +1,13 @@
 package com.makentoshe.habrachan.application.android.screen.login.navigation
 
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
+import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
 
 class LoginNavigation(private val router: StackRouter) {
 
     fun toUserScreen() {
-        TODO("Navigate to user screen")
+        router.exit()
+        router.stack(UserScreen())
     }
 
     fun back() {
