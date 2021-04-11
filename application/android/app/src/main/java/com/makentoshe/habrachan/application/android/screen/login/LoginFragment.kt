@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginSpec
+import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginNavigation
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.LoginViewModel
 import com.makentoshe.habrachan.network.exception.LoginResponseException
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -24,6 +25,7 @@ class LoginFragment : CoreFragment() {
 
     override val arguments = Arguments(this)
 
+    private val navigation by inject<LoginNavigation>()
     private val viewModel by inject<LoginViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,7 +63,8 @@ class LoginFragment : CoreFragment() {
         lifecycleScope.launch {
             viewModel.loginFlow.collectLatest {
                 it.fold({
-
+                    println(it)
+                    navigation.toUserScreen()
                 }, { throwable ->
                     if (throwable is LoginResponseException && throwable.other != null) {
                         fragment_login_password.error = getString(R.string.login_account_error)
@@ -69,7 +72,6 @@ class LoginFragment : CoreFragment() {
                         fragment_login_password.error = getString(R.string.login_unknown_error)
                     }
                 })
-                println(it)
             }
         }
     }
