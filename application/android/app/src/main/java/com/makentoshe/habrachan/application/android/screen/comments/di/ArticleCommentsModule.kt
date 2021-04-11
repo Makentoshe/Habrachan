@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
+import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
@@ -27,7 +28,7 @@ import javax.inject.Qualifier
 annotation class ArticleCommentsScope
 class ArticleCommentsModule(fragment: ArticleCommentsFragment) : Module() {
 
-    private val router by inject<Router>()
+    private val router by inject<StackRouter>()
     private val client by inject<OkHttpClient>()
     private val session by inject<UserSession>()
     private val database by inject<AndroidCacheDatabase>()
