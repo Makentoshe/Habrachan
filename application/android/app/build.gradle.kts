@@ -111,6 +111,12 @@ dependencies {
     val cicerone = "5.1.1"
     implementation("ru.terrakok.cicerone:cicerone:$cicerone")
 
+    // Navigation Component
+    //
+    val navigation = properties["version.androidx.navigation"]
+    implementation("androidx.navigation:navigation-fragment-ktx:$navigation")
+    implementation("androidx.navigation:navigation-ui-ktx:$navigation")
+
     // Material components
     // https://github.com/material-components/material-components-android
     val material = "1.3.0-alpha01"

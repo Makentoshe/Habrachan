@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_activity_main"
+    app:startDestination="@id/articlesFlowFragment">
+
+    <fragment
+        android:id="@+id/articlesFlowFragment"
+        android:name="com.makentoshe.habrachan.application.android.screen.articles.ArticlesFlowFragment"
+        android:label="ArticlesFlowFragment" >
+        <action
+            android:id="@+id/action_articlesFlowFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="com.makentoshe.habrachan.application.android.screen.article.ArticleFragment"
+        android:label="ArticleFragment" >
+        <action
+            android:id="@+id/action_articleFragment_to_articleCommentsFragment"
+            app:destination="@id/articleCommentsFragment" />
+        <action
+            android:id="@+id/action_articleFragment_to_contentFragment"
+            app:destination="@id/contentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/articleCommentsFragment"
+        android:name="com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment"
+        android:label="ArticleCommentsFragment" >
+        <action
+            android:id="@+id/action_articleCommentsFragment_to_discussionCommentsFragment"
+            app:destination="@id/discussionCommentsFragment" />
+        <action
+            android:id="@+id/action_articleCommentsFragment_to_contentFragment"
+            app:destination="@id/contentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/discussionCommentsFragment"
+        android:name="com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment"
+        android:label="DiscussionCommentsFragment" >
+        <action
+            android:id="@+id/action_discussionCommentsFragment_to_contentFragment"
+            app:destination="@id/contentFragment" />
+        <action
+            android:id="@+id/action_discussionCommentsFragment_self2"
+            app:destination="@id/discussionCommentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/contentFragment"
+        android:name="com.makentoshe.habrachan.application.android.screen.content.ContentFragment"
+        android:label="ContentFragment" />
+</navigation>

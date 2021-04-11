@@ -27,12 +27,12 @@ class AppActivity : AppCompatActivity() {
 
         if (savedInstanceState != null) return
 
-        when (intent.action) {
-            Intent.ACTION_MAIN -> {
-                val screen = ArticlesFlowScreen()
-                router.newRootScreen(screen)
-            }
-        }
+//        when (intent.action) {
+//            Intent.ACTION_MAIN -> {
+//                val screen = ArticlesFlowScreen()
+//                router.newRootScreen(screen)
+//            }
+//        }
     }
 
     override fun onResumeFragments() {
