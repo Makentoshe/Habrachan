@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.network.manager
 
 import com.makentoshe.habrachan.network.deserializer.MobileGetUserDeserializer
+import com.makentoshe.habrachan.network.deserializer.MobileLoginDeserializer
 import com.makentoshe.habrachan.network.userSession
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -18,7 +19,7 @@ class MobileLoginManagerTest {
         val userSession = userSession("", "")
 
         val userManager = MobileGetUserManager.Builder(client, MobileGetUserDeserializer()).build()
-        val loginManager = MobileLoginManager.Builder(OkHttpClient(), userManager).build()
+        val loginManager = MobileLoginManager.Builder(OkHttpClient(), MobileLoginDeserializer(), userManager).build()
 
         val request = loginManager.request(userSession, "", "")
         val response = loginManager.login(request)
