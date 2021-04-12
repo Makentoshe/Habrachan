@@ -2,15 +2,9 @@ package com.makentoshe.habrachan.application.android.di
 
 import android.content.Context
 import com.makentoshe.habrachan.BuildConfig
-import com.makentoshe.habrachan.network.deserializer.NativeGetArticleDeserializer
-import com.makentoshe.habrachan.network.deserializer.NativeGetArticlesDeserializer
-import com.makentoshe.habrachan.network.deserializer.NativeGetMeDeserializer
-import com.makentoshe.habrachan.network.deserializer.NativeLoginDeserializer
+import com.makentoshe.habrachan.network.deserializer.*
 import com.makentoshe.habrachan.network.manager.*
-import com.makentoshe.habrachan.network.request.GetArticleRequest2
-import com.makentoshe.habrachan.network.request.GetArticlesRequest2
-import com.makentoshe.habrachan.network.request.GetArticlesSpec
-import com.makentoshe.habrachan.network.request.LoginRequest
+import com.makentoshe.habrachan.network.request.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.config.Module
@@ -35,6 +29,9 @@ class NetworkModule(context: Context) : Module() {
         val nativeMeManager = NativeGetMeManager.Builder(client, NativeGetMeDeserializer()).build()
         val loginManager = NativeLoginManager.Builder(client, NativeLoginDeserializer(), nativeMeManager).build()
         bind<LoginManager<out LoginRequest>>().toInstance(loginManager)
+
+        val nativeGetUserManager = NativeGetUserManager.Builder(client, NativeGetUserDeserializer()).build()
+        bind<GetUserManager<out GetUserRequest>>().toInstance(nativeGetUserManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
