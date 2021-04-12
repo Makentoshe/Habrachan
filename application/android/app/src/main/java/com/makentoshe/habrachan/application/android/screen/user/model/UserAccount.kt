@@ -4,5 +4,5 @@ import com.makentoshe.habrachan.entity.User
 import java.io.Serializable
 
 sealed class UserAccount: Serializable {
-    data class MeUserAccount(val user: User? = null): UserAccount(), Serializable
+    data class Me(val user: User? = null): UserAccount(), Serializable
 }
