@@ -3,7 +3,8 @@ package com.makentoshe.habrachan.application.android.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.makentoshe.habrachan.application.android.database.dao.UserSessionDao
-import com.makentoshe.habrachan.application.android.database.record.*
+import com.makentoshe.habrachan.application.android.database.record.UserRecord
+import com.makentoshe.habrachan.application.android.database.record.UserSessionRecord
 
 /**
  * This is a database with user-sensitive records used in the Android application.
@@ -11,10 +12,7 @@ import com.makentoshe.habrachan.application.android.database.record.*
  * entities - array of object types that database contains.
  */
 @Database(
-    entities = [
-        UserSessionRecord::class
-    ],
-    version = 1
+    entities = [UserSessionRecord::class, UserRecord::class], version = 1
 )
 abstract class UserSessionDatabase : RoomDatabase() {
 
