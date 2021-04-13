@@ -9,7 +9,7 @@ class LoginNavigation(private val router: StackRouter) {
 
     fun toUserScreen(user: User?) {
         router.exit()
-        router.stack(UserScreen(UserAccount.Me(user = user)))
+        router.stack(UserScreen(UserAccount.Me(login = user?.login)))
     }
 
     fun back() {

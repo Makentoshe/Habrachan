@@ -36,15 +36,13 @@ class ApplicationModule(context: Context, cicerone: Cicerone<StackRouter>) : Mod
         bind<Router>().toInstance(cicerone.router)
         bind<NavigatorHolder>().toInstance(cicerone.navigatorHolder)
 
-        val userSession = userSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY)
-        bind<UserSession>().toInstance(userSession)
-
         bind<ExceptionHandler>().toInstance(ExceptionHandlerImpl(context))
 
         if (userDatabase.userSessionDao().getAll().isEmpty()) {
-            val record = UserSessionRecord(userSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY))
+            val record = UserSessionRecord(userSession(BuildConfig.CLIENT_KEY, BuildConfig.API_KEY), user = null)
             userDatabase.userSessionDao().insert(record)
         }
+
         val androidUserSession = AndroidUserSession(userDatabase.userSessionDao())
         bind<UserSession>().toInstance(androidUserSession)
         bind<AndroidUserSession>().toInstance(androidUserSession)

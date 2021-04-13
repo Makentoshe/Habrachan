@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
+import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
@@ -36,8 +36,13 @@ class UserFragment : CoreFragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.user.collectLatest {
-                println(it)
+            viewModel.user.collectLatest { result ->
+                fragment_user_progress.visibility = View.GONE
+                result.fold({ user ->
+                    println(user)
+                },{ throwable ->
+                    println(throwable)
+                })
             }
         }
     }
