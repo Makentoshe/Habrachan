@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.application.android.AndroidUserSession
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.core.arena.users.GetUserArena
 import com.makentoshe.habrachan.entity.User
+import com.makentoshe.habrachan.functional.Either
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.flowOn
@@ -24,15 +25,19 @@ class UserViewModel(
         is UserAccount.Me -> requestMe(account)
     }
 
-    private suspend fun requestMe(account: UserAccount.Me): Result<User> {
+    private suspend fun requestMe(account: UserAccount.Me): Either<User, Throwable> {
         val user = userSession.user
         if (user != null) {
-            return Result.success(user)
+            return Either.Left(user)
         } else {
             return if (account.login == null) {
-                Result.failure(IllegalStateException("There is no stored user and login is null"))
+                Either.Right(IllegalStateException("There is no stored user and login is null"))
             } else {
-                arena.suspendFetch(arena.manager.request(userSession, account.login)).map { it.user }
+                return arena.suspendFetch(arena.manager.request(userSession, account.login)).fold({
+                    Either.Left(it.user)
+                }, {
+                    Either.Right(it)
+                })
             }
         }
     }

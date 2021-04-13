@@ -36,6 +36,7 @@
     <dimen name="heightL">48dp</dimen>
     <!-- Used at most for toolbars -->
     <dimen name="heightLL">56dp</dimen>
+    <dimen name="heightXLL">96dp</dimen>
     <dimen name="separator_height">1dp</dimen>
 
     <!-- Radius -->

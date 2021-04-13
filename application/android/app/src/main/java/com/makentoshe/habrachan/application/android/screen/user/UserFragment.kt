@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
+import com.makentoshe.habrachan.entity.User
 import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -35,16 +36,20 @@ class UserFragment : CoreFragment() {
             viewModel.userAccountChannel.send(arguments.account)
         }
 
+        when (val account = arguments.account) {
+            is UserAccount.Me -> fragment_user_toolbar.title = account.login
+        }
+
         lifecycleScope.launch {
-            viewModel.user.collectLatest { result ->
+            viewModel.user.collectLatest { either ->
                 fragment_user_progress.visibility = View.GONE
-                result.fold({ user ->
-                    println(user)
-                },{ throwable ->
-                    println(throwable)
-                })
+                either.fold({ user -> onUserSuccess(user) },{ throwable -> println(throwable) })
             }
         }
+    }
+
+    private fun onUserSuccess(user: User) {
+        fragment_user_toolbar.title = user.login
     }
 
     class Arguments(fragment: UserFragment) : CoreFragment.Arguments(fragment) {
