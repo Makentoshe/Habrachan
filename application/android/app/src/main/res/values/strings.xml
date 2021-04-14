@@ -106,4 +106,7 @@
     <string name="login_button">Log in</string>
     <string name="login_fragment_oauth_separator">or log in with</string>
 
+    <string name="user_fullname">Full name</string>
+    <string name="user_registered">Registered</string>
+
 </resources>
