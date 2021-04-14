@@ -10,10 +10,12 @@ import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
 import com.makentoshe.habrachan.entity.User
+import com.makentoshe.habrachan.entity.timeRegistered
 import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
+import java.text.SimpleDateFormat
 
 class UserFragment : CoreFragment() {
 
@@ -50,6 +52,8 @@ class UserFragment : CoreFragment() {
 
     private fun onUserSuccess(user: User) {
         fragment_user_toolbar.title = user.login
+        fragment_user_fullname.text = user.fullname
+        fragment_user_registered.text = SimpleDateFormat("MMMM dd, YYYY").format(user.timeRegistered)
     }
 
     class Arguments(fragment: UserFragment) : CoreFragment.Arguments(fragment) {

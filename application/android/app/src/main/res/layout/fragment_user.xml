@@ -43,7 +43,6 @@
         android:id="@+id/fragment_user_fullname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Хвостов Максим"
         android:layout_marginStart="@dimen/dimenL"
         app:layout_constraintTop_toBottomOf="@id/fragment_user_fullname_title"
         app:layout_constraintStart_toEndOf="@id/fragment_user_avatar" />
@@ -64,11 +63,9 @@
         android:id="@+id/fragment_user_registered"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="February 5, 2019"
         android:layout_marginStart="@dimen/dimenL"
         app:layout_constraintTop_toBottomOf="@id/fragment_user_registered_title"
         app:layout_constraintStart_toEndOf="@id/fragment_user_avatar" />
-
 
     <ProgressBar
         android:id="@+id/fragment_user_progress"
