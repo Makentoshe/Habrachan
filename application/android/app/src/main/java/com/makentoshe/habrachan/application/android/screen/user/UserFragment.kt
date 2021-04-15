@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.dp2px
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
+import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import com.makentoshe.habrachan.entity.User
 import com.makentoshe.habrachan.entity.timeRegistered
+import com.makentoshe.habrachan.network.response.GetContentResponse
 import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -45,7 +48,13 @@ class UserFragment : CoreFragment() {
         lifecycleScope.launch {
             viewModel.user.collectLatest { either ->
                 fragment_user_progress.visibility = View.GONE
-                either.fold({ user -> onUserSuccess(user) },{ throwable -> println(throwable) })
+                either.fold({ user -> onUserSuccess(user) }, { throwable -> println(throwable) })
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.avatar.collectLatest { either ->
+                either.fold(::onAvatarSuccess, ::onAvatarFailure)
             }
         }
     }
@@ -59,6 +68,15 @@ class UserFragment : CoreFragment() {
         fragment_user_counters_rating.text = user.rating.toString()
         fragment_user_counters_followers.text = user.followersCount.toString()
         fragment_user_counters_following.text = user.followsCount.toString()
+    }
+
+    private fun onAvatarSuccess(response: GetContentResponse) {
+        val drawable = response.bytes.toRoundedDrawable(resources, dp2px(R.dimen.radiusS))
+        fragment_user_avatar.setImageDrawable(drawable)
+    }
+
+    private fun onAvatarFailure(throwable: Throwable) {
+        fragment_user_avatar.setImageResource(R.drawable.ic_account_stub)
     }
 
     class Arguments(fragment: UserFragment) : CoreFragment.Arguments(fragment) {
