@@ -27,7 +27,7 @@ interface UserSession {
 
     /** Returns true if user already logged in */
     val isLoggedIn: Boolean
-        get() = token.isNotBlank()
+        get() = token.isNotEmpty()
 }
 
 fun userSession(

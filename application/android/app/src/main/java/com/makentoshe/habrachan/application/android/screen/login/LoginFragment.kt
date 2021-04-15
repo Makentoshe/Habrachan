@@ -8,6 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginSpec
 import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginNavigation
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.LoginViewModel
@@ -63,6 +64,7 @@ class LoginFragment : CoreFragment() {
         lifecycleScope.launch {
             viewModel.loginFlow.collectLatest { result ->
                 result.fold({ response ->
+                    ApplicationStateBroadcastReceiver.signIn(requireActivity())
                     navigation.toUserScreen(response.user)
                 }, { throwable ->
                     if (throwable is LoginResponseException && throwable.other != null) {

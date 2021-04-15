@@ -4,15 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayoutMediator
 import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.AndroidUserSession
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.broadcast.ApplicationState
+import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesFlowAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesNavigation
 import com.makentoshe.habrachan.network.request.SpecType
 import com.makentoshe.habrachan.network.request.TopSpecType
 import kotlinx.android.synthetic.main.fragment_flow_articles.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
 class ArticlesFlowFragment : CoreFragment() {
@@ -27,6 +33,8 @@ class ArticlesFlowFragment : CoreFragment() {
 
     private val adapter by inject<ArticlesFlowAdapter>()
     private val navigation by inject<ArticlesNavigation>()
+    private val androidUserSession by inject<AndroidUserSession>()
+    private val applicationStateBroadcastReceiver by inject<ApplicationStateBroadcastReceiver>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_flow_articles, container, false)
@@ -39,8 +47,27 @@ class ArticlesFlowFragment : CoreFragment() {
             tab.text = arguments.specs[position].title()
         }.attach()
 
+        if (androidUserSession.isLoggedIn) {
+            fragment_flow_articles_toolbar.setNavigationIcon(R.drawable.ic_account)
+        } else {
+            fragment_flow_articles_toolbar.setNavigationIcon(R.drawable.ic_account_outline)
+        }
+
         fragment_flow_articles_toolbar.setNavigationOnClickListener {
-            navigation.navigateToLogin()
+            if (androidUserSession.isLoggedIn) navigation.navigateToUser() else navigation.navigateToLogin()
+        }
+
+        lifecycleScope.launch {
+            applicationStateBroadcastReceiver.applicationStateChannel.receiveAsFlow().collect { state ->
+                when (state) {
+                    ApplicationState.SignOut -> {
+                        fragment_flow_articles_toolbar.setNavigationIcon(R.drawable.ic_account_outline)
+                    }
+                    ApplicationState.SignIn -> {
+                        fragment_flow_articles_toolbar.setNavigationIcon(R.drawable.ic_account)
+                    }
+                }
+            }
         }
     }
 
