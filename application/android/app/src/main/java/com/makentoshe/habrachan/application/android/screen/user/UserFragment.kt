@@ -61,6 +61,8 @@ class UserFragment : CoreFragment() {
         lifecycleScope.launch {
             viewModel.avatar.collectLatest { either ->
                 either.fold(::onAvatarSuccess, ::onAvatarFailure)
+                fragment_user_avatar.visibility = View.VISIBLE
+                fragment_user_avatar_progress.visibility = View.GONE
             }
         }
     }
