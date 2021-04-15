@@ -39,6 +39,8 @@ class UserFragment : CoreFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.setOnClickListener { /* workaround */ }
+
         if (savedInstanceState == null) lifecycleScope.launch {
             viewModel.userAccountChannel.send(arguments.account)
         }

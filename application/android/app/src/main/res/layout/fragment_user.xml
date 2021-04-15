@@ -97,15 +97,14 @@
                 android:id="@+id/fragment_user_counters_karma"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="7.0" />
+                android:gravity="center" />
 
             <TextView
                 style="@style/Habrachan.Text.Support"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Karma" />
+                android:text="@string/user_counter_karma" />
 
         </LinearLayout>
 
@@ -121,15 +120,14 @@
                 android:id="@+id/fragment_user_counters_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="123" />
+                android:gravity="center" />
 
             <TextView
                 style="@style/Habrachan.Text.Support"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="rating" />
+                android:text="@string/user_counter_rating" />
 
         </LinearLayout>
 
@@ -145,15 +143,14 @@
                 android:id="@+id/fragment_user_counters_followers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="7" />
+                android:gravity="center" />
 
             <TextView
                 style="@style/Habrachan.Text.Support"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Followers" />
+                android:text="@string/user_counter_followers" />
 
         </LinearLayout>
 
@@ -169,15 +166,14 @@
                 android:id="@+id/fragment_user_counters_following"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="23" />
+                android:gravity="center" />
 
             <TextView
                 style="@style/Habrachan.Text.Support"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Following" />
+                android:text="@string/user_counter_following" />
 
         </LinearLayout>
 

@@ -108,5 +108,9 @@
 
     <string name="user_fullname">Full name</string>
     <string name="user_registered">Registered</string>
+    <string name="user_counter_karma">Karma</string>
+    <string name="user_counter_rating">Rating</string>
+    <string name="user_counter_followers">Followers</string>
+    <string name="user_counter_following">Following</string>
 
 </resources>
