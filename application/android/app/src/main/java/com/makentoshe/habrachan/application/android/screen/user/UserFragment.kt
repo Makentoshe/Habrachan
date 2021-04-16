@@ -71,6 +71,7 @@ class UserFragment : CoreFragment() {
         fragment_user_toolbar.title = user.login
         fragment_user_fullname.text = user.fullname
         fragment_user_registered.text = SimpleDateFormat("MMMM dd, YYYY").format(user.timeRegistered)
+        fragment_user_speciality.text = user.speciality
 
         fragment_user_counters_karma.text = user.score.toString()
         fragment_user_counters_rating.text = user.rating.toString()

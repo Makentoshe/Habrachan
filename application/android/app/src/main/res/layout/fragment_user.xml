@@ -86,14 +86,27 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="fragment_user_avatar, fragment_user_registered" />
 
+
+    <TextView
+        android:id="@+id/fragment_user_speciality"
+        style="@style/Habrachan.Text.Support"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimenL"
+        android:layout_marginTop="@dimen/dimenS"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_counters_barrier"/>
+
     <LinearLayout
         android:id="@+id/fragment_user_counters"
         android:layout_width="match_parent"
         android:layout_height="@dimen/heightL"
         android:orientation="horizontal"
         android:baselineAligned="false"
-        android:layout_marginHorizontal="@dimen/dimenL"
-        app:layout_constraintTop_toBottomOf="@id/fragment_user_counters_barrier">
+        android:layout_marginTop="@dimen/dimenXS"
+        android:layout_marginHorizontal="@dimen/dimenS"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_speciality">
 
         <LinearLayout
             android:layout_width="0dp"
