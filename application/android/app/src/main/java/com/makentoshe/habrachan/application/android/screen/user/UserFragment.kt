@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
@@ -52,14 +53,15 @@ class UserFragment : CoreFragment() {
         fragment_user_toolbar.setNavigationOnClickListener { navigation.back() }
 
         lifecycleScope.launch {
-            viewModel.user.collectLatest { either ->
+            viewModel.userFlow.collectLatest { either ->
                 fragment_user_progress.visibility = View.GONE
+                fragment_user_avatar_progress.visibility = if (fragment_user_avatar.isVisible) View.GONE else View.VISIBLE
                 either.fold({ user -> onUserSuccess(user) }, { throwable -> println(throwable) })
             }
         }
 
         lifecycleScope.launch {
-            viewModel.avatar.collectLatest { either ->
+            viewModel.avatarFlow.collectLatest { either ->
                 either.fold(::onAvatarSuccess, ::onAvatarFailure)
                 fragment_user_avatar.visibility = View.VISIBLE
                 fragment_user_avatar_progress.visibility = View.GONE
@@ -68,6 +70,7 @@ class UserFragment : CoreFragment() {
     }
 
     private fun onUserSuccess(user: User) {
+        fragment_user_content.visibility = View.VISIBLE
         fragment_user_toolbar.title = user.login
         fragment_user_fullname.text = user.fullname
         fragment_user_registered.text = SimpleDateFormat("MMMM dd, YYYY").format(user.timeRegistered)
