@@ -100,10 +100,6 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_bottom_votedown.setOnClickListener {
             Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
         }
-
-        fragment_article_author.setOnClickListener {
-            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
-        }
     }
 
     // TODO make separate class for creating html urls
@@ -127,6 +123,10 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         } catch (e: Exception) {
             exceptionController.render(exceptionHandler.handleException(e))
             fragment_article_appbar.isEnabled = false
+        }
+
+        fragment_article_author.setOnClickListener {
+            navigator.navigateToUserScreen(response.article.author.login)
         }
     }
 

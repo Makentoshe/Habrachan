@@ -3,6 +3,8 @@ package com.makentoshe.habrachan.application.android.screen.article.navigation
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentScreen
+import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
+import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
 import com.makentoshe.habrachan.entity.Article
 
 class ArticleNavigation(private val router: StackRouter) {
@@ -20,22 +22,7 @@ class ArticleNavigation(private val router: StackRouter) {
         router.stack(ContentScreen(source))
     }
 
-
-//    /** Navigates to [OverlayImageScreen] */
-//    fun toArticleResourceScreen(resource: String) {
-//        router.navigateTo(OverlayImageScreen(resource))
-//    }
-//
-//    fun toArticleCommentsScreen(article: Article) {
-//        router.navigateTo(CommentsScreen(article))
-//    }
-//
-//    fun toUserScreen(userName: String): Boolean {
-//        if (sessionDao.get().isLoggedIn) {
-//            router.navigateTo(UserScreen(UserAccount.User(userName)))
-//            return true
-//        } else {
-//            return false
-//        }
-//    }
+    fun navigateToUserScreen(login: String) {
+        router.stack(UserScreen(UserAccount.User(login)))
+    }
 }

@@ -56,7 +56,7 @@ class UserFragment : CoreFragment() {
             viewModel.userFlow.collectLatest { either ->
                 fragment_user_progress.visibility = View.GONE
                 fragment_user_avatar_progress.visibility = if (fragment_user_avatar.isVisible) View.GONE else View.VISIBLE
-                either.fold({ user -> onUserSuccess(user) }, { throwable -> println(throwable) })
+                either.fold({ user -> onUserSuccess(user) }, { throwable -> onUserFailure(throwable) })
             }
         }
 
@@ -80,6 +80,12 @@ class UserFragment : CoreFragment() {
         fragment_user_counters_rating.text = user.rating.toString()
         fragment_user_counters_followers.text = user.followersCount.toString()
         fragment_user_counters_following.text = user.followsCount.toString()
+    }
+
+    private fun onUserFailure(throwable: Throwable) {
+        fragment_user_avatar_progress.visibility = View.GONE
+        fragment_user_error.visibility = View.VISIBLE
+        fragment_user_error_title.text = throwable.toString()
     }
 
     private fun onAvatarSuccess(response: GetContentResponse) {

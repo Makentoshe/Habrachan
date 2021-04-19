@@ -20,8 +20,8 @@ abstract class SourceFirstArena<in K, V>(private val arenaStorage: ArenaCache<K,
             val fetchedResult = arenaStorage.fetch(key)
             if (fetchedResult.isSuccess) return fetchedResult
 
-            val fetchedException = fetchedResult.exceptionOrNull() as ArenaStorageException
-            return Result.failure(fetchedException.initCause(exception))
+            val fetchedException = fetchedResult.exceptionOrNull() ?: Exception("Arena exception")
+            return Result.failure(fetchedException.initCause(exception) )
         }
     }
 }

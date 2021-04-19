@@ -46,6 +46,7 @@ class UserViewModel(
 
     private suspend fun request(account: UserAccount) = when (account) {
         is UserAccount.Me -> requestMe(account)
+        is UserAccount.User -> requestUser(account)
     }
 
     private suspend fun requestMe(account: UserAccount.Me) {
@@ -60,14 +61,15 @@ class UserViewModel(
         val login = account.login ?: user?.login
             ?: return userChannel.send(Either.Right(IllegalStateException("There is no stored user, and login is null")))
 
-        getUserArena.suspendFetch(getUserArena.manager.request(userSession, login)).fold({
+        requestUser(UserAccount.User(login))
+    }
+
+    private suspend fun requestUser(account: UserAccount.User) {
+        getUserArena.suspendFetch(getUserArena.manager.request(userSession, account.login)).fold({
             userChannel.send(Either.Left(it.user))
-            // optimize avatar loading - if already was loaded in pre show and not changed yet
-            if (user?.avatar != it.user.avatar) avatarChannel.send(it.user)
+            avatarChannel.send(it.user)
         }, {
-            if (user == null) {
-                userChannel.send(Either.Right(it))
-            }
+            userChannel.send(Either.Right(it))
         })
     }
 
