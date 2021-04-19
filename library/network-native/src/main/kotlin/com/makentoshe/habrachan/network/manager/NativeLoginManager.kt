@@ -26,8 +26,8 @@ class NativeLoginManager(
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun login(request: NativeLoginRequest): Result<LoginResponse> {
-        return loginApi.login(
+    override suspend fun login(request: NativeLoginRequest): Result<LoginResponse> = try {
+        loginApi.login(
             request.userSession.client, request.userSession.api, request.email, request.password
         ).execute().fold({
             loginDeserializer.body(it.string())
@@ -43,6 +43,8 @@ class NativeLoginManager(
         }, {
             Result.failure(it)
         })
+    } catch (exception: Exception) {
+        Result.failure(exception)
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
@@ -54,15 +56,21 @@ class NativeLoginManager(
         })
     }
 
-    class Builder(private val client: OkHttpClient, private val loginDeserializer: NativeLoginDeserializer, private val userDeserializer: NativeGetUserDeserializer) {
+    class Builder(
+        private val client: OkHttpClient,
+        private val loginDeserializer: NativeLoginDeserializer,
+        private val userDeserializer: NativeGetUserDeserializer
+    ) {
 
         private val baseUrl = "https://habr.com/"
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
 
         fun build() = NativeLoginManager(
-            getRetrofit().create(NativeLoginApi::class.java), loginDeserializer,
-            getRetrofit().create(NativeUsersApi::class.java), userDeserializer
+            getRetrofit().create(NativeLoginApi::class.java),
+            loginDeserializer,
+            getRetrofit().create(NativeUsersApi::class.java),
+            userDeserializer
         )
     }
 }

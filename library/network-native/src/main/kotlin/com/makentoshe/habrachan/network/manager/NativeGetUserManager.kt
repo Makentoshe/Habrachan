@@ -18,12 +18,14 @@ class NativeGetUserManager(
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun user(request: NativeGetUserRequest): Result<NativeGetUserResponse> {
-        return api.getUser(request.userSession.client, request.userSession.token!!, request.username).execute().fold({
+    override suspend fun user(request: NativeGetUserRequest): Result<NativeGetUserResponse> = try {
+        api.getUser(request.userSession.client, request.userSession.token!!, request.username).execute().fold({
             deserializer.body(request, it.string())
         }, {
             deserializer.error(request, it.string())
         })
+    } catch (exception: Exception) {
+        Result.failure(exception)
     }
 
     class Builder(private val client: OkHttpClient, private val deserializer: NativeGetUserDeserializer) {
