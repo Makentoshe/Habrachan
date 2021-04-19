@@ -25,7 +25,7 @@ data class User(
     @SerializedName("location")
     val location: Location?, // null
     @SerializedName("rating")
-    override val rating: Int, // 0
+    override val rating: Float, // 0
     @SerializedName("ratingPos")
     override val ratingPosition: Int, // 6054
     @SerializedName("registerDateTime")
@@ -58,7 +58,7 @@ data class User(
     override val followsCount: Int
         get() = followStats.followCount
 
-    override val score: Int
+    override val score: Float
         get() = scoreStats.score
 
     override val isCanVote: Boolean
