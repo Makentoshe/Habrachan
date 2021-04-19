@@ -13,8 +13,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
 class NativeGetArticlesManager(
-    private val api: NativeArticlesApi,
-    private val deserializer: NativeGetArticlesDeserializer
+    private val api: NativeArticlesApi, private val deserializer: NativeGetArticlesDeserializer
 ) : GetArticlesManager<NativeGetArticlesRequest, NativeGetArticlesSpec> {
 
     override val specs = listOf(
@@ -36,14 +35,16 @@ class NativeGetArticlesManager(
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun articles(request: NativeGetArticlesRequest): Result<GetArticlesResponse2> {
-        return api.getArticles(
+    override suspend fun articles(request: NativeGetArticlesRequest): Result<GetArticlesResponse2> = try {
+        api.getArticles(
             request.session.client, request.session.api, request.session.token, request.spec.path, request.page
         ).execute().fold({
             deserializer.body(request, it.string())
         }, {
             deserializer.error(request, it.string())
         })
+    } catch (exception: Exception) {
+        Result.failure(exception)
     }
 
     class Builder(private val client: OkHttpClient, private val deserializer: NativeGetArticlesDeserializer) {
@@ -52,7 +53,6 @@ class NativeGetArticlesManager(
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
 
-        fun build() =
-            NativeGetArticlesManager(getRetrofit().create(NativeArticlesApi::class.java), deserializer)
+        fun build() = NativeGetArticlesManager(getRetrofit().create(NativeArticlesApi::class.java), deserializer)
     }
 }

@@ -2,20 +2,14 @@ package com.makentoshe.habrachan.network.manager
 
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
-import com.makentoshe.habrachan.entity.user
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.MobileLoginApi
-import com.makentoshe.habrachan.network.api.MobileUsersApi
-import com.makentoshe.habrachan.network.deserializer.MobileGetUserDeserializer
 import com.makentoshe.habrachan.network.deserializer.MobileLoginDeserializer
-import com.makentoshe.habrachan.network.fold
-import com.makentoshe.habrachan.network.request.MobileGetUserRequest
 import com.makentoshe.habrachan.network.request.MobileLoginRequest
 import com.makentoshe.habrachan.network.response.LoginResponse
 import okhttp3.*
 import org.jsoup.Jsoup
 import retrofit2.Retrofit
-import java.lang.IllegalStateException
 import java.util.regex.Pattern
 
 class MobileLoginManager private constructor(
@@ -32,39 +26,43 @@ class MobileLoginManager private constructor(
 
     @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun login(request: MobileLoginRequest): Result<LoginResponse> {
-        // get cookies. consumer, state and referer
-        val cookieResponse = loginApi.getLoginCookies().execute()
-        val referer = cookieResponse.raw().request.url
-        val state = referer.queryParameter("state") ?: ""
-        val consumer = referer.queryParameter("consumer") ?: ""
+        try {
+            // get cookies. consumer, state and referer
+            val cookieResponse = loginApi.getLoginCookies().execute()
+            val referer = cookieResponse.raw().request.url
+            val state = referer.queryParameter("state") ?: ""
+            val consumer = referer.queryParameter("consumer") ?: ""
 
-        // get window.location.href redirect
-        val loginResponse =
-            loginApi.login(referer.toString(), request.email, request.password, state, consumer).execute()
-        val loginResponseString = loginResponse.body()?.string() ?: ""
+            // get window.location.href redirect
+            val loginResponse =
+                loginApi.login(referer.toString(), request.email, request.password, state, consumer).execute()
+            val loginResponseString = loginResponse.body()?.string() ?: ""
 
-        // parse window.location.href = 'url_here' string
-        val url = getUrlsFromString(loginResponseString).firstOrNull()
+            // parse window.location.href = 'url_here' string
+            val url = getUrlsFromString(loginResponseString).firstOrNull()
             ?: return deserializer.error(request, loginResponseString)
 
-        // redirect to get more login cookies such as phpsessid and others
-        // TODO(low) we can gain and sync some settings or current habr states from response
-        val redirectResponse = client.newCall(Request.Builder().url(url).build()).execute()
+            // redirect to get more login cookies such as phpsessid and others
+            // TODO(low) we can gain and sync some settings or current habr states from response
+            val redirectResponse = client.newCall(Request.Builder().url(url).build()).execute()
 
-        val mobileResponse = LoginResponse.MobileResponse(cookieJar.cookies.values.flatten())
+            val mobileResponse = LoginResponse.MobileResponse(cookieJar.cookies.values.flatten())
 
-        if (userManager != null) {
-            val string = redirectResponse.body?.string() ?: return Result.failure(IllegalStateException())
-            val login = parseRedirectResponse(string)
-            val userRequest = userManager.request(request.userSession, login)
-            return userManager.user(userRequest).fold({
-                Result.success(LoginResponse(request, mobileResponse = mobileResponse, user = it.user))
-            }, {
-                // TODO specify exception: Login was ok but user was failed
-                Result.failure(it)
-            })
-        } else {
-            return Result.success(LoginResponse(request, mobileResponse = mobileResponse, user = null))
+            if (userManager != null) {
+                val string = redirectResponse.body?.string() ?: return Result.failure(IllegalStateException())
+                val login = parseRedirectResponse(string)
+                val userRequest = userManager.request(request.userSession, login)
+                return userManager.user(userRequest).fold({
+                    Result.success(LoginResponse(request, mobileResponse = mobileResponse, user = it.user))
+                }, {
+                    // TODO specify exception: Login was ok but user was failed
+                    Result.failure(it)
+                })
+            } else {
+                return Result.success(LoginResponse(request, mobileResponse = mobileResponse, user = null))
+            }
+        } catch (exception: Exception) {
+            return Result.failure(exception)
         }
     }
 

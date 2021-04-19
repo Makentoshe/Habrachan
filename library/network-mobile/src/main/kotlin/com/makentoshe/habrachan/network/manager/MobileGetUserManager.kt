@@ -17,12 +17,14 @@ class MobileGetUserManager(
         return MobileGetUserRequest(userSession, username)
     }
 
-    override suspend fun user(request: MobileGetUserRequest): Result<GetUserResponse> {
-        return api.getUser(request.username, request.userSession.filterLanguage, request.userSession.habrLanguage).execute().fold({
+    override suspend fun user(request: MobileGetUserRequest): Result<GetUserResponse> = try {
+        api.getUser(request.username, request.userSession.filterLanguage, request.userSession.habrLanguage).execute().fold({
             deserializer.body(request, it.string())
         }, {
             deserializer.error(request, it.string())
         })
+    } catch (exception: Exception) {
+        Result.failure(exception)
     }
 
     class Builder(private val client: OkHttpClient, private val deserializer: MobileGetUserDeserializer) {

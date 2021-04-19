@@ -22,8 +22,8 @@ class NativeLoginManager(
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun login(request: NativeLoginRequest): Result<LoginResponse> {
-        return api.login(
+    override suspend fun login(request: NativeLoginRequest): Result<LoginResponse> = try {
+        api.login(
             request.userSession.client, request.userSession.api, request.email, request.password
         ).execute().fold({ nativeResponseBody ->
             deserializer.body(nativeResponseBody.string()).fold({ nativeResponse ->
@@ -41,16 +41,8 @@ class NativeLoginManager(
         }, {
             deserializer.error(request, it.string())
         })
-//
-//        return manager?.me(manager.request(request.userSession))?.fold({
-//            nativeResponse.map { nativeResponse ->
-//                LoginResponse(
-//                    request, nativeResponse = nativeResponse, user = it.user
-//                )
-//            }
-//        }, {
-//            Result.failure(it)
-//        }) ?: nativeResponse.map { LoginResponse(request, nativeResponse = it, user = null) }
+    } catch (exception: Exception) {
+        Result.failure(exception)
     }
 
     class Builder(
