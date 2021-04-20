@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.makentoshe.habrachan.application.core.arena.ArenaException
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.network.manager.GetContentManagerException
+import com.makentoshe.habrachan.network.exception.GetContentManagerException
+import com.makentoshe.habrachan.network.exception.GetUserDeserializerException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 import javax.net.ssl.SSLPeerUnverifiedException
@@ -27,18 +29,19 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
     override fun handleException(exception: Throwable?): ExceptionHandler.Entry = when (exception) {
         is ArenaStorageException -> handleArenaStorageException(exception)
         is GetContentManagerException -> handleContentManagerException(exception)
+        is ArenaException -> handleArenaException(exception)
         else -> handleUnknownException(exception)
     }
 
     private fun handleArenaStorageException(exception: ArenaStorageException) = when (val cause = exception.cause) {
         is SSLPeerUnverifiedException -> handleArenaStorageSSlPeerUnverifiedException(cause)
-        is UnknownHostException -> handleArenaStorageUnknownHostException(cause)
+        is UnknownHostException -> handleUnknownHostException(cause)
         is SSLHandshakeException -> handleSSLHandshakeArenaStorageException(cause)
         else -> handleUnknownArenaStorageException(exception)
     }
 
     /** internet connection disabled */
-    private fun handleArenaStorageUnknownHostException(exception: UnknownHostException): ExceptionHandler.Entry {
+    private fun handleUnknownHostException(exception: UnknownHostException): ExceptionHandler.Entry {
         val title = context.getString(R.string.exception_handler_network)
         val description = context.getString(R.string.exception_handler_network_unknown_host)
         return ExceptionHandler.Entry(title, description)
@@ -67,9 +70,21 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
 
     private fun handleContentManagerException(exception: GetContentManagerException) = when (val cause = exception.cause) {
         is SSLPeerUnverifiedException -> handleArenaStorageSSlPeerUnverifiedException(cause)
-        is UnknownHostException -> handleArenaStorageUnknownHostException(cause)
+        is UnknownHostException -> handleUnknownHostException(cause)
         is SSLHandshakeException -> handleSSLHandshakeArenaStorageException(cause)
         else -> handleUnknownException(exception)
+    }
+
+    private fun handleArenaException(exception: ArenaException) = when(val cause = exception.sourceException) {
+        is UnknownHostException -> handleUnknownHostException(cause)
+        is GetUserDeserializerException -> handleGetUserDeserializerException(cause)
+        else -> handleUnknownException(cause)
+    }
+
+    private fun handleGetUserDeserializerException(exception: GetUserDeserializerException): ExceptionHandler.Entry {
+        val title = context.getString(R.string.exception_handler_authorization_required)
+        val description = context.getString(R.string.exception_handler_authorization_required_description)
+        return ExceptionHandler.Entry(title, description)
     }
 
     @SuppressLint("LongLogTag")

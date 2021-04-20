@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.CoreFragment
-import com.makentoshe.habrachan.application.android.dp2px
+import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserNavigation
 import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
-import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import com.makentoshe.habrachan.entity.User
 import com.makentoshe.habrachan.entity.timeRegistered
 import com.makentoshe.habrachan.network.response.GetContentResponse
+import kotlinx.android.synthetic.main.fragment_articles.*
 import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -34,6 +34,9 @@ class UserFragment : CoreFragment() {
     override val arguments = Arguments(this)
     private val viewModel by inject<UserViewModel>()
     private val navigation by inject<UserNavigation>()
+    private val exceptionHandler by inject<ExceptionHandler>()
+
+    private lateinit var exceptionController: ExceptionController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_user, container, false)
@@ -51,6 +54,8 @@ class UserFragment : CoreFragment() {
         }
 
         fragment_user_toolbar.setNavigationOnClickListener { navigation.back() }
+
+        exceptionController = ExceptionController(ExceptionViewHolder(fragment_user_exception))
 
         lifecycleScope.launch {
             viewModel.userFlow.collectLatest { either ->
@@ -84,8 +89,8 @@ class UserFragment : CoreFragment() {
 
     private fun onUserFailure(throwable: Throwable) {
         fragment_user_avatar_progress.visibility = View.GONE
-        fragment_user_error.visibility = View.VISIBLE
-        fragment_user_error_title.text = throwable.toString()
+        exceptionController.render(exceptionHandler.handleException(throwable))
+        fragment_user_exception.findViewById<Button>(R.id.layout_exception_retry).visibility = View.GONE
     }
 
     private fun onAvatarSuccess(response: GetContentResponse) {
