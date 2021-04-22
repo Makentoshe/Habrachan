@@ -48,14 +48,19 @@ class LoginFragment : CoreFragment() {
         }
 
         fragment_login_button.setOnClickListener {
+            closeSoftKeyboard()
             val email = fragment_login_email.editText?.text
             if (email.isNullOrBlank()) {
                 fragment_login_email.error = getString(R.string.login_email_error_blank)
+                return@setOnClickListener
             }
             val password = fragment_login_password.editText?.text
             if (password.isNullOrBlank()) {
                 fragment_login_password.error = getString(R.string.login_password_error_blank)
+                return@setOnClickListener
             }
+            fragment_login_button.visibility = View.INVISIBLE
+            fragment_login_progress.visibility = View.VISIBLE
             lifecycleScope.launch {
                 viewModel.loginChannel.send(LoginSpec(email.toString(), password.toString()))
             }
