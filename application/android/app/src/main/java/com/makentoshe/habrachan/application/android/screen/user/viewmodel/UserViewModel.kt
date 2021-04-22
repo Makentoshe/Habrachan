@@ -20,8 +20,15 @@ class UserViewModel(
     private val userSession: AndroidUserSession
 ) : ViewModel() {
 
+    val logoffChannel = Channel<Unit>()
+
+    val logoffFlow: Flow<Unit> = logoffChannel.receiveAsFlow().map {
+        userSession.token = ""
+        userSession.user = null
+    }
+
     /** Send a UserAccount to receive a user from [userFlow] */
-    val userAccountChannel = Channel<UserAccount>()
+    val accountChannel = Channel<UserAccount>()
 
     /** Internal proxy for [userFlow] */
     private val userChannel = Channel<Either<User, Throwable>>()
@@ -40,7 +47,7 @@ class UserViewModel(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            userAccountChannel.receiveAsFlow().collectLatest(::request)
+            accountChannel.receiveAsFlow().collectLatest(::request)
         }
     }
 

@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.user
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -9,13 +10,13 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
+import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserNavigation
 import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
 import com.makentoshe.habrachan.entity.User
 import com.makentoshe.habrachan.entity.timeRegistered
 import com.makentoshe.habrachan.network.response.GetContentResponse
-import kotlinx.android.synthetic.main.fragment_articles.*
 import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -46,21 +47,18 @@ class UserFragment : CoreFragment() {
         view.setOnClickListener { /* workaround */ }
 
         if (savedInstanceState == null) lifecycleScope.launch {
-            viewModel.userAccountChannel.send(arguments.account)
-        }
-
-        when (val account = arguments.account) {
-            is UserAccount.Me -> fragment_user_toolbar.title = account.login
+            viewModel.accountChannel.send(arguments.account)
         }
 
         fragment_user_toolbar.setNavigationOnClickListener { navigation.back() }
-
+        fragment_user_toolbar.setOnMenuItemClickListener(::onMenuItemClick)
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_user_exception))
 
         lifecycleScope.launch {
             viewModel.userFlow.collectLatest { either ->
                 fragment_user_progress.visibility = View.GONE
-                fragment_user_avatar_progress.visibility = if (fragment_user_avatar.isVisible) View.GONE else View.VISIBLE
+                fragment_user_avatar_progress.visibility =
+                    if (fragment_user_avatar.isVisible) View.GONE else View.VISIBLE
                 either.fold({ user -> onUserSuccess(user) }, { throwable -> onUserFailure(throwable) })
             }
         }
@@ -72,6 +70,30 @@ class UserFragment : CoreFragment() {
                 fragment_user_avatar_progress.visibility = View.GONE
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.logoffFlow.collectLatest {
+                ApplicationStateBroadcastReceiver.signOut(requireActivity())
+                navigation.back()
+            }
+        }
+
+        when (val account = arguments.account) {
+            is UserAccount.Me -> {
+                fragment_user_toolbar.title = account.login
+                fragment_user_toolbar.menu.setGroupVisible(R.id.menu_user_options_group_me, true)
+            }
+            is UserAccount.User -> {
+                fragment_user_toolbar.title = account.login
+            }
+        }
+    }
+
+    private fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
+        R.id.menu_user_options_action_logout -> true.apply {
+            lifecycleScope.launch { viewModel.logoffChannel.send(Unit) }
+        }
+        else -> false
     }
 
     private fun onUserSuccess(user: User) {
