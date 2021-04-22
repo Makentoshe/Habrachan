@@ -2,6 +2,9 @@ package com.makentoshe.habrachan.application.android.screen.comments.navigation
 
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentScreen
+import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
+import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
+import com.makentoshe.habrachan.entity.User
 import ru.terrakok.cicerone.Router
 
 class CommentsNavigation(
@@ -19,4 +22,9 @@ class CommentsNavigation(
     fun toContentScreen(source: String) {
         router.stack(ContentScreen(source))
     }
+
+    fun toUserScreen(login: String) {
+        router.stack(UserScreen(UserAccount.User(login = login)))
+    }
+
 }
