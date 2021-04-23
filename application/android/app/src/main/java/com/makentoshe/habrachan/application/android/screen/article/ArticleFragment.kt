@@ -20,7 +20,6 @@ import com.makentoshe.habrachan.application.android.screen.article.viewmodel.Art
 import com.makentoshe.habrachan.network.response.GetArticleResponse2
 import com.makentoshe.habrachan.network.response.GetContentResponse
 import kotlinx.android.synthetic.main.fragment_article.*
-import kotlinx.android.synthetic.main.fragment_article_content.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -173,7 +172,6 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     // Views can be null because
     // java.lang.IllegalStateException: fragment_article_separator must not be null
     override fun onWebPageFinished(view: WebView?, url: String?) {
-        fragment_article_separator?.visibility = View.VISIBLE
         fragment_article_bottom?.visibility = View.VISIBLE
     }
 
