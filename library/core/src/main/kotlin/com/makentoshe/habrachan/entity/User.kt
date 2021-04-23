@@ -11,10 +11,10 @@ interface User {
     val speciality: String
 //    val gender: Int TODO make enum later
     val timeRegisteredRaw: String
-    val rating: Int
+    val rating: Float
     val ratingPosition: Int
 
-    val score: Int
+    val score: Float
     val postsCount: Int
     val commentsCount: Int
     val favoritesCount: Int
@@ -35,9 +35,9 @@ fun user(
     speciality: String,
     timeRegisteredRaw: String,
     avatar: String,
-    rating: Int,
+    rating: Float,
     ratingPosition: Int,
-    score: Int,
+    score: Float,
     postsCount: Int,
     commentsCount: Int,
     favoritesCount: Int,

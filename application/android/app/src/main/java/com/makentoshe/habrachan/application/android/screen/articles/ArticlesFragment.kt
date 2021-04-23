@@ -51,17 +51,21 @@ class ArticlesFragment : CoreFragment() {
     ): View? = inflater.inflate(R.layout.fragment_articles, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) lifecycleScope.launch {
+            val requestSpec = arguments.spec ?: return@launch
+            viewModel.articlesSpecChannel.send(ArticlesSpec(arguments.page, requestSpec))
+        }
+
+        lifecycleScope.launch {
+            viewModel.articles.collectLatest {
+                adapter.submitData(it)
+            }
+        }
+
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_articles_exception))
         exceptionController.setRetryButton {
             adapter.retry()
             showLoadingState()
-        }
-
-        if (savedInstanceState == null) lifecycleScope.launch {
-            val requestSpec = arguments.spec ?: return@launch
-            viewModel.articles(ArticlesSpec(arguments.page, requestSpec)).collectLatest {
-                adapter.submitData(it)
-            }
         }
 
         val itemDecoration = ArticleItemDecoration.from(requireContext())

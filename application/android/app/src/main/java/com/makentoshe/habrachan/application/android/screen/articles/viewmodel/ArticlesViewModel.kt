@@ -21,23 +21,19 @@ class ArticlesViewModel2(
     private val session: UserSession, private val arena: GetArticlesArena
 ) : ViewModel() {
 
-    val specChannel = Channel<ArticlesSpec>()
+    val articlesSpecChannel = Channel<ArticlesSpec>()
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    val articles = specChannel.receiveAsFlow().flatMapConcat {
-        Pager(PagingConfig(ArticlesSpec.PAGE_SIZE), it) {
+    val articles = articlesSpecChannel.receiveAsFlow().flatMapConcat{ spec ->
+        Pager(PagingConfig(ArticlesSpec.PAGE_SIZE), spec) {
             ArticlesDataSource(session, arena)
         }.flow
     }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
 
-    /** Returns flow with paging data for selected tags */
-    fun articles(spec: ArticlesSpec) = Pager(PagingConfig(ArticlesSpec.PAGE_SIZE), spec) {
-        ArticlesDataSource(session, arena)
-    }.flow.cachedIn(viewModelScope.plus(Dispatchers.IO))
-
     class Factory(
         private val session: UserSession, private val arena: GetArticlesArena
     ) : ViewModelProvider.NewInstanceFactory() {
+        @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = ArticlesViewModel2(session, arena) as T
     }
 }

@@ -1,0 +1,17 @@
+{
+  "code": 400,
+  "message": "Bad request",
+  "additional": {
+    "errors": [
+      {
+        "key": "MISSING",
+        "field": "email"
+      },
+      {
+        "key": "MISSING",
+        "field": "password"
+      }
+    ]
+  },
+  "data": null
+}

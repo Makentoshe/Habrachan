@@ -8,21 +8,16 @@ package com.makentoshe.habrachan.application.core.arena
 abstract class SourceFirstArena<in K, V>(private val arenaStorage: ArenaCache<K, V>) : Arena<K, V>() {
 
     override suspend fun suspendFetch(key: K): Result<V> {
-        try {
-            val networkFetch = this.internalSuspendFetch(key)
-            if (networkFetch.isSuccess) {
-                arenaStorage.carry(key, networkFetch.getOrNull()!!)
-                return networkFetch
-            }
-
-            throw networkFetch.exceptionOrNull()!!
-        } catch (exception: Exception) {
-            val fetchedResult = arenaStorage.fetch(key)
-            if (fetchedResult.isSuccess) return fetchedResult
-
-            val fetchedException = fetchedResult.exceptionOrNull() as ArenaStorageException
-            return Result.failure(fetchedException.initCause(exception))
-        }
+        return internalSuspendFetch(key).fold({ sourceFetch ->
+            arenaStorage.carry(key, sourceFetch)
+            Result.success(sourceFetch)
+        }, { sourceThrowable ->
+            arenaStorage.fetch(key).fold({ cacheFetch ->
+                Result.success(cacheFetch)
+            }, { cacheThrowable ->
+                Result.failure(ArenaException(sourceException = sourceThrowable, cacheException = cacheThrowable))
+            })
+        })
     }
 }
 

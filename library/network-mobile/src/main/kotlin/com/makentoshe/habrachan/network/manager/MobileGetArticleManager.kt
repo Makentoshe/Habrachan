@@ -19,8 +19,8 @@ class MobileGetArticleManager(
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun article(request: MobileGetArticleRequest) : Result<MobileGetArticleResponse> {
-        return api.getArticle(
+    override suspend fun article(request: MobileGetArticleRequest): Result<MobileGetArticleResponse> = try {
+        api.getArticle(
             request.articleId.articleId, request.userSession.filterLanguage, request.userSession.habrLanguage
         ).execute().fold({
             deserializer.body(it.string())
@@ -31,6 +31,8 @@ class MobileGetArticleManager(
         }, {
             Result.failure(it)
         })
+    } catch (exception: Exception) {
+        Result.failure(exception)
     }
 
     class Builder(private val client: OkHttpClient, private val deserializer: MobileGetArticleDeserializer) {

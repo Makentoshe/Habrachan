@@ -5,20 +5,17 @@ package com.makentoshe.habrachan.application.core.arena
  * the data will be fetched from the source and save in the storage for the future reuse.
  */
 abstract class CacheFirstArena<in K, V>(private val arenaStorage: ArenaCache<K, V>) : Arena<K, V>() {
-    override suspend fun suspendFetch(key: K): Result<V> = try {
-        val storageFetch = arenaStorage.fetch(key)
-        if (storageFetch.isSuccess) {
-            storageFetch
-        } else {
-            throw storageFetch.exceptionOrNull()!!
-        }
-    } catch (exception: Exception) {
-        val sourceFetch = internalSuspendFetch(key)
-        if (sourceFetch.isSuccess) {
-            arenaStorage.carry(key, sourceFetch.getOrNull()!!)
-            sourceFetch
-        } else {
-            Result.failure(sourceFetch.exceptionOrNull()!!.initCause(exception))
-        }
+
+    override suspend fun suspendFetch(key: K): Result<V> {
+        return arenaStorage.fetch(key).fold({ storageFetch ->
+            Result.success(storageFetch)
+        }, { storageThrowable ->
+            internalSuspendFetch(key).fold({ sourceFetch ->
+                arenaStorage.carry(key, sourceFetch)
+                Result.success(sourceFetch)
+            }, { sourceThrowable ->
+                Result.failure(ArenaException(sourceException = sourceThrowable, cacheException = storageThrowable))
+            })
+        })
     }
 }

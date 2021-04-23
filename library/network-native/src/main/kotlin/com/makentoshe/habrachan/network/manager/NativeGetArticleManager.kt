@@ -19,8 +19,8 @@ class NativeGetArticleManager(
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun article(request: NativeGetArticleRequest): Result<NativeGetArticleResponse> {
-        return api.getArticle(
+    override suspend fun article(request: NativeGetArticleRequest): Result<NativeGetArticleResponse> = try {
+        api.getArticle(
             request.userSession.client, request.userSession.api, request.userSession.token, request.articleId.articleId
         ).execute().fold({
             deserializer.body(it.string())
@@ -31,6 +31,8 @@ class NativeGetArticleManager(
         }, {
             Result.failure(it)
         })
+    } catch (exception: Exception) {
+        Result.failure(exception)
     }
 
     class Builder(private val client: OkHttpClient, private val deserializer: NativeGetArticleDeserializer) {

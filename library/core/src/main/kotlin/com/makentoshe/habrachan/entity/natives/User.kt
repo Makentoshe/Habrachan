@@ -35,11 +35,11 @@ data class User(
     @SerializedName("path")
     val path: String, // /users/makentoshe/
     @SerializedName("rating")
-    override val rating: Int, // 0
+    override val rating: Float, // 0
     @SerializedName("rating_position")
     override val ratingPosition: Int, // 0
     @SerializedName("score")
-    override val score: Int, // 7
+    override val score: Float, // 7
     @SerializedName("sex")
     val sex: Int, // 0
     @SerializedName("specializm")

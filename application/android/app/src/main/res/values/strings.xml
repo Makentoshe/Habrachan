@@ -95,6 +95,22 @@
     <string name="comments_button_first_comment">Be the first one</string>
     <string name="comments_fragment_subtitle">Comments</string>
     <string name="comment_popup_inspect_user">Inspect user</string>
+
+    <string name="login_toolbar_authorization">Authorization</string>
+    <string name="login_email_hint">E-mail</string>
+    <string name="login_email_error_blank">E-mail should not be empty</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_password_error_blank">Password should not be empty</string>
+    <string name="login_unknown_error">Unknown error</string>
+    <string name="login_account_error">There is no user with such email and password</string>
+    <string name="login_button">Log in</string>
     <string name="login_fragment_oauth_separator">or log in with</string>
+
+    <string name="user_fullname">Full name</string>
+    <string name="user_registered">Registered</string>
+    <string name="user_counter_karma">Karma</string>
+    <string name="user_counter_rating">Rating</string>
+    <string name="user_counter_followers">Followers</string>
+    <string name="user_counter_following">Following</string>
 
 </resources>

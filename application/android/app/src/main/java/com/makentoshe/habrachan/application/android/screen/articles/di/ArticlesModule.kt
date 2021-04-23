@@ -27,15 +27,15 @@ annotation class ArticlesScope
 
 class ArticlesModule(fragment: ArticlesFragment) : Module() {
 
-    private val router by inject<StackRouter>()
     private val session by inject<UserSession>()
     private val exceptionHandler by inject<ExceptionHandler>()
     private val androidCacheDatabase by inject<AndroidCacheDatabase>()
+    private val navigation by inject<ArticlesNavigation>()
 
     private val getArticlesManager by inject<GetArticlesManager<GetArticlesRequest2, GetArticlesSpec>>()
 
     init {
-        Toothpick.openScopes(ApplicationScope::class).inject(this)
+        Toothpick.openScopes(ApplicationScope::class, ArticlesFlowScope::class).inject(this)
 
         val articlesArenaCache = GetArticlesArenaCache(androidCacheDatabase)
         val articlesArena = GetArticlesArena(getArticlesManager, articlesArenaCache)
@@ -43,7 +43,7 @@ class ArticlesModule(fragment: ArticlesFragment) : Module() {
         val viewModel = ViewModelProviders.of(fragment, factory)[ArticlesViewModel2::class.java]
         bind<ArticlesViewModel2>().toInstance(viewModel)
 
-        val adapter = ArticlesAdapter(ArticlesNavigation(router))
+        val adapter = ArticlesAdapter(navigation)
         bind<ArticlesAdapter>().toInstance(adapter)
 
         val appendAdapter = AppendArticleAdapter(adapter, exceptionHandler)

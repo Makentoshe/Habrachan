@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.network.manager
 
 import com.makentoshe.habrachan.network.UserSession
+import com.makentoshe.habrachan.network.exception.GetContentManagerException
 import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.GetContentRequest
 import com.makentoshe.habrachan.network.response.GetContentResponse
@@ -24,8 +25,3 @@ class GetContentManager(private val client: OkHttpClient) {
     }
 
 }
-
-// TODO make special exception for whole manager exceptions
-class GetContentManagerException(
-    val request: GetContentRequest, override val message: String
-) : Exception()

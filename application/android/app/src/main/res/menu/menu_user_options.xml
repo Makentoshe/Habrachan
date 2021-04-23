@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
     <group
-        android:id="@+id/group_user_me"
+        android:id="@+id/menu_user_options_group_me"
         android:visible="false">
         <item
-            android:id="@+id/action_logout"
+            android:id="@+id/menu_user_options_action_logout"
             android:title="@string/menu_logout" />
     </group>
 

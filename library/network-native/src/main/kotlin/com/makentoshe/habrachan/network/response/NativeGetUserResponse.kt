@@ -2,7 +2,6 @@ package com.makentoshe.habrachan.network.response
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.natives.User
-import com.makentoshe.habrachan.network.request.GetUserRequest
 import com.makentoshe.habrachan.network.request.NativeGetUserRequest
 
 data class NativeGetUserResponse(

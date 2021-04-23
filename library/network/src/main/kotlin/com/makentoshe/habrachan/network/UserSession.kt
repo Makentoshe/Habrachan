@@ -22,20 +22,35 @@ interface UserSession {
      */
     var habrLanguage: String
 
-    /** Used when user is logged in. If user is logged off the value should be null */
-    var token: String?
+    /** Used when user is logged in. If user is logged off the value should be empty */
+    var token: String
 
     /** Returns true if user already logged in */
     val isLoggedIn: Boolean
-        get() = token != null
+        get() = token.isNotEmpty()
 }
 
 fun userSession(
     client: String,
     api: String,
-    token: String? = null,
+    token: String = "",
     filterLanguage: String = "ru%2Cen",
     habrLanguage: String = "en"
+) = object: UserSession {
+    override val api = api
+    override val client = client
+    override var token = token
+    override var habrLanguage: String = habrLanguage
+    override var filterLanguage: String = filterLanguage
+}
+
+fun userSession(
+    userSession: UserSession,
+    client: String = userSession.client,
+    api: String = userSession.api,
+    token: String = userSession.token,
+    filterLanguage: String = userSession.filterLanguage,
+    habrLanguage: String = userSession.habrLanguage
 ) = object: UserSession {
     override val api = api
     override val client = client

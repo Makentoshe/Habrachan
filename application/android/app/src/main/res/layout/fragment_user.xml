@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        style="@style/Habrachan.Light.Toolbar"
+        android:id="@+id/fragment_user_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightLL"
+        android:elevation="4dp"
+        app:menu="@menu/menu_user_options"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/fragment_user_avatar"
+        android:layout_width="@dimen/heightXLL"
+        android:layout_height="@dimen/heightXLL"
+        android:layout_marginTop="@dimen/dimenL"
+        android:layout_marginStart="@dimen/dimenL"
+        android:src="@drawable/ic_account_stub"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_toolbar"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/fragment_user_avatar_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/fragment_user_avatar"
+        app:layout_constraintStart_toStartOf="@id/fragment_user_avatar"
+        app:layout_constraintEnd_toEndOf="@id/fragment_user_avatar"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_user_avatar" />
+
+    <TextView
+        android:id="@+id/fragment_user_fullname_title"
+        style="@style/Habrachan.Text.Support"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_fullname"
+        android:layout_marginTop="@dimen/dimenL"
+        android:layout_marginStart="@dimen/dimenL"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_toolbar"
+        app:layout_constraintStart_toEndOf="@id/fragment_user_avatar" />
+
+    <TextView
+        style="@style/Habrachan.Text.Main"
+        android:id="@+id/fragment_user_fullname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimenL"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_fullname_title"
+        app:layout_constraintStart_toEndOf="@id/fragment_user_avatar" />
+
+    <TextView
+        android:id="@+id/fragment_user_registered_title"
+        style="@style/Habrachan.Text.Support"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_registered"
+        android:layout_marginTop="@dimen/dimenL"
+        android:layout_marginStart="@dimen/dimenL"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_fullname"
+        app:layout_constraintStart_toEndOf="@id/fragment_user_avatar" />
+
+    <TextView
+        style="@style/Habrachan.Text.Main"
+        android:id="@+id/fragment_user_registered"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimenL"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_registered_title"
+        app:layout_constraintStart_toEndOf="@id/fragment_user_avatar" />
+
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/fragment_user_counters_barrier"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="fragment_user_avatar, fragment_user_registered" />
+
+
+    <TextView
+        android:id="@+id/fragment_user_speciality"
+        style="@style/Habrachan.Text.Support"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimenL"
+        android:layout_marginTop="@dimen/dimenS"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_counters_barrier" />
+
+    <LinearLayout
+        android:id="@+id/fragment_user_counters"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightL"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:layout_marginTop="@dimen/dimenXS"
+        android:layout_marginHorizontal="@dimen/dimenS"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_speciality">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="bottom">
+
+            <TextView
+                style="@style/Habrachan.Text"
+                android:id="@+id/fragment_user_counters_karma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <TextView
+                style="@style/Habrachan.Text.Support"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/user_counter_karma" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="bottom">
+
+            <TextView
+                style="@style/Habrachan.Text"
+                android:id="@+id/fragment_user_counters_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <TextView
+                style="@style/Habrachan.Text.Support"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/user_counter_rating" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="bottom">
+
+            <TextView
+                style="@style/Habrachan.Text"
+                android:id="@+id/fragment_user_counters_followers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <TextView
+                style="@style/Habrachan.Text.Support"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/user_counter_followers" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="bottom">
+
+            <TextView
+                style="@style/Habrachan.Text"
+                android:id="@+id/fragment_user_counters_following"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <TextView
+                style="@style/Habrachan.Text.Support"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/user_counter_following" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/fragment_user_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <include
+        layout="@layout/layout_exception"
+        android:id="@+id/fragment_user_exception"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:visibility="gone"
+        android:id="@+id/fragment_user_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="fragment_user_registered, fragment_user_counters, fragment_user_registered_title, fragment_user_fullname, fragment_user_fullname_title, fragment_user_speciality" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

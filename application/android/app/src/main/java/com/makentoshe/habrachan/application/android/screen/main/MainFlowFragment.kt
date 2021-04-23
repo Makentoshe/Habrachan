@@ -49,34 +49,6 @@ class MainFlowFragment : CoreFragment() {
         return true
     }
 
-//    private fun setEmptyAccount(item: MenuItem) {
-//        item.setTitle(R.string.menu_account)
-//        item.setIcon(R.drawable.ic_account_outline)
-//    }
-//
-//    private fun setLoggedAccount(item: MenuItem) {
-//        setLoggedAccountAlt(item, sessionDatabase.me().get().login)
-//    }
-//
-//    private fun setLoggedAccountAlt(item: MenuItem, login: String) {
-//        item.title = login
-//        item.setIcon(R.drawable.ic_account)
-//    }
-//
-//    override fun onStart() {
-//        super.onStart()
-//        val logoutIntentFilter = IntentFilter(LogoutBroadcastReceiver.ACTION)
-//        requireContext().registerReceiver(logoutBroadcastReceiver, logoutIntentFilter)
-//        val loginIntentFilter = IntentFilter(LoginBroadcastReceiver.ACTION)
-//        requireContext().registerReceiver(loginBroadcastReceiver, loginIntentFilter)
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        requireContext().unregisterReceiver(logoutBroadcastReceiver)
-//        requireContext().unregisterReceiver(loginBroadcastReceiver)
-//    }
-
     class Arguments(fragment: MainFlowFragment): CoreFragment.Arguments(fragment) {
 
         var page: Int

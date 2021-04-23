@@ -84,6 +84,8 @@ dependencies {
     implementation(project(":library:network"))
     implementation(project(":library:network-native"))
 
+    implementation(project(":functional"))
+
     // OkHttp
     // https://github.com/square/okhttp/
     val okhttp = "4.1.0"

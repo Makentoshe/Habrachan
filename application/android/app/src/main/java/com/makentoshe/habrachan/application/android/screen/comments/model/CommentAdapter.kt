@@ -68,6 +68,10 @@ class CommentAdapter(
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
         }).setStubAvatar().setLevel(model.level)
 
+        holder.avatarView.setOnClickListener {
+            navigation.toUserScreen(model.comment.author.login)
+        }
+
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.requestAvatar(model.comment.avatar).collectLatest { result ->
                 result.onFailure { controller.setStubAvatar() }.onSuccess {

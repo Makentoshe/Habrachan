@@ -18,6 +18,7 @@
     <dimen name="textMS">12sp</dimen>
 
     <!-- Margins and Paddings -->
+    <dimen name="dimen5XL">36dp</dimen>
     <dimen name="dimen2XL">24dp</dimen>
     <dimen name="dimenXL">20dp</dimen>
     <dimen name="dimenL">16dp</dimen>
@@ -35,6 +36,7 @@
     <dimen name="heightL">48dp</dimen>
     <!-- Used at most for toolbars -->
     <dimen name="heightLL">56dp</dimen>
+    <dimen name="heightXLL">96dp</dimen>
     <dimen name="separator_height">1dp</dimen>
 
     <!-- Radius -->
