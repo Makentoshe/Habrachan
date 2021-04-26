@@ -9,7 +9,6 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.*
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.request.GetCommentsRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
@@ -39,7 +38,7 @@ class DiscussionCommentsViewModel(
 
     /** Replies for the [comment] */
     val comments = specChannel.consumeAsFlow().map { spec ->
-        val result = arena.suspendFetch(GetCommentsRequest(session, spec.articleId))
+        val result = arena.suspendFetch(arena.commentsManager.request(session, spec.articleId))
         val forest = CommentModelForest.build(result.getOrNull()!!)
 
         viewModelScope.launch(Dispatchers.IO) {

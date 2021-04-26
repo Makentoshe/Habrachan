@@ -5,12 +5,12 @@ import com.makentoshe.habrachan.entity.natives.Comment
 import com.makentoshe.habrachan.network.request.NativeGetCommentsRequest
 
 data class NativeGetCommentsResponse(
-    val request: NativeGetCommentsRequest,
-    val data: List<Comment>,
+    override val request: NativeGetCommentsRequest,
+    override val data: List<Comment>,
     val isCanComment: Boolean,
     val last: Int,
     val serverTime: String
-) {
+): GetCommentsResponse {
     class Factory(
         @SerializedName("data")
         val data: List<Comment>,

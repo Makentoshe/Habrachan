@@ -11,11 +11,9 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.ARTICL
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelElement
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsDataSource
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
-import com.makentoshe.habrachan.application.core.arena.Arena
+import com.makentoshe.habrachan.application.core.arena.comments.CommentsSourceFirstArena
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
-import com.makentoshe.habrachan.entity.natives.Comment
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.request.GetCommentsRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
@@ -26,7 +24,7 @@ import kotlinx.coroutines.plus
 
 class ArticleCommentsViewModel(
     private val session: UserSession,
-    private val arena: Arena<GetCommentsRequest, List<Comment>>,
+    private val arena: CommentsSourceFirstArena,
     avatarArena: ContentArena
 ) : CommentsViewModel(avatarArena, session) {
 
@@ -55,7 +53,7 @@ class ArticleCommentsViewModel(
 
     class Factory(
         private val session: UserSession,
-        private val commentsArena: Arena<GetCommentsRequest, List<Comment>>,
+        private val commentsArena: CommentsSourceFirstArena,
         private val avatarArena: ContentArena
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

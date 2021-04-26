@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.network.deserializer.NativeGetCommentsDeserializ
 import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.GetCommentsRequest2
 import com.makentoshe.habrachan.network.request.NativeGetCommentsRequest
+import com.makentoshe.habrachan.network.response.NativeGetCommentsResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
@@ -18,8 +19,8 @@ class NativeGetCommentsManager(
         return NativeGetCommentsRequest(userSession, articleId(articleId))
     }
 
-    override fun comments(request: NativeGetCommentsRequest) {
-        api.getComments(request.session.client, request.session.token, request.session.api, request.articleId.articleId).execute().fold({
+    override fun comments(request: NativeGetCommentsRequest) : Result<NativeGetCommentsResponse> {
+        return api.getComments(request.session.client, request.session.token, request.session.api, request.articleId.articleId).execute().fold({
             deserializer.body(request, it.string())
         }, {
             deserializer.error(request, it.string())
