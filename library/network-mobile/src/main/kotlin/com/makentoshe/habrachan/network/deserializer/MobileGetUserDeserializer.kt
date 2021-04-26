@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.network.deserializer
 import com.google.gson.Gson
 import com.makentoshe.habrachan.entity.mobiles.User
 import com.makentoshe.habrachan.network.exception.GetUserDeserializerException
+import com.makentoshe.habrachan.network.exceptions.MobileGetUserDeserializerException
 import com.makentoshe.habrachan.network.request.MobileGetUserRequest
 import com.makentoshe.habrachan.network.response.MobileGetUserResponse
 
@@ -16,6 +17,6 @@ class MobileGetUserDeserializer {
     }
 
     fun error(request: MobileGetUserRequest, json: String): Result<MobileGetUserResponse> {
-        return Result.failure(GetUserDeserializerException(request, json))
+        return Result.failure(MobileGetUserDeserializerException(request, json))
     }
 }
