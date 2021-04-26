@@ -1,13 +1,24 @@
 package com.makentoshe.habrachan.network.manager
 
+import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.NativeCommentsApi
 import com.makentoshe.habrachan.network.converter.ConverterException
 import com.makentoshe.habrachan.network.converter.convertCommentsSuccess
 import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.GetCommentsRequest
+import com.makentoshe.habrachan.network.request.GetCommentsRequest2
 import com.makentoshe.habrachan.network.response.GetCommentsResponse
+import com.makentoshe.habrachan.network.userSession
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+
+interface GetCommentsManager<Request: GetCommentsRequest2> {
+
+    fun request(userSession: UserSession, articleId: Int): Request
+
+    fun comments(request: Request)
+}
 
 // TODO refactor CommentsManager
 interface CommentsManager {
@@ -56,12 +67,3 @@ class NativeCommentsManager(private val api: NativeCommentsApi) : CommentsManage
 //        })
 //    }
 }
-
-// TODO move to network api tests
-//fun main() : Unit = runBlocking {
-//    val userSession = userSession("85cab69095196f3.89453480", "173984950848a2d27c0cc1c76ccf3d6d3dc8255b")
-//    val commentsRequest = GetCommentsRequest(userSession, 442440)
-//    val manager = CommentsManager.Factory(OkHttpClient()).native()
-//    val response = manager.getComments(commentsRequest)
-//    println(response)
-//}
