@@ -112,5 +112,6 @@
     <string name="user_counter_rating">Rating</string>
     <string name="user_counter_followers">Followers</string>
     <string name="user_counter_following">Following</string>
+    <string name="fragment_login_password_recovery">Forgot password?</string>
 
 </resources>
