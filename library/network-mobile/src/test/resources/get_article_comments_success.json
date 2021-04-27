@@ -1,0 +1,614 @@
+{
+  "comments": {
+    "19831270": {
+      "id": "19831270",
+      "parentId": null,
+      "level": 0,
+      "timePublished": "2019-03-03T14:56:56+00:00",
+      "timeChanged": "2019-03-03T15:03:06+00:00",
+      "isSuspended": false,
+      "score": 1,
+      "votesCount": 1,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">По мне anko неудобно по причине отсутствия адекватного превью, который будет нормально работать и без билда. Так все супер, но это большой недостаток, который мешает просто пипец как работать<br/></div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1103690",
+        "alias": "androidovshchik",
+        "fullname": "Влад",
+        "avatarUrl": null,
+        "speciality": null
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19831502": {
+      "id": "19831502",
+      "parentId": null,
+      "level": 0,
+      "timePublished": "2019-03-03T16:19:00+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Я тоже использовал anko… Мне не нравилось разнесенный в java ui и логика… анко этот вопрос решала.<br/>\r\nНо билделось очень долго.<br/>\r\n(А потом появился flutter.)</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1317526",
+        "alias": "irbis_al",
+        "fullname": "Александр",
+        "avatarUrl": null,
+        "speciality": "Пользователь"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19831736",
+        "19844548"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19831736": {
+      "id": "19831736",
+      "parentId": "19831502",
+      "level": 1,
+      "timePublished": "2019-03-03T17:48:35+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 2,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ой да ладно<br/>\r\nПрям уж flutter взошел на олимп, нафиг нам нужен kotlin/native sdk (нет)<br/>\r\nСырой он еще, чтобы что-то серьезное делать как ни крути</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1103690",
+        "alias": "androidovshchik",
+        "fullname": "Влад",
+        "avatarUrl": null,
+        "speciality": null
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19844546"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19841482": {
+      "id": "19841482",
+      "parentId": null,
+      "level": 0,
+      "timePublished": "2019-03-06T06:15:06+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Удобно ли через Anko делаеть более сложный интерфейс и под разные ориентации дисплея? </p></div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "752405",
+        "alias": "Geminix",
+        "fullname": "Александр Голдобин",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/259/241/dad/259241dad0ae5903be5f6f98d8a3d9d5.png",
+        "speciality": "Android, Vue.js разработчик"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19844602"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19844546": {
+      "id": "19844546",
+      "parentId": "19831736",
+      "level": 2,
+      "timePublished": "2019-03-06T15:00:33+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Знаете, скорее не сырой, а молодой, но его вполне можно использовать, или хотя бы стоит к нему присмотреться.<br/>\r\nКасательно kotlin native: пока полная тишина.<br/></div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1988151",
+        "alias": "piconst",
+        "fullname": null,
+        "avatarUrl": null,
+        "speciality": null
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19844548": {
+      "id": "19844548",
+      "parentId": "19831502",
+      "level": 1,
+      "timePublished": "2019-03-06T15:00:39+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Flutter не интегрируешь в готовый, протестированный ентерпрайз, мед.проекты(где нужна полная стабильность).</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1591877",
+        "alias": "goodvin1709",
+        "fullname": "Dmitry",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/8bd/ca0/c91/8bdca0c91b4b88e1ca14acb072d4de98.jpg",
+        "speciality": "Android Developer"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19844550": {
+      "id": "19844550",
+      "parentId": null,
+      "level": 0,
+      "timePublished": "2019-03-06T15:00:48+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Программное написание интерфейса это какая то дичь мазохистская, через пару месяцев сам не поймешь где какой элемент описывается, если у экрана больше 10 контролов. В статье какой то Brainkuck… Пока вы на своем котлине будете одну кнопку через 5 фабрик описывать с корутинами и лямбдами, на 1С уже мышкой накидается готовое приложение <img src=\"/img/image-loader.svg\" alt=\"image\" data-src=\"https://habrastorage.org/getpro/habr/comment_images/084/a7b/c0a/084a7bc0a887a60eee7455cf6b38cd67.png\"/></div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1176754",
+        "alias": "vidyakinsergey",
+        "fullname": "Сергей В.",
+        "avatarUrl": null,
+        "speciality": "Программист 1С"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19845418",
+        "19845664"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19844602": {
+      "id": "19844602",
+      "parentId": "19841482",
+      "level": 1,
+      "timePublished": "2019-03-06T15:07:33+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>К сожалению, не могу судить по этому поводу. Тут уж каждому по разному. С одной стороны верстка xml более наглядна, благодаря тому же WYSIWYG. Но с другой, Kotlin позволяет удобно разбить UI на классы, оборачивать их и т.д.<br/>\r\nНасчет ориентации экрана, возможно, <a href=\"https://github.com/Kotlin/anko/blob/acb7e606dfca0ebd5becf04b93c5b932e9575246/anko/library/static/commons/src/main/java/Helpers.kt#L96\">такой метод</a> покажется Вам удобным.</p></div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1961555",
+        "alias": "Makentoshe",
+        "fullname": "Хвостов Максим",
+        "avatarUrl": null,
+        "speciality": "Неполноценный разработчик"
+      },
+      "isAuthor": false,
+      "isPostAuthor": true,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19845418": {
+      "id": "19845418",
+      "parentId": "19844550",
+      "level": 1,
+      "timePublished": "2019-03-06T18:30:46+00:00",
+      "timeChanged": "2019-03-06T18:33:10+00:00",
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Смотря как писать<br/>\r\nЕсли придерживаться адекватной архитектуры и без говнокода, то все ок даже на крупных проектах<br/>\r\nЧто-то слабо верится в идиллию с конструктором вашим<br/>\r\nПростой пример, если понадобится какая-н. мелочь, допустим кружок над иконкой нарисовать с счетчиком уведомлений, как вы это сделаете своим конструктором?)<br/>\r\nПо-моему, все очевидно, да и к тому же в чужом коде (он должен быть сгенерированным у конструктора) разбираться то еще удовольствие и ни факт, что получится, либо придется костылить (что вероятнее, если код большой)<br/>\r\nДеньги разрабам не так просто платят, уж поверьте<br/>\r\nПотому что далеко с конструктором не уйдешь<br/>\r\nНо я верю, что скоро они по умнеют (ии и прочее), вот тогда начнется веселье</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1103690",
+        "alias": "androidovshchik",
+        "fullname": "Влад",
+        "avatarUrl": null,
+        "speciality": null
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19845460"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19845460": {
+      "id": "19845460",
+      "parentId": "19845418",
+      "level": 2,
+      "timePublished": "2019-03-06T18:46:48+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><blockquote>кружок над иконкой нарисовать с счетчиком уведомлений</blockquote>Имеете в виду бейдж? Такого в 1С нет, да. Но это вопрос UX/UI и «шашечек или ехать» — можно вывести уведомления на главный экран, верхнюю/нижнюю панельку, можно исхиртиться заранее заготовленными иконками (1,2,3,4,5+) и т.д. Главное что рабочее приложение интегрированное с бэкэндами фирмы будет готово за неделю и бизнес ощутит пользу.<br/>\r\nДля игрушек и низкоуровневых приложений — Java/Kotlin, для бизнеса и работы с данными — 1С выходит на сцену ))<br/>\r\nКстати у 1С нет сгенерированного UI-кода, только визуальный конструктор ) Но можно и хардкорно элементы кодом добавлять</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1176754",
+        "alias": "vidyakinsergey",
+        "fullname": "Сергей В.",
+        "avatarUrl": null,
+        "speciality": "Программист 1С"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19845508"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19845508": {
+      "id": "19845508",
+      "parentId": "19845460",
+      "level": 3,
+      "timePublished": "2019-03-06T18:59:38+00:00",
+      "timeChanged": "2019-03-06T19:00:30+00:00",
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ну для внутреннего пользования может и не надо таких ухищрений, подойдет и набор из коробки<br/>\r\nДизайнеры они такие, могут такое придумать, что без натива будет сложно реализовать<br/>\r\nДля бизнеса видимо реально проще брать готовые решения, чем пилить велосипед, который может и не поехать в итоге или сломаться на середине пути или еще что-н.))</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1103690",
+        "alias": "androidovshchik",
+        "fullname": "Влад",
+        "avatarUrl": null,
+        "speciality": null
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19845664": {
+      "id": "19845664",
+      "parentId": "19844550",
+      "level": 1,
+      "timePublished": "2019-03-06T19:34:27+00:00",
+      "timeChanged": "2019-03-06T19:42:57+00:00",
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ну ну. Писал я на 1с, вроде наше приложение какой то там конкурс выиграло, в магните 2к пользователей используют. Кастома по визуальной части ноль. Полный ноль. Хочешь кастомный интерфейс — html, и то там проблемы и например дравер или тулбар не кастомизируешь. После 1с перешел на котлин и понимаю какие то были мучения. Ну и да, гигантское количество библиотек (в отличии от 1с) — позволяют довольно быстро пилить довольно сильные вещи.<br/>\r\n<br/>\r\nЗ.Ы. Если говорить в целом к тому же — в андроиде вполне есть WYSIWYG редактор интерфейса. Впрочем концептуально как раз создание внешнего вида из кода мне больше нравится, про anko не скажу, активно не трогал, но то что сделали во флаттере мне понравилось когда пощупал немного.</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "491702",
+        "alias": "Neikist",
+        "fullname": "Kirill Vlasov",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/e6f/3ef/ad0/e6f3efad0c90057a56971fd1718e9b9a.jpg",
+        "speciality": "Android developer"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19845716"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19845716": {
+      "id": "19845716",
+      "parentId": "19845664",
+      "level": 2,
+      "timePublished": "2019-03-06T19:49:20+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Какие например кастомные доработки UI прям жизненно были необходимы в корпоративном приложении? Может просто непривычно что «не тру-Материал» интерфейс и хотелось привычных контролов? Вы писали на старой мобильной платформе или на новой после 8.3.6? Сейчас много добавилось — звук, push, гео, печать, монетизация, отчеты.<br/>\r\nТут надо конечно осознавать возможности и оценивать требования — важнее визуальность или функциональность+скорость.</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1176754",
+        "alias": "vidyakinsergey",
+        "fullname": "Сергей В.",
+        "avatarUrl": null,
+        "speciality": "Программист 1С"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19845780"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19845780": {
+      "id": "19845780",
+      "parentId": "19845716",
+      "level": 3,
+      "timePublished": "2019-03-06T20:08:59+00:00",
+      "timeChanged": "2019-03-06T20:21:25+00:00",
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Начинался проект на 8.3.8 где то, когда заканчивался актуальная 8.3.12 была.<br/>\r\nЕсли говорить про UI то проблем много было, не сделать на каждый элемент списка свои элементы управления от условий, сами элементы списков почти не кастомизируются, нужно было рисовать деревья в ТЧ и они на МП выглядели ужасно плюс очень часто приходилось говорить что вот так 1сный контрол не кастомизируются и это очень заказчика напрягало. Это конкретно то что было проблемами для нас, но там и изысков в интерфейсе не сказать что много требовалось.<br/>\r\nЕсли говорить не про UI — нет работы в фоне (нет аналога нативных механизмов позволяющий к примеру обновления проверять или записывать местоположение даже после перезагрузки устройства или убийства приложения), нет возможности встроить сторонний SDK (СИБ заказчика требовал например через сторонний SDK делать канал связи шифрованный, шифровать базу, иметь возможность удаленно данные вайпнуть, на рут проверять и еще кучу всего). В итоге реализовали это все только частично через аж два нативных приложения рядом и примерно 7-9 месяцев бодались с СИБ чтобы они вообще позволили приложение запустить в прод. Еще что то было, но уже и не помню даже.<br/>\r\n<br/>\r\nЕще дополню, вы почему то так написали что функциональности с 1с будет больше и скорость работы будет выше, но это ведь не так. По всем трем пунктам нативная разработка заметно обгоняет 1с.</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "491702",
+        "alias": "Neikist",
+        "fullname": "Kirill Vlasov",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/e6f/3ef/ad0/e6f3efad0c90057a56971fd1718e9b9a.jpg",
+        "speciality": "Android developer"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19846190"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19846190": {
+      "id": "19846190",
+      "parentId": "19845780",
+      "level": 4,
+      "timePublished": "2019-03-06T23:33:16+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Скорость я имел в виду разработки а не работы, хотя и работа не медленная совсем. Функциональности больше «из коробки» — у вас сразу есть СУБД и «ORM», визуальный конструктор форм, построение отчетов, полная кроссплатформенность. Внешние компоненты можно писать на C++ и Java. Криптография появилась в 2017 году. Геозоны, обработка двоичных данных, нативная поддержка многооконности — тоже в 2017 в 8.3.10. Удаленно вайпнуть тоже не проблема, по пушу с секретной командой.<br/>\r\n<br/>\r\nВ общем, 90% потребностей платформа покрывает, остальное можно сделать нативным приложением-службой и общаться с ним. Или внешней компонентой.<br/>\r\nНа ютубе есть презентация с кейсами, там есть примеры как пара 1сников за 2 недели делали для целых заводов приложение и оно работало везде. Если делать нативно — надо привлечь Android+iOS разработчиков, делать свой бэкенд и интеграцию с 1С, потом все это поддерживать… На такое только крупные холдинги решаются, а на 1С можно запилить свое приложение для любого мелкого бизнеса, только идеи подавай</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1176754",
+        "alias": "vidyakinsergey",
+        "fullname": "Сергей В.",
+        "avatarUrl": null,
+        "speciality": "Программист 1С"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19846548"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19846548": {
+      "id": "19846548",
+      "parentId": "19846190",
+      "level": 5,
+      "timePublished": "2019-03-07T05:07:03+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><blockquote>сразу есть СУБД и «ORM»</blockquote><br/>\r\nRoom или какой нибудь realm подключаются в два чиха. А в том же руме, хоть это и не очень хорошо, можно прям модельки для ретрофита хранить, что позволяет не задумываться о маппинге сеть&lt;->субд объекты.<br/>\r\n<blockquote> визуальный конструктор форм</blockquote><br/>\r\nЕсть в нативном андроиде, во флаттере же есть hot reload или flutter studio. И да, визуальный редактор нормальный для 1с только где то год как появился, до этого реальную форму без запуска не увидеть было.<br/>\r\n<blockquote>построение отчетов</blockquote> — тут пока не знаю, не было необходимости поэтому с библиотеками для всяких диаграмм/таблиц не сильно пока разбирался. Впрочем например в приложении для магнита на 1с у нас отчетов не было.<br/>\r\n<blockquote>полная кроссплатформенность</blockquote><br/>\r\nФлаттер запускается под ios и под андроид, при этом имеет на 99% выглядящий нативным для каждой платформы интерфейс и очень широкие возможности по взаимодействию с нативным кодом.<br/>\r\n<blockquote>Внешние компоненты можно писать на C++ и Java.</blockquote><br/>\r\nУ вас был опыт? Потому что по факту это разве что для работы с железом годиться, какой нибудь SDK сторонний не встроить например.<br/>\r\n<blockquote>Удаленно вайпнуть тоже не проблема, по пушу с секретной командой.</blockquote><br/>\r\nВот только есть нюанс, код выполнится только после того как пользователь на этот пуш нажмет, не раньше. Не говоря уж что например в случае магнита телефон только во внутренней сети изначально должен был работать, без доступа к интернету с FCM.<br/>\r\n<blockquote>90% потребностей платформа покрывает</blockquote><br/>\r\nПо факту процентов 50-60. И то только для b2b, в b2c сегменте к тому же дизайну требований гораздо больше.<br/>\r\n<blockquote>остальное можно сделать нативным приложением-службой и общаться с ним. Или внешней компонентой.</blockquote> И нет, выше писал — не всегда это прокатывает. Тем более это опять же только b2b, для b2c такое решение не подойдет.<br/>\r\n<blockquote>На ютубе есть презентация с кейсами, там есть примеры как пара 1сников за 2 недели делали для целых заводов приложение и оно работало везде.</blockquote><br/>\r\nМой нынешний коллега подрабатывал до текущего места работы фрилансом и он аналогично собирал простые приложения из готовых библиотек за несколько дней/пару недель. Это только кажется что разработка на 1с сильно быстрее, по факту выигрыш только в самом начале и то потом он начинает исчезать. Не говоря уж про то что если нужно сложное приложение — на 1с можно его из за отсутствия тех же готовых библиотек даже дольше писать. Да и вообще большая часть времени это написание и модификация бизнес логики, например то же приложение для магнита в сумме делалось наверно 1к-2к+ человекочасов.<br/>\r\n<blockquote>Если делать нативно — надо привлечь Android+iOS разработчиков, делать свой бэкенд и интеграцию с 1С, потом все это поддерживать…</blockquote><br/>\r\nДаже если забыть о флаттере и писать чистый натив — на кой черт отдельный бек с интеграцией с 1с? Если можно апи сразу в 1с сделать.<br/>\r\n<blockquote>На такое только крупные холдинги решаются, а на 1С можно запилить свое приложение для любого мелкого бизнеса, только идеи подавай</blockquote><br/>\r\nНу ну, не забывайте что мелкому бизнесу кроме того чтобы потратиться на разработку (а это скорее всего франч будет с их ценниками) еще нужно будет купить лицензии. При этом какой нибудь фрилансер мелкое приложение на нативе точно так же за неделю сделает и никаких лицензий не нужно будет.</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "491702",
+        "alias": "Neikist",
+        "fullname": "Kirill Vlasov",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/e6f/3ef/ad0/e6f3efad0c90057a56971fd1718e9b9a.jpg",
+        "speciality": "Android developer"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19865436": {
+      "id": "19865436",
+      "parentId": null,
+      "level": 0,
+      "timePublished": "2019-03-11T12:37:06+00:00",
+      "timeChanged": null,
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><blockquote>Room или какой нибудь realm подключаются в два чиха</blockquote>А там есть сразу уровень документов, справочников со спецификой этих объектов? Или надо самому написать слой абстракции для каждого вида сущностей? Или постоянно голыми таблицами/классами оперировать? <blockquote>визуальный редактор нормальный для 1с только где то год как появился, до этого реальную форму без запуска не увидеть было</blockquote>Это откуда такие познания?? Аж посмеялся ) В 1С изначально с 1996 (?) года был визуальный конструктор <blockquote>визуальный редактор… Есть в нативном андроиде</blockquote>Ну там какая то смесь из визуального редактора и XML-кода, если туда неправильно влезть, визуальный просмотр крашится. К тому же что-то не припомню, чтоб визуальный редактор был соединен с ОRM и ты мог мышкой на форму таскать поля объекта БД. Нативно можно делать приложения типа как 1С, но надо уметь работать со стеком разных продуктов и написать себе мини-ядро для удобной абстракции бизнес-логики. Дальше пойдет быстрее, но это будет свой велосипед, применяемый в рамках студии/разработчика, надо писать к нему документацию, тесты и т.д.</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1176754",
+        "alias": "vidyakinsergey",
+        "fullname": "Сергей В.",
+        "avatarUrl": null,
+        "speciality": "Программист 1С"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19866984"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19866984": {
+      "id": "19866984",
+      "parentId": "19865436",
+      "level": 1,
+      "timePublished": "2019-03-11T17:23:51+00:00",
+      "timeChanged": "2019-03-11T17:25:30+00:00",
+      "isSuspended": false,
+      "score": 0,
+      "votesCount": 0,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><blockquote>Это откуда такие познания?? Аж посмеялся ) В 1С изначально с 1996 (?) года был визуальный конструктор </blockquote><br/>\r\nМожет вы забыли, но мы про мобильную платформу сейчас, а для нее редактор появился только недавно.<br/>\r\n<blockquote>К тому же что-то не припомню, чтоб визуальный редактор был соединен с ОRM и ты мог мышкой на форму таскать поля объекта БД.</blockquote><br/>\r\nНе совсем в том виде, но есть data binding+view-model позволяющий практически то же самое. Дополню еще только что нормальным подходом маппить модель из БД или сети на вью слой — считается насколько я знаю только на маленьких проектах. На крупных проектах обычно их наоборот разнести стараются чтобы слои разделить.<br/>\r\n<blockquote>А там есть сразу уровень документов, справочников со спецификой этих объектов?</blockquote><br/>\r\nВот только в 1с выйти за пределы «документов, справочников» и не выйдет особо. Архитектура и решения прибиты гвоздями.<br/>\r\n<blockquote>можно делать приложения типа как 1С, но надо уметь работать со стеком разных продуктов и написать себе мини-ядро для удобной абстракции бизнес-логики. </blockquote><br/>\r\nМыслите шире, приложения «типа как 1С» — не сказать что прям широченная сфера деятельности.</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "491702",
+        "alias": "Neikist",
+        "fullname": "Kirill Vlasov",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/e6f/3ef/ad0/e6f3efad0c90057a56971fd1718e9b9a.jpg",
+        "speciality": "Android developer"
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [
+        "19882394"
+      ],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    },
+    "19882394": {
+      "id": "19882394",
+      "parentId": "19866984",
+      "level": 2,
+      "timePublished": "2019-03-14T09:22:48+00:00",
+      "timeChanged": "2019-03-14T09:25:00+00:00",
+      "isSuspended": false,
+      "score": 1,
+      "votesCount": 1,
+      "message": "<div xmlns=\"http://www.w3.org/1999/xhtml\">По-моему, на вкус и цвет товарищей нет. Нравится и удобнее 1C — вперед. У каждой платформы есть свои плюсы и минусы, вопрос только — какая меньше боли принесет при разработке и поддержки (каждый сам решает)</div>",
+      "editorVersion": 1,
+      "author": {
+        "id": "1103690",
+        "alias": "androidovshchik",
+        "fullname": "Влад",
+        "avatarUrl": null,
+        "speciality": null
+      },
+      "isAuthor": false,
+      "isPostAuthor": false,
+      "isNew": false,
+      "isFavorite": false,
+      "isCanEdit": false,
+      "timeEditAllowedTill": null,
+      "children": [],
+      "vote": {
+        "value": null,
+        "isCanVote": false
+      }
+    }
+  },
+  "moderated": {},
+  "threads": [
+    "19831270",
+    "19831502",
+    "19841482",
+    "19844550",
+    "19865436"
+  ],
+  "commentAccess": {
+    "isCanComment": false,
+    "cantCommentReasonKey": "AUTH_REQUIRED",
+    "cantCommentReason": "Authorization required"
+  },
+  "lastCommentTimestamp": 1552555368
+}

@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 class CommentDiffUtilItemCallback : DiffUtil.ItemCallback<CommentModelElement>() {
 
     override fun areItemsTheSame(oldItem: CommentModelElement, newItem: CommentModelElement): Boolean {
-        return oldItem.comment.id == newItem.comment.id
+        return oldItem.comment.commentId == newItem.comment.commentId
     }
 
     override fun areContentsTheSame(oldItem: CommentModelElement, newItem: CommentModelElement): Boolean {

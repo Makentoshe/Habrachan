@@ -11,7 +11,7 @@ class CommentsDataSource(
 ) : PagingSource<CommentsSpec, CommentModelElement>() {
 
     override suspend fun load(params: LoadParams<CommentsSpec>): LoadResult<CommentsSpec, CommentModelElement> {
-        return arena.suspendFetch(arena.commentsManager.request(session, params.key!!.articleId)).fold({ comments ->
+        return arena.suspendFetch(arena.articleCommentsManager.request(session, params.key!!.articleId)).fold({ comments ->
             LoadResult.Page(CommentModelForest.build(comments).collect(levelRange), null, null, 0, 0)
         }, {
             LoadResult.Error(it)

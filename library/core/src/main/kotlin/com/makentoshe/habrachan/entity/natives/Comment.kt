@@ -1,41 +1,42 @@
 package com.makentoshe.habrachan.entity.natives
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.entity.Comment
 import java.text.SimpleDateFormat
 import java.util.*
 
 data class Comment(
     @SerializedName("id")
-    val id: Int,
+    override val commentId: Int,
     @SerializedName("author")
-    val author: CommentAuthor,
+    override val author: CommentAuthor,
     @SerializedName("avatar")
     val avatar: String,
     @SerializedName("isAuthor")
-    val isAuthor: Boolean,
+    override val isAuthor: Boolean,
     @SerializedName("is_can_vote")
-    val isCanVote: Boolean,
+    override val isCanVote: Boolean,
     @SerializedName("is_favorite")
-    val isFavorite: Boolean,
+    override val isFavorite: Boolean,
     @SerializedName("level")
-    val level: Int,
+    override val level: Int,
     @SerializedName("message")
-    val message: String,
+    override val message: String,
     @SerializedName("parent_id")
-    val parentId: Int,
+    override val parentId: Int,
     @SerializedName("score")
-    val score: Int,
+    override val score: Int,
     @SerializedName("thread")
     val thread: Int,
     @SerializedName("time_changed")
-    val timeChanged: String?,
+    override val timeChangedRaw: String?,
     @SerializedName("time_published")
-    val timePublishedRaw: String
+    override val timePublishedRaw: String
 
 //    @Embedded(prefix = "any_")
 //    @SerializedName("vote")
 //    val vote: Any?,
-) {
+): Comment {
 
     val timePublished: Date
         get() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(timePublishedRaw)

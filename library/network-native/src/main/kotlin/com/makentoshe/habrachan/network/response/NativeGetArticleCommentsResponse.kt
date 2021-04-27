@@ -2,15 +2,15 @@ package com.makentoshe.habrachan.network.response
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.natives.Comment
-import com.makentoshe.habrachan.network.request.NativeGetCommentsRequest
+import com.makentoshe.habrachan.network.request.NativeGetArticleCommentsRequest
 
-data class NativeGetCommentsResponse(
-    override val request: NativeGetCommentsRequest,
+data class NativeGetArticleCommentsResponse(
+    override val request: NativeGetArticleCommentsRequest,
     override val data: List<Comment>,
     val isCanComment: Boolean,
     val last: Int,
     val serverTime: String
-): GetCommentsResponse {
+): GetArticleCommentsResponse {
     class Factory(
         @SerializedName("data")
         val data: List<Comment>,
@@ -21,8 +21,8 @@ data class NativeGetCommentsResponse(
         @SerializedName("server_time")
         val serverTime: String
     ) {
-        fun build(request: NativeGetCommentsRequest): NativeGetCommentsResponse {
-            return NativeGetCommentsResponse(request, data, isCanComment, last, serverTime)
+        fun build(request: NativeGetArticleCommentsRequest): NativeGetArticleCommentsResponse {
+            return NativeGetArticleCommentsResponse(request, data, isCanComment, last, serverTime)
         }
     }
 }

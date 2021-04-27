@@ -5,21 +5,20 @@ import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.NativeCommentsApi
 import com.makentoshe.habrachan.network.deserializer.NativeGetCommentsDeserializer
 import com.makentoshe.habrachan.network.fold
-import com.makentoshe.habrachan.network.request.GetCommentsRequest2
-import com.makentoshe.habrachan.network.request.NativeGetCommentsRequest
-import com.makentoshe.habrachan.network.response.NativeGetCommentsResponse
+import com.makentoshe.habrachan.network.request.NativeGetArticleCommentsRequest
+import com.makentoshe.habrachan.network.response.NativeGetArticleCommentsResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-class NativeGetCommentsManager(
+class NativeGetArticleCommentsManager(
     private val api: NativeCommentsApi, private val deserializer: NativeGetCommentsDeserializer
-) : GetCommentsManager<NativeGetCommentsRequest> {
+) : GetArticleCommentsManager<NativeGetArticleCommentsRequest> {
 
-    override fun request(userSession: UserSession, articleId: Int): NativeGetCommentsRequest {
-        return NativeGetCommentsRequest(userSession, articleId(articleId))
+    override fun request(userSession: UserSession, articleId: Int): NativeGetArticleCommentsRequest {
+        return NativeGetArticleCommentsRequest(userSession, articleId(articleId))
     }
 
-    override fun comments(request: NativeGetCommentsRequest) : Result<NativeGetCommentsResponse> {
+    override suspend fun comments(request: NativeGetArticleCommentsRequest) : Result<NativeGetArticleCommentsResponse> {
         return api.getComments(request.session.client, request.session.token, request.session.api, request.articleId.articleId).execute().fold({
             deserializer.body(request, it.string())
         }, {
@@ -33,6 +32,6 @@ class NativeGetCommentsManager(
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
 
-        fun build() = NativeGetCommentsManager(getRetrofit().create(NativeCommentsApi::class.java), deserializer)
+        fun build() = NativeGetArticleCommentsManager(getRetrofit().create(NativeCommentsApi::class.java), deserializer)
     }
 }

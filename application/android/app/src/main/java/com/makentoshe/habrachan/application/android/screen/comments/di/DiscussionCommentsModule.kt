@@ -16,9 +16,9 @@ import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.Di
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.manager.GetCommentsManager
+import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
 import com.makentoshe.habrachan.network.manager.GetContentManager
-import com.makentoshe.habrachan.network.request.GetCommentsRequest2
+import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 import okhttp3.OkHttpClient
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -41,7 +41,7 @@ class DiscussionCommentsModule(fragment: DiscussionCommentsFragment): Module() {
     private val database by inject<AndroidCacheDatabase>()
 
     private val getContentManager by inject<GetContentManager>()
-    private val getCommentsManager by inject<GetCommentsManager<GetCommentsRequest2>>()
+    private val getCommentsManager by inject<GetArticleCommentsManager<GetArticleCommentsRequest>>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)

@@ -84,7 +84,7 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentModelBlank) {
-        BlockViewController(holder).setLevel(model.level).setBody(model.count, model.comment.id) {
+        BlockViewController(holder).setLevel(model.level).setBody(model.count, model.comment.commentId) {
             navigation.toDiscussionCommentsFragment(it)
         }
     }

@@ -49,7 +49,7 @@ class CommentModelForest private constructor(val nodes: List<CommentModelNode>) 
     val roots = nodes.filter { model -> model.comment.parentId == 0 }
 
     fun findNodeByCommentId(id: Int): CommentModelNode? {
-        return nodes.find { it.comment.id == id }
+        return nodes.find { it.comment.commentId == id }
     }
 
     // At now we trust the source: the nodes is already sorted, but we should
@@ -73,7 +73,7 @@ class CommentModelForest private constructor(val nodes: List<CommentModelNode>) 
      * [levelDepth] local depth. The 0 equals the comment's level value.
      */
     fun collect(id: Int, levelDepth: Int): List<CommentModelElement> {
-        val node = nodes.find { it.comment.id == id } ?: throw NoSuchElementException()
+        val node = nodes.find { it.comment.commentId == id } ?: throw NoSuchElementException()
 
         val minLevel = node.comment.level
         val minLevelCollect = collectRecursive(node, minLevel)
@@ -117,14 +117,14 @@ class CommentModelForest private constructor(val nodes: List<CommentModelNode>) 
         // if they have - add to changes map
         nodes.forEach { node ->
             if (node.comment.level == maxLevelDepth && node.childs.isNotEmpty()) {
-                changes[node.comment.id] = CommentModelBlank(node.comment, node.count(), node.level + 1)
+                changes[node.comment.commentId] = CommentModelBlank(node.comment, node.count(), node.level + 1)
             }
         }
 
         // joining nodes and changes together
         val elements = LinkedList<CommentModelElement>(nodes)
         changes.entries.forEach { entry ->
-            val index = elements.indexOf(elements.find { it.comment.id == entry.key })
+            val index = elements.indexOf(elements.find { it.comment.commentId == entry.key })
             elements.add(index + 1, entry.value)
         }
 
@@ -134,7 +134,7 @@ class CommentModelForest private constructor(val nodes: List<CommentModelNode>) 
     companion object {
         fun build(comments: List<Comment>): CommentModelForest {
             val models = comments.map { CommentModelNode(it, it.level) }
-            val map = comments.map { it.id }.zip(models).toMap()
+            val map = comments.map { it.commentId }.zip(models).toMap()
             models.forEach { model ->
                 model.parent = map[model.comment.parentId]
                 model.parent?.childs?.add(model)

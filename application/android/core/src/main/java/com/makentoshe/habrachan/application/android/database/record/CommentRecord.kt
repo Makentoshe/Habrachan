@@ -45,7 +45,7 @@ data class CommentRecord(
     constructor(article: Article, comment: Comment) : this(article.id, comment)
 
     constructor(articleId: Int, comment: Comment) : this(
-        comment.id,
+        comment.commentId,
         CommentAuthorRecord(comment.author),
         comment.avatar,
         comment.isAuthor,
@@ -56,7 +56,7 @@ data class CommentRecord(
         comment.parentId,
         comment.score,
         comment.thread,
-        comment.timeChanged,
+        comment.timeChangedRaw,
         comment.timePublishedRaw,
         articleId
     )
