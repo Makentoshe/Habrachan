@@ -47,12 +47,7 @@ class ArticlesFlowFragment : CoreFragment() {
             tab.text = arguments.specs[position].title()
         }.attach()
 
-        if (androidUserSession.isLoggedIn) {
-            fragment_flow_articles_toolbar.setNavigationIcon(R.drawable.ic_account)
-        } else {
-            fragment_flow_articles_toolbar.setNavigationIcon(R.drawable.ic_account_outline)
-        }
-
+        if (androidUserSession.isLoggedIn) updateToolbarLogin() else updateToolbarLogout()
         fragment_flow_articles_toolbar.setNavigationOnClickListener {
             if (androidUserSession.isLoggedIn) navigation.navigateToUser() else navigation.navigateToLogin()
         }
@@ -60,15 +55,21 @@ class ArticlesFlowFragment : CoreFragment() {
         lifecycleScope.launch {
             applicationStateBroadcastReceiver.applicationStateChannel.receiveAsFlow().collect { state ->
                 when (state) {
-                    ApplicationState.SignOut -> {
-                        fragment_flow_articles_toolbar.setNavigationIcon(R.drawable.ic_account_outline)
-                    }
-                    ApplicationState.SignIn -> {
-                        fragment_flow_articles_toolbar.setNavigationIcon(R.drawable.ic_account)
-                    }
+                    ApplicationState.SignOut -> updateToolbarLogout()
+                    ApplicationState.SignIn -> updateToolbarLogin()
                 }
             }
         }
+    }
+
+    private fun updateToolbarLogout() {
+        fragment_flow_articles_toolbar.setNavigationIcon(R.drawable.ic_account_outline)
+        fragment_flow_articles_toolbar.setTitle(R.string.app_name)
+    }
+
+    private fun updateToolbarLogin() {
+        fragment_flow_articles_toolbar.setNavigationIcon(R.drawable.ic_account)
+        fragment_flow_articles_toolbar.title = androidUserSession.user?.login ?: getString(R.string.app_name)
     }
 
     private fun SpecType.title(): String = when (this) {
