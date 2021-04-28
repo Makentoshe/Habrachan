@@ -19,8 +19,8 @@ android {
         applicationId = "com.makentoshe.habrachan"
         minSdkVersion(21)
         targetSdkVersion(29)
-        versionCode = 5
-        versionName = "0.4.0"
+        versionCode = 6
+        versionName = "0.5.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         var token = ""
