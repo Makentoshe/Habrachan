@@ -72,6 +72,8 @@ class LoginFragment : CoreFragment() {
                     ApplicationStateBroadcastReceiver.signIn(requireActivity())
                     navigation.toUserScreen(response.user)
                 }, { throwable ->
+                    fragment_login_button.visibility = View.VISIBLE
+                    fragment_login_progress.visibility = View.INVISIBLE
                     if (throwable is LoginResponseException && throwable.other != null) {
                         fragment_login_password.error = getString(R.string.login_account_error)
                     } else {
