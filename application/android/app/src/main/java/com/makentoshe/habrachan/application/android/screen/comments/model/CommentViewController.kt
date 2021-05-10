@@ -2,15 +2,14 @@ package com.makentoshe.habrachan.application.android.screen.comments.model
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
 import com.makentoshe.habrachan.application.android.time
-import com.makentoshe.habrachan.entity.natives.Comment
+import com.makentoshe.habrachan.entity.Comment
+import com.makentoshe.habrachan.entity.timePublished
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.ImagesPlugin
@@ -86,7 +85,7 @@ class CommentViewController(private val holder: CommentViewHolder, navigation: C
     }
 
     fun setAvatar(drawable: Drawable): CommentViewController {
-        Handler(Looper.getMainLooper()).post { holder.avatarView.setImageDrawable(drawable) }
+        holder.avatarView.setImageDrawable(drawable)
         return this
     }
 }

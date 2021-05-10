@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.comments.model
 
-import com.makentoshe.habrachan.entity.natives.Comment
+import com.makentoshe.habrachan.entity.Comment
 import java.util.*
 import kotlin.NoSuchElementException
 import kotlin.collections.ArrayList
