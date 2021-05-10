@@ -6,12 +6,12 @@ import com.makentoshe.habrachan.application.android.database.dao.CommentDao
 import com.makentoshe.habrachan.application.android.database.record.CommentRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.entity.natives.Comment
-import com.makentoshe.habrachan.network.request.GetCommentsRequest2
+import com.makentoshe.habrachan.entity.Comment
+import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 
 class CommentsArenaCache(
     private val commentDao: CommentDao
-) : ArenaCache<GetCommentsRequest2, List<Comment>> {
+) : ArenaCache<GetArticleCommentsRequest, List<Comment>> {
 
     companion object {
         private const val limit = 3000
@@ -23,7 +23,7 @@ class CommentsArenaCache(
         }
     }
 
-    override fun fetch(key: GetCommentsRequest2): Result<List<Comment>> = try {
+    override fun fetch(key: GetArticleCommentsRequest): Result<List<Comment>> = try {
         val records = commentDao.getByArticleId(key.articleId.articleId)
         capture(Log.INFO) { "Fetched ${records.size} comments by key: $key" }
         if (records.isEmpty()) {
@@ -36,7 +36,7 @@ class CommentsArenaCache(
         Result.failure(ArenaStorageException("CommentsArenaCache").initCause(exception))
     }
 
-    override fun carry(key: GetCommentsRequest2, value: List<Comment>) {
+    override fun carry(key: GetArticleCommentsRequest, value: List<Comment>) {
         if (commentDao.count() > limit) capture(Log.WARN) {
             // TODO implement removing oldest elements
             "TODO: Removing oldest $step elements from cache"

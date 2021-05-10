@@ -13,7 +13,7 @@ interface NativeArticlesApi {
         @Header("token") token: String?,
         @Path("spec") spec: String,
         @Query("page") page: Int,
-        @Query("include") include: String? = null,
+        @Query("include") include: String? = "text_html",
 //        @Query("get_article") getArticle: Boolean? = null,
         @Query("exclude") exclude: String? = null,
         @Query("sort") sort: String? = null

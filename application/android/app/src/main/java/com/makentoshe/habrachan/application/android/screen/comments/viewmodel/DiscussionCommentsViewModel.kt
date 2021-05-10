@@ -38,7 +38,7 @@ class DiscussionCommentsViewModel(
 
     /** Replies for the [comment] */
     val comments = specChannel.consumeAsFlow().map { spec ->
-        val result = arena.suspendFetch(arena.commentsManager.request(session, spec.articleId))
+        val result = arena.suspendFetch(arena.articleCommentsManager.request(session, spec.articleId))
         val forest = CommentModelForest.build(result.getOrNull()!!)
 
         viewModelScope.launch(Dispatchers.IO) {

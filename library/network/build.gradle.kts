@@ -15,7 +15,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
     // Core module for access entities
-    implementation(project(":library:core"))
+    implementation(project(":entity"))
 
     // Gson
     // https://github.com/google/gson

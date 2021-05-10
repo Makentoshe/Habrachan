@@ -1,7 +1,6 @@
 rootProject.name = "Habrachan"
 
 include(":library")
-include(":library:core")
 include(":library:network")
 
 include(":library:network-mobile")
@@ -17,3 +16,7 @@ include(":application:android")
 include(":application:android:app")
 include(":application:android:core")
 include("functional")
+
+include(":entity")
+include(":entity:entity-mobile")
+include(":entity:entity-native")

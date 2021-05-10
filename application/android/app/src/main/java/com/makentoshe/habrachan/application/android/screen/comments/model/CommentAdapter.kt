@@ -40,7 +40,7 @@ class CommentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when(viewType) {
+        return when (viewType) {
             1 -> BlockViewHolder(inflater.inflate(R.layout.layout_comment_block, parent, false))
             else -> CommentViewHolder(inflater.inflate(R.layout.layout_comment_item, parent, false))
         }
@@ -52,7 +52,7 @@ class CommentAdapter(
         }
 
         when (model) {
-            is CommentModelNode-> {
+            is CommentModelNode -> {
                 onBindViewHolderComment(holder as CommentViewHolder, position, model)
             }
             is CommentModelBlank -> {
@@ -72,19 +72,20 @@ class CommentAdapter(
             navigation.toUserScreen(model.comment.author.login)
         }
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.requestAvatar(model.comment.avatar).collectLatest { result ->
+        val avatar = model.comment.avatar
+        if (avatar == null) controller.setStubAvatar() else lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.requestAvatar(avatar).collectLatest { result ->
                 result.onFailure { controller.setStubAvatar() }.onSuccess {
                     val resources = holder.context.resources
                     val radius = holder.context.dp2px(R.dimen.radiusS)
-                    controller.setAvatar(it.bytes.toRoundedDrawable(resources, radius))
+                    launch(Dispatchers.Main) { controller.setAvatar(it.bytes.toRoundedDrawable(resources, radius)) }
                 }
             }
         }
     }
 
     private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentModelBlank) {
-        BlockViewController(holder).setLevel(model.level).setBody(model.count, model.comment.id) {
+        BlockViewController(holder).setLevel(model.level).setBody(model.count, model.comment.commentId) {
             navigation.toDiscussionCommentsFragment(it)
         }
     }

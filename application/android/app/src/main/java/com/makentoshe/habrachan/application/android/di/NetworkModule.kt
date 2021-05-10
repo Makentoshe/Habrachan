@@ -33,8 +33,8 @@ class NetworkModule(context: Context) : Module() {
         val nativeGetUserManager = NativeGetUserManager.Builder(client, NativeGetUserDeserializer()).build()
         bind<GetUserManager<out GetUserRequest>>().toInstance(nativeGetUserManager)
 
-        val nativeGetCommentsManager = NativeGetCommentsManager.Builder(client, NativeGetCommentsDeserializer()).build()
-        bind<GetCommentsManager<out GetCommentsRequest2>>().toInstance(nativeGetCommentsManager)
+        val nativeGetCommentsManager = NativeGetArticleCommentsManager.Builder(client, NativeGetCommentsDeserializer()).build()
+        bind<GetArticleCommentsManager<out GetArticleCommentsRequest>>().toInstance(nativeGetCommentsManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
