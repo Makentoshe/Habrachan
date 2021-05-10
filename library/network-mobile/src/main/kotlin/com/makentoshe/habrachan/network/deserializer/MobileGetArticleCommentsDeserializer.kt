@@ -1,23 +1,20 @@
 package com.makentoshe.habrachan.network.deserializer
 
 import com.google.gson.Gson
-import com.makentoshe.habrachan.entity.mobiles.User
-import com.makentoshe.habrachan.network.exceptions.MobileGetUserDeserializerException
+import com.makentoshe.habrachan.network.exceptions.MobileGetArticleCommentsDeserializerException
 import com.makentoshe.habrachan.network.request.MobileGetArticleCommentsRequest
-import com.makentoshe.habrachan.network.request.MobileGetUserRequest
 import com.makentoshe.habrachan.network.response.MobileGetArticleCommentsResponse
-import com.makentoshe.habrachan.network.response.MobileGetUserResponse
 
 class MobileGetArticleCommentsDeserializer {
 
     fun body(request: MobileGetArticleCommentsRequest, json: String): Result<MobileGetArticleCommentsResponse> = try {
-        val user = Gson().fromJson(json, User::class.java)
-        Result.success(MobileGetUserResponse(request, user))
+        val factory = Gson().fromJson(json, MobileGetArticleCommentsResponse.Factory::class.java)
+        Result.success(factory.build(request))
     } catch (exception: Exception) {
         Result.failure(exception)
     }
 
-    fun error(request: MobileGetArticleCommentsResponse, json: String): Result<MobileGetArticleCommentsResponse> {
-        return Result.failure(MobileGetUserDeserializerException(request, json))
+    fun error(request: MobileGetArticleCommentsRequest, json: String): Result<MobileGetArticleCommentsResponse> {
+        return Result.failure(MobileGetArticleCommentsDeserializerException(request, json))
     }
 }
