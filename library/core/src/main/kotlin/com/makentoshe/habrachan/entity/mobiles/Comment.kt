@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.entity.mobiles
 
-
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.Comment
 
@@ -40,10 +39,14 @@ data class Comment(
     @SerializedName("timePublished")
     override val timePublishedRaw: String, // 2019-03-03T14:56:56+00:00
     @SerializedName("vote")
-    val vote: Vote,
+    val vote: CommentVote,
     @SerializedName("votesCount")
     val votesCount: Int // 1
-): Comment {
+) : Comment {
+
     override val isCanVote: Boolean
         get() = vote.isCanVote
+
+    override val avatar: String?
+        get() = author.avatarUrl
 }

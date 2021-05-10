@@ -8,7 +8,7 @@ data class CommentAuthor(
     @SerializedName("alias")
     override val login: String, // androidovshchik
     @SerializedName("avatarUrl")
-    val avatarUrl: Any?, // null
+    val avatarUrl: String?, // null
     @SerializedName("fullname")
     val fullname: String, // Влад
     @SerializedName("id")

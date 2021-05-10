@@ -2,8 +2,6 @@ package com.makentoshe.habrachan.entity.natives
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.Comment
-import java.text.SimpleDateFormat
-import java.util.*
 
 data class Comment(
     @SerializedName("id")
@@ -11,7 +9,7 @@ data class Comment(
     @SerializedName("author")
     override val author: CommentAuthor,
     @SerializedName("avatar")
-    val avatar: String,
+    override val avatar: String?,
     @SerializedName("isAuthor")
     override val isAuthor: Boolean,
     @SerializedName("is_can_vote")
@@ -36,8 +34,4 @@ data class Comment(
 //    @Embedded(prefix = "any_")
 //    @SerializedName("vote")
 //    val vote: Any?,
-): Comment {
-
-    val timePublished: Date
-        get() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(timePublishedRaw)
-}
+): Comment
