@@ -80,7 +80,9 @@ dependencies {
     implementation(project(":application:core"))
     implementation(project(":application:android:core"))
 
-    implementation(project(":library:core"))
+    implementation(project(":entity"))
+    implementation(project(":entity:entity-native"))
+
     implementation(project(":library:network"))
     implementation(project(":library:network-native"))
 

@@ -11,7 +11,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
-    implementation(project(":library:core"))
+    implementation(project(":entity"))
     implementation(project(":library:network"))
 
     // OkHttp - networking

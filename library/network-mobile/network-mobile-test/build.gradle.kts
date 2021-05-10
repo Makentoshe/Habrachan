@@ -12,7 +12,8 @@ dependencies {
     implementation(kotlin("stdlib"))
 
     // Core module for access entities
-    implementation(project(":library:core"))
+    implementation(project(":entity"))
+    implementation(project(":entity:entity-mobile"))
     // Network module for access abstracts
     implementation(project(":library:network"))
     // Network module module for accessing to test classes

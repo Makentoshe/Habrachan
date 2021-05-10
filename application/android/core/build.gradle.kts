@@ -45,7 +45,9 @@ dependencies {
 
     implementation(kotlin("stdlib"))
 
-    implementation(project(":library:core"))
+    implementation(project(":entity"))
+    implementation(project(":entity:entity-native"))
+
     implementation(project(":library:network"))
     implementation(project(":application:core"))
 

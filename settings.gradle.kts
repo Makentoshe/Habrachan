@@ -1,7 +1,6 @@
 rootProject.name = "Habrachan"
 
 include(":library")
-include(":library:core")
 include(":library:network")
 
 include(":library:network-mobile")

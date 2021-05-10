@@ -1,9 +1,9 @@
 package com.makentoshe.habrachan.network.response
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.entity.mobiles.Comment
 import com.makentoshe.habrachan.entity.mobiles.CommentAccess
 import com.makentoshe.habrachan.entity.mobiles.Moderated
-import com.makentoshe.habrachan.entity.natives.Comment
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 import com.makentoshe.habrachan.network.request.MobileGetArticleCommentsRequest
 
