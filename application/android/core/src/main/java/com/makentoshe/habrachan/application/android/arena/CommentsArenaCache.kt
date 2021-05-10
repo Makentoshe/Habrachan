@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.application.android.database.dao.CommentDao
 import com.makentoshe.habrachan.application.android.database.record.CommentRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.entity.natives.Comment
+import com.makentoshe.habrachan.entity.Comment
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 
 class CommentsArenaCache(

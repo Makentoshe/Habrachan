@@ -4,8 +4,9 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.entity.Comment
+import com.makentoshe.habrachan.entity.comment
 import com.makentoshe.habrachan.entity.natives.Article
-import com.makentoshe.habrachan.entity.natives.Comment
 
 @Entity
 data class CommentRecord(
@@ -16,7 +17,7 @@ data class CommentRecord(
     @Embedded(prefix = "author_")
     val author: CommentAuthorRecord,
     @SerializedName("avatar")
-    val avatar: String,
+    val avatar: String?,
     @SerializedName("isAuthor")
     val isAuthor: Boolean,
     @SerializedName("is_can_vote")
@@ -31,8 +32,6 @@ data class CommentRecord(
     val parentId: Int,
     @SerializedName("score")
     val score: Int,
-    @SerializedName("thread")
-    val thread: Int,
     @SerializedName("time_changed")
     val timeChanged: String?,
     @SerializedName("time_published")
@@ -55,25 +54,23 @@ data class CommentRecord(
         comment.message,
         comment.parentId,
         comment.score,
-        comment.thread,
         comment.timeChangedRaw,
         comment.timePublishedRaw,
         articleId
     )
 
-    fun toComment() = Comment(
+    fun toComment() = comment(
         id,
+        level,
         author.toCommentAuthor(),
+        message,
+        parentId,
+        score,
         avatar,
         isAuthor,
         isCanVote,
         isFavorite,
-        level,
-        message,
-        parentId,
-        score,
-        thread,
-        timeChanged,
-        timePublished
+        timePublished,
+        timeChanged
     )
 }
