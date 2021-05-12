@@ -19,12 +19,18 @@ interface GetArticlesSpec {
 }
 
 sealed class SpecType: Serializable {
+    abstract val title: String
 
-    object All : SpecType(), Serializable
+    object All : SpecType(), Serializable {
+        override val title: String = "all"
+    }
 
-    object Interesting : SpecType(), Serializable
+    object Interesting : SpecType(), Serializable {
+        override val title: String = "interesting"
+    }
 
     class Top(val type: TopSpecType) : SpecType(), Serializable {
+        override val title: String = "top $type"
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -44,16 +50,27 @@ sealed class SpecType: Serializable {
 }
 
 sealed class TopSpecType: Serializable {
+    abstract val title: String
 
-    object Daily : TopSpecType(), Serializable
+    object Daily : TopSpecType(), Serializable {
+        override val title: String = "daily"
+    }
 
-    object Weekly : TopSpecType(), Serializable
+    object Weekly : TopSpecType(), Serializable {
+        override val title: String = "weekly"
+    }
 
-    object Monthly : TopSpecType(), Serializable
+    object Monthly : TopSpecType(), Serializable {
+        override val title: String = "monthly"
+    }
 
-    object Yearly : TopSpecType(), Serializable
+    object Yearly : TopSpecType(), Serializable {
+        override val title: String = "yearly"
+    }
 
-    object Alltime : TopSpecType(), Serializable
+    object Alltime : TopSpecType(), Serializable {
+        override val title: String = "alltime"
+    }
 
 }
 

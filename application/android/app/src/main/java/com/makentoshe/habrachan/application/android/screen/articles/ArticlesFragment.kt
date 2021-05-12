@@ -12,6 +12,8 @@ import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.ExceptionController
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.ExceptionViewHolder
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.event.AnalyticEvent
 import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesSpec
@@ -25,7 +27,7 @@ import toothpick.ktp.delegate.inject
 
 class ArticlesFragment : CoreFragment() {
 
-    companion object {
+    companion object : Analytics() {
         fun build(page: Int = 1): ArticlesFragment {
             val fragment = ArticlesFragment()
             fragment.arguments.page = page
@@ -52,6 +54,7 @@ class ArticlesFragment : CoreFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (savedInstanceState == null) lifecycleScope.launch {
+            capture(AnalyticEvent.Screen.Articles.SearchQuery(arguments.spec?.title))
             val requestSpec = arguments.spec ?: return@launch
             viewModel.articlesSpecChannel.send(ArticlesSpec(arguments.page, requestSpec))
         }
