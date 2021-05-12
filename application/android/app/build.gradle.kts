@@ -23,21 +23,10 @@ android {
         versionName = "0.5.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        var token = ""
-        var password = ""
-        var email = ""
-        if (project.rootProject.file("local.properties").canRead()) {
-            val properties = Properties()
-            properties.load(project.rootProject.file("local.properties").inputStream())
-            token = properties.getProperty("api.token")
-            password = properties.getProperty("login.password")
-            email = properties.getProperty("login.email")
-        }
+        val properties = Properties().apply { load(project.rootProject.file("local.properties").inputStream()) }
+        buildConfigField("String", "API_ANALYTICS", "\"${properties["api.analytics"]!!}\"")
         buildConfigField("String", "CLIENT_KEY", "\"85cab69095196f3.89453480\"")
         buildConfigField("String", "API_KEY", "\"173984950848a2d27c0cc1c76ccf3d6d3dc8255b\"")
-        buildConfigField("String", "TOKEN_KEY", "\"$token\"")
-        buildConfigField("String", "LOGIN", "\"$email\"")
-        buildConfigField("String", "PASSWORD", "\"$password\"")
     }
     buildTypes {
         getByName("release") {
@@ -79,6 +68,7 @@ dependencies {
 
     implementation(project(":application:core"))
     implementation(project(":application:android:core"))
+    implementation(project(":application:android:analytics"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
@@ -198,7 +188,7 @@ dependencies {
     implementation("io.noties.markwon:image:$markwon")
     implementation("io.noties.markwon:ext-tables:$markwon")
 
-    val core = "1.3.0"
+    val core = properties["version.androidx.core"]
     implementation("androidx.core:core-ktx:$core")
 
     implementation("androidx.appcompat:appcompat:1.2.0")
