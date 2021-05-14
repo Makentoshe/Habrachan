@@ -1,5 +1,3 @@
-import java.util.*
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -23,21 +21,8 @@ android {
         versionName = "0.5.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        var token = ""
-        var password = ""
-        var email = ""
-        if (project.rootProject.file("local.properties").canRead()) {
-            val properties = Properties()
-            properties.load(project.rootProject.file("local.properties").inputStream())
-            token = properties.getProperty("api.token")
-            password = properties.getProperty("login.password")
-            email = properties.getProperty("login.email")
-        }
         buildConfigField("String", "CLIENT_KEY", "\"85cab69095196f3.89453480\"")
         buildConfigField("String", "API_KEY", "\"173984950848a2d27c0cc1c76ccf3d6d3dc8255b\"")
-        buildConfigField("String", "TOKEN_KEY", "\"$token\"")
-        buildConfigField("String", "LOGIN", "\"$email\"")
-        buildConfigField("String", "PASSWORD", "\"$password\"")
     }
     buildTypes {
         getByName("release") {
