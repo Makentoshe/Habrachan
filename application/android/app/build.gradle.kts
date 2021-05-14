@@ -58,12 +58,13 @@ repositories {
 }
 
 dependencies {
-    val kotlin = "1.3.72"
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*,jar"))))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin")
+
+    implementation(kotlin("stdlib"))
 
     implementation(project(":application:core"))
     implementation(project(":application:android:core"))
+    implementation(project(":application:android:database"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))

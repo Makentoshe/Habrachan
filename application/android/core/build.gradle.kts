@@ -51,6 +51,8 @@ dependencies {
     implementation(project(":library:network"))
     implementation(project(":application:core"))
 
+    implementation(project(":application:android:database"))
+
     // Room (sql database library)
     // https://developer.android.com/topic/libraries/architecture/room
     val room = "2.2.5"
