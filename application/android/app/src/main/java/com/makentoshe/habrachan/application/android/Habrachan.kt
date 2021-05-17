@@ -3,7 +3,8 @@ package com.makentoshe.habrachan.application.android
 import android.app.Application
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.analytics.Analytics
-import com.makentoshe.habrachan.application.android.analytics.event.AnalyticEvent
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.di.ApplicationModule
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.di.InjectionActivityLifecycleCallback
@@ -15,14 +16,15 @@ import toothpick.configuration.Configuration
 
 class Habrachan : Application() {
 
-    companion object : Analytics()
+    companion object : Analytics(LogAnalytic())
 
     private val injectActivityLifecycleCallback = InjectionActivityLifecycleCallback()
 
     override fun onCreate() {
         super.onCreate()
         Toothpick.setConfiguration(getToothpickConfiguration())
-        Analytics.Flurry().registry(this, BuildConfig.API_ANALYTICS, BuildConfig.DEBUG)
+
+        LogAnalytic.Factory.registry(BuildConfig.DEBUG)
 
         val applicationModule = ApplicationModule(applicationContext, Cicerone.create(StackRouter()))
         val networkModule = NetworkModule(applicationContext)
@@ -33,7 +35,7 @@ class Habrachan : Application() {
         registerActivityLifecycleCallbacks(injectActivityLifecycleCallback)
 
         Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
-            capture(AnalyticEvent.Exception.Unhandled(paramThrowable))
+            capture(analyticEvent("UnhandledException", paramThrowable.toString()))
             throw paramThrowable
         }
     }
