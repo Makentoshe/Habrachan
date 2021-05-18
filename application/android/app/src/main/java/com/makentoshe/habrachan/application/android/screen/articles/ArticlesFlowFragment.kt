@@ -76,14 +76,14 @@ class ArticlesFlowFragment : CoreFragment() {
         is SpecType.All -> getString(R.string.articles_type_all)
         is SpecType.Interesting -> getString(R.string.articles_type_interesting)
         is SpecType.Top -> when (this.type) {
-            TopSpecType.Alltime -> getString(R.string.articles_top_type_alltime)
-            TopSpecType.Yearly -> getString(R.string.articles_top_type_yearly)
-            TopSpecType.Monthly -> getString(R.string.articles_top_type_monthly)
-            TopSpecType.Weekly -> getString(R.string.articles_top_type_weekly)
-            TopSpecType.Daily -> getString(R.string.articles_top_type_daily)
-            else -> ""
+            is TopSpecType.Alltime -> getString(R.string.articles_top_type_alltime)
+            is TopSpecType.Yearly -> getString(R.string.articles_top_type_yearly)
+            is TopSpecType.Monthly -> getString(R.string.articles_top_type_monthly)
+            is TopSpecType.Weekly -> getString(R.string.articles_top_type_weekly)
+            is TopSpecType.Daily -> getString(R.string.articles_top_type_daily)
+            else -> getString(R.string.not_implemented)
         }.let { getString(R.string.articles_top_preposition, it) }
-        else -> ""
+        else -> getString(R.string.not_implemented)
     }
 
     class Arguments(fragment: ArticlesFlowFragment) : CoreFragment.Arguments(fragment) {
