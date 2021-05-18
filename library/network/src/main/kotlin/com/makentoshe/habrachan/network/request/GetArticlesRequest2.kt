@@ -34,7 +34,7 @@ sealed class SpecType: Serializable {
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
-            if (javaClass != other?.javaClass) return false
+            if (other == null || this::class != other::class) return false
 
             other as Top
 
@@ -47,6 +47,21 @@ sealed class SpecType: Serializable {
             return type.hashCode()
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is SpecType) return false
+
+        if (title != other.title) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return title.hashCode()
+    }
+
+
 }
 
 sealed class TopSpecType: Serializable {
