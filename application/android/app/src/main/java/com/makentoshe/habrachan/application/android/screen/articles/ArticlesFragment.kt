@@ -35,6 +35,8 @@ class ArticlesFragment : CoreFragment() {
         fun build(spec: SpecType) = ArticlesFragment().apply {
             arguments.spec = spec
         }
+
+        private const val VIEW_MODEL_STATE_KEY = "ViewModel"
     }
 
     override val arguments = Arguments(this)
@@ -51,7 +53,8 @@ class ArticlesFragment : CoreFragment() {
     ): View? = inflater.inflate(R.layout.fragment_articles, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) lifecycleScope.launch {
+        val wasViewModelRecreated = viewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
+        if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch {
             val requestSpec = arguments.spec ?: return@launch
             viewModel.articlesSpecChannel.send(ArticlesSpec(arguments.page, requestSpec))
         }
@@ -110,6 +113,11 @@ class ArticlesFragment : CoreFragment() {
         exceptionController.hide()
         fragment_articles_progress.visibility = View.VISIBLE
         fragment_articles_swipe.visibility = View.GONE
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(VIEW_MODEL_STATE_KEY, viewModel.toString())
     }
 
     class Arguments(fragment: ArticlesFragment) : CoreFragment.Arguments(fragment) {
