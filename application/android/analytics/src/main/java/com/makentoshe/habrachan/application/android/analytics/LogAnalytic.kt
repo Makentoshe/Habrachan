@@ -11,7 +11,7 @@ open class LogAnalytic: Analytic {
 
     private fun consoleDebug(tag: String, message: String) {
         if (!enableConsoleLog) return
-        Log.d("$tag", message)
+        Log.d("analytics.logger.$tag", message)
     }
 
     companion object Factory {
