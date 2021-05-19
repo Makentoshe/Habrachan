@@ -33,10 +33,6 @@ dependencies {
     val kotlinVersion = properties["version.kotlin"]
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
-    // Flurry analytics
-    val flurryVersion = properties["version.flurry"]
-    implementation("com.flurry.android:analytics:$flurryVersion")
-
     val androidxCoreVersion = properties["version.androidx.core"]
     implementation ("androidx.core:core-ktx:$androidxCoreVersion")
 
