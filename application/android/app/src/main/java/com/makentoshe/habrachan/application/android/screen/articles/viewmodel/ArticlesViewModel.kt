@@ -6,6 +6,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesDataSource
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesSpec
 import com.makentoshe.habrachan.application.core.arena.articles.GetArticlesArena
@@ -21,14 +24,25 @@ class ArticlesViewModel2(
     private val session: UserSession, private val arena: GetArticlesArena
 ) : ViewModel() {
 
+    companion object : Analytics(LogAnalytic())
+
+    init {
+        capture(analyticEvent(javaClass.simpleName, "Constructor"))
+    }
+
     val articlesSpecChannel = Channel<ArticlesSpec>()
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    val articles = articlesSpecChannel.receiveAsFlow().flatMapConcat{ spec ->
+    val articles = articlesSpecChannel.receiveAsFlow().flatMapConcat { spec ->
         Pager(PagingConfig(ArticlesSpec.PAGE_SIZE), spec) {
             ArticlesDataSource(session, arena)
         }.flow
     }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
+
+    override fun onCleared() {
+        super.onCleared()
+        capture(analyticEvent(javaClass.simpleName, "OnCleared"))
+    }
 
     class Factory(
         private val session: UserSession, private val arena: GetArticlesArena

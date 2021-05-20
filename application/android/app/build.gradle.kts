@@ -21,6 +21,8 @@ android {
         versionName = "0.5.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        val properties = Properties().apply { load(project.rootProject.file("local.properties").inputStream()) }
+//        buildConfigField("String", "API_ANALYTICS", "\"${properties["api.analytics"]!!}\"")
         buildConfigField("String", "CLIENT_KEY", "\"85cab69095196f3.89453480\"")
         buildConfigField("String", "API_KEY", "\"173984950848a2d27c0cc1c76ccf3d6d3dc8255b\"")
     }
@@ -65,6 +67,7 @@ dependencies {
     implementation(project(":application:core"))
     implementation(project(":application:android:core"))
     implementation(project(":application:android:database"))
+    implementation(project(":application:android:analytics"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
@@ -184,7 +187,7 @@ dependencies {
     implementation("io.noties.markwon:image:$markwon")
     implementation("io.noties.markwon:ext-tables:$markwon")
 
-    val core = "1.3.0"
+    val core = properties["version.androidx.core"]
     implementation("androidx.core:core-ktx:$core")
 
     implementation("androidx.appcompat:appcompat:1.2.0")

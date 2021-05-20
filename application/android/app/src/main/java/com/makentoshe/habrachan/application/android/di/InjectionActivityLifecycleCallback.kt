@@ -13,7 +13,7 @@ import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowInjec
 import com.makentoshe.habrachan.application.android.screen.user.di.UserInjectingFragmentLifecycleCallback
 import toothpick.Toothpick
 
-class InjectionActivityLifecycleCallback : Application.ActivityLifecycleCallbacks {
+class InjectionActivityLifecycleCallback() : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         if (activity !is AppActivity) return

@@ -18,6 +18,7 @@ include(":application:android")
 include(":application:android:app")
 include(":application:android:core")
 include(":application:android:database")
+include(":application:android:analytics")
 
 include(":entity")
 include(":entity:entity-mobile")
