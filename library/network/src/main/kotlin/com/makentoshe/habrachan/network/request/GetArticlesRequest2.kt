@@ -31,21 +31,6 @@ sealed class SpecType: Serializable {
 
     class Top(val type: TopSpecType) : SpecType(), Serializable {
         override val title: String = "top $type"
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (other == null || this::class != other::class) return false
-
-            other as Top
-
-            if (type != other.type) return false
-
-            return true
-        }
-
-        override fun hashCode(): Int {
-            return type.hashCode()
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -60,7 +45,6 @@ sealed class SpecType: Serializable {
     override fun hashCode(): Int {
         return title.hashCode()
     }
-
 
 }
 
