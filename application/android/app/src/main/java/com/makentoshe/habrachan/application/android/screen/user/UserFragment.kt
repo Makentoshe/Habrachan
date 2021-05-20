@@ -10,7 +10,11 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
+import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserNavigation
 import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
@@ -25,11 +29,13 @@ import java.text.SimpleDateFormat
 
 class UserFragment : CoreFragment() {
 
-    companion object {
+    companion object : Analytics(LogAnalytic()){
 
         fun build(account: UserAccount) = UserFragment().apply {
             arguments.account = account
         }
+
+        private const val VIEW_MODEL_STATE_KEY = "ViewModel"
     }
 
     override val arguments = Arguments(this)
@@ -46,7 +52,9 @@ class UserFragment : CoreFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.setOnClickListener { /* workaround */ }
 
-        if (savedInstanceState == null) lifecycleScope.launch {
+        val wasViewModelRecreated = viewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
+        if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch {
+            capture(analyticEvent(this@UserFragment.javaClass.simpleName, arguments.account.toString()))
             viewModel.accountChannel.send(arguments.account)
         }
 
@@ -122,6 +130,11 @@ class UserFragment : CoreFragment() {
 
     private fun onAvatarFailure(throwable: Throwable) {
         fragment_user_avatar.setImageResource(R.drawable.ic_account_stub)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(VIEW_MODEL_STATE_KEY, viewModel.toString())
     }
 
     class Arguments(fragment: UserFragment) : CoreFragment.Arguments(fragment) {
