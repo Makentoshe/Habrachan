@@ -11,6 +11,9 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsEmptyStateController
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
@@ -18,13 +21,14 @@ import com.makentoshe.habrachan.application.android.screen.comments.navigation.C
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentsEmptyStateViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_article.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
 class ArticleCommentsFragment : CoreFragment() {
 
-    companion object {
+    companion object : Analytics(LogAnalytic()){
         fun capture(level: Int, message: () -> String) {
             if (!BuildConfig.DEBUG) return
             Log.println(level, "ArticleCommentsFragment", message())
@@ -34,6 +38,8 @@ class ArticleCommentsFragment : CoreFragment() {
             arguments.articleId = articleId
             arguments.articleTitle = articleTitle
         }
+
+        private const val VIEW_MODEL_STATE_KEY = "ViewModel"
     }
 
     override val arguments = Arguments(this)
@@ -51,7 +57,9 @@ class ArticleCommentsFragment : CoreFragment() {
     ): View? = inflater.inflate(R.layout.fragment_comments_article, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) lifecycleScope.launch {
+        val wasViewModelRecreated = viewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
+        if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch(Dispatchers.IO) {
+            capture(analyticEvent(this@ArticleCommentsFragment.javaClass.simpleName, "articleId=${arguments.articleId}"))
             val spec = CommentsSpec(arguments.articleId)
             viewModel.sendSpecChannel.send(spec)
         }
@@ -102,6 +110,11 @@ class ArticleCommentsFragment : CoreFragment() {
             fragment_comments_article_progress.visibility = View.GONE
             fragment_comments_article_recycler.visibility = View.VISIBLE
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(VIEW_MODEL_STATE_KEY, viewModel.toString())
     }
 
     class Arguments(fragment: ArticleCommentsFragment) : CoreFragment.Arguments(fragment) {

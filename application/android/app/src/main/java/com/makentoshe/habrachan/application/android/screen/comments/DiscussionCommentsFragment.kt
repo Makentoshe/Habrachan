@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
 import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsAdapterQualifier
 import com.makentoshe.habrachan.application.android.screen.comments.di.TitleAdapterQualifier
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
@@ -27,7 +31,7 @@ import toothpick.ktp.delegate.inject
 
 class DiscussionCommentsFragment : CoreFragment() {
 
-    companion object {
+    companion object: Analytics(LogAnalytic()) {
         @SuppressLint("LongLogTag")
         fun capture(level: Int, message: () -> String) {
             if (!BuildConfig.DEBUG) return
@@ -46,6 +50,8 @@ class DiscussionCommentsFragment : CoreFragment() {
             arguments.articleTitle = articleTitle
             arguments.commentId = commentId
         }
+
+        private const val VIEW_MODEL_STATE_KEY = "ViewModel"
     }
 
     override val arguments = Arguments(this)
@@ -62,7 +68,10 @@ class DiscussionCommentsFragment : CoreFragment() {
     ): View = inflater.inflate(R.layout.fragment_comments_discussion, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) lifecycleScope.launch(Dispatchers.IO) {
+        val wasViewModelRecreated = viewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
+        if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch(Dispatchers.IO) {
+            val message = "articleId=${arguments.articleId}, commentId=${arguments.commentId}"
+            capture(analyticEvent(this@DiscussionCommentsFragment.javaClass.simpleName, message))
             viewModel.sendSpecChannel.send(CommentsSpec(arguments.articleId, arguments.commentId))
         }
 
@@ -82,6 +91,11 @@ class DiscussionCommentsFragment : CoreFragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.comment.collectLatest { titleAdapter.submitData(it) }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(VIEW_MODEL_STATE_KEY, viewModel.toString())
     }
 
     class Arguments(fragment: DiscussionCommentsFragment) : CoreFragment.Arguments(fragment) {
