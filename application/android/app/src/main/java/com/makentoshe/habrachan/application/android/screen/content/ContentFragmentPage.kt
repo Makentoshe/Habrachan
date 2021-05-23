@@ -13,6 +13,9 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.listener.multi.BaseMultiplePermissionsListener
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.filesystem.FileSystem
 import com.makentoshe.habrachan.application.android.screen.content.model.ContentActionBroadcastReceiver
 import com.makentoshe.habrachan.application.android.screen.content.viewmodel.ContentViewModel
@@ -30,11 +33,13 @@ import java.io.File
 
 class ContentFragmentPage : CoreFragment() {
 
-    companion object {
+    companion object : Analytics(LogAnalytic()) {
 
         fun build(source: String) = ContentFragmentPage().apply {
             arguments.source = source
         }
+
+        private const val VIEW_MODEL_STATE_KEY = "ViewModel"
     }
 
     override val arguments = Arguments(this)
@@ -59,7 +64,9 @@ class ContentFragmentPage : CoreFragment() {
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_content_exception))
         fragment_content_image.maxScale = 10f
 
-        if (savedInstanceState == null) lifecycleScope.launch {
+        val wasViewModelRecreated = viewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
+        if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch {
+            capture(analyticEvent(this@ContentFragmentPage.javaClass.simpleName, "source=${arguments.source}"))
             viewModel.sourceChannel.send(ContentViewModel.ContentSpec(arguments.source))
         }
 
@@ -103,7 +110,8 @@ class ContentFragmentPage : CoreFragment() {
         val permissions = listOf(
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE
         )
-        val listener = CustomBaseMultiplePermissionsListener(requireContext(), picturesFilesystem, imageResponse, lifecycleScope)
+        val listener =
+            CustomBaseMultiplePermissionsListener(requireContext(), picturesFilesystem, imageResponse, lifecycleScope)
         Dexter.withContext(context).withPermissions(permissions).withListener(listener).check()
     }
 
@@ -139,6 +147,11 @@ class ContentFragmentPage : CoreFragment() {
         fragment_content_image.visibility = View.GONE
         fragment_content_gif.visibility = View.GONE
         fragment_content_progress.visibility = View.GONE
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(VIEW_MODEL_STATE_KEY, viewModel.toString())
     }
 
     private class CustomBaseMultiplePermissionsListener(
