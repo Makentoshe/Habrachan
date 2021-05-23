@@ -144,6 +144,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_bottom_comments.setOnClickListener {
             navigator.toArticleCommentsScreen(response.article)
         }
+        fragment_article_bottom.visibility = View.VISIBLE
     }
 
     private fun onArticleReceivedFailure(exception: Throwable) {
@@ -167,12 +168,6 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_avatar_image.visibility = View.VISIBLE
 
         fragment_article_avatar_progress.visibility = View.GONE
-    }
-
-    // Views can be null because
-    // java.lang.IllegalStateException: fragment_article_separator must not be null
-    override fun onWebPageFinished(view: WebView?, url: String?) {
-        fragment_article_bottom?.visibility = View.VISIBLE
     }
 
     override fun onWebReceivedError(

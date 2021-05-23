@@ -16,10 +16,6 @@ class HabrachanWebViewClient(private val listener: HabrachanWebViewClientListene
         return true
     }
 
-    override fun onPageFinished(view: WebView?, url: String?) {
-        listener.onWebPageFinished(view, url)
-    }
-
     override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
         listener.onWebReceivedError(view, errorCode, description, failingUrl)
     }
