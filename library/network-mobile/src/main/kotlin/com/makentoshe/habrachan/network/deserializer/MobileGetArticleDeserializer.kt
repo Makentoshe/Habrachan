@@ -3,11 +3,13 @@ package com.makentoshe.habrachan.network.deserializer
 import com.google.gson.Gson
 import com.makentoshe.habrachan.entity.mobiles.Article
 
-class MobileGetArticleDeserializer {
+class MobileGetArticleDeserializer: GsonDeserializer() {
 
     //article_success
-    fun body(json: String): Result<Article> {
-        return Result.success(Gson().fromJson(json, Article::class.java))
+    fun body(json: String): Result<Article> = try {
+        Result.success(gson.fromJson(json, Article::class.java))
+    } catch (exception: Exception) {
+        Result.failure(exception)
     }
 
     //article_failure

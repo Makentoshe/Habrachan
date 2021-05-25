@@ -1,14 +1,15 @@
 package com.makentoshe.habrachan.network.deserializer
 
-import com.google.gson.Gson
 import com.makentoshe.habrachan.network.exception.NativeGetArticleCommentsDeserializerException
 import com.makentoshe.habrachan.network.request.NativeGetArticleCommentsRequest
 import com.makentoshe.habrachan.network.response.NativeGetArticleCommentsResponse
 
-class NativeGetCommentsDeserializer {
+class NativeGetCommentsDeserializer : GsonDeserializer() {
 
-    fun body(request: NativeGetArticleCommentsRequest, json: String): Result<NativeGetArticleCommentsResponse> {
-        return Result.success(Gson().fromJson(json, NativeGetArticleCommentsResponse.Factory::class.java).build(request))
+    fun body(request: NativeGetArticleCommentsRequest, json: String): Result<NativeGetArticleCommentsResponse> = try {
+        Result.success(gson.fromJson(json, NativeGetArticleCommentsResponse.Factory::class.java).build(request))
+    } catch (exception: Exception) {
+        Result.failure(exception)
     }
 
     fun error(request: NativeGetArticleCommentsRequest, json: String): Result<NativeGetArticleCommentsResponse> {

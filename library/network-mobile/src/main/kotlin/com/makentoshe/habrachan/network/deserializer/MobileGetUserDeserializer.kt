@@ -1,16 +1,14 @@
 package com.makentoshe.habrachan.network.deserializer
 
-import com.google.gson.Gson
 import com.makentoshe.habrachan.entity.mobiles.User
-import com.makentoshe.habrachan.network.exception.GetUserDeserializerException
 import com.makentoshe.habrachan.network.exceptions.MobileGetUserDeserializerException
 import com.makentoshe.habrachan.network.request.MobileGetUserRequest
 import com.makentoshe.habrachan.network.response.MobileGetUserResponse
 
-class MobileGetUserDeserializer {
+class MobileGetUserDeserializer : GsonDeserializer() {
 
     fun body(request: MobileGetUserRequest, json: String): Result<MobileGetUserResponse> = try {
-        val user = Gson().fromJson(json, User::class.java)
+        val user = gson.fromJson(json, User::class.java)
         Result.success(MobileGetUserResponse(request, user))
     } catch (exception: Exception) {
         Result.failure(exception)

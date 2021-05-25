@@ -12,7 +12,7 @@ import kotlin.math.roundToInt
 class ArticleHtmlController(private val resources: Resources) {
 
     fun render(article: Article): String {
-        return render(article.textHtml ?: throw IllegalStateException("text_html is null"))
+        return render(article.text?.html ?: throw IllegalStateException("text_html is null"))
     }
 
     fun render(string: String) = render(Jsoup.parse(string))

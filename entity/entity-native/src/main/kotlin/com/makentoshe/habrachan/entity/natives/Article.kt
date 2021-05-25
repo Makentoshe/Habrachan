@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.entity.natives
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.Article
+import com.makentoshe.habrachan.entity.ArticleText
 
 data class Article(
     @SerializedName("id")
@@ -53,7 +54,7 @@ data class Article(
     @SerializedName("preview_html")
     val previewHtml: String?,
     @SerializedName("text_html")
-    override val textHtml: String,
+    override val text: ArticleText?,
     @SerializedName("reading_count")
     override val readingCount: Int,
     @SerializedName("score")
