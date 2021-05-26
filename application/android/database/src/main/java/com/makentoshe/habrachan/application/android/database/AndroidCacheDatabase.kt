@@ -26,7 +26,7 @@ import com.makentoshe.habrachan.application.android.database.record.*
         ArticleFlowCrossRef::class,
         ArticleAuthorRecord::class,
                ],
-    version = 5
+    version = 6
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
