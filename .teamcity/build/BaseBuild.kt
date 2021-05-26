@@ -1,5 +1,9 @@
 package build
 
+import GithubVcsRoot
+import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
+
 // This is a base build attached to the Github VCS
 abstract class BaseBuild(name: String, init: BuildType.() -> Unit): BuildType({
     this.name = name

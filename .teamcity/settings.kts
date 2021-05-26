@@ -1,7 +1,5 @@
 import build.AndroidBuild
 import build.AndroidRelease
-import build.ApplicationCore
-import build.LibraryBuild
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.version
 
@@ -34,8 +32,6 @@ project {
     vcsRoot(GithubVcsRoot)
     vcsRoot(MetadataVcsRoot)
 
-    buildType(LibraryBuild)
-    buildType(ApplicationCore)
     buildType(AndroidBuild)
     buildType(AndroidRelease)
 

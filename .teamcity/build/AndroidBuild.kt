@@ -1,5 +1,13 @@
 package build
 
+import MetadataVcsRoot
+import Parameters
+import installAndroidSdk
+import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
+import reference
+
 object AndroidBuild : VcsBaseBuild("Android build", {
     description = """
         Default Android build. This build prepares environment and runs tests.
