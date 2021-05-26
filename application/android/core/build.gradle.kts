@@ -48,9 +48,9 @@ dependencies {
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
 
-    implementation(project(":library:network"))
-    implementation(project(":application:core"))
+    implementation(project(":network"))
 
+    implementation(project(":application:core"))
     implementation(project(":application:android:database"))
 
     // Room (sql database library)

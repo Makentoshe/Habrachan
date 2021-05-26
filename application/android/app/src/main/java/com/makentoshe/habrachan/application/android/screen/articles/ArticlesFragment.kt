@@ -14,7 +14,6 @@ import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
-import com.makentoshe.habrachan.application.android.analytics.event.AnalyticEvent
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesAdapter

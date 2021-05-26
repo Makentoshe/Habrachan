@@ -77,8 +77,8 @@ dependencies {
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
 
-    implementation(project(":library:network"))
-    implementation(project(":library:network-native"))
+    implementation(project(":network"))
+    implementation(project(":network:network-native"))
 
     implementation(project(":functional"))
 
