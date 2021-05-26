@@ -9,10 +9,6 @@ object GithubVcsRoot : GitVcsRoot({
     }
 })
 
-object SpaceVcsRoot : GitVcsRoot({
-    name = "Space"
-})
-
 /** Contains sensitive metadata. Keystores for signing android application, for example */
 object MetadataVcsRoot : GitVcsRoot({
     name = "Metadata"
