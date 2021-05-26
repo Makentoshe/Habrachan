@@ -23,7 +23,10 @@ android {
         versionName = "0.5.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val properties = Properties().apply { load(project.rootProject.file("local.properties").inputStream()) }
+        val localPropertiesFile = project.rootProject.file("local.properties")
+        if (localPropertiesFile.exists() && localPropertiesFile.isFile) {
+            val properties = Properties().apply { load(localPropertiesFile.inputStream()) }
+        }
 //        buildConfigField("String", "API_ANALYTICS", "\"${properties["api.analytics"]!!}\"")
         buildConfigField("String", "CLIENT_KEY", "\"85cab69095196f3.89453480\"")
         buildConfigField("String", "API_KEY", "\"173984950848a2d27c0cc1c76ccf3d6d3dc8255b\"")
