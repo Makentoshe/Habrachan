@@ -6,7 +6,6 @@ repositories {
     mavenCentral()
 }
 
-// TODO remove hardcoded dependencies
 dependencies {
 
     implementation(kotlin("stdlib"))
@@ -21,26 +20,35 @@ dependencies {
 
     // Gson
     // https://github.com/google/gson
-    val gson = "2.8.6"
-    implementation("com.google.code.gson:gson:$gson")
+    val gsonVersion = properties["version.gson"]
+    implementation("com.google.code.gson:gson:$gsonVersion")
 
     // OkHttp
     // https://github.com/square/okhttp/
-    val okhttp = "4.1.0"
-    implementation("com.squareup.okhttp3:okhttp:$okhttp")
+    val okhttpVersion = properties["version.okhttp"]
+    implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
 
     // Retrofit
     // https://github.com/square/retrofit
-    val retrofit = "2.3.0"
-    implementation("com.squareup.retrofit2:retrofit:$retrofit")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofit")
+    val retrofitVersion = properties["version.retrofit"]
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     // Kotlin coroutines
     // https://github.com/Kotlin/kotlinx.coroutines
-    val coroutines = "1.3.7"
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
+    val coroutinesVersion = properties["version.coroutines"]
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
-    testImplementation("junit:junit:4.12")
+    val junitVersion = properties["version.junit"]
+    testImplementation("junit:junit:$junitVersion")
+}
+
+// idkw, but "onlyIf" does not disables/skips this task, so this is a workaround
+tasks.test.configure {
+    // for ci/cd: this should be managed by build system.
+    // we should disable tests by default (ide), because the REAL api will invoked each build
+    // and may cause accident DDoS
+    enabled = project.hasProperty("allow-network-test")
 }
 
 // Allows to use kotlin.Result type as a return
