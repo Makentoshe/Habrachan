@@ -1,12 +1,12 @@
 package src.build
 
-import MetadataVcsRoot
-import Parameters
-import installAndroidSdk
 import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
-import reference
+import src.MetadataVcsRoot
+import src.Parameters
+import src.installAndroidSdk
+import src.reference
 
 object AndroidRelease : BaseBuild("Android release", {
     val releaseApkOutput = "application/android/app/build/outputs/apk/release/"

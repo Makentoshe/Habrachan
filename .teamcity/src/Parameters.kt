@@ -1,5 +1,7 @@
-import Parameters.Environment.AndroidHome
+package src
+
 import jetbrains.buildServer.configs.kotlin.v2019_2.Parameter
+import src.Parameters.Environment.AndroidHome
 
 object Parameters {
     /**

@@ -1,9 +1,9 @@
 package src.build
 
-import Parameters
-import installAndroidSdk
 import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
+import src.Parameters
+import src.installAndroidSdk
 
 object AndroidBuild : VcsBaseBuild("Android build", {
     description = """

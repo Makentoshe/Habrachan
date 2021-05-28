@@ -1,6 +1,7 @@
 package src.build
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
+import src.Parameters
 
 object NetworkNativeNetworkTestBuild: WeeklyBaseBuild("Run network tests for network:network-native module", {
     description = """
