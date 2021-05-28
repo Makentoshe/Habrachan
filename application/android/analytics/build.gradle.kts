@@ -33,6 +33,12 @@ dependencies {
     val kotlinVersion = properties["version.kotlin"]
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
+    val slf4jVersion = properties["version.slf4j"]
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+
+    val logbackVersion = properties["version.logback"]
+    implementation("com.github.tony19:logback-android:$logbackVersion")
+
     val androidxCoreVersion = properties["version.androidx.core"]
     implementation ("androidx.core:core-ktx:$androidxCoreVersion")
 
