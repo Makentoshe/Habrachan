@@ -3,15 +3,24 @@ package com.makentoshe.habrachan.application.android.analytics
 import android.util.Log
 import com.makentoshe.habrachan.application.android.analytics.event.AnalyticEvent
 
-open class LogAnalytic: Analytic {
+open class LogAnalytic : Analytic {
 
     override fun capture(event: AnalyticEvent) {
-        consoleDebug(event.eventTitle, event.eventMessage)
+        val eventException = event.eventException
+        if (eventException != null) {
+            consoleException(event.eventTitle, event.eventMessage, eventException)
+        } else {
+            consoleDebug(event.eventTitle, event.eventMessage)
+        }
     }
 
     private fun consoleDebug(tag: String, message: String) {
         if (!enableConsoleLog) return
         Log.d("analytics.logger.$tag", message)
+    }
+
+    private fun consoleException(tag: String, message: String, exception: Throwable) {
+        Log.e(tag, message, exception)
     }
 
     companion object Factory {
