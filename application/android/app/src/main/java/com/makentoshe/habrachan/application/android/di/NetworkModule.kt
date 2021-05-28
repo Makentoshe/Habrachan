@@ -2,6 +2,9 @@ package com.makentoshe.habrachan.application.android.di
 
 import android.content.Context
 import com.makentoshe.habrachan.BuildConfig
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.network.deserializer.*
 import com.makentoshe.habrachan.network.manager.*
 import com.makentoshe.habrachan.network.request.*
@@ -12,6 +15,8 @@ import toothpick.ktp.binding.bind
 import javax.net.ssl.HostnameVerifier
 
 class NetworkModule(context: Context) : Module() {
+
+    companion object: Analytics(LogAnalytic())
 
     private val client = OkHttpClient.Builder().followRedirects(true).addLoggingInterceptor().build()
 
@@ -39,7 +44,9 @@ class NetworkModule(context: Context) : Module() {
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
         if (BuildConfig.DEBUG) {
-            val logging = HttpLoggingInterceptor()
+            val logging = HttpLoggingInterceptor {
+                capture(analyticEvent("OkHttpClient", it))
+            }
             logging.level = HttpLoggingInterceptor.Level.BASIC
             addInterceptor(logging)
         }
