@@ -1,4 +1,4 @@
-package build
+package src.build
 
 import GithubVcsRoot
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType

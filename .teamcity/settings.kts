@@ -1,5 +1,5 @@
-import build.AndroidBuild
-import build.AndroidRelease
+import src.build.AndroidBuild
+import src.build.AndroidRelease
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.version
 

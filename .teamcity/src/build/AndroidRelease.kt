@@ -1,4 +1,4 @@
-package build
+package src.build
 
 import MetadataVcsRoot
 import Parameters
