@@ -5,18 +5,24 @@ import com.makentoshe.habrachan.network.deserializer.NativeGetArticleDeserialize
 import com.makentoshe.habrachan.network.userSession
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
+import org.junit.Assert.assertEquals
 import org.junit.Ignore
 import org.junit.Test
 
-class NativeGetArticleManagerTest {
+class NativeGetArticleManagerTest : NativeUnitTest() {
+
+    private val userSession = userSession(client, api)
+    private val manager = NativeGetArticleManager.Builder(OkHttpClient(), NativeGetArticleDeserializer()).build()
 
     @Test
-    @Ignore
-    fun networkSuccess() = runBlocking {
-        val userSession = userSession("", "73984950848a2d27c0cc1c76ccf3d6d3dc8255b")
-        val manager = NativeGetArticleManager.Builder(OkHttpClient(), NativeGetArticleDeserializer()).build()
+    fun testShould() = runBlocking {
         val request = manager.request(userSession, articleId(442440))
         val response = manager.article(request)
+
+        val articleResponse = response.getOrThrow()
+        assertEquals(request, articleResponse.request)
+        assertEquals(442440, articleResponse.article.id)
+        assertEquals("Makentoshe", articleResponse.article.author.login)
 
         println(response)
     }
