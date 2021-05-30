@@ -4,9 +4,9 @@ import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.request.VoteArticleRequest
 import com.makentoshe.habrachan.network.response.VoteArticleResponse
 
-interface VoteArticleDeserializer {
+interface VoteArticleDeserializer<Request: VoteArticleRequest> {
 
-    fun success(request: VoteArticleRequest, json: String): Result<VoteArticleResponse>
+    fun success(request: Request, json: String): Result<VoteArticleResponse>
 
-    fun failure(request: VoteArticleRequest, json: String): Result<VoteArticleResponse>
+    fun failure(request: Request, json: String): Result<VoteArticleResponse>
 }
