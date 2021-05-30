@@ -18,14 +18,15 @@ class MobileLoginManager private constructor(
     private val cookieJar: CustomCookieJar,
     private val deserializer: MobileLoginDeserializer,
     private val userManager: MobileGetUserManager?
-) : LoginManager<MobileLoginRequest> {
+) {
 
-    override fun request(userSession: UserSession, email: String, password: String): MobileLoginRequest {
+    fun request(userSession: UserSession, email: String, password: String): MobileLoginRequest {
         return MobileLoginRequest(userSession, email, password)
     }
 
+    // TODO retrieve and solve captcha
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun login(request: MobileLoginRequest): Result<LoginResponse> {
+    suspend fun login(request: MobileLoginRequest): Result<LoginResponse> {
         try {
             // get cookies. consumer, state and referer
             val cookieResponse = loginApi.getLoginCookies().execute()
