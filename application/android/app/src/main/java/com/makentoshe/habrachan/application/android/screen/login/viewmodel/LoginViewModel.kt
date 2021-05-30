@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.application.android.AndroidUserSession
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginSpec
-import com.makentoshe.habrachan.network.manager.LoginManager
-import com.makentoshe.habrachan.network.request.LoginRequest
+import com.makentoshe.habrachan.network.manager.NativeLoginManager
 import com.makentoshe.habrachan.network.response.LoginResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -15,7 +14,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 
 class LoginViewModel(
-    private val userSession: AndroidUserSession, private val loginManager: LoginManager<LoginRequest>
+    private val userSession: AndroidUserSession, private val loginManager: NativeLoginManager
 ) : ViewModel() {
 
     val loginChannel = Channel<LoginSpec>()
@@ -34,7 +33,7 @@ class LoginViewModel(
     }
 
     class Factory(
-        private val userSession: AndroidUserSession, private val loginManager: LoginManager<LoginRequest>
+        private val userSession: AndroidUserSession, private val loginManager: NativeLoginManager
     ) : ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>) = LoginViewModel(userSession, loginManager) as T

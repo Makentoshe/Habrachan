@@ -7,8 +7,7 @@ import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.login.LoginFragment
 import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginNavigation
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.LoginViewModel
-import com.makentoshe.habrachan.network.manager.LoginManager
-import com.makentoshe.habrachan.network.request.LoginRequest
+import com.makentoshe.habrachan.network.manager.NativeLoginManager
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -18,7 +17,7 @@ annotation class LoginScope
 
 class LoginModule(fragment: LoginFragment): Module() {
     
-    private val loginManager by inject<LoginManager<LoginRequest>>()
+    private val loginManager by inject<NativeLoginManager>()
     private val userSession by inject<AndroidUserSession>()
     private val router by inject<StackRouter>()
     
