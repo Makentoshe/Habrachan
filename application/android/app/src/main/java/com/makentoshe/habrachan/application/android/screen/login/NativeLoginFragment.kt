@@ -9,28 +9,28 @@ import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
-import com.makentoshe.habrachan.application.android.screen.login.model.LoginSpec
+import com.makentoshe.habrachan.application.android.screen.login.model.NativeLoginSpec
 import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginNavigation
-import com.makentoshe.habrachan.application.android.screen.login.viewmodel.LoginViewModel
+import com.makentoshe.habrachan.application.android.screen.login.viewmodel.NativeLoginViewModel
 import com.makentoshe.habrachan.network.exception.LoginResponseException
-import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_login_native.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
-class LoginFragment : CoreFragment() {
+class NativeLoginFragment : CoreFragment() {
 
     companion object {
-        fun build() = LoginFragment()
+        fun build() = NativeLoginFragment()
     }
 
     override val arguments = Arguments(this)
 
     private val navigation by inject<LoginNavigation>()
-    private val viewModel by inject<LoginViewModel>()
+    private val viewModel by inject<NativeLoginViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        return inflater.inflate(R.layout.fragment_login_native, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,7 +62,7 @@ class LoginFragment : CoreFragment() {
             fragment_login_button.visibility = View.INVISIBLE
             fragment_login_progress.visibility = View.VISIBLE
             lifecycleScope.launch {
-                viewModel.loginChannel.send(LoginSpec(email.toString(), password.toString()))
+                viewModel.loginChannel.send(NativeLoginSpec(email.toString(), password.toString()))
             }
         }
 
@@ -84,5 +84,5 @@ class LoginFragment : CoreFragment() {
         }
     }
 
-    class Arguments(fragment: LoginFragment) : CoreFragment.Arguments(fragment)
+    class Arguments(fragment: NativeLoginFragment) : CoreFragment.Arguments(fragment)
 }

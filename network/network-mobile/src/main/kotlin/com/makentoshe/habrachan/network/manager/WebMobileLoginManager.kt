@@ -20,9 +20,8 @@ class WebMobileLoginManager private constructor(
         return MobileLoginRequest(userSession, email, password)
     }
 
-    // TODO retrieve and solve captcha
     @Suppress("BlockingMethodInNonBlockingContext")
-    suspend fun login(request: MobileLoginRequest, htmlProcess: suspend (MobileLoginRequest, String, String) -> LoginResponse.MobileResponse): Result<LoginResponse> {
+    suspend fun login(request: MobileLoginRequest, htmlProcess: suspend (String) -> LoginResponse.MobileResponse): Unit {
         try {
             // get cookies. consumer, state and referer
             val cookieResponse = loginApi.getLoginCookies().execute()
@@ -31,9 +30,10 @@ class WebMobileLoginManager private constructor(
             val consumer = referer.queryParameter("consumer") ?: ""
             val url = "https://account.habr.com/login/?state=$state&consumer=$consumer&hl=${request.userSession.habrLanguage}"
 
-            return Result.success(LoginResponse(request, mobileResponse = htmlProcess(request, state, consumer), user = null))
+            val response = htmlProcess(url)
+            println(response)
         } catch (exception: Exception) {
-            return Result.failure(exception)
+            println(exception)
         }
     }
 
