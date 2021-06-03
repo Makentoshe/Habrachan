@@ -80,9 +80,9 @@ data class Article(
     @SerializedName("votes_count")
     override val votesCount: Int  = 0,
     @SerializedName("is_can_comment")
-    val isCanComment: Boolean?
-//    @SerializedName("voting")
-//    val voting: Voting? = null
+    val isCanComment: Boolean?,
+    @SerializedName("voting")
+    val voting: Voting? = null
 ) : Article {
 
     override val articleId: Int
