@@ -35,6 +35,9 @@ class NetworkModule(context: Context) : Module() {
 
         val nativeGetCommentsManager = NativeGetArticleCommentsManager.Builder(client, NativeGetCommentsDeserializer()).build()
         bind<GetArticleCommentsManager<out GetArticleCommentsRequest>>().toInstance(nativeGetCommentsManager)
+
+        val nativeVoteArticleManager = NativeVoteArticleManager.Builder(client, NativeVoteArticleDeserializer()).build()
+        bind<VoteArticleManager<out VoteArticleRequest>>().toInstance(nativeVoteArticleManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {

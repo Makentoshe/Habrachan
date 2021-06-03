@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
@@ -20,10 +19,14 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.application.android.screen.article.model.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
+import com.makentoshe.habrachan.entity.articleId
+import com.makentoshe.habrachan.network.request.ArticleVote
 import com.makentoshe.habrachan.network.response.GetArticleResponse2
 import com.makentoshe.habrachan.network.response.GetContentResponse
+import com.makentoshe.habrachan.network.response.VoteArticleResponse
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -82,6 +85,11 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
                 navigator.toArticleContentScreen(it)
             }
         }
+        lifecycleScope.launch {
+            viewModel2.voteArticle.collectLatest { response ->
+                response.fold(::onVoteArticleSuccess,::onVoteArticleFailure)
+            }
+        }
 
         exceptionController.setRetryButton {
             exceptionController.hide()
@@ -100,11 +108,17 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_toolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
 
         fragment_article_bottom_voteup.setOnClickListener {
-            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+            lifecycleScope.launch(Dispatchers.IO) {
+                val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.UP)
+                viewModel2.voteArticleSpecChannel.send(spec)
+            }
         }
 
         fragment_article_bottom_votedown.setOnClickListener {
-            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+            lifecycleScope.launch(Dispatchers.IO) {
+                val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.DOWN)
+                viewModel2.voteArticleSpecChannel.send(spec)
+            }
         }
     }
 
@@ -148,10 +162,11 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_bottom_voteview.text = response.article.score.toString()
         fragment_article_bottom_reading_count.text = response.article.readingCount.toString()
         fragment_article_bottom_comments_count.text = response.article.commentsCount.toString()
+        fragment_article_bottom.visibility = View.VISIBLE
         fragment_article_bottom_comments.setOnClickListener {
             navigator.toArticleCommentsScreen(response.article)
         }
-        fragment_article_bottom.visibility = View.VISIBLE
+        // TODO show article vote
     }
 
     private fun onArticleReceivedFailure(exception: Throwable) {
@@ -175,6 +190,22 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_avatar_image.visibility = View.VISIBLE
 
         fragment_article_avatar_progress.visibility = View.GONE
+    }
+
+    private fun onVoteArticleSuccess(response: VoteArticleResponse) {
+        fragment_article_bottom_voteview.text = response.score.toString()
+        when (response.request.articleVote) {
+            ArticleVote.UP -> fragment_article_bottom_voteup.apply {
+                setColorFilter(ContextCompat.getColor(requireContext(), R.color.positive))
+            }
+            ArticleVote.DOWN -> fragment_article_bottom_votedown.apply {
+                setColorFilter(ContextCompat.getColor(requireContext(), R.color.negative))
+            }
+        }.setImageResource(R.drawable.ic_arrow_bold_solid)
+    }
+
+    private fun onVoteArticleFailure(throwable: Throwable?) {
+        // todo show a snackbar with description
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
