@@ -7,7 +7,7 @@ import com.google.gson.JsonElement
 import com.makentoshe.habrachan.entity.ArticleText
 import java.lang.reflect.Type
 
-abstract class GsonDeserializer {
+abstract class NativeGsonDeserializer {
 
     val gson = GsonBuilder().apply {
         registerTypeAdapter(ArticleText::class.java, TypeAdapter())
