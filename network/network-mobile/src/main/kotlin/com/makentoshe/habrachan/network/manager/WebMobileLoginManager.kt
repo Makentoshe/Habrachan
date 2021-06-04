@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.network.manager
 
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.MobileLoginApi
+import com.makentoshe.habrachan.network.exceptions.WebMobileLoginException
 import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.WebMobileLoginRequest
 import com.makentoshe.habrachan.network.response.WebMobileLoginResponse
@@ -36,14 +37,15 @@ class WebMobileLoginManager private constructor(
             val loginScreenPassedRequest = Request.Builder().url(loginScreenPassedUrl).build()
             val loginScreenPassedResponse = client.newCall(loginScreenPassedRequest).execute()
 
+            // TODO parse string and retrieve a user data
             val string = loginScreenPassedResponse.body?.string().toString()
             return loginScreenPassedResponse.fold({
                 Result.success(WebMobileLoginResponse(request, cookieJar.cookies.flatMap { it.value }, string))
             }, {
-                Result.failure(Exception(it.string()))
+                Result.failure(WebMobileLoginException(request, Exception(it.string())))
             })
         } catch (exception: Exception) {
-            return Result.failure(exception)
+            return Result.failure(WebMobileLoginException(request, exception))
         }
     }
 
