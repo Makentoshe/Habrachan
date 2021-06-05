@@ -2,6 +2,8 @@ package com.makentoshe.habrachan.entity.mobiles
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.User
+import com.makentoshe.habrachan.entity.mobiles.login.NotificationUnreadCounters
+import com.makentoshe.habrachan.entity.mobiles.login.Settings
 
 data class User(
     @SerializedName("alias")
@@ -37,7 +39,32 @@ data class User(
     @SerializedName("speciality")
     override val speciality: String, // Неполноценный разработчик
     @SerializedName("workplace")
-    val workplace: List<Workplace>
+    val workplace: List<Workplace>,
+
+    @SerializedName("availableInvitesCount")
+    val availableInvitesCount: Int, // 0
+    @SerializedName("companiesAdmin")
+    val companiesAdmin: List<Any>,
+    @SerializedName("crc32")
+    val crc32: String, // 2612327884
+    @SerializedName("email")
+    val email: String, // mkliverout@gmail.com
+    @SerializedName("gaUid")
+    val gaUid: String, // 3423668c935b1bf023a407cef909f343
+    @SerializedName("groups")
+    val groups: List<String>,
+    @SerializedName("notices")
+    val notices: List<Any>,
+    @SerializedName("notificationUnreadCounters")
+    val notificationUnreadCounters: NotificationUnreadCounters,
+    @SerializedName("ppaBalance")
+    val ppaBalance: Any?, // null
+    @SerializedName("rssKey")
+    val rssKey: String, // 79d71c6c1b51c44e2be8c4bf2e05e4bd
+    @SerializedName("settings")
+    val settings: Settings,
+    @SerializedName("unreadConversationCount")
+    val unreadConversationCount: Int // 0
 ) : User {
 
     override val avatar: String
