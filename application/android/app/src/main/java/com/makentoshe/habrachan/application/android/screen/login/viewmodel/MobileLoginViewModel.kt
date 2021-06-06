@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.makentoshe.habrachan.application.android.AndroidUserSession
 import com.makentoshe.habrachan.functional.Result
-import com.makentoshe.habrachan.network.manager.WebMobileLoginManager
-import com.makentoshe.habrachan.network.response.WebMobileLoginResponse
+import com.makentoshe.habrachan.network.login.WebMobileLoginManager
+import com.makentoshe.habrachan.network.login.WebMobileLoginResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel

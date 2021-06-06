@@ -1,6 +1,7 @@
-package com.makentoshe.habrachan.network.request
+package com.makentoshe.habrachan.network.login
 
 import com.makentoshe.habrachan.network.UserSession
+import com.makentoshe.habrachan.network.request.MobileRequest
 
 /**
  * [userSession] is an object containing any user information for any api used in application.

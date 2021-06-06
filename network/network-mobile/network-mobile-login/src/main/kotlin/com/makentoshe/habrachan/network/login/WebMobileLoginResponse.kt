@@ -1,7 +1,6 @@
-package com.makentoshe.habrachan.network.response
+package com.makentoshe.habrachan.network.login
 
 import com.makentoshe.habrachan.entity.mobiles.login.LoginInitialState
-import com.makentoshe.habrachan.network.request.WebMobileLoginRequest
 import okhttp3.Cookie
 
 /**

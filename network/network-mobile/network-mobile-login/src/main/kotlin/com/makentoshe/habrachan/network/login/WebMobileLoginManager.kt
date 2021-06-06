@@ -1,14 +1,10 @@
-package com.makentoshe.habrachan.network.manager
+package com.makentoshe.habrachan.network.login
 
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.fold
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.MobileLoginApi
-import com.makentoshe.habrachan.network.deserializer.WebMobileLoginDeserializer
-import com.makentoshe.habrachan.network.exceptions.WebMobileLoginException
 import com.makentoshe.habrachan.network.fold
-import com.makentoshe.habrachan.network.request.WebMobileLoginRequest
-import com.makentoshe.habrachan.network.response.WebMobileLoginResponse
 import okhttp3.*
 import retrofit2.Retrofit
 

@@ -1,7 +1,8 @@
-package com.makentoshe.habrachan.network.deserializer
+package com.makentoshe.habrachan.network.login
 
 import com.makentoshe.habrachan.entity.mobiles.login.LoginInitialState
 import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.network.deserializer.MobileGsonDeserializer
 import org.jsoup.Jsoup
 
 internal class WebMobileLoginDeserializer : MobileGsonDeserializer() {
