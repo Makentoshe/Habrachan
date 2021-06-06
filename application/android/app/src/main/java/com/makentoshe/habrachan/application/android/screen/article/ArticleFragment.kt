@@ -34,7 +34,7 @@ import toothpick.ktp.delegate.inject
 
 class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
-    companion object: Analytics(LogAnalytic()) {
+    companion object : Analytics(LogAnalytic()) {
 
         fun build(articleId: Int) = ArticleFragment().apply {
             arguments.articleId = articleId
@@ -87,7 +87,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         }
         lifecycleScope.launch {
             viewModel2.voteArticle.collectLatest { response ->
-                response.fold(::onVoteArticleSuccess,::onVoteArticleFailure)
+                response.fold(::onVoteArticleSuccess, ::onVoteArticleFailure)
             }
         }
 
@@ -166,7 +166,11 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_bottom_comments.setOnClickListener {
             navigator.toArticleCommentsScreen(response.article)
         }
-        // TODO show article vote
+
+        when (response.article.vote.value) {
+            1.0 -> setVoteUpIcon()
+            -1.0 -> setVoteDownIcon()
+        }
     }
 
     private fun onArticleReceivedFailure(exception: Throwable) {
@@ -195,14 +199,18 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private fun onVoteArticleSuccess(response: VoteArticleResponse) {
         fragment_article_bottom_voteview.text = response.score.toString()
         when (response.request.articleVote) {
-            ArticleVote.UP -> fragment_article_bottom_voteup.apply {
-                setColorFilter(ContextCompat.getColor(requireContext(), R.color.positive))
-            }
-            ArticleVote.DOWN -> fragment_article_bottom_votedown.apply {
-                setColorFilter(ContextCompat.getColor(requireContext(), R.color.negative))
-            }
-        }.setImageResource(R.drawable.ic_arrow_bold_solid)
+            ArticleVote.UP -> setVoteUpIcon()
+            ArticleVote.DOWN -> setVoteDownIcon()
+        }
     }
+
+    private fun setVoteUpIcon() = fragment_article_bottom_voteup.apply {
+        setColorFilter(ContextCompat.getColor(requireContext(), R.color.positive))
+    }.setImageResource(R.drawable.ic_arrow_bold_solid)
+
+    private fun setVoteDownIcon() = fragment_article_bottom_votedown.apply {
+        setColorFilter(ContextCompat.getColor(requireContext(), R.color.negative))
+    }.setImageResource(R.drawable.ic_arrow_bold_solid)
 
     private fun onVoteArticleFailure(throwable: Throwable?) {
         // todo show a snackbar with description
