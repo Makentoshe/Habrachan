@@ -1,7 +1,10 @@
 package com.makentoshe.habrachan.network.manager
 
+import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.functional.fold
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.MobileLoginApi
+import com.makentoshe.habrachan.network.deserializer.WebMobileLoginDeserializer
 import com.makentoshe.habrachan.network.exceptions.WebMobileLoginException
 import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.WebMobileLoginRequest
@@ -14,8 +17,11 @@ import retrofit2.Retrofit
  *
  * Should use with ui, that works like a web browser, e.g. WebView.
  */
-class WebMobileLoginManager private constructor(
-    private val loginApi: MobileLoginApi, private val client: OkHttpClient, private val cookieJar: CustomCookieJar
+class WebMobileLoginManager internal constructor(
+    private val loginApi: MobileLoginApi,
+    private val client: OkHttpClient,
+    private val cookieJar: CustomCookieJar,
+    private val deserializer: WebMobileLoginDeserializer
 ) {
 
     fun request(userSession: UserSession, external: suspend (String) -> String): WebMobileLoginRequest {
@@ -33,14 +39,20 @@ class WebMobileLoginManager private constructor(
             val loginScreenUrl =
                 "https://account.habr.com/login/?state=$state&consumer=$consumer&hl=${request.userSession.habrLanguage}"
 
+            // pass a login screen and optional google recaptcha using external tool
             val loginScreenPassedUrl = request.external(loginScreenUrl)
             val loginScreenPassedRequest = Request.Builder().url(loginScreenPassedUrl).build()
             val loginScreenPassedResponse = client.newCall(loginScreenPassedRequest).execute()
 
-            // TODO parse string and retrieve a user data
-            val string = loginScreenPassedResponse.body?.string().toString()
+            // parse an external tool response
             return loginScreenPassedResponse.fold({
-                Result.success(WebMobileLoginResponse(request, cookieJar.cookies.flatMap { it.value }, string))
+                val string = it.string()
+                deserializer.deserializeLoginScreenPassedResponse(string).fold({ state ->
+                    val cookies = cookieJar.cookies.flatMap { it.value }
+                    Result.success(WebMobileLoginResponse(request, cookies, string, state))
+                }, {
+                    Result.failure(WebMobileLoginException(request, it))
+                })
             }, {
                 Result.failure(WebMobileLoginException(request, Exception(it.string())))
             })
@@ -51,16 +63,22 @@ class WebMobileLoginManager private constructor(
 
     class Builder(client: OkHttpClient) {
 
+        private val webMobileLoginDeserializer = WebMobileLoginDeserializer()
         private val cookieJar = CustomCookieJar()
         private val baseUrl = "https://account.habr.com"
         private val client = client.newBuilder().cookieJar(cookieJar).build()
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
 
-        fun build() = WebMobileLoginManager(getRetrofit().create(MobileLoginApi::class.java), client, cookieJar)
+        fun build() = WebMobileLoginManager(
+            getRetrofit().create(MobileLoginApi::class.java),
+            client,
+            cookieJar,
+            webMobileLoginDeserializer
+        )
     }
 
-    private class CustomCookieJar : CookieJar {
+    internal class CustomCookieJar : CookieJar {
 
         val cookies = HashMap<HttpUrl, ArrayList<Cookie>>()
 

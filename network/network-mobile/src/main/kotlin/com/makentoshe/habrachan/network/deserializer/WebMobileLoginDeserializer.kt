@@ -1,22 +1,18 @@
 package com.makentoshe.habrachan.network.deserializer
 
 import com.makentoshe.habrachan.entity.mobiles.login.LoginInitialState
-import com.makentoshe.habrachan.network.exceptions.WebMobuleLoginDeserializeException
-import com.makentoshe.habrachan.network.request.WebMobileLoginRequest
-import com.makentoshe.habrachan.network.response.WebMobileLoginResponse
+import com.makentoshe.habrachan.functional.Result
 import org.jsoup.Jsoup
 
-class WebMobileLoginDeserializer : MobileGsonDeserializer() {
+internal class WebMobileLoginDeserializer : MobileGsonDeserializer() {
 
-    fun body(request: WebMobileLoginRequest, string: String): Result<WebMobileLoginResponse> = try {
+    fun deserializeLoginScreenPassedResponse(string: String): Result<LoginInitialState> = try {
         val document = Jsoup.parse(string)
         val initialStateData = document.body().select("script")[0].dataNodes()[0].wholeData
-        val json = initialStateData.drop(27).dropLast(146)
-        val initialState = gson.fromJson(json, LoginInitialState::class.java)
-        println(initialState)
-        Result.success(WebMobileLoginResponse(request, emptyList(), string))
+        val json = initialStateData.trimIndent().drop(25).dropLast(122)
+        Result.success(gson.fromJson(json, LoginInitialState::class.java))
     } catch (exception: Exception) {
-        Result.failure(WebMobuleLoginDeserializeException(request, string, exception))
+        Result.failure(exception)
     }
 
 }
