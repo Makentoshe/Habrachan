@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.entity.mobiles
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.ArticleText
+import com.makentoshe.habrachan.entity.ArticleVote
 
 data class Article(
     @SerializedName("id")
@@ -28,7 +29,7 @@ data class Article(
     @SerializedName("plannedPublishTime")
     val plannedPublishTime: Any?, // null
     @SerializedName("postLabels")
-    val postLabels: List<String>,
+    val postLabels: List<ArticleBadge>,
 //    @SerializedName("postType")
 //    override val postType: Any, // article
     @SerializedName("relatedData")
@@ -58,4 +59,7 @@ data class Article(
 
     override val votesCount: Int
         get() = statistics.votesCount
+
+    override val vote: ArticleVote
+        get() = ArticleVote(relatedData.vote.value)
 }

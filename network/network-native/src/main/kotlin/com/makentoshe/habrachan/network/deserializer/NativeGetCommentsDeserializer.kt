@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.network.exception.NativeGetArticleCommentsDeseri
 import com.makentoshe.habrachan.network.request.NativeGetArticleCommentsRequest
 import com.makentoshe.habrachan.network.response.NativeGetArticleCommentsResponse
 
-class NativeGetCommentsDeserializer : GsonDeserializer() {
+class NativeGetCommentsDeserializer : NativeGsonDeserializer() {
 
     fun body(request: NativeGetArticleCommentsRequest, json: String): Result<NativeGetArticleCommentsResponse> = try {
         Result.success(gson.fromJson(json, NativeGetArticleCommentsResponse.Factory::class.java).build(request))

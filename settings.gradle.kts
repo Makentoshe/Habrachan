@@ -8,6 +8,7 @@ include(":entity:entity-native")
 
 include(":network")
 include(":network:network-mobile")
+include(":network:network-mobile:network-mobile-login")
 include(":network:network-mobile:network-mobile-test")
 include(":network:network-native")
 include(":network:network-native:network-native-test")

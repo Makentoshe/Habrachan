@@ -36,4 +36,6 @@ data class AndroidUserSession(
             dao.clearAndInsert(UserSessionRecord(client, api, filterLanguage, habrLanguage, token, value))
             field = value
         }
+
+    var cookies: List<String> = emptyList()
 }

@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.network.deserializer
 
 import com.makentoshe.habrachan.entity.mobiles.Article
 
-class MobileGetArticleDeserializer: GsonDeserializer() {
+class MobileGetArticleDeserializer: MobileGsonDeserializer() {
 
     //article_success
     fun body(json: String): Result<Article> = try {

@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.network.exception.NativeGetUserDeserializerExcep
 import com.makentoshe.habrachan.network.request.NativeGetUserRequest
 import com.makentoshe.habrachan.network.response.NativeGetUserResponse
 
-class NativeGetUserDeserializer : GsonDeserializer() {
+class NativeGetUserDeserializer : NativeGsonDeserializer() {
 
     fun body(request: NativeGetUserRequest, json: String): Result<NativeGetUserResponse> = try {
         Result.success(gson.fromJson(json, NativeGetUserResponse.Factory::class.java).build(request))

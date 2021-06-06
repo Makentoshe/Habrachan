@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!-- TODO refactor layout -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
@@ -70,7 +71,8 @@
         android:layout_marginStart="@dimen/dimenXS"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/score_imageview"
-        app:layout_constraintStart_toEndOf="@+id/score_imageview" />
+        app:layout_constraintStart_toEndOf="@+id/score_imageview"
+        tools:text="234234234" />
 
     <ImageView
         android:id="@+id/reading_count_imageview"
@@ -93,7 +95,8 @@
         android:layout_marginStart="@dimen/dimenXS"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/reading_count_imageview"
-        app:layout_constraintStart_toEndOf="@+id/reading_count_imageview" />
+        app:layout_constraintStart_toEndOf="@+id/reading_count_imageview"
+        tools:text="234345345" />
 
     <ImageView
         android:id="@+id/comments_count_imageview"

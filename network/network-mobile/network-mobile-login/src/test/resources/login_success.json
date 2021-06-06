@@ -1,0 +1,3956 @@
+{
+  "adblock": {
+    "hasAcceptableAdsFilter": false,
+    "hasAdblock": false
+  },
+  "articlesList": {
+    "articlesList": {
+      "557242": {
+        "id": "557242",
+        "timePublished": "2021-06-04T07:22:46+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Разработка контроллера резервного питания. Схемотехника",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "tutorial",
+            "data": null
+          }
+        ],
+        "author": {
+          "id": "967248",
+          "alias": "Indemsys",
+          "fullname": null,
+          "avatarUrl": "",
+          "speciality": ""
+        },
+        "statistics": {
+          "commentsCount": 3,
+          "favoritesCount": 22,
+          "readingCount": 1014,
+          "score": 2,
+          "votesCount": 4
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "19737",
+            "alias": "controllers",
+            "type": "collective",
+            "title": "Программирование микроконтроллеров",
+            "titleHtml": "Программирование микроконтроллеров"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21472",
+            "alias": "circuit-design",
+            "type": "collective",
+            "title": "Схемотехника",
+            "titleHtml": "Схемотехника"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21484",
+            "alias": "electronics",
+            "type": "collective",
+            "title": "Производство и разработка электроники",
+            "titleHtml": "Производство и разработка электроники"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21976",
+            "alias": "DIY",
+            "type": "collective",
+            "title": "DIY или Сделай сам",
+            "titleHtml": "DIY или Сделай сам"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "22016",
+            "alias": "easyelectronics",
+            "type": "collective",
+            "title": "Электроника для начинающих",
+            "titleHtml": "Электроника для начинающих"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          },
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 3,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T07:22:46+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EЦель - разработка универсального контроллера, обеспечивающего резервное питание 220 В переменного и 24 В постоянного тока в случае отключения сетевого напряжения.  Вот такого как на рисунке.  \u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd15\u002Fd4f\u002Fb9b\u002Fd15d4fb9bb4d54f69b9f0b11639ef537.gif",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd15\u002Fd4f\u002Fb9b\u002Fd15d4fb9bb4d54f69b9f0b11639ef537.gif",
+            "fit": "cover",
+            "positionY": 3.4090909090909,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "559938": {
+        "id": "559938",
+        "timePublished": "2021-06-04T07:52:39+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Тернистый путь внедрения Swift Package Manager. Доклад Яндекса",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "80105",
+          "alias": "Leono",
+          "fullname": "Леонид Клюев",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F584\u002F202\u002Ff51\u002F584202f51fff3dae4b751e071363f736.png",
+          "speciality": "Редактор"
+        },
+        "statistics": {
+          "commentsCount": 0,
+          "favoritesCount": 1,
+          "readingCount": 191,
+          "score": 5,
+          "votesCount": 5
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "4991",
+            "alias": "yandex",
+            "type": "corporative",
+            "title": "Яндекс",
+            "titleHtml": "Яндекс"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "548",
+            "alias": "ios_dev",
+            "type": "collective",
+            "title": "Разработка под iOS",
+            "titleHtml": "Разработка под iOS"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": true
+            },
+            "id": "6345",
+            "alias": "mobile_dev",
+            "type": "collective",
+            "title": "Разработка мобильных приложений",
+            "titleHtml": "Разработка мобильных приложений"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "17714",
+            "alias": "objectivec",
+            "type": "collective",
+            "title": "Objective C",
+            "titleHtml": "Objective C"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "19039",
+            "alias": "swift",
+            "type": "collective",
+            "title": "Swift",
+            "titleHtml": "Swift"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 0,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T07:52:39+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "Доклад будет интересен iOS-разработчикам, которые хотят внедрить технологию Swift Package Manager (SPM) в существующий проект. Руководитель iOS-разработки Яндекс Go Вадим Белотицкий рассказал о причинах, по которым его команда решила внедрять SPM, и о решении возникших проблем, включая:\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cul\u003E\r\n\u003Cli\u003EПроблемы с компиляцией\u003C\u002Fli\u003E\r\n\u003Cli\u003EСочетание Swift- и Objective-C-кода\u003C\u002Fli\u003E\r\n\u003Cli\u003EПадения, связанные с некорректной линковкой проекта\u003C\u002Fli\u003E\r\n\u003Cli\u003EСочетание двух менеджеров зависимостей — CocoaPods и SPM\u003C\u002Fli\u003E\r\n\u003Cli\u003EПроблемы сборки на CI (TeamCity)\u003C\u002Fli\u003E\r\n\u003C\u002Ful\u003E\u003Cbr\u003E\r\nСам процесс внедрения рассмотрен поэтапно, начиная с примеров Apple и тестовых примеров к первым шагам по внедрению (созданию первого модуля с генерацией проекта) и вплоть до состояния приложения сейчас.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cdiv class=\"oembed\"\u003E\u003Ciframe allowfullscreen id=\"60b24c5d5a3f6bb5bd1eb649\" src=\"https:\u002F\u002Fembedd.srv.habr.com\u002Fiframe\u002F60b24c5d5a3f6bb5bd1eb649\"\u003E\u003C\u002Fiframe\u003E\u003C\u002Fdiv\u003E",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать конспект",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560174": {
+        "id": "560174",
+        "timePublished": "2021-06-04T08:00:02+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Мой питомец умер. История тамагочи",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2296163",
+          "alias": "host_m",
+          "fullname": "Mikhail",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F27c\u002F3e9\u002F2b5\u002F27c3e92b56c7de6147eaebd062a1656e.png",
+          "speciality": "Хостинг серверов"
+        },
+        "statistics": {
+          "commentsCount": 2,
+          "favoritesCount": 10,
+          "readingCount": 1985,
+          "score": 15,
+          "votesCount": 15
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "22298",
+            "alias": "vdsina",
+            "type": "corporative",
+            "title": "VDSina.ru",
+            "titleHtml": "VDSina.ru"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20742",
+            "alias": "read",
+            "type": "collective",
+            "title": "Читальный зал",
+            "titleHtml": "Читальный зал"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21894",
+            "alias": "gadgets",
+            "type": "collective",
+            "title": "Гаджеты",
+            "titleHtml": "Гаджеты"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21980",
+            "alias": "games",
+            "type": "collective",
+            "title": "Игры и игровые приставки",
+            "titleHtml": "Игры и игровые приставки"
+          }
+        ],
+        "flows": [
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management"
+          },
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 2,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T08:00:02+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fte\u002F_x\u002Fe2\u002Fte_xe2txv6hhucqfsjbck5putz4.jpeg\" alt=\"image\"\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nВ детстве о собственном питомце мечтали если не все, то многие. Собачке там, котёнке, попугайчике или хомячке. Хотелось ухаживать за ним, кормить, холить и лелеять, а так же гулять и играться. Но, увы, подобная возможность была не у всех. Многим банально не разрешали родители, понимавшие всю ответственность и хлопоты, которые обязательно лягут на их хрупкие плечи, появись в доме мохнатый или пернатый друг. А вот товарищ, герой данной статьи, о котором пойдет дальнейший рассказ, таких проблем не вызывал, затрат на корм не требовал, потому, за недостатком друга живого, детям приобретали друга электронного, ставшего любимой игрушкой и хитом своего времени. Да, речь о Тамагочи, девайсе, увлекшем не одно поколение мальчишек и девчонок. Рассмотрим историю зарождения, узнаем, что это вообще такое и дальнейшее развитие. Поехали.\u003Cbr\u003E",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560698": {
+        "id": "560698",
+        "timePublished": "2021-06-04T09:59:34+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Граф Цеппелин, открывший эпоху дирижаблей",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2666479",
+          "alias": "Shyhartskoi",
+          "fullname": "Алексей",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Ffb4\u002F306\u002Ffe7\u002Ffb4306fe7636d2d332ee28f431a3a9d2.jpg",
+          "speciality": ""
+        },
+        "statistics": {
+          "commentsCount": 0,
+          "favoritesCount": 0,
+          "readingCount": 83,
+          "score": 0,
+          "votesCount": 0
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "22698",
+            "alias": "macloud",
+            "type": "corporative",
+            "title": "Маклауд",
+            "titleHtml": "Маклауд"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21910",
+            "alias": "popular_science",
+            "type": "collective",
+            "title": "Научно-популярное",
+            "titleHtml": "Научно-популярное"
+          }
+        ],
+        "flows": [
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 0,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T09:59:34+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fan\u002F87\u002Fx-\u002Fan87x-hpd60t5qyw7pnyoz9rpmq.png\"\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nВо время гражданской войны в США, между Севером и Югом, европейцы заимели обыкновение засылать туда своих легальных информаторов с вполне конкретными задачами — наблюдать за новинками в военном деле, с официальным статусом «военных наблюдателей», и в их число попал и 25 немецкий лейтенант Фердинанд фон Цеппелин.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nЕго положение давало ему возможность эти самые новинки, что называется, «потрогать руками», и однажды любезные местные военные предложили ему вместе с ними пойти в разведку. А в разведку они ходили, поднимаясь в небо на аэростате, который толстым канатом были привязан к земле, и свысока обозревать перемещение вражеских войск.\u003Cbr\u003E\r\n\u003Cbr\u003E",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560772": {
+        "id": "560772",
+        "timePublished": "2021-06-04T09:04:02+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Антипаттерны деплоя в Kubernetes. Часть 2",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "translation",
+            "data": {
+              "originalAuthorName": "Kostis Kapelonis",
+              "originalUrl": "https:\u002F\u002Fmedium.com\u002Fcontainers-101\u002Fkubernetes-deployment-antipatterns-part-2-2af25a710bc0"
+            }
+          }
+        ],
+        "author": {
+          "id": "2019653",
+          "alias": "IDWarlock",
+          "fullname": null,
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F032\u002Fa19\u002Fd6a\u002F032a19d6a86a73f8c21e8d630eb794bd.jpg",
+          "speciality": "Знающий"
+        },
+        "statistics": {
+          "commentsCount": 1,
+          "favoritesCount": 4,
+          "readingCount": 349,
+          "score": 4,
+          "votesCount": 4
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "17357",
+            "alias": "timeweb",
+            "type": "corporative",
+            "title": "Timeweb",
+            "titleHtml": "Timeweb"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Программирование",
+            "titleHtml": "Программирование"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20788",
+            "alias": "devops",
+            "type": "collective",
+            "title": "DevOps",
+            "titleHtml": "DevOps"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "22196",
+            "alias": "kubernetes",
+            "type": "collective",
+            "title": "Kubernetes",
+            "titleHtml": "Kubernetes"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          },
+          {
+            "id": "6",
+            "alias": "admin",
+            "title": "Administrating"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 1,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T09:04:02+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EПеред вами вторая часть руководства по \u003Cstrong\u003Eантипаттернам деплоя в Kubernetes\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Cp\u003EВ этой статье не просто перечислены известные антипаттерны деплоя в Kubernetes, но и предлагаются соответствующие решения. Вы можете проверить ваши процессы развёртывания и исправить существующие проблемы без поиска дополнительной информации.\u003C\u002Fp\u003E\u003Cp\u003EТеперь вы сможете составить полную картину того, как создать образ контейнера и как правильно его развернуть (при этом избежав некоторых распространенных ошибок).\u003C\u002Fp\u003E\u003Cp\u003EОбратите внимание, что это руководство посвящено развёртыванию приложений в Kubernetes, но не затрагивает настройку самих кластеров Kubernetes. Предполагается, что кластер Kubernetes уже развёрнут, правильно настроен и вы просто хотите развернуть в нём ваше приложение.\u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd3d\u002Fd86\u002Fb3d\u002Fd3dd86b3dfe2a2b47d72fad623c87239.jpeg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd3d\u002Fd86\u002Fb3d\u002Fd3dd86b3dfe2a2b47d72fad623c87239.jpeg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 7.3076923076923
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560840": {
+        "id": "560840",
+        "timePublished": "2021-06-04T07:17:21+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Умный особняк",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "282053",
+          "alias": "Komrus",
+          "fullname": "Кирилл",
+          "avatarUrl": "",
+          "speciality": "CIO"
+        },
+        "statistics": {
+          "commentsCount": 3,
+          "favoritesCount": 10,
+          "readingCount": 1269,
+          "score": 2,
+          "votesCount": 2
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "18818",
+            "alias": "scada",
+            "type": "collective",
+            "title": "SCADA",
+            "titleHtml": "SCADA"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21966",
+            "alias": "home_automation",
+            "type": "collective",
+            "title": "Умный дом",
+            "titleHtml": "Умный дом"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "22113",
+            "alias": "engineering_systems",
+            "type": "collective",
+            "title": "Инженерные системы",
+            "titleHtml": "Инженерные системы"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          },
+          {
+            "id": "6",
+            "alias": "admin",
+            "title": "Administrating"
+          },
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 3,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T07:17:21+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EВнутренности, скрывающиеся под измочаленными за последние годы стараниями маркетологов  словами \"умный дом\" могут быть очень сильно разные. Как, например, под словом «печь» может подразумеваться и печь-буржуйка, так и доменная печь.\u003C\u002Fp\u003E\u003Cp\u003EИ если в предыдущей статье мы писали о построении вентиляции в историческом здании (Храме Спас-на-Крови), то в этот раз  хочется рассказать о особенностях умного дома в большом особняке. А также о проблемах, которые приходилось решать при создании и автоматизации климатики в этом современном здании. Площадью под 3000 квадратов, с бассейном и СПА зоной.\u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F267\u002Fd99\u002Fca5\u002F267d99ca5d3239f8278a1c1ab7df2802.png",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F267\u002Fd99\u002Fca5\u002F267d99ca5d3239f8278a1c1ab7df2802.png",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560890": {
+        "id": "560890",
+        "timePublished": "2021-06-04T08:02:45+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Как догфудинг работает на практике",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "1756207",
+          "alias": "ilyalazarev",
+          "fullname": "Илья Лазарев",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F37b\u002F153\u002F528\u002F37b15352823396506db533ca6533f3d1.jpg",
+          "speciality": "Head of 8base Russia"
+        },
+        "statistics": {
+          "commentsCount": 0,
+          "favoritesCount": 2,
+          "readingCount": 740,
+          "score": 3,
+          "votesCount": 3
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20722",
+            "alias": "startuprise",
+            "type": "collective",
+            "title": "Развитие стартапа",
+            "titleHtml": "Развитие стартапа"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20726",
+            "alias": "productpm",
+            "type": "collective",
+            "title": "Управление продуктом",
+            "titleHtml": "Управление продуктом"
+          }
+        ],
+        "flows": [
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 0,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T08:02:45+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EВ современном мире как никогда важно выпускать качественные, конкурентоспособные продукты и на эту тему написано много статей и книг, придумано много практик. Я хотел бы остановиться на одной из них, простой в использовании и действенной, непосредственный опыт внедрения которой имею. \u003C\u002Fp\u003E\u003Cp\u003EСегодня мы поговорим о догфудинге.&nbsp;\u003C\u002Fp\u003E\u003Cp\u003E\u003Cstrong\u003EДогфудинг\u003C\u002Fstrong\u003E (англ. Dogfooding, Eating your own dog food) - это практика использования сотрудниками компании собственных продуктов и сервисов.\u003C\u002Fp\u003E\u003Cp\u003EЧувствую, как у читателя начинают возникать вопросы «Что???», «Причем тут собачий корм?».&nbsp; Однажды мне даже сказали, что этот термин вызывает неприятные ассоциации.&nbsp;\u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9ed\u002F197\u002F352\u002F9ed197352026e9e5a641b06dec09ddc5.PNG",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9ed\u002F197\u002F352\u002F9ed197352026e9e5a641b06dec09ddc5.PNG",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560912": {
+        "id": "560912",
+        "timePublished": "2021-06-04T09:08:53+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Балет и роботы",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "410650",
+          "alias": "man_of_letters",
+          "fullname": null,
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fb59\u002Fd10\u002Fcc4\u002Fb59d10cc4887ce1d5ac2382e5f034940.png",
+          "speciality": "Человек смыслов"
+        },
+        "statistics": {
+          "commentsCount": 1,
+          "favoritesCount": 9,
+          "readingCount": 236,
+          "score": 6,
+          "votesCount": 6
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "19791",
+            "alias": "ruvds",
+            "type": "corporative",
+            "title": "RUVDS.com",
+            "titleHtml": "RUVDS.com"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "262",
+            "alias": "video",
+            "type": "collective",
+            "title": "Работа с видео",
+            "titleHtml": "Работа с видео"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "17175",
+            "alias": "image_processing",
+            "type": "collective",
+            "title": "Обработка изображений",
+            "titleHtml": "Обработка изображений"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "19439",
+            "alias": "machine_learning",
+            "type": "collective",
+            "title": "Машинное обучение",
+            "titleHtml": "Машинное обучение"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20742",
+            "alias": "read",
+            "type": "collective",
+            "title": "Читальный зал",
+            "titleHtml": "Читальный зал"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          },
+          {
+            "id": "2",
+            "alias": "design",
+            "title": "Design"
+          },
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 1,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T09:08:53+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Ch4\u003E\u003Cfont color=\"#3AC1EF\"\u003EОцветнение видео под капотом\u003C\u002Ffont\u003E\u003C\u002Fh4\u003EПродолжаю рассказывать о своём необычном увлечении. Моё хобби заключается в алгоритмическом преобразовании древнего черно-белого видео в материал, который выглядит современно. Про мою первую работу написано в этой \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fpost\u002F481710\u002F\"\u003Eстатье\u003C\u002Fa\u003E. Прошло время, мои навыки улучшились, и теперь я не смеюсь над мемом \u003Ca href=\"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fzr\u002F1a\u002Flb\u002Fzr1alblhtlixii_4c_l97uvds9m.jpeg\" rel=\"nofollow noopener noreferrer\"\u003E«Zoom and enhance»\u003C\u002Fa\u003E.\u003Cbr\u003E\r\n\u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F560912\u002F\"\u003E\u003Cdiv style=\"text-align:center;\"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fih\u002Fhi\u002Flr\u002Fihhilrpivjrspnjqr03bfhezlk4.png\"\u003E\u003C\u002Fdiv\u003E\u003C\u002Fa\u003EВремяпрепровождение может показаться странным, но оно, правда, приносит удовольствие. Может дело в возможности быть волшебником, превращающим с помощью техномагии пепел прошлого в огонь, а может причина в множестве интеллектуальных ребусов, не имеющих готового решения, может быть это компенсация недостатка творческого самовыражения, может быть всё вместе. С каждым новым видео процесс обрастает деталями, растёт количество задействованных сторонних инструментов и скриптов.",
+          "imageUrl": null,
+          "buttonTextHtml": "Окунуться в прекрасное",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560928": {
+        "id": "560928",
+        "timePublished": "2021-06-04T08:18:26+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "TREX: 27-ричная симметричная система счисления",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2638647",
+          "alias": "TrifonovIS",
+          "fullname": "Трифонов Иван",
+          "avatarUrl": "",
+          "speciality": "Архитектор ИТ-систем"
+        },
+        "statistics": {
+          "commentsCount": 6,
+          "favoritesCount": 6,
+          "readingCount": 1026,
+          "score": 6,
+          "votesCount": 6
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Программирование",
+            "titleHtml": "Программирование"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "17812",
+            "alias": "maths",
+            "type": "collective",
+            "title": "Математика",
+            "titleHtml": "Математика"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 6,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T08:18:26+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EКаждый специалист по компьютерам знает, насколько сложно работать с длинными последовательностями нулей и единиц. На помощь ему приходят восьмеричная и шестнадцатиричная системы счисления, обеспечивающие более компактное представление информации. \u003C\u002Fp\u003E\u003Cp\u003EС троичной системой счисления ситуация хуже: есть несколько способов представления троичных чисел и есть несколько способов компактной записи троичных чисел, но они имеют недостатки, усложняющие работу с ними. \u003C\u002Fp\u003E\u003Cp\u003EСистема кодирования TREX разработана для компактного отображения симметричной троичной системы счисления при ее использовании в компьютерных системах\u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbaa\u002Fcd4\u002F27e\u002Fbaacd427e4d8c89ccd439c80b2599671.jpg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbaa\u002Fcd4\u002F27e\u002Fbaacd427e4d8c89ccd439c80b2599671.jpg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560960": {
+        "id": "560960",
+        "timePublished": "2021-06-04T07:23:29+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "А вы когда-нибудь причиняли себе физическую боль собственным кодом?",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "translation",
+            "data": {
+              "originalAuthorName": "Nikita Skobov",
+              "originalUrl": "https:\u002F\u002Fblog.nikitas.link\u002Fhave-you-ever-hurt-yourself-from-your-own-code#5"
+            }
+          }
+        ],
+        "author": {
+          "id": "1327826",
+          "alias": "ProductivityInside",
+          "fullname": "Productivity Inside",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fe7d\u002Fd1f\u002F7ae\u002Fe7dd1f7ae26609981edce6deabc5d751.png",
+          "speciality": "Пользователь"
+        },
+        "statistics": {
+          "commentsCount": 7,
+          "favoritesCount": 3,
+          "readingCount": 1648,
+          "score": 8,
+          "votesCount": 14
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20886",
+            "alias": "productivity_inside",
+            "type": "corporative",
+            "title": "Productivity Inside",
+            "titleHtml": "Productivity Inside"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21988",
+            "alias": "sound",
+            "type": "collective",
+            "title": "Звук",
+            "titleHtml": "Звук"
+          }
+        ],
+        "flows": [
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 7,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T07:23:29+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "Приходилось ли вам когда-нибудь ненароком причинить себе или другим физический вред из-за ошибок в коде? Мне – да. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\nПримерно год назад я работал со сгенерированными файлами в формате WAV, их было несколько тысяч. Я пытался снабдить их метками, рассортировать по папкам, создавал метаданные. В процессе я прослушал несколько штук, и, к моей досаде, оказалось, что все они начинаются с довольно продолжительной тишины. Это сильно раздражало, особенно когда прослушиваешь серию файлов подряд и постоянно спотыкаешься о паузы перед воспроизведением каждого следующего. Прекрасно, значит, еще и с этим придется что-то делать.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nЯ уже потратил сколько-то времени на поиск решений для удаления тишины из файлов, когда меня вдруг осенило: это ведь WAV! Данные в файлах формата WAV обычно представляют собой PCM-аудио, то есть каждое значение в файле задает амплитуду звука в некоторый момент времени. Соответственно, если у нас там действительно полная тишина, а не белый шум, то в файле этой тишине должны соответствовать сплошные нули, так ведь?\u003Cbr\u003E",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560964": {
+        "id": "560964",
+        "timePublished": "2021-06-04T07:03:58+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Основы Flutter для начинающих (Часть V)",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2569045",
+          "alias": "KiberneticWorm",
+          "fullname": "Dmitry Tsyvtsyn",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F194\u002F5eb\u002Fd0a\u002F1945ebd0a00e35a7bdfc285234209869.jpg",
+          "speciality": "Android developer"
+        },
+        "statistics": {
+          "commentsCount": 3,
+          "favoritesCount": 13,
+          "readingCount": 792,
+          "score": 0,
+          "votesCount": 0
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": true
+            },
+            "id": "17107",
+            "alias": "android_dev",
+            "type": "collective",
+            "title": "Разработка под Android",
+            "titleHtml": "Разработка под Android"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "17712",
+            "alias": "dart",
+            "type": "collective",
+            "title": "Dart",
+            "titleHtml": "Dart"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "22176",
+            "alias": "flutter",
+            "type": "collective",
+            "title": "Flutter",
+            "titleHtml": "Flutter"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 3,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T07:03:58+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EНаконец-то мы добрались до одной из самых важных тем, без которой идти дальше нет смысла.\u003C\u002Fp\u003E\u003Cp\u003EПлан довольно простой: нам предстоит познакомиться с клиент-серверной архитектурой и реализовать получение списка постов.\u003C\u002Fp\u003E\u003Cp\u003EВ конце мы правильно организуем файлы наших страниц  и вынесем элемент списка в отдельный файл.\u003C\u002Fp\u003E\u003Cp\u003EПолетели!\u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F679\u002F9d6\u002F075\u002F6799d6075ab020bd268fecefbf2aefe3.jpeg",
+          "buttonTextHtml": "Read more",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F679\u002F9d6\u002F075\u002F6799d6075ab020bd268fecefbf2aefe3.jpeg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560976": {
+        "id": "560976",
+        "timePublished": "2021-06-04T08:02:01+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Почему в цифровую эпоху резервное копирование – это необходимость?",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "1857375",
+          "alias": "Carrotyfox",
+          "fullname": null,
+          "avatarUrl": "",
+          "speciality": ""
+        },
+        "statistics": {
+          "commentsCount": 0,
+          "favoritesCount": 5,
+          "readingCount": 612,
+          "score": 0,
+          "votesCount": 0
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "50",
+            "alias": "infosecurity",
+            "type": "collective",
+            "title": "Информационная безопасность",
+            "titleHtml": "Информационная безопасность"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "19197",
+            "alias": "dwh",
+            "type": "collective",
+            "title": "Хранение данных",
+            "titleHtml": "Хранение данных"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21898",
+            "alias": "hardware",
+            "type": "collective",
+            "title": "Компьютерное железо",
+            "titleHtml": "Компьютерное железо"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          },
+          {
+            "id": "6",
+            "alias": "admin",
+            "title": "Administrating"
+          },
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 0,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T08:02:01+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EМногие из нас уже оказывались в весьма незавидной ситуации, когда, уронив смартфон или пролив кофе на ноутбук, мы были вынуждены провести несколько не самых приятных минут, ожидая, включится ли наше устройство после этого инцидента, и, если да, все ли данные на нем сохранятся. Если нам везло, все заканчивалось легким неудобством, а если нет, на восстановление поврежденных данных приходилось потратить много времени и сил, и это при условии, что это было технически возможно. \u003C\u002Fp\u003E\u003Cp\u003EРезервное копирование приобрело особое значение, потому что за последний год возросло не только количество пользователей в онлайн, но и частота хакерских атак. По мере того, как смартфоны проникают во все уголки нашей жизни, совершенно неудивительно, что именно эти устройства все чаще становятся лакомой добычей для преступников, повышая криминальную статистику краж. Если телефон не удалось восстановить и резервной копии данных не было, то с устройством придется попрощаться навсегда. \u003C\u002Fp\u003E\u003Cp\u003EВ условиях ускорения цифрового роста и трансформации мы стали очень сильно зависеть от удобства, скорости и эффективности наших цифровых устройств, ведь они помогают нам работать, жить и играть. Поэтому важно не только повышать осведомленность о важности резервного копирования данных, но и использовать для этого самые продвинутые технологии. \u003C\u002Fp\u003E\u003Cp\u003EБлагодаря широкому ассортименту своих решений для хранения данных компания Western Digital смогла завоевать доверие как у частных, так и у корпоративных клиентов. Кроме того, в условиях повышения мобильности наличие надежных портативных внешних накопителей стало досужей необходимостью. Вам не нужно разбираться в технических тонкостях, чтобы на уровне мастера овладеть всеми премудростями резервного копирования, потому что в Western Digital уже позаботились о том, чтобы сделать эту задачу максимально простой для вас, ведь тогда у вас будет больше времени для простых радостей жизни. Подключите, установите и расслабьтесь, ведь сохранение всего вашего контента, который вы создаете каждый день, – изображений, видео и всего остального – уже началось. И хотя такие функции, как автоматический бэкап требуют некоторой настройки и дополнительных шагов, после первого включения разобраться с ними не составит труда. Вам достаточно выбрать подходящий диск, а всем остальным займется Western Digital с помощью своей обширной линейки устройств разных размеров и объемов, среди которых вы точно найдете решение по хранению данных, подходящее именно под ваши нужды. \u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4e9\u002F396\u002F2d9\u002F4e93962d9de5d58875f3835237dbe3a7.jpg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4e9\u002F396\u002F2d9\u002F4e93962d9de5d58875f3835237dbe3a7.jpg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560978": {
+        "id": "560978",
+        "timePublished": "2021-06-04T08:04:53+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "ХPaste от Southbridge для пересылки паролей и кода",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2388777",
+          "alias": "Polina_Averina",
+          "fullname": null,
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Feab\u002F364\u002F193\u002Feab36419344dc0ed056f430c3212263f.png",
+          "speciality": "Редактор в Southbridge"
+        },
+        "statistics": {
+          "commentsCount": 2,
+          "favoritesCount": 3,
+          "readingCount": 334,
+          "score": 5,
+          "votesCount": 5
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "17901",
+            "alias": "southbridge",
+            "type": "corporative",
+            "title": "Southbridge",
+            "titleHtml": "Southbridge"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "50",
+            "alias": "infosecurity",
+            "type": "collective",
+            "title": "Информационная безопасность",
+            "titleHtml": "Информационная безопасность"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "144",
+            "alias": "open_source",
+            "type": "collective",
+            "title": "Open source",
+            "titleHtml": "Open source"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 2,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T08:04:53+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fev\u002F_i\u002Fav\u002Fev_iavxkilmmeu0rgaxpfv0ej74.png\" alt=\"image\"\u003E\u003C\u002Fp\u003E\u003Cbr\u003E\r\n\u003Cp\u003EВремя от времени нам нужно обмениваться с клиентами и коллегами паролями, фрагментами кода или логами. О сервисах для одноразовых url, с помощью которых можно передавать пароли, уже много писали на Хабре, например, \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fpost\u002F486246\u002F\"\u003Eздесь\u003C\u002Fa\u003E и \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fpost\u002F132153\u002F\"\u003Eвот тут\u003C\u002Fa\u003E. Мы тоже когда-то использовали Pastebin, но потом создали свой сервис ХPaste. Сегодня рассказываем, зачем он нам, и делимся исходниками.\u003C\u002Fp\u003E",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560984": {
+        "id": "560984",
+        "timePublished": "2021-06-04T08:24:36+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Как отслеживать использование памяти CPU и загруженность диска в Java",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "sandbox",
+            "data": null
+          }
+        ],
+        "author": {
+          "id": "2718351",
+          "alias": "infinite_loop",
+          "fullname": null,
+          "avatarUrl": "",
+          "speciality": ""
+        },
+        "statistics": {
+          "commentsCount": 2,
+          "favoritesCount": 8,
+          "readingCount": 597,
+          "score": 0,
+          "votesCount": 6
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "375",
+            "alias": "java",
+            "type": "collective",
+            "title": "Java",
+            "titleHtml": "Java"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 2,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T08:24:36+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EКак отслеживать использование памяти CPU и загруженность диска в Java.\u003C\u002Fp\u003E",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1b5\u002Fd99\u002F225\u002F1b5d9922530c146255f222d54bc82c85.jpg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560988": {
+        "id": "560988",
+        "timePublished": "2021-06-04T08:54:05+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Бесплатная Школа наставников для разработчиков, тестировщиков и аналитиков стартует 5 июля",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2175261",
+          "alias": "eshulyndina",
+          "fullname": "Ekaterina Shulyndina",
+          "avatarUrl": "",
+          "speciality": "Редактор"
+        },
+        "statistics": {
+          "commentsCount": 0,
+          "favoritesCount": 4,
+          "readingCount": 212,
+          "score": 4,
+          "votesCount": 4
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "22588",
+            "alias": "yandex_praktikum",
+            "type": "corporative",
+            "title": "Яндекс.Практикум",
+            "titleHtml": "Яндекс.Практикум"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Программирование",
+            "titleHtml": "Программирование"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20696",
+            "alias": "study",
+            "type": "collective",
+            "title": "Учебный процесс в IT",
+            "titleHtml": "Учебный процесс в IT"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20736",
+            "alias": "hr_management",
+            "type": "collective",
+            "title": "Управление персоналом",
+            "titleHtml": "Управление персоналом"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20740",
+            "alias": "career",
+            "type": "collective",
+            "title": "Карьера в IT-индустрии",
+            "titleHtml": "Карьера в IT-индустрии"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          },
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 0,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T08:54:05+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Ca href=\"https:\u002F\u002Fpraktikum.yandex.ru\u002Fpromo\u002Fmentors-school?utm_source=pr&amp;utm_medium=content&amp;utm_content=4_06_21&amp;utm_campaign=pr_content_mentors-school_habr\" rel=\"nofollow noopener noreferrer\"\u003EШкола наставников\u003C\u002Fa\u003E — это онлайн-интенсив из 5 занятий, где обучают будущих наставников сервиса онлайн-образования Яндекс.Практикум.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nНаставники — это опытные IT-специалисты, которые отвечают на вопросы студентов и проводят воркшопы по особенно сложным темам курса. Специалисты совмещают наставничество с основной работой, в зависимости от курса это занимает от 6 до 12 часов в неделю. Это оплачиваемая занятость.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\n\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fsv\u002F9w\u002Ful\u002Fsv9wulzjz-cyobdknp-feptmj7q.png\"\u003E\u003Cbr\u003E",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560992": {
+        "id": "560992",
+        "timePublished": "2021-06-04T08:57:10+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Система мотивации: ТОП-3 практики из США",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "recovery",
+            "data": null
+          }
+        ],
+        "author": {
+          "id": "790023",
+          "alias": "ivan_ceo",
+          "fullname": "Иван Бабайлов",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F98c\u002F4d6\u002Fe9a\u002F98c4d6e9a8cc3f91429cdc3defbaf232.jpg",
+          "speciality": "Пользователь"
+        },
+        "statistics": {
+          "commentsCount": 1,
+          "favoritesCount": 0,
+          "readingCount": 733,
+          "score": -3,
+          "votesCount": 3
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20682",
+            "alias": "pm",
+            "type": "collective",
+            "title": "Управление проектами",
+            "titleHtml": "Управление проектами"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20716",
+            "alias": "ecommerce",
+            "type": "collective",
+            "title": "Управление e-commerce",
+            "titleHtml": "Управление e-commerce"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20726",
+            "alias": "productpm",
+            "type": "collective",
+            "title": "Управление продуктом",
+            "titleHtml": "Управление продуктом"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20736",
+            "alias": "hr_management",
+            "type": "collective",
+            "title": "Управление персоналом",
+            "titleHtml": "Управление персоналом"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20744",
+            "alias": "media_management",
+            "type": "collective",
+            "title": "Управление медиа",
+            "titleHtml": "Управление медиа"
+          }
+        ],
+        "flows": [
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 1,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T08:57:10+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EЯ много исследую зарубежный опыт, прохожу обучения, слежу за тенденциями и в этом материале хочу поделиться с вами 3 лучшими практиками, которые используют компании из Штатов.\u003C\u002Fp\u003E\u003Cp\u003EВы можете посмотреть видеоверсию статьи, либо прочитать текстовый материал...\u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F75b\u002F680\u002F039\u002F75b68003935996c693524f9a34a55132.jpg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F75b\u002F680\u002F039\u002F75b68003935996c693524f9a34a55132.jpg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560994": {
+        "id": "560994",
+        "timePublished": "2021-06-04T09:12:46+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Генри Форд в космосе: как стартап Phantom Space разрабатывает новую модель запусков",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "translation",
+            "data": {
+              "originalAuthorName": "Neel V. Patel",
+              "originalUrl": "https:\u002F\u002Fwww.technologyreview.com\u002F2021\u002F05\u002F26\u002F1025350\u002Fphantom-space-startup-jim-cantrell\u002F"
+            }
+          }
+        ],
+        "author": {
+          "id": "2208414",
+          "alias": "Femole",
+          "fullname": "Валентин Митрохин",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F7dc\u002F178\u002F13b\u002F7dc17813b76324a6b202da5263ef5337.jpg",
+          "speciality": "Пользователь"
+        },
+        "statistics": {
+          "commentsCount": 1,
+          "favoritesCount": 1,
+          "readingCount": 537,
+          "score": 8,
+          "votesCount": 8
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "18764",
+            "alias": "madrobots",
+            "type": "corporative",
+            "title": "Madrobots",
+            "titleHtml": "Madrobots"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21962",
+            "alias": "space",
+            "type": "collective",
+            "title": "Космонавтика",
+            "titleHtml": "Космонавтика"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "22014",
+            "alias": "futurenow",
+            "type": "collective",
+            "title": "Будущее здесь",
+            "titleHtml": "Будущее здесь"
+          }
+        ],
+        "flows": [
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 1,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T09:12:46+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003E\u003Cstrong\u003EАэрокосмическая компания из Аризоны планирует производить достаточно ракет для запуска 100 миссий в год.\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003E\u003Cem\u003EПредставляем вашему вниманию перевод статьи Нила Пателя, которая вышла в MIT Technology Review 26 мая 2021 года. В центре внимания — космическая аризонская мечта. Бывший соратник Илона Маска предлагает пересмотреть существующие экономические модели запусков и обещает новый виток конкуренции на орбите.\u003C\u002Fem\u003E\u003C\u002Fp\u003E\u003Cp\u003EДжим Кантрелл называет себя «интеллектуальным отцом бизнеса малых запусков». С ним трудно не согласиться. Когда Илон Маск основал SpaceX в 2002 году, Кантрелл стал первым вице-президентом компании по развитию бизнеса. Его опыт имел решающее значение при разработке Falcon 1, первой ракеты SpaceX.\u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9da\u002Fa62\u002Ffd5\u002F9daa62fd5d77972a5d06cc177a8f7c1a.jpeg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9da\u002Fa62\u002Ffd5\u002F9daa62fd5d77972a5d06cc177a8f7c1a.jpeg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "560998": {
+        "id": "560998",
+        "timePublished": "2021-06-04T09:06:20+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "BauTravel: Ксения Гордиенко — жизнь и строительство в Европе и Северной Америке",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2190174",
+          "alias": "ArtemBoiko",
+          "fullname": "Артём Бойко",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F4cb\u002Fc30\u002F795\u002F4cbc3079555e8399b3d3ded7e8b9da1a.png",
+          "speciality": "BIM Coordinator | bigdataconstruction.com"
+        },
+        "statistics": {
+          "commentsCount": 0,
+          "favoritesCount": 2,
+          "readingCount": 258,
+          "score": 0,
+          "votesCount": 0
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "17698",
+            "alias": "cad_cam",
+            "type": "collective",
+            "title": "CAD\u002FCAM",
+            "titleHtml": "CAD\u002FCAM"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20734",
+            "alias": "it_immigration",
+            "type": "collective",
+            "title": "IT-эмиграция",
+            "titleHtml": "IT-эмиграция"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21892",
+            "alias": "design",
+            "type": "collective",
+            "title": "Дизайн",
+            "titleHtml": "Дизайн"
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development"
+          },
+          {
+            "id": "2",
+            "alias": "design",
+            "title": "Design"
+          },
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 0,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T09:06:20+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EВ этом интервью у меня в гостях&nbsp;\u003Cstrong\u003EКсения Гордиенко из Канады\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Cp\u003EПосле окончания института в Санкт-Петербурге Ксения обучалась в Германии, после чего за короткое время смогла вырасти из студента-ассистента до BIM-менеджера одной из крупнейших строительных компаний Европы. Но, несмотря на достигнутые результаты, Ксения вместе со своим мужем переезжает в Канаду, где начинает свою жизнь с чистого листа.\u003C\u002Fp\u003E\u003Cp\u003EВ этом выпуске мы поговорим с Ксенией Гордиенко о проблемах эмиграции и актуальных проблемах строительной отрасли.\u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1df\u002F772\u002Fa98\u002F1df772a98e633e5c972ecc62320e72ba.png",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1df\u002F772\u002Fa98\u002F1df772a98e633e5c972ecc62320e72ba.png",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "561004": {
+        "id": "561004",
+        "timePublished": "2021-06-04T09:25:03+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Как 3D-печатные слуховые аппараты тихо захватили мир?",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "translation",
+            "data": {
+              "originalAuthorName": "3DSourced",
+              "originalUrl": "https:\u002F\u002Fwww.3dsourced.com\u002Feditors-picks\u002Fcustom-hearing-aids-3d-printed\u002F"
+            }
+          }
+        ],
+        "author": {
+          "id": "1412272",
+          "alias": "kornveits",
+          "fullname": "Александр Корнвейц",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F227\u002F7fa\u002F70d\u002F2277fa70d386d3c021741c84d96371a1.png",
+          "speciality": "Эксперт в области аддитивных технологий"
+        },
+        "statistics": {
+          "commentsCount": 2,
+          "favoritesCount": 0,
+          "readingCount": 296,
+          "score": 0,
+          "votesCount": 0
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21964",
+            "alias": "3d-printers",
+            "type": "collective",
+            "title": "3D-принтеры",
+            "titleHtml": "3D-принтеры"
+          }
+        ],
+        "flows": [
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 2,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T09:25:03+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003E3D-печать захватила рынок пользовательских слуховых аппаратов. Сегодня почти 100% таких аппаратов печатается на 3D-принтерах. По оценкам, общее количество используемых 3D-печатных слуховых аппаратов составляет более 10 миллионов. Только швейцарская компания Sonova, мировой лидер в области производства решений для улучшения слуха, утверждает, что произвела более 1 000 000 единиц в 2016 году. И похоже эта «революция» осталась без внимания.\u003C\u002Fp\u003E\u003Cp\u003EПочему вы впервые слышите о 3D-печатных слуховых аппаратах? Чтобы ответить на этот вопрос, нужно вернуться к истокам появления этих замечательных устройств.\u003C\u002Fp\u003E\u003Cp\u003EПринцип работы слухового аппарата заключается в том, что он улавливает звуки из внешнего мира, а затем усиливает их в ушах слабослышащих людей, по существу, делая эти звуки просто громче. Современные слуховые аппараты бывают разные по форме и дизайну. Но только изготовленные на заказ типа внутриушных In-the-Ear (ITE) и канальных In-the-Canal (ITC) используют технологию 3D-печати. Остальные, включая более распространенные заушные слуховые аппараты (BTE), все еще продолжают производиться традиционным способом.\u003C\u002Fp\u003E\u003Cp\u003EИзготовленные на заказ 3D-печатные слуховые аппараты моделируются с учетом анатомии уха каждого отдельного пациента. По сравнению с розничными версиями эти пользовательские модели значительно удобнее, их превосходная посадка уменьшает движение или скольжение в ухе. Некоторые из самых маленьких ITC-моделей, особенно те, которые носят глубоко в ушном канале, продаются исключительно как индивидуальные модели.\u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F381\u002F6a1\u002F412\u002F3816a141295bd3c510e1c40d0e7b3c5a.jpg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F381\u002F6a1\u002F412\u002F3816a141295bd3c510e1c40d0e7b3c5a.jpg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "561010": {
+        "id": "561010",
+        "timePublished": "2021-06-04T09:40:28+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "MVP на примере швейцарского ножа",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "1430750",
+          "alias": "idzenski",
+          "fullname": "Илья Дзенски",
+          "avatarUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F616\u002F622\u002Fb2d\u002F616622b2d83c005da978c80da67c355b.jpg",
+          "speciality": "СЕО Дизайн-студии HeyPixel, автор канала @dzenskii"
+        },
+        "statistics": {
+          "commentsCount": 0,
+          "favoritesCount": 0,
+          "readingCount": 416,
+          "score": 0,
+          "votesCount": 0
+        },
+        "hubs": [
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "19583",
+            "alias": "dev_management",
+            "type": "collective",
+            "title": "Управление разработкой",
+            "titleHtml": "Управление разработкой"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20722",
+            "alias": "startuprise",
+            "type": "collective",
+            "title": "Развитие стартапа",
+            "titleHtml": "Развитие стартапа"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "20726",
+            "alias": "productpm",
+            "type": "collective",
+            "title": "Управление продуктом",
+            "titleHtml": "Управление продуктом"
+          },
+          {
+            "relatedData": {
+              "isSubscribed": false
+            },
+            "id": "21892",
+            "alias": "design",
+            "type": "collective",
+            "title": "Дизайн",
+            "titleHtml": "Дизайн"
+          }
+        ],
+        "flows": [
+          {
+            "id": "2",
+            "alias": "design",
+            "title": "Design"
+          },
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 0,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-07-04T09:40:28+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "\u003Cp\u003EОбъясняем бабушке, что такое MVP на примере швейцарского ножа и двух инженеров.\u003C\u002Fp\u003E",
+          "imageUrl": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7b6\u002F350\u002F971\u002F7b6350971d2c3e5ad841fb83c6a49b53.jpeg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7b6\u002F350\u002F971\u002F7b6350971d2c3e5ad841fb83c6a49b53.jpeg",
+            "fit": "cover",
+            "positionY": 64.090909090909,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      }
+    },
+    "articlesIds": {
+      "ARTICLES_LIST_ALL": [
+        "560698",
+        "561010",
+        "561004",
+        "560994",
+        "560912",
+        "560998",
+        "560772",
+        "560992",
+        "560988",
+        "560984",
+        "560928",
+        "560978",
+        "560890",
+        "560976",
+        "560174",
+        "559938",
+        "560960",
+        "557242",
+        "560840",
+        "560964"
+      ]
+    },
+    "isLoading": false,
+    "pagesCount": {
+      "ARTICLES_LIST_ALL": 50
+    },
+    "route": {
+      "name": "ARTICLES_LIST_ALL",
+      "params": {
+        "hl": "en"
+      },
+      "query": {}
+    },
+    "reasonsList": null,
+    "view": "cards",
+    "lastVisitedRoute": {},
+    "karma": {}
+  },
+  "authorContribution": {
+    "authors": {}
+  },
+  "betaTest": {
+    "currentAnnouncement": null,
+    "announcements": {},
+    "announcementCards": null,
+    "announcementComments": {},
+    "announcementCommentThreads": {},
+    "announcementCommentingStatuses": {},
+    "archivedList": []
+  },
+  "authorStatistics": {
+    "articleRefs": {},
+    "articleIds": {},
+    "pagesCount": {},
+    "route": {},
+    "viewsCount": [],
+    "maxStatsCount": {}
+  },
+  "comments": {
+    "commentsListV2": {},
+    "threads": [],
+    "commentWithOpenedForm": null,
+    "isFormDisabled": false,
+    "previewComment": null,
+    "pagesCount": null,
+    "commentAccess": {},
+    "scrollParents": {},
+    "pageArticleComments": {
+      "freshComments": [],
+      "lastViewedComment": 0,
+      "postId": null,
+      "lastCommentTimestamp": "",
+      "moderated": [],
+      "moderatedIds": [],
+      "commentRoute": ""
+    }
+  },
+  "companies": {
+    "companyRefs": {
+      "ruvds": {
+        "id": "3593",
+        "alias": "ruvds",
+        "titleHtml": "RUVDS.com",
+        "descriptionHtml": "VDS\u002FVPS-хостинг. Скидка 10% по коду \u003Cb\u003EHABR10\u003C\u002Fb\u003E",
+        "imageUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002Ff27\u002Fea8\u002F5bd\u002Ff27ea85bd62fbd985c308110885af7e0.png",
+        "relatedData": {
+          "isSubscribed": false
+        },
+        "statistics": {
+          "subscribersCount": 31097,
+          "rating": 4071.68,
+          "invest": null
+        },
+        "commonHubs": [
+          {
+            "id": "91",
+            "alias": "webdev",
+            "type": "collective",
+            "title": "Website development",
+            "titleHtml": "Website development"
+          },
+          {
+            "id": "221",
+            "alias": "sys_admin",
+            "type": "collective",
+            "title": "System administration",
+            "titleHtml": "System administration"
+          },
+          {
+            "id": "21976",
+            "alias": "DIY",
+            "type": "collective",
+            "title": "DIY",
+            "titleHtml": "DIY"
+          },
+          {
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Programming",
+            "titleHtml": "Programming"
+          },
+          {
+            "id": "21982",
+            "alias": "lifehacks",
+            "type": "collective",
+            "title": "Lifehacks for geeks",
+            "titleHtml": "Lifehacks for geeks"
+          }
+        ]
+      },
+      "macloud": {
+        "id": "7796",
+        "alias": "macloud",
+        "titleHtml": "Маклауд",
+        "descriptionHtml": "Облачные серверы на базе AMD EPYC",
+        "imageUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F762\u002Fa3f\u002F7f5\u002F762a3f7f5d8dd06a124724495e436a14.png",
+        "relatedData": {
+          "isSubscribed": false
+        },
+        "statistics": {
+          "subscribersCount": 174,
+          "rating": 3337.7,
+          "invest": null
+        },
+        "commonHubs": [
+          {
+            "id": "21910",
+            "alias": "popular_science",
+            "type": "collective",
+            "title": "Popular science",
+            "titleHtml": "Popular science"
+          },
+          {
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Programming",
+            "titleHtml": "Programming"
+          },
+          {
+            "id": "20742",
+            "alias": "read",
+            "type": "collective",
+            "title": "Reading room",
+            "titleHtml": "Reading room"
+          },
+          {
+            "id": "91",
+            "alias": "webdev",
+            "type": "collective",
+            "title": "Website development",
+            "titleHtml": "Website development"
+          },
+          {
+            "id": "21982",
+            "alias": "lifehacks",
+            "type": "collective",
+            "title": "Lifehacks for geeks",
+            "titleHtml": "Lifehacks for geeks"
+          }
+        ]
+      },
+      "selectel": {
+        "id": "975",
+        "alias": "selectel",
+        "titleHtml": "Selectel",
+        "descriptionHtml": "IT-инфраструктура для бизнеса",
+        "imageUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F66a\u002Ff7d\u002F039\u002F66af7d03979b6d18654293d8f1e72837.png",
+        "relatedData": {
+          "isSubscribed": false
+        },
+        "statistics": {
+          "subscribersCount": 23778,
+          "rating": 3055.52,
+          "invest": null
+        },
+        "commonHubs": [
+          {
+            "id": "21898",
+            "alias": "hardware",
+            "type": "collective",
+            "title": "Computer hardware",
+            "titleHtml": "Computer hardware"
+          },
+          {
+            "id": "22014",
+            "alias": "futurenow",
+            "type": "collective",
+            "title": "The future is here",
+            "titleHtml": "The future is here"
+          },
+          {
+            "id": "21910",
+            "alias": "popular_science",
+            "type": "collective",
+            "title": "Popular science",
+            "titleHtml": "Popular science"
+          },
+          {
+            "id": "21894",
+            "alias": "gadgets",
+            "type": "collective",
+            "title": "Gadgets",
+            "titleHtml": "Gadgets"
+          },
+          {
+            "id": "21918",
+            "alias": "soft",
+            "type": "collective",
+            "title": "Software",
+            "titleHtml": "Software"
+          }
+        ]
+      },
+      "vdsina": {
+        "id": "5766",
+        "alias": "vdsina",
+        "titleHtml": "VDSina.ru",
+        "descriptionHtml": "Серверы в Москве и Амстердаме",
+        "imageUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F349\u002Fb75\u002Fe68\u002F349b75e680748f727261c7de1a4e1c5f.png",
+        "relatedData": {
+          "isSubscribed": false
+        },
+        "statistics": {
+          "subscribersCount": 584,
+          "rating": 2149.26,
+          "invest": null
+        },
+        "commonHubs": [
+          {
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Programming",
+            "titleHtml": "Programming"
+          },
+          {
+            "id": "50",
+            "alias": "infosecurity",
+            "type": "collective",
+            "title": "Information Security",
+            "titleHtml": "Information Security"
+          },
+          {
+            "id": "21910",
+            "alias": "popular_science",
+            "type": "collective",
+            "title": "Popular science",
+            "titleHtml": "Popular science"
+          },
+          {
+            "id": "21918",
+            "alias": "soft",
+            "type": "collective",
+            "title": "Software",
+            "titleHtml": "Software"
+          },
+          {
+            "id": "144",
+            "alias": "open_source",
+            "type": "collective",
+            "title": "Open source",
+            "titleHtml": "Open source"
+          }
+        ]
+      },
+      "itsoft": {
+        "id": "7728",
+        "alias": "itsoft",
+        "titleHtml": "ITSOFT",
+        "descriptionHtml": "Дата-центры: размещение и аренда серверов и стоек.",
+        "imageUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002Ff48\u002Fd46\u002F029\u002Ff48d460297f1a9fe1a9e3e0a1e7aedc9.png",
+        "relatedData": {
+          "isSubscribed": false
+        },
+        "statistics": {
+          "subscribersCount": 162,
+          "rating": 635.41,
+          "invest": null
+        },
+        "commonHubs": [
+          {
+            "id": "21910",
+            "alias": "popular_science",
+            "type": "collective",
+            "title": "Popular science",
+            "titleHtml": "Popular science"
+          },
+          {
+            "id": "22014",
+            "alias": "futurenow",
+            "type": "collective",
+            "title": "The future is here",
+            "titleHtml": "The future is here"
+          },
+          {
+            "id": "21928",
+            "alias": "finance",
+            "type": "collective",
+            "title": "Finance in IT",
+            "titleHtml": "Finance in IT"
+          },
+          {
+            "id": "21962",
+            "alias": "space",
+            "type": "collective",
+            "title": "Astronautics",
+            "titleHtml": "Astronautics"
+          },
+          {
+            "id": "20738",
+            "alias": "business-laws",
+            "type": "collective",
+            "title": "Legislation in IT",
+            "titleHtml": "Legislation in IT"
+          }
+        ]
+      },
+      "skillfactory": {
+        "id": "1841",
+        "alias": "skillfactory",
+        "titleHtml": "SkillFactory",
+        "descriptionHtml": "Школа Computer Science. Скидка 10% по коду HABR",
+        "imageUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F9bb\u002F5f7\u002Fd50\u002F9bb5f7d50871bf0981f64b1970f22fe1.png",
+        "relatedData": {
+          "isSubscribed": false
+        },
+        "statistics": {
+          "subscribersCount": 637,
+          "rating": 601.73,
+          "invest": null
+        },
+        "commonHubs": [
+          {
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Programming",
+            "titleHtml": "Programming"
+          },
+          {
+            "id": "340",
+            "alias": "python",
+            "type": "collective",
+            "title": "Python",
+            "titleHtml": "Python"
+          },
+          {
+            "id": "19439",
+            "alias": "machine_learning",
+            "type": "collective",
+            "title": "Machine learning",
+            "titleHtml": "Machine learning"
+          },
+          {
+            "id": "20696",
+            "alias": "study",
+            "type": "collective",
+            "title": "Studying in IT",
+            "titleHtml": "Studying in IT"
+          },
+          {
+            "id": "20742",
+            "alias": "read",
+            "type": "collective",
+            "title": "Reading room",
+            "titleHtml": "Reading room"
+          }
+        ]
+      },
+      "mvideo": {
+        "id": "4918",
+        "alias": "mvideo",
+        "titleHtml": "М.Видео-Эльдорадо",
+        "descriptionHtml": "Розничная компания №1 с технологией OneRetail",
+        "imageUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002Ff13\u002F179\u002F5ae\u002Ff131795ae8cb8fd3111d0d14e9bf316f.png",
+        "relatedData": {
+          "isSubscribed": false
+        },
+        "statistics": {
+          "subscribersCount": 185,
+          "rating": 550.95,
+          "invest": null
+        },
+        "commonHubs": [
+          {
+            "id": "20742",
+            "alias": "read",
+            "type": "collective",
+            "title": "Reading room",
+            "titleHtml": "Reading room"
+          },
+          {
+            "id": "20740",
+            "alias": "career",
+            "type": "collective",
+            "title": "IT career",
+            "titleHtml": "IT career"
+          },
+          {
+            "id": "397",
+            "alias": "analysis_design",
+            "type": "collective",
+            "title": "System Analysis and Design",
+            "titleHtml": "System Analysis and Design"
+          },
+          {
+            "id": "19439",
+            "alias": "machine_learning",
+            "type": "collective",
+            "title": "Machine learning",
+            "titleHtml": "Machine learning"
+          },
+          {
+            "id": "19281",
+            "alias": "mobile_testing",
+            "type": "collective",
+            "title": "Mobile applications testing",
+            "titleHtml": "Mobile applications testing"
+          }
+        ]
+      },
+      "otus": {
+        "id": "4756",
+        "alias": "otus",
+        "titleHtml": "OTUS",
+        "descriptionHtml": "Цифровые навыки от ведущих экспертов",
+        "imageUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F968\u002F422\u002F761\u002F968422761136a38a89fc391fd927f903.jpg",
+        "relatedData": {
+          "isSubscribed": false
+        },
+        "statistics": {
+          "subscribersCount": 57653,
+          "rating": 541.82,
+          "invest": null
+        },
+        "commonHubs": [
+          {
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Programming",
+            "titleHtml": "Programming"
+          },
+          {
+            "id": "19439",
+            "alias": "machine_learning",
+            "type": "collective",
+            "title": "Machine learning",
+            "titleHtml": "Machine learning"
+          },
+          {
+            "id": "357",
+            "alias": "javascript",
+            "type": "collective",
+            "title": "JavaScript",
+            "titleHtml": "JavaScript"
+          },
+          {
+            "id": "375",
+            "alias": "java",
+            "type": "collective",
+            "title": "Java",
+            "titleHtml": "Java"
+          },
+          {
+            "id": "50",
+            "alias": "infosecurity",
+            "type": "collective",
+            "title": "Information Security",
+            "titleHtml": "Information Security"
+          }
+        ]
+      },
+      "timeweb": {
+        "id": "1461",
+        "alias": "timeweb",
+        "titleHtml": "Timeweb",
+        "descriptionHtml": "VDS, инфраструктура и решения для бизнеса",
+        "imageUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002Ff16\u002F9bf\u002F2f9\u002Ff169bf2f9f64895ed94992d0d15e98fc.jpg",
+        "relatedData": {
+          "isSubscribed": false
+        },
+        "statistics": {
+          "subscribersCount": 360,
+          "rating": 527.85,
+          "invest": null
+        },
+        "commonHubs": [
+          {
+            "id": "21910",
+            "alias": "popular_science",
+            "type": "collective",
+            "title": "Popular science",
+            "titleHtml": "Popular science"
+          },
+          {
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Programming",
+            "titleHtml": "Programming"
+          },
+          {
+            "id": "357",
+            "alias": "javascript",
+            "type": "collective",
+            "title": "JavaScript",
+            "titleHtml": "JavaScript"
+          },
+          {
+            "id": "20788",
+            "alias": "devops",
+            "type": "collective",
+            "title": "DevOps",
+            "titleHtml": "DevOps"
+          },
+          {
+            "id": "221",
+            "alias": "sys_admin",
+            "type": "collective",
+            "title": "System administration",
+            "titleHtml": "System administration"
+          }
+        ]
+      },
+      "mailru": {
+        "id": "2",
+        "alias": "mailru",
+        "titleHtml": "Mail.ru Group",
+        "descriptionHtml": "Building the Internet",
+        "imageUrl": "\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F7fd\u002F5f3\u002Faac\u002F7fd5f3aac3b05466673c8f59c835539a.png",
+        "relatedData": {
+          "isSubscribed": false
+        },
+        "statistics": {
+          "subscribersCount": 99959,
+          "rating": 518.97,
+          "invest": null
+        },
+        "commonHubs": [
+          {
+            "id": "20788",
+            "alias": "devops",
+            "type": "collective",
+            "title": "DevOps",
+            "titleHtml": "DevOps"
+          },
+          {
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Programming",
+            "titleHtml": "Programming"
+          },
+          {
+            "id": "22196",
+            "alias": "kubernetes",
+            "type": "collective",
+            "title": "Kubernetes",
+            "titleHtml": "Kubernetes"
+          },
+          {
+            "id": "22632",
+            "alias": "tarantool",
+            "type": "collective",
+            "title": "Tarantool",
+            "titleHtml": "Tarantool"
+          },
+          {
+            "id": "20696",
+            "alias": "study",
+            "type": "collective",
+            "title": "Studying in IT",
+            "titleHtml": "Studying in IT"
+          }
+        ]
+      }
+    },
+    "companyIds": {},
+    "companyTopIds": [
+      "ruvds",
+      "macloud",
+      "selectel",
+      "vdsina",
+      "itsoft",
+      "skillfactory",
+      "mvideo",
+      "otus",
+      "timeweb",
+      "mailru"
+    ],
+    "pagesCount": {},
+    "companyProfiles": {},
+    "companiesCategories": [],
+    "companiesWidgets": {},
+    "companiesWorkers": {},
+    "companiesFans": {},
+    "route": {},
+    "isLoading": false,
+    "companyWorkersLoading": false,
+    "companyFansLoading": false
+  },
+  "companiesContribution": {
+    "hubs": {},
+    "flows": {},
+    "companyRefs": {}
+  },
+  "companyHubsContribution": {
+    "contributionRefs": {
+      "hubRefs": {},
+      "hubIds": {}
+    }
+  },
+  "conversation": {
+    "messages": [],
+    "respondent": null,
+    "isLoadMore": false
+  },
+  "conversations": {
+    "conversations": [],
+    "unreadCount": 0,
+    "pagesCount": 0,
+    "isLoadMore": false
+  },
+  "desktopState": {
+    "desktopFl": null,
+    "desktopHl": null,
+    "isChecked": false,
+    "isLoginDemanded": false
+  },
+  "dfp": {
+    "slotsDict": {}
+  },
+  "docs": {
+    "menu": {},
+    "articles": {},
+    "mainMenu": [],
+    "loading": {
+      "main": false,
+      "dropdown": false,
+      "article": false
+    }
+  },
+  "flows": {
+    "flows": [
+      {
+        "alias": "develop",
+        "id": 1,
+        "route": {
+          "name": "FLOW_PAGE",
+          "params": {
+            "flowName": "develop"
+          }
+        }
+      },
+      {
+        "alias": "admin",
+        "id": 6,
+        "route": {
+          "name": "FLOW_PAGE",
+          "params": {
+            "flowName": "admin"
+          }
+        }
+      },
+      {
+        "alias": "design",
+        "id": 2,
+        "route": {
+          "name": "FLOW_PAGE",
+          "params": {
+            "flowName": "design"
+          }
+        }
+      },
+      {
+        "alias": "management",
+        "id": 3,
+        "route": {
+          "name": "FLOW_PAGE",
+          "params": {
+            "flowName": "management"
+          }
+        }
+      },
+      {
+        "alias": "marketing",
+        "id": 4,
+        "route": {
+          "name": "FLOW_PAGE",
+          "params": {
+            "flowName": "marketing"
+          }
+        }
+      },
+      {
+        "alias": "popsci",
+        "id": 7,
+        "route": {
+          "name": "FLOW_PAGE",
+          "params": {
+            "flowName": "popsci"
+          }
+        }
+      }
+    ]
+  },
+  "global": {
+    "isPwa": false,
+    "device": "desktop"
+  },
+  "hubs": {
+    "hubRefs": {},
+    "hubIds": {},
+    "pagesCount": {},
+    "isLoading": false,
+    "route": {}
+  },
+  "hubsBlock": {
+    "hubRefs": {},
+    "hubIds": {}
+  },
+  "i18n": {
+    "fl": "ru,en",
+    "hl": "en",
+    "messages": {
+      "Already voted": "You has already voted",
+      "EXTERNAL_VOTER_FREQUENCY_LIMIT": "You can`t vote for karma more often than once per 2 minutes",
+      "EXTERNAL_VOTER_KARMA_LIMIT": "You don`t have enough karma to vote",
+      "EXTERNAL_VOTER_CHARGE": "You are out of votes",
+      "EXTERNAL_VOTER_POSTS_LIMIT": "You can`t upvote with an account which has no published posts",
+      "EXTERNAL_VOTER_NOT_BE_EVIL": "The voting feature is temporarily disabled. Too often downvote { username }",
+      "EXTERNAL_USER_INFINITY_KARM": "You can`t vote for a user with an unlimited karma",
+      "EXTERNAL_USER_POSTS_LIMIT": "User without posts can`t have more than +4 karma",
+      "EXTERNAL_USER_READONLY": "You can`t vote for read-only user",
+      "ARTICLE_COMMENTS_COUNT": "{count, plural,\n=0 { Leave a comment }\nother { Comments { count } }\n}",
+      "ARTICLE_COMMENTS_TITLE": "Comments",
+      "ARTICLE_DONATE_TITLE": "Support the author",
+      "ARTICLE_DONATE_BUTTON": "Donate",
+      "ARTICLE_DONATE_POPUP": "Payment system",
+      "ARTICLE_ORIGIN_TITLE": "Original author:",
+      "ARTICLE_REASON_BUTTON_SEND": "Send anonymously",
+      "ARTICLE_REASON_ERROR": "Something went wrong. Try again please",
+      "ARTICLE_REASON_POPUP_TITLE": "Specify the reason of the downvote so the author could improve the post",
+      "ARTICLE_REASON_SUCCESS": "Thanks for your vote",
+      "ARTICLE_REASON_SUBTITLE": "Reasons for downvotes",
+      "ARTICLE_REASON_TOTAL": "Total votes { total }: ↑{ positive } and ↓{ negative }",
+      "ARTICLE_REASON_NO_DATA": "No reasons for downvotes yet",
+      "ARTICLE_SHARING_TITLE": "Share publication",
+      "ARTICLE_TAGS_TITLE": "Tags:",
+      "ARTICLE_HUBS_TITLE": "Hubs:",
+      "ARTICLE_COMPLAINT_TITLE": "Report",
+      "ARTICLE_RECOMMENDATION_TITLE": "Send recommendations to the author",
+      "ARTICLE_SHOW_REMOVED_COMMENTS": "Show deleted comments",
+      "ARTICLE_HIDE_REMOVED_COMMENTS": "Hide deleted comments",
+      "ARTICLE_ENABLE_COMMENTS": "Enable comments",
+      "ARTICLE_DISABLE_COMMENTS": "Disable comments",
+      "ARTICLE_DISABLE_COMMENTS_CONFIRM": "Are you sure you want to disable comments for this post?",
+      "ARTICLE_DISABLE_COMMENTS_REASON": "Name the reason why comments are disabled.\n\n The reason will be visible to other users",
+      "ARTICLE_DISABLE_COMMENTS_MESSAGE": "Comments are disabled for this publication",
+      "ARTICLE_NEVER_PUBLISHED": "Never been published",
+      "ARTICLE_PLANNED": "Planned on",
+      "ARTICLE_CLEAR_CACHE_COMMENTS": "Clear cache",
+      "ARTICLE_CLEAR_CACHE_SUCCESS_MESSAGE": "Кэш успешно очищен. Страница будет перезагружена",
+      "ARTICLE_RECOMMENDATIONS_FORM_TITLE": "Select the recommendations to be sent to the author",
+      "ARTICLE_MODERATOR_MESSAGE": "Message from moderator:",
+      "ARTICLE_DRAFT_DELETE": "Delete draft",
+      "ARTICLE_DRAFT_DELETE_CONFIRM": "Are you sure you want to delete the draft?",
+      "ARTICLE_SUBSCRIBE_TITLE": "Subscribe to new comments",
+      "ARTICLE_SUBSCRIBE_TRACKER": "Tracker",
+      "ARTICLE_SUBSCRIBE_EMAIL": "Email",
+      "ARTICLE_SUBSCRIBE_SAVE": "Save",
+      "ARTICLE_LABEL_textruCheck": "Results of the check on text.ru",
+      "ARTICLE_LABEL_translation": "Translation",
+      "ARTICLE_LABEL_tutorial": "Tutorial",
+      "ARTICLE_LABEL_sandbox": "Sandbox",
+      "ARTICLE_LABEL_recovery": "Recovery mode",
+      "ARTICLE_LABEL_invitePending": "Awaiting invitation",
+      "ARTICLE_LABEL_moderationPending": "Awaiting moderation",
+      "ARTICLE_LABEL_draft": "Draft",
+      "ARTICLE_LABEL_technotext2020": "🔥 Technotext 2020",
+      "ARTICLE_COMPANY_BLOG": "{companyName} company blog",
+      "BETA_TESTING_TITLE": "Beta testing",
+      "BETA_TESTING_JOIN": "Participate",
+      "BETA_TESTING_LEAVE": "Leave",
+      "BETA_TESTING_EMPTY": "We're not testing anything at the moment. Come back later.",
+      "BETA_TESTING_ADMIN_BLOCK_TITLE": "Administration",
+      "BETA_TESTING_CREATE_ANNOUNCEMENT": "Create testing announcement",
+      "BETA_TESTING_EDIT_CURRENT_TEST": "Edit current test",
+      "BETA_TESTING_FEATURES_ARCHIVE_TITLE": "Features archive",
+      "BETA_TESTING_RESULTS": "Testing results",
+      "BETA_TESTING_WELCOME": "\u003Cp\u003EHello, {username}!\u003C\u002Fp\u003E\n        \u003Cp\u003EYou're just a one step short from becoming a beta tester of the project.\n        Use the button below to reach a special page,\n        where our product team announces upcoming updates and features.\n        You can check it out before the official release\n        and of course give us some feedback or report a bug.\u003C\u002Fp\u003E\n        \u003Cp\u003EPay attention: by agreeing to become a beta tester,\n        you also agree to subscribe on an e-mail announcements\n        about new features available for testing.\u003C\u002Fp\u003E",
+      "CALENDAR_MONTH_APRIL_TITLE": "April",
+      "CALENDAR_MONTH_AUGUST_TITLE": "August",
+      "CALENDAR_MONTH_DECEMBER_TITLE": "December",
+      "CALENDAR_MONTH_FEBRUARY_TITLE": "February",
+      "CALENDAR_MONTH_JANUARY_TITLE": "January",
+      "CALENDAR_MONTH_JULY_TITLE": "July",
+      "CALENDAR_MONTH_JUNE_TITLE": "June",
+      "CALENDAR_MONTH_MARCH_TITLE": "March",
+      "CALENDAR_MONTH_MAY_TITLE": "May",
+      "CALENDAR_MONTH_NOVEMBER_TITLE": "November",
+      "CALENDAR_MONTH_OCTOBER_TITLE": "October",
+      "CALENDAR_MONTH_SEPTEMBER_TITLE": "September",
+      "CALENDAR_NEXT_MONTH_TITLE": "Next month",
+      "CALENDAR_PREVIOUS_MONTH_TITLE": "Previous month",
+      "CALENDAR_WEEKDAY_FRIDAY_SHORT_TITLE": "Fri",
+      "CALENDAR_WEEKDAY_FRIDAY_TITLE": "Friday",
+      "CALENDAR_WEEKDAY_MONDAY_SHORT_TITLE": "Mon",
+      "CALENDAR_WEEKDAY_MONDAY_TITLE": "Monday",
+      "CALENDAR_WEEKDAY_SATURDAY_SHORT_TITLE": "Sat",
+      "CALENDAR_WEEKDAY_SATURDAY_TITLE": "Saturday",
+      "CALENDAR_WEEKDAY_SUNDAY_SHORT_TITLE": "Sun",
+      "CALENDAR_WEEKDAY_SUNDAY_TITLE": "Sunday",
+      "CALENDAR_WEEKDAY_THURSDAY_SHORT_TITLE": "Thu",
+      "CALENDAR_WEEKDAY_THURSDAY_TITLE": "Thursday",
+      "CALENDAR_WEEKDAY_TUESDAY_SHORT_TITLE": "Tue",
+      "CALENDAR_WEEKDAY_TUESDAY_TITLE": "Tuesday",
+      "CALENDAR_WEEKDAY_WEDNESDAY_SHORT_TITLE": "Wed",
+      "CALENDAR_WEEKDAY_WEDNESDAY_TITLE": "Wednesday",
+      "CHARGE_KARMA_NOT_ENOUGH": "You have not enough karma to vote",
+      "CHARGE_KARMA_VOTE_USERS_POSTS": "{type, plural,\n      =1 { You have \u003Cstrong\u003E{count}\u003C\u002Fstrong\u003E vote for karma and posts}\n      other { You have \u003Cstrong\u003E{count}\u003C\u002Fstrong\u003E votes for karma and posts}\n    }",
+      "CHARGE_KARMA_VOTE_POSTS": "{type, plural,\n      =1 { You have \u003Cstrong\u003E{count}\u003C\u002Fstrong\u003E vote for posts}\n      other { You have \u003Cstrong\u003E{count}\u003C\u002Fstrong\u003E votes for posts}\n    }",
+      "CHARGE_KARMA_VOTE_COMMENTS": "{type, plural,\n      =1 { You have \u003Cstrong\u003E{count}\u003C\u002Fstrong\u003E vote for comments}\n      other { You have \u003Cstrong\u003E{count}\u003C\u002Fstrong\u003E votes for comments}\n    }",
+      "CHARGE_KARMA_VOTE_AND_COMMENTS": "{type, plural,\n      =1 { , and also \u003Cstrong\u003E{count}\u003C\u002Fstrong\u003E for comments}\n      other { , and also \u003Cstrong\u003E{count}\u003C\u002Fstrong\u003E for comments}\n    }",
+      "CHARGE_KARMA_HOW_TO_INCREASE": "How to increase karma?",
+      "CHARGE_KARMA_TOO_SMALL": "You can't vote due to low karma",
+      "CHARGE_EMPTY_FOR_TODAY": "You have no more votes for today",
+      "AUTH_REQUIRED": "Authorization required",
+      "COMMENT_ACTION_APPROVE": "Approve",
+      "COMMENT_ACTION_LOOK": "Look",
+      "COMMENT_ACTION_PREVIEW": "Preview",
+      "COMMENT_ACTION_REJECT": "Reject",
+      "COMMENT_ACTION_REPLY": "Reply",
+      "COMMENT_ACTION_SAVE": "Save",
+      "COMMENT_ACTION_SEND": "Send",
+      "COMMENT_ACTION_SUSPEND": "Delete",
+      "COMMENT_ACTION_SUSPEND_CONFIRM": "Are you sure you want to delete it?",
+      "COMMENT_ACTION_VOTE": "Vote",
+      "COMMENT_ACTION_EDIT": "Edit",
+      "COMMENT_ACTION_COPY_LINK": "Copy link",
+      "COMMENT_ACTION_COLLAPSE_BRANCH": "Collapse branch",
+      "COMMENT_COLLAPSED": "Show comments ({count})",
+      "COMMENT_EMPTY": "Unfortunately there are no comments here yet",
+      "COMMENT_NOTICE_UNABLE": "Unfortunately, you are not able to leave comments.",
+      "COMMENT_NOTICE_UNAUTH_DECLARATION": "Only those users with full accounts are able to&nbsp;leave comments. \u003Ca href=\"{url}\"\u003ELog in\u003C\u002Fa\u003E, please.",
+      "COMMENT_NOTICE_COPY_LINK_SUCCESS": "Link was copied",
+      "COMMENT_NOTICE_COPY_LINK_ERROR": "Oops, unable to copy",
+      "COMMENT_PLACEHOLDER_EMPTY": "UFO landed and left these words here",
+      "COMMENT_PLACEHOLDER_VOTED": "Voted",
+      "COMMENT_EDIT_FORM_TITLE": "Edit comment",
+      "COMMENT_BASE_FORM_TITLE": "Leave a comment",
+      "MODERATE_POST_COMMENT_EXPIRED": "You can only comment new posts",
+      "MODERATE_POST_COMMENT_PENDING": "You are not allowed to comment this post until your first comment passes moderation",
+      "POST_COMMENT_EDIT_NOT_ALLOWED": "You can not edit this comment",
+      "POST_COMMENT_ERROR_UNDEFINED": "Error undefined",
+      "POST_COMMENT_FREQ_1LVL": "You can not comment more than once every 5 minutes",
+      "POST_COMMENT_FREQ_2LVL": "You can not comment more than once per hour",
+      "POST_COMMENT_FREQ_3LVL": "You can not comment more than once a day",
+      "POST_COMMENT_FREQ_4LVL": "You can not comment more than once a week",
+      "POST_COMMENT_HIDDEN": "Comments disabled",
+      "POST_COMMENT_KARMA_LIMIT": "\u003Ca href=\"\u002Fdocs\u002Fhelp\u002Fkarma\u002F#recovery\"\u003EYou don't have enough karma\u003C\u002Fa\u003E",
+      "POST_COMMENT_TARGET_UNDEFINED": "Please specify comment target",
+      "POST_IN_DRAFTS": "Post in drafts",
+      "POST_NOT_FOUND": "Post not found",
+      "USER_ACCESS_LIMIT": "You don't have enough rights",
+      "USER_BLOCKED": "You have been blocked by moderators",
+      "USER_RO_NOT_ALLOWED_ACTION": "This action is unavailable for the read-only account",
+      "COMMENT_COMPLAINT_TITLE": "Report comment",
+      "COMMENT_COMPLAINT_SUCCESS": "Thank you, the report has been sent",
+      "COMMENT_COMPLAINT_HINT": "Please, add the description",
+      "GO_TO_PREV_COMMENT": "Click (hotkey - k) goes to the previous unread comment",
+      "GO_TO_NEXT_COMMENT": "Click (hotkey - j) leads to the next unread comment",
+      "GO_TO_FIRST_UNREAD_COMMENT": "Number of new comments. Click (hotkey - f) leads to the first unread comment",
+      "UPDATE_COMMENTS": "Refresh comments",
+      "GO_TO_PARENT_COMMENT": "Show previous comment",
+      "GO_TO_CHILD_COMMENT": "Back to the answer",
+      "COMMENT_EDITED": "Comment has been edited",
+      "CONVERSATION_FORM_ACTION_SEND": "Send",
+      "CONVERSATION_FORM_PLACEHOLDER": "Your message",
+      "CONVERSATION_MESSAGES_EMPTY_TEXT": "No messages yet",
+      "CONVERSATION_NEW_MESSAGES_EMPTY_TEXT": "No new messages yet",
+      "CONVERSATION_TITLE": "Conversation with ",
+      "CONVERSATIONS_EMPTY_TEXT": "No conversations yet. Send message to one of the&nbsp;users or use search",
+      "CONVERSATIONS_SUGGEST_EMPTY_TEXT": "There is no&nbsp;user with such a&nbsp;nickname. Try&nbsp;to retype the&nbsp;name",
+      "CONVERSATIONS_SUGGEST_PLACEHOLDER": "User search",
+      "CONVERSATIONS_TITLE": "Conversations",
+      "DATA_ICONS_VIEWS": "Views",
+      "DATA_ICONS_ADD_TO_BOOKMARKS": "Add to bookmarks",
+      "DATA_ICONS_REMOVE_FROM_BOOKMARKS": "Remove from bookmarks",
+      "DATA_ICONS_BOOKMARKS_COUNT": "Users added post to bookmarks",
+      "DATA_ICONS_READ_COMMENTS": "Read comments",
+      "DATA_ICONS_READ_NEW_COMMENTS": "Read new comments",
+      "DATA_ICONS_SHARE": "Share",
+      "DATA_ICONS_LIKE": "Like",
+      "DATA_ICONS_DISLIKE": "Dislike",
+      "DATA_ICONS_VOTE_DOWN": "You've voted down, you can't cancel your vote",
+      "DATA_ICONS_VOTE_UP": "You voted up",
+      "ERROR_PAGE_AUTH": "Login",
+      "ERROR_PAGE_BACK_TO_MAIN": "Back to the main page",
+      "ERROR_PAGE_MESSAGE_INTERNAL": "Something went wrong",
+      "ERROR_PAGE_MESSAGE_NOT_AUTHORIZED": "Please login to see this page",
+      "ERROR_PAGE_MESSAGE_NOT_FOUND": "Page is outdated, was removed or never existed at all",
+      "ERROR_PAGE_MESSAGE_NOT_IMPLEMENTED": "Please use desktop version",
+      "ERROR_PAGE_MESSAGE_UNAUTHORIZED": "Для просмотра страницы необходимо авторизоваться",
+      "ERROR_PAGE_MESSAGE_TIMEOUT": "Please check your connection and try to refresh the page.",
+      "ERROR_PAGE_REFRESH": "Refresh",
+      "ERROR_PAGE_TITLE_INTERNAL": "Internal error",
+      "ERROR_PAGE_TITLE_NOT_AUTHORIZED": "Authorization failed",
+      "ERROR_PAGE_TITLE_NOT_FOUND": "Page not found",
+      "ERROR_PAGE_TITLE_NOT_IMPLEMENTED": "This page doesn't have mobile version yet",
+      "ERROR_PAGE_TITLE_UNAUTHORIZED": "Access denied",
+      "ERROR_PAGE_TITLE_TIMEOUT": "Connection lost",
+      "ERROR_PAGE_TITLE_ARTICLE_IN_DRAFTS": "Access to this post is restricted",
+      "ERROR_PAGE_MESSAGE_ARTICLE_IN_DRAFTS": "You're trying to open the post, written by \u003Ca class=\"tm-page__link\" href=\"{userProfileLink}\"\u003E{userName}\u003C\u002Fa\u003E, but unfortunately it was marked as a draft (by the user himself or the UFO)",
+      "ERROR_PAGE_TITLE_ARTICLE_USER_INACTIVE": "Access to this post is restricted",
+      "ERROR_PAGE_MESSAGE_ARTICLE_USER_INACTIVE": "You're trying to open a post, written by \u003Ca class=\"tm-page__link\" href=\"{userProfileLink}\"\u003E{userName}\u003C\u002Fa\u003E, who is now blocked\u002Fdeactivated or deleted",
+      "ERROR_PAGE_TITLE_ARTICLE_USER_BANNED": "Access to this post is restricted",
+      "ERROR_PAGE_MESSAGE_ARTICLE_USER_BANNED": "You're trying to open a post, written by \u003Ca class=\"tm-page__link\" href=\"{userProfileLink}\"\u003E{userName}\u003C\u002Fa\u003E, who is now banned",
+      "ERROR_PAGE_MESSAGE_NO_INTERNET_LINK": "Oops, seems the connection is lost",
+      "ERROR_IMAGE_WAS_NOT_LOADED": "Failed to load image",
+      "ERROR_MISSING_BRANDING_IMAGE": "A cover is supposed to be here, but something went wrong",
+      "ERROR_PAGE_MESSAGE_USER_PROFILE_INACTIVE": "You're trying to open the profile page of \u003Ca class=\"tm-page__link\" href=\"{userProfileLink}\"\u003E{userName}\u003C\u002Fa\u003E, who has been deactivated\u002Fdeleted",
+      "EXAMPLE_COMPANY_DESC": "Company",
+      "EXAMPLE_COMPANY": "MAIL.RU",
+      "EXAMPLE_COUNTER": "234 publications",
+      "EXAMPLE_NICKNAME": "Boomburum",
+      "EXAMPLE_USERNAME": "Alexey Shavelev",
+      "FEEDBACK_TITLE": "Support",
+      "FEEDBACK_SUBJECT": "Specify the subject:",
+      "FEEDBACK_EMAIL": "Your email adress:",
+      "FEEDBACK_EMAIL_TIP": "Support team will send the answer to this adress",
+      "FEEDBACK_MESSAGE": "Message:",
+      "FEEDBACK_PERSONAL": "I agree that my personal data will be ",
+      "FEEDBACK_PERSONAL_LINK": "processed",
+      "FEEDBACK_SEND": "Send",
+      "FEEDBACK_SENT": "Your message has been sent. Be patient, you will receive an answer soon.",
+      "FEEDBACK_ABOUT_TITLE": "Support service",
+      "FEEDBACK_ABOUT": "\u003Cp\u003ERequests are processed on&nbsp;working days, from 9&nbsp;a.m.&nbsp;to&nbsp;9&nbsp;p.m. (GMT+3, Moscow).\u003C\u002Fp\u003E\u003Cp\u003EWe&nbsp;try to&nbsp;reply within 24&nbsp;hours, but the time lag may increase depending on&nbsp;the number and complexity of&nbsp;requests received. If&nbsp;there is&nbsp;no&nbsp;answer for a&nbsp;long time, check your Spam folder.\u003C\u002Fp\u003E\u003Cp\u003EDescribe the key points of&nbsp;the request in&nbsp;details&nbsp;— this will reduce the number of&nbsp;follow-up questions and help to&nbsp;get the answer faster.\u003C\u002Fp\u003E\u003Cp\u003ETo&nbsp;send a&nbsp;screenshot please upload it&nbsp;to&nbsp;\u003Ca target=\"_blank\" href=\"http:\u002F\u002Fhabrastorage.org\u002F\" rel=\" noopener\"\u003Ehabrastorage.org\u003C\u002Fa\u003E and give a&nbsp;direct link in&nbsp;the text.\u003C\u002Fp\u003E\u003Cp\u003EBefore contacting the support try to&nbsp;find the answer in&nbsp;the \u003Ca href=\"\u002Fdocs\u002Fhelp\u002Frules\u002F\" rel=\" noopener\"\u003EHelp section\u003C\u002Fa\u003E of&nbsp;the website.\u003C\u002Fp\u003E",
+      "FLAG_SANDBOX": "From Sandbox",
+      "FLAG_TRANSLATION": "Translation",
+      "FLAG_TUTORIAL": "Tutorial",
+      "FOOTER_DESKTOP": "Desktop version",
+      "FOOTER_LANG": "Language settings",
+      "FOOTER_HELP": "Help",
+      "ICON_LANG": "Language",
+      "ICON_CLOSE": "Close",
+      "ICON_CLOSE_ROUNDED": "Close",
+      "ICON_COUNTER_FAVORITE": "Bookmarks",
+      "ICON_COUNTER_COMMENTS": "Comments",
+      "ICON_MAIL": "Send message",
+      "ICON_COUNTER_RATING": "Rating",
+      "ICON_COUNTER_VOTE": "Voting",
+      "ICON_COUNTER_VIEWS": "Views",
+      "ICON_COUNTER_SHARE": "Social media shares",
+      "ICON_HEADER_BURGER": "Menu",
+      "ICON_HEADER_USER": "Profile",
+      "ICON_SEARCH": "Search",
+      "ICON_ARROW_BACK": "Back",
+      "ICON_REFRESH": "Refresh",
+      "ICON_ARROW_DOWN": "Dropdown",
+      "ICON_PULL_ARROW": "Pull to refresh",
+      "ICON_LOGOUT": "Logout",
+      "ICON_PENCIL": "Edit",
+      "ICON_PENCIL_SMALL": "Edited",
+      "ICON_COPY": "Copy",
+      "ICON_COLLAPSE": "Collapse",
+      "ICON_BOOKMARK": "Bookmark",
+      "ICON_DOTS": "More",
+      "ICON_SMALL_ARROW": "Navigate",
+      "ICON_PIN": "Pinned",
+      "ICON_EXPAND": "Expand",
+      "ICON_ARROW_SEND": "Send",
+      "ICON_SETTINGS": "Settings",
+      "ICON_RATING": "Rating",
+      "ICON_SUBSCRIBERS": "Subscribers",
+      "ICON_CONTRIBUTION": "Contribution",
+      "ICON_SORTING_DOWN": "Sorting",
+      "ICON_KARMA": "Karma",
+      "ICON_PAGE_SETTINGS": "Settings",
+      "ICON_GRADE": "Grade",
+      "ICON_WRITE": "Write a post",
+      "ICON_EDIT": "Edit",
+      "ICON_MODERATOR_CHECK": "Checked by moderator",
+      "ICON_FLAG": "Report",
+      "ICON_LOGO": "Habr",
+      "ICON_SUBSCRIBED": "Subscribed",
+      "ICON_SUBSCRIBE": "Subscribe",
+      "ICON_SOCIAL_LOGO_FACEBOOK": "Facebook",
+      "ICON_SOCIAL_LOGO_TWITTER": "Twitter",
+      "ICON_SOCIAL_LOGO_VKONTAKTE": "VK",
+      "ICON_SOCIAL_LOGO_TELEGRAM": "Telegram",
+      "ICON_SOCIAL_LOGO_YOUTUBE": "Youtube",
+      "ICON_SOCIAL_LOGO_ZEN": "Yandex Zen",
+      "ICON_SERVICE_HABRCOM_RU": "Habr",
+      "ICON_SERVICE_QNA_RU": "Habr Q&A",
+      "ICON_SERVICE_CAREER_RU": "Habr Career",
+      "ICON_SERVICE_FREELANCE_RU": "Habr Freelance",
+      "ICON_TRASH": "Delete",
+      "ICON_NOTIFICATIONS": "Tracker",
+      "ICON_NOTIFICATIONS_FILLED": "Tracker",
+      "ICON_USER_GROUP": "User group",
+      "ICON_RSS": "Copy RSS link",
+      "ICON_COMPANY": "Company",
+      "ICON_USER_NOTICE_ERROR": "Error",
+      "ICON_USER_NOTICE_WARNING": "Warning",
+      "ICON_USER_NOTICE_INFO": "Info",
+      "ICON_REPORT": "Report",
+      "JOBS_ALL": "All vacancies",
+      "JOBS_EMPTY": "The company has no open vacancies on “\u003Ca class=\"tm-company-vacancies__link\" href=\"https:\u002F\u002Fcareer.habr.com\u002F\u002Fvacancies?utm_source=tm_habrahabr&utm_medium=companyadmin&utm_campaign=vacancies\" target=\"_blank\"\u003EHabr Career\u003C\u002Fa\u003E” at the moment.",
+      "JOBS_REMOTE": "remote job",
+      "JOBS_TITLE": "{ company, select,\n  none { Vacancies }\n  other { Vacancies { company } }\n}",
+      "VACANCIES_ALL": "More vacancies on Habr Career",
+      "VACANCIES_TITLE": "{ company, select,\n      none { Vacancies }\n      other { Vacancies { company } }\n    }",
+      "COURSES_ALL": "More courses on Habr Career",
+      "COURSES_TITLE": "Courses",
+      "TASKS_ALL": "More jobs on Habr Freelance",
+      "TASKS_TITLE": "Freelance jobs",
+      "QUESTIONS_ALL": "More questions on Habr Q&A",
+      "QUESTIONS_TITLE": "Questions",
+      "HELP_COMPANIES": "Companies",
+      "HELP_FEED": "Feed",
+      "HELP_HABRACENTRE": "Habracentre",
+      "HELP_HABRAMAIL": "Conversations",
+      "HELP_HUBS": "Hubs",
+      "HELP_KARMA": "Karma & Rating",
+      "HELP_LENTA": "Feed",
+      "HELP_OTHER": "Other",
+      "HELP_POSTS": "Posts",
+      "HELP_PROBLEMS": "Problems",
+      "HELP_REGISTRATION": "Registration and invitations",
+      "HELP_RULES": "Rules",
+      "HELP_SANDBOX": "Sandbox",
+      "HELP_SETTINGS": "Settings",
+      "HELP_SPONSORSHIP-INFO": "Sponsorship",
+      "HELP_TRACKER": "Tracker",
+      "HOT_KEYS": "Hot keys",
+      "HOT_KEYS_FEED": "Pages with a list of search publications etc.:",
+      "HOT_KEYS_POST": "Post page:",
+      "HOT_KEYS_ALL": "All pages:",
+      "HOT_KEYS_NEXT_POST": "go to the next item in the list",
+      "HOT_KEYS_PREV_POST": "go to the previous item in the list",
+      "HOT_KEYS_TOP_POST": "scroll to the top of the page",
+      "HOT_KEYS_BOTTOM_POST": "scroll to the bottom of the page",
+      "HOT_KEYS_OPEN_POST": "open selected post",
+      "HOT_KEYS_NEW_COMMENT": "writing a new comment: scrolling to the form of writing a comment with setting the focus in it",
+      "HOT_KEYS_RELOAD": "refresh comments",
+      "HOT_KEYS_NEXT_COMMENT_READ": "go to the next unread comment (with a comment mark as read)",
+      "HOT_KEYS_NEXT_COMMENT_UNREAD": "go to previous unread comment",
+      "HOT_KEYS_PREV_COMMENT_UNREAD": "go to next unread comment",
+      "HOT_KEYS_ESC": "closing navigation bars, modal windows",
+      "HOT_KEYS_TOGGLE_VIEW": "toggle feed style",
+      "HOT_KEYS_LEVEL_UP": "go to upper navigation level",
+      "INVITE_HAS_BEEN_SENT": "Invite has been sent",
+      "INVITE_PAGE_FORM_TITLE_MESSAGES": "{type, plural,\n      =1 { You have {count} invitation. You can invite some good people}\n      =2 { You have {count} invitations. You can invite some good people}\n      other { You have {count} invitations. You can invite some good people }\n    }",
+      "INVITE_PAGE_FORM_EMAIL_FIELD_LABEL": "An e-mail of a good person",
+      "INVITE_PAGE_FORM_FULLNAME_FIELD_LABEL": "What is the name of a good person?",
+      "INVITE_PAGE_USED_INVITES_SECTION_TITLE": "Accepted",
+      "INVITE_PAGE_UNUSED_INVITES_SECTION_TITLE": "Sent",
+      "INVITE_PAGE_RESEND_BUTTON_TITLE": "Send again",
+      "INVITE_PAGE_REVOKE_BUTTON_TITLE": "Revoke",
+      "INVITE_PAGE_SUBMIT_BUTTON_TITLE": "Invite",
+      "INVITE_PAGE_SUCCESS_RESENDED_NOTIFICATION": "invitation successfully re sent!",
+      "INVITE_PAGE_SUCCESS_REVOKED_NOTIFICATION": "Invitation successfully revoked!",
+      "INVITE_PAGE_SUCCESS_SUBMITED_NOTIFICATION": "Invitation successfully sent!",
+      "INVITE_PAGE_EMPTY_INVITES_MESSAGE": "You have no invitations. \u003Ca href=\"{url}\"\u003EHow to get?\u003C\u002Fa\u003E",
+      "KARMA_RESET": "Karma reset",
+      "KARMA_ALREADY_RESET": "You have already reset your karma on {date}. You can reset karma only once.",
+      "KARMA_ALREADY_RESET_ZERO": "Your karma equals 0 anyway",
+      "KARMA_RESET_SENT": "Your application for resetting your karma has been accepted\n      and will be processed within 24 hours. Please stay calm.",
+      "KARMA_CHANGED_MY_MIND": "I’ve changed my mind!",
+      "KARMA_RESET_WARNING": "Warning: you can only reset your karma once.\n      Some time after activating this option,\n      the votes of users who voted for your karma will be canceled.\n      You can start getting karma “from scratch”.",
+      "KARMA_RESET_AGREE": "I agree to reset my karma and I'm warned that I can do this only once",
+      "KARMA_RESET_SUBMIT": "Reset karma",
+      "MEGAPROJECTS_DESCRIPTION": "“Habr megaprojects are created by our Content Studio: vivid stories, quizes, quests about IT industry and everything related to it.",
+      "MISPRINT_TITLE": "Report a mistake",
+      "MISPRINT_WARNING": "You have selected too large piece of text. To make it easier for the author to understand what the error is, highlight only the problematic word or phrase or add an explanation below.",
+      "MISPRINT_PLACEHOLDER": "Description (optional)",
+      "MISPRINT_HINT": "This message will bе sent to your dialogue with the author.",
+      "MISPRINT_SEND": "Send",
+      "MISPRINT_CANCEL": "Cancel",
+      "MISPRINT_SUCCESS": "Thank you, your report was sent to the author",
+      "SEARCH_RESULTS_PAGE_TITLE": "Search results for «{query}»",
+      "SANDBOX_PAGE_TITLE": "Sandbox",
+      "SANDBOX_PAGE_MOST_IMPORTANT_TITLE": "Most Important",
+      "SANDBOX_PAGE_AWAIT_INVITE_AUTHORS_TITLE": "Waiting for invitation",
+      "SANDBOX_PAGE_NEW_AUTHORS_TITLE": "New authors",
+      "SANDBOX_PAGE_MY_TITLE": "My posts",
+      "SANDBOX_PAGE_AWAIT_MODERATION_TITLE": "Waiting for moderation",
+      "NEWS_PAGE_META_TITLE": "IT News: technology highlights",
+      "NEWS_PAGE_META_DESCRIPTION": ": The most important IT news of the world today: science and technology, development, gadgets, games, business and many more.",
+      "FLOW_PAGE_NEWS_META_TITLE": "News \u002F {flowName}",
+      "FLOW_PAGE_NEWS_META_DESCRIPTION": "News in {flowName} stream",
+      "FLOW_PAGE_AUTHORS_META_TITLE": " Authors \u002F {flowName}",
+      "FLOW_PAGE_AUTHORS_META_DESCRIPTION": "Top authors in {flowName} stream on Habr",
+      "FLOW_PAGE_HUBS_META_TITLE": "Hubs \u002F {flowName}",
+      "FLOW_PAGE_HUBS_META_DESCRIPTION": "Hubs list in {flowName} on Habr",
+      "FLOW_PAGE_COMPANIES_META_TITLE": "Companies \u002F {flowName}",
+      "FLOW_PAGE_COMPANIES_META_DESCRIPTION": "Top companies in {flowName} stream on Habr",
+      "USER_PROFILE_PAGE_META_TITLE": "{userName, select,\n        ? {}\n        other {{userName} aka}\n      } {userAlias}\n      {companyName, select,\n        ? {}\n        other {from company {companyName}}\n      } - {userInfo}",
+      "USER_PROFILE_PAGE_META_DESCRIPTION": "{userName, select,\n        ? {}\n        other {{userName} aka}\n      } {userAlias}{companyName, select,\n        ? {}\n        other {, working at {companyName} company}\n      }.",
+      "USER_PROFILE_PAGE_META_DESCRIPTION_POSTS": "Authored {postsCount, plural,\n        one {{postsCount, number} post}\n        other {{postsCount, number} posts}\n      } on Habr.",
+      "USER_PROFILE_PAGE_META_DESCRIPTION_COMMENTS": "Posted {commentsCount, plural,\n        one {{commentsCount, number} comment}\n        other {{commentsCount, number} comments}\n      }.",
+      "USER_PROFILE_PAGE_META_DESCRIPTION_POSTS_AND_COMMENTS": "Authored {postsCount, plural,\n        one {{postsCount, number} post}\n        other {{postsCount, number} posts}\n      } on Habr and posted {commentsCount, plural,\n        one {{commentsCount, number} comment}\n        other {{commentsCount, number} comments}\n      }.",
+      "COMPANY_ARTICLES_PAGE_META_DESCRIPTION": "{count, plural,\n      one {{count, number} article}\n      other {{count, number} articles}\n      =0 {No articles}\n    } from {companyName} company authors",
+      "COMPANY_NEWS_PAGE_META_DESCRIPTION": "{count, plural,\n      one {{count, number} news post}\n      other {{count, number} news posts}\n      =0 {No news}\n    } from {companyName} company authors",
+      "DESCRIPTION_PERIOD": "Top of { period, select,\n      daily { the last 24 hours }\n      weekly { the last 7 days }\n      monthly { the last 30 days }\n      yearly { the last 12 months }\n      alltime { all time }\n    }",
+      "DESCRIPTION_SCORE": "Habr is the largest resource for IT professionals in Europe. People visit Habr to discuss industry news and share own experience.",
+      "DESCRIPTION_FLOW_PAGE_LATEST": "All posts in {flowName} stream on Habr",
+      "DESCRIPTION_FLOW_PAGE_SCORE": "All posts with rating more than {score} in stream {flowName} on Habr",
+      "DESCRIPTION_FLOW_PAGE_PERIOD": "Top of { period, select,\n      daily { the day }\n      weekly { the week }\n      monthly { the month }\n      yearly { the year }\n      alltime { all time }\n    } in {flowName} stream on Habr",
+      "NAV_ACCOUNT": "Your account",
+      "NAV_ADVERTISING": "Ads",
+      "NAV_AGREEMENT": "Agreement",
+      "NAV_ARTICLES": "Articles",
+      "NAV_ARTICLES_USER": "Posts",
+      "NAV_DRAFTS": "Drafts",
+      "NAV_PLANNED": "Planned",
+      "NAV_AUTHORS": "Authors",
+      "NAV_BLOG": "Blog",
+      "NAV_BOOKMARKS": "Bookmarks",
+      "NAV_BOOKMARKS_ARTICLES": "Posts",
+      "NAV_BOOKMARKS_COMMENTS": "Comments",
+      "NAV_FOLLOWERS": "Followers",
+      "NAV_FOLLOWED": "Following",
+      "NAV_PROFILE_WHOIS": "Whois",
+      "NAV_PROFILE_INVITES": "Invitations",
+      "NAV_PROFILE_NOTES": "Notes",
+      "NAV_USER_STATISTICS": "Statistics",
+      "NAV_COMMENTS": "Comments",
+      "NAV_COMPANIES": "Companies",
+      "NAV_CONFIDENTIAL": "Confidential",
+      "NAV_CONVERSATIONS": "Conversations",
+      "NAV_FEEDBACK": "Support",
+      "NAV_CONTENT": "Content",
+      "NAV_CORPBLOG": "Subscription plans",
+      "NAV_DOCS": "Docs",
+      "NAV_FLOWS": "Streams",
+      "NAV_FLOWS_ALL": "All streams",
+      "NAV_FLOW_ADMIN": "Admin",
+      "NAV_FLOW_DESIGN": "Design",
+      "NAV_FLOW_DEVELOP": "Development",
+      "NAV_FLOW_GEEKTIMES": "Geektimes",
+      "NAV_FLOW_POPSCI": "PopSci",
+      "NAV_FLOW_MANAGEMENT": "Management",
+      "NAV_FLOW_MARKETING": "Marketing",
+      "NAV_FLOW_MISC": "Other",
+      "NAV_HELP": "How it works",
+      "NAV_HUBS": "Hubs",
+      "NAV_INFO": "Information",
+      "NAV_LOGOUT": "Log out",
+      "NAV_MEGAPROJECTS": "Megaprojects",
+      "NAV_MEGAPOST": "Megapost",
+      "NAV_MY_FEED": "My feed",
+      "NAV_NEWS": "News",
+      "NAV_NEXT_PAGE": "There",
+      "NAV_PREV_PAGE": "Here",
+      "NAV_PROFILE": "Profile",
+      "NAV_PROJECTS_SECTION_LABEL": "Все сервисы Хабра",
+      "NAV_PROJECT_HABR": "Habr",
+      "NAV_PROJECT_HABR_DESCR": "",
+      "NAV_PROJECT_FREELANSIM": "Freelance",
+      "NAV_PROJECT_FREELANSIM_DESCR": "",
+      "NAV_PROJECT_MOYKRUG": "Career",
+      "NAV_PROJECT_MOYKRUG_DESCR": "",
+      "NAV_PROJECT_TOSTER": "Q&A",
+      "NAV_PROJECT_TOSTER_DESCR": "",
+      "NAV_FOR_AUTHORS": "For authors",
+      "NAV_FOR_COMPANIES": "For companies",
+      "NAV_DOCUMENTS": "Documents",
+      "NAV_SEARCH": "Search",
+      "NAV_SECTIONS": "Sections",
+      "NAV_SERVICE": "Services",
+      "NAV_SETTINGS_LANGUAGE": "Language settings",
+      "NAV_VACANCIES": "Vacancies",
+      "NAV_MAIN_TOPIC": "Remote marathon",
+      "NAV_DOCS_MAIN": "Information",
+      "NAV_WORKSHOPS": "Seminars",
+      "NAV_SHOW_FIRST": "Show first",
+      "NAV_SHOW": "Show",
+      "NAV_SHOW_BY_RATING": "Rating limit",
+      "NAV_SHOW_BY_PERIOD": "Period",
+      "NAV_DAY": "Day",
+      "NAV_WEEK": "Week",
+      "NAV_MONTH": "Month",
+      "NAV_QUARTER": "Quarter",
+      "NAV_HALFYEAR": "Half year",
+      "NAV_YEAR": "Year",
+      "NAV_ALLTIME": "All time",
+      "NAV_ALL": "All",
+      "NAV_NEW": "New",
+      "NAV_BEST": "Top",
+      "NAV_TITLE_SCORE": "New with rating ≥{score}",
+      "NAV_TITLE_LATEST": "Everything",
+      "NAV_TITLE_PERIOD": "Best of { period, select,\n      daily { the day }\n      weekly { the week }\n      monthly { the month }\n      yearly { the year }\n      alltime { all time }\n    }",
+      "NAV_APPLY": "Apply",
+      "NAV_SORTING_ABC": "Title",
+      "NAV_SORTING_ABC_TITLE": "By title",
+      "NAV_SORTING_ABC_USER": "Name",
+      "NAV_SORTING_ABC_USER_TITLE": "By name",
+      "NAV_SORTING_RATING": "Rating",
+      "NAV_SORTING_RATING_TITLE": "By rating",
+      "NAV_SORTING_SUBSCRIBERS": "Subscribers",
+      "NAV_SORTING_SUBSCRIBERS_TITLE": "By subscribers",
+      "NAV_SORTING_SORTBY": "Sort by",
+      "NAV_SORTING_SHOW": "Order",
+      "NAV_SORTING_CATEGORIES": "Categories",
+      "NAV_CONTRIBUTION": "Authors' contribution",
+      "NAV_HUBS_CONTRIBUTION": "Contribution to hubs",
+      "NAV_SORTING_KARMA_AUTHORS_PAGE_LABEL": "Karma",
+      "NAV_SORTING_KARMA_FLOW_PAGE_LABEL": "Contribution to stream",
+      "NAV_SORTING_KARMA_HUB_PAGE_LABEL": "Contribution to hub",
+      "NAV_SORTING_KARMA_TITLE": "By karma",
+      "NAV_SORTING_CONTRIBUTION_TITLE": "By contribution",
+      "NAV_SANDBOX_APPROVED": "Waiting for invitation",
+      "NAV_SANDBOX_DISAPPROVED": "Waiting for moderation",
+      "NAV_SANDBOX_MY": "My posts",
+      "NAV_SANDBOX_INVITED": "New authors",
+      "NAV_SANDBOX_MOST_IMPORTANT": "Most important",
+      "NAV_SANDBOX_BECOME_AUTHOR": "How to become an author",
+      "NAV_WORKERS": "Employees",
+      "NAV_WORKERS_TITLE": "{companyTitle} employees",
+      "NAV_FANS_TITLE": "{companyTitle} subscribers",
+      "NAV_FANS": "Subscribers",
+      "NAV_RULES": "Rules of the site",
+      "NAV_BECOME_AUTHOR": "How to become an author",
+      "NAV_PAGE_SETTINGS": "Language, feed",
+      "NAV_LOGIN": "Login",
+      "NAV_REGISTER": "Sign up",
+      "NAV_PPA": "ASP",
+      "NAV_SANDBOX": "Sandbox",
+      "NAV_ABOUT": "About",
+      "NAV_DOWN": "Down",
+      "NAV_UP": "Up",
+      "NEWS_DESCRIPTION": "Habr is the largest resource for IT professionals in Europe. People visit Habr to discuss industry news and share own experience.",
+      "NEWS_COMMENTS": "Comments:",
+      "NEWS_ALL_NEWS": "All news",
+      "NEWS_ALL_NEWS_COMPANY": "All news from { companyTitle }",
+      "NEWS_ALL_NEWS_FLOW": "All news from { flowTitle } stream",
+      "BETA_TEST_NO": "No, thanks",
+      "BETA_TEST_SWITCH_BACK": "Disable β-testing",
+      "BETA_TEST_TEXT": "We've worked hard, so let's go, huh?",
+      "BETA_TEST_TITLE": "Psst, wanna test some PWA?",
+      "BETA_TEST_YES": "Yes, please",
+      "OFFLINE_CLOSE": "Close",
+      "OFFLINE_TITLE": "Internet connection lost",
+      "REFRESH_ACTION": "Reload page",
+      "REFRESH_TITLE": "We’ve updated a couple of things. To keep Habr running, please refresh the page.",
+      "CACHED_DATA_TITLE": "Seems like the connection is lost.",
+      "CACHED_DATA": "Habr was like this on ",
+      "POINTS_ERROR_VOTING_DISABLED": "Not enough charge for voting",
+      "POINTS_LABEL_KARMA": "Karma",
+      "POINTS_LABEL_RATING": "Rating",
+      "POINTS_LABEL_GRADE_SHORT": "Grade",
+      "POINTS_LABEL_GRADE": "Company grade from Habr Career",
+      "POINTS_LABEL_SUBSCRIBERS": "{type, plural,\n      other { {count} subscribers }\n      one { {count} subscriber }\n    }",
+      "POLLS_VOTE": "Vote",
+      "POLLS_DECLINE": "Decline",
+      "POLLS_STAT_VOTED": "{type, plural,\n      =5 { {votesCount} users voted. }\n      =2 { {votesCount} users voted.  }\n      =1 { {votesCount} user voted. }\n      =0 { Nobody voted yet. }\n    }",
+      "POLLS_STAT_PASSED": "{type, plural,\n      =5 { {passCount} users abstained. }\n      =2 { {passCount} users abstained. }\n      =1 { {passCount} user abstained. }\n      =0 { Nobody abstained. }\n    }",
+      "POLLS_NOTICE_UNAUTH_ACTION": "\u003Ca href=\"{url}\"\u003ELog in\u003C\u002Fa\u003E, please.",
+      "POLLS_NOTICE_UNAUTH_DECLARATION": "Only registered users can participate in poll.",
+      "PPA_PAGE_TITLE": "Author Support Program",
+      "PPA_PAGE_TITLE_SHORT": "ASP",
+      "PPA_SUBPAGE_ABOUT": "About",
+      "PPA_SUBPAGE_BALANCE": "Balance",
+      "PPA_SUBPAGE_FUNDS_WITHDRAWAL": "Funds Withdrawal",
+      "PPA_SUBPAGE_RULES": "Rules",
+      "PPA_SUBPAGE_PRIVACY": "Privacy",
+      "PPA_SUBPAGE_FAQ": "FAQ",
+      "PPA_LINKS": "Links",
+      "PPA_INFO": "Info",
+      "PPA_NEWS": "News",
+      "PPA_LINK_PPA_RULES": "ASP Rules",
+      "PPA_LINK_PRIVACY": "Privacy Policy",
+      "PPA_LINK_PRIVACY_LONG": "Privacy Policy",
+      "PPA_LINK_CC": "CC BY 3.0",
+      "PPA_LINK_FAQ": "Read F.A.Q.",
+      "PPA_LINK_SITE_RULES": "Site Rules",
+      "PPA_BALANCE": "Balance",
+      "PPA_WITHDRAW_BUTTON": "Withdraw",
+      "PPA_WITHDRAW_TOGGLE_SUCCESS": "Withdraw settings updated successfully",
+      "PPA_JUST_CREATED": "We're preparing your profile, please come back later.",
+      "PPA_JOIN_SUCCESS": "You've successfully joined the ASP!",
+      "PPA_WITHDRAW_EXPLAINER": "We'll have to identify you in order to make a copyright transfer agreement and pay you royalties.\n      Please fill in and verify the form below before sending.\n      This will help you to restore an access to your account in case you lose the access to it.",
+      "PPA_AWAITING_MODERATION": "Ваши данные отправлены и будут проверены в течение 10 рабочих дней.\n      По результатам проверки вы получите уведомление на адрес электронной почты,\n      указанный при регистрации.",
+      "PPA_FEEDBACK_PRE": "If you have any questions please contact our",
+      "PPA_FEEDBACK_POST": "technical support",
+      "PPA_WEBMONEY_WALLET": "Your Webmoney wallet id that is used to withdraw funds",
+      "PPA_WEBMONEY_CHANGE": "You can change the wallet id by contacting our",
+      "PPA_FORM_RULES_AGREE": "I accept the rules",
+      "PPA_FORM_RESIDENCY": "Residency",
+      "PPA_FORM_NAME": "Name",
+      "PPA_FORM_SURNAME": "Surname",
+      "PPA_FORM_SECOND_NAME": "Second Name",
+      "PPA_FORM_PASSPORT_DATA": "Passport details",
+      "PPA_FORM_PASSPORT_DATA_DESC": "Series, issued by, date of issue, place of registration including city, street, home and flat number",
+      "PPA_FORM_REGISTRATION_ADDRESS": "Registration address",
+      "PPA_FORM_REGISTRATION_ADDRESS_DESC": "Example: 123456, Moscow, Tverskaya street 2, 1",
+      "PPA_FORM_PHONE": "Phone",
+      "PPA_FORM_SNILS": "SNILS",
+      "PPA_FORM_INN": "INN",
+      "PPA_FORM_WEBMONEY": "WebMoney wallet id",
+      "PPA_FORM_PASSPORT_SCAN": "Passport scan",
+      "PPA_FORM_PASSPORT_SCAN_DESC": "Including pages with registration info. Preferably in a zip-archive.",
+      "PPA_FORM_SNILS_SCAN": "SNILS scan",
+      "PPA_FORM_INN_SCAN": "INN scan",
+      "PPA_FORM_AGREE": "I agree to provide my personal data",
+      "PPA_FORM_AUTO_WITHDRAW": "Enable automated funds withdrawal",
+      "PPA_FILE_UPLOAD_SUCCESS": "File '{{ filename }}' uploaded successfully",
+      "PPG_COMMENTS_TITLE": "Accelerated commentary course",
+      "PPG_COMMENTS_LEAD": "\u003Cp\u003EModerators of&nbsp;the website offer you a&nbsp;small course to&nbsp;increase the literacy of&nbsp;commenting on&nbsp;publications. Recommendations, by&nbsp;following which you will improve the readability of&nbsp;your comments and make them softer and silky are published below.\u003C\u002Fp\u003E\u003Cp\u003ERead each item carefully. To&nbsp;consolidate the theory with practice, select the \u003Cstrong\u003Ecorrect answers:\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E",
+      "PPG_COMMENTS_BOTTOM": "Note: by pressing \"Continue\" button, you report that everything is clear.",
+      "PPG_COMMENTS_EMOJI": "The text should not contain an abundance of smileys or emoji",
+      "PPG_COMMENTS_EMOJI_1": "Right, I've tired of them since ICQ",
+      "PPG_COMMENTS_EMOJI_2": "What, again?! ]:-\u003E",
+      "PPG_COMMENTS_EMOJI_3": "That's a joke 0_o",
+      "PPG_COMMENTS_CAPITAL": "Each new sentence begins with a capital letter",
+      "PPG_COMMENTS_CAPITAL_1": "Can I do it in SuCh WaY??!",
+      "PPG_COMMENTS_CAPITAL_2": "\"Each new sentence begins with a capital letter\" — got it.",
+      "PPG_COMMENTS_CAPITAL_3": "always believed that the main thing was to understand the meaning",
+      "PPG_COMMENTS_SPACE": "Between words there is only one space",
+      "PPG_COMMENTS_SPACE_1": "I'll keep the space button under tough control",
+      "PPG_COMMENTS_SPACE_2": "Then whyhave I finishedten-fingerprintingcourse????!!",
+      "PPG_COMMENTS_SPACE_3": "Can I at least occasionally spoil myself with two spaces between the words?",
+      "PPG_COMMENTS_PUNTUATION_SPACE": "Between the punctuation mark and the next word (if any), only one space placed",
+      "PPG_COMMENTS_PUNTUATION_SPACE_1": "Okay,got it!!!!! )",
+      "PPG_COMMENTS_PUNTUATION_SPACE_2": "This is obvious, I think.",
+      "PPG_COMMENTS_PUNTIATION": "Punctuation marks (dots, commas, colons, semicolon) are written together with the word after which they stand",
+      "PPG_COMMENTS_PUNTIATION_1": "Of course, it is not necessary to write them separately",
+      "PPG_COMMENTS_PUNTIATION_2": "Of course not , no one pays attention to such things",
+      "PPG_CONTINUE": "Continue",
+      "PPG_ERROR": "Unfortunately, you made a mistake in one of the answers. Try again",
+      "PPG_SUCCESS": "Congratulations, you are with us now. Welcome!",
+      "PPG_SMILES_TITLE": "Emoji wipe program",
+      "PPG_SMILES_LEAD": "Before continuing to comment on the publications on Habr please read the recommendations below:",
+      "PPG_SMILES_LABEL": "I will no longer abuse smilies in the comments on Habr",
+      "PPG_INFO": "Your violations",
+      "PPG_COMMENTS_INFO": "Ignored spelling rules",
+      "PPG_SMILES_INFO": "Abused emojis",
+      "PPG_TIMES": "{type, plural,\n      =1 { {times} time}\n      other { {times} times}\n    }",
+      "PROFILE_ACTION_EXPAND": "Show all",
+      "PROFILE_ACTION_FOLLOW": "Follow",
+      "PROFILE_ACTION_FOLLOWING": "Following",
+      "PROFILE_ACTION_SUBSCRIBE": "Subscribe",
+      "PROFILE_ACTION_SUBSCRIBED": "Subscribed",
+      "PROFILE_PAGE_TITLE_ARTICLES": "Posts \u002F Profile of { username }",
+      "PROFILE_PAGE_TITLE_STATISTICS": "Posts statistics \u002F Profile of { username }",
+      "PROFILE_PAGE_TITLE_BOOKMARKS": "Bookmarks \u002F Profile of { username }",
+      "PROFILE_PAGE_TITLE_BOOKMARKS_ARTICLES": "Posts \u002F Bookmarks \u002F Profile of { username }",
+      "PROFILE_PAGE_TITLE_BOOKMARKS_COMMENTS": "Comments \u002F Bookmarks \u002F Profile of { username }",
+      "PROFILE_PAGE_TITLE_COMMENTS": "Comments \u002F Profile of { username }",
+      "PROFILE_PAGE_TITLE_MAIN": "Profile of { username }",
+      "PROFILE_PAGE_TITLE_FOLLOWERS": "Following{gender, select, 1 { him} 2 { her} other {}} \u002F Followers \u002F Profile of {username}",
+      "PROFILE_PAGE_TITLE_FOLLOWED": "{gender, select, 1 {He follows} 2 {She follows} other {Follows}} \u002F Followers \u002F Profile of {username}",
+      "PROFILE_TEXT_BY_INVITATION": " by invitation from ",
+      "PROFILE_TEXT_UFO": "UFO",
+      "PROFILE_TITLE_ABOUT": "About",
+      "PROFILE_TITLE_BADGES": "Badges",
+      "PROFILE_TITLE_COMPANIES": "Subscribed to companies",
+      "PROFILE_TITLE_CONTACTS": "Contact info",
+      "PROFILE_TITLE_HUBS": "Belongs to hubs",
+      "PROFILE_TITLE_INVITED": "Invited",
+      "PROFILE_TITLE_INVITED_TO_SITE": "Invited to the website",
+      "PROFILE_TITLE_REGISTERED": "Registered",
+      "PROFILE_TITLE_ACTIVITY": "Activity",
+      "PROFILE_TITLE_RATING": "Rating",
+      "PROFILE_TITLE_BIRTHDAY": "Date of birth",
+      "PROFILE_TITLE_LOCATION": "Location",
+      "PROFILE_TITLE_WORKS_IN": "Works in",
+      "PROFILE_RATING_POSITION_MALE": "{position, selectordinal,\n      one {#-st}\n      two {#-nd}\n      few {#-rd}\n      other {#-th}\n      =0 { Does not participate }\n    }\n    ",
+      "PROFILE_RATING_POSITION_FEMALE": "{position, selectordinal,\n      one {#-st}\n      two {#-nd}\n      few {#-rd}\n      other {#-th}\n      =0 { Does not participate }\n    }\n    ",
+      "PROFILE_WRITE_NOTE": "Make a note",
+      "PROFILE_WRITE_NOTE_TITLE": "Note",
+      "PROFILE_WRITE_NOTE_SAVE": "Save",
+      "PROFILE_WRITE_NOTE_EDIT": "Edit",
+      "PROFILE_WRITE_NOTE_PLACEHOLDER": "Note about the user will be visible to you only",
+      "PROFILE_HUB_SPONSORED": "Sponsored by",
+      "PROFILE_HUB_CURATOR": "Curator",
+      "PROFILE_NO_NOTES": "You have made no user notes yet.",
+      "PROFILE_NOTE_USER": "User",
+      "PROFILE_NOTE_MESSAGE": "Message",
+      "PROFILE_NOTE_DATE": "Date",
+      "PROFILE_POSTS": "Posts",
+      "PROFILE_COMMENTS": "Comments",
+      "AUTHOR_STATISTICS_SECTION_TITLE": "Posts views",
+      "AUTHOR_STATISTICS_TOOLTIP": "Views",
+      "AUTHOR_STATISTICS_NO_DATA": "No data",
+      "PROFILE_COMPANY_TITLE_ABOUT": "About the company",
+      "PROFILE_COMPANY_TITLE_ABOUT_LONG": "About {companyName} company",
+      "PROFILE_BLOCK_TITLE": "Information",
+      "PROFILE_COMPANY_TITLE_BLOG": "Corporate blog",
+      "PROFILE_COMPANY_TITLE_NEWS": "Corporate news",
+      "PROFILE_COMPANY_TITLE_DOMAINS": "Domains",
+      "PROFILE_COMPANY_TITLE_EMPLOYEES_COUNT": "Employees",
+      "PROFILE_COMPANY_TITLE_FOUNDATION_DATE": "Founded",
+      "PROFILE_COMPANY_TITLE_LOCATION": "Location",
+      "PROFILE_COMPANY_TITLE_REGISTRATION_DATE": "Registered",
+      "PROFILE_COMPANY_TITLE_REPRESENTIVE_USER": "Representative",
+      "PROFILE_COMPANY_TITLE_TEAM": "Team",
+      "PROFILE_COMPANY_TITLE_VACANCIES": "Vacancies from",
+      "PROFILE_COMPANY_DESCRIPTION_VACANCIES": "Vacancies from {companyName} company",
+      "PROFILE_COMPANY_TITLE_WEBSITE": "Website",
+      "ADMINISTRATION_BLOCK_TITLE": "Administrating",
+      "ADMINISTRATION_BLOCK_CP": "Go to the control panel",
+      "ADMINISTRATION_BLOCK_WRITE": "Create post",
+      "ADMINISTRATION_BLOCK_CONTENT": "Content for your blog",
+      "ADMINISTRATION_BLOCK_DOCS": "How to maintain a blog",
+      "PUBLICATION_READY_PUBLISH": "Proceed to settings",
+      "PUBLICATION_BACK_TO_EDITOR": "Back to publication",
+      "PUBLICATION_PUBLISH": "Publish",
+      "PUBLICATION_SAVE": "Save",
+      "PUBLICATION_PUBLISH_SANDBOX": "Send to moderation",
+      "PUBLICATION_SAVE_DRAFT": "Save draft",
+      "PUBLICATION_SETTINGS": "Post settings",
+      "PUBLICATION_TYPE": "Type",
+      "PUBLICATION_TYPE_ARTICLE": "Article",
+      "PUBLICATION_TYPE_NEWS": "News",
+      "PUBLICATION_LANG": "Language",
+      "PUBLICATION_LANG_RU": "Russian",
+      "PUBLICATION_LANG_EN": "English",
+      "PUBLICATION_HUBS": "Hubs",
+      "PUBLICATION_HUBS_PLACEHOLDER": "Choose hubs",
+      "PUBLICATION_HUBS_HINT": "Choose from 1 up to 5 hubs",
+      "PUBLICATION_KEYWORDS": "Keywords",
+      "PUBLICATION_KEYWORDS_HINT": "Enter from 1 to 10 key words here, separated by commas",
+      "PUBLICATION_TRANSLATION": "Translation",
+      "PUBLICATION_TRANSLATION_AUTHOR": "Original author",
+      "PUBLICATION_TRANSLATION_AUTHOR_HINT": "E.g. Tim O'Reily",
+      "PUBLICATION_TRANSLATION_SOURCE": "Original source",
+      "PUBLICATION_TRANSLATION_SOURCE_HINT": "E.g. http:\u002F\u002Fwww.oreillynet.com\u002Fpub\u002Fa\u002Foreilly\u002Ftim\u002Fnews\u002F2005\u002F09\u002F30\u002Fwhat-is-web-20.html?page=1",
+      "PUBLICATION_TUTORIAL": "Tutorial",
+      "PUBLICATION_FEED_VIEW": "Post feed view",
+      "PUBLICATION_ADD_COVER": "Add cover here",
+      "PUBLICATION_ADD_COVER_DESCRIPTION": "Drop a file with 780×440 size here (jpg, gif, png) or click",
+      "PUBLICATION_TEXT_BEFORE_CUT_HINT": "We recommend 100-2000 symbols",
+      "PUBLICATION_CUT_BUTTON_TEXT_DEFAUlT_RU": "Читать далее",
+      "PUBLICATION_CUT_BUTTON_TEXT_DEFAUlT_EN": "Read more",
+      "PUBLICATION_CUT_BUTTON_TEXT": "Read more button text",
+      "PLAN_PUBLICATION": "Schedule the post",
+      "POLLS_SUBJECT_PLACEHOLDER": "Subject",
+      "POLLS_SUBJECT": "Specify poll subject",
+      "POLLS_VARIANTS": "Users can select:",
+      "POLLS_VARIANTS_ADD": "Add answer",
+      "POLLS_VARIANT_PLACEHOLDER": "Answer",
+      "POLLS_VARIANTS_MULTIPLE": "Several answers",
+      "POLLS_VARIANTS_TIMED": "The poll has a validity period",
+      "POLLS_ADD_POLL": "Add poll",
+      "POLLS_DELETE_POLL": "Delete poll",
+      "PUBLICATION_HUBS_BYPOST": "Already set in post",
+      "PUBLICATION_HUBS_COLLECTIVE": "Thematic",
+      "PUBLICATION_HUBS_CORPORATIVE": "Corporate",
+      "PUBLICATION_HUBS_OFFTOPIC": "Offtopic",
+      "PUBLICATION_PUBLISH_ACTION_ALERT": "Are you sure you want to publish this post?",
+      "PUBLICATION_MODERATED": "Checked by moderator",
+      "PUBLICATION_FORM_ERRORS": "Post form has errors",
+      "PUBLICATION_SAVED_LOCALLY": "Saved at",
+      "PUBLICATION_SAVED_DRAFT": "You have an autosaved draft «{title}» on",
+      "PUBLICATION_SAVED_DRAFT_RESTORE": "Restore",
+      "PUBLICATION_RESTORE_ACTION_ALERT": "Are you sure you want to restore this draft?",
+      "PUBLICATION_DRAFT_UNNAMED": "Untitled",
+      "PUBLICATION_FOLLOW_RULES": "Follow the \u003Ca target=\"_blank\" href=\"\u002Fdocs\u002Fhelp\u002Frules\u002F\"\u003Esite rules\u003C\u002Fa\u003E",
+      "PUBLICATION_FOLLOW_ADVICE": "Use \u003Ca target=\"_blank\" href=\"\u002Fdocs\u002Fcompanies\u002Fdesign\u002F\"\u003Etips &amp;&nbsp;tricks\u003C\u002Fa\u003E to&nbsp;write an&nbsp;easy-to-read post",
+      "PUBLICATION_USE_HUB": "Pick the \u003Ca target=\"_blank\" href=\"\u002Fhub\u002Fi_am_advertising\u002F\"\u003E&laquo;Self Promo&raquo;\u003C\u002Fa\u003E hub for posts with ads",
+      "PUBLICATION_IMAGE_SIZE": "Upload pictures less than 8MB for the post body and less than 1MB for the post cover",
+      "PUBLICATION_BETA": "\u003Cp\u003EThis is&nbsp;a&nbsp;new WYSIWYG editor in&nbsp;which all new posts will be&nbsp;created by&nbsp;default.\u003C\u002Fp\u003E\u003Cp\u003EYou can learn more about the new editor \u003Ca href=\"\u002Fdocs\u002Fhelp\u002Fwysiwyg\u002F\"\u003Ehere\u003C\u002Fa\u003E.\u003C\u002Fp\u003E\u003Cp\u003EThe old editor is&nbsp;available via the \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Ftopic\u002Fadd\u002F\"\u003Elink\u003C\u002Fa\u003E, but soon it&nbsp;will not be&nbsp;available anymore.\u003C\u002Fp\u003E",
+      "PUBLICATION_BETA_TITLE": "New editor",
+      "PUBLICATION_ADVICE_TITLE": "Memo to the author",
+      "PUBLICATION_TITLE_EDIT": "Post edit",
+      "PUBLICATION_TITLE_NEW": "Create post",
+      "PUBLICATION_SANDBOX_ALREADY_SENT": "You already sent one article to the \"Sandbox\" — please wait for the moderator’s decision.",
+      "RECAPTCHA_POLICY_TEXT": "This site is protected by reCAPTCHA and the Google. \u003Ca href=\"https:\u002F\u002Fpolicies.google.com\u002Fprivacy\" target=\"_blank\"\u003EPrivacy Policy\u003C\u002Fa\u003E and \u003Ca href=\"https:\u002F\u002Fpolicies.google.com\u002Fterms\" target=\"_blank\"\u003ETerms of Service\u003C\u002Fa\u003E apply",
+      "SANDBOX_SIDEBAR_ABOUT": "This is the \u003Ca href=\"\u002Fen\u002Finfo\u002Fhelp\u002Fsandbox\u002F\" target=\"_blank\"\u003ESandbox\u003C\u002Fa\u003E — the part of Habr that accumulates all the debut posts of those who want to become full members of the community.\u003Cbr\u002F\u003E\u003Cbr\u002F\u003E If you have an \u003Ca href=\"\u002Fen\u002Finfo\u002Fhelp\u002Fregistration\u002F#invite\" target=\"_blank\"\u003Einvitation\u003C\u002Fa\u003E send it to the author of the pending publication you like in order to share the post with the rest of Habr community so they can read and comment it.\u003Cbr\u002F\u003E\u003Cbr\u002F\u003E To avoid any prejudice all the posts here are anonymous and nicknames are generated randomly.",
+      "SANDBOX_SIDEBAR_INVITED_ABOUT": "Here is the content created by the newcomers who could only read and write comments until their first post.\u003Cbr\u002F\u003E\u003Cbr\u002F\u003E Surely you also have something to share with Habr, so don’t be afraid to write a post. We have special guides for it and all we are \u003Ca href=\"\u002Fen\u002Fsandbox\u002Fstart\u002F\" target=\"_blank\"\u003Eready to help\u003C\u002Fa\u003E.",
+      "SANDBOX_INVITE_BUTTON_LABEL": "Invite and publish",
+      "SANDBOX_PUBLISH_BUTTON_LABEL": "Publish to sandbox",
+      "SANDBOX_REJECT_BUTTON_LABEL": "Reject",
+      "SANDBOX_REWORK_BUTTON_LABEL": "Rework",
+      "SANDBOX_REJECT_FORM_TITLE": "Reject",
+      "SANDBOX_REWORK_FORM_TITLE": "Rework",
+      "SANDBOX_MODERATION_BLOCK_TEXT_CONTENT": "\u003Cp\u003EDon’t pass such stuff:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003Eadvertising and&nbsp;PR-posts\u003C\u002Fli\u003E\u003Cli\u003Equestions (we have \u003Ca href=\"https:\u002F\u002Fqna.habr.com\" target=\"_blank\" rel=\" noopener\"\u003EHabr Q&amp;A\u003C\u002Fa\u003E for them);\u003C\u002Fli\u003E\u003Cli\u003Evacancies (use \u003Ca href=\"https:\u002F\u002Fcareer.habr.com\u002F\" target=\"_blank\" rel=\" noopener\"\u003EHabr Career\u003C\u002Fa\u003E instead);\u003C\u002Fli\u003E\u003Cli\u003Earticles, that were previously published on other websites;\u003C\u002Fli\u003E\u003Cli\u003Earticles without correct punctuation, containing emojis and plenty of exclamation marks, unnecessary highlighting of words and sentences, and other inappropriate text formatting;\u003C\u002Fli\u003E\u003Cli\u003Ecomplaints about companies and services;\u003C\u002Fli\u003E\u003Cli\u003Elow-quality translations;\u003C\u002Fli\u003E\u003Cli\u003Epieces of code without explanation;\u003C\u002Fli\u003E\u003Cli\u003Eone-word articles;\u003C\u002Fli\u003E\u003Cli\u003Earticles that are weakly related to IT or not related at all.\u003C\u002Fli\u003E\u003C\u002Ful\u003E",
+      "SANDBOX_ADDITIONAL_WARNING": "You can’t comment this post because its author is not yet a \u003Ca href=\"\u002Fdocs\u002Fhelp\u002Fregistration\u002F#standard\"\u003Efull member\u003C\u002Fa\u003E of the community. You will be able to contact the author only after he or she has been \u003Ca href=\"\u002Fdocs\u002Fhelp\u002Fregistration\u002F#invite\"\u003Einvited\u003C\u002Fa\u003E by someone in the community. Until then, author’s username will be hidden by an alias.",
+      "SANDBOX_MODERATE_FORM_REASON_LABEL": "Reason",
+      "SANDBOX_MODERATE_FORM_MESSAGE_LABEL": "Moderator comment",
+      "SANDBOX_MODERATE_REASON_SELECT_LABEL": "Choose a reason...",
+      "SANDBOX_MODERATE_FORM_REASON_REWORK_MESSAGE": "Article has been rejected!",
+      "SANDBOX_MODERATE_FORM_REASON_REJECT_MESSAGE": "Article has been sent to rework!",
+      "SANDBOX_MODERATE_FORM_INVITE_SEND_MESSAGE": "Invite has been sent!",
+      "SANDBOX_PUBLISHED_MESSAGE": "Publication was published in sandbox",
+      "SANDBOX_INVITE_CONFIRM_MESSAGE": "Are you sure, you want to invite this user?",
+      "SANDBOX_PUBLISH_CONFIRM_MESSAGE": "Are you sure, that you want to approve this post for sandbox?",
+      "SANDBOX_BECOME_AUTHOR": "How to become an author",
+      "SEARCH_EMPTY_ARTICLES": "We're sorry, but there's no results for this query",
+      "SEARCH_EMPTY_USERS": "We're sorry, but there's no results for this query",
+      "SEARCH_EMPTY_COMMON": "We're sorry, but there's no results for this query",
+      "SEARCH_INPUT_PLACEHOLDER": "Search",
+      "SEARCH_TAB_ARTICLES": "Posts",
+      "SEARCH_TAB_USERS": "Users",
+      "SEARCH_TAB_USERS_LONG": "Users - Top 100",
+      "SEARCH_TAB_HUBS": "Hubs",
+      "SEARCH_TAB_COMPANIES": "Companies",
+      "SEARCH_TAB_COMMENTS": "Comments",
+      "SEARCH_ORDER_BY_RELEVANCE": "by relevance",
+      "SEARCH_ORDER_BY_DATE": "by date",
+      "SEARCH_ORDER_BY_RATING": "by rating",
+      "SETTINGS_AGREEMENT_FINISH": "The end",
+      "SETTINGS_ACTION_SAVE": "Save preferences",
+      "SETTINGS_ARTICLES_ERROR": "You should select at least one language",
+      "SETTINGS_ARTICLES_TITLE": "Content",
+      "SETTINGS_FEED": "Feed",
+      "SETTINGS_FEED_CLASSIC": "Classic",
+      "SETTINGS_FEED_COMPACT": "Compact",
+      "SETTINGS_EMAIL_LABEL": "I want to receive emails on Habr updates (monthly)",
+      "SETTINGS_DIGEST_LABEL": "I want to receive digests with the best articles (weekly)",
+      "SETTINGS_FL_LANG_ENGLISH": "English",
+      "SETTINGS_FL_LANG_RUSSIAN": "Russian",
+      "SETTINGS_LANG_ENGLISH": "English",
+      "SETTINGS_LANG_RUSSIAN": "Русский",
+      "SETTINGS_RULES": "site rules",
+      "SETTINGS_TITLE": "Page settings",
+      "SETTINGS_UI_TITLE": "Interface",
+      "SETTINGS_SUCCESS": "Settings were updated successfully",
+      "SETTINGS": "Settings",
+      "SETTINGS_PROFILE": "Profile settings",
+      "SETTINGS_PROFILE_TITLE": "Profile",
+      "SETTINGS_PRIVACY_TITLE": "Privacy",
+      "SETTINGS_NOTIFICATIONS_TITLE": "Notifications",
+      "SETTINGS_APPS_INSTALLED_TITLE": "Installed applications",
+      "SETTINGS_APPS_TITLE": "Applications",
+      "SETTINGS_APPS_MY_TITLE": "My applications",
+      "SETTINGS_APPS_REMOVE": "Remove",
+      "SETTINGS_APPS_EDIT": "Edit",
+      "SETTINGS_APPS_EMPTY": "You have no applications yet",
+      "SETTINGS_APPS_ADD": "Add new application",
+      "SETTINGS_APP_EDIT_TITLE": "Edit application",
+      "SETTINGS_APP_ADD_TITLE": "Add new application",
+      "SETTINGS_APP_IMAGE": "Icon",
+      "SETTINGS_APP_TITLE": "Application name",
+      "SETTINGS_APP_TITLE_HINT": "Enter application name",
+      "SETTINGS_APP_REDIRECT": "Redirect URL",
+      "SETTINGS_APP_REDIRECT_HINT": "Specify the URL for the redirect after authorization",
+      "SETTINGS_APP_ABOUT_HINT": "Describe your application",
+      "SETTINGS_APP_ABOUT": "Short description",
+      "SETTINGS_APP_TYPE": "Application type",
+      "SETTINGS_APP_TYPE_WEB": "Web application",
+      "SETTINGS_APP_TYPE_MOBILE": "Mobile application",
+      "SETTINGS_APP_TYPE_BROWSER": "Browser application",
+      "SETTINGS_APP_SCOPE": "Access permissions",
+      "SETTINGS_APP_READ": "Read only",
+      "SETTINGS_APP_READ_BOOKMARK": "Read only + bookmarks",
+      "SETTINGS_APP_ALL_RIGHTS": "Full access",
+      "SETTINGS_APP_EXTENDED": "Extended rights",
+      "SETTINGS_APP_COMPANY_NAME": "Company name",
+      "SETTINGS_APP_COMPANY_NAME_HINT": "Enter the developer company name",
+      "SETTINGS_APP_COMPANY_URL": "Company’s website",
+      "SETTINGS_APP_COMPANY_URL_HINT": "Enter the devepoler company’s website",
+      "SETTINGS_APP_TYPE_CHOOSE": "Select type",
+      "SETTINGS_APP_SCOPE_CHOOSE": "Select access permissions",
+      "SETTINGS_APP_RESET_CLIENT_ID": "Reset Client ID & Client Secret",
+      "SETTINGS_APP_RESET_API_KEY": "Reset API Key",
+      "SETTINGS_APP_RESET_HINT": "After the reset, all your applications will stop working until you update the settings",
+      "SETTINGS_ACCOUNT_TITLE": "Account",
+      "SETTINGS_MISC_TITLE": "Other",
+      "SETTINGS_PROFILE_AVATAR": "Avatar",
+      "SETTINGS_PROFILE_AVATAR_HINT": "Format: jpg, gif, png. \u003Cbr\u002F\u003E Maximal size: 1 MB.",
+      "SETTINGS_PROFILE_REALNAME": "Actual name",
+      "SETTINGS_PROFILE_REALNAME_HINT": "Specify your first and last name so that other users can find out what your name is",
+      "SETTINGS_PROFILE_WORKPLACE": "Workplace",
+      "SETTINGS_PROFILE_WORKPLACE_PLACEHOLDER": "Link with the company will be removed after saving the changes.",
+      "SETTINGS_PROFILE_WORKPLACE_PLACEHOLDER_ACTION": "Restore",
+      "SETTINGS_PROFILE_CONTACTS_PLACEHOLDER": "Contact link will be removed after saving the changes.",
+      "SETTINGS_PROFILE_CONTACTS_PLACEHOLDER_ACTION": "Restore",
+      "SETTINGS_PROFILE_SPECIALITY": "Specialization",
+      "SETTINGS_PROFILE_SPECIALITY_HINT": "Specify your specialization. For example: Database Administrator",
+      "SETTINGS_PROFILE_GENDER": "Gender",
+      "SETTINGS_PROFILE_GENDER_OTHER": "Other",
+      "SETTINGS_PROFILE_GENDER_MALE": "Male",
+      "SETTINGS_PROFILE_GENDER_FEMALE": "Female",
+      "SETTINGS_PROFILE_BIRTH_DATE": "Birth date",
+      "SETTINGS_PROFILE_BIRTH_DAY": "Day",
+      "SETTINGS_PROFILE_BIRTH_MONTH": "Month",
+      "SETTINGS_PROFILE_BIRTH_YEAR": "Year",
+      "SETTINGS_PROFILE_LOCATION": "Location",
+      "SETTINGS_PROFILE_COUNTRY": "Country",
+      "SETTINGS_PROFILE_REGION": "Region",
+      "SETTINGS_PROFILE_CITY": "City",
+      "SETTINGS_PROFILE_CONTACTS": "Contacts and social media",
+      "SETTINGS_PROFILE_CONTACTS_HINT": "Specify the username or ID and we will create the link ourselves. If you want the link to be shown in the authors information panel, select it by clicking on the icon on the right.",
+      "SETTINGS_PROFILE_CONTACTS_ADD": "Add link",
+      "SETTINGS_PROFILE_YANDEX_MONEY": "YooMoney",
+      "SETTINGS_PROFILE_YANDEX_MONEY_HINT": "Wallet number 11-20 digits",
+      "SETTINGS_PROFILE_PAYPAL": "PayPal.Me",
+      "SETTINGS_PROFILE_PAYPAL_HINT": "PayPal.Me identificator. 3 to 20 digits and\u002For English letters",
+      "SETTINGS_PROFILE_WEBMONEY": "Webmoney",
+      "SETTINGS_PROFILE_WEBMONEY_HINT": "Wallet number. 12 digits",
+      "SETTINGS_PROFILE_PAYMENTS": "Payment details",
+      "SETTINGS_PROFILE_PAYMENTS_HINT": "If you want to receive rewards from others for your posts, specify the numbers of your wallets.",
+      "SETTINGS_PROFILE_ABOUT": "Tell us about yourself",
+      "SETTINGS_PROFILE_ABOUT_HINT": "No more than 65 000 characters",
+      "SETTINGS_PROFILE_SUBMIT": "Save changes",
+      "SETTINGS_PROFILE_SHOW_CONTACTS": "Who can see your websites and social networking accounts",
+      "SETTINGS_PROFILE_TO_EVERYONE": "everyone",
+      "SETTINGS_PROFILE_TO_FOLLOWING": "only those you are following",
+      "SETTINGS_PROFILE_INBOX_ACCESS": "Who can send you direct messages",
+      "SETTINGS_PROFILE_FROM_EVERYONE": "everyone",
+      "SETTINGS_PROFILE_FROM_FOLLOWERS": "only those you are following",
+      "SETTINGS_PROFILE_SHOW_ACTIVITY": "Who can track your activity on Habr",
+      "SETTINGS_PROFILE_TO_FOLLOWERS": "only those who following you",
+      "SETTINGS_NOTIFICATIONS_NEW_COMMENTS": "Notifications about new comments",
+      "SETTINGS_NOTIFICATIONS_TO_MY_POSTS": "To my posts",
+      "SETTINGS_NOTIFICATIONS_TO_POSTS_WITH_COMMENTS": "To posts I left comments to",
+      "SETTINGS_NOTIFICATIONS_TO_BOOKMARKED_POSTS": "To posts I have bookmarked",
+      "SETTINGS_NOTIFICATIONS_TRACKER": "Tracker",
+      "SETTINGS_NOTIFICATIONS_EMAIL": "Email",
+      "SETTINGS_NOTIFICATIONS_SEND_ME_EMAILS": "Send me emails",
+      "SETTINGS_NOTIFICATIONS_NEWS": "About Habr news",
+      "SETTINGS_NOTIFICATIONS_NEW_EXPERIENCE": "About new opportunities for me on Habr",
+      "SETTINGS_NOTIFICATIONS_NEW_MESSAGES": "About new messages in conversations",
+      "SETTINGS_NOTIFICATIONS_NEW_COMMENTS_REPLY": "About new replies to my comments",
+      "SETTINGS_NOTIFICATIONS_NEW_MENTION": "When I’m mentioned in posts and comments",
+      "SETTINGS_NOTIFICATIONS_NEW_FOLLOWER": "When new subscriber added",
+      "SETTINGS_NOTIFICATIONS_TRACKER_SETTINGS": "Tracker settings",
+      "SETTINGS_NOTIFICATIONS_TRACKER_BADGE": "Show the number of unread notifications next to the tracker icon",
+      "SETTINGS_NOTIFICATIONS_FOLLOWERS_BOOKMARKS": "Show followers bookmarks in tracker",
+      "SETTINGS_NOTIFICATIONS_DIGEST": "How often do you want to receive a newsletter with the most interesting from the hubs you are subscribed to?",
+      "SETTINGS_NOTIFICATIONS_DIGEST_NEVER": "Send never",
+      "SETTINGS_NOTIFICATIONS_DIGEST_DAY": "Send every day",
+      "SETTINGS_NOTIFICATIONS_DIGEST_WEEK": "Send weekly",
+      "SETTINGS_NOTIFICATIONS_DIGEST_MONTH": "Send monthly",
+      "SETTINGS_MISC_INTERACTIONS": "Interaction",
+      "SETTINGS_MISC_REFRESH_PANEL": "Show comments update panel",
+      "SETTINGS_MISC_HOTKEYS": "Use hotkeys",
+      "SETTINGS_MISC_DISABLE_ADS": "Disable ads",
+      "SETTINGS_MISC_YES_IT_WOULD_BE_NICE": "Yes, that would be great!",
+      "SOCIAL_COPY": "Copy link",
+      "SOCIAL_COPIED": "The link is copied to the clipboard",
+      "SOCIAL_FACEBOOK": "Facebook",
+      "SOCIAL_TWITTER": "Twitter",
+      "SOCIAL_VK": "VK",
+      "SOCIAL_TELEGRAM": "Telegram",
+      "SOCIAL_POCKET": "Pocket",
+      "SUBSCRIPTION_TITLE": "Newsletter with your subscriptions",
+      "SUBSCRIPTION_TEXT": "We can email you the digests. What if you've always needed them?",
+      "SUBSCRIPTION_PERIOD_D": "Send every day",
+      "SUBSCRIPTION_PERIOD_W": "Send weekly",
+      "SUBSCRIPTION_PERIOD_M": "Send monthly",
+      "SUBSCRIPTION_SUBSCRIBE": "Subscribe",
+      "SUBSCRIPTION_THANKS": "Thanks for subscribing",
+      "SUBSCRIPTION_EDITORAL_TITLE": "Editorial Digest",
+      "SUBSCRIPTION_EDITORAL_DESCRIPTION": "We email you the best articles monthly",
+      "SUBSCRIPTION_EDITORAL_PLACEHOLDER": "Email address",
+      "SUBSCRIPTION_EDITORAL_SUCCESS": "You’ll get an email soon at this address. Confirm the subscription if you didn’t change your mind.",
+      "SUBSCRIPTION_EDITORAL_ERROR": "Something went wrong. Try again please.",
+      "TITLE_FEED": "Posts by subscription",
+      "TITLE_FEED_SETTINGS": "My feed settings",
+      "TITLE_LATEST": "All posts in a row",
+      "TITLE_SCORE": "All posts with rating ≥{score}",
+      "TITLE_PERIOD": "Best of { period, select,\n  daily { the day }\n  weekly { the week }\n  monthly { the month }\n  yearly { the year }\n  alltime { all time }\n} stream",
+      "TITLE_FLOW_PAGE_LATEST": "All posts \u002F {flowName}",
+      "TITLE_FLOW_PAGE_SCORE": "All posts with rating ≥{score} \u002F {flowName}",
+      "TITLE_FLOW_PAGE_PERIOD": "Top of { period, select,\n  daily { the day }\n  weekly { the week }\n  monthly { the month }\n  yearly { the year }\n  alltime { all time }\n} \u002F {flowName}",
+      "TITLE_MOST_READING": "Most reading",
+      "TITLE_HABR_BLOG": "Habr blog",
+      "TITLE_SIMILAR": "Popular right now",
+      "TITLE_TOP_DAILY": "Top of the last 24 hours",
+      "TITLE_MEGAPROJECTS": "Megaprojects",
+      "TITLE_BLOCK_KARMAGRAPH": "Кармаграф",
+      "TITLE_BLOCK_SANDBOX_ABOUT": "About the sandbox",
+      "TITLE_BLOCK_SANDBOX_NEW_AUTHORS": "New authors",
+      "TITLE_BLOCK_SANDBOX_ABOUT_MODERATION": "About post's verification",
+      "TITLE_SANDBOX_BECOME_AUTHOR": "How to become an author",
+      "TITLE_UNKNOWN": "",
+      "TRACKER_TITLE": "Tracker",
+      "TRACKER_NOTIFICATIONS": "Notifications",
+      "TRACKER_SHOW_ALL_NOTIFICATIONS": "Show all notifications",
+      "TRACKER_MARK_ALL_READ": "Mark all read",
+      "TRACKER_MARKED_READ": "UFO has just read the notifications for you",
+      "TRACKER_SETTINGS": "Tracker settings",
+      "TRACKER_NO_NOTIFICATIONS": "No new notifications.",
+      "TRACKER_COMMENTS_SINGLE_TO_SUBSCRIBER": "Comments on post \u003Carticle\u002F\u003E",
+      "TRACKER_COMMENTS_SINGLE_TO_AUTHOR": "Comments on your post \u003Carticle\u002F\u003E",
+      "TRACKER_COMMENTS_MULTIPLE_TO_AUTHOR": "Comment on your post \u003Carticle\u002F\u003E",
+      "TRACKER_COMMENTS_MULTIPLE_TO_AUTHOR_TITLE": "{count, plural,\n      one {{count} user}\n      other {{count} users}\n    }",
+      "TRACKER_COMMENTS_MULTIPLE_TO_SUBSCRIBER": "Comment post \u003Carticle\u002F\u003E",
+      "TRACKER_COMMENTS_MULTIPLE_TO_SUBSCRIBER_TITLE": "{count, plural,\n      one {{count} user}\n      other {{count} users}\n    }",
+      "TRACKER_MENTION_IN_COMMENT": "Mentioned you in a \u003Ccomment\u003Ecomment\u003C\u002Fcomment\u003E to the post \u003Carticle\u002F\u003E",
+      "TRACKER_MENTIONS_IN_POST": "Mentioned you in the post \u003Carticle\u002F\u003E",
+      "TRACKER_PPA_AVAILABLE": "Congratulations! You can participate in \u003Cppa\u003EAuthor Support Program\u003C\u002Fppa\u003E now!",
+      "TRACKER_SANDBOX_APPROVE": "Moderator published your post \u003Carticle\u002F\u003E to the sandbox. Now users can read it and invite you to the site.",
+      "TRACKER_SANDBOX_INVITE": "Moderator published your post \u003Carticle\u002F\u003E from the sandbox to the main feed. Congratulations, you are now a full-fledged Habr user!",
+      "TRACKER_SANDBOX_REWORK": "Moderator returned your sandbox post \u003Carticle\u002F\u003E to drafts. You need to improve it.",
+      "TRACKER_SANDBOX_REJECT": "Moderator rejected your post \u003Carticle\u002F\u003E to the sandbox.",
+      "TRACKER_CATEGORY_ALL": "All notifications",
+      "TRACKER_CATEGORY_POSTS_AND_COMMENTS": "Posts and comments",
+      "TRACKER_CATEGORY_SUBSCRIBERS": "Subscribers",
+      "TRACKER_CATEGORY_MENTIONS": "Mentions",
+      "TRACKER_CATEGORY_SYSTEM": "Notifications",
+      "TRACKER_CATEGORY_APPLICATIONS": "Applications",
+      "TRACKER_CATEGORY_COUNTER_ALL": "All notifications ({counter})",
+      "TRACKER_CATEGORY_COUNTER_POSTS_AND_COMMENTS": "Posts and comments ({counter})",
+      "TRACKER_CATEGORY_COUNTER_SUBSCRIBERS": "Subscribers ({counter})",
+      "TRACKER_CATEGORY_COUNTER_MENTIONS": "Mentions ({counter})",
+      "TRACKER_CATEGORY_COUNTER_SYSTEM": "Notifications ({counter})",
+      "TRACKER_CATEGORY_COUNTER_APPLICATIONS": "Applications ({counter})",
+      "WHEN_FULL_DATE": "{ day } { month, select,\n      0 { January }\n      1 { February }\n      2 { March }\n      3 { April }\n      4 { May }\n      5 { June }\n      6 { July }\n      7 { August }\n      8 { September }\n      9 { October }\n      10 { November }\n      11 { December }\n      } { year }",
+      "WHEN_FULL_DATE_AT": "{ day } { month, select,\n      0 { January }\n      1 { February }\n      2 { March }\n      3 { April }\n      4 { May }\n      5 { June }\n      6 { Jule }\n      7 { August }\n      8 { September }\n      9 { October }\n      10 { November }\n      11 { December }\n      } { year } at { time }",
+      "WHEN_TODAY_AT": "today at { time }",
+      "WHEN_AT": "{ time }",
+      "WHEN_YESTERDAY_AT": "yesterday at { time }",
+      "WELCOME_ACCOUNT": "3. Account",
+      "WELCOME_COMPANIES": "Companies",
+      "WELCOME_EMAIL": "5. Email",
+      "WELCOME_FEED": "1. Feed",
+      "WELCOME_HIDE_HUBS_LIST": "Hide hubs",
+      "WELCOME_HUBS": "Hubs",
+      "WELCOME_HUBS_LIST": "Show hubs",
+      "WELCOME_KARMA": "4. Karma & Rating",
+      "WELCOME_NEXT_STEP": "Next step",
+      "WELCOME_PREV_STEP": "Previous step",
+      "WELCOME_SHOW_ALL": "Show all",
+      "WELCOME_SUBSCRIPTIONS": "2. Subscriptions",
+      "WIDGET_BANNER": "Widget",
+      "WIDGET_NEWS": "News",
+      "WIDGET_LINKS": "Links",
+      "WIDGET_APPLICATIONS": "Applications",
+      "WIDGET_VK": "VK",
+      "WIDGET_TWITTER": "Twitter",
+      "WIDGET_TWITTER_FOLLOW": "Follow @{ name }",
+      "WIDGET_FACEBOOK": "Facebook",
+      "VOICE_TITLE": "The Voice",
+      "VOICE_TITLE_NEW": "New voice",
+      "VOICE_TITLE_EDIT": "Edit voice",
+      "VOICE_DESCRIPTION": "Anonymous short message in large print between regular posts.\n      You can write anything within reason.\n      Available to the two users with highest rating or karma.\n      You can use it once per 3 days.",
+      "VOICE_LANGUAGE": "Language of the post",
+      "VOICE_MESSAGE": "Message",
+      "VOICE_MESSAGE_HINT": "Message up to 140 symbols",
+      "VOICE_TAGS": "Tags",
+      "VOICE_TAGS_HINT": "Add 1 to 10 tags, separated by comma",
+      "VOICE_UNAVAILABLE": "You can’t use The Voice anymore.",
+      "VOICE_LIMIT_REACHED": "You can use The Voice one time every 3 days.",
+      "VOICE_POST_SUCCESS": "New Voice posted successfully.",
+      "VOICE_DRAFT_SAVED": "Voice draft saved successfully.",
+      "VOICE_VERIFIED": "Verified",
+      "VOICE_VERIFY_REQUIRED": "Please tick the verified checkbox before sending.",
+      "VOICE_POST_OVERPUBLISHING": "Voice posting quota exceeded, try again later.",
+      "STATISTICS_BLOCK_TITLE": "Statistics",
+      "STATISTICS_TOTAL": "Total",
+      "STATISTICS_MALE": "Male",
+      "STATISTICS_FEMALE": "Female",
+      "STATISTICS_OTHER": "Other",
+      "KARMAGRAPH_BLOCK_DESCRIPTION": "Broadcasts karma changes (up&nbsp;and down) on&nbsp;Habr. Updated every 4&nbsp;hours. In&nbsp;the full moon you can observe cataclysms and turbulence on&nbsp;the karmagraph.",
+      "COMPANY": "Company",
+      "COMPANY_HUBS_LABEL": "Writes to hubs",
+      "TOP_COMPANIES_BLOCK_TITLE": "Top companies",
+      "COMPANIES_ALL": "All companies",
+      "DATE_FORMAT": "{ date } at { time }",
+      "EMPTY_POSTS_MESSAGE": "Unfortunately there are no publications here yet",
+      "HUB": "Hub",
+      "NUMBER_FORMAT": "{ order, select,\nnone { { number } }\nthousands { { number }k }\n}",
+      "SHOW_MORE": "Show more",
+      "SITENAME": "Habr",
+      "USER": "User",
+      "WRITE_BUTTON_LABEL": "Write",
+      "MY_FEED_SETTINGS_TITLE": "Feed settings",
+      "PINNED_POST": "Pinned post",
+      "PROMO_BLOCK_ADD": "",
+      "PROMO_BLOCK_TITLE": "Please pay attention",
+      "HOW_TO_BE_SPONSOR": "How to become a sponsor",
+      "LOG_IN": "Log in",
+      "SIGN_UP": "Sign up",
+      "CARDS_VIEW": "Classic feed style",
+      "LIST_VIEW": "Compact feed style",
+      "FILTERS": "Filter",
+      "HUBS_ALL": "All hubs",
+      "AUTHORS_COUNT": "{type, plural,\n      =5 { authors }\n      =2 { authors }\n      =1 { author }\n      =0 { authors }\n    }",
+      "POSTS_COUNT": "{type, plural,\n      =5 { posts }\n      =2 { posts }\n      =1 { post }\n      =0 { posts }\n    }",
+      "VOTES_COUNT": "{type, plural,\n      =5 { {count} votes }\n      =2 { {count} votes }\n      =1 { {count} vote }\n      =0 { {count} votes }\n    }",
+      "ALL": "All",
+      "TOP_100_AUTHORS": "Top 100 authors",
+      "TOP_100_COMPANIES": "Top 100 companies",
+      "SUBMIT_FORM_ACTION": "Send",
+      "USERS_EMPTY": "Unfortunately there are no users here yet",
+      "READ_ONLY": "read-only",
+      "USER_RATING": "User`s rating",
+      "PROFILED_HUB": "Core hub",
+      "SUGGEST_COMPANY": "Add a company",
+      "SUGGEST_HUB": "Suggest a new hub",
+      "COMPANIES_ADMIN": "Manage companies",
+      "COMPANY_ADMIN": "Manage company",
+      "COMPANY_EXPIRED": "The {company} company has temporarily suspended it’s blog on Habr",
+      "USER_NOTICE_MESSAGE_emailNotConfirmed": "You need to confirm you e-mail adress. Please, use the link in the activation e-mail you have just received. To send an e-mail once again please press \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fauth\u002Flogin\u002Fresend\u002F\" target=\"_blank\"\u003Ehere\u003C\u002Fa\u003E.",
+      "USER_NOTICE_MESSAGE_emailCompromised": "We can not deliver an e-mail to the address that you have selected. To fix this, please, follow the \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fauth\u002Flogin\u002Femail_compromised\u002F\" target=\"_blank\"\u003Elink\u003C\u002Fa\u003E.",
+      "GOOD": "Good",
+      "AWESOME": "Awesome",
+      "SO_SO": "So-so",
+      "COMPANIES_CONTRIBUTION": "Companies contribution"
+    }
+  },
+  "info": {
+    "infoPage": {},
+    "isLoading": true
+  },
+  "location": {
+    "urlStruct": {
+      "protocol": null,
+      "slashes": null,
+      "auth": null,
+      "host": null,
+      "port": null,
+      "hostname": null,
+      "hash": null,
+      "query": {},
+      "pathname": "\u002Fen\u002Fall\u002F",
+      "path": "\u002Fen\u002Fall\u002F",
+      "href": "\u002Fen\u002Fall\u002F"
+    },
+    "searchQuery": null
+  },
+  "me": {
+    "user": {
+      "id": "1961555",
+      "alias": "Makentoshe",
+      "fullname": "Хвостов Максим",
+      "avatarUrl": null,
+      "groups": [
+        "normal"
+      ],
+      "settings": {
+        "miscSettings": {
+          "viewCommentsRefresh": true,
+          "enableShortcuts": true,
+          "hideAdv": true,
+          "digestSubscription": null
+        },
+        "langSettings": {
+          "hl": "en",
+          "fl": "ru,en"
+        },
+        "chargeSettings": {
+          "postVoteCount": 9,
+          "commentVoteCount": 18
+        },
+        "permissionSettings": {
+          "canAddComplaints": false,
+          "canCreateVoices": false
+        }
+      },
+      "crc32": "2612327884",
+      "gaUid": "3423668c935b1bf023a407cef909f343",
+      "availableInvitesCount": 0,
+      "email": "mkliverout@gmail.com",
+      "scoreStats": {
+        "score": 9,
+        "votesCount": 9
+      },
+      "ppaBalance": null,
+      "unreadConversationCount": 0,
+      "notificationUnreadCounters": {
+        "posts_and_comments": 1,
+        "subscribers": 0,
+        "mentions": 0,
+        "system": 0,
+        "applications": 0
+      },
+      "notices": [],
+      "rssKey": "79d71c6c1b51c44e2be8c4bf2e05e4bd",
+      "companiesAdmin": []
+    },
+    "errorMessage": "",
+    "karmaResetInfo": {
+      "canReincarnate": null,
+      "wasReincarnated": null,
+      "currentScore": null
+    },
+    "notes": null
+  },
+  "mostReadingList": {
+    "mostReadingListIds": [],
+    "mostReadingListRefs": null,
+    "promoPost": null
+  },
+  "myFeedSettings": {
+    "hubIds": {},
+    "hubRefs": {}
+  },
+  "newsBlock": {
+    "articleRefs": {},
+    "articleIds": {},
+    "requestTime": {}
+  },
+  "pinnedPost": {
+    "pinnedPost": null
+  },
+  "ppa": {
+    "articles": {},
+    "card": null,
+    "transactions": null,
+    "totalTransactions": null,
+    "isAccessible": null
+  },
+  "projectsBlocks": {
+    "itemsList": [],
+    "blockName": null,
+    "blockCompany": null
+  },
+  "promoBlock": {
+    "promoItems": []
+  },
+  "pullRefresh": {
+    "shouldRefresh": false
+  },
+  "rootClassName": {
+    "classNamesDict": {
+      "tm-fira-loaded": true
+    }
+  },
+  "sandbox": {
+    "articleIds": [],
+    "articleRefs": {},
+    "pagesCount": null,
+    "route": {},
+    "lastVisitedRoute": {},
+    "isLoading": false
+  },
+  "settingsOther": {
+    "inputs": {
+      "uiLang": {
+        "errors": [],
+        "ref": null,
+        "value": ""
+      },
+      "articlesLangEnglish": {
+        "errors": [],
+        "ref": null,
+        "value": false
+      },
+      "articlesLangRussian": {
+        "errors": [],
+        "ref": null,
+        "value": false
+      },
+      "agreement": {
+        "errors": [],
+        "ref": null,
+        "value": false
+      },
+      "email": {
+        "errors": [],
+        "ref": null,
+        "value": true
+      },
+      "digest": {
+        "errors": [],
+        "ref": null,
+        "value": true
+      }
+    }
+  },
+  "similarList": {
+    "similarListIds": [],
+    "similarListRefs": null
+  },
+  "ssr": {
+    "error": null,
+    "isDataLoaded": false,
+    "isDataLoading": false,
+    "isHydrationFailed": false,
+    "isI18nLoaded": true,
+    "isServer": false
+  },
+  "userHubsContribution": {
+    "contributionRefs": {
+      "hubRefs": {},
+      "hubIds": {}
+    }
+  },
+  "userInvites": {
+    "availableInvites": 0,
+    "usedInvitesIds": [],
+    "usedInvitesRefs": {},
+    "usedInvitesPagesCount": 0,
+    "unusedInvitesIds": [],
+    "unusedInvitesRefs": {},
+    "unusedInvitesPagesCount": 0
+  },
+  "users": {
+    "authorRefs": {},
+    "authorIds": {},
+    "pagesCount": {},
+    "authorProfiles": {},
+    "authorFollowers": {},
+    "authorFollowed": {},
+    "karmaStats": [],
+    "statistics": null,
+    "isLoading": false,
+    "authorFollowersLoading": false,
+    "authorFollowedLoading": false,
+    "route": {}
+  },
+  "viewport": {
+    "prevScrollY": {},
+    "scrollY": 0,
+    "width": 0
+  },
+  "tracker": {
+    "items": {},
+    "pagesCache": {},
+    "markedReadSilently": {},
+    "unreadCounters": {
+      "applications": null,
+      "system": null,
+      "mentions": null,
+      "subscribers": null,
+      "posts_and_comments": null
+    }
+  }
+}

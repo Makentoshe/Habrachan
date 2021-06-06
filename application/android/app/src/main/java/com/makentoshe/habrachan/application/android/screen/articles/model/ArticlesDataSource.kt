@@ -14,6 +14,7 @@ class ArticlesDataSource(
     companion object : Analytics(LogAnalytic())
 
     override suspend fun load(params: LoadParams<ArticlesSpec>): LoadResult<ArticlesSpec, ArticleModelElement> {
+
         val articlesSpec = params.key
         capture(analyticEvent(javaClass.simpleName, "articlesSpec=${articlesSpec.toString()}"))
         if (articlesSpec == null) {

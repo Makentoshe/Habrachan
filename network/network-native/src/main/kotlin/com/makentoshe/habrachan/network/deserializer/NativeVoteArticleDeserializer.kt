@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.network.exception.NativeVoteArticleDeserializerE
 import com.makentoshe.habrachan.network.request.NativeVoteArticleRequest
 import com.makentoshe.habrachan.network.response.NativeVoteArticleResponse
 
-open class NativeVoteArticleDeserializer : GsonDeserializer(), VoteArticleDeserializer<NativeVoteArticleRequest> {
+open class NativeVoteArticleDeserializer : NativeGsonDeserializer(), VoteArticleDeserializer<NativeVoteArticleRequest> {
 
     override fun success(request: NativeVoteArticleRequest, json: String): Result<NativeVoteArticleResponse> = try {
         Result.success(gson.fromJson(json, NativeVoteArticleResponse.Factory::class.java).build(request))
