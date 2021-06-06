@@ -7,8 +7,8 @@ data class Voting(
 //    val reasonMap: Any?,
     @SerializedName("score")
     val score: Int,
-//    @SerializedName("vote")
-//    val vote: Any?,
+    @SerializedName("vote")
+    val vote: Double?,
     @SerializedName("voteCount")
     val voteCount: VoteCount
 )
