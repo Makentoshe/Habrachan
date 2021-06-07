@@ -1,10 +1,11 @@
 package com.makentoshe.habrachan.network.manager
 
 import com.makentoshe.habrachan.entity.ArticleId
-import com.makentoshe.habrachan.functional.fold
+import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.NativeArticlesApi
 import com.makentoshe.habrachan.network.deserializer.NativeVoteArticleDeserializer
+import com.makentoshe.habrachan.network.exception.NativeVoteArticleException
 import com.makentoshe.habrachan.network.fold
 import com.makentoshe.habrachan.network.request.ArticleVote
 import com.makentoshe.habrachan.network.request.NativeVoteArticleRequest
@@ -12,7 +13,7 @@ import com.makentoshe.habrachan.network.response.VoteArticleResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-open class NativeVoteArticleManager(
+open class NativeVoteArticleManager internal constructor(
     private val api: NativeArticlesApi, private val deserializer: NativeVoteArticleDeserializer
 ) : VoteArticleManager<NativeVoteArticleRequest> {
 
@@ -21,7 +22,7 @@ open class NativeVoteArticleManager(
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun vote(request: NativeVoteArticleRequest): kotlin.Result<VoteArticleResponse> = try {
+    override suspend fun vote(request: NativeVoteArticleRequest): Result<VoteArticleResponse> = try {
         when (request.articleVote) {
             ArticleVote.UP -> {
                 api.voteArticleUp(request.userSession.client, request.userSession.token, request.articleId.articleId)
@@ -29,21 +30,21 @@ open class NativeVoteArticleManager(
             ArticleVote.DOWN -> {
                 api.voteArticleDown(request.userSession.client, request.userSession.token, request.articleId.articleId)
             }
-        }.execute().fold({
-            deserializer.success(request, it.string())
-        }, {
-            deserializer.failure(request, it.string())
-        }).fold({
-            kotlin.Result.success(it)
-        },{
-            kotlin.Result.failure(it)
-        })
+        }.execute().run {
+            fold({
+                deserializer.success(request, it.string(), code(), message())
+            }, {
+                deserializer.failure(request, it.string(), code(), message())
+            })
+        }
     } catch (exception: Exception) {
-        kotlin.Result.failure(exception)
+        val additional = listOf(exception.localizedMessage)
+        Result.failure(NativeVoteArticleException(request, "", additional, -1, exception.localizedMessage, exception))
     }
 
-    class Builder(private val client: OkHttpClient, private val deserializer: NativeVoteArticleDeserializer) {
+    class Builder(private val client: OkHttpClient) {
 
+        private val deserializer = NativeVoteArticleDeserializer()
         private val baseUrl = "https://habr.com/"
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()

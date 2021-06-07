@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.network
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.getOrThrow
 import com.makentoshe.habrachan.network.deserializer.NativeVoteArticleDeserializer
-import com.makentoshe.habrachan.network.exception.NativeVoteArticleDeserializerException
+import com.makentoshe.habrachan.network.exception.NativeVoteArticleException
 import com.makentoshe.habrachan.network.request.ArticleVote
 import com.makentoshe.habrachan.network.request.NativeVoteArticleRequest
 import org.junit.Assert.assertEquals
@@ -33,7 +33,7 @@ class NativeVoteArticleDeserializerTest : UnitTest() {
         val request = NativeVoteArticleRequest(articleId(442440), userSession, ArticleVote.UP)
         val result = deserializer.failure(request, failureJson)
 
-        val exception = result.exceptionOrNull()!! as NativeVoteArticleDeserializerException
+        val exception = result.exceptionOrNull()!! as NativeVoteArticleException
         assertEquals(request, exception.request)
         assertEquals(failureJson, exception.raw)
     }

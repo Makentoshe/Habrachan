@@ -1,20 +1,21 @@
 package com.makentoshe.habrachan.network.deserializer
 
 import com.makentoshe.habrachan.functional.Result
-import com.makentoshe.habrachan.network.deserialize.VoteArticleDeserializer
-import com.makentoshe.habrachan.network.exception.NativeVoteArticleDeserializerException
+import com.makentoshe.habrachan.network.exception.NativeVoteArticleException
 import com.makentoshe.habrachan.network.request.NativeVoteArticleRequest
 import com.makentoshe.habrachan.network.response.NativeVoteArticleResponse
 
-open class NativeVoteArticleDeserializer : NativeGsonDeserializer(), VoteArticleDeserializer<NativeVoteArticleRequest> {
+internal class NativeVoteArticleDeserializer : NativeGsonDeserializer() {
 
-    override fun success(request: NativeVoteArticleRequest, json: String): Result<NativeVoteArticleResponse> = try {
+    fun success(request: NativeVoteArticleRequest, json: String, code: Int, message: String): Result<NativeVoteArticleResponse> = try {
         Result.success(gson.fromJson(json, NativeVoteArticleResponse.Factory::class.java).build(request))
     } catch (exception: Exception) {
-        Result.failure(NativeVoteArticleDeserializerException(request, json, exception))
+        Result.failure(NativeVoteArticleException(request, json, listOf(message), code, message, exception))
     }
 
-    override fun failure(request: NativeVoteArticleRequest, json: String): Result<NativeVoteArticleResponse> {
-        return Result.failure(NativeVoteArticleDeserializerException(request, json))
+    fun failure(request: NativeVoteArticleRequest, json: String, code: Int, message: String): Result<NativeVoteArticleResponse> = try {
+        Result.failure(gson.fromJson(json, NativeVoteArticleException.Factory::class.java).build(request, json))
+    } catch (exception: Exception) {
+        Result.failure(NativeVoteArticleException(request, json, listOf(message), code, message, exception))
     }
 }
