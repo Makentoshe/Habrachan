@@ -13,6 +13,7 @@ import com.makentoshe.habrachan.application.android.screen.login.model.NativeLog
 import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginNavigation
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.NativeLoginViewModel
 import com.makentoshe.habrachan.network.exception.LoginResponseException
+import com.makentoshe.habrachan.network.response.LoginResponse
 import kotlinx.android.synthetic.main.fragment_login_native.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,7 +22,9 @@ import toothpick.ktp.delegate.inject
 class NativeLoginFragment : CoreFragment() {
 
     companion object {
-        fun build() = NativeLoginFragment()
+        fun build(navigateToUserScreenAfterLogin: Boolean) = NativeLoginFragment().apply {
+            arguments.shouldNavigateToUserScreenAfterLogin = navigateToUserScreenAfterLogin
+        }
     }
 
     override val arguments = Arguments(this)
@@ -67,22 +70,41 @@ class NativeLoginFragment : CoreFragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.loginFlow.collectLatest { result ->
-                result.fold({ response ->
-                    ApplicationStateBroadcastReceiver.signIn(requireActivity())
-                    navigation.toUserScreen(response.user)
-                }, { throwable ->
-                    fragment_login_button.visibility = View.VISIBLE
-                    fragment_login_progress.visibility = View.INVISIBLE
-                    if (throwable is LoginResponseException && throwable.other != null) {
-                        fragment_login_password.error = getString(R.string.login_account_error)
-                    } else {
-                        fragment_login_password.error = getString(R.string.login_unknown_error)
-                    }
-                })
-            }
+            viewModel.loginFlow.collectLatest(::onLoginResult)
         }
     }
 
-    class Arguments(fragment: NativeLoginFragment) : CoreFragment.Arguments(fragment)
+    private fun onLoginResult(result: Result<LoginResponse>) {
+        result.fold(::onLoginSuccess, ::onLoginFailure)
+    }
+
+    private fun onLoginSuccess(response: LoginResponse) {
+        ApplicationStateBroadcastReceiver.signIn(requireActivity())
+        if (arguments.shouldNavigateToUserScreenAfterLogin) {
+            return navigation.toUserScreen(response.user)
+        }
+
+        navigation.back()
+    }
+
+    private fun onLoginFailure(throwable: Throwable) {
+        fragment_login_button.visibility = View.VISIBLE
+        fragment_login_progress.visibility = View.INVISIBLE
+        if (throwable is LoginResponseException && throwable.other != null) {
+            fragment_login_password.error = getString(R.string.login_account_error)
+        } else {
+            fragment_login_password.error = getString(R.string.login_unknown_error)
+        }
+    }
+
+    class Arguments(fragment: NativeLoginFragment) : CoreFragment.Arguments(fragment) {
+
+        var shouldNavigateToUserScreenAfterLogin: Boolean
+            set(value) = fragmentArguments.putBoolean(NAVIGATE_TO_USER_SCREEN, value)
+            get() = fragmentArguments.getBoolean(NAVIGATE_TO_USER_SCREEN, true)
+
+        companion object {
+            private const val NAVIGATE_TO_USER_SCREEN = "NavigateToUserScreenAfterLogin"
+        }
+    }
 }
