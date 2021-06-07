@@ -9,8 +9,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.analytics.Analytics
@@ -20,6 +22,8 @@ import com.makentoshe.habrachan.application.android.screen.article.model.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
 import com.makentoshe.habrachan.entity.articleId
+import com.makentoshe.habrachan.functional.fold
+import com.makentoshe.habrachan.network.exception.NativeVoteArticleException
 import com.makentoshe.habrachan.network.request.ArticleVote
 import com.makentoshe.habrachan.network.response.GetArticleResponse2
 import com.makentoshe.habrachan.network.response.GetContentResponse
@@ -212,8 +216,23 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         setColorFilter(ContextCompat.getColor(requireContext(), R.color.negative))
     }.setImageResource(R.drawable.ic_arrow_bold_solid)
 
+    // todo show a snackbar with description
     private fun onVoteArticleFailure(throwable: Throwable?) {
-        // todo show a snackbar with description
+        if (throwable !is NativeVoteArticleException) return
+
+        if (throwable.code == 401) {
+            showSnackbar(R.string.article_vote_action_login_require_text, R.string.article_vote_action_login_require_button) {
+                navigator.navigateToLoginScreen()
+            }
+        }
+
+        if (throwable.code == 400 && throwable.request.articleVote == ArticleVote.DOWN) {
+            showSnackbar(R.string.article_vote_action_negative_describe_text, R.string.article_vote_action_negative_describe_button)
+        }
+    }
+
+    private fun showSnackbar(@StringRes stringText: Int, @StringRes actionString: Int, action: (View) -> Unit = {}) {
+        Snackbar.make(requireView(), stringText, Snackbar.LENGTH_LONG).setAction(actionString, action).show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

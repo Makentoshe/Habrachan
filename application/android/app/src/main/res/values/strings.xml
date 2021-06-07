@@ -55,6 +55,10 @@
     <string name="articles_top_type_daily">Daily</string>
 
     <string name="menu_article_share">Share article</string>
+    <string name="article_vote_action_login_require_text">You should be logged in to performing this action</string>
+    <string name="article_vote_action_login_require_button">Log in</string>
+    <string name="article_vote_action_negative_describe_text">Negative reason should be described</string>
+    <string name="article_vote_action_negative_describe_button">Close</string>
 
     <string name="menu_content_share">Share content url</string>
     <string name="menu_content_download">Download content</string>
@@ -112,6 +116,7 @@
     <string name="user_counter_rating">Rating</string>
     <string name="user_counter_followers">Followers</string>
     <string name="user_counter_following">Following</string>
+
     <string name="fragment_login_password_recovery">Forgot password?</string>
 
 </resources>
