@@ -17,7 +17,7 @@ class NativeVoteArticleDeserializerTest : UnitTest() {
     fun testShouldCheckSuccessDeserialize() {
         val successJson = getResourceString("vote_article_success.json")
         val request = NativeVoteArticleRequest(articleId(442440), userSession, ArticleVote.UP)
-        val result = deserializer.success(request, successJson)
+        val result = deserializer.success(request, successJson, 1, "message")
 
         val response = result.getOrThrow()
 
@@ -28,13 +28,28 @@ class NativeVoteArticleDeserializerTest : UnitTest() {
     }
 
     @Test
-    fun testShouldCheckTokenFailureDeserialize() {
+    fun testShouldCheckSuccessDeserializeWithFailureResponse() {
         val failureJson = getResourceString("vote_article_failure_token.json")
         val request = NativeVoteArticleRequest(articleId(442440), userSession, ArticleVote.UP)
-        val result = deserializer.failure(request, failureJson)
+        val result = deserializer.failure(request, failureJson, 900, "error")
 
         val exception = result.exceptionOrNull()!! as NativeVoteArticleException
-        assertEquals(request, exception.request)
         assertEquals(failureJson, exception.raw)
+        assertEquals(request, exception.request)
+        assertEquals(401, exception.code)
+        assertEquals("Authorization required", exception.message)
+    }
+
+    @Test
+    fun testShouldCheckFailureDeserialize() {
+        val failureJson = "Any failure json that should not being parsed successfully at all"
+        val request = NativeVoteArticleRequest(articleId(442440), userSession, ArticleVote.UP)
+        val result = deserializer.failure(request, failureJson, 900, "error")
+
+        val exception = result.exceptionOrNull()!! as NativeVoteArticleException
+        assertEquals(failureJson, exception.raw)
+        assertEquals(request, exception.request)
+        assertEquals(900, exception.code)
+        assertEquals("error", exception.message)
     }
 }
