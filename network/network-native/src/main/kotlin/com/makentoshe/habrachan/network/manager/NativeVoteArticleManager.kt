@@ -23,12 +23,12 @@ open class NativeVoteArticleManager internal constructor(
 
     @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun vote(request: NativeVoteArticleRequest): Result<VoteArticleResponse> = try {
-        when (request.articleVote) {
-            ArticleVote.UP -> {
+        when (val articleVote = request.articleVote) {
+            is ArticleVote.Up -> {
                 api.voteArticleUp(request.userSession.client, request.userSession.token, request.articleId.articleId)
             }
-            ArticleVote.DOWN -> {
-                api.voteArticleDown(request.userSession.client, request.userSession.token, request.articleId.articleId)
+            is ArticleVote.Down -> {
+                api.voteArticleDown(request.userSession.client, request.userSession.token, request.articleId.articleId, articleVote.reason.ordinal)
             }
         }.execute().run {
             fold({
