@@ -113,14 +113,14 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
         fragment_article_bottom_voteup.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.UP)
+                val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Up)
                 viewModel2.voteArticleSpecChannel.send(spec)
             }
         }
 
         fragment_article_bottom_votedown.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.DOWN)
+                val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Down)
                 viewModel2.voteArticleSpecChannel.send(spec)
             }
         }
@@ -203,8 +203,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private fun onVoteArticleSuccess(response: VoteArticleResponse) {
         fragment_article_bottom_voteview.text = response.score.toString()
         when (response.request.articleVote) {
-            ArticleVote.UP -> setVoteUpIcon()
-            ArticleVote.DOWN -> setVoteDownIcon()
+            ArticleVote.Up -> setVoteUpIcon()
+            ArticleVote.Down -> setVoteDownIcon()
         }
     }
 
@@ -226,7 +226,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
             }
         }
 
-        if (throwable.code == 400 && throwable.request.articleVote == ArticleVote.DOWN) {
+        if (throwable.code == 400 && throwable.request.articleVote == ArticleVote.Down) {
             showSnackbar(R.string.article_vote_action_negative_describe_text, R.string.article_vote_action_negative_describe_button)
         }
     }
