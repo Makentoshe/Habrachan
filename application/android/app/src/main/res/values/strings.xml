@@ -59,7 +59,7 @@
     <string name="article_vote_action_login_require_button">Log in</string>
     <string name="article_vote_action_negative_describe_text">Negative reason should be described</string>
     <string name="article_vote_action_negative_describe_button">Close</string>
-    <string name="article_vote_action_negative_dialog_title">Specify the reason of the downvote so the author could improve the post</string>
+    <string name="article_vote_action_negative_dialog_title">Specify the reason of the downvote for the author</string>
     <string name="article_vote_action_negative_dialog_positive">Select reason</string>
     <string name="article_vote_action_negative_dialog_neutral">Cancel</string>
     <string-array name="article_vote_action_negative_dialog_reasons">
