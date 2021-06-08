@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
@@ -120,7 +121,16 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
         fragment_article_bottom_votedown.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Down)
+                ArticleVoteDownReasonDialogFragment.show(childFragmentManager)
+            }
+        }
+
+        @Suppress("USELESS_CAST")
+        val fragmentManager = childFragmentManager as FragmentManager
+        fragmentManager.setFragmentResultListener(ArticleVoteDownReasonDialogFragment.request, this) { _, result ->
+            val reason = result.getSerializable(ArticleVoteDownReasonDialogFragment.key) as ArticleVote.Down.Reason
+            val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Down(reason))
+            lifecycleScope.launch(Dispatchers.IO) {
                 viewModel2.voteArticleSpecChannel.send(spec)
             }
         }
@@ -203,8 +213,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private fun onVoteArticleSuccess(response: VoteArticleResponse) {
         fragment_article_bottom_voteview.text = response.score.toString()
         when (response.request.articleVote) {
-            ArticleVote.Up -> setVoteUpIcon()
-            ArticleVote.Down -> setVoteDownIcon()
+            is ArticleVote.Up -> setVoteUpIcon()
+            is ArticleVote.Down -> setVoteDownIcon()
         }
     }
 
@@ -221,17 +231,27 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         if (throwable !is NativeVoteArticleException) return
 
         if (throwable.code == 401) {
-            showSnackbar(R.string.article_vote_action_login_require_text, R.string.article_vote_action_login_require_button) {
+            showSnackbar(
+                R.string.article_vote_action_login_require_text, R.string.article_vote_action_login_require_button
+            ) {
                 navigator.navigateToLoginScreen()
             }
         }
 
-        if (throwable.code == 400 && throwable.request.articleVote == ArticleVote.Down) {
-            showSnackbar(R.string.article_vote_action_negative_describe_text, R.string.article_vote_action_negative_describe_button)
+        if (throwable.code == 400 && throwable.request.articleVote is ArticleVote.Down) {
+            showSnackbar(
+                R.string.article_vote_action_negative_describe_text,
+                R.string.article_vote_action_negative_describe_button
+            )
         }
     }
 
-    private fun showSnackbar(@StringRes stringText: Int, @StringRes actionString: Int, action: (View) -> Unit = {}) {
+    private fun showSnackbar(
+        @StringRes
+        stringText: Int,
+        @StringRes
+        actionString: Int, action: (View) -> Unit = {}
+    ) {
         Snackbar.make(requireView(), stringText, Snackbar.LENGTH_LONG).setAction(actionString, action).show()
     }
 
