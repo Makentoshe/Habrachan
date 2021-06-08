@@ -28,7 +28,7 @@ open class NativeVoteArticleManager internal constructor(
                 api.voteArticleUp(request.userSession.client, request.userSession.token, request.articleId.articleId)
             }
             is ArticleVote.Down -> {
-                api.voteArticleDown(request.userSession.client, request.userSession.token, request.articleId.articleId, articleVote.reason.ordinal)
+                api.voteArticleDown(request.userSession.client, request.userSession.token, request.articleId.articleId, articleVote.reason.ordinal + 1)
             }
         }.execute().run {
             fold({
