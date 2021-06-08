@@ -10,6 +10,7 @@ dependencies {
 
     implementation(kotlin("stdlib"))
 
+    implementation(project(":functional"))
     // Core module for access entities
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
@@ -49,6 +50,10 @@ tasks.test.configure {
     // we should disable tests by default (ide), because the REAL api will invoked each build
     // and may cause accident DDoS
     enabled = project.hasProperty("allow-network-test")
+
+    this.systemProperty("Anus", "Psa")
+//        systemProperty "username", findProperty("username")
+//        systemProperty "password", findProperty("password")
 }
 
 // Allows to use kotlin.Result type as a return
