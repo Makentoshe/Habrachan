@@ -61,11 +61,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private val articleHtmlController by inject<ArticleHtmlController>()
     private val javaScriptInterface by inject<JavaScriptInterface>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_article, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        inflater.inflate(R.layout.fragment_article, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_article_exception))
@@ -230,20 +227,15 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private fun onVoteArticleFailure(throwable: Throwable?) {
         if (throwable !is NativeVoteArticleException) return
 
-        if (throwable.code == 401) {
-            showSnackbar(
-                R.string.article_vote_action_login_require_text, R.string.article_vote_action_login_require_button
-            ) {
-                navigator.navigateToLoginScreen()
-            }
+        if (throwable.code == 401) return showSnackbar(
+            R.string.article_vote_action_login_require_text, R.string.article_vote_action_login_require_button
+        ) {
+            navigator.navigateToLoginScreen()
         }
 
-        if (throwable.code == 400 && throwable.request.articleVote is ArticleVote.Down) {
-            showSnackbar(
-                R.string.article_vote_action_negative_describe_text,
-                R.string.article_vote_action_negative_describe_button
-            )
-        }
+        if (throwable.code == 400 && throwable.request.articleVote is ArticleVote.Down) return showSnackbar(
+            R.string.article_vote_action_negative_describe_text, R.string.article_vote_action_negative_describe_button
+        )
     }
 
     private fun showSnackbar(
@@ -251,9 +243,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         stringText: Int,
         @StringRes
         actionString: Int, action: (View) -> Unit = {}
-    ) {
-        Snackbar.make(requireView(), stringText, Snackbar.LENGTH_LONG).setAction(actionString, action).show()
-    }
+    ) = Snackbar.make(requireView(), stringText, Snackbar.LENGTH_LONG).setAction(actionString, action).show()
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -262,9 +252,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
     override fun onWebReceivedError(
         view: WebView?, errorCode: Int, description: String?, failingUrl: String?
-    ) {
-        onArticleReceivedFailure(Exception(description))
-    }
+    ) = onArticleReceivedFailure(Exception(description))
 
     class Arguments(articleFragment: ArticleFragment) : CoreFragment.Arguments(articleFragment) {
 
