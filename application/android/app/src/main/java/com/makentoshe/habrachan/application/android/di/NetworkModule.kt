@@ -28,13 +28,16 @@ class NetworkModule(context: Context) : Module() {
 
         val nativeMeManager = NativeGetMeManager.Builder(client, NativeGetMeDeserializer()).build()
         val loginManager = NativeLoginManager.Builder(client, NativeLoginDeserializer(), nativeMeManager).build()
-        bind<LoginManager<out LoginRequest>>().toInstance(loginManager)
+        bind<NativeLoginManager>().toInstance(loginManager)
 
         val nativeGetUserManager = NativeGetUserManager.Builder(client, NativeGetUserDeserializer()).build()
         bind<GetUserManager<out GetUserRequest>>().toInstance(nativeGetUserManager)
 
         val nativeGetCommentsManager = NativeGetArticleCommentsManager.Builder(client, NativeGetCommentsDeserializer()).build()
         bind<GetArticleCommentsManager<out GetArticleCommentsRequest>>().toInstance(nativeGetCommentsManager)
+
+        val nativeVoteArticleManager = NativeVoteArticleManager.Builder(client).build()
+        bind<VoteArticleManager<out VoteArticleRequest>>().toInstance(nativeVoteArticleManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {

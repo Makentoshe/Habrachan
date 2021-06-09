@@ -104,7 +104,7 @@
     "url": "https:\/\/habr.com\/ru\/post\/442440\/",
     "post_type": 1,
     "post_type_str": "simple",
-    "vote": null,
+    "vote": 1,
     "is_can_vote": false,
     "voting": {
       "score": 19,
@@ -113,7 +113,7 @@
         "positive": 19,
         "negative": 0
       },
-      "vote": null,
+      "vote": 1,
       "reasonMap": null
     },
     "is_habred": true,

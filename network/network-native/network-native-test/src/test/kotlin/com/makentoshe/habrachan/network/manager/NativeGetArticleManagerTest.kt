@@ -2,16 +2,13 @@ package com.makentoshe.habrachan.network.manager
 
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.network.deserializer.NativeGetArticleDeserializer
-import com.makentoshe.habrachan.network.userSession
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
-import org.junit.Ignore
 import org.junit.Test
 
 class NativeGetArticleManagerTest : NativeUnitTest() {
 
-    private val userSession = userSession(client, api)
     private val manager = NativeGetArticleManager.Builder(OkHttpClient(), NativeGetArticleDeserializer()).build()
 
     @Test

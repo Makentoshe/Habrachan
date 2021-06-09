@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.network.exception.NativeLoginResponseException
 import com.makentoshe.habrachan.network.request.NativeLoginRequest
 import com.makentoshe.habrachan.network.response.LoginResponse
 
-class NativeLoginDeserializer : GsonDeserializer() {
+class NativeLoginDeserializer : NativeGsonDeserializer() {
 
     fun body(json: String): Result<LoginResponse.NativeResponse> = try {
         Result.success(gson.fromJson(json, LoginResponse.NativeResponse::class.java))

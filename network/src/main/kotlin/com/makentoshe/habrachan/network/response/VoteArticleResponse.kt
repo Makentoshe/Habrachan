@@ -1,12 +1,9 @@
 package com.makentoshe.habrachan.network.response
 
-import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.network.request.VoteArticleRequest
 
-data class VoteArticleResponse(
-    @SerializedName("ok")
-    val ok: Boolean,
-    @SerializedName("score")
-    val score: Int,
-    @SerializedName("server_time")
-    val serverTime: String
-)
+interface VoteArticleResponse {
+    val request: VoteArticleRequest
+    /** The updated score for article */
+    val score: Int
+}

@@ -55,6 +55,25 @@
     <string name="articles_top_type_daily">Daily</string>
 
     <string name="menu_article_share">Share article</string>
+    <string name="article_vote_action_login_require_text">You should be logged in to performing this action</string>
+    <string name="article_vote_action_login_require_button">Log in</string>
+    <string name="article_vote_action_negative_describe_text">Negative reason should be described</string>
+    <string name="article_vote_action_negative_describe_button">Close</string>
+    <string name="article_vote_action_negative_dialog_title">Specify the reason of the downvote for the author</string>
+    <string name="article_vote_action_negative_dialog_positive">Select reason</string>
+    <string name="article_vote_action_negative_dialog_neutral">Cancel</string>
+    <string-array name="article_vote_action_negative_dialog_reasons">
+        <item>It’s hardly a tech article</item>
+        <item>Seems more like a commercial to me</item>
+        <item>It’s off-topic to Habr</item>
+        <item>A lot of errors and typos in the text</item>
+        <item>The article is carelessly formatted</item>
+        <item>Prejudice against the author or company</item>
+        <item>There is nothing new for me in this article</item>
+        <item>Didn’t understand anything while reading</item>
+        <item>Other</item>
+        <item>Disagree with the article</item>
+    </string-array>
 
     <string name="menu_content_share">Share content url</string>
     <string name="menu_content_download">Download content</string>
@@ -112,6 +131,7 @@
     <string name="user_counter_rating">Rating</string>
     <string name="user_counter_followers">Followers</string>
     <string name="user_counter_following">Following</string>
+
     <string name="fragment_login_password_recovery">Forgot password?</string>
 
 </resources>

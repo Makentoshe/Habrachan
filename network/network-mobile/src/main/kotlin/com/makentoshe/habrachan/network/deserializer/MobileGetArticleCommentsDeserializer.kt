@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.network.exceptions.MobileGetArticleCommentsDeser
 import com.makentoshe.habrachan.network.request.MobileGetArticleCommentsRequest
 import com.makentoshe.habrachan.network.response.MobileGetArticleCommentsResponse
 
-class MobileGetArticleCommentsDeserializer: GsonDeserializer() {
+class MobileGetArticleCommentsDeserializer: MobileGsonDeserializer() {
 
     fun body(request: MobileGetArticleCommentsRequest, json: String): Result<MobileGetArticleCommentsResponse> = try {
         val factory = gson.fromJson(json, MobileGetArticleCommentsResponse.Factory::class.java)

@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.network.deserializer
 import com.makentoshe.habrachan.network.request.NativeGetMeRequest
 import com.makentoshe.habrachan.network.response.NativeGetMeResponse
 
-class NativeGetMeDeserializer : GsonDeserializer() {
+class NativeGetMeDeserializer : NativeGsonDeserializer() {
 
     fun body(request: NativeGetMeRequest, json: String): Result<NativeGetMeResponse> = try {
         Result.success(gson.fromJson(json, NativeGetMeResponse.Factory::class.java).build(request))

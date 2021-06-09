@@ -83,12 +83,12 @@
                     android:id="@+id/fragment_article_bottom_voteup"
                     android:layout_width="@dimen/heightL"
                     android:layout_height="@dimen/heightL"
-                    android:src="@drawable/ic_arrow_long"
+                    android:src="@drawable/ic_arrow_bold_outline"
                     android:layout_gravity="center"
                     android:padding="@dimen/dimenM"
                     app:tintMode="src_atop"
                     app:tint="@color/text"
-                    android:rotation="90"
+                    android:rotation="180"
                     tools:ignore="ContentDescription,RtlSymmetry" />
 
                 <TextView
@@ -102,12 +102,11 @@
                     android:id="@+id/fragment_article_bottom_votedown"
                     android:layout_width="@dimen/heightL"
                     android:layout_height="@dimen/heightL"
-                    android:src="@drawable/ic_arrow_long"
+                    android:src="@drawable/ic_arrow_bold_outline"
                     android:layout_gravity="center"
                     android:padding="@dimen/dimenM"
                     app:tintMode="src_atop"
                     app:tint="@color/text"
-                    android:rotation="-90"
                     tools:ignore="ContentDescription,RtlSymmetry" />
 
             </LinearLayout>

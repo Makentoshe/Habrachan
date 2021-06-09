@@ -17,6 +17,9 @@ dependencies {
     // Core module for access entities
     implementation(project(":entity"))
 
+    // Functional module for access support types
+    implementation(project(":functional"))
+
     // Gson
     // https://github.com/google/gson
     val gson = "2.8.6"

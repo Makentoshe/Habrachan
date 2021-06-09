@@ -18,8 +18,9 @@ import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.GetArticleManager
 import com.makentoshe.habrachan.network.manager.GetContentManager
+import com.makentoshe.habrachan.network.manager.VoteArticleManager
 import com.makentoshe.habrachan.network.request.GetArticleRequest2
-import okhttp3.OkHttpClient
+import com.makentoshe.habrachan.network.request.VoteArticleRequest
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -30,8 +31,8 @@ annotation class ArticleScope
 class ArticleModule(fragment: ArticleFragment) : Module() {
 
     private val router by inject<StackRouter>()
-    private val client by inject<OkHttpClient>()
     private val session by inject<UserSession>()
+    private val voteArticleManager by inject<VoteArticleManager<VoteArticleRequest>>()
 
     private val cacheDatabase by inject<AndroidCacheDatabase>()
 
@@ -48,7 +49,7 @@ class ArticleModule(fragment: ArticleFragment) : Module() {
         val articleCache = GetArticleArenaCache(cacheDatabase)
         val articleArena = GetArticleArena(getArticleManager, articleCache)
 
-        val viewModelFactory2 = ArticleViewModel2.Factory(session, articleArena, avatarArena)
+        val viewModelFactory2 = ArticleViewModel2.Factory(session, articleArena, avatarArena, voteArticleManager)
         val viewModel2 = ViewModelProviders.of(fragment, viewModelFactory2)[ArticleViewModel2::class.java]
         bind<ArticleViewModel2>().toInstance(viewModel2)
 

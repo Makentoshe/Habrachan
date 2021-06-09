@@ -13,7 +13,7 @@ data class ArticleAuthor(
     @SerializedName("id")
     override val userId: Int, // 2534877
     @SerializedName("login")
-    override val login: String, // KD637
+    override val login: String = alias, // KD637
     @SerializedName("speciality")
     val speciality: String // officer
 ): ArticleAuthor
