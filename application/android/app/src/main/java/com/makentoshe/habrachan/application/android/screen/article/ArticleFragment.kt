@@ -110,8 +110,9 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_toolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
 
         fragment_article_bottom_voteup.setOnClickListener {
+            val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Up)
+            capture(analyticEvent("Votedown(spec=$spec)"))
             lifecycleScope.launch(Dispatchers.IO) {
-                val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Up)
                 viewModel2.voteArticleSpecChannel.send(spec)
             }
         }
@@ -127,6 +128,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragmentManager.setFragmentResultListener(ArticleVoteDownReasonDialogFragment.request, this) { _, result ->
             val reason = result.getSerializable(ArticleVoteDownReasonDialogFragment.key) as ArticleVote.Down.Reason
             val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Down(reason))
+            capture(analyticEvent("Votedown(spec=$spec)"))
             lifecycleScope.launch(Dispatchers.IO) {
                 viewModel2.voteArticleSpecChannel.send(spec)
             }
