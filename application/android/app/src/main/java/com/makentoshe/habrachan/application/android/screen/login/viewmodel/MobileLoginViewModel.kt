@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.makentoshe.habrachan.application.android.AndroidUserSession
 import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.functional.onSuccess
 import com.makentoshe.habrachan.network.login.WebMobileLoginManager
 import com.makentoshe.habrachan.network.login.WebMobileLoginResponse
 import kotlinx.coroutines.Dispatchers
@@ -35,11 +36,11 @@ class WebMobileLoginViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val response = loginManager.login(request)
             internalMobileLoginResponseChannel.send(response)
-//            response.onSuccess { loginResponse ->
-//                userSession.user = loginResponse.initialState.me.user
-//                userSession.cookies = loginResponse.cookies.map { it.toString() }
-//                println(userSession.cookies)
-//            }
+            response.onSuccess { loginResponse ->
+                userSession.cookies = loginResponse.cookies.map { it.toString() }
+                userSession.user = loginResponse.initialState.me.user
+                println(userSession.cookies)
+            }
         }
     }
 

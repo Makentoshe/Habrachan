@@ -14,7 +14,7 @@ class ArticlesNavigation(private val router: StackRouter) {
     }
 
     fun navigateToLogin() {
-        router.stack(NativeLoginScreen(shouldNavigateToUserScreenAfterLogin = true))
+        router.stack(NativeLoginScreen())
     }
 
     fun navigateToUser() {
