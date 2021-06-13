@@ -21,3 +21,5 @@ include(":application:android:app")
 include(":application:android:core")
 include(":application:android:database")
 include(":application:android:analytics")
+include("network:network-native:network-native-login")
+findProject(":network:network-native:network-native-login")?.name = "network-native-login"

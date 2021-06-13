@@ -1,8 +1,7 @@
-package com.makentoshe.habrachan.network.exception
+package com.makentoshe.habrachan.network
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.network.request.LoginRequest
-import com.makentoshe.habrachan.network.request.NativeLoginRequest
 
 data class NativeLoginResponseException(
     val request: LoginRequest,
@@ -13,7 +12,7 @@ data class NativeLoginResponseException(
     val code: Int,
     val data: Any?,
     override val message: String
-) : Throwable() {
+) : Throwable(){
 
     data class Factory(
         @SerializedName("additional")
