@@ -12,7 +12,9 @@ import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBr
 import com.makentoshe.habrachan.application.android.screen.login.model.NativeLoginSpec
 import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginNavigation
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.NativeLoginViewModel
-import com.makentoshe.habrachan.network.exception.NativeLoginResponseException
+import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.functional.fold
+import com.makentoshe.habrachan.network.NativeLoginResponseException
 import com.makentoshe.habrachan.network.response.LoginResponse
 import kotlinx.android.synthetic.main.fragment_login_native.*
 import kotlinx.coroutines.flow.collectLatest

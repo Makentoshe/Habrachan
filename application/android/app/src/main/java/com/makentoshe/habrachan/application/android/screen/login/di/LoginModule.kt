@@ -9,8 +9,8 @@ import com.makentoshe.habrachan.application.android.screen.login.NativeLoginFrag
 import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginNavigation
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.NativeLoginViewModel
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.WebMobileLoginViewModel
+import com.makentoshe.habrachan.network.NativeLoginManager
 import com.makentoshe.habrachan.network.login.WebMobileLoginManager
-import com.makentoshe.habrachan.network.manager.NativeLoginManager
 import okhttp3.OkHttpClient
 import toothpick.Toothpick
 import toothpick.config.Module

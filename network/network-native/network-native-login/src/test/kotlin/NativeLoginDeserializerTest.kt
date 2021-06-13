@@ -1,8 +1,6 @@
-package com.makentoshe.habrachan.network
-
-import com.makentoshe.habrachan.network.deserializer.NativeLoginDeserializer
-import com.makentoshe.habrachan.network.exception.NativeLoginResponseException
-import com.makentoshe.habrachan.network.request.NativeLoginRequest
+import com.makentoshe.habrachan.network.NativeLoginDeserializer
+import com.makentoshe.habrachan.network.NativeLoginRequest
+import com.makentoshe.habrachan.network.NativeLoginResponseException
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
