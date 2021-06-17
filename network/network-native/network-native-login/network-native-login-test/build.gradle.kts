@@ -44,3 +44,11 @@ dependencies {
     val junitVersion = properties["version.junit"]
     testImplementation("junit:junit:$junitVersion")
 }
+
+// idkw, but "onlyIf" does not disables/skips this task, so this is a workaround
+tasks.test.configure {
+    // for ci/cd: this should be managed by build system.
+    // we should disable tests by default (ide), because the REAL api will be invoked on each build
+    // and may cause accident DDoS
+    enabled = project.hasProperty("allow-network-test")
+}
