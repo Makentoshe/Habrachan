@@ -13,7 +13,7 @@ class NativeLoginDeserializer : NativeGsonDeserializer() {
     }
 
     fun error(request: NativeLoginRequest, json: String): Result<LoginResponse> {
-        val exception = gson.fromJson(json, NativeLoginResponseException.Factory::class.java).build(request, json)
+        val exception = gson.fromJson(json, NativeLoginException.Factory::class.java).build(request, json)
         return Result.failure(exception)
     }
 }

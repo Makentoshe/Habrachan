@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.network
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.network.request.LoginRequest
 
-data class NativeLoginResponseException(
+data class NativeLoginException(
     val request: LoginRequest,
     val raw: String,
     val email: String?, // MISSING or INVALID
@@ -25,13 +25,13 @@ data class NativeLoginResponseException(
         val message: String // Bad request
     ) {
 
-        fun build(request: NativeLoginRequest, raw: String): NativeLoginResponseException {
+        fun build(request: NativeLoginRequest, raw: String): NativeLoginException {
             val errors = (additional as Map<String, Any>)["errors"]
             val other = if (errors is String) errors else null
             val list = if (errors is List<*>) errors as List<Map<String, String>> else null
             val email = list?.find { it["field"] == "email" }?.get("key")
             val password = list?.find { it["field"] == "password"}?.get("key")
-            return NativeLoginResponseException(request, raw, email, password, other, code, data, message)
+            return NativeLoginException(request, raw, email, password, other, code, data, message)
         }
     }
 }

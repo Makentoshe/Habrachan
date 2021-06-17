@@ -1,5 +1,5 @@
+import com.makentoshe.habrachan.network.NativeLoginException
 import com.makentoshe.habrachan.network.NativeLoginManager
-import com.makentoshe.habrachan.network.NativeLoginResponseException
 import com.makentoshe.habrachan.network.deserializer.NativeGetMeDeserializer
 import com.makentoshe.habrachan.network.manager.NativeGetMeManager
 import kotlinx.coroutines.runBlocking
@@ -26,7 +26,7 @@ class NativeLoginManagerTest : UnitTest() {
         val request = manager.request(userSession, "a@b.com", "123")
         val response = manager.login(request)
 
-        val exception = response.exceptionOrNull() as? NativeLoginResponseException ?: throw IllegalStateException()
+        val exception = response.exceptionOrNull() as? NativeLoginException ?: throw IllegalStateException()
         assertEquals(400, exception.code)
     }
 
@@ -37,7 +37,7 @@ class NativeLoginManagerTest : UnitTest() {
         val request = manager.request(userSession, "", "123")
         val response = manager.login(request)
 
-        val exception = response.exceptionOrNull() as? NativeLoginResponseException ?: throw IllegalStateException()
+        val exception = response.exceptionOrNull() as? NativeLoginException ?: throw IllegalStateException()
         assertEquals(400, exception.code)
     }
 
@@ -48,7 +48,7 @@ class NativeLoginManagerTest : UnitTest() {
         val request = manager.request(userSession, "my@mail.com", "")
         val response = manager.login(request)
 
-        val exception = response.exceptionOrNull() as? NativeLoginResponseException ?: throw IllegalStateException()
+        val exception = response.exceptionOrNull() as? NativeLoginException ?: throw IllegalStateException()
         assertEquals(400, exception.code)
     }
 }

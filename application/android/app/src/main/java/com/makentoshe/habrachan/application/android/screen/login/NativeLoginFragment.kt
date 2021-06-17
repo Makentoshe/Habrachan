@@ -14,7 +14,7 @@ import com.makentoshe.habrachan.application.android.screen.login.navigation.Logi
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.NativeLoginViewModel
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.fold
-import com.makentoshe.habrachan.network.NativeLoginResponseException
+import com.makentoshe.habrachan.network.NativeLoginException
 import com.makentoshe.habrachan.network.response.LoginResponse
 import kotlinx.android.synthetic.main.fragment_login_native.*
 import kotlinx.coroutines.flow.collectLatest
@@ -92,7 +92,7 @@ class NativeLoginFragment : CoreFragment() {
     private fun onLoginFailure(throwable: Throwable) {
         fragment_login_button.visibility = View.VISIBLE
         fragment_login_progress.visibility = View.INVISIBLE
-        if (throwable is NativeLoginResponseException && throwable.other != null) {
+        if (throwable is NativeLoginException && throwable.other != null) {
             fragment_login_password.error = getString(R.string.login_account_error)
         } else {
             fragment_login_password.error = getString(R.string.login_unknown_error)
