@@ -15,6 +15,7 @@ include(":network:network-mobile:network-mobile-test")
 include(":network:network-native")
 include(":network:network-native:network-native-test")
 include(":network:network-native:network-native-login")
+include("network:network-native:network-native-article-vote")
 include(":network:network-native:network-native-login:network-native-login-test")
 
 include(":application")
