@@ -1,9 +1,9 @@
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.getOrThrow
 import com.makentoshe.habrachan.network.NativeVoteArticleDeserializer
-import com.makentoshe.habrachan.network.exception.NativeVoteArticleException
+import com.makentoshe.habrachan.network.NativeVoteArticleException
+import com.makentoshe.habrachan.network.NativeVoteArticleRequest
 import com.makentoshe.habrachan.network.request.ArticleVote
-import com.makentoshe.habrachan.network.request.NativeVoteArticleRequest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

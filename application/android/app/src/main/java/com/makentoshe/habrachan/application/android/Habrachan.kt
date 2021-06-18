@@ -48,3 +48,7 @@ class Habrachan : Application() {
         }
     }
 }
+
+fun getDataset(): Array<String> {
+    return arrayOf("", "sad")
+}

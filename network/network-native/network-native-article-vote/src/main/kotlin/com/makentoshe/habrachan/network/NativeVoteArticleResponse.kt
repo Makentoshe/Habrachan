@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.network
 
 import com.google.gson.annotations.SerializedName
-import com.makentoshe.habrachan.network.request.NativeVoteArticleRequest
 import com.makentoshe.habrachan.network.response.VoteArticleResponse
 
 data class NativeVoteArticleResponse(

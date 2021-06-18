@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.application.android.di
 import android.content.Context
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.network.NativeLoginManager
+import com.makentoshe.habrachan.network.NativeVoteArticleManager
 import com.makentoshe.habrachan.network.deserializer.*
 import com.makentoshe.habrachan.network.manager.*
 import com.makentoshe.habrachan.network.request.*
