@@ -1,14 +1,14 @@
 package com.makentoshe.habrachan.application.android.screen.comments.model
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.BuildConfig
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.dp2px
@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+// TODO(high): Replace navigation with CommentViewController.ContentFactory
 class CommentAdapter(
     private val navigation: CommentsNavigation,
     private val lifecycleScope: CoroutineScope,
@@ -30,12 +31,7 @@ class CommentAdapter(
     private val fragmentManager: FragmentManager
 ) : PagingDataAdapter<CommentModelElement, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
 
-    companion object {
-        inline fun capture(level: Int, message: () -> String) {
-            if (BuildConfig.DEBUG) return
-            Log.println(level, "CommentAdapter", message())
-        }
-    }
+    companion object : Analytics(LogAnalytic())
 
     override fun getItemViewType(position: Int): Int = when (peek(position)) {
         is CommentModelNode -> super.getItemViewType(position)
@@ -52,8 +48,10 @@ class CommentAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val model = getItem(position) ?: return capture(Log.ERROR) {
-            "Comment is null at position $position"
+        val model = getItem(position)
+        if (model == null) {
+            val event = analyticEvent("CommentAdapter", "Comment is null at position $position")
+            return capture(event)
         }
 
         when (model) {
@@ -67,15 +65,9 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
-        val controller = CommentViewController(holder, navigation).install(model.comment).setVoteListener({
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-        }, {
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-        }).setStubAvatar().setLevel(model.level)
-
-//        holder.avatarView.setOnClickListener {
-//            navigation.toUserScreen(model.comment.author.login)
-//        }
+        val controller = CommentViewController(holder).default(model.comment).setLevel(model.level)
+        val content = CommentViewController.CommentContent(model.comment.message, holder.context)
+        controller.setContent(content.setNavigationOnImageClick(navigation))
 
         holder.itemView.setOnClickListener {
             CommentDetailsDialogFragment.build().show(fragmentManager, "sas")

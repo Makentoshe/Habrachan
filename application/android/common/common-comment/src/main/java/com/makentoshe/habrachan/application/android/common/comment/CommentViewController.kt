@@ -1,9 +1,10 @@
 package com.makentoshe.habrachan.application.android.common.comment
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
-import android.view.View
+import android.widget.TextView
 import com.makentoshe.habrachan.application.android.common.core.time
 import com.makentoshe.habrachan.entity.Comment
 import com.makentoshe.habrachan.entity.timePublished
@@ -13,12 +14,7 @@ import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.image.network.OkHttpNetworkSchemeHandler
 import okhttp3.OkHttpClient
 
-class CommentViewController(private val holder: CommentViewHolder, navigation: CommentViewControllerNavigator) {
-
-    // TODO optimize image loading using image arena
-    private val markwon = Markwon.builder(holder.context).usePlugin(HtmlPlugin.create()).usePlugin(ImagesPlugin.create {
-        it.addSchemeHandler(OkHttpNetworkSchemeHandler.create(OkHttpClient()))
-    }).usePlugin(ImageClickMarkwonPlugin(navigation)).build()
+class CommentViewController(private val holder: CommentViewHolder) {
 
     init {
         holder.levelView.removeAllViews()
@@ -27,42 +23,17 @@ class CommentViewController(private val holder: CommentViewHolder, navigation: C
         holder.timestampView.text = ""
     }
 
-    fun install(comment: Comment): CommentViewController {
-        render(comment)
-        setVoteScore(comment.score)
+    fun default(comment: Comment): CommentViewController {
+        setStubAvatar()
         setAuthor(comment.author.login)
+        setVoteScore(comment.score)
         setTimestamp(comment.timePublished.time(holder.context, R.string.format_comment_time))
+        setContent(CommentContent.Factory(holder.context).build(comment.message))
         return this
     }
 
-    fun render(comment: Comment): CommentViewController {
-        markwon.setMarkdown(holder.bodyView, comment.message)
-        return this
-    }
-
-    fun setAuthor(author: String): CommentViewController {
-        holder.authorView.text = author
-        return this
-    }
-
-    fun setTimestamp(timestamp: String): CommentViewController {
-        holder.timestampView.text = timestamp
-        return this
-    }
-
-    fun setVoteListener(
-        voteUpListener: (View) -> Unit, voteDownListener: (View) -> Unit
-    ): CommentViewController {
-        holder.voteUpView.setOnClickListener(voteUpListener)
-        holder.voteDownView.setOnClickListener(voteDownListener)
-        return this
-    }
-
-    fun setLevel(level: Int): CommentViewController {
-        val inflater = LayoutInflater.from(holder.context)
-        (0 until level).forEach { _ ->
-            inflater.inflate(R.layout.layout_comment_level, holder.levelView, true)
-        }
+    fun setContent(content: CommentContent): CommentViewController {
+        content.setContentToView(holder.bodyView)
         return this
     }
 
@@ -84,5 +55,50 @@ class CommentViewController(private val holder: CommentViewHolder, navigation: C
     fun setAvatar(drawable: Drawable): CommentViewController {
         holder.avatarView.setImageDrawable(drawable)
         return this
+    }
+
+    fun setLevel(level: Int): CommentViewController {
+        val inflater = LayoutInflater.from(holder.context)
+        (0 until level).forEach { _ ->
+            inflater.inflate(R.layout.layout_comment_level, holder.levelView, true)
+        }
+        return this
+    }
+
+    fun setAuthor(author: String): CommentViewController {
+        holder.authorView.text = author
+        return this
+    }
+
+    fun setTimestamp(timestamp: String): CommentViewController {
+        holder.timestampView.text = timestamp
+        return this
+    }
+
+    class CommentContent(val content: String, context: Context) {
+
+        private var imageClickPlugin: ImageClickMarkwonPlugin? = null
+        private val htmlPlugin = HtmlPlugin.create()
+        private val imagePlugin = ImagesPlugin.create {
+            // TODO optimize image loading using image arena
+            it.addSchemeHandler(OkHttpNetworkSchemeHandler.create(OkHttpClient()))
+        }
+
+        private val markwonBuilder = Markwon.builder(context)
+
+        fun setNavigationOnImageClick(navigation: CommentViewControllerNavigator): CommentContent {
+            imageClickPlugin = ImageClickMarkwonPlugin(navigation)
+            return this
+        }
+
+        internal fun setContentToView(textView: TextView) {
+            val list = mutableListOf(htmlPlugin, imagePlugin)
+            imageClickPlugin?.let(list::add)
+            markwonBuilder.usePlugins(list).build().setMarkdown(textView, content)
+        }
+
+        class Factory(private val context: Context) {
+            fun build(content: String) = CommentContent(content, context)
+        }
     }
 }
