@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Habrachan</string>
+    <string name="not_implemented">Not implemented</string>
+
+
+    <string name="format_comment_time">%1$s in %2$s</string>
+</resources>

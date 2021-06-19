@@ -1,13 +1,10 @@
-package com.makentoshe.habrachan.application.android.screen.comments.model
+package com.makentoshe.habrachan.application.android.common.comment
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
-import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
-import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
-import com.makentoshe.habrachan.application.android.time
+import com.makentoshe.habrachan.application.android.common.core.time
 import com.makentoshe.habrachan.entity.Comment
 import com.makentoshe.habrachan.entity.timePublished
 import io.noties.markwon.Markwon
@@ -16,7 +13,7 @@ import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.image.network.OkHttpNetworkSchemeHandler
 import okhttp3.OkHttpClient
 
-class CommentViewController(private val holder: CommentViewHolder, navigation: CommentsNavigation) {
+class CommentViewController(private val holder: CommentViewHolder, navigation: CommentViewControllerNavigator) {
 
     // TODO optimize image loading using image arena
     private val markwon = Markwon.builder(holder.context).usePlugin(HtmlPlugin.create()).usePlugin(ImagesPlugin.create {
@@ -34,7 +31,7 @@ class CommentViewController(private val holder: CommentViewHolder, navigation: C
         render(comment)
         setVoteScore(comment.score)
         setAuthor(comment.author.login)
-        setTimestamp(comment.timePublished.time(holder.context, R.string.comments_time_format))
+        setTimestamp(comment.timePublished.time(holder.context, R.string.format_comment_time))
         return this
     }
 

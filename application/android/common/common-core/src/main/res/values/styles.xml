@@ -1,0 +1,62 @@
+<resources>
+
+    <style name="Habrachan.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#ff9cc2ce</item>
+        <item name="colorAccent">#ff9cc2ce</item>
+        <item name="colorPrimaryDark">#ff728e96</item>
+    </style>
+
+    <style name="Habrachan.Separator" parent="Habrachan.Light">
+        <item name="android:background">@color/separator</item>
+    </style>
+
+    <style name="Habrachan.Progress" parent="Habrachan.Light">
+        <item name="android:indeterminateTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="Habrachan.Progress.Light" parent="Habrachan.Light">
+        <item name="android:indeterminateTint">@color/title</item>
+    </style>
+
+    <style name="Habrachan.Text" parent="Habrachan.Light">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="Habrachan.Text.Main">
+        <item name="android:textSize">@dimen/textML</item>
+    </style>
+
+    <style name="Habrachan.Text.Main.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Habrachan.Text.Support">
+        <item name="android:textSize">@dimen/textM</item>
+        <item name="android:textColor">@color/dimmed</item>
+    </style>
+
+    <style name="Habrachan.Text.Title">
+        <item name="android:textSize">@dimen/textLL</item>
+    </style>
+
+    <style name="Habrachan.Text.Title.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Habrachan.Text.Small">
+        <item name="android:textSize">@dimen/textMS</item>
+        <item name="android:textColor">@color/dimmed</item>
+    </style>
+
+    <style name="Habrachan.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Habrachan.Button.Toggle.Toolbar" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/button_toggle_toolbar_foreground_color</item>
+        <item name="backgroundTint">@color/button_toggle_toolbar_background_color</item>
+        <item name="strokeColor">@color/title</item>
+        <item name="android:textSize">@dimen/textMS</item>
+    </style>
+
+</resources>

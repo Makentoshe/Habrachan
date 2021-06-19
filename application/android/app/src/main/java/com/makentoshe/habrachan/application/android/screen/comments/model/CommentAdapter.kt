@@ -4,14 +4,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.BuildConfig
+import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
+import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.dp2px
+import com.makentoshe.habrachan.application.android.screen.comments.CommentDetailsDialogFragment
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.BlockViewHolder
-import com.makentoshe.habrachan.application.android.screen.comments.view.CommentViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +25,9 @@ import kotlinx.coroutines.launch
 class CommentAdapter(
     private val navigation: CommentsNavigation,
     private val lifecycleScope: CoroutineScope,
-    private val viewModel: CommentsViewModel
+    private val viewModel: CommentsViewModel,
+    // For bottom sheet dialog displaying
+    private val fragmentManager: FragmentManager
 ) : PagingDataAdapter<CommentModelElement, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
 
     companion object {
@@ -68,8 +73,12 @@ class CommentAdapter(
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
         }).setStubAvatar().setLevel(model.level)
 
-        holder.avatarView.setOnClickListener {
-            navigation.toUserScreen(model.comment.author.login)
+//        holder.avatarView.setOnClickListener {
+//            navigation.toUserScreen(model.comment.author.login)
+//        }
+
+        holder.itemView.setOnClickListener {
+            CommentDetailsDialogFragment.build().show(fragmentManager, "sas")
         }
 
         val avatar = model.comment.avatar

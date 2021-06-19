@@ -1,15 +1,14 @@
-package com.makentoshe.habrachan.application.android.screen.comments.model
+package com.makentoshe.habrachan.application.android.common.comment
 
 import android.text.style.ClickableSpan
 import android.view.View
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.MarkwonSpansFactory
 import io.noties.markwon.Prop
 import org.commonmark.node.Image
 
 class ImageClickMarkwonPlugin(
-    private val navigation: CommentsNavigation
+    private val navigation: CommentViewControllerNavigator
 ) : AbstractMarkwonPlugin() {
     override fun configureSpansFactory(builder: MarkwonSpansFactory.Builder) {
         val origin = builder.getFactory(Image::class.java) ?: return

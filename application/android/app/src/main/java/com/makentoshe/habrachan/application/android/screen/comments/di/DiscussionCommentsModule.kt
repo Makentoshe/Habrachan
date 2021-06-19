@@ -53,10 +53,10 @@ class DiscussionCommentsModule(fragment: DiscussionCommentsFragment): Module() {
             CommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle)
         bind<CommentsNavigation>().toInstance(navigation)
 
-        val commentsAdapter = CommentAdapter(navigation, fragment.lifecycleScope, viewModel)
+        val commentsAdapter = CommentAdapter(navigation, fragment.lifecycleScope, viewModel, fragment.childFragmentManager)
         bind<CommentAdapter>().withName(CommentsAdapterQualifier).toInstance(commentsAdapter)
 
-        val titleAdapter = CommentAdapter(navigation, fragment.lifecycleScope, viewModel)
+        val titleAdapter = CommentAdapter(navigation, fragment.lifecycleScope, viewModel, fragment.childFragmentManager)
         bind<CommentAdapter>().withName(TitleAdapterQualifier).toInstance(titleAdapter)
 
         bind<ConcatAdapter>().toInstance(ConcatAdapter(titleAdapter, commentsAdapter))

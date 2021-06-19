@@ -1,3 +1,5 @@
+include(":application:android:common:common-core")
+include(":common-comment")
 rootProject.name = "Habrachan"
 
 include(":functional")
@@ -19,6 +21,8 @@ include(":application:android:app")
 include(":application:android:core")
 include(":application:android:database")
 include(":application:android:analytics")
+include(":application:android:common")
+include(":application:android:common:common-comment")
 
 include(":entity")
 include(":entity:entity-mobile")

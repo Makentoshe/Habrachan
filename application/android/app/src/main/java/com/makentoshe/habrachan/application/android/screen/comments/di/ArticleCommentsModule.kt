@@ -46,7 +46,7 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : Module() {
             CommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle)
         bind<CommentsNavigation>().toInstance(navigation)
 
-        val commentAdapter = CommentAdapter(navigation, fragment.lifecycleScope, viewModel)
+        val commentAdapter = CommentAdapter(navigation, fragment.lifecycleScope, viewModel, fragment.childFragmentManager)
         bind<CommentAdapter>().toInstance(commentAdapter)
 
     }

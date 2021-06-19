@@ -1,14 +1,13 @@
-package com.makentoshe.habrachan.application.android.screen.comments.view
+package com.makentoshe.habrachan.application.android.common.comment
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.makentoshe.habrachan.R
 
-// TODO move holder to controller class
 class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val context: Context = view.context
     val avatarView: ImageView = view.findViewById(R.id.layout_comment_item_avatar)
@@ -20,4 +19,14 @@ class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val voteScoreView: TextView = view.findViewById(R.id.layout_comment_item_vote_score)
     val voteDownView: View = view.findViewById(R.id.layout_comment_item_vote_down)
     val levelView: ViewGroup = view.findViewById(R.id.layout_comment_item_level)
+
+    class Factory {
+
+        fun create(context: Context, parent: ViewGroup? = null): CommentViewHolder {
+            val inflater = LayoutInflater.from(context)
+            val view = inflater.inflate(R.layout.layout_comment_item, parent, false)
+            return CommentViewHolder(view)
+        }
+    }
 }
+
