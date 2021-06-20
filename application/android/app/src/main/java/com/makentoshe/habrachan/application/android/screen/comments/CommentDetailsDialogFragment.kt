@@ -8,7 +8,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
-import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 
 class CommentDetailsDialogFragment : BottomSheetDialogFragment() {
@@ -24,7 +23,7 @@ class CommentDetailsDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val commentView = view.findViewById<View>(R.id.dialog_comment_details_comment)
         val commentViewHolder = CommentViewHolder(commentView)
-        val commentViewController = CommentViewController(commentViewHolder)
+//        val commentViewController = CommentViewController(commentViewHolder)
     }
 
 //    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

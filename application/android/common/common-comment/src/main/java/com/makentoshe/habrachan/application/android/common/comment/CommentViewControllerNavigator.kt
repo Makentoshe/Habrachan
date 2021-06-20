@@ -4,3 +4,8 @@ interface CommentViewControllerNavigator {
 
     fun toContentScreen(source: String)
 }
+
+interface BlockViewControllerNavigator {
+
+    fun toDiscussionScreen(commentId: Int)
+}

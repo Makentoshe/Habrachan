@@ -2,19 +2,17 @@ package com.makentoshe.habrachan.application.android.screen.comments.model
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.comment.BlockViewController
+import com.makentoshe.habrachan.application.android.common.comment.BlockViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.dp2px
-import com.makentoshe.habrachan.application.android.screen.comments.CommentDetailsDialogFragment
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
-import com.makentoshe.habrachan.application.android.screen.comments.view.BlockViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import kotlinx.coroutines.CoroutineScope
@@ -22,13 +20,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-// TODO(high): Replace navigation with CommentViewController.ContentFactory
 class CommentAdapter(
-    private val navigation: CommentsNavigation,
     private val lifecycleScope: CoroutineScope,
     private val viewModel: CommentsViewModel,
-    // For bottom sheet dialog displaying
-    private val fragmentManager: FragmentManager
+    private val commentContentFactory: CommentViewController.CommentContent.Factory,
+    private val blockContentFactory: BlockViewController.BlockContent.Factory
 ) : PagingDataAdapter<CommentModelElement, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
 
     companion object : Analytics(LogAnalytic())
@@ -66,12 +62,11 @@ class CommentAdapter(
 
     private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
         val controller = CommentViewController(holder).default(model.comment).setLevel(model.level)
-        val content = CommentViewController.CommentContent(model.comment.message, holder.context)
-        controller.setContent(content.setNavigationOnImageClick(navigation))
+        controller.setContent(commentContentFactory.build(model.comment.message))
 
-        holder.itemView.setOnClickListener {
-            CommentDetailsDialogFragment.build().show(fragmentManager, "sas")
-        }
+//        holder.itemView.setOnClickListener {
+//            CommentDetailsDialogFragment.build().show(fragmentManager, "sas")
+//        }
 
         val avatar = model.comment.avatar
         if (avatar == null) controller.setStubAvatar() else lifecycleScope.launch(Dispatchers.IO) {
@@ -86,8 +81,7 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentModelBlank) {
-        BlockViewController(holder).setLevel(model.level).setBody(model.count, model.comment.commentId) {
-            navigation.toDiscussionCommentsFragment(it)
-        }
+        val blockContent = blockContentFactory.build(model.count, model.comment.commentId)
+        BlockViewController(holder).setLevel(model.level).setContent(blockContent)
     }
 }

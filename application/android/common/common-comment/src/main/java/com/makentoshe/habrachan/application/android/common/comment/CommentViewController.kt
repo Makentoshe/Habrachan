@@ -75,9 +75,10 @@ class CommentViewController(private val holder: CommentViewHolder) {
         return this
     }
 
-    class CommentContent(val content: String, context: Context) {
+    class CommentContent(
+        val content: String, context: Context, private var imageClickPlugin: ImageClickMarkwonPlugin? = null
+    ) {
 
-        private var imageClickPlugin: ImageClickMarkwonPlugin? = null
         private val htmlPlugin = HtmlPlugin.create()
         private val imagePlugin = ImagesPlugin.create {
             // TODO optimize image loading using image arena
@@ -98,7 +99,15 @@ class CommentViewController(private val holder: CommentViewHolder) {
         }
 
         class Factory(private val context: Context) {
-            fun build(content: String) = CommentContent(content, context)
+
+            private var imageClickPlugin: ImageClickMarkwonPlugin? = null
+
+            fun setNavigationOnImageClick(navigation: CommentViewControllerNavigator): CommentContent.Factory {
+                imageClickPlugin = ImageClickMarkwonPlugin(navigation)
+                return this
+            }
+
+            fun build(content: String) = CommentContent(content, context, imageClickPlugin)
         }
     }
 }

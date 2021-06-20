@@ -1,11 +1,10 @@
-package com.makentoshe.habrachan.application.android.screen.comments.view
+package com.makentoshe.habrachan.application.android.common.comment
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.makentoshe.habrachan.R
 
 class BlockViewHolder(view: View): RecyclerView.ViewHolder(view) {
     val context: Context = view.context
