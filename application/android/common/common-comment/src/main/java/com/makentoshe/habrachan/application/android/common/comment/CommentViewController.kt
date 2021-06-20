@@ -16,6 +16,8 @@ import okhttp3.OkHttpClient
 
 class CommentViewController(private val holder: CommentViewHolder) {
 
+    private var navigator: CommentViewControllerNavigator? = null
+
     init {
         holder.levelView.removeAllViews()
         holder.voteScoreView.text = ""
@@ -29,6 +31,7 @@ class CommentViewController(private val holder: CommentViewHolder) {
         setVoteScore(comment.score)
         setTimestamp(comment.timePublished.time(holder.context, R.string.format_comment_time))
         setContent(CommentContent.Factory(holder.context).build(comment.message))
+        navigator?.let { navigator ->  holder.itemView.setOnClickListener { navigator.toDetailsScreen() } }
         return this
     }
 
@@ -75,10 +78,16 @@ class CommentViewController(private val holder: CommentViewHolder) {
         return this
     }
 
-    class CommentContent(
-        val content: String, context: Context, private var imageClickPlugin: ImageClickMarkwonPlugin? = null
-    ) {
+    class Factory(private val navigator: CommentViewControllerNavigator? = null) {
 
+        fun build(holder: CommentViewHolder) = CommentViewController(holder).apply {
+            this.navigator = this@Factory.navigator
+        }
+    }
+
+    class CommentContent(val content: String, context: Context) {
+
+        private var imageClickPlugin: ImageClickMarkwonPlugin? = null
         private val htmlPlugin = HtmlPlugin.create()
         private val imagePlugin = ImagesPlugin.create {
             // TODO optimize image loading using image arena
@@ -102,12 +111,14 @@ class CommentViewController(private val holder: CommentViewHolder) {
 
             private var imageClickPlugin: ImageClickMarkwonPlugin? = null
 
-            fun setNavigationOnImageClick(navigation: CommentViewControllerNavigator): CommentContent.Factory {
+            fun setNavigationOnImageClick(navigation: CommentViewControllerNavigator): Factory {
                 imageClickPlugin = ImageClickMarkwonPlugin(navigation)
                 return this
             }
 
-            fun build(content: String) = CommentContent(content, context, imageClickPlugin)
+            fun build(content: String) = CommentContent(content, context).apply {
+                this.imageClickPlugin = this@Factory.imageClickPlugin
+            }
         }
     }
 }

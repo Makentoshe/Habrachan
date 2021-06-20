@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
+import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
@@ -33,7 +34,7 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : CommentsModule(
         val viewModel = getArticleCommentsViewModel(fragment)
         bind<ArticleCommentsViewModel>().toInstance(viewModel)
 
-        val navigation = CommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle)
+        val navigation = CommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle, fragment.childFragmentManager)
         bind<CommentsNavigation>().toInstance(navigation)
 
         val commentAdapter = getCommentAdapter(fragment, viewModel, navigation)
@@ -41,9 +42,11 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : CommentsModule(
     }
 
     private fun getCommentAdapter(fragment: Fragment, viewModel: ArticleCommentsViewModel, navigation: CommentsNavigation): CommentAdapter {
+        val commentViewControllerFactory = CommentViewController.Factory(navigation)
+
         val commentContentFactory = commentContentFactory.setNavigationOnImageClick(navigation)
         val blockContentFactory = blockContentFactory.setNavigation(navigation)
-        return CommentAdapter(fragment.lifecycleScope, viewModel, commentContentFactory, blockContentFactory)
+        return CommentAdapter(fragment.lifecycleScope, viewModel, commentViewControllerFactory, commentContentFactory, blockContentFactory)
     }
 
     private fun getArticleCommentsViewModel(fragment: ArticleCommentsFragment): ArticleCommentsViewModel {

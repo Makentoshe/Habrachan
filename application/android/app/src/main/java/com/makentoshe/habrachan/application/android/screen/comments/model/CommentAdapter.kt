@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 class CommentAdapter(
     private val lifecycleScope: CoroutineScope,
     private val viewModel: CommentsViewModel,
+    private val commentControllerFactory: CommentViewController.Factory,
     private val commentContentFactory: CommentViewController.CommentContent.Factory,
     private val blockContentFactory: BlockViewController.BlockContent.Factory
 ) : PagingDataAdapter<CommentModelElement, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
@@ -61,12 +62,8 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
-        val controller = CommentViewController(holder).default(model.comment).setLevel(model.level)
+        val controller = commentControllerFactory.build(holder).default(model.comment).setLevel(model.level)
         controller.setContent(commentContentFactory.build(model.comment.message))
-
-//        holder.itemView.setOnClickListener {
-//            CommentDetailsDialogFragment.build().show(fragmentManager, "sas")
-//        }
 
         val avatar = model.comment.avatar
         if (avatar == null) controller.setStubAvatar() else lifecycleScope.launch(Dispatchers.IO) {

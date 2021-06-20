@@ -1,14 +1,19 @@
 package com.makentoshe.habrachan.application.android.screen.comments.navigation
 
+import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.application.android.common.comment.BlockViewControllerNavigator
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewControllerNavigator
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
+import com.makentoshe.habrachan.application.android.screen.comments.CommentDetailsDialogFragment
 import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentScreen
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
 
 class CommentsNavigation(
-    private val router: StackRouter, private val articleId: Int, private val articleTitle: String
+    private val router: StackRouter,
+    private val articleId: Int,
+    private val articleTitle: String,
+    private val fragmentManager: FragmentManager
 ) : CommentViewControllerNavigator, BlockViewControllerNavigator {
 
     fun back() {
@@ -17,6 +22,10 @@ class CommentsNavigation(
 
     override fun toDiscussionScreen(commentId: Int) {
         router.stack(DiscussionCommentsScreen(articleId, articleTitle, commentId))
+    }
+
+    override fun toDetailsScreen() {
+        CommentDetailsDialogFragment.build().show(fragmentManager, "test")
     }
 
     override fun toContentScreen(source: String) {

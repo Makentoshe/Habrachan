@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
+import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
@@ -39,7 +40,7 @@ class DiscussionCommentsModule(fragment: DiscussionCommentsFragment) : CommentsM
         val viewModel = getDiscussionCommentsViewModel(fragment)
         bind<DiscussionCommentsViewModel>().toInstance(viewModel)
 
-        val navigation = CommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle)
+        val navigation = CommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle, fragment.childFragmentManager)
         bind<CommentsNavigation>().toInstance(navigation)
 
         val commentsAdapter = getCommentAdapter(fragment, viewModel, navigation)
@@ -53,14 +54,16 @@ class DiscussionCommentsModule(fragment: DiscussionCommentsFragment) : CommentsM
     }
 
     private fun getCommentAdapter(fragment: Fragment, viewModel: DiscussionCommentsViewModel, navigation: CommentsNavigation): CommentAdapter {
+        val commentControllerFactory = CommentViewController.Factory(navigation)
         val commentContentFactory = commentContentFactory.setNavigationOnImageClick(navigation)
         val blockContentFactory = blockContentFactory.setNavigation(navigation)
-        return CommentAdapter(fragment.lifecycleScope, viewModel, commentContentFactory, blockContentFactory)
+        return CommentAdapter(fragment.lifecycleScope, viewModel, commentControllerFactory, commentContentFactory, blockContentFactory)
     }
 
     private fun getTitleAdapter(fragment: Fragment, viewModel: DiscussionCommentsViewModel, navigation: CommentsNavigation): CommentAdapter {
+        val commentControllerFactory = CommentViewController.Factory(navigation)
         val commentContentFactory = commentContentFactory.setNavigationOnImageClick(navigation)
-        return CommentAdapter(fragment.lifecycleScope, viewModel, commentContentFactory, blockContentFactory)
+        return CommentAdapter(fragment.lifecycleScope, viewModel, commentControllerFactory, commentContentFactory, blockContentFactory)
     }
 
     private fun getDiscussionCommentsViewModel(fragment: Fragment): DiscussionCommentsViewModel {
