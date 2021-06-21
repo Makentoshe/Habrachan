@@ -24,8 +24,8 @@ class CommentsNavigation(
         router.stack(DiscussionCommentsScreen(articleId, articleTitle, commentId))
     }
 
-    override fun toDetailsScreen() {
-        CommentDetailsDialogFragment.build().show(fragmentManager, "test")
+    override fun toDetailsScreen(commentId: Int) {
+        CommentDetailsDialogFragment.build(commentId).show(fragmentManager, "test")
     }
 
     override fun toContentScreen(source: String) {

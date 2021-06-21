@@ -1,20 +1,17 @@
 package com.makentoshe.habrachan.application.android.screen.comments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.BuildConfig
-import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
+import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
+import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsAdapterQualifier
 import com.makentoshe.habrachan.application.android.screen.comments.di.TitleAdapterQualifier
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
@@ -28,16 +25,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
+class DiscussionCommentsFragment : BaseFragment() {
 
-class DiscussionCommentsFragment : CoreFragment() {
-
-    companion object: Analytics(LogAnalytic()) {
-        @SuppressLint("LongLogTag")
-        fun capture(level: Int, message: () -> String) {
-            if (!BuildConfig.DEBUG) return
-            Log.println(level, "DiscussionCommentsFragment", message())
-        }
-
+    companion object : Analytics(LogAnalytic()) {
         fun build(
             /** Comments will be downloaded for selected article. */
             articleId: Int,
@@ -98,7 +88,7 @@ class DiscussionCommentsFragment : CoreFragment() {
         outState.putString(VIEW_MODEL_STATE_KEY, viewModel.toString())
     }
 
-    class Arguments(fragment: DiscussionCommentsFragment) : CoreFragment.Arguments(fragment) {
+    class Arguments(fragment: DiscussionCommentsFragment) : FragmentArguments(fragment) {
 
         var articleId: Int
             get() = fragmentArguments.getInt(ARTICLE_ID)

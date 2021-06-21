@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.comments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.*
+import com.makentoshe.habrachan.application.android.ExceptionController
+import com.makentoshe.habrachan.application.android.ExceptionHandler
+import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
+import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsEmptyStateController
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
@@ -26,14 +29,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
-class ArticleCommentsFragment : CoreFragment() {
+class ArticleCommentsFragment : BaseFragment() {
 
     companion object : Analytics(LogAnalytic()){
-        fun capture(level: Int, message: () -> String) {
-            if (!BuildConfig.DEBUG) return
-            Log.println(level, "ArticleCommentsFragment", message())
-        }
-
         fun build(articleId: Int, articleTitle: String) = ArticleCommentsFragment().apply {
             arguments.articleId = articleId
             arguments.articleTitle = articleTitle
@@ -117,7 +115,7 @@ class ArticleCommentsFragment : CoreFragment() {
         outState.putString(VIEW_MODEL_STATE_KEY, viewModel.toString())
     }
 
-    class Arguments(fragment: ArticleCommentsFragment) : CoreFragment.Arguments(fragment) {
+    class Arguments(fragment: ArticleCommentsFragment) : FragmentArguments(fragment) {
 
         var articleId: Int
             get() = fragmentArguments.getInt(ARTICLE_ID)

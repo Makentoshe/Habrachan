@@ -10,10 +10,10 @@ abstract class CoreFragment : Fragment() {
 
     abstract val arguments: Arguments
 
-    abstract class Arguments(private val fragment: CoreFragment) {
+    abstract class Arguments(private val fragment: Fragment) {
 
         init {
-            val fragment = fragment as Fragment
+            val fragment = fragment
             if (fragment.arguments == null) {
                 fragment.arguments = Bundle()
             }

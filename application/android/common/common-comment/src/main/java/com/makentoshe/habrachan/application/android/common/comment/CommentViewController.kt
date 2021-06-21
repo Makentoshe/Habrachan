@@ -31,7 +31,11 @@ class CommentViewController(private val holder: CommentViewHolder) {
         setVoteScore(comment.score)
         setTimestamp(comment.timePublished.time(holder.context, R.string.format_comment_time))
         setContent(CommentContent.Factory(holder.context).build(comment.message))
-        navigator?.let { navigator ->  holder.itemView.setOnClickListener { navigator.toDetailsScreen() } }
+        navigator?.let { navigator ->
+            holder.itemView.setOnClickListener {
+                navigator.toDetailsScreen(comment.commentId)
+            }
+        }
         return this
     }
 

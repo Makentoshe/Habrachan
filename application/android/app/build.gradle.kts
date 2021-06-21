@@ -70,6 +70,7 @@ dependencies {
     implementation(project(":application:android:core"))
     implementation(project(":application:android:database"))
     implementation(project(":application:android:analytics"))
+    implementation(project(":application:android:common:common-core"))
     implementation(project(":application:android:common:common-comment"))
 
     implementation(project(":entity"))

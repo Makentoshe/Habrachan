@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.CommentDetailsDialogFragment
 import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -14,7 +15,14 @@ class ArticleCommentsInjectingFragmentLifecycleCallback : FragmentManager.Fragme
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) = when (f) {
         is ArticleCommentsFragment -> injectArticleCommentsFragment(f)
         is DiscussionCommentsFragment -> injectDiscussionCommentsFragment(f)
+        is CommentDetailsDialogFragment -> injectCommentDetailsDialogFragment(f)
         else -> Unit
+    }
+
+    private fun injectCommentDetailsDialogFragment(fragment: CommentDetailsDialogFragment) {
+        val module = CommentDetailsModule(fragment)
+        val scope = Toothpick.openScopes(ApplicationScope::class, CommentDetailsScope::class)
+        scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
     private fun injectArticleCommentsFragment(fragment: ArticleCommentsFragment) {
