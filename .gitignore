@@ -19,7 +19,7 @@ build/
 
 # TeamCity files
 .teamcity/target
-!.teamcity/build/
+!.teamcity/src/build/
 
 # Local configuration file (sdk path, etc)
 local.properties

@@ -12,7 +12,7 @@ import kotlin.math.roundToInt
 class ArticleHtmlController(private val resources: Resources) {
 
     fun render(article: Article): String {
-        return render(article.textHtml ?: throw IllegalStateException("text_html is null"))
+        return render(article.text?.html ?: throw IllegalStateException("text_html is null"))
     }
 
     fun render(string: String) = render(Jsoup.parse(string))
@@ -37,6 +37,15 @@ class ArticleHtmlController(private val resources: Resources) {
         body.select("img").forEach { image ->
             // TODO check case when image placed in <a> tag and implement dialog for making decision
             image.attr("onclick", "onImageClickedListener(this);")
+
+            if (image.parent().tagName() == "figure") {
+                // Removes size attrs, mostly actual for PC only
+                image.removeAttr("width")
+                image.removeAttr("height")
+                // Removes possibly confluent text
+                image.removeAttr("alt")
+                image.removeAttr("title")
+            }
 //            val parent = image.parent()
 //            if (parent.`is`("a")) {
 //                parent.replaceWith(image)

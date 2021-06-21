@@ -1,17 +1,16 @@
-include(":application:android:common:common-core")
-include(":common-comment")
 rootProject.name = "Habrachan"
 
 include(":functional")
 
-include(":library")
-include(":library:network")
+include(":entity")
+include(":entity:entity-mobile")
+include(":entity:entity-native")
 
-include(":library:network-mobile")
-include(":library:network-mobile:network-mobile-test")
-
-include(":library:network-native")
-include(":library:network-native:network-native-test")
+include(":network")
+include(":network:network-mobile")
+include(":network:network-mobile:network-mobile-test")
+include(":network:network-native")
+include(":network:network-native:network-native-test")
 
 include(":application")
 include(":application:core")
@@ -22,8 +21,5 @@ include(":application:android:core")
 include(":application:android:database")
 include(":application:android:analytics")
 include(":application:android:common")
+include(":application:android:common:common-core")
 include(":application:android:common:common-comment")
-
-include(":entity")
-include(":entity:entity-mobile")
-include(":entity:entity-native")

@@ -5,7 +5,6 @@ import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.arena.GetArticlesArenaCache
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFragment
 import com.makentoshe.habrachan.application.android.screen.articles.model.AppendArticleAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesAdapter

@@ -3,10 +3,7 @@ package com.makentoshe.habrachan.application.android.database.record
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.makentoshe.habrachan.entity.Article
-import com.makentoshe.habrachan.entity.ArticleFlow
-import com.makentoshe.habrachan.entity.ArticleHub
-import com.makentoshe.habrachan.entity.article
+import com.makentoshe.habrachan.entity.*
 
 @Entity
 data class ArticleRecord2(
@@ -30,7 +27,7 @@ data class ArticleRecord2(
         ArticleAuthorRecord(article.author),
         article.commentsCount,
         article.favoritesCount,
-        article.textHtml,
+        article.text?.html,
         article.readingCount,
         article.score,
         article.timePublishedRaw,
@@ -51,7 +48,7 @@ data class ArticleRecord2(
         author.toArticleAuthor(),
         hubs,
         flows,
-        textHtml
+        textHtml?.let(::ArticleText)
     )
 
     companion object Types {

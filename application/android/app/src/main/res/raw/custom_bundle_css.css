@@ -10,11 +10,34 @@ h1 {
     padding: 5% 10%;
 }
 
+
+
+
 img {
     display: inline;
     height: auto;
     max-width: 100%;
 }
+
+figure img {
+    align-self: center;
+}
+
+figure {
+    height: auto;
+    max-width: 100%;
+    display: flex;
+    flex-flow: column;
+    margin: auto;
+}
+
+figcaption {
+    font: italic smaller sans-serif;
+    text-align: center;
+}
+
+
+
 
 pre {
     border: 1px solid #e5e8ec;

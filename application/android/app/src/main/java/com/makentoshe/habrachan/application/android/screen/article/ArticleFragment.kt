@@ -20,7 +20,6 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.application.android.screen.article.model.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
-import com.makentoshe.habrachan.application.android.screen.user.UserFragment
 import com.makentoshe.habrachan.network.response.GetArticleResponse2
 import com.makentoshe.habrachan.network.response.GetContentResponse
 import kotlinx.android.synthetic.main.fragment_article.*

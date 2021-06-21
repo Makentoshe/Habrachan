@@ -1,9 +1,11 @@
-import build.AndroidBuild
-import build.AndroidRelease
-import build.ApplicationCore
-import build.LibraryBuild
+import src.build.AndroidBuild
+import src.build.AndroidRelease
 import jetbrains.buildServer.configs.kotlin.v2019_2.project
 import jetbrains.buildServer.configs.kotlin.v2019_2.version
+import src.GithubVcsRoot
+import src.MetadataVcsRoot
+import src.Parameters
+import src.build.NetworkNativeNetworkTestBuild
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -34,10 +36,9 @@ project {
     vcsRoot(GithubVcsRoot)
     vcsRoot(MetadataVcsRoot)
 
-    buildType(LibraryBuild)
-    buildType(ApplicationCore)
     buildType(AndroidBuild)
     buildType(AndroidRelease)
+    buildType(NetworkNativeNetworkTestBuild)
 
     params {
         add(Parameters.Configuration.AndroidSdkUrl)

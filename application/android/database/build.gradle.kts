@@ -44,7 +44,7 @@ dependencies {
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
 
-    implementation(project(":library:network"))
+    implementation(project(":network"))
 
     // Gson
     // https://github.com/google/gson

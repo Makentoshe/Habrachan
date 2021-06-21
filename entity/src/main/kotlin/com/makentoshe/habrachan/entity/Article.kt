@@ -15,7 +15,7 @@ interface Article : ArticleId {
     val readingCount: Int
     val favoritesCount: Int
     val votesCount: Int
-    val textHtml: String?
+    val text: ArticleText?
 }
 
 val Article.timePublished: Date
@@ -34,7 +34,7 @@ fun article(
     author: ArticleAuthor,
     hubs: List<ArticleHub>,
     flows: List<ArticleFlow>,
-    textHtml: String?
+    articleText: ArticleText?
 ) = object : Article {
     override val articleId: Int = id
     override val title: String = title
@@ -47,6 +47,6 @@ fun article(
     override val author: ArticleAuthor = author
     override val flows: List<ArticleFlow> = flows
     override val hubs: List<ArticleHub> = hubs
-    override val textHtml = textHtml
+    override val text = articleText
     override val votesCount = votesCount
 }

@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.entity.mobiles
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.Article
+import com.makentoshe.habrachan.entity.ArticleText
 
 data class Article(
     @SerializedName("id")
@@ -52,8 +53,8 @@ data class Article(
     override val favoritesCount: Int
         get() = statistics.favoritesCount
 
-    override val textHtml: String
-        get() = leadData.textHtml
+    override val text: ArticleText?
+        get() = leadData.textHtml?.let(::ArticleText)
 
     override val votesCount: Int
         get() = statistics.votesCount

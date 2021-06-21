@@ -12,7 +12,7 @@ dependencies {
     implementation(kotlin("stdlib"))
 
     implementation(project(":entity"))
-    implementation(project(":library:network"))
+    implementation(project(":network"))
 
     // OkHttp - networking
     // https://github.com/square/okhttp/
