@@ -41,14 +41,15 @@ interface NativeArticlesApi {
     ): Call<ResponseBody>
 
     @PUT("api/v1/post/{id}/vote?vote=-1")
-    fun voteDown(
+    fun voteArticleDown(
         @Header("client") clientKey: String,
         @Header("token") token: String,
-        @Path("id") id: Int
+        @Path("id") id: Int,
+        @Query("reason") reason: Int
     ): Call<ResponseBody>
 
     @PUT("api/v1/post/{id}/vote?vote=1")
-    fun voteUp(
+    fun voteArticleUp(
         @Header("client") clientKey: String,
         @Header("token") token: String,
         @Path("id") id: Int

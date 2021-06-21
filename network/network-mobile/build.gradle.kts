@@ -17,6 +17,8 @@ dependencies {
     // Network module for access abstracts
     implementation(project(":network"))
 
+    implementation(project(":functional"))
+
     // Gson
     // https://github.com/google/gson
     val gson = "2.8.6"

@@ -10,18 +10,18 @@ import com.makentoshe.habrachan.network.userSession
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-class NativeLoginManager(
+class NativeLoginManager private constructor(
     private val api: NativeLoginApi,
     private val deserializer: NativeLoginDeserializer,
     private val manager: NativeGetMeManager?
-) : LoginManager<NativeLoginRequest> {
+) {
 
-    override fun request(userSession: UserSession, email: String, password: String): NativeLoginRequest {
+    fun request(userSession: UserSession, email: String, password: String): NativeLoginRequest {
         return NativeLoginRequest(userSession, email, password)
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun login(request: NativeLoginRequest): Result<LoginResponse> = try {
+    suspend fun login(request: NativeLoginRequest): Result<LoginResponse> = try {
         api.login(
             request.userSession.client, request.userSession.api, request.email, request.password
         ).execute().fold({ nativeResponseBody ->

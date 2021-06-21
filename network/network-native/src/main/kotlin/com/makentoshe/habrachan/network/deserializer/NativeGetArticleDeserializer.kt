@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.network.deserializer
 
 import com.makentoshe.habrachan.network.response.NativeGetArticleResponse
 
-open class NativeGetArticleDeserializer: GsonDeserializer() {
+open class NativeGetArticleDeserializer: NativeGsonDeserializer() {
 
     // article_success
     open fun body(json: String): Result<NativeGetArticleResponse.Factory> = try {

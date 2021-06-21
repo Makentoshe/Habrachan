@@ -20,7 +20,8 @@ data class ArticleRecord2(
     val title: String,
     val votesCount: Int = 0,
     /** One of the SpecTypes: "all", "top", "interesting", "subscription" or "" (empty) */
-    val type: String
+    val type: String,
+    val voteValue: Double?
 ) {
     constructor(type: String, article: Article) : this(
         article.articleId,
@@ -33,7 +34,8 @@ data class ArticleRecord2(
         article.timePublishedRaw,
         article.title,
         article.votesCount,
-        type
+        type,
+        article.vote.value
     )
 
     fun toArticle(hubs: List<ArticleHub>, flows: List<ArticleFlow>) = article(
@@ -48,7 +50,8 @@ data class ArticleRecord2(
         author.toArticleAuthor(),
         hubs,
         flows,
-        textHtml?.let(::ArticleText)
+        textHtml?.let(::ArticleText),
+        ArticleVote(voteValue)
     )
 
     companion object Types {

@@ -5,7 +5,7 @@ import com.makentoshe.habrachan.network.exceptions.MobileGetUserDeserializerExce
 import com.makentoshe.habrachan.network.request.MobileGetUserRequest
 import com.makentoshe.habrachan.network.response.MobileGetUserResponse
 
-class MobileGetUserDeserializer : GsonDeserializer() {
+class MobileGetUserDeserializer : MobileGsonDeserializer() {
 
     fun body(request: MobileGetUserRequest, json: String): Result<MobileGetUserResponse> = try {
         val user = gson.fromJson(json, User::class.java)

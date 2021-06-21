@@ -9,9 +9,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.analytics.Analytics
@@ -20,10 +22,16 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.application.android.screen.article.model.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
+import com.makentoshe.habrachan.entity.articleId
+import com.makentoshe.habrachan.functional.fold
+import com.makentoshe.habrachan.network.exception.NativeVoteArticleException
+import com.makentoshe.habrachan.network.request.ArticleVote
 import com.makentoshe.habrachan.network.response.GetArticleResponse2
 import com.makentoshe.habrachan.network.response.GetContentResponse
+import com.makentoshe.habrachan.network.response.VoteArticleResponse
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.android.synthetic.main.fragment_article_toolbar.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -31,7 +39,7 @@ import toothpick.ktp.delegate.inject
 
 class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
-    companion object: Analytics(LogAnalytic()) {
+    companion object : Analytics(LogAnalytic()) {
 
         fun build(articleId: Int) = ArticleFragment().apply {
             arguments.articleId = articleId
@@ -53,11 +61,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
     private val articleHtmlController by inject<ArticleHtmlController>()
     private val javaScriptInterface by inject<JavaScriptInterface>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_article, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        inflater.inflate(R.layout.fragment_article, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_article_exception))
@@ -82,6 +87,11 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
                 navigator.toArticleContentScreen(it)
             }
         }
+        lifecycleScope.launch {
+            viewModel2.voteArticle.collectLatest { response ->
+                response.fold(::onVoteArticleSuccess, ::onVoteArticleFailure)
+            }
+        }
 
         exceptionController.setRetryButton {
             exceptionController.hide()
@@ -100,11 +110,28 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_toolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
 
         fragment_article_bottom_voteup.setOnClickListener {
-            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+            val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Up)
+            capture(analyticEvent("Votedown(spec=$spec)"))
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel2.voteArticleSpecChannel.send(spec)
+            }
         }
 
         fragment_article_bottom_votedown.setOnClickListener {
-            Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_LONG).show()
+            lifecycleScope.launch(Dispatchers.IO) {
+                ArticleVoteDownReasonDialogFragment.show(childFragmentManager)
+            }
+        }
+
+        @Suppress("USELESS_CAST")
+        val fragmentManager = childFragmentManager as FragmentManager
+        fragmentManager.setFragmentResultListener(ArticleVoteDownReasonDialogFragment.request, this) { _, result ->
+            val reason = result.getSerializable(ArticleVoteDownReasonDialogFragment.key) as ArticleVote.Down.Reason
+            val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Down(reason))
+            capture(analyticEvent("Votedown(spec=$spec)"))
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel2.voteArticleSpecChannel.send(spec)
+            }
         }
     }
 
@@ -148,10 +175,15 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_bottom_voteview.text = response.article.score.toString()
         fragment_article_bottom_reading_count.text = response.article.readingCount.toString()
         fragment_article_bottom_comments_count.text = response.article.commentsCount.toString()
+        fragment_article_bottom.visibility = View.VISIBLE
         fragment_article_bottom_comments.setOnClickListener {
             navigator.toArticleCommentsScreen(response.article)
         }
-        fragment_article_bottom.visibility = View.VISIBLE
+
+        when (response.article.vote.value) {
+            1.0 -> setVoteUpIcon()
+            -1.0 -> setVoteDownIcon()
+        }
     }
 
     private fun onArticleReceivedFailure(exception: Throwable) {
@@ -177,6 +209,44 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
         fragment_article_avatar_progress.visibility = View.GONE
     }
 
+    private fun onVoteArticleSuccess(response: VoteArticleResponse) {
+        fragment_article_bottom_voteview.text = response.score.toString()
+        when (response.request.articleVote) {
+            is ArticleVote.Up -> setVoteUpIcon()
+            is ArticleVote.Down -> setVoteDownIcon()
+        }
+    }
+
+    private fun setVoteUpIcon() = fragment_article_bottom_voteup.apply {
+        setColorFilter(ContextCompat.getColor(requireContext(), R.color.positive))
+    }.setImageResource(R.drawable.ic_arrow_bold_solid)
+
+    private fun setVoteDownIcon() = fragment_article_bottom_votedown.apply {
+        setColorFilter(ContextCompat.getColor(requireContext(), R.color.negative))
+    }.setImageResource(R.drawable.ic_arrow_bold_solid)
+
+    // todo show a snackbar with description
+    private fun onVoteArticleFailure(throwable: Throwable?) {
+        if (throwable !is NativeVoteArticleException) return
+
+        if (throwable.code == 401) return showSnackbar(
+            R.string.article_vote_action_login_require_text, R.string.article_vote_action_login_require_button
+        ) {
+            navigator.navigateToLoginScreen()
+        }
+
+        if (throwable.code == 400 && throwable.request.articleVote is ArticleVote.Down) return showSnackbar(
+            R.string.article_vote_action_negative_describe_text, R.string.article_vote_action_negative_describe_button
+        )
+    }
+
+    private fun showSnackbar(
+        @StringRes
+        stringText: Int,
+        @StringRes
+        actionString: Int, action: (View) -> Unit = {}
+    ) = Snackbar.make(requireView(), stringText, Snackbar.LENGTH_LONG).setAction(actionString, action).show()
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(VIEW_MODEL_STATE_KEY, viewModel2.toString())
@@ -184,9 +254,7 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
     override fun onWebReceivedError(
         view: WebView?, errorCode: Int, description: String?, failingUrl: String?
-    ) {
-        onArticleReceivedFailure(Exception(description))
-    }
+    ) = onArticleReceivedFailure(Exception(description))
 
     class Arguments(articleFragment: ArticleFragment) : CoreFragment.Arguments(articleFragment) {
 

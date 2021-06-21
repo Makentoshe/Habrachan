@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.entity.natives
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.ArticleText
+import com.makentoshe.habrachan.entity.ArticleVote
 
 data class Article(
     @SerializedName("id")
@@ -76,15 +77,19 @@ data class Article(
     @SerializedName("url")
     val url: String?,
     @SerializedName("vote")
-    val vote: Double?,
+    private val internalVoteValue: Double?,
     @SerializedName("votes_count")
     override val votesCount: Int  = 0,
     @SerializedName("is_can_comment")
-    val isCanComment: Boolean?
-//    @SerializedName("voting")
-//    val voting: Voting? = null
+    val isCanComment: Boolean?,
+    @SerializedName("voting")
+    val voting: Voting? = null
 ) : Article {
 
     override val articleId: Int
         get() = id
+
+    override val vote: ArticleVote
+        get() = ArticleVote(internalVoteValue)
+
 }

@@ -11,5 +11,7 @@ data class ArticleHub(
     @SerializedName("title")
     override val title: String, // SkillFactory corporate blog
     @SerializedName("type")
-    val type: String // corporative
+    val type: String, // corporative
+    @SerializedName("relatedData")
+    val relatedData: ArticleHubRelatedData?
 ): ArticleHub

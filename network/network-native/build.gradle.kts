@@ -16,6 +16,9 @@ dependencies {
     implementation(project(":entity:entity-native"))
     // Network module for access abstracts
     implementation(project(":network"))
+    
+    // Functional module for access support types
+    implementation(project(":functional"))
 
     // Gson
     // https://github.com/google/gson
