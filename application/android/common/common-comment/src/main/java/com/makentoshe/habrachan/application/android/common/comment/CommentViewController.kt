@@ -26,10 +26,9 @@ class CommentViewController(private val holder: CommentViewHolder) {
     }
 
     fun default(comment: Comment): CommentViewController {
-        setStubAvatar()
+        setStubAvatar().setTimestamp(comment)
         setAuthor(comment.author.login)
         setVoteScore(comment.score)
-        setTimestamp(comment.timePublished.time(holder.context, R.string.format_comment_time))
         setContent(CommentContent.Factory(holder.context).build(comment.message))
         navigator?.let { navigator ->
             holder.itemView.setOnClickListener {
@@ -79,6 +78,11 @@ class CommentViewController(private val holder: CommentViewHolder) {
 
     fun setTimestamp(timestamp: String): CommentViewController {
         holder.timestampView.text = timestamp
+        return this
+    }
+
+    fun setTimestamp(comment: Comment): CommentViewController {
+        setTimestamp(comment.timePublished.time(holder.context, R.string.format_comment_time))
         return this
     }
 

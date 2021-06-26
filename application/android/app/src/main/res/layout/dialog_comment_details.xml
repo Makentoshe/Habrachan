@@ -5,8 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
+        layout="@layout/layout_comment_item"
         android:id="@+id/dialog_comment_details_comment"
-        layout="@layout/layout_comment_item" />
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/dimenS" />
 
     <View
         style="@style/Habrachan.Separator"
@@ -19,7 +22,7 @@
         android:id="@+id/dialog_comment_details_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="dialog_comment_details_menu_test"/>
+        app:constraint_referenced_ids="dialog_comment_details_menu_test" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Habrachan.Button.Text"

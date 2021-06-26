@@ -261,3 +261,8 @@ fun <T> Result<T>.onSuccess(action: (value: T) -> Unit): Result<T> {
 fun <T> Result<T>.either(): Either<T, Throwable> {
     return fold({ Either.Left(it) }, { Either.Right(it) })
 }
+
+
+fun <T> kotlin.Result<T>.toResult(): Result<T> {
+    return fold({ Result.success(it) }, { Result.failure(it) })
+}
