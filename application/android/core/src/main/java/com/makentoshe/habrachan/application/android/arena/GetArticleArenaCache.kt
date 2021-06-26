@@ -2,7 +2,10 @@ package com.makentoshe.habrachan.application.android.arena
 
 import android.util.Log
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
-import com.makentoshe.habrachan.application.android.database.record.*
+import com.makentoshe.habrachan.application.android.database.record.ArticleAuthorRecord
+import com.makentoshe.habrachan.application.android.database.record.ArticleHubCrossRef
+import com.makentoshe.habrachan.application.android.database.record.ArticleRecord2
+import com.makentoshe.habrachan.application.android.database.record.HubRecord2
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.request.GetArticleRequest2
@@ -40,10 +43,12 @@ class GetArticleArenaCache(
 
         cacheDatabase.articlesDao().insert(ArticleRecord2(ArticleRecord2.UNDEFINED, value.article))
         cacheDatabase.articleAuthorDao().insert(ArticleAuthorRecord(value.article.author))
-        value.article.flows.forEach { flow ->
-            cacheDatabase.flowDao().insert(FlowRecord2(flow))
-            cacheDatabase.articleFlowCrossRefDao().insert(ArticleFlowCrossRef(value.article.articleId, flow.flowId))
-        }
+
+//        TODO[26.06.2021] - list of flows returns Flow(id=0, name=null, alias=null, url=https://habr.com/ru/flows//, path=/flows//, hubsCount=null) for each element
+//        value.article.flows.forEach { flow ->
+//            cacheDatabase.flowDao().insert(FlowRecord2(flow))
+//            cacheDatabase.articleFlowCrossRefDao().insert(ArticleFlowCrossRef(value.article.articleId, flow.flowId))
+//        }
         value.article.hubs.forEach { hub ->
             cacheDatabase.hubDao().insert(HubRecord2(hub))
             cacheDatabase.articleHubCrossRefDao().insert(ArticleHubCrossRef(value.article.articleId, hub.hubId))
