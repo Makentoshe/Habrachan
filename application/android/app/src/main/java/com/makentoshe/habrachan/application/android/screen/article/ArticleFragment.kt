@@ -24,7 +24,7 @@ import com.makentoshe.habrachan.application.android.screen.article.navigation.Ar
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.fold
-import com.makentoshe.habrachan.network.exception.NativeVoteArticleException
+import com.makentoshe.habrachan.network.NativeVoteArticleException
 import com.makentoshe.habrachan.network.request.ArticleVote
 import com.makentoshe.habrachan.network.response.GetArticleResponse2
 import com.makentoshe.habrachan.network.response.GetContentResponse

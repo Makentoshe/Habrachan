@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.application.android.AndroidUserSession
 import com.makentoshe.habrachan.application.android.screen.login.model.NativeLoginSpec
-import com.makentoshe.habrachan.network.manager.NativeLoginManager
+import com.makentoshe.habrachan.functional.onSuccess
+import com.makentoshe.habrachan.network.NativeLoginManager
 import com.makentoshe.habrachan.network.response.LoginResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel

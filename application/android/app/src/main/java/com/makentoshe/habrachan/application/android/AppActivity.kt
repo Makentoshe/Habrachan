@@ -6,11 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.navigation.StackSupportAppNavigator
-import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
-import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
-import com.makentoshe.habrachan.entity.articleId
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
@@ -29,6 +25,8 @@ class AppActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState != null) return
+
+        String(this.resources.openRawResource(R.raw.article).readBytes())
 
         when (intent.action) {
             Intent.ACTION_MAIN -> {

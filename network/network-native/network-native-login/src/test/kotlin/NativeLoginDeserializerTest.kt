@@ -1,8 +1,6 @@
-package com.makentoshe.habrachan.network
-
-import com.makentoshe.habrachan.network.deserializer.NativeLoginDeserializer
-import com.makentoshe.habrachan.network.exception.NativeLoginResponseException
-import com.makentoshe.habrachan.network.request.NativeLoginRequest
+import com.makentoshe.habrachan.network.NativeLoginDeserializer
+import com.makentoshe.habrachan.network.NativeLoginException
+import com.makentoshe.habrachan.network.NativeLoginRequest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -14,7 +12,7 @@ class NativeLoginDeserializerTest: UnitTest() {
     fun shouldDeserializeLoginFailureWithMissingFields() {
         val request = NativeLoginRequest(userSession, "", "")
         val json = getResourceString("login_failure_1.json")
-        val exception = deserializer.error(request, json).exceptionOrNull() as NativeLoginResponseException
+        val exception = deserializer.error(request, json).exceptionOrNull() as NativeLoginException
 
         assertEquals(request, exception.request)
         assertEquals(json, exception.raw)
@@ -28,7 +26,7 @@ class NativeLoginDeserializerTest: UnitTest() {
     fun shouldDeserializeLoginFailureWithAccountError() {
         val request = NativeLoginRequest(userSession, "", "")
         val json = getResourceString("login_failure_2.json")
-        val exception = deserializer.error(request, json).exceptionOrNull() as NativeLoginResponseException
+        val exception = deserializer.error(request, json).exceptionOrNull() as NativeLoginException
 
         assertEquals(request, exception.request)
         assertEquals(json, exception.raw)

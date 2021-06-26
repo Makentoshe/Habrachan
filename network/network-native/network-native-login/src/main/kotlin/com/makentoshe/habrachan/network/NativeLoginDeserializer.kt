@@ -1,7 +1,7 @@
-package com.makentoshe.habrachan.network.deserializer
+package com.makentoshe.habrachan.network
 
-import com.makentoshe.habrachan.network.exception.NativeLoginResponseException
-import com.makentoshe.habrachan.network.request.NativeLoginRequest
+import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.network.deserializer.NativeGsonDeserializer
 import com.makentoshe.habrachan.network.response.LoginResponse
 
 class NativeLoginDeserializer : NativeGsonDeserializer() {
@@ -13,7 +13,7 @@ class NativeLoginDeserializer : NativeGsonDeserializer() {
     }
 
     fun error(request: NativeLoginRequest, json: String): Result<LoginResponse> {
-        val exception = gson.fromJson(json, NativeLoginResponseException.Factory::class.java).build(request, json)
+        val exception = gson.fromJson(json, NativeLoginException.Factory::class.java).build(request, json)
         return Result.failure(exception)
     }
 }
