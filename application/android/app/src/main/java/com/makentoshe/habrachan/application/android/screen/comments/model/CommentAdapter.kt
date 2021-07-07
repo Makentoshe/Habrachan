@@ -1,6 +1,5 @@
 package com.makentoshe.habrachan.application.android.screen.comments.model
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -36,12 +35,9 @@ class CommentAdapter(
         else -> super.getItemViewType(position)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
-            1 -> BlockViewHolder(inflater.inflate(R.layout.layout_comment_block, parent, false))
-            else -> CommentViewHolder(inflater.inflate(R.layout.layout_comment_item, parent, false))
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
+        1 -> BlockViewHolder.Factory().create(parent.context, parent)
+        else -> CommentViewHolder.Factory().create(parent.context, parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

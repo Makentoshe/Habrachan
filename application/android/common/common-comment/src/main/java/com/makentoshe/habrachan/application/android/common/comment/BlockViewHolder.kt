@@ -14,10 +14,10 @@ class BlockViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     class Factory {
 
-        fun create(context: Context, parent: ViewGroup? = null): CommentViewHolder {
+        fun create(context: Context, parent: ViewGroup? = null): BlockViewHolder {
             val inflater = LayoutInflater.from(context)
             val view = inflater.inflate(R.layout.layout_comment_block, parent, false)
-            return CommentViewHolder(view)
+            return BlockViewHolder(view)
         }
     }
 }
