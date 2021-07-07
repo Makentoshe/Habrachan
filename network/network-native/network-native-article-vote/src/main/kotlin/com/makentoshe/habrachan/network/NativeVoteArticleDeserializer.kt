@@ -1,9 +1,7 @@
-package com.makentoshe.habrachan.network.deserializer
+package com.makentoshe.habrachan.network
 
 import com.makentoshe.habrachan.functional.Result
-import com.makentoshe.habrachan.network.exception.NativeVoteArticleException
-import com.makentoshe.habrachan.network.request.NativeVoteArticleRequest
-import com.makentoshe.habrachan.network.response.NativeVoteArticleResponse
+import com.makentoshe.habrachan.network.deserializer.NativeGsonDeserializer
 
 internal class NativeVoteArticleDeserializer : NativeGsonDeserializer() {
 

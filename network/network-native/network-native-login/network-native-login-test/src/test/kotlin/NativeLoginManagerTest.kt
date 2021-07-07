@@ -1,56 +1,54 @@
-package com.makentoshe.habrachan.network.manager
-
+import com.makentoshe.habrachan.network.NativeLoginException
+import com.makentoshe.habrachan.network.NativeLoginManager
 import com.makentoshe.habrachan.network.deserializer.NativeGetMeDeserializer
-import com.makentoshe.habrachan.network.deserializer.NativeLoginDeserializer
-import com.makentoshe.habrachan.network.userSession
+import com.makentoshe.habrachan.network.manager.NativeGetMeManager
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
+import org.junit.Assert.assertEquals
 import org.junit.Ignore
 import org.junit.Test
 
-class NativeLoginManagerTest {
+class NativeLoginManagerTest : UnitTest() {
 
     @Test
-    @Ignore
+    @Ignore("proper email and password should be provided")
     fun networkSuccess() = runBlocking {
-        val userSession = userSession("85cab69095196f3.89453480", "173984950848a2d27c0cc1c76ccf3d6d3dc8255b")
         val meManager = NativeGetMeManager.Builder(OkHttpClient(), NativeGetMeDeserializer()).build()
-        val manager = NativeLoginManager.Builder(OkHttpClient(), NativeLoginDeserializer(), meManager).build()
+        val manager = NativeLoginManager.Builder(OkHttpClient(), meManager).build()
         val request = manager.request(userSession, "", "")
         val response = manager.login(request)
-        println(response)
     }
 
     @Test
-    @Ignore
     fun networkFailureInvalidMail() = runBlocking {
-        val userSession = userSession("85cab69095196f3.89453480", "173984950848a2d27c0cc1c76ccf3d6d3dc8255b")
         val meManager = NativeGetMeManager.Builder(OkHttpClient(), NativeGetMeDeserializer()).build()
-        val manager = NativeLoginManager.Builder(OkHttpClient(), NativeLoginDeserializer(), meManager).build()
+        val manager = NativeLoginManager.Builder(OkHttpClient(), meManager).build()
         val request = manager.request(userSession, "a@b.com", "123")
         val response = manager.login(request)
-        println(response)
+
+        val exception = response.exceptionOrNull() as? NativeLoginException ?: throw IllegalStateException()
+        assertEquals(400, exception.code)
     }
 
     @Test
-    @Ignore
     fun networkFailureMissingMail() = runBlocking {
-        val userSession = userSession("85cab69095196f3.89453480", "173984950848a2d27c0cc1c76ccf3d6d3dc8255b")
         val meManager = NativeGetMeManager.Builder(OkHttpClient(), NativeGetMeDeserializer()).build()
-        val manager = NativeLoginManager.Builder(OkHttpClient(), NativeLoginDeserializer(), meManager).build()
+        val manager = NativeLoginManager.Builder(OkHttpClient(), meManager).build()
         val request = manager.request(userSession, "", "123")
         val response = manager.login(request)
-        println(response)
+
+        val exception = response.exceptionOrNull() as? NativeLoginException ?: throw IllegalStateException()
+        assertEquals(400, exception.code)
     }
 
     @Test
-    @Ignore
     fun networkFailureMissingPassword() = runBlocking {
-        val userSession = userSession("85cab69095196f3.89453480", "173984950848a2d27c0cc1c76ccf3d6d3dc8255b")
         val meManager = NativeGetMeManager.Builder(OkHttpClient(), NativeGetMeDeserializer()).build()
-        val manager = NativeLoginManager.Builder(OkHttpClient(), NativeLoginDeserializer(), meManager).build()
+        val manager = NativeLoginManager.Builder(OkHttpClient(), meManager).build()
         val request = manager.request(userSession, "my@mail.com", "")
         val response = manager.login(request)
-        println(response)
+
+        val exception = response.exceptionOrNull() as? NativeLoginException ?: throw IllegalStateException()
+        assertEquals(400, exception.code)
     }
 }

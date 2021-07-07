@@ -1,19 +1,15 @@
-package com.makentoshe.habrachan.network.manager
+package com.makentoshe.habrachan.network
 
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.functional.Result
-import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.NativeArticlesApi
-import com.makentoshe.habrachan.network.deserializer.NativeVoteArticleDeserializer
-import com.makentoshe.habrachan.network.exception.NativeVoteArticleException
-import com.makentoshe.habrachan.network.fold
+import com.makentoshe.habrachan.network.manager.VoteArticleManager
 import com.makentoshe.habrachan.network.request.ArticleVote
-import com.makentoshe.habrachan.network.request.NativeVoteArticleRequest
 import com.makentoshe.habrachan.network.response.VoteArticleResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-open class NativeVoteArticleManager internal constructor(
+class NativeVoteArticleManager private constructor(
     private val api: NativeArticlesApi, private val deserializer: NativeVoteArticleDeserializer
 ) : VoteArticleManager<NativeVoteArticleRequest> {
 

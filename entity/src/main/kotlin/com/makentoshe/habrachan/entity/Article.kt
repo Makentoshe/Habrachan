@@ -7,8 +7,9 @@ interface Article : ArticleId {
     val title: String
     val timePublishedRaw: String
     val hubs: List<ArticleHub>
+    // TODO[26.06.2021] - list of flows returns Flow(id=0, name=null, alias=null, url=https://habr.com/ru/flows//, path=/flows//, hubsCount=null) for each element
     val flows: List<ArticleFlow>
-//    val postType: Any // TODO string or int, so it is time to create a enum later
+    // val postType: Any // TODO string or int, so it is time to create a enum later
     val author: ArticleAuthor
     val score: Int
     val commentsCount: Int
@@ -20,7 +21,7 @@ interface Article : ArticleId {
 }
 
 val Article.timePublished: Date
-    get() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(timePublishedRaw)
+    get() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(timePublishedRaw)
 
 fun article(
     id: Int,

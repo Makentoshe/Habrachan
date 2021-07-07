@@ -1,19 +1,18 @@
-package com.makentoshe.habrachan.network.exception
+package com.makentoshe.habrachan.network
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.network.request.LoginRequest
-import com.makentoshe.habrachan.network.request.NativeLoginRequest
 
-data class NativeLoginResponseException(
-    override val request: LoginRequest,
-    override val raw: String,
-    override val email: String?, // MISSING or INVALID
-    override val password: String?, // MISSING
-    override val other: String?,
+data class NativeLoginException(
+    val request: LoginRequest,
+    val raw: String,
+    val email: String?, // MISSING or INVALID
+    val password: String?, // MISSING
+    val other: String?,
     val code: Int,
     val data: Any?,
     override val message: String
-) : LoginResponseException() {
+) : Throwable(){
 
     data class Factory(
         @SerializedName("additional")
@@ -26,13 +25,13 @@ data class NativeLoginResponseException(
         val message: String // Bad request
     ) {
 
-        fun build(request: NativeLoginRequest, raw: String): NativeLoginResponseException {
+        fun build(request: NativeLoginRequest, raw: String): NativeLoginException {
             val errors = (additional as Map<String, Any>)["errors"]
             val other = if (errors is String) errors else null
             val list = if (errors is List<*>) errors as List<Map<String, String>> else null
             val email = list?.find { it["field"] == "email" }?.get("key")
             val password = list?.find { it["field"] == "password"}?.get("key")
-            return NativeLoginResponseException(request, raw, email, password, other, code, data, message)
+            return NativeLoginException(request, raw, email, password, other, code, data, message)
         }
     }
 }

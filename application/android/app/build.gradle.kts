@@ -1,4 +1,4 @@
-import java.util.*
+//import java.util.*
 
 plugins {
     id("com.android.application")
@@ -19,14 +19,14 @@ android {
         applicationId = "com.makentoshe.habrachan"
         minSdkVersion(21)
         targetSdkVersion(29)
-        versionCode = 7
-        versionName = "0.5.2"
+        versionCode = 8
+        versionName = "0.6.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val localPropertiesFile = project.rootProject.file("local.properties")
-        if (localPropertiesFile.exists() && localPropertiesFile.isFile) {
-            val properties = Properties().apply { load(localPropertiesFile.inputStream()) }
-        }
+//        val localPropertiesFile = project.rootProject.file("local.properties")
+//        if (localPropertiesFile.exists() && localPropertiesFile.isFile) {
+//            val properties = Properties().apply { load(localPropertiesFile.inputStream()) }
+//        }
 //        buildConfigField("String", "API_ANALYTICS", "\"${properties["api.analytics"]!!}\"")
         buildConfigField("String", "CLIENT_KEY", "\"85cab69095196f3.89453480\"")
         buildConfigField("String", "API_KEY", "\"173984950848a2d27c0cc1c76ccf3d6d3dc8255b\"")
@@ -82,6 +82,8 @@ dependencies {
 
     implementation(project(":network"))
     implementation(project(":network:network-native"))
+    implementation(project(":network:network-native:network-native-login"))
+    implementation(project(":network:network-native:network-native-article-vote"))
     implementation(project(":network:network-mobile"))
     implementation(project(":network:network-mobile:network-mobile-login"))
 

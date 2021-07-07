@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.navigation.StackSupportAppNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
@@ -28,7 +29,7 @@ class AppActivity : AppCompatActivity() {
 
         when (intent.action) {
             Intent.ACTION_MAIN -> {
-                val screen = ArticleCommentsScreen(562536, "Custom Test title")
+                val screen = ArticlesFlowScreen()
                 router.newRootScreen(screen)
             }
         }

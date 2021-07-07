@@ -7,11 +7,16 @@ include(":entity:entity-mobile")
 include(":entity:entity-native")
 
 include(":network")
+
 include(":network:network-mobile")
 include(":network:network-mobile:network-mobile-login")
 include(":network:network-mobile:network-mobile-test")
+
 include(":network:network-native")
 include(":network:network-native:network-native-test")
+include(":network:network-native:network-native-login")
+include("network:network-native:network-native-article-vote")
+include(":network:network-native:network-native-login:network-native-login-test")
 
 include(":application")
 include(":application:core")

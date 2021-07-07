@@ -1,6 +1,7 @@
-package com.makentoshe.habrachan.network.exception
+package com.makentoshe.habrachan.network
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.network.exception.VoteArticleDeserializerException
 import com.makentoshe.habrachan.network.request.VoteArticleRequest
 
 data class NativeVoteArticleException(

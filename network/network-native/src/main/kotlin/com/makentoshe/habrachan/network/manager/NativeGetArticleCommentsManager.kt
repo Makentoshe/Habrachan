@@ -18,12 +18,15 @@ class NativeGetArticleCommentsManager(
         return NativeGetArticleCommentsRequest(userSession, articleId(articleId))
     }
 
-    override suspend fun comments(request: NativeGetArticleCommentsRequest) : Result<NativeGetArticleCommentsResponse> {
-        return api.getComments(request.session.client, request.session.token, request.session.api, request.articleId.articleId).execute().fold({
+    @Suppress("BlockingMethodInNonBlockingContext") // suspend function
+    override suspend fun comments(request: NativeGetArticleCommentsRequest) : Result<NativeGetArticleCommentsResponse> = try {
+        api.getComments(request.session.client, request.session.token, request.session.api, request.articleId.articleId).execute().fold({
             deserializer.body(request, it.string())
         }, {
             deserializer.error(request, it.string())
         })
+    } catch (exception: Exception) {
+        Result.failure(exception)
     }
 
     class Builder(private val client: OkHttpClient, private val deserializer: NativeGetCommentsDeserializer) {

@@ -5,9 +5,7 @@
 
 package com.makentoshe.habrachan.functional
 
-class Result<out T> internal constructor(
-    internal val value: Any?
-) : java.io.Serializable {
+class Result<out T> internal constructor(internal val value: Any?) : java.io.Serializable {
 
     /**
      * Returns `true` if this instance represents a successful outcome.
@@ -167,6 +165,15 @@ fun <R, T : R> Result<T>.getOrDefault(defaultValue: R): R {
  */
 fun <R, T> Result<T>.fold(
     onSuccess: (value: T) -> R, onFailure: (exception: Throwable) -> R
+): R {
+    return when (val exception = exceptionOrNull()) {
+        null -> onSuccess(value as T)
+        else -> onFailure(exception)
+    }
+}
+
+suspend fun <R, T> Result<T>.suspendFold(
+    onSuccess: suspend (value: T) -> R, onFailure: suspend (exception: Throwable) -> R
 ): R {
     return when (val exception = exceptionOrNull()) {
         null -> onSuccess(value as T)
