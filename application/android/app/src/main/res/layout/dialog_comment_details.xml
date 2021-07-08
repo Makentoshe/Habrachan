@@ -9,7 +9,7 @@
         android:id="@+id/dialog_comment_details_comment"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/dimenS" />
+        android:layout_marginBottom="@dimen/dimenMS" />
 
     <View
         style="@style/Habrachan.Separator"

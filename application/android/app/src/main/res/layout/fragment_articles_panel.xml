@@ -25,7 +25,7 @@
         android:layout_height="@dimen/heightL"
         app:singleSelection="true"
         app:selectionRequired="true"
-        android:layout_marginHorizontal="@dimen/dimenS"
+        android:layout_marginHorizontal="@dimen/dimenMS"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">

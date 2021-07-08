@@ -22,10 +22,10 @@
     <dimen name="dimen2XL">24dp</dimen>
     <dimen name="dimenXL">20dp</dimen>
     <dimen name="dimenL">16dp</dimen>
-    <dimen name="dimenM">12dp</dimen>
-    <dimen name="dimenS">8dp</dimen>
-    <dimen name="dimenXS">4dp</dimen>
-    <dimen name="dimen2XS">2dp</dimen>
+    <dimen name="dimenML">12dp</dimen>
+    <dimen name="dimenMS">8dp</dimen>
+    <dimen name="dimenSM">4dp</dimen>
+    <dimen name="dimenSS">2dp</dimen>
 
     <!-- Elements -->
     <dimen name="heightXS">16dp</dimen>

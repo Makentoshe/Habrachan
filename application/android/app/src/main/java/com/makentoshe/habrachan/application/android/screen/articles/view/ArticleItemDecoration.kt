@@ -22,7 +22,7 @@ class ArticleItemDecoration(
         private const val itemWidth = 2
 
         fun from(context: Context): ArticleItemDecoration {
-            val margin = context.resources.getDimension(R.dimen.dimenS)
+            val margin = context.resources.getDimension(R.dimen.dimenMS)
             val color = ContextCompat.getColor(context, R.color.brand_dark)
             return ArticleItemDecoration(color, margin)
         }

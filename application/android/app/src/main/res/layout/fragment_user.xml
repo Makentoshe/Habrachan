@@ -95,7 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dimenL"
-        android:layout_marginTop="@dimen/dimenS"
+        android:layout_marginTop="@dimen/dimenMS"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_user_counters_barrier" />
@@ -106,8 +106,8 @@
         android:layout_height="@dimen/heightL"
         android:orientation="horizontal"
         android:baselineAligned="false"
-        android:layout_marginTop="@dimen/dimenXS"
-        android:layout_marginHorizontal="@dimen/dimenS"
+        android:layout_marginTop="@dimen/dimenSM"
+        android:layout_marginHorizontal="@dimen/dimenMS"
         app:layout_constraintTop_toBottomOf="@id/fragment_user_speciality">
 
         <LinearLayout

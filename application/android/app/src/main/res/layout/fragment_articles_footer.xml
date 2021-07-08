@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="@dimen/dimenM" />
+        app:layout_constraintGuide_begin="@dimen/dimenML" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/fragment_articles_footer_guideline_start"
@@ -50,7 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dimenS"
+        android:layout_marginTop="@dimen/dimenMS"
         app:layout_constraintTop_toBottomOf="@id/fragment_articles_footer_title"
         app:layout_constraintStart_toStartOf="@id/fragment_articles_footer_guideline_start"
         app:layout_constraintEnd_toEndOf="@id/fragment_articles_footer_guideline_end" />
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/retry"
-        android:layout_marginTop="@dimen/dimenM"
+        android:layout_marginTop="@dimen/dimenML"
         app:layout_constraintTop_toBottomOf="@id/fragment_articles_footer_message"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

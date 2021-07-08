@@ -7,10 +7,10 @@
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:paddingStart="@dimen/dimenM"
-    android:paddingTop="@dimen/dimenS"
-    android:paddingEnd="@dimen/dimenM"
-    android:paddingBottom="@dimen/dimenS">
+    android:paddingStart="@dimen/dimenML"
+    android:paddingTop="@dimen/dimenMS"
+    android:paddingEnd="@dimen/dimenML"
+    android:paddingBottom="@dimen/dimenMS">
 
     <TextView
         android:id="@+id/time_published"
@@ -42,7 +42,7 @@
         style="@style/Habrachan.Text.Support"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimenS"
+        android:layout_marginTop="@dimen/dimenMS"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <androidx.constraintlayout.widget.Barrier
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:barrierMargin="@dimen/dimenS"
+        app:barrierMargin="@dimen/dimenMS"
         app:constraint_referenced_ids="hubs_titles" />
 
     <ImageView
@@ -68,7 +68,7 @@
         style="@style/Habrachan.Text.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimenXS"
+        android:layout_marginStart="@dimen/dimenSM"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/score_imageview"
         app:layout_constraintStart_toEndOf="@+id/score_imageview"
@@ -92,7 +92,7 @@
         style="@style/Habrachan.Text.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimenXS"
+        android:layout_marginStart="@dimen/dimenSM"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/reading_count_imageview"
         app:layout_constraintStart_toEndOf="@+id/reading_count_imageview"
@@ -116,7 +116,7 @@
         style="@style/Habrachan.Text.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimenS"
+        android:layout_marginStart="@dimen/dimenMS"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/comments_count_imageview"
         app:layout_constraintStart_toEndOf="@+id/comments_count_imageview" />

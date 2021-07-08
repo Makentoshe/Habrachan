@@ -9,7 +9,7 @@
         android:id="@+id/layout_empty_state_image"
         android:layout_width="360dp"
         android:layout_height="360dp"
-        android:layout_marginBottom="@dimen/dimenS" />
+        android:layout_marginBottom="@dimen/dimenMS" />
 
     <TextView
         style="@style/Habrachan.Text.Main"
