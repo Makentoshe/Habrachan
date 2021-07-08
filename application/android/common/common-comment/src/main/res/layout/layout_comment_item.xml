@@ -20,7 +20,7 @@
         android:layout_width="@dimen/heightML"
         android:layout_height="@dimen/heightML"
         android:src="@drawable/ic_account_stub"
-        android:layout_marginTop="@dimen/dimenS"
+        android:layout_marginTop="@dimen/dimenMS"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_level"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
@@ -30,92 +30,149 @@
         style="@style/Habrachan.Text.Main.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimenS"
+        android:layout_marginStart="@dimen/dimenMS"
         android:text="Author"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_avatar"
         app:layout_constraintTop_toTopOf="@id/layout_comment_item_avatar"
         app:layout_constraintBottom_toTopOf="@id/layout_comment_item_timestamp"
-        tools:text="Makentoshe (author name)"/>
+        tools:text="Makentoshe (author name)" />
 
     <TextView
         android:id="@+id/layout_comment_item_timestamp"
         style="@style/Habrachan.Text.Support"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimenS"
+        android:layout_marginStart="@dimen/dimenMS"
         android:text="Timestamp"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_avatar"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_author"
-        app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_avatar"/>
+        app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_avatar" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/layout_comment_item_barrier_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="layout_comment_item_timestamp, layout_comment_item_avatar" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/layout_comment_item_barrier_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="right"
-        app:constraint_referenced_ids="layout_comment_item_timestamp, layout_comment_item_author" />
-
-    <!-- TODO move to common (may be into the core module and create controller class) -->
-    <LinearLayout
-        android:id="@+id/layout_comment_item_vote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toEndOf="@id/layout_comment_item_barrier_vertical">
-
-        <ImageView
-            android:id="@+id/layout_comment_item_vote_up"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_arrow_long"
-            android:layout_gravity="center"
-            android:padding="8dp"
-            app:tintMode="src_atop"
-            app:tint="@color/text"
-            android:rotation="90"
-            tools:ignore="ContentDescription,RtlSymmetry" />
-
-        <TextView
-            style="@style/Habrachan.Text"
-            android:id="@+id/layout_comment_item_vote_score"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            tools:text="39"/>
-
-        <ImageView
-            android:id="@+id/layout_comment_item_vote_down"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_arrow_long"
-            android:layout_gravity="center"
-            android:padding="8dp"
-            android:paddingRight="0dp"
-            app:tintMode="src_atop"
-            app:tint="@color/text"
-            android:rotation="-90"
-            tools:ignore="ContentDescription,RtlSymmetry" />
-
-    </LinearLayout>
+        app:constraint_referenced_ids="layout_comment_item_timestamp, layout_comment_item_avatar"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="46dp" />
 
     <TextView
         style="@style/Habrachan.Text.Main"
         android:id="@+id/layout_comment_item_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimenXS"
+        android:layout_marginTop="@dimen/dimenSM"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_barrier_horizontal"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_level"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Multilined rendered from html comment body placed here"/>
+        tools:text="Multilined rendered from html comment body placed here" />
+
+    <ImageView
+        android:id="@+id/layout_comment_item_vote_down"
+        android:layout_width="@dimen/heightML"
+        android:layout_height="@dimen/heightML"
+        android:src="@drawable/ic_arrow_bold_outline"
+        android:layout_gravity="center"
+        android:padding="@dimen/dimenSL"
+        app:tintMode="src_atop"
+        app:tint="@color/text"
+        android:rotation="180"
+        tools:ignore="ContentDescription,RtlSymmetry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body" />
+
+    <TextView
+        android:id="@+id/layout_comment_item_vote_text"
+        style="@style/Habrachan.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/heightML"
+        android:gravity="center"
+        android:minWidth="@dimen/heightML"
+        android:text="12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/layout_comment_item_vote_down"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body" />
+
+    <ImageView
+        android:id="@+id/layout_comment_item_vote_up"
+        android:layout_width="@dimen/heightML"
+        android:layout_height="@dimen/heightML"
+        android:layout_gravity="center"
+        android:padding="@dimen/dimenSL"
+        android:src="@drawable/ic_arrow_bold_outline"
+        app:tint="@color/text"
+        app:tintMode="src_atop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_vote_text"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_reply"
+        tools:ignore="ContentDescription,RtlSymmetry" />
+
+    <ImageView
+        android:id="@+id/layout_comment_item_reply"
+        android:layout_width="@dimen/heightML"
+        android:layout_height="@dimen/heightML"
+        android:layout_gravity="center"
+        android:padding="@dimen/dimenSL"
+        android:src="@drawable/ic_reply"
+        app:tint="@color/text"
+        app:tintMode="src_atop"
+        android:layout_marginEnd="@dimen/dimenL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_vote_up"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_share"
+        tools:ignore="ContentDescription,RtlSymmetry" />
+
+    <ImageView
+        android:id="@+id/layout_comment_item_share"
+        android:layout_width="@dimen/heightML"
+        android:layout_height="@dimen/heightML"
+        android:layout_gravity="center"
+        android:padding="@dimen/dimenSL"
+        android:src="@drawable/ic_share"
+        app:tint="@color/text"
+        app:tintMode="src_atop"
+        android:layout_marginEnd="@dimen/dimenL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_reply"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_bookmark"
+        tools:ignore="ContentDescription,RtlSymmetry" />
+
+    <ImageView
+        android:id="@+id/layout_comment_item_bookmark"
+        android:layout_width="@dimen/heightML"
+        android:layout_height="@dimen/heightML"
+        android:layout_gravity="center"
+        android:padding="@dimen/dimenSL"
+        android:src="@drawable/ic_bookmark_outline"
+        app:tint="@color/text"
+        app:tintMode="src_atop"
+        android:layout_marginEnd="@dimen/dimenL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_share"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_overflow"
+        tools:ignore="ContentDescription,RtlSymmetry" />
+
+    <ImageView
+        android:id="@+id/layout_comment_item_overflow"
+        android:layout_width="@dimen/heightML"
+        android:layout_height="@dimen/heightML"
+        android:layout_gravity="center"
+        android:padding="@dimen/dimenSL"
+        android:src="@drawable/ic_overflow"
+        android:rotation="90"
+        app:tint="@color/text"
+        app:tintMode="src_atop"
+        android:layout_marginEnd="@dimen/dimenL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_bookmark"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_level"
+        tools:ignore="ContentDescription,RtlSymmetry" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

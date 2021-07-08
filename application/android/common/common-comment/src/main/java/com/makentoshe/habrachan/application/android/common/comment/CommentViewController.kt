@@ -30,11 +30,11 @@ class CommentViewController(private val holder: CommentViewHolder) {
         setAuthor(comment.author.login)
         setVoteScore(comment.score)
         setContent(CommentContent.Factory(holder.context).build(comment.message))
-        navigator?.let { navigator ->
-            holder.itemView.setOnClickListener {
-                navigator.toDetailsScreen(comment.commentId)
-            }
-        }
+//        navigator?.let { navigator ->
+//            holder.itemView.setOnClickListener {
+//                navigator.toDetailsScreen(comment.commentId)
+//            }
+//        }
         return this
     }
 
@@ -84,6 +84,30 @@ class CommentViewController(private val holder: CommentViewHolder) {
     fun setTimestamp(comment: Comment): CommentViewController {
         setTimestamp(comment.timePublished.time(holder.context, R.string.format_comment_time))
         return this
+    }
+
+    fun setVoteUpAction(listener: () -> Unit) {
+        holder.voteUpView.setOnClickListener { listener() }
+    }
+
+    fun setVoteDownAction(listener: () -> Unit) {
+        holder.voteDownView.setOnClickListener { listener() }
+    }
+
+    fun setReplyAction(listener: () -> Unit) {
+        holder.replyView.setOnClickListener { listener() }
+    }
+
+    fun setShareAction(listener: () -> Unit) {
+        holder.shareView.setOnClickListener { listener() }
+    }
+
+    fun setBookmarkAction(listener: () -> Unit) {
+        holder.bookmarkView.setOnClickListener { listener() }
+    }
+
+    fun setOverflowAction(listener: () -> Unit) {
+        holder.overflowView.setOnClickListener { listener() }
     }
 
     class Factory(private val navigator: CommentViewControllerNavigator? = null) {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dimenS">
+    android:layout_marginStart="@dimen/dimenMS">
 
     <LinearLayout
         android:id="@+id/layout_comment_block_level"
@@ -19,7 +19,7 @@
         style="@style/Habrachan.Text.Main.Bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/dimenS"
+        android:paddingVertical="@dimen/dimenMS"
         app:layout_constraintStart_toEndOf="@id/layout_comment_block_level"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

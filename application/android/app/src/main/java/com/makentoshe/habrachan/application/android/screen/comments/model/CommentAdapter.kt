@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.comments.model
 
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
@@ -60,6 +61,24 @@ class CommentAdapter(
     private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
         val controller = commentControllerFactory.build(holder).default(model.comment).setLevel(model.level)
         controller.setContent(commentContentFactory.build(model.comment.message))
+        controller.setBookmarkAction {
+            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+        }
+        controller.setReplyAction {
+            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+        }
+        controller.setShareAction {
+            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+        }
+        controller.setOverflowAction {
+            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+        }
+        controller.setVoteUpAction {
+            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+        }
+        controller.setVoteDownAction {
+            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+        }
 
         val avatar = model.comment.avatar
         if (avatar == null) controller.setStubAvatar() else lifecycleScope.launch(Dispatchers.IO) {

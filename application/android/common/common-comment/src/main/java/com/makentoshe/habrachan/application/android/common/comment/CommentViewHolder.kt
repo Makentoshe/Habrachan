@@ -14,11 +14,14 @@ class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val authorView: TextView = view.findViewById(R.id.layout_comment_item_author)
     val timestampView: TextView = view.findViewById(R.id.layout_comment_item_timestamp)
     val bodyView: TextView = view.findViewById(R.id.layout_comment_item_body)
-    val voteView: View = view.findViewById(R.id.layout_comment_item_vote)
     val voteUpView: View = view.findViewById(R.id.layout_comment_item_vote_up)
-    val voteScoreView: TextView = view.findViewById(R.id.layout_comment_item_vote_score)
+    val voteScoreView: TextView = view.findViewById(R.id.layout_comment_item_vote_text)
     val voteDownView: View = view.findViewById(R.id.layout_comment_item_vote_down)
     val levelView: ViewGroup = view.findViewById(R.id.layout_comment_item_level)
+    val replyView: View = view.findViewById(R.id.layout_comment_item_reply)
+    val shareView: View = view.findViewById(R.id.layout_comment_item_share)
+    val bookmarkView: View = view.findViewById(R.id.layout_comment_item_bookmark)
+    val overflowView: View = view.findViewById(R.id.layout_comment_item_overflow)
 
     class Factory {
 
