@@ -48,6 +48,23 @@
         <item name="android:textColor">@color/dimmed</item>
     </style>
 
+    <style name="Habrachan.Icon" parent="Habrachan.Light">
+        <item name="android:layout_height">@dimen/heightML</item>
+        <item name="android:layout_width">@dimen/heightML</item>
+        <item name="android:padding">@dimen/dimenSL</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="Habrachan.Icon.Enabled">
+        <item name="tint">@color/text</item>
+        <item name="tintMode">src_atop</item>
+    </style>
+
+    <style name="Habrachan.Icon.Disabled">
+        <item name="tint">@color/opaque</item>
+        <item name="tintMode">src_atop</item>
+    </style>
+
     <style name="Habrachan.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>

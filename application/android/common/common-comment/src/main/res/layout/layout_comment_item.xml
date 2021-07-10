@@ -69,19 +69,14 @@
         tools:text="Multilined rendered from html comment body placed here" />
 
     <ImageView
+        style="@style/Habrachan.Icon.Disabled"
         android:id="@+id/layout_comment_item_vote_down"
-        android:layout_width="@dimen/heightML"
-        android:layout_height="@dimen/heightML"
         android:src="@drawable/ic_arrow_bold_outline"
-        android:layout_gravity="center"
-        android:padding="@dimen/dimenSL"
-        app:tintMode="src_atop"
-        app:tint="@color/text"
         android:rotation="180"
-        tools:ignore="ContentDescription,RtlSymmetry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body" />
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
+        tools:ignore="ContentDescription,RtlSymmetry" />
 
     <TextView
         android:id="@+id/layout_comment_item_vote_text"
@@ -96,14 +91,9 @@
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body" />
 
     <ImageView
+        style="@style/Habrachan.Icon.Disabled"
         android:id="@+id/layout_comment_item_vote_up"
-        android:layout_width="@dimen/heightML"
-        android:layout_height="@dimen/heightML"
-        android:layout_gravity="center"
-        android:padding="@dimen/dimenSL"
         android:src="@drawable/ic_arrow_bold_outline"
-        app:tint="@color/text"
-        app:tintMode="src_atop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_vote_text"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
@@ -111,14 +101,9 @@
         tools:ignore="ContentDescription,RtlSymmetry" />
 
     <ImageView
+        style="@style/Habrachan.Icon.Disabled"
         android:id="@+id/layout_comment_item_reply"
-        android:layout_width="@dimen/heightML"
-        android:layout_height="@dimen/heightML"
-        android:layout_gravity="center"
-        android:padding="@dimen/dimenSL"
         android:src="@drawable/ic_reply"
-        app:tint="@color/text"
-        app:tintMode="src_atop"
         android:layout_marginEnd="@dimen/dimenL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_vote_up"
@@ -127,14 +112,9 @@
         tools:ignore="ContentDescription,RtlSymmetry" />
 
     <ImageView
+        style="@style/Habrachan.Icon.Disabled"
         android:id="@+id/layout_comment_item_share"
-        android:layout_width="@dimen/heightML"
-        android:layout_height="@dimen/heightML"
-        android:layout_gravity="center"
-        android:padding="@dimen/dimenSL"
         android:src="@drawable/ic_share"
-        app:tint="@color/text"
-        app:tintMode="src_atop"
         android:layout_marginEnd="@dimen/dimenL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_reply"
@@ -143,14 +123,9 @@
         tools:ignore="ContentDescription,RtlSymmetry" />
 
     <ImageView
+        style="@style/Habrachan.Icon.Disabled"
         android:id="@+id/layout_comment_item_bookmark"
-        android:layout_width="@dimen/heightML"
-        android:layout_height="@dimen/heightML"
-        android:layout_gravity="center"
-        android:padding="@dimen/dimenSL"
         android:src="@drawable/ic_bookmark_outline"
-        app:tint="@color/text"
-        app:tintMode="src_atop"
         android:layout_marginEnd="@dimen/dimenL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_share"
@@ -159,15 +134,10 @@
         tools:ignore="ContentDescription,RtlSymmetry" />
 
     <ImageView
+        style="@style/Habrachan.Icon.Disabled"
         android:id="@+id/layout_comment_item_overflow"
-        android:layout_width="@dimen/heightML"
-        android:layout_height="@dimen/heightML"
-        android:layout_gravity="center"
-        android:padding="@dimen/dimenSL"
         android:src="@drawable/ic_overflow"
         android:rotation="90"
-        app:tint="@color/text"
-        app:tintMode="src_atop"
         android:layout_marginEnd="@dimen/dimenL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_bookmark"
