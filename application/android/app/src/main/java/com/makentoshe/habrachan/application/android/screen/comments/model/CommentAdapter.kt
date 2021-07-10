@@ -61,6 +61,8 @@ class CommentAdapter(
     private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
         val controller = commentControllerFactory.build(holder).default(model.comment).setLevel(model.level)
         controller.setContent(commentContentFactory.build(model.comment.message))
+        controller.showExpandedBottomPanel()
+
         controller.setBookmarkAction {
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
         }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.TextView
 import com.makentoshe.habrachan.application.android.common.core.time
 import com.makentoshe.habrachan.entity.Comment
@@ -108,6 +109,21 @@ class CommentViewController(private val holder: CommentViewHolder) {
 
     fun setOverflowAction(listener: () -> Unit) {
         holder.overflowView.setOnClickListener { listener() }
+    }
+
+    fun showExpandedBottomPanel() {
+        holder.collapsedGroup.visibility = View.GONE
+        holder.expandedGroup.visibility = View.VISIBLE
+    }
+
+    fun showCollapsedBottomPanel() {
+        holder.expandedGroup.visibility = View.GONE
+        holder.collapsedGroup.visibility = View.VISIBLE
+    }
+
+    fun hideBottomPanel() {
+        holder.expandedGroup.visibility = View.GONE
+        holder.collapsedGroup.visibility = View.GONE
     }
 
     class Factory(private val navigator: CommentViewControllerNavigator? = null) {
