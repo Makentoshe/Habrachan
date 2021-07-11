@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import com.makentoshe.habrachan.application.android.common.core.dp2px
 import com.makentoshe.habrachan.application.android.common.core.time
 import com.makentoshe.habrachan.entity.Comment
 import com.makentoshe.habrachan.entity.timePublished
@@ -29,11 +30,6 @@ class CommentViewController(private val holder: CommentViewHolder) {
         setAuthor(comment.author.login)
         setVoteScore(comment.score)
         setContent(CommentContent.Factory(holder.context).build(comment.message))
-//        navigator?.let { navigator ->
-//            holder.itemView.setOnClickListener {
-//                navigator.toDetailsScreen(comment.commentId)
-//            }
-//        }
         return this
     }
 
@@ -131,6 +127,16 @@ class CommentViewController(private val holder: CommentViewHolder) {
         holder.replyView.visibility = View.GONE
         holder.shareView.visibility = View.GONE
         holder.bookmarkView.visibility = View.GONE
+    }
+
+    fun collapseCommentBody() {
+        holder.bodyView.maxHeight = holder.context.dp2px(100f).toInt()
+        holder.bodyView.isEnabled = false
+    }
+
+    fun expandCommentBody() {
+        holder.bodyView.maxHeight = Int.MAX_VALUE
+        holder.bodyView.isEnabled = true
     }
 
     class CommentContent(val content: String, context: Context) {
