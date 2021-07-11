@@ -145,11 +145,27 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="Habrachan.Button.Error" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/negative</item>
+    </style>
+
     <style name="Habrachan.Button.Toggle.Toolbar" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">@color/button_toggle_toolbar_foreground_color</item>
         <item name="backgroundTint">@color/button_toggle_toolbar_background_color</item>
         <item name="strokeColor">@color/title</item>
         <item name="android:textSize">@dimen/textMS</item>
+    </style>
+
+    <style name="Habrachan.Menu.Option" parent="Habrachan.Button.Text">
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="Habrachan.Menu.Option.Positive">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Habrachan.Menu.Option.Negative">
+        <item name="android:textColor">@color/negative</item>
     </style>
 
 </resources>

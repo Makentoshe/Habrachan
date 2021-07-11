@@ -8,10 +8,7 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.common.comment.BlockViewController
-import com.makentoshe.habrachan.application.android.common.comment.BlockViewHolder
-import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
-import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
+import com.makentoshe.habrachan.application.android.common.comment.*
 import com.makentoshe.habrachan.application.android.dp2px
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
@@ -23,7 +20,7 @@ import kotlinx.coroutines.launch
 class CommentAdapter(
     private val lifecycleScope: CoroutineScope,
     private val viewModel: CommentsViewModel,
-    private val commentControllerFactory: CommentViewController.Factory,
+    private val navigation: CommentViewControllerNavigator,
     private val commentContentFactory: CommentViewController.CommentContent.Factory,
     private val blockContentFactory: BlockViewController.BlockContent.Factory
 ) : PagingDataAdapter<CommentModelElement, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
@@ -59,7 +56,7 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
-        val controller = commentControllerFactory.build(holder).default(model.comment).setLevel(model.level)
+        val controller = CommentViewController(holder).default(model.comment).setLevel(model.level)
         controller.setContent(commentContentFactory.build(model.comment.message))
         controller.showExpandedBottomPanel()
 
@@ -73,7 +70,7 @@ class CommentAdapter(
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
         }
         controller.setOverflowAction {
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            navigation.toDetailsScreen(model.comment.commentId)
         }
         controller.setVoteUpAction {
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()

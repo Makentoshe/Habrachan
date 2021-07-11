@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 
 class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -23,9 +22,6 @@ class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val shareView: View = view.findViewById(R.id.layout_comment_item_share)
     val bookmarkView: View = view.findViewById(R.id.layout_comment_item_bookmark)
     val overflowView: View = view.findViewById(R.id.layout_comment_item_overflow)
-
-    val expandedGroup: Group = view.findViewById(R.id.layout_comment_item_expanded)
-    val collapsedGroup: Group = view.findViewById(R.id.layout_comment_item_collapsed)
 
     class Factory {
 

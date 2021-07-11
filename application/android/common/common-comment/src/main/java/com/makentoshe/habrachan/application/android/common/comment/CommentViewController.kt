@@ -17,8 +17,6 @@ import okhttp3.OkHttpClient
 
 class CommentViewController(private val holder: CommentViewHolder) {
 
-    private var navigator: CommentViewControllerNavigator? = null
-
     init {
         holder.levelView.removeAllViews()
         holder.voteScoreView.text = ""
@@ -112,25 +110,27 @@ class CommentViewController(private val holder: CommentViewHolder) {
     }
 
     fun showExpandedBottomPanel() {
-        holder.collapsedGroup.visibility = View.GONE
-        holder.expandedGroup.visibility = View.VISIBLE
+        showCollapsedBottomPanel()
+        holder.replyView.visibility = View.VISIBLE
+        holder.shareView.visibility = View.VISIBLE
+        holder.bookmarkView.visibility = View.VISIBLE
     }
 
     fun showCollapsedBottomPanel() {
-        holder.expandedGroup.visibility = View.GONE
-        holder.collapsedGroup.visibility = View.VISIBLE
+        holder.voteDownView.visibility = View.VISIBLE
+        holder.voteUpView.visibility = View.VISIBLE
+        holder.voteScoreView.visibility = View.VISIBLE
+        holder.overflowView.visibility = View.VISIBLE
     }
 
     fun hideBottomPanel() {
-        holder.expandedGroup.visibility = View.GONE
-        holder.collapsedGroup.visibility = View.GONE
-    }
-
-    class Factory(private val navigator: CommentViewControllerNavigator? = null) {
-
-        fun build(holder: CommentViewHolder) = CommentViewController(holder).apply {
-            this.navigator = this@Factory.navigator
-        }
+        holder.voteDownView.visibility = View.GONE
+        holder.voteUpView.visibility = View.GONE
+        holder.voteScoreView.visibility = View.GONE
+        holder.overflowView.visibility = View.GONE
+        holder.replyView.visibility = View.GONE
+        holder.shareView.visibility = View.GONE
+        holder.bookmarkView.visibility = View.GONE
     }
 
     class CommentContent(val content: String, context: Context) {

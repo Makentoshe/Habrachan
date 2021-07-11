@@ -34,7 +34,6 @@ class CommentDetailsDialogFragment : BaseBottomSheetDialogFragment() {
 
     override val arguments = Arguments(this)
     private val viewModel by inject<CommentDetailsViewModel>()
-    private val controllerFactory = CommentViewController.Factory()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.dialog_comment_details, container, false)
@@ -47,13 +46,17 @@ class CommentDetailsDialogFragment : BaseBottomSheetDialogFragment() {
         }
 
         val viewHolder = CommentViewHolder(view.findViewById(R.id.dialog_comment_details_comment))
-        val viewController = controllerFactory.build(viewHolder)
+        viewHolder.bodyView.maxLines = 5
+        viewHolder.bodyView.isEnabled = false
+        with(CommentViewController(viewHolder)) {
+            hideBottomPanel()
 
-        lifecycleScope.launch {
-            viewModel.commentFlow.collectLatest { viewController.onCommentResult(it) }
-        }
-        lifecycleScope.launch {
-            viewModel.avatarFlow.collectLatest { viewController.onAvatarResult(it) }
+            lifecycleScope.launch {
+                viewModel.commentFlow.collectLatest { onCommentResult(it) }
+            }
+            lifecycleScope.launch {
+                viewModel.avatarFlow.collectLatest { onAvatarResult(it) }
+            }
         }
     }
 
