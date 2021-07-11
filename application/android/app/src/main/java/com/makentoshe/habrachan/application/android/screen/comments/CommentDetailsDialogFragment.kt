@@ -46,8 +46,6 @@ class CommentDetailsDialogFragment : BaseBottomSheetDialogFragment() {
         }
 
         val viewHolder = CommentViewHolder(view.findViewById(R.id.dialog_comment_details_comment))
-        viewHolder.bodyView.maxLines = 5
-        viewHolder.bodyView.isEnabled = false
         with(CommentViewController(viewHolder)) {
             hideBottomPanel()
 
@@ -58,10 +56,16 @@ class CommentDetailsDialogFragment : BaseBottomSheetDialogFragment() {
                 viewModel.avatarFlow.collectLatest { onAvatarResult(it) }
             }
         }
+
+        viewHolder.avatarView.setOnClickListener {
+            println(viewHolder.bodyView.height)
+            println(viewHolder.bodyView.maxHeight)
+        }
     }
 
     private fun CommentViewController.onCommentResult(result: Result<Comment>) = result.fold({ comment ->
-        default(comment)
+        default(comment).setContent(comment)
+        collapseCommentBody()
     }, {
         println(result)
     })

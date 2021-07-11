@@ -1,3 +1,5 @@
+@file:Suppress("UsePropertyAccessSyntax")
+
 package com.makentoshe.habrachan.application.android.common.comment
 
 import android.content.Context
@@ -26,37 +28,26 @@ class CommentViewController(private val holder: CommentViewHolder) {
     }
 
     fun default(comment: Comment): CommentViewController {
-        setStubAvatar().setTimestamp(comment)
-        setAuthor(comment.author.login)
-        setVoteScore(comment.score)
-        setContent(CommentContent.Factory(holder.context).build(comment.message))
+        setStubAvatar()
+        setTimestamp(comment)
+        setAuthor(comment)
+        setVoteScore(comment)
         return this
     }
 
-    fun setContent(content: CommentContent): CommentViewController {
-        content.setContentToView(holder.bodyView)
-        return this
-    }
+    fun setContent(content: CommentContent) = content.setContentToView(holder.bodyView)
 
-    fun setVoteScore(score: Int): CommentViewController {
-        holder.voteScoreView.text = score.toString()
-        return this
-    }
+    fun setContent(comment: Comment) = setContent(CommentContent.Factory(holder.context).build(comment.message))
 
-    fun setStubAvatar(): CommentViewController {
-        holder.avatarView.setImageResource(R.drawable.ic_account_stub)
-        return this
-    }
+    fun setVoteScore(score: Int) = holder.voteScoreView.setText(score.toString())
 
-    fun setAvatar(bitmap: Bitmap): CommentViewController {
-        holder.avatarView.setImageBitmap(bitmap)
-        return this
-    }
+    fun setVoteScore(comment: Comment) = setVoteScore(comment.score)
 
-    fun setAvatar(drawable: Drawable): CommentViewController {
-        holder.avatarView.setImageDrawable(drawable)
-        return this
-    }
+    fun setStubAvatar() = holder.avatarView.setImageResource(R.drawable.ic_account_stub)
+
+    fun setAvatar(bitmap: Bitmap) = holder.avatarView.setImageBitmap(bitmap)
+
+    fun setAvatar(drawable: Drawable)= holder.avatarView.setImageDrawable(drawable)
 
     fun setLevel(level: Int): CommentViewController {
         val inflater = LayoutInflater.from(holder.context)
@@ -66,20 +57,13 @@ class CommentViewController(private val holder: CommentViewHolder) {
         return this
     }
 
-    fun setAuthor(author: String): CommentViewController {
-        holder.authorView.text = author
-        return this
-    }
+    fun setAuthor(author: String) = holder.authorView.setText(author)
 
-    fun setTimestamp(timestamp: String): CommentViewController {
-        holder.timestampView.text = timestamp
-        return this
-    }
+    fun setAuthor(comment: Comment) = setAuthor(comment.author.login)
 
-    fun setTimestamp(comment: Comment): CommentViewController {
-        setTimestamp(comment.timePublished.time(holder.context, R.string.format_comment_time))
-        return this
-    }
+    fun setTimestamp(timestamp: String) = holder.timestampView.setText(timestamp)
+
+    fun setTimestamp(comment: Comment) = setTimestamp(comment.timePublished.time(holder.context, R.string.format_comment_time))
 
     fun setVoteUpAction(listener: () -> Unit) {
         holder.voteUpView.setOnClickListener { listener() }
@@ -129,14 +113,14 @@ class CommentViewController(private val holder: CommentViewHolder) {
         holder.bookmarkView.visibility = View.GONE
     }
 
-    fun collapseCommentBody() {
-        holder.bodyView.maxHeight = holder.context.dp2px(100f).toInt()
-        holder.bodyView.isEnabled = false
+    fun collapseCommentBody() = with(holder.bodyView) {
+        maxHeight = holder.context.dp2px(100f).toInt()
+        isEnabled = false
     }
 
-    fun expandCommentBody() {
-        holder.bodyView.maxHeight = Int.MAX_VALUE
-        holder.bodyView.isEnabled = true
+    fun expandCommentBody() = with (holder.bodyView) {
+        maxHeight = Int.MAX_VALUE
+        isEnabled = true
     }
 
     class CommentContent(val content: String, context: Context) {

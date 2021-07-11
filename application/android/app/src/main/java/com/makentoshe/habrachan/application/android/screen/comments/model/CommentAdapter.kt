@@ -35,7 +35,7 @@ class CommentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         1 -> BlockViewHolder.Factory().create(parent.context, parent)
-        else -> CommentViewHolder.Factory().create(parent.context, parent)
+        else -> CommentViewHolder.Factory().build(parent.context, parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -56,36 +56,41 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
-        val controller = CommentViewController(holder).default(model.comment).setLevel(model.level)
-        controller.setContent(commentContentFactory.build(model.comment.message))
-        controller.showExpandedBottomPanel()
+        with(CommentViewController(holder).default(model.comment)) {
+            setContent(commentContentFactory.build(model.comment.message))
+            setLevel(model.level)
+            showExpandedBottomPanel()
+            setCommentAvatar(holder, model)
 
-        controller.setBookmarkAction {
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            setBookmarkAction {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            }
+            setReplyAction {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            }
+            setShareAction {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            }
+            setOverflowAction {
+                navigation.toDetailsScreen(model.comment.commentId)
+            }
+            setVoteUpAction {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            }
+            setVoteDownAction {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            }
         }
-        controller.setReplyAction {
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-        }
-        controller.setShareAction {
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-        }
-        controller.setOverflowAction {
-            navigation.toDetailsScreen(model.comment.commentId)
-        }
-        controller.setVoteUpAction {
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-        }
-        controller.setVoteDownAction {
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-        }
+    }
 
+    private fun CommentViewController.setCommentAvatar(holder: CommentViewHolder, model: CommentModelNode) {
         val avatar = model.comment.avatar
-        if (avatar == null) controller.setStubAvatar() else lifecycleScope.launch(Dispatchers.IO) {
+        if (avatar == null) setStubAvatar() else lifecycleScope.launch(Dispatchers.IO) {
             viewModel.requestAvatar(avatar).collectLatest { result ->
-                result.onFailure { controller.setStubAvatar() }.onSuccess {
+                result.onFailure { setStubAvatar() }.onSuccess {
                     val resources = holder.context.resources
                     val radius = holder.context.dp2px(R.dimen.radiusS)
-                    launch(Dispatchers.Main) { controller.setAvatar(it.bytes.toRoundedDrawable(resources, radius)) }
+                    launch(Dispatchers.Main) { setAvatar(it.bytes.toRoundedDrawable(resources, radius)) }
                 }
             }
         }

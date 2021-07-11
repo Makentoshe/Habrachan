@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val context: Context = view.context
+
     val avatarView: ImageView = view.findViewById(R.id.layout_comment_item_avatar)
     val authorView: TextView = view.findViewById(R.id.layout_comment_item_author)
     val timestampView: TextView = view.findViewById(R.id.layout_comment_item_timestamp)
@@ -25,11 +26,13 @@ class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     class Factory {
 
-        fun create(context: Context, parent: ViewGroup? = null): CommentViewHolder {
+        fun build(context: Context, parent: ViewGroup? = null): CommentViewHolder {
             val inflater = LayoutInflater.from(context)
             val view = inflater.inflate(R.layout.layout_comment_item, parent, false)
             return CommentViewHolder(view)
         }
+
+        fun build(parent: ViewGroup): CommentViewHolder = build(parent.context, parent)
     }
 }
 
