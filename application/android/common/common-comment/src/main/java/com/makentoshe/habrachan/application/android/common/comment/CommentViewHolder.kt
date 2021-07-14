@@ -15,6 +15,7 @@ class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val authorView: TextView = view.findViewById(R.id.layout_comment_item_author)
     val timestampView: TextView = view.findViewById(R.id.layout_comment_item_timestamp)
     val bodyView: TextView = view.findViewById(R.id.layout_comment_item_body)
+
     val voteUpView: View = view.findViewById(R.id.layout_comment_item_vote_up)
     val voteScoreView: TextView = view.findViewById(R.id.layout_comment_item_vote_text)
     val voteDownView: View = view.findViewById(R.id.layout_comment_item_vote_down)
@@ -23,6 +24,9 @@ class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val shareView: View = view.findViewById(R.id.layout_comment_item_share)
     val bookmarkView: View = view.findViewById(R.id.layout_comment_item_bookmark)
     val overflowView: View = view.findViewById(R.id.layout_comment_item_overflow)
+
+    val fadeView: View = view.findViewById(R.id.layout_comment_item_fade)
+    val expandView: TextView = view.findViewById(R.id.layout_comment_item_expand)
 
     class Factory {
 

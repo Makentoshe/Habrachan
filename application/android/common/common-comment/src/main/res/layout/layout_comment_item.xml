@@ -68,6 +68,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Multilined rendered from html comment body placed here" />
 
+    <View
+        android:visibility="gone"
+        android:id="@+id/layout_comment_item_fade"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/heightML"
+        android:background="@drawable/drawable_background_gradient_comment_fade"
+        app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_body"
+        app:layout_constraintStart_toStartOf="@id/layout_comment_item_body"
+        app:layout_constraintEnd_toEndOf="@id/layout_comment_item_body"/>
+
     <ImageView
         style="@style/Habrachan.Icon.Disabled"
         android:id="@+id/layout_comment_item_vote_down"
@@ -137,16 +147,27 @@
         tools:ignore="ContentDescription,RtlSymmetry" />
 
     <ImageView
-        android:visibility="gone"
-        style="@style/Habrachan.Icon.Enabled"
         android:id="@+id/layout_comment_item_overflow"
-        android:src="@drawable/ic_overflow"
-        android:rotation="90"
+        style="@style/Habrachan.Icon.Enabled"
         android:layout_marginEnd="@dimen/dimenL"
+        android:rotation="90"
+        android:src="@drawable/ic_overflow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_bookmark"
-        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_level"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
         tools:ignore="ContentDescription,RtlSymmetry" />
+
+    <TextView
+        android:visibility="gone"
+        style="@style/Habrachan.Text.Main.Bold"
+        android:id="@+id/layout_comment_item_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/heightML"
+        android:text="Show full comment"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_level"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
