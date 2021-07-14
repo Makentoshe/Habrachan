@@ -17,9 +17,9 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsEmptyStateController
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
+import com.makentoshe.habrachan.application.android.screen.comments.model.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentsEmptyStateViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
@@ -42,7 +42,7 @@ class ArticleCommentsFragment : BaseFragment() {
 
     override val arguments = Arguments(this)
 
-    private val adapter by inject<CommentAdapter>()
+    private val adapter by inject<ContentCommentAdapter>()
     private val viewModel by inject<ArticleCommentsViewModel>()
     private val navigation by inject<CommentsNavigation>()
     private val exceptionHandler by inject<ExceptionHandler>()

@@ -12,10 +12,9 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
-import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsAdapterQualifier
-import com.makentoshe.habrachan.application.android.screen.comments.di.TitleAdapterQualifier
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
+import com.makentoshe.habrachan.application.android.screen.comments.model.ContentCommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.TitleCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.DiscussionCommentSeparatorItemDecoration
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
@@ -46,8 +45,8 @@ class DiscussionCommentsFragment : BaseFragment() {
 
     override val arguments = Arguments(this)
 
-    private val commentAdapter by inject<CommentAdapter>(CommentsAdapterQualifier)
-    private val titleAdapter by inject<CommentAdapter>(TitleAdapterQualifier)
+    private val commentAdapter by inject<ContentCommentAdapter>()
+    private val titleAdapter by inject<TitleCommentAdapter>()
     private val adapter by inject<ConcatAdapter>()
 
     private val navigation by inject<CommentsNavigation>()

@@ -2,28 +2,22 @@ package com.makentoshe.habrachan.application.android.screen.comments.model
 
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.comment.*
-import com.makentoshe.habrachan.application.android.dp2px
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
-import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
-class CommentAdapter(
-    private val lifecycleScope: CoroutineScope,
-    private val viewModel: CommentsViewModel,
+open class ContentCommentAdapter(
+    lifecycleScope: CoroutineScope,
+    viewModel: CommentsViewModel,
     private val navigation: CommentViewControllerNavigator,
     private val commentContentFactory: CommentBodyController.CommentContent.Factory,
     private val blockContentFactory: BlockViewController.BlockContent.Factory
-) : PagingDataAdapter<CommentModelElement, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
+) : BaseCommentAdapter<RecyclerView.ViewHolder>(lifecycleScope, viewModel) {
 
     companion object : Analytics(LogAnalytic())
 
@@ -55,7 +49,7 @@ class CommentAdapter(
         }
     }
 
-    private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
+    protected open fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
         val commentViewController = CommentViewController(holder).default(model.comment)
         val commentBodyController = CommentBodyController(holder)
         val commentBottomPanelController = CommentBottomPanelController(holder)
@@ -81,19 +75,6 @@ class CommentAdapter(
             }
             setVoteDownAction {
                 Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun CommentViewController.setCommentAvatar(holder: CommentViewHolder, model: CommentModelNode) {
-        val avatar = model.comment.avatar
-        if (avatar == null) setStubAvatar() else lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.requestAvatar(avatar).collectLatest { result ->
-                result.onFailure { setStubAvatar() }.onSuccess {
-                    val resources = holder.context.resources
-                    val radius = holder.context.dp2px(R.dimen.radiusS)
-                    launch(Dispatchers.Main) { setAvatar(it.bytes.toRoundedDrawable(resources, radius)) }
-                }
             }
         }
     }

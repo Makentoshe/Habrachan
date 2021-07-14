@@ -8,7 +8,8 @@ import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.ContentCommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.TitleCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
@@ -23,11 +24,6 @@ import javax.inject.Qualifier
 
 @Qualifier
 annotation class DiscussionCommentsScope
-
-internal const val TitleAdapterQualifier = "TitleAdapter"
-
-internal const val CommentsAdapterQualifier = "CommentsAdapter"
-
 class DiscussionCommentsModule(fragment: DiscussionCommentsFragment) : CommentsModule(fragment) {
 
     private val getContentManager by inject<GetContentManager>()
@@ -43,24 +39,23 @@ class DiscussionCommentsModule(fragment: DiscussionCommentsFragment) : CommentsM
         bind<CommentsNavigation>().toInstance(navigation)
 
         val commentsAdapter = getCommentAdapter(fragment, viewModel, navigation)
-        bind<CommentAdapter>().withName(CommentsAdapterQualifier).toInstance(commentsAdapter)
+        bind<ContentCommentAdapter>().toInstance(commentsAdapter)
 
         val titleAdapter = getTitleAdapter(fragment, viewModel, navigation)
-        bind<CommentAdapter>().withName(TitleAdapterQualifier).toInstance(titleAdapter)
+        bind<TitleCommentAdapter>().toInstance(titleAdapter)
 
         bind<ConcatAdapter>().toInstance(ConcatAdapter(titleAdapter, commentsAdapter))
-
     }
 
-    private fun getCommentAdapter(fragment: Fragment, viewModel: DiscussionCommentsViewModel, navigation: CommentsNavigation): CommentAdapter {
+    private fun getCommentAdapter(fragment: Fragment, viewModel: DiscussionCommentsViewModel, navigation: CommentsNavigation): ContentCommentAdapter {
         val commentContentFactory = commentContentFactory.setNavigationOnImageClick(navigation)
         val blockContentFactory = blockContentFactory.setNavigation(navigation)
-        return CommentAdapter(fragment.lifecycleScope, viewModel, navigation, commentContentFactory, blockContentFactory)
+        return ContentCommentAdapter(fragment.lifecycleScope, viewModel, navigation, commentContentFactory, blockContentFactory)
     }
 
-    private fun getTitleAdapter(fragment: Fragment, viewModel: DiscussionCommentsViewModel, navigation: CommentsNavigation): CommentAdapter {
+    private fun getTitleAdapter(fragment: Fragment, viewModel: DiscussionCommentsViewModel, navigation: CommentsNavigation): TitleCommentAdapter {
         val commentContentFactory = commentContentFactory.setNavigationOnImageClick(navigation)
-        return CommentAdapter(fragment.lifecycleScope, viewModel, navigation, commentContentFactory, blockContentFactory)
+        return TitleCommentAdapter(fragment.lifecycleScope, viewModel, commentContentFactory)
     }
 
     private fun getDiscussionCommentsViewModel(fragment: Fragment): DiscussionCommentsViewModel {

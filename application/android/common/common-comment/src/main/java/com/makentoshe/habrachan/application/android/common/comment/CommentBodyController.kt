@@ -24,7 +24,10 @@ class CommentBodyController(private val holder: CommentViewHolder) {
         }
     }
 
-    fun setContent(content: CommentContent) = content.setContentToView(holder.bodyView)
+    fun setContent(content: CommentContent): CommentBodyController {
+        content.setContentToView(holder.bodyView)
+        return this
+    }
 
     fun setContent(comment: Comment) = setContent(CommentContent.Factory(holder.context).build(comment.message))
 

@@ -7,7 +7,7 @@ import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsSourceFirstArena
@@ -37,13 +37,13 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : CommentsModule(
         bind<CommentsNavigation>().toInstance(navigation)
 
         val commentAdapter = getCommentAdapter(fragment, viewModel, navigation)
-        bind<CommentAdapter>().toInstance(commentAdapter)
+        bind<ContentCommentAdapter>().toInstance(commentAdapter)
     }
 
-    private fun getCommentAdapter(fragment: Fragment, viewModel: ArticleCommentsViewModel, navigation: CommentsNavigation): CommentAdapter {
+    private fun getCommentAdapter(fragment: Fragment, viewModel: ArticleCommentsViewModel, navigation: CommentsNavigation): ContentCommentAdapter {
         val commentContentFactory = commentContentFactory.setNavigationOnImageClick(navigation)
         val blockContentFactory = blockContentFactory.setNavigation(navigation)
-        return CommentAdapter(fragment.lifecycleScope, viewModel, navigation, commentContentFactory, blockContentFactory)
+        return ContentCommentAdapter(fragment.lifecycleScope, viewModel, navigation, commentContentFactory, blockContentFactory)
     }
 
     private fun getArticleCommentsViewModel(fragment: ArticleCommentsFragment): ArticleCommentsViewModel {
