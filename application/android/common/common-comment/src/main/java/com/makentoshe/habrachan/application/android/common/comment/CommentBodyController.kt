@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.application.android.common.comment
 
 import android.content.Context
+import android.view.View
 import android.widget.TextView
 import com.makentoshe.habrachan.application.android.common.core.dp2px
 import com.makentoshe.habrachan.entity.Comment
@@ -10,16 +11,16 @@ import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.image.network.OkHttpNetworkSchemeHandler
 import okhttp3.OkHttpClient
 
+// TODO(medium) fix fade displaying for images
 class CommentBodyController(private val holder: CommentViewHolder) {
 
-    private var shouldBeCollapsed = false
+    private val maxCollapsedHeight = holder.context.dp2px(100f).toInt()
+    private val maxExpandedHeight = Int.MAX_VALUE
 
     init {
         holder.bodyView.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-            val height = bottom - top
-            val oldHeight = oldBottom - oldTop
-
-            println("$height $oldHeight")
+//            println("${holder.bodyView.height} ${holder.bodyView.maxHeight}")
+            holder.fadeView.visibility = if (holder.bodyView.height == holder.bodyView.maxHeight) View.VISIBLE else View.GONE
         }
     }
 
@@ -28,14 +29,12 @@ class CommentBodyController(private val holder: CommentViewHolder) {
     fun setContent(comment: Comment) = setContent(CommentContent.Factory(holder.context).build(comment.message))
 
     fun collapse() = with(holder.bodyView) {
-        shouldBeCollapsed = true
-        maxHeight = holder.context.dp2px(100f).toInt()
+        maxHeight = maxCollapsedHeight
         isEnabled = false
     }
 
-    fun expand() = with (holder.bodyView) {
-        shouldBeCollapsed = false
-        maxHeight = Int.MAX_VALUE
+    fun expand() = with(holder.bodyView) {
+        maxHeight = maxExpandedHeight
         isEnabled = true
     }
 

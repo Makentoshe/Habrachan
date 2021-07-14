@@ -69,14 +69,20 @@
         tools:text="Multilined rendered from html comment body placed here" />
 
     <View
-        android:visibility="gone"
         android:id="@+id/layout_comment_item_fade"
         android:layout_width="0dp"
         android:layout_height="@dimen/heightML"
         android:background="@drawable/drawable_background_gradient_comment_fade"
-        app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_body"
+        app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_panel"
         app:layout_constraintStart_toStartOf="@id/layout_comment_item_body"
         app:layout_constraintEnd_toEndOf="@id/layout_comment_item_body"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/layout_comment_item_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="layout_comment_item_vote_up, layout_comment_item_vote_text, layout_comment_item_vote_down, layout_comment_item_reply, layout_comment_item_share, layout_comment_item_bookmark, layout_comment_item_overflow"/>
 
     <ImageView
         style="@style/Habrachan.Icon.Disabled"

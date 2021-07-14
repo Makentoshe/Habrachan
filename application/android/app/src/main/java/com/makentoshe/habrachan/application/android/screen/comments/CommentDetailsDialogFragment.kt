@@ -66,6 +66,10 @@ class CommentDetailsDialogFragment : BaseBottomSheetDialogFragment() {
         },{
             commentViewController.setStubAvatar()
         })
+
+        viewHolder.avatarView.setOnClickListener {
+            commentBodyController.expand()
+        }
     }
 
     private fun <T> Flow<Result<T>>.foldLatest(success: (T) -> Unit, failure: (Throwable) -> Unit) {
