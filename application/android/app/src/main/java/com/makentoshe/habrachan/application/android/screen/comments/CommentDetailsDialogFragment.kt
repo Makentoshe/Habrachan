@@ -9,17 +9,18 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.comment.CommentBodyController
+import com.makentoshe.habrachan.application.android.common.comment.CommentBottomPanelController
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseBottomSheetDialogFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentDetailsViewModel
 import com.makentoshe.habrachan.application.android.toBitmap
-import com.makentoshe.habrachan.entity.Comment
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.fold
-import com.makentoshe.habrachan.network.response.GetContentResponse
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
@@ -46,35 +47,30 @@ class CommentDetailsDialogFragment : BaseBottomSheetDialogFragment() {
         }
 
         val viewHolder = CommentViewHolder(view.findViewById(R.id.dialog_comment_details_comment))
-        with(CommentViewController(viewHolder)) {
-            bottomPanelController.hide()
+        val commentViewController = CommentViewController(viewHolder)
+        val commentBodyController = CommentBodyController(viewHolder)
+        val commentBottomPanelController = CommentBottomPanelController(viewHolder)
+        commentBottomPanelController.hide()
 
-            lifecycleScope.launch {
-                viewModel.commentFlow.collectLatest { onCommentResult(it) }
-            }
-            lifecycleScope.launch {
-                viewModel.avatarFlow.collectLatest { onAvatarResult(it) }
-            }
-        }
+        viewModel.commentFlow.foldLatest({ comment ->
+            commentViewController.default(comment)
+            commentBodyController.setContent(comment)
+            commentBodyController.collapse()
+            commentBottomPanelController.hide()
+        },{ throwable ->
+            println(throwable)
+        })
 
-        viewHolder.avatarView.setOnClickListener {
-            println(viewHolder.bodyView.height)
-            println(viewHolder.bodyView.maxHeight)
-        }
+        viewModel.avatarFlow.foldLatest({ response ->
+            commentViewController.setAvatar(response.bytes.toBitmap())
+        },{
+            commentViewController.setStubAvatar()
+        })
     }
 
-    private fun CommentViewController.onCommentResult(result: Result<Comment>) = result.fold({ comment ->
-        default(comment).setContent(comment)
-        collapseCommentBody()
-    }, {
-        println(result)
-    })
-
-    private fun CommentViewController.onAvatarResult(result: Result<GetContentResponse>) = result.fold({
-        setAvatar(it.bytes.toBitmap())
-    }, {
-        setStubAvatar()
-    })
+    private fun <T> Flow<Result<T>>.foldLatest(success: (T) -> Unit, failure: (Throwable) -> Unit) {
+        lifecycleScope.launch { collectLatest { it.fold(success, failure) } }
+    }
 
     class Arguments(fragment: CommentDetailsDialogFragment) : FragmentArguments(fragment) {
 

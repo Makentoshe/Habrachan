@@ -21,7 +21,7 @@ class CommentAdapter(
     private val lifecycleScope: CoroutineScope,
     private val viewModel: CommentsViewModel,
     private val navigation: CommentViewControllerNavigator,
-    private val commentContentFactory: CommentViewController.CommentContent.Factory,
+    private val commentContentFactory: CommentBodyController.CommentContent.Factory,
     private val blockContentFactory: BlockViewController.BlockContent.Factory
 ) : PagingDataAdapter<CommentModelElement, RecyclerView.ViewHolder>(CommentDiffUtilItemCallback()) {
 
@@ -56,31 +56,31 @@ class CommentAdapter(
     }
 
     private fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
-        with(CommentViewController(holder).default(model.comment)) {
-            setContent(commentContentFactory.build(model.comment.message))
-            setLevel(model.level)
-            bottomPanelController.showExpanded()
-            setCommentAvatar(holder, model)
+        val commentViewController = CommentViewController(holder).default(model.comment)
+        val commentBodyController = CommentBodyController(holder)
+        val commentBottomPanelController = CommentBottomPanelController(holder)
 
-            with(bottomPanelController) {
-                setBookmarkAction {
-                    Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-                }
-                setReplyAction {
-                    Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-                }
-                setShareAction {
-                    Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-                }
-                setOverflowAction {
-                    navigation.toDetailsScreen(model.comment.commentId)
-                }
-                setVoteUpAction {
-                    Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-                }
-                setVoteDownAction {
-                    Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-                }
+        commentViewController.setLevel(model.level).setCommentAvatar(holder, model)
+        commentBodyController.setContent(commentContentFactory.build(model.comment.message))
+        with(commentBottomPanelController) {
+            showExpanded()
+            setBookmarkAction {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            }
+            setReplyAction {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            }
+            setShareAction {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            }
+            setOverflowAction {
+                navigation.toDetailsScreen(model.comment.commentId)
+            }
+            setVoteUpAction {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            }
+            setVoteDownAction {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
             }
         }
     }
