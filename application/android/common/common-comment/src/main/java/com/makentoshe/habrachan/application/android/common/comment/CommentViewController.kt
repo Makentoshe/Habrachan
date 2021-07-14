@@ -20,6 +20,8 @@ import okhttp3.OkHttpClient
 
 class CommentViewController(private val holder: CommentViewHolder) {
 
+    val bottomPanelController = BottomPanelController(holder)
+
     init {
         holder.levelView.removeAllViews()
         holder.voteScoreView.text = ""
@@ -65,54 +67,6 @@ class CommentViewController(private val holder: CommentViewHolder) {
 
     fun setTimestamp(comment: Comment) = setTimestamp(comment.timePublished.time(holder.context, R.string.format_comment_time))
 
-    fun setVoteUpAction(listener: () -> Unit) {
-        holder.voteUpView.setOnClickListener { listener() }
-    }
-
-    fun setVoteDownAction(listener: () -> Unit) {
-        holder.voteDownView.setOnClickListener { listener() }
-    }
-
-    fun setReplyAction(listener: () -> Unit) {
-        holder.replyView.setOnClickListener { listener() }
-    }
-
-    fun setShareAction(listener: () -> Unit) {
-        holder.shareView.setOnClickListener { listener() }
-    }
-
-    fun setBookmarkAction(listener: () -> Unit) {
-        holder.bookmarkView.setOnClickListener { listener() }
-    }
-
-    fun setOverflowAction(listener: () -> Unit) {
-        holder.overflowView.setOnClickListener { listener() }
-    }
-
-    fun showExpandedBottomPanel() {
-        showCollapsedBottomPanel()
-        holder.replyView.visibility = View.VISIBLE
-        holder.shareView.visibility = View.VISIBLE
-        holder.bookmarkView.visibility = View.VISIBLE
-    }
-
-    fun showCollapsedBottomPanel() {
-        holder.voteDownView.visibility = View.VISIBLE
-        holder.voteUpView.visibility = View.VISIBLE
-        holder.voteScoreView.visibility = View.VISIBLE
-        holder.overflowView.visibility = View.VISIBLE
-    }
-
-    fun hideBottomPanel() {
-        holder.voteDownView.visibility = View.GONE
-        holder.voteUpView.visibility = View.GONE
-        holder.voteScoreView.visibility = View.GONE
-        holder.overflowView.visibility = View.GONE
-        holder.replyView.visibility = View.GONE
-        holder.shareView.visibility = View.GONE
-        holder.bookmarkView.visibility = View.GONE
-    }
-
     fun collapseCommentBody() = with(holder.bodyView) {
         maxHeight = holder.context.dp2px(100f).toInt()
         isEnabled = false
@@ -121,6 +75,57 @@ class CommentViewController(private val holder: CommentViewHolder) {
     fun expandCommentBody() = with (holder.bodyView) {
         maxHeight = Int.MAX_VALUE
         isEnabled = true
+    }
+
+    class BottomPanelController(private val holder: CommentViewHolder) {
+
+        fun setVoteUpAction(listener: () -> Unit) {
+            holder.voteUpView.setOnClickListener { listener() }
+        }
+
+        fun setVoteDownAction(listener: () -> Unit) {
+            holder.voteDownView.setOnClickListener { listener() }
+        }
+
+        fun setReplyAction(listener: () -> Unit) {
+            holder.replyView.setOnClickListener { listener() }
+        }
+
+        fun setShareAction(listener: () -> Unit) {
+            holder.shareView.setOnClickListener { listener() }
+        }
+
+        fun setBookmarkAction(listener: () -> Unit) {
+            holder.bookmarkView.setOnClickListener { listener() }
+        }
+
+        fun setOverflowAction(listener: () -> Unit) {
+            holder.overflowView.setOnClickListener { listener() }
+        }
+
+        fun showExpanded() {
+            showCollapsed()
+            holder.replyView.visibility = View.VISIBLE
+            holder.shareView.visibility = View.VISIBLE
+            holder.bookmarkView.visibility = View.VISIBLE
+        }
+
+        fun showCollapsed() {
+            holder.voteDownView.visibility = View.VISIBLE
+            holder.voteUpView.visibility = View.VISIBLE
+            holder.voteScoreView.visibility = View.VISIBLE
+            holder.overflowView.visibility = View.VISIBLE
+        }
+
+        fun hide() {
+            holder.voteDownView.visibility = View.GONE
+            holder.voteUpView.visibility = View.GONE
+            holder.voteScoreView.visibility = View.GONE
+            holder.overflowView.visibility = View.GONE
+            holder.replyView.visibility = View.GONE
+            holder.shareView.visibility = View.GONE
+            holder.bookmarkView.visibility = View.GONE
+        }
     }
 
     class CommentContent(val content: String, context: Context) {

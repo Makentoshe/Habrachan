@@ -59,26 +59,28 @@ class CommentAdapter(
         with(CommentViewController(holder).default(model.comment)) {
             setContent(commentContentFactory.build(model.comment.message))
             setLevel(model.level)
-            showExpandedBottomPanel()
+            bottomPanelController.showExpanded()
             setCommentAvatar(holder, model)
 
-            setBookmarkAction {
-                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-            }
-            setReplyAction {
-                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-            }
-            setShareAction {
-                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-            }
-            setOverflowAction {
-                navigation.toDetailsScreen(model.comment.commentId)
-            }
-            setVoteUpAction {
-                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
-            }
-            setVoteDownAction {
-                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+            with(bottomPanelController) {
+                setBookmarkAction {
+                    Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+                }
+                setReplyAction {
+                    Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+                }
+                setShareAction {
+                    Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+                }
+                setOverflowAction {
+                    navigation.toDetailsScreen(model.comment.commentId)
+                }
+                setVoteUpAction {
+                    Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+                }
+                setVoteDownAction {
+                    Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

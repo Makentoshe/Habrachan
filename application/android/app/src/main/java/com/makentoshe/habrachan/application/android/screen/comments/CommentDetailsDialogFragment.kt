@@ -47,7 +47,7 @@ class CommentDetailsDialogFragment : BaseBottomSheetDialogFragment() {
 
         val viewHolder = CommentViewHolder(view.findViewById(R.id.dialog_comment_details_comment))
         with(CommentViewController(viewHolder)) {
-            hideBottomPanel()
+            bottomPanelController.hide()
 
             lifecycleScope.launch {
                 viewModel.commentFlow.collectLatest { onCommentResult(it) }
