@@ -31,7 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimenMS"
-        android:text="Author"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_avatar"
         app:layout_constraintTop_toTopOf="@id/layout_comment_item_avatar"
         app:layout_constraintBottom_toTopOf="@id/layout_comment_item_timestamp"
@@ -43,10 +42,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimenMS"
-        android:text="Timestamp"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_avatar"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_author"
-        app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_avatar" />
+        app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_avatar"
+        tools:text="Timestamp" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/layout_comment_item_barrier_horizontal"
@@ -75,20 +74,19 @@
         android:background="@drawable/drawable_background_gradient_comment_fade"
         app:layout_constraintBottom_toBottomOf="@id/layout_comment_item_panel"
         app:layout_constraintStart_toStartOf="@id/layout_comment_item_body"
-        app:layout_constraintEnd_toEndOf="@id/layout_comment_item_body"/>
+        app:layout_constraintEnd_toEndOf="@id/layout_comment_item_body" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/layout_comment_item_panel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="layout_comment_item_vote_up, layout_comment_item_vote_text, layout_comment_item_vote_down, layout_comment_item_reply, layout_comment_item_share, layout_comment_item_bookmark, layout_comment_item_overflow"/>
+        app:constraint_referenced_ids="layout_comment_item_vote_down, layout_comment_item_vote_text, layout_comment_item_vote_up, layout_comment_item_reply, layout_comment_item_share, layout_comment_item_bookmark, layout_comment_item_overflow" />
 
     <ImageView
         style="@style/Habrachan.Icon.Disabled"
-        android:id="@+id/layout_comment_item_vote_down"
+        android:id="@+id/layout_comment_item_vote_up"
         android:src="@drawable/ic_arrow_bold_outline"
-        android:rotation="180"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
@@ -101,15 +99,16 @@
         android:layout_height="@dimen/heightML"
         android:gravity="center"
         android:minWidth="@dimen/heightML"
-        android:text="12"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/layout_comment_item_vote_down"
-        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body" />
+        app:layout_constraintEnd_toStartOf="@id/layout_comment_item_vote_up"
+        app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
+        tools:text="12" />
 
     <ImageView
         style="@style/Habrachan.Icon.Disabled"
-        android:id="@+id/layout_comment_item_vote_up"
+        android:id="@+id/layout_comment_item_vote_down"
         android:src="@drawable/ic_arrow_bold_outline"
+        android:rotation="180"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_vote_text"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
@@ -123,7 +122,7 @@
         android:src="@drawable/ic_reply"
         android:layout_marginEnd="@dimen/dimenL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_vote_up"
+        app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_vote_down"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_share"
         tools:ignore="ContentDescription,RtlSymmetry" />
