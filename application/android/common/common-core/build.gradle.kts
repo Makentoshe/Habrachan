@@ -39,6 +39,7 @@ android {
 dependencies {
 
     implementation(kotlin("stdlib"))
+    implementation(project(":functional"))
 
     // Material components
     // https://github.com/material-components/material-components-android
@@ -50,6 +51,9 @@ dependencies {
 
     val appcompat = properties["version.androidx.appcompat"]
     implementation("androidx.appcompat:appcompat:$appcompat")
+
+    val coroutinesVersion = "1.5.0" //properties["version.coroutines"]
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$coroutinesVersion")
 
     testImplementation("junit:junit:4.12")
 
