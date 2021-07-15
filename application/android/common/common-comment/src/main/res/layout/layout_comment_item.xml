@@ -85,7 +85,7 @@
 
     <ImageView
         style="@style/Habrachan.Icon.Disabled"
-        android:id="@+id/layout_comment_item_vote_up"
+        android:id="@+id/layout_comment_item_vote_down"
         android:src="@drawable/ic_arrow_bold_outline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -100,19 +100,20 @@
         android:gravity="center"
         android:minWidth="@dimen/heightML"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/layout_comment_item_vote_up"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
+        app:layout_constraintEnd_toStartOf="@id/layout_comment_item_vote_down"
+        app:layout_constraintStart_toEndOf="@id/layout_comment_item_vote_up"
         tools:text="12" />
 
     <ImageView
         style="@style/Habrachan.Icon.Disabled"
-        android:id="@+id/layout_comment_item_vote_down"
+        android:id="@+id/layout_comment_item_vote_up"
         android:src="@drawable/ic_arrow_bold_outline"
         android:rotation="180"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_vote_text"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_reply"
+        app:layout_constraintEnd_toStartOf="@id/layout_comment_item_vote_text"
         tools:ignore="ContentDescription,RtlSymmetry" />
 
     <ImageView
@@ -122,7 +123,7 @@
         android:src="@drawable/ic_reply"
         android:layout_marginEnd="@dimen/dimenL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_vote_down"
+        app:layout_constraintEnd_toStartOf="@+id/layout_comment_item_vote_up"
         app:layout_constraintTop_toBottomOf="@id/layout_comment_item_body"
         app:layout_constraintStart_toEndOf="@id/layout_comment_item_share"
         tools:ignore="ContentDescription,RtlSymmetry" />
