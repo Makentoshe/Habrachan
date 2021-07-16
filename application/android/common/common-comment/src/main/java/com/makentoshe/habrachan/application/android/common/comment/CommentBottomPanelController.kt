@@ -22,19 +22,19 @@ class CommentBottomPanelController(private val holder: CommentViewHolder) {
 
     fun setReplyAction(
         lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
-    ) = holder.voteDownView.setOnClickListener(lifecycleScope, dispatcher, listener)
+    ) = holder.replyView.setOnClickListener(lifecycleScope, dispatcher, listener)
 
     fun setShareAction(
         lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
-    ) = holder.voteDownView.setOnClickListener(lifecycleScope, dispatcher, listener)
+    ) = holder.shareView.setOnClickListener(lifecycleScope, dispatcher, listener)
 
     fun setBookmarkAction(
         lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
-    ) = holder.voteDownView.setOnClickListener(lifecycleScope, dispatcher, listener)
+    ) = holder.bookmarkView.setOnClickListener(lifecycleScope, dispatcher, listener)
 
     fun setOverflowAction(
         lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
-    ) = holder.voteDownView.setOnClickListener(lifecycleScope, dispatcher, listener)
+    ) = holder.overflowView.setOnClickListener(lifecycleScope, dispatcher, listener)
 
     fun showExpanded() : CommentBottomPanelController {
         showCollapsed()
