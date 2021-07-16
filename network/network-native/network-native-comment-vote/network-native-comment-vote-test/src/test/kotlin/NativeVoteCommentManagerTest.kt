@@ -1,5 +1,5 @@
+import com.makentoshe.habrachan.entity.CommentVote
 import com.makentoshe.habrachan.network.NativeVoteCommentManager
-import com.makentoshe.habrachan.network.request.CommentVote
 import com.makentoshe.habrachan.network.userSession
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
