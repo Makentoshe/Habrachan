@@ -20,6 +20,8 @@ class CommentViewController(private val holder: CommentViewHolder) {
         holder.voteScoreView.text = ""
         holder.authorView.text = ""
         holder.timestampView.text = ""
+        resetVoteUpIcon()
+        resetVoteDownIcon()
         return this
     }
 
@@ -50,9 +52,17 @@ class CommentViewController(private val holder: CommentViewHolder) {
         setColorFilter(ContextCompat.getColor(holder.context, R.color.positive))
     }.setImageResource(R.drawable.ic_arrow_bold_solid)
 
+    fun resetVoteUpIcon() = holder.voteUpView.apply {
+        setColorFilter(ContextCompat.getColor(holder.context, R.color.text))
+    }.setImageResource(R.drawable.ic_arrow_bold_outline)
+
     fun setVoteDownIcon() = holder.voteDownView.apply {
         setColorFilter(ContextCompat.getColor(holder.context, R.color.negative))
     }.setImageResource(R.drawable.ic_arrow_bold_solid)
+
+    fun resetVoteDownIcon() = holder.voteDownView.apply {
+        setColorFilter(ContextCompat.getColor(holder.context, R.color.text))
+    }.setImageResource(R.drawable.ic_arrow_bold_outline)
 
     fun setStubAvatar() = holder.avatarView.setImageResource(R.drawable.ic_account_stub)
 
