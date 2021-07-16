@@ -1,38 +1,47 @@
 package com.makentoshe.habrachan.application.android.common.comment
 
 import android.view.View
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CommentBottomPanelController(private val holder: CommentViewHolder) {
 
-    fun setVoteUpAction(listener: () -> Unit) {
-        holder.voteUpView.setOnClickListener { listener() }
-    }
+    private fun View.setOnClickListener(
+        lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
+    ) = setOnClickListener { lifecycleScope.launch(dispatcher) { listener() } }
 
-    fun setVoteDownAction(listener: () -> Unit) {
-        holder.voteDownView.setOnClickListener { listener() }
-    }
+    fun setVoteUpAction(
+        lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
+    ) = holder.voteUpView.setOnClickListener(lifecycleScope, dispatcher, listener)
 
-    fun setReplyAction(listener: () -> Unit) {
-        holder.replyView.setOnClickListener { listener() }
-    }
+    fun setVoteDownAction(
+        lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
+    ) = holder.voteDownView.setOnClickListener(lifecycleScope, dispatcher, listener)
 
-    fun setShareAction(listener: () -> Unit) {
-        holder.shareView.setOnClickListener { listener() }
-    }
+    fun setReplyAction(
+        lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
+    ) = holder.voteDownView.setOnClickListener(lifecycleScope, dispatcher, listener)
 
-    fun setBookmarkAction(listener: () -> Unit) {
-        holder.bookmarkView.setOnClickListener { listener() }
-    }
+    fun setShareAction(
+        lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
+    ) = holder.voteDownView.setOnClickListener(lifecycleScope, dispatcher, listener)
 
-    fun setOverflowAction(listener: () -> Unit) {
-        holder.overflowView.setOnClickListener { listener() }
-    }
+    fun setBookmarkAction(
+        lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
+    ) = holder.voteDownView.setOnClickListener(lifecycleScope, dispatcher, listener)
 
-    fun showExpanded() {
+    fun setOverflowAction(
+        lifecycleScope: CoroutineScope, dispatcher: CoroutineDispatcher = Dispatchers.IO, listener: suspend () -> Unit
+    ) = holder.voteDownView.setOnClickListener(lifecycleScope, dispatcher, listener)
+
+    fun showExpanded() : CommentBottomPanelController {
         showCollapsed()
         holder.replyView.visibility = View.VISIBLE
         holder.shareView.visibility = View.VISIBLE
         holder.bookmarkView.visibility = View.VISIBLE
+        return this
     }
 
     fun showCollapsed() {

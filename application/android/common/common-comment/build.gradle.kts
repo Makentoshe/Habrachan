@@ -39,8 +39,16 @@ android {
 dependencies {
 
     implementation(kotlin("stdlib"))
+
     implementation(project(":entity"))
+    implementation(project(":entity:entity-native"))
+
+    implementation(project(":network"))
+    implementation(project(":network:network-native"))
+
     implementation(project(":application:android:common:common-core"))
+
+    implementation(project(":functional"))
 
     // OkHttp
     // https://github.com/square/okhttp/
@@ -59,6 +67,16 @@ dependencies {
     // https://github.com/material-components/material-components-android
     val materialVersion = properties["version.androidx.material"]
     implementation("com.google.android.material:material:$materialVersion")
+
+    // Architecture components
+    // https://developer.android.com/topic/libraries/architecture
+    val arch = "1.1.1"
+    implementation("android.arch.lifecycle:extensions:$arch")
+    implementation("android.arch.lifecycle:viewmodel:$arch")
+
+    // Coroutines for android ViewModel
+    val coroutinesViewModel = "2.3.0-beta01"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutinesViewModel")
 
     val constraintVersion = "2.0.4"
     implementation("androidx.constraintlayout:constraintlayout:$constraintVersion")

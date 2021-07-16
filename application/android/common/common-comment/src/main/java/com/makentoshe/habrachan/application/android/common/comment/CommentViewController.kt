@@ -11,11 +11,13 @@ import com.makentoshe.habrachan.entity.timePublished
 
 class CommentViewController(private val holder: CommentViewHolder) {
 
-    init {
+    /** Might be called after constructor for cleaning holder from previous data */
+    fun dispose() : CommentViewController {
         holder.levelView.removeAllViews()
         holder.voteScoreView.text = ""
         holder.authorView.text = ""
         holder.timestampView.text = ""
+        return this
     }
 
     fun default(comment: Comment): CommentViewController {
