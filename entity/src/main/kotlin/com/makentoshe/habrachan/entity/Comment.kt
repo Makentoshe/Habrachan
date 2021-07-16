@@ -17,6 +17,8 @@ interface Comment : CommentId {
 
     val timePublishedRaw: String
     val timeChangedRaw: String?
+
+    val voteRaw: Int?
 }
 
 val Comment.timePublished: Date
@@ -24,6 +26,13 @@ val Comment.timePublished: Date
 
 val Comment.timeChanged: Date?
     get() = if (timeChangedRaw != null) SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(timeChangedRaw) else null
+
+val Comment.vote: CommentVote?
+    get() = when (voteRaw) {
+        1 -> CommentVote.Up
+        -1 -> CommentVote.Down
+        else -> null
+    }
 
 fun comment(
     id: Int,
@@ -37,7 +46,8 @@ fun comment(
     isCanVote: Boolean,
     isFavorite: Boolean,
     timePublishedRaw: String,
-    timeChangedRaw: String?
+    timeChangedRaw: String?,
+    voteRaw: Int?
 ) = object : Comment {
     override val commentId = id
     override val author = commentAuthor
@@ -51,5 +61,5 @@ fun comment(
     override val isFavorite = isFavorite
     override val timeChangedRaw = timeChangedRaw
     override val timePublishedRaw = timePublishedRaw
+    override val voteRaw: Int? = voteRaw
 }
-

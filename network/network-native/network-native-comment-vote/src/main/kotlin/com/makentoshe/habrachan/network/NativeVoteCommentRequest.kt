@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.network
 
-import com.makentoshe.habrachan.network.request.CommentVote
+import com.makentoshe.habrachan.entity.CommentVote
 import com.makentoshe.habrachan.network.request.NativeRequest
 import com.makentoshe.habrachan.network.request.VoteCommentRequest2
 

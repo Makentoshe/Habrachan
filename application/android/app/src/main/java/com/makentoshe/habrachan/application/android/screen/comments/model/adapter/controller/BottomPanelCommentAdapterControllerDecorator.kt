@@ -4,21 +4,20 @@ import android.widget.Toast
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.common.comment.CommentBottomPanelController
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
-import com.makentoshe.habrachan.application.android.common.comment.CommentViewControllerNavigator
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentSpec
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.common.core.collectResult
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelElement
-import com.makentoshe.habrachan.network.request.CommentVote
+import com.makentoshe.habrachan.entity.CommentVote
+import com.makentoshe.habrachan.network.response.VoteCommentResponse2
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 class BottomPanelCommentAdapterControllerDecorator(
     private val commentAdapterController: CommentAdapterController?,
     private val lifecycleScope: CoroutineScope,
-    private val navigation: CommentViewControllerNavigator,
     private val voteCommentViewModelProvider: VoteCommentViewModelProvider,
     private val additional: (CommentBottomPanelController) -> Unit = { }
 ): CommentAdapterController {
@@ -32,10 +31,18 @@ class BottomPanelCommentAdapterControllerDecorator(
         internalOnBindViewHolderBottomPanel(holder, model)
 
         model.getViewModel().voteCommentFlow.collectResult(lifecycleScope, {
-            CommentViewController(holder).setVoteScore(it.score)
+            onVoteCommentSuccess(holder, it)
         }, {
             println(it)
         })
+    }
+
+    private fun onVoteCommentSuccess(holder: CommentViewHolder, response: VoteCommentResponse2) {
+        val controller = CommentViewController(holder).setVoteScore(response.score)
+        when (response.request.commentVote) {
+            CommentVote.Up -> controller.setVoteUpIcon()
+            CommentVote.Down -> controller.setVoteDownIcon()
+        }
     }
 
     private fun internalOnBindViewHolderBottomPanel(holder: CommentViewHolder, model: CommentModelElement) {

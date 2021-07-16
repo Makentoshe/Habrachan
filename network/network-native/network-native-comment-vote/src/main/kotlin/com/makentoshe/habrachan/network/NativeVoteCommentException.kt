@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.network.exception.VoteCommentManagerException
 import com.makentoshe.habrachan.network.request.VoteCommentRequest2
 
-class NativeVoteCommentException(
+data class NativeVoteCommentException(
     override val request: VoteCommentRequest2,
     override val raw: String,
     val additional: List<String>,
@@ -13,7 +13,7 @@ class NativeVoteCommentException(
     override val cause: Throwable? = null,
 ) : VoteCommentManagerException() {
 
-    class Factory(
+    data class Factory(
         @SerializedName("additional")
         val additional: List<String>,
         @SerializedName("code")

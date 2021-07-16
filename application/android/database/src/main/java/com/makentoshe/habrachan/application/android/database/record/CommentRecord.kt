@@ -36,6 +36,8 @@ data class CommentRecord(
     val timeChanged: String?,
     @SerializedName("time_published")
     val timePublished: String,
+    @SerializedName("vote")
+    val vote: Int?,
 
     /** Article id for many comments to 1 article relation. */
     val articleId: Int
@@ -56,6 +58,7 @@ data class CommentRecord(
         comment.score,
         comment.timeChangedRaw,
         comment.timePublishedRaw,
+        comment.voteRaw,
         articleId
     )
 
@@ -71,6 +74,7 @@ data class CommentRecord(
         isCanVote,
         isFavorite,
         timePublished,
-        timeChanged
+        timeChanged,
+        vote
     )
 }

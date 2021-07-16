@@ -49,4 +49,7 @@ data class Comment(
 
     override val avatar: String?
         get() = author.avatarUrl
+
+    override val voteRaw: Int?
+        get() = vote.value
 }

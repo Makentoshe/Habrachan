@@ -48,7 +48,7 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : CommentsModule(
     ): ContentCommentAdapter {
         val commentContentFactory = commentContentFactory.setNavigationOnImageClick(navigation)
         val avatarDecorator = AvatarCommentAdapterControllerDecorator(null, fragment.lifecycleScope, viewModel)
-        val bottomPanelDecorator = BottomPanelCommentAdapterControllerDecorator(avatarDecorator, fragment.lifecycleScope, navigation, voteCommentViewModelProvider)
+        val bottomPanelDecorator = BottomPanelCommentAdapterControllerDecorator(avatarDecorator, fragment.lifecycleScope, voteCommentViewModelProvider)
         val contentCommentAdapterController = ContentCommentAdapterController(bottomPanelDecorator, commentContentFactory)
         return ContentCommentAdapter(contentCommentAdapterController, blockContentFactory.setNavigation(navigation))
     }

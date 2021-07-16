@@ -29,9 +29,7 @@ data class Comment(
     @SerializedName("time_changed")
     override val timeChangedRaw: String?,
     @SerializedName("time_published")
-    override val timePublishedRaw: String
-
-//    @Embedded(prefix = "any_")
-//    @SerializedName("vote")
-//    val vote: Any?,
+    override val timePublishedRaw: String,
+    @SerializedName("vote")
+    override val voteRaw: Int?
 ): Comment

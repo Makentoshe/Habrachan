@@ -6,5 +6,5 @@ data class CommentVote(
     @SerializedName("isCanVote")
     val isCanVote: Boolean, // false
     @SerializedName("value")
-    val value: Any? // null
+    val value: Int? // null
 )
