@@ -84,7 +84,7 @@
         app:constraint_referenced_ids="layout_comment_item_vote_down, layout_comment_item_vote_text, layout_comment_item_vote_up, layout_comment_item_reply, layout_comment_item_share, layout_comment_item_bookmark, layout_comment_item_overflow" />
 
     <ImageView
-        style="@style/Habrachan.Icon.Disabled"
+        style="@style/Habrachan.Icon.Enabled"
         android:id="@+id/layout_comment_item_vote_down"
         android:src="@drawable/ic_arrow_bold_outline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +106,7 @@
         tools:text="12" />
 
     <ImageView
-        style="@style/Habrachan.Icon.Disabled"
+        style="@style/Habrachan.Icon.Enabled"
         android:id="@+id/layout_comment_item_vote_up"
         android:src="@drawable/ic_arrow_bold_outline"
         android:rotation="180"
@@ -154,7 +154,7 @@
 
     <ImageView
         android:id="@+id/layout_comment_item_overflow"
-        style="@style/Habrachan.Icon.Enabled"
+        style="@style/Habrachan.Icon.Disabled"
         android:layout_marginEnd="@dimen/dimenL"
         android:rotation="90"
         android:src="@drawable/ic_overflow"
