@@ -7,7 +7,10 @@ import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.model.ContentCommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.AvatarCommentAdapterControllerDecorator
+import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.BottomPanelCommentAdapterControllerDecorator
+import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.ContentCommentAdapterController
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsSourceFirstArena
@@ -36,14 +39,18 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : CommentsModule(
         val navigation = CommentsNavigation(router, fragment.arguments.articleId, fragment.arguments.articleTitle, fragment.childFragmentManager)
         bind<CommentsNavigation>().toInstance(navigation)
 
-        val commentAdapter = getCommentAdapter(fragment, viewModel, navigation)
+        val commentAdapter = getContentCommentAdapter(fragment, viewModel, navigation)
         bind<ContentCommentAdapter>().toInstance(commentAdapter)
     }
 
-    private fun getCommentAdapter(fragment: Fragment, viewModel: ArticleCommentsViewModel, navigation: CommentsNavigation): ContentCommentAdapter {
+    private fun getContentCommentAdapter(
+        fragment: Fragment, viewModel: ArticleCommentsViewModel, navigation: CommentsNavigation
+    ): ContentCommentAdapter {
         val commentContentFactory = commentContentFactory.setNavigationOnImageClick(navigation)
-        val blockContentFactory = blockContentFactory.setNavigation(navigation)
-        return ContentCommentAdapter(fragment.lifecycleScope, viewModel, navigation, commentContentFactory, blockContentFactory)
+        val avatarDecorator = AvatarCommentAdapterControllerDecorator(null, fragment.lifecycleScope, viewModel)
+        val bottomPanelDecorator = BottomPanelCommentAdapterControllerDecorator(avatarDecorator, fragment.lifecycleScope, navigation, voteCommentViewModelProvider)
+        val contentCommentAdapterController = ContentCommentAdapterController(bottomPanelDecorator, commentContentFactory)
+        return ContentCommentAdapter(contentCommentAdapterController, blockContentFactory.setNavigation(navigation))
     }
 
     private fun getArticleCommentsViewModel(fragment: ArticleCommentsFragment): ArticleCommentsViewModel {

@@ -19,7 +19,7 @@ import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFra
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsEmptyStateController
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
-import com.makentoshe.habrachan.application.android.screen.comments.model.ContentCommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentsEmptyStateViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel

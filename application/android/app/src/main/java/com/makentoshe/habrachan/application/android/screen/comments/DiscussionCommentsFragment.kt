@@ -13,8 +13,8 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
-import com.makentoshe.habrachan.application.android.screen.comments.model.ContentCommentAdapter
-import com.makentoshe.habrachan.application.android.screen.comments.model.TitleCommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.TitleCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.DiscussionCommentSeparatorItemDecoration
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
