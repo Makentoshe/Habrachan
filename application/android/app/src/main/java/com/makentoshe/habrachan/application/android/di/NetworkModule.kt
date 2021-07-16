@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.network.NativeLoginManager
 import com.makentoshe.habrachan.network.NativeVoteArticleManager
+import com.makentoshe.habrachan.network.NativeVoteCommentManager
 import com.makentoshe.habrachan.network.deserializer.*
 import com.makentoshe.habrachan.network.manager.*
 import com.makentoshe.habrachan.network.request.*
@@ -45,6 +46,9 @@ class NetworkModule(context: Context) : Module() {
 
         val nativeVoteArticleManager = NativeVoteArticleManager.Builder(client).build()
         bind<VoteArticleManager<out VoteArticleRequest>>().toInstance(nativeVoteArticleManager)
+
+        val nativeVoteCommentManager = NativeVoteCommentManager.Builder(client).build()
+        bind<VoteCommentManager<out VoteCommentRequest2>>().toInstance(nativeVoteCommentManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {

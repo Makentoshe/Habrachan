@@ -84,6 +84,7 @@ dependencies {
     implementation(project(":network:network-native"))
     implementation(project(":network:network-native:network-native-login"))
     implementation(project(":network:network-native:network-native-article-vote"))
+    implementation(project(":network:network-native:network-native-comment-vote"))
     implementation(project(":network:network-mobile"))
     implementation(project(":network:network-mobile:network-mobile-login"))
 
