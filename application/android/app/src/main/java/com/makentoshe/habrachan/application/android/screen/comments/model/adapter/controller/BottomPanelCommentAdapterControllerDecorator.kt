@@ -1,6 +1,8 @@
 package com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller
 
+import android.view.View
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.common.comment.CommentBottomPanelController
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
@@ -11,6 +13,7 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Vot
 import com.makentoshe.habrachan.application.android.common.core.collectResult
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelElement
 import com.makentoshe.habrachan.entity.CommentVote
+import com.makentoshe.habrachan.network.NativeVoteCommentException
 import com.makentoshe.habrachan.network.response.VoteCommentResponse2
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +23,7 @@ class BottomPanelCommentAdapterControllerDecorator(
     private val lifecycleScope: CoroutineScope,
     private val voteCommentViewModelProvider: VoteCommentViewModelProvider,
     private val additional: (CommentBottomPanelController) -> Unit = { }
-): CommentAdapterController {
+) : CommentAdapterController {
 
     private fun CommentModelElement.getViewModel(): VoteCommentViewModel {
         return voteCommentViewModelProvider.get(comment.commentId)
@@ -33,7 +36,7 @@ class BottomPanelCommentAdapterControllerDecorator(
         model.getViewModel().voteCommentFlow.collectResult(lifecycleScope, {
             onVoteCommentSuccess(holder, it)
         }, {
-            println(it)
+            onVoteCommentFailure(holder, it)
         })
     }
 
@@ -43,6 +46,16 @@ class BottomPanelCommentAdapterControllerDecorator(
             CommentVote.Up -> controller.setVoteUpIcon()
             CommentVote.Down -> controller.setVoteDownIcon()
         }
+    }
+
+    private fun onVoteCommentFailure(holder: CommentViewHolder, throwable: Throwable) {
+        val parentView = holder.itemView.parent as View
+        val message = if (throwable is NativeVoteCommentException) {
+            throwable.additional.joinToString(". ")
+        } else {
+            throwable.message ?: throwable.toString()
+        }
+        Snackbar.make(parentView, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun internalOnBindViewHolderBottomPanel(holder: CommentViewHolder, model: CommentModelElement) {
