@@ -40,9 +40,6 @@ class BottomPanelCommentAdapterControllerDecorator(
 
     private fun internalOnBindViewHolderBottomPanel(holder: CommentViewHolder, model: CommentModelElement) {
         with(CommentBottomPanelController(holder).showExpanded()) {
-            setOverflowAction(lifecycleScope) {
-                navigation.toDetailsScreen(model.comment.commentId)
-            }
             setVoteUpAction(lifecycleScope) {
                 model.getViewModel().voteCommentChannel.send(VoteCommentSpec(model.comment.commentId, CommentVote.Up))
             }
@@ -51,13 +48,16 @@ class BottomPanelCommentAdapterControllerDecorator(
             }
 
             setBookmarkAction(lifecycleScope, Dispatchers.Main) {
-                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_SHORT).show()
             }
             setReplyAction(lifecycleScope, Dispatchers.Main) {
-                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_SHORT).show()
             }
             setShareAction(lifecycleScope, Dispatchers.Main) {
-                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_LONG).show()
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_SHORT).show()
+            }
+            setOverflowAction(lifecycleScope, Dispatchers.Main) {
+                Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_SHORT).show()
             }
 
             apply(additional)
