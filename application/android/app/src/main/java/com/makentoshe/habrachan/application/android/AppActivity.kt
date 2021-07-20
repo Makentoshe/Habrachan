@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.application.android
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.R
@@ -42,10 +43,23 @@ class AppActivity : AppCompatActivity() {
 
     private fun deeplinkStart(intent: Intent) {
         val uri = intent.data ?: throw IllegalStateException("wtf?")
-        println(uri.pathSegments)
-        when(uri.pathSegments.first()) {
+        when (uri.pathSegments.first()) {
             "post" -> deeplinkArticleStart(articleId(uri.pathSegments[1].toInt()))
+            else -> deeplinkOtherStart(uri)
         }
+    }
+
+    private fun deeplinkOtherStart(uri: Uri) {
+        println(uri.pathSegments)
+        when (val second = uri.pathSegments[1]) {
+            "post" -> deeplinkArticleStart(articleId(uri.pathSegments[2].toInt()))
+            "company" -> deeplinkCorporateArticleStart(uri)
+        }
+    }
+
+    private fun deeplinkCorporateArticleStart(uri: Uri) {
+//        val companyName = uri.pathSegments[2]
+        deeplinkArticleStart(articleId(uri.pathSegments[4].toInt()))
     }
 
     private fun deeplinkArticleStart(articleId: ArticleId) {
