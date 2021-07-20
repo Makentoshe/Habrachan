@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.navigation.StackSupportAppNavigator
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
+import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
+import com.makentoshe.habrachan.entity.ArticleId
+import com.makentoshe.habrachan.entity.articleId
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
@@ -28,11 +30,26 @@ class AppActivity : AppCompatActivity() {
         if (savedInstanceState != null) return
 
         when (intent.action) {
-            Intent.ACTION_MAIN -> {
-                val screen = ArticlesFlowScreen()
-                router.newRootScreen(screen)
-            }
+            Intent.ACTION_MAIN -> defaultStart(intent)
+            Intent.ACTION_VIEW -> deeplinkStart(intent)
         }
+    }
+
+    private fun defaultStart(intent: Intent) {
+        val screen = ArticlesFlowScreen()
+        router.newRootScreen(screen)
+    }
+
+    private fun deeplinkStart(intent: Intent) {
+        val uri = intent.data ?: throw IllegalStateException("wtf?")
+        println(uri.pathSegments)
+        when(uri.pathSegments.first()) {
+            "post" -> deeplinkArticleStart(articleId(uri.pathSegments[1].toInt()))
+        }
+    }
+
+    private fun deeplinkArticleStart(articleId: ArticleId) {
+        router.newRootScreen(ArticleScreen(articleId))
     }
 
     override fun onResumeFragments() {
