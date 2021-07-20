@@ -9,6 +9,8 @@ import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBr
 import com.makentoshe.habrachan.application.android.navigation.StackSupportAppNavigator
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
+import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
+import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
 import ru.terrakok.cicerone.NavigatorHolder
@@ -54,7 +56,12 @@ class AppActivity : AppCompatActivity() {
         when (val second = uri.pathSegments[1]) {
             "post" -> deeplinkArticleStart(articleId(uri.pathSegments[2].toInt()))
             "company" -> deeplinkCorporateArticleStart(uri)
+            "users" -> deeplinkUserStart(uri.pathSegments[2])
         }
+    }
+
+    private fun deeplinkUserStart(login: String) {
+        router.newRootScreen(UserScreen(UserAccount.User(login)))
     }
 
     private fun deeplinkCorporateArticleStart(uri: Uri) {
