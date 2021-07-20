@@ -5,6 +5,8 @@ interface CommentViewControllerNavigator {
     fun toContentScreen(source: String)
 
     fun toDetailsScreen(commentId: Int)
+
+    fun toUserScreen(login: String)
 }
 
 interface BlockViewControllerNavigator {

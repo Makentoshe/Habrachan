@@ -32,7 +32,7 @@ class CommentsNavigation(
         router.stack(ContentScreen(source))
     }
 
-    fun toUserScreen(login: String) {
+    override fun toUserScreen(login: String) {
         router.stack(UserScreen(UserAccount.User(login = login)))
     }
 

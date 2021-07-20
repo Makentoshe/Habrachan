@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.comment.BlockViewController
 import com.makentoshe.habrachan.application.android.common.comment.BlockViewHolder
+import com.makentoshe.habrachan.application.android.common.comment.CommentViewControllerNavigator
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelBlank
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelNode
@@ -14,7 +15,8 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.adapte
 
 open class ContentCommentAdapter(
     private val commentAdapterController: CommentAdapterController,
-    private val blockContentFactory: BlockViewController.BlockContent.Factory
+    private val blockContentFactory: BlockViewController.BlockContent.Factory,
+    private val navigation: CommentViewControllerNavigator? = null
 ) : BaseCommentAdapter<RecyclerView.ViewHolder>() {
 
     companion object : Analytics(LogAnalytic())
@@ -45,6 +47,10 @@ open class ContentCommentAdapter(
 
     protected open fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
         commentAdapterController.onBindViewHolderComment(holder, position, model)
+
+        holder.setOnClickListenerForHeader {
+            navigation?.toUserScreen(model.comment.author.login)
+        }
     }
 
     private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentModelBlank) {

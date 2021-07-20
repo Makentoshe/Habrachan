@@ -50,7 +50,7 @@ class ArticleCommentsModule(fragment: ArticleCommentsFragment) : CommentsModule(
         val avatarDecorator = AvatarCommentAdapterControllerDecorator(null, fragment.lifecycleScope, viewModel)
         val bottomPanelDecorator = BottomPanelCommentAdapterControllerDecorator(avatarDecorator, fragment.lifecycleScope, voteCommentViewModelProvider)
         val contentCommentAdapterController = ContentCommentAdapterController(bottomPanelDecorator, commentContentFactory)
-        return ContentCommentAdapter(contentCommentAdapterController, blockContentFactory.setNavigation(navigation))
+        return ContentCommentAdapter(contentCommentAdapterController, blockContentFactory.setNavigation(navigation), navigation)
     }
 
     private fun getArticleCommentsViewModel(fragment: ArticleCommentsFragment): ArticleCommentsViewModel {

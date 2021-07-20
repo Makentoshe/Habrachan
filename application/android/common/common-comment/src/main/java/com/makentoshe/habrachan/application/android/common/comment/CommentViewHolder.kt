@@ -28,6 +28,12 @@ class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val fadeView: View = view.findViewById(R.id.layout_comment_item_fade)
     val expandView: TextView = view.findViewById(R.id.layout_comment_item_expand)
 
+    fun setOnClickListenerForHeader(listener: View.OnClickListener) {
+        avatarView.setOnClickListener(listener)
+        authorView.setOnClickListener(listener)
+        timestampView.setOnClickListener(listener)
+    }
+
     class Factory {
 
         fun build(context: Context, parent: ViewGroup? = null): CommentViewHolder {
