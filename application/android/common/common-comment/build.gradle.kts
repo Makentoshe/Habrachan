@@ -87,7 +87,7 @@ dependencies {
     val appcompatVersion = properties["version.androidx.appcompat"]
     implementation("androidx.appcompat:appcompat:$appcompatVersion")
 
-    val junitVersion = properties["version.junit"]
+    val junitVersion = properties["version.test.junit"]
     testImplementation("junit:junit:$junitVersion")
 
     val runner = properties["version.androidx.test.runner"]

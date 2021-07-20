@@ -40,6 +40,6 @@ dependencies {
     val coroutinesVersion = properties["version.coroutines"]
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
-    val junitVersion = properties["version.junit"]
+    val junitVersion = properties["version.test.junit"]
     testImplementation("junit:junit:$junitVersion")
 }

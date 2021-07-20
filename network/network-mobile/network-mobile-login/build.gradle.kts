@@ -44,6 +44,6 @@ dependencies {
     val jsoupVersion = properties["version.jsoup"]
     implementation("org.jsoup:jsoup:$jsoupVersion")
 
-    val junitVersion = properties["version.junit"]
+    val junitVersion = properties["version.test.junit"]
     testImplementation("junit:junit:$junitVersion")
 }

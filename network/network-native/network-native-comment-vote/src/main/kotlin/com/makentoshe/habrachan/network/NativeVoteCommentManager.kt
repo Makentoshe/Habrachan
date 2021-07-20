@@ -10,7 +10,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Retrofit
 
-class NativeVoteCommentManager(
+class NativeVoteCommentManager internal constructor(
     private val api: NativeCommentsApi, private val deserializer: NativeVoteCommentDeserializer
 ) : VoteCommentManager<NativeVoteCommentRequest> {
 
