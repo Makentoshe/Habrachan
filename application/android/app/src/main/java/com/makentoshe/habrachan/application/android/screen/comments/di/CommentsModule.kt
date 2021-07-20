@@ -31,7 +31,7 @@ abstract class CommentsModule(fragment: Fragment): Module() {
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
 
-        val factory = VoteCommentViewModel.Factory(session, voteCommentManager)
+        val factory = VoteCommentViewModel.Factory(session, voteCommentManager, database.commentDao())
         voteCommentViewModelProvider = VoteCommentViewModelProvider(fragment, factory)
         bind<VoteCommentViewModelProvider>().toInstance(voteCommentViewModelProvider)
     }

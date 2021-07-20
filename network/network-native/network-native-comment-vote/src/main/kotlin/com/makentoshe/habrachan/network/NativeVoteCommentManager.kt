@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.network
 
+import com.makentoshe.habrachan.entity.CommentId
 import com.makentoshe.habrachan.entity.CommentVote
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.api.NativeCommentsApi
@@ -14,7 +15,7 @@ class NativeVoteCommentManager internal constructor(
     private val api: NativeCommentsApi, private val deserializer: NativeVoteCommentDeserializer
 ) : VoteCommentManager<NativeVoteCommentRequest> {
 
-    override fun request(userSession: UserSession, commentId: Int, vote: CommentVote): NativeVoteCommentRequest {
+    override fun request(userSession: UserSession, commentId: CommentId, vote: CommentVote): NativeVoteCommentRequest {
         return NativeVoteCommentRequest(userSession, commentId, vote)
     }
 
@@ -22,10 +23,10 @@ class NativeVoteCommentManager internal constructor(
     override suspend fun vote(request: NativeVoteCommentRequest): Result<VoteCommentResponse2> = try {
         when (request.commentVote) {
             is CommentVote.Up -> {
-                api.voteUp(request.userSession.client, request.userSession.token, request.commentId)
+                api.voteUp(request.userSession.client, request.userSession.token, request.commentId.commentId)
             }
             is CommentVote.Down -> {
-                api.voteDown(request.userSession.client, request.userSession.token, request.commentId)
+                api.voteDown(request.userSession.client, request.userSession.token, request.commentId.commentId)
             }
         }.executeAndFold(deserializer, request)
     } catch (exception: Exception) {

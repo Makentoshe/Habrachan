@@ -61,10 +61,10 @@ class BottomPanelCommentAdapterControllerDecorator(
     private fun internalOnBindViewHolderBottomPanel(holder: CommentViewHolder, model: CommentModelElement) {
         with(CommentBottomPanelController(holder).showExpanded()) {
             setVoteUpAction(lifecycleScope) {
-                model.getViewModel().voteCommentChannel.send(VoteCommentSpec(model.comment.commentId, CommentVote.Up))
+                model.getViewModel().voteCommentChannel.send(VoteCommentSpec(model.comment, CommentVote.Up))
             }
             setVoteDownAction(lifecycleScope) {
-                model.getViewModel().voteCommentChannel.send(VoteCommentSpec(model.comment.commentId, CommentVote.Down))
+                model.getViewModel().voteCommentChannel.send(VoteCommentSpec(model.comment, CommentVote.Down))
             }
 
             setBookmarkAction(lifecycleScope, Dispatchers.Main) {
