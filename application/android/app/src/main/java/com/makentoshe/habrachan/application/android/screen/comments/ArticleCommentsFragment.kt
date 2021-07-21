@@ -23,6 +23,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.adapte
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentsEmptyStateViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
+import com.makentoshe.habrachan.entity.ArticleId
 import kotlinx.android.synthetic.main.fragment_comments_article.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -32,8 +33,8 @@ import toothpick.ktp.delegate.inject
 class ArticleCommentsFragment : BaseFragment() {
 
     companion object : Analytics(LogAnalytic()){
-        fun build(articleId: Int, articleTitle: String) = ArticleCommentsFragment().apply {
-            arguments.articleId = articleId
+        fun build(articleId: ArticleId, articleTitle: String) = ArticleCommentsFragment().apply {
+            arguments.articleId = articleId.articleId
             arguments.articleTitle = articleTitle
         }
 

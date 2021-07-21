@@ -22,6 +22,7 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.application.android.screen.article.model.*
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
+import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.fold
 import com.makentoshe.habrachan.network.NativeVoteArticleException
@@ -41,8 +42,8 @@ class ArticleFragment : CoreFragment(), HabrachanWebViewClientListener {
 
     companion object : Analytics(LogAnalytic()) {
 
-        fun build(articleId: Int) = ArticleFragment().apply {
-            arguments.articleId = articleId
+        fun build(articleId: ArticleId) = ArticleFragment().apply {
+            arguments.articleId = articleId.articleId
         }
 
         private const val VIEW_MODEL_STATE_KEY = "ViewModel"
