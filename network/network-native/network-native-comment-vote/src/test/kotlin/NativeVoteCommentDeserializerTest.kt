@@ -1,4 +1,5 @@
 import com.makentoshe.habrachan.entity.CommentVote
+import com.makentoshe.habrachan.entity.commentId
 import com.makentoshe.habrachan.network.NativeVoteCommentDeserializer
 import com.makentoshe.habrachan.network.NativeVoteCommentException
 import com.makentoshe.habrachan.network.NativeVoteCommentRequest
@@ -12,7 +13,7 @@ class NativeVoteCommentDeserializerTest : UnitTest() {
         val failureJson = "vote_comment_failure.json"
         val code = 0
         val message = "Random message"
-        val request = NativeVoteCommentRequest(userSession, -1, CommentVote.Down)
+        val request = NativeVoteCommentRequest(userSession, commentId(-1), CommentVote.Down)
         val deserializer = NativeVoteCommentDeserializer()
 
         val response = deserializer.success(request, failureJson, code, message).exceptionOrNull() as NativeVoteCommentException
@@ -28,7 +29,7 @@ class NativeVoteCommentDeserializerTest : UnitTest() {
         val failureJson = "vote_comment_failure.json"
         val code = 0
         val message = "Random message"
-        val request = NativeVoteCommentRequest(userSession, -1, CommentVote.Down)
+        val request = NativeVoteCommentRequest(userSession, commentId(-1), CommentVote.Down)
         val deserializer = NativeVoteCommentDeserializer()
 
         val response = deserializer.failure(request, failureJson, code, message).exceptionOrNull() as NativeVoteCommentException
