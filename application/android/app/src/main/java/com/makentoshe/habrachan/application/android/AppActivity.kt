@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBr
 import com.makentoshe.habrachan.application.android.navigation.StackSupportAppNavigator
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
+import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
 import com.makentoshe.habrachan.entity.ArticleId
@@ -55,7 +56,7 @@ class AppActivity : AppCompatActivity() {
         println(uri.pathSegments)
         when (val second = uri.pathSegments[1]) {
             "post" -> deeplinkArticleStart(articleId(uri.pathSegments[2].toInt()))
-            "company" -> deeplinkCorporateArticleStart(uri)
+            "company" -> deeplinkCorporateStart(uri)
             "users" -> deeplinkUserStart(uri.pathSegments[2])
         }
     }
@@ -64,9 +65,17 @@ class AppActivity : AppCompatActivity() {
         router.newRootScreen(UserScreen(UserAccount.User(login)))
     }
 
-    private fun deeplinkCorporateArticleStart(uri: Uri) {
+    private fun deeplinkCorporateStart(uri: Uri) {
 //        val companyName = uri.pathSegments[2]
-        deeplinkArticleStart(articleId(uri.pathSegments[4].toInt()))
+        val articleId = articleId(uri.pathSegments[4].toInt())
+        when (uri.pathSegments.last()) {
+            "comments" -> deeplinkCommentsStart(articleId)
+            else -> deeplinkArticleStart(articleId)
+        }
+    }
+
+    private fun deeplinkCommentsStart(articleId: ArticleId) {
+        router.newRootScreen(ArticleCommentsScreen(articleId, ""))
     }
 
     private fun deeplinkArticleStart(articleId: ArticleId) {
