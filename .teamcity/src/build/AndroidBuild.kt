@@ -3,7 +3,6 @@ package src.build
 import jetbrains.buildServer.configs.kotlin.v2019_2.PublishMode
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import src.Parameters
-import src.createLocalProperties
 import src.installAndroidSdk
 
 object AndroidBuild : VcsBaseBuild("Android build", {
@@ -24,7 +23,6 @@ object AndroidBuild : VcsBaseBuild("Android build", {
 
     steps {
         installAndroidSdk()
-        createLocalProperties()
         gradle {
             name = "Android application build"
             tasks = "clean build"

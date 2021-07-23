@@ -43,13 +43,6 @@ object Parameters {
         /** Token for android's keystore */
         val Keystore = Parameter("keystore", "credentialsJSON:ecec29f2-58f4-44e8-896c-50e86206ff9a")
 
-        /** Token contains a real used token from official android app */
-        val HabrClientToken = Parameter("habr-client-token", "credentialsJSON:34bcbef3-91a0-4304-8ea9-a56f66004513")
-
-        /** Token contains a real api token from official android app */
-        val HabrApiToken = Parameter("habr-api-token", "credentialsJSON:a667b9ee-ae50-438e-aa21-0dee3c39af99")
-
-        val HabrUserToken = Parameter("habr-user-token", "credentialsJSON:c64b624b-4d32-477f-9517-2bcd9fac854b")
     }
 }
 
