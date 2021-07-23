@@ -27,7 +27,7 @@ class NativeVoteCommentManagerTest : UnitTest() {
         val request = manager.request(userSession, commentId(-1), CommentVote.Down)
 
         assertEquals(CommentVote.Down, request.commentVote)
-        assertEquals(-1, request.commentId)
+        assertEquals(-1, request.commentId.commentId)
         assertEquals(userSession, request.userSession)
     }
 
@@ -46,7 +46,7 @@ class NativeVoteCommentManagerTest : UnitTest() {
 
         val response = manager.vote(request).getOrThrow()
         assertEquals(7, response.score)
-        assertEquals(-1, response.request.commentId)
+        assertEquals(-1, response.request.commentId.commentId)
         assertEquals(CommentVote.Up, response.request.commentVote)
     }
 
