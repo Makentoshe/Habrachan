@@ -26,8 +26,8 @@ class ArticleCommentsInjectingFragmentLifecycleCallback : FragmentManager.Fragme
     }
 
     private fun injectArticleCommentsFragment(fragment: ArticleCommentsFragment) {
-        val module = ArticleCommentsModule(fragment)
-        val scope = Toothpick.openScopes(ApplicationScope::class, ArticleCommentsScope::class)
+        val module = ArticleCommentsModule(fragment) // TODO separate module for all Articles and for concrete article
+        val scope = Toothpick.openScopes(ApplicationScope::class, ArticleCommentsScope::class, fragment.arguments.articleId)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 
