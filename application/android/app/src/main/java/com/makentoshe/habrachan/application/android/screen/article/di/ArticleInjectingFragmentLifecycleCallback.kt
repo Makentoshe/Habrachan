@@ -16,8 +16,8 @@ class ArticleInjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecy
     }
 
     private fun injectArticleFragment(fragment: ArticleFragment) {
-        val module = ArticleModule(fragment)
-        val scope = Toothpick.openScopes(ApplicationScope::class, ArticleScope::class)
+        val module = ArticleModule(fragment) // TODO separate module for all Articles and for concrete article
+        val scope = Toothpick.openScopes(ApplicationScope::class, ArticleScope::class, fragment.arguments.articleId)
         scope.installModules(module).closeOnDestroy(fragment).inject(fragment)
     }
 }
