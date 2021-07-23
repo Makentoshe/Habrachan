@@ -27,7 +27,7 @@ changeVcsRoot(RelativeId("MetadataVcsRoot")) {
 
     (this as GitVcsRoot).apply {
         branch = "master"
-        checkoutPolicy = GitVcsRoot.AgentCheckoutPolicy.USE_MIRRORS
+        checkoutPolicy = GitVcsRoot.AgentCheckoutPolicy.NO_MIRRORS
     }
 
 }
