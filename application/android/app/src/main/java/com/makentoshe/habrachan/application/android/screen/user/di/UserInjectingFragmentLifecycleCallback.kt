@@ -16,8 +16,8 @@ class UserInjectingFragmentLifecycleCallback : FragmentManager.FragmentLifecycle
     }
 
     private fun injectUserFragment(fragment: UserFragment) {
-        val module = UserModule(fragment)
-        val scope = Toothpick.openScopes(ApplicationScope::class, UserScope::class)
+        val module = UserModule(fragment) // TODO separate module for all users and for concrete user
+        val scope = Toothpick.openScopes(ApplicationScope::class, UserScope::class, fragment.arguments.account)
         scope.installModules(module).closeOnDestroy(fragment).inject(fragment)
     }
 }
