@@ -54,3 +54,21 @@ fun BuildSteps.installAndroidSdk() {
     updateAndroidSDK("28", "28.0.3")
     updateAndroidSDK("29", "29.0.3")
 }
+
+fun BuildSteps.createLocalProperties() {
+
+    val fileTitle = "local.properties"
+
+    val fileContent = """
+        client=${Parameters.Credential.HabrClientToken.reference}
+        api=${Parameters.Credential.HabrApiToken.reference}
+        token=${Parameters.Credential.HabrUserToken.reference}
+    """.trimIndent()
+
+    script {
+        name = "Create local.properties file"
+        scriptContent = """
+            echo "$fileContent" > "$fileTitle"
+        """.trimIndent()
+    }
+}
