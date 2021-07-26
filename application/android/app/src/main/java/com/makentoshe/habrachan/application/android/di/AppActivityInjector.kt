@@ -4,7 +4,6 @@ import com.makentoshe.habrachan.application.android.AppActivity
 import com.makentoshe.habrachan.application.android.common.di.ActivityInjector
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.screen.comments.di.ArticleCommentsInjectingFragmentLifecycleCallback
-import com.makentoshe.habrachan.application.android.screen.content.di.ContentInjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.application.android.screen.login.di.LoginInjectingFragmentLifecycleCallback
 import com.makentoshe.habrachan.application.android.screen.user.di.UserInjectingFragmentLifecycleCallback
 import toothpick.Toothpick
@@ -20,9 +19,6 @@ class AppActivityInjector(vararg fragmentInjectors: FragmentInjector<*>) : Activ
 
     val articleCommentsCallback = ArticleCommentsInjectingFragmentLifecycleCallback()
     supportFragmentManager.registerFragmentLifecycleCallbacks(articleCommentsCallback, true)
-
-    val contentCallback = ContentInjectingFragmentLifecycleCallback()
-    supportFragmentManager.registerFragmentLifecycleCallbacks(contentCallback, true)
 
     val loginCallback = LoginInjectingFragmentLifecycleCallback()
     supportFragmentManager.registerFragmentLifecycleCallbacks(loginCallback, true)

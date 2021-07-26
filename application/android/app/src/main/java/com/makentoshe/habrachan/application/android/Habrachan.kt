@@ -13,6 +13,8 @@ import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.article.di.ArticleFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFragmentInjector
+import com.makentoshe.habrachan.application.android.screen.content.di.ContentFragmentInjector
+import com.makentoshe.habrachan.application.android.screen.content.di.ContentFragmentPageInjector
 import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowFragmentInjector
 import ru.terrakok.cicerone.Cicerone
 import toothpick.Toothpick
@@ -26,7 +28,9 @@ class Habrachan : Application() {
         MainFlowFragmentInjector(),
         ArticlesFlowFragmentInjector(),
         ArticlesFragmentInjector(),
-        ArticleFragmentInjector()
+        ArticleFragmentInjector(),
+        ContentFragmentInjector(),
+        ContentFragmentPageInjector()
     )
 
     override fun onCreate() {
