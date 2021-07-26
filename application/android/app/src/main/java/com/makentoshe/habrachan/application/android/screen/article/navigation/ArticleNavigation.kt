@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.application.android.screen.article.navigation
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentScreen
-import com.makentoshe.habrachan.application.android.screen.login.navigation.NativeLoginScreen
+import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginScreen
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
 import com.makentoshe.habrachan.entity.Article
@@ -28,6 +28,6 @@ class ArticleNavigation(private val router: StackRouter) {
     }
 
     fun navigateToLoginScreen() {
-        router.stack(NativeLoginScreen())
+        router.stack(LoginScreen())
     }
 }

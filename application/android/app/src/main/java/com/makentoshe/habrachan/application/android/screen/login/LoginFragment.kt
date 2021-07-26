@@ -11,7 +11,7 @@ import com.makentoshe.habrachan.application.android.CoreFragment
 import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.screen.login.model.NativeLoginSpec
 import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginNavigation
-import com.makentoshe.habrachan.application.android.screen.login.viewmodel.NativeLoginViewModel
+import com.makentoshe.habrachan.application.android.screen.login.viewmodel.LoginViewModel
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.fold
 import com.makentoshe.habrachan.network.NativeLoginException
@@ -21,10 +21,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
-class NativeLoginFragment : CoreFragment() {
+class LoginFragment : CoreFragment() {
 
     companion object {
-        fun build(navigateToUserScreenAfterLogin: Boolean) = NativeLoginFragment().apply {
+        fun build(navigateToUserScreenAfterLogin: Boolean) = LoginFragment().apply {
             arguments.shouldNavigateToUserScreenAfterLogin = navigateToUserScreenAfterLogin
         }
     }
@@ -32,7 +32,7 @@ class NativeLoginFragment : CoreFragment() {
     override val arguments = Arguments(this)
 
     private val navigation by inject<LoginNavigation>()
-    private val viewModel by inject<NativeLoginViewModel>()
+    private val viewModel by inject<LoginViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_native, container, false)
@@ -99,7 +99,7 @@ class NativeLoginFragment : CoreFragment() {
         }
     }
 
-    class Arguments(fragment: NativeLoginFragment) : CoreFragment.Arguments(fragment) {
+    class Arguments(fragment: LoginFragment) : CoreFragment.Arguments(fragment) {
 
         var shouldNavigateToUserScreenAfterLogin: Boolean
             set(value) = fragmentArguments.putBoolean(NAVIGATE_TO_USER_SCREEN, value)

@@ -14,8 +14,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 
-class NativeLoginViewModel(
-    private val userSession: AndroidUserSession, private val loginManager: NativeLoginManager
+class LoginViewModel(
+    private val userSession: AndroidUserSession,
+    private val loginManager: NativeLoginManager
 ) : ViewModel() {
 
     val loginChannel = Channel<NativeLoginSpec>()
@@ -37,6 +38,6 @@ class NativeLoginViewModel(
         private val userSession: AndroidUserSession, private val loginManager: NativeLoginManager
     ) : ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>) = NativeLoginViewModel(userSession, loginManager) as T
+        override fun <T : ViewModel?> create(modelClass: Class<T>) = LoginViewModel(userSession, loginManager) as T
     }
 }
