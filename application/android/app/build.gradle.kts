@@ -75,6 +75,7 @@ dependencies {
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:common:common-core"))
     implementation(project(":application:android:common:common-comment"))
+    implementation(project(":application:android:common:common-di"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
