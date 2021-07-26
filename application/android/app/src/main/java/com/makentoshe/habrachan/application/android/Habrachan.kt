@@ -5,9 +5,9 @@ import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.di.AppActivityInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationModule
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.di.InjectionActivityLifecycleCallback
 import com.makentoshe.habrachan.application.android.di.NetworkModule
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import ru.terrakok.cicerone.Cicerone
@@ -18,7 +18,7 @@ class Habrachan : Application() {
 
     companion object : Analytics(LogAnalytic())
 
-    private val injectActivityLifecycleCallback = InjectionActivityLifecycleCallback()
+    private val injectActivityLifecycleCallback = AppActivityInjector()
 
     override fun onCreate() {
         super.onCreate()
