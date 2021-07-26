@@ -15,12 +15,6 @@ fun analyticEvent(title: String, message: String, exception: Throwable? = null) 
     override val eventException: Throwable? = exception
 }
 
-/** Allows to define eventTitle using class name */
-fun analyticEvent(`class`: KClass<Any>, message: String, throwable: Throwable? = null) = analyticEvent(`class`.simpleName.toString(), message, throwable)
-
-/** Allows to define eventTitle from a current call context */
-fun Any.analyticEvent(message: String, throwable: Throwable? = null) = analyticEvent(this::class.java.simpleName, message, throwable)
-
 /**
  * Allows to create message in the [AnalyticEvent] context.
  *
@@ -32,3 +26,14 @@ fun analyticEvent(title: String, throwable: Throwable? = null, message: Analytic
         get() = message()
     override val eventException = throwable
 }
+
+/** Allows to define eventTitle using class name */
+fun analyticEvent(`class`: KClass<Any>, message: String, throwable: Throwable? = null) =
+    analyticEvent(`class`.simpleName.toString(), message, throwable)
+
+/** Allows to define eventTitle from a current call context */
+fun Any.analyticEvent(message: String, throwable: Throwable? = null) =
+    analyticEvent(this::class.java.simpleName, message, throwable)
+
+fun Any.analyticEvent(throwable: Throwable? = null, message: AnalyticEvent.() -> String) =
+    analyticEvent(this::class.java.simpleName, throwable, message)
