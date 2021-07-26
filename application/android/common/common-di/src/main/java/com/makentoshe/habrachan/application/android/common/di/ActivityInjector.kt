@@ -7,13 +7,12 @@ import androidx.fragment.app.FragmentActivity
 import kotlin.reflect.KClass
 
 abstract class ActivityInjector<T: FragmentActivity>(
-    private val `class`: KClass<T>,
+    private val activityClass: KClass<T>,
     private val action: T.(Bundle?) -> Unit
 ) : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        if (activity::class != `class`) return
-        action.invoke(activity as T, savedInstanceState)
+        if (activity::class == activityClass) action.invoke(activity as T, savedInstanceState)
     }
 
     override fun onActivityStarted(activity: Activity?) = Unit
