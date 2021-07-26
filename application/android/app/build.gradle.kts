@@ -5,6 +5,7 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
@@ -243,4 +244,23 @@ dependencies {
 
 kapt {
     correctErrorTypes = true
+}
+
+
+
+detekt {
+    config = files("$projectDir/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+//    baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
+
+    reports {
+        html.enabled = true // observe findings in your browser with structure and code snippets
+        xml.enabled = true // checkstyle like format mainly for integrations like Jenkins
+        txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
+    }
+}
+
+// Kotlin DSL
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    // Target version of the generated JVM bytecode. It is used for type resolution.
+    jvmTarget = "1.8"
 }

@@ -1,0 +1,61 @@
+build:
+  maxIssues: 20 # break the build if more than zero weighted issues are found
+  excludeCorrectable: false
+  weights:
+  # complexity: 2 # every rule of the complexity rule set should count as if two issues were found...
+  # LongParameterList: 1 # ...with the exception of the LongParameterList rule.
+  # style: 1
+  # comments: 1 # comment rules are just a nice to know?!
+
+style:
+  active: true
+
+  MaxLineLength:
+    active: true
+    maxLineLength: 120
+    excludePackageStatements: true
+    excludeImportStatements: true
+    excludeCommentStatements: false
+
+complexity:
+  active: true
+
+  TooManyFunctions:
+    active: true
+    thresholdInClasses: 25
+
+  LargeClass:
+    active: true
+    threshold: 600
+
+  LongMethod:
+    active: true
+    threshold: 60
+
+  LongParameterList:
+    functionThreshold: 9
+    constructorThreshold: 27
+
+  NestedBlockDepth:
+    threshold: 4
+
+empty-blocks:
+  active: true
+
+  EmptyCatchBlock:
+    active: true
+
+  EmptyClassBlock:
+    active: true
+
+  EmptyDefaultConstructor:
+    active: true
+
+  EmptyFunctionBlock:
+    active: true
+
+  EmptyKtFile:
+    active: true
+
+  EmptySecondaryConstructor:
+    active: true
