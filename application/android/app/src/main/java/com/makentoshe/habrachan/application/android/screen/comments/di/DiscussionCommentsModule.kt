@@ -23,10 +23,7 @@ import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 import toothpick.Toothpick
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
-import javax.inject.Qualifier
 
-@Qualifier
-annotation class DiscussionCommentsScope
 class DiscussionCommentsModule(fragment: DiscussionCommentsFragment) : CommentsModule(fragment) {
 
     private val getContentManager by inject<GetContentManager>()
