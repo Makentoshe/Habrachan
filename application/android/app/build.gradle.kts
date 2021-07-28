@@ -19,8 +19,8 @@ android {
         applicationId = "com.makentoshe.habrachan"
         minSdkVersion(21)
         targetSdkVersion(29)
-        versionCode = 8
-        versionName = "0.6.2"
+        versionCode = 9
+        versionName = "0.7.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
 //        val localPropertiesFile = project.rootProject.file("local.properties")
