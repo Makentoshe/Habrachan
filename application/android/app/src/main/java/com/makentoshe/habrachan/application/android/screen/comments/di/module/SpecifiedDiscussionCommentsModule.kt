@@ -40,9 +40,9 @@ class SpecifiedDiscussionCommentsModule(private val fragment: DiscussionComments
         val voteCommentViewModelProvider = VoteCommentViewModelProvider(fragment, voteCommentViewModelFactory)
         bind<VoteCommentViewModelProvider>().toInstance(voteCommentViewModelProvider)
 
-        bind<ContentCommentAdapter>().toProvider(ContentCommentAdapterProvider::class)
-        bind<TitleCommentAdapter>().toProvider(TitleCommentAdapterProvider::class)
-        bind<ConcatAdapter>().toProvider(DiscussionConcatAdapterProvider::class)
+        bind<ContentCommentAdapter>().toProvider(ContentCommentAdapterProvider::class).providesSingleton()
+        bind<TitleCommentAdapter>().toProvider(TitleCommentAdapterProvider::class).providesSingleton()
+        bind<ConcatAdapter>().toProvider(DiscussionConcatAdapterProvider::class).providesSingleton()
     }
 }
 
