@@ -19,9 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 class DiscussionCommentsViewModel(
-    private val session: UserSession,
-    private val arena: CommentsCacheFirstArena,
-    avatarArena: ContentArena
+    private val session: UserSession, private val arena: CommentsCacheFirstArena, avatarArena: ContentArena
 ) : CommentsViewModel(avatarArena, session) {
 
     private val specChannel = Channel<CommentsSpec>()
