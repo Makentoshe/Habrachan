@@ -3,21 +3,50 @@ package com.makentoshe.habrachan.application.android.screen.comments.di
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.di.module.ArticleCommentsModule
+import com.makentoshe.habrachan.application.android.screen.comments.di.module.CommentsModule2
+import com.makentoshe.habrachan.application.android.screen.comments.di.module.SpecifiedArticleCommentsModule
+import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
-class ArticleCommentsFragmentInjector: FragmentInjector<ArticleCommentsFragment>(
+class ArticleCommentsFragmentInjector : FragmentInjector<ArticleCommentsFragment>(
     fragmentClass = ArticleCommentsFragment::class
 ) {
+
+    // separated for all comment screens and for specified article screen
     override fun inject(injectorScope: FragmentInjectorScope<ArticleCommentsFragment>) {
-        val scope = CommentsScope.Article(injectorScope.fragment.arguments.articleId)
-        val module = ArticleCommentsModule(injectorScope.fragment) // TODO separate module for all Articles and for concrete article
-        val toothpickScope = Toothpick.openScopes(ApplicationScope::class, CommentsScope::class, scope)
+        val scope = ArticleCommentsScope2(injectorScope.fragment.arguments.articleId)
+
+        val toothpickScope = articleCommentsScope(injectorScope).openSubScope(scope)
+        val module = SpecifiedArticleCommentsModule(injectorScope.fragment)
+        captureModuleInstall(module, scope, injectorScope)
         toothpickScope.closeOnDestroy(injectorScope.fragment).installModules(module).inject(injectorScope.fragment)
     }
-}
 
-sealed class CommentsScope {
-    data class Article(val articleId: Int): CommentsScope()
-    data class Discussion(val commentId: Int): CommentsScope()
+    private fun articleCommentsScope(injectorScope: FragmentInjectorScope<ArticleCommentsFragment>): Scope {
+        val scope = ArticleCommentsScope2::class
+        if (Toothpick.isScopeOpen(scope)) {
+            captureScopeOpened(scope, injectorScope)
+            return Toothpick.openScopes(ApplicationScope::class, CommentsScope::class, scope)
+        }
+
+        val toothpickScope = commentsScope(injectorScope).openSubScope(scope)
+        val module = ArticleCommentsModule(injectorScope.fragment)
+        captureModuleInstall(module, scope, injectorScope)
+        return toothpickScope.installModules(module)
+    }
+
+    private fun commentsScope(injectorScope: FragmentInjectorScope<ArticleCommentsFragment>): Scope {
+        val scope = CommentsScope::class
+        if (Toothpick.isScopeOpen(scope)) {
+            captureScopeOpened(scope, injectorScope)
+            return Toothpick.openScopes(ApplicationScope::class, scope)
+        }
+
+        val toothpickScope = Toothpick.openScopes(ApplicationScope::class, scope)
+        val module = CommentsModule2(injectorScope.fragment)
+        captureModuleInstall(module, scope, injectorScope)
+        return toothpickScope.installModules(module)
+    }
 }
