@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.di.module.ArticleCommentsModule
-import com.makentoshe.habrachan.application.android.screen.comments.di.module.CommentsModule2
+import com.makentoshe.habrachan.application.android.screen.comments.di.module.CommentsModule
 import com.makentoshe.habrachan.application.android.screen.comments.di.module.SpecifiedArticleCommentsModule
 import toothpick.Scope
 import toothpick.Toothpick
@@ -45,7 +45,7 @@ class ArticleCommentsFragmentInjector : FragmentInjector<ArticleCommentsFragment
         }
 
         val toothpickScope = Toothpick.openScopes(ApplicationScope::class, scope)
-        val module = CommentsModule2(injectorScope.fragment)
+        val module = CommentsModule(injectorScope.fragment)
         captureModuleInstall(module, scope, injectorScope)
         return toothpickScope.installModules(module)
     }

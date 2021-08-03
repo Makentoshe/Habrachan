@@ -10,20 +10,31 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.adapte
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.BottomPanelCommentAdapterControllerDecorator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.ContentCommentAdapterController
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
-import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
+import javax.inject.Inject
 import javax.inject.Provider
 
-internal class ContentCommentAdapterProvider(
-    private val fragment: Fragment,
-    private val navigation: CommentsNavigation,
-    private val voteCommentViewModelProvider: VoteCommentViewModelProvider,
-    private val articleCommentsViewModel: ArticleCommentsViewModel,
-): Provider<ContentCommentAdapter> {
+internal class ContentCommentAdapterProvider : Provider<ContentCommentAdapter> {
 
-    private val blockContentFactory = BlockViewController.BlockContent.Factory(fragment.requireContext())
-    private val commentContentFactory = CommentBodyController.CommentContent.Factory(fragment.requireContext())
+    @Inject
+    lateinit var blockContentFactory: BlockViewController.BlockContent.Factory
+
+    @Inject
+    lateinit var commentContentFactory: CommentBodyController.CommentContent.Factory
+
+    @Inject
+    lateinit var fragment: Fragment
+
+    @Inject
+    lateinit var navigation: CommentsNavigation
+
+    @Inject
+    lateinit var voteCommentViewModelProvider: VoteCommentViewModelProvider
+
+    @Inject
+    lateinit var articleCommentsViewModelProvider: ArticleCommentsViewModelProvider
 
     override fun get(): ContentCommentAdapter {
+        val articleCommentsViewModel = articleCommentsViewModelProvider.get(fragment)
         val avatarDecorator = AvatarCommentAdapterControllerDecorator(null, fragment.lifecycleScope, articleCommentsViewModel)
         return contentCommentAdapterChain2(avatarDecorator)
     }

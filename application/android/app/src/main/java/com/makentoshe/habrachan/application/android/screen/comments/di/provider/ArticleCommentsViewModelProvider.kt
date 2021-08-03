@@ -13,13 +13,21 @@ import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
 import com.makentoshe.habrachan.network.manager.GetContentManager
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
+import javax.inject.Inject
 
-internal class ArticleCommentsViewModelProvider(
-    private val database: AndroidCacheDatabase,
-    private val getContentManager: GetContentManager,
-    private val getCommentsManager: GetArticleCommentsManager<GetArticleCommentsRequest>,
-    private val session: UserSession,
-) : ViewModelProvider<ArticleCommentsViewModel> {
+internal class ArticleCommentsViewModelProvider : ViewModelProvider<ArticleCommentsViewModel> {
+
+    @Inject
+    internal lateinit var database: AndroidCacheDatabase
+
+    @Inject
+    internal lateinit var getContentManager: GetContentManager
+
+    @Inject
+    internal lateinit var getCommentsManager: GetArticleCommentsManager<GetArticleCommentsRequest>
+
+    @Inject
+    internal lateinit var session: UserSession
 
     override fun get(fragment: Fragment): ArticleCommentsViewModel {
         val avatarArena = avatarArena(avatarArenaCache(fragment))
