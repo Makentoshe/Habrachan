@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.adapte
 import javax.inject.Inject
 import javax.inject.Provider
 
-internal class DiscussionConcatAdapterProvider: Provider<ConcatAdapter> {
+internal class DiscussionConcatAdapterProvider : Provider<ConcatAdapter> {
 
     @Inject
     internal lateinit var titleCommentAdapter: TitleCommentAdapter
@@ -14,7 +14,5 @@ internal class DiscussionConcatAdapterProvider: Provider<ConcatAdapter> {
     @Inject
     internal lateinit var contentCommentAdapter: ContentCommentAdapter
 
-    override fun get(): ConcatAdapter {
-        return ConcatAdapter(titleCommentAdapter, contentCommentAdapter)
-    }
+    override fun get() = ConcatAdapter(titleCommentAdapter, contentCommentAdapter)
 }

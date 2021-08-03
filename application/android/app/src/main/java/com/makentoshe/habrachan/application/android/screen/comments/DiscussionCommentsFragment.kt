@@ -57,6 +57,7 @@ class DiscussionCommentsFragment : BaseFragment() {
     ): View = inflater.inflate(R.layout.fragment_comments_discussion, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        println(commentAdapter)
         val wasViewModelRecreated = viewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
         if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch(Dispatchers.IO) {
             val message = "articleId=${arguments.articleId}, commentId=${arguments.commentId}"
