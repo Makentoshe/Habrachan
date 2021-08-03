@@ -39,6 +39,16 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(kotlin("stdlib"))
+    implementation(project(":application:android:analytics"))
+
+    // Toothpick
+    // https://github.com/stephanenicolas/toothpick
+    val toothpick = "3.1.0"
+    implementation("com.github.stephanenicolas.toothpick:ktp:$toothpick")
+    kapt("com.github.stephanenicolas.toothpick:toothpick-compiler:$toothpick")
+    implementation("com.github.stephanenicolas.toothpick:smoothie:$toothpick")
+    implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpick")
+    testImplementation("com.github.stephanenicolas.toothpick:toothpick-testing-junit5:$toothpick")
 
     val androidxCoreVersion = properties["version.androidx.core"]
     implementation("androidx.core:core-ktx:$androidxCoreVersion")
