@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.common.comment
+package com.makentoshe.habrachan.application.android.common.comment.controller.comment
 
 interface CommentViewControllerNavigator {
 
@@ -9,7 +9,3 @@ interface CommentViewControllerNavigator {
     fun toUserScreen(login: String)
 }
 
-interface BlockViewControllerNavigator {
-
-    fun toDiscussionScreen(commentId: Int)
-}

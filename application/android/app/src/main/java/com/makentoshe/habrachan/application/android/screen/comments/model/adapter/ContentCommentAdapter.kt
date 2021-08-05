@@ -6,10 +6,10 @@ import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.comment.BlockViewHolder
-import com.makentoshe.habrachan.application.android.common.comment.CommentViewControllerNavigator
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.BlockViewController
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
+import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewControllerNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelBlank
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelNode
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterController
