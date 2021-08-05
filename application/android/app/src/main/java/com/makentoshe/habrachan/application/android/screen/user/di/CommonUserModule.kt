@@ -7,7 +7,9 @@ import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabas
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.user.UserFragment
+import com.makentoshe.habrachan.application.android.screen.user.di.provider.UserViewModelFactoryProvider
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserNavigation
+import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.application.core.arena.users.GetUserArena
 import com.makentoshe.habrachan.network.manager.GetContentManager
@@ -18,7 +20,9 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
-class CommonUserModule(injectorScope: FragmentInjector.FragmentInjectorScope<UserFragment>) : Module() {
+class CommonUserModule(
+    injectorScope: FragmentInjector.FragmentInjectorScope<UserFragment>,
+) : Module() {
 
     private val androidCacheDatabase by inject<AndroidCacheDatabase>()
     private val getUserManager by inject<GetUserManager<GetUserRequest>>()
@@ -34,5 +38,7 @@ class CommonUserModule(injectorScope: FragmentInjector.FragmentInjectorScope<Use
 
         val contentArenaCache = ContentArenaCache(androidCacheDatabase.contentDao(), injectorScope.context.cacheDir)
         bind<ContentArena>().toInstance(ContentArena(getContentManager, contentArenaCache))
+
+        bind<UserViewModel.Factory>().toProvider(UserViewModelFactoryProvider::class).providesSingleton()
     }
 }
