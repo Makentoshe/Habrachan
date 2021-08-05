@@ -2,16 +2,16 @@ package com.makentoshe.habrachan.application.android.screen.comments.di.module
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import com.makentoshe.habrachan.application.android.common.comment.BlockViewController
-import com.makentoshe.habrachan.application.android.common.comment.CommentBodyController
+import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
+import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.ArticleCommentsViewModelProvider
-import com.makentoshe.habrachan.application.android.screen.comments.di.provider.BlockContentFactoryProvider
-import com.makentoshe.habrachan.application.android.screen.comments.di.provider.CommentContentFactoryProvider
+import com.makentoshe.habrachan.application.android.screen.comments.di.provider.ContentBodyBlockFactoryProvider
+import com.makentoshe.habrachan.application.android.screen.comments.di.provider.ContentBodyCommentFactoryProvider
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.VoteCommentViewModelFactoryProvider
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import toothpick.Toothpick
@@ -39,8 +39,8 @@ class CommentsModule(articleId: Int, articleTitle: String, fragment: Fragment) :
         val navigation = CommentsNavigation(router, articleId, articleTitle, fragment.childFragmentManager)
         bind<CommentsNavigation>().toInstance(navigation)
 
-        bind<BlockViewController.BlockContent.Factory>().toProvider(BlockContentFactoryProvider::class)
-        bind<CommentBodyController.CommentContent.Factory>().toProvider(CommentContentFactoryProvider::class)
+        bind<ContentBodyBlock.Factory>().toProvider(ContentBodyBlockFactoryProvider::class)
+        bind<ContentBodyComment.Factory>().toProvider(ContentBodyCommentFactoryProvider::class)
         bind<VoteCommentViewModel.Factory>().toProvider(VoteCommentViewModelFactoryProvider::class)
         bind<ArticleCommentsViewModelProvider>().toClass(ArticleCommentsViewModelProvider::class)
     }

@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.application.android.screen.comments.di
 
 import androidx.fragment.app.Fragment
-import com.makentoshe.habrachan.application.android.common.comment.BlockViewController
-import com.makentoshe.habrachan.application.android.common.comment.CommentBodyController
+import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
+import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
@@ -22,8 +22,8 @@ abstract class CommentsModule(fragment: Fragment): Module() {
     protected val session by inject<UserSession>()
     protected val database by inject<AndroidCacheDatabase>()
 
-    protected val commentContentFactory = CommentBodyController.CommentContent.Factory(fragment.requireContext())
-    protected val blockContentFactory = BlockViewController.BlockContent.Factory(fragment.requireContext())
+    protected val commentContentFactory = ContentBodyComment.Factory(fragment.requireContext())
+    protected val blockContentFactory = ContentBodyBlock.Factory(fragment.requireContext())
 
     protected val voteCommentManager by inject<VoteCommentManager<VoteCommentRequest2>>()
     protected val voteCommentViewModelProvider: VoteCommentViewModelProvider
