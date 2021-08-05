@@ -26,7 +26,7 @@ class BottomPanelCommentAdapterControllerDecorator(
 ) : CommentAdapterController {
 
     private fun CommentModelElement.getViewModel(): VoteCommentViewModel {
-        return voteCommentViewModelProvider.get(comment.commentId)
+        return voteCommentViewModelProvider.get(comment.commentId.toString())
     }
 
     override fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelElement) {

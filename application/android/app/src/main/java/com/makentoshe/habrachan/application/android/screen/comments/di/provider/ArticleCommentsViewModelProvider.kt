@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.arena.CommentsArenaCache
-import com.makentoshe.habrachan.application.android.common.comment.di.provider.ViewModelProvider
+import com.makentoshe.habrachan.application.android.common.comment.di.provider.ViewModelFragmentProvider
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsSourceFirstArena
@@ -15,7 +15,7 @@ import com.makentoshe.habrachan.network.manager.GetContentManager
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 import javax.inject.Inject
 
-internal class ArticleCommentsViewModelProvider : ViewModelProvider<ArticleCommentsViewModel> {
+internal class ArticleCommentsViewModelProvider : ViewModelFragmentProvider<ArticleCommentsViewModel> {
 
     @Inject
     internal lateinit var database: AndroidCacheDatabase
