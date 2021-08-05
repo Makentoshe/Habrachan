@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.application.android.common.comment
 
 import android.text.style.ClickableSpan
 import android.view.View
+import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewControllerNavigator
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.MarkwonSpansFactory
 import io.noties.markwon.Prop

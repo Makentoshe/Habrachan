@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.application.android.screen.comments.navigation
 
 import androidx.fragment.app.FragmentManager
-import com.makentoshe.habrachan.application.android.common.comment.BlockViewControllerNavigator
-import com.makentoshe.habrachan.application.android.common.comment.CommentViewControllerNavigator
+import com.makentoshe.habrachan.application.android.common.comment.controller.block.BlockViewControllerNavigator
+import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewControllerNavigator
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.comments.CommentDetailsDialogFragment
 import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentScreen

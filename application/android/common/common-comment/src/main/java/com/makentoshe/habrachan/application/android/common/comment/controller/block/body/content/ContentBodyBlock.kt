@@ -3,8 +3,8 @@ package com.makentoshe.habrachan.application.android.common.comment.controller.b
 import android.content.Context
 import android.view.View
 import android.widget.TextView
-import com.makentoshe.habrachan.application.android.common.comment.BlockViewControllerNavigator
 import com.makentoshe.habrachan.application.android.common.comment.R
+import com.makentoshe.habrachan.application.android.common.comment.controller.block.BlockViewControllerNavigator
 
 class ContentBodyBlock internal constructor(val count: Int, val parent: Int, private val context: Context) {
 
