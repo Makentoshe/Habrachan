@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.application.android.screen.comments.di.provider
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.makentoshe.habrachan.application.android.common.comment.BlockViewController
-import com.makentoshe.habrachan.application.android.common.comment.CommentBodyController
+import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
+import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.AvatarCommentAdapterControllerDecorator
@@ -16,10 +16,10 @@ import javax.inject.Provider
 internal class ContentCommentAdapterProvider : Provider<ContentCommentAdapter> {
 
     @Inject
-    lateinit var blockContentFactory: BlockViewController.BlockContent.Factory
+    lateinit var contentBodyBlockFactory: ContentBodyBlock.Factory
 
     @Inject
-    lateinit var commentContentFactory: CommentBodyController.CommentContent.Factory
+    lateinit var contentBodyCommentFactory: ContentBodyComment.Factory
 
     @Inject
     lateinit var fragment: Fragment
@@ -45,13 +45,13 @@ internal class ContentCommentAdapterProvider : Provider<ContentCommentAdapter> {
     }
 
     private fun contentCommentAdapterChain3(bottomPanelDecorator: BottomPanelCommentAdapterControllerDecorator): ContentCommentAdapter {
-        val commentContentFactory = commentContentFactory.setNavigationOnImageClick(navigation)
+        val commentContentFactory = contentBodyCommentFactory.setNavigationOnImageClick(navigation)
         val controller = ContentCommentAdapterController(bottomPanelDecorator, commentContentFactory)
         return contentCommentAdapterChain4(controller)
     }
 
     private fun contentCommentAdapterChain4(contentCommentAdapterController: ContentCommentAdapterController): ContentCommentAdapter {
-        val blockContentFactory = blockContentFactory.setNavigation(navigation)
+        val blockContentFactory = contentBodyBlockFactory.setNavigation(navigation)
         return ContentCommentAdapter(contentCommentAdapterController, blockContentFactory, navigation)
     }
 

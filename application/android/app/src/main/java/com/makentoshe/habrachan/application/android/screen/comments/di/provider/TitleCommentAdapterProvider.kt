@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.comments.di.provider
 
-import com.makentoshe.habrachan.application.android.common.comment.CommentBodyController
+import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.TitleCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.AvatarCommentAdapterControllerDecorator
@@ -14,7 +14,7 @@ import javax.inject.Provider
 internal class TitleCommentAdapterProvider : Provider<TitleCommentAdapter> {
 
     @Inject
-    internal lateinit var commentContentFactory: CommentBodyController.CommentContent.Factory
+    internal lateinit var contentBodyCommentFactory: ContentBodyComment.Factory
 
     @Inject
     internal lateinit var voteCommentViewModelProvider: VoteCommentViewModelProvider
@@ -28,8 +28,8 @@ internal class TitleCommentAdapterProvider : Provider<TitleCommentAdapter> {
     override fun get(): TitleCommentAdapter {
         val avatar = AvatarCommentAdapterControllerDecorator(null, fragmentLifecycleScope, discussionCommentsViewModel)
         val bottomPanel = BottomPanelCommentAdapterControllerDecorator(avatar, fragmentLifecycleScope, voteCommentViewModelProvider)
-        return TitleCommentAdapter(ContentCommentAdapterController(bottomPanel, commentContentFactory) { _, bodyController ->
-            bodyController.collapse()
+        return TitleCommentAdapter(ContentCommentAdapterController(bottomPanel, contentBodyCommentFactory) { controller ->
+            controller.body.collapse()
         })
     }
 

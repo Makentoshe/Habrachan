@@ -5,17 +5,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.common.comment.BlockViewController
 import com.makentoshe.habrachan.application.android.common.comment.BlockViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewControllerNavigator
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
+import com.makentoshe.habrachan.application.android.common.comment.controller.block.BlockViewController
+import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelBlank
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelNode
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterController
 
 open class ContentCommentAdapter(
     private val commentAdapterController: CommentAdapterController,
-    private val blockContentFactory: BlockViewController.BlockContent.Factory,
+    private val contentBodyBlockFactory: ContentBodyBlock.Factory,
     private val navigation: CommentViewControllerNavigator? = null
 ) : BaseCommentAdapter<RecyclerView.ViewHolder>() {
 
@@ -54,7 +55,10 @@ open class ContentCommentAdapter(
     }
 
     private fun onBindViewHolderBlock(holder: BlockViewHolder, position: Int, model: CommentModelBlank) {
-        val blockContent = blockContentFactory.build(model.count, model.comment.commentId)
-        BlockViewController(holder).setLevel(model.level).setContent(blockContent)
+        val blockContent = contentBodyBlockFactory.build(model.count, model.comment.commentId)
+        with(BlockViewController(holder).body) {
+            level.setLevel(model.level)
+            content.setContent(blockContent)
+        }
     }
 }

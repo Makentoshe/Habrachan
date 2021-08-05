@@ -9,10 +9,8 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.common.comment.CommentBodyController
-import com.makentoshe.habrachan.application.android.common.comment.CommentBottomPanelController
-import com.makentoshe.habrachan.application.android.common.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
+import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseBottomSheetDialogFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentDetailsViewModel
@@ -48,27 +46,35 @@ class CommentDetailsDialogFragment : BaseBottomSheetDialogFragment() {
 
         val viewHolder = CommentViewHolder(view.findViewById(R.id.dialog_comment_details_comment))
         val commentViewController = CommentViewController(viewHolder)
-        val commentBodyController = CommentBodyController(viewHolder)
-        val commentBottomPanelController = CommentBottomPanelController(viewHolder)
-        commentBottomPanelController.hide()
+        commentViewController.panel.showHidden()
 
         viewModel.commentFlow.foldLatest({ comment ->
-            commentViewController.default(comment)
-            commentBodyController.setContent(comment)
-            commentBodyController.collapse()
-            commentBottomPanelController.hide()
-        },{ throwable ->
+            with(commentViewController) {
+                body.collapse()
+                with(body) {
+                    author.setAuthor(comment)
+                    avatar.setStubAvatar()
+                    timestamp.setTimestamp(comment)
+                    content.setContent(comment)
+                }
+                panel.showHidden()
+                with(panel) {
+                    vote.voteScore.setVoteScore(comment)
+                    vote.setCurrentVoteState(comment)
+                }
+            }
+        }, { throwable ->
             println(throwable)
         })
 
         viewModel.avatarFlow.foldLatest({ response ->
-            commentViewController.setAvatar(response.bytes.toBitmap())
-        },{
-            commentViewController.setStubAvatar()
+            commentViewController.body.avatar.setAvatar(response.bytes.toBitmap())
+        }, {
+            commentViewController.body.avatar.setStubAvatar()
         })
 
         viewHolder.avatarView.setOnClickListener {
-            commentBodyController.expand()
+            commentViewController.body.expand()
         }
     }
 
