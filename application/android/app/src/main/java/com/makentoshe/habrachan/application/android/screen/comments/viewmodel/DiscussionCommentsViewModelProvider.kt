@@ -2,10 +2,10 @@ package com.makentoshe.habrachan.application.android.screen.comments.viewmodel
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.application.android.common.comment.di.provider.ViewModelProvider
+import com.makentoshe.habrachan.application.android.common.comment.di.provider.ViewModelFragmentProvider
 import javax.inject.Inject
 
-internal class DiscussionCommentsViewModelProvider : ViewModelProvider<DiscussionCommentsViewModel> {
+internal class DiscussionCommentsViewModelProvider : ViewModelFragmentProvider<DiscussionCommentsViewModel> {
 
     @Inject
     lateinit var factory: DiscussionCommentsViewModel.Factory
