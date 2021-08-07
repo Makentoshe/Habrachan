@@ -6,12 +6,14 @@ import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.AndroidUserSession
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.ExceptionHandlerImpl
+import com.makentoshe.habrachan.application.android.Launcher
 import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.database.UserSessionDatabase
 import com.makentoshe.habrachan.application.android.database.migration.AndroidCacheDatabaseMigration_1_2
 import com.makentoshe.habrachan.application.android.database.record.UserSessionRecord
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.userSession
 import ru.terrakok.cicerone.Cicerone
@@ -38,6 +40,7 @@ class ApplicationModule(context: Context, cicerone: Cicerone<StackRouter>) : Mod
         bind<StackRouter>().toInstance(cicerone.router)
         bind<Router>().toInstance(cicerone.router)
         bind<NavigatorHolder>().toInstance(cicerone.navigatorHolder)
+        bind<Launcher>().toInstance(Launcher(ArticlesFlowScreen()))
 
         bind<ApplicationStateBroadcastReceiver>().toInstance(applicationStateBroadcastReceiver)
 

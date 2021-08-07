@@ -7,8 +7,8 @@ import com.makentoshe.habrachan.entity.ArticleId
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class ArticleCommentsScreen(
-    private val articleId: ArticleId,
-    private val articleTitle: String
+    val articleId: ArticleId,
+    val articleTitle: String
 ) : SupportAppScreen() {
 
     constructor(article: Article): this(article, article.title)

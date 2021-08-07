@@ -6,9 +6,9 @@ import com.makentoshe.habrachan.entity.natives.Article
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class DiscussionCommentsScreen(
-    private val articleId: Int,
-    private val articleTitle: String,
-    private val commentId: Int = 0
+    val articleId: Int,
+    val articleTitle: String,
+    val commentId: Int = 0
 ) : SupportAppScreen() {
 
     constructor(article: Article, commentId: Int = 0): this(article.id, article.title, commentId)
