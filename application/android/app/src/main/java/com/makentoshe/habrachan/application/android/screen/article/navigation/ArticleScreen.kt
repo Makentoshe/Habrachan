@@ -5,7 +5,7 @@ import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.ArticleId
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
-class ArticleScreen(private val articleId: ArticleId, private val article: Article? = null) : SupportAppScreen() {
+class ArticleScreen(val articleId: ArticleId, val article: Article? = null) : SupportAppScreen() {
 
     constructor(article: Article): this(article, article)
 
