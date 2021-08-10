@@ -1,6 +1,7 @@
 import android.content.Intent
 import android.net.Uri
 import com.makentoshe.habrachan.application.android.Launcher
+import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.DiscussionCommentsScreen
@@ -56,6 +57,30 @@ class LauncherTest : TestCase() {
         val screen = launcher.deeplink(intent) as UserScreen
 
         assertEquals("makentoshe", (screen.account as UserAccount.User).login)
+    }
+
+    @Test
+    fun testShouldOpenCorporateBlogArticleScreen() {
+        val intent = intent(Uri.parse("https://habr.com/ru/company/flipperdevices/blog/564570/"))
+        val screen = launcher.deeplink(intent) as ArticleScreen
+
+        assertEquals(564570, screen.articleId.articleId)
+    }
+
+    @Test
+    fun testShouldOpenArticleScreen1() {
+        val intent = intent(Uri.parse("https://habr.com/post/564570/"))
+        val screen = launcher.deeplink(intent) as ArticleScreen
+
+        assertEquals(564570, screen.articleId.articleId)
+    }
+
+    @Test
+    fun testShouldOpenArticleScreen2() {
+        val intent = intent(Uri.parse("https://habr.com/ru/post/564570/"))
+        val screen = launcher.deeplink(intent) as ArticleScreen
+
+        assertEquals(564570, screen.articleId.articleId)
     }
 
     private fun intent(uri: Uri) = Intent(Intent.ACTION_VIEW, uri)
