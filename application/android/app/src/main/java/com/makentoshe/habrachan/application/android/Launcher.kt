@@ -10,7 +10,9 @@ import com.makentoshe.habrachan.application.android.screen.comments.navigation.A
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.DiscussionCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
+import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
+import com.makentoshe.habrachan.entity.commentId
 import ru.terrakok.cicerone.Screen
 
 /**
@@ -36,52 +38,60 @@ class Launcher(private val defaultScreen: Screen) {
     /** Try to resolve deeplink intent. If resolve failed default screen launches instead */
     fun deeplink(intent: Intent): Screen {
         capture(analyticEvent { "Deeplinking: ${intent.data}" })
-        return deeplink(0, intent.data ?: return default())
-    }
+        val iterator = intent.data?.iterator() ?: return defaultScreen
 
-    /** Internal deeplink resolving */
-    private fun deeplink(depth: Int, uri: Uri): Screen = try {
-        when (uri.pathSegments[depth]) {
-            "post", "blog" -> article(depth + 1, uri)
-            "users", "user" -> users(depth + 1, uri)
-            else -> deeplink(depth + 1, uri)
-        }
-    } catch (ioobe: IndexOutOfBoundsException) {
-        defaultScreen
-    }
-
-    private fun article(depth: Int, uri: Uri): Screen {
-        val articleId = uri.pathSegments[depth].toInt()
-        return article(articleId, depth + 1, uri)
-    }
-
-    private fun article(articleId: Int, depth: Int, uri: Uri): Screen {
-        if (uri.fragment == null) {
-            if (uri.pathSegments.size == depth) {
-                return articleScreen(articleId)
-            }
-            if (uri.pathSegments[depth] == "comments") {
-                return articleCommentsScreen(articleId)
+        while (iterator.hasNext()) {
+            when (val segment = iterator.next()) {
+                "post", "blog" -> return article(iterator)
+                "users" -> return users(iterator)
+                "company" -> company(segment, iterator)
             }
         }
-        val commentId = uri.fragment!!.split('_').last().toInt()
-        return articleCommentScreen(articleId, commentId)
+
+        return defaultScreen
     }
 
-    private fun articleCommentsScreen(articleId: Int): ArticleCommentsScreen {
-        return ArticleCommentsScreen(articleId(articleId), "Deeplinked...")
+    private fun Uri.iterator(): Iterator<String> = ArrayList(pathSegments).apply {
+        fragment?.split("_")?.forEach(::add)
+    }.iterator()
+
+    private fun article(iterator: Iterator<String>) : Screen {
+        if (!iterator.hasNext()) return defaultScreen
+        val articleId = articleId(iterator.next().toIntOrNull() ?: return defaultScreen)
+
+        while (iterator.hasNext()) {
+            when (val segment = iterator.next()) {
+                "comments" -> return articleComments(articleId, iterator)
+                "comment" -> return discussionArticleComments(articleId, iterator)
+            }
+        }
+
+        return ArticleScreen(articleId)
     }
 
-    private fun articleCommentScreen(articleId: Int, commentId: Int): DiscussionCommentsScreen {
-        return DiscussionCommentsScreen(articleId, "Deeplinked...", commentId)
-    }
-
-    private fun articleScreen(articleId: Int): ArticleScreen {
-        return ArticleScreen(articleId(articleId))
-    }
-
-    private fun users(depth: Int, uri: Uri): Screen {
-        val login = uri.pathSegments[depth]
+    private fun users(iterator: Iterator<String>) : Screen {
+        if (!iterator.hasNext()) return defaultScreen
+        val login = iterator.next()
         return UserScreen(UserAccount.User(login))
+    }
+
+    private fun company(segment: String, iterator: Iterator<String>) : Screen {
+        return defaultScreen
+    }
+
+    private fun articleComments(articleId: ArticleId, iterator: Iterator<String>) : Screen {
+        while (iterator.hasNext()) {
+            when(val segment = iterator.next()) {
+                "comment" -> return discussionArticleComments(articleId, iterator)
+            }
+        }
+
+        return ArticleCommentsScreen(articleId, "Deeplinking")
+    }
+
+    private fun discussionArticleComments(articleId: ArticleId, iterator: Iterator<String>): Screen {
+        if (!iterator.hasNext()) return ArticleCommentsScreen(articleId, "Deeplinking")
+        val commentId = commentId(iterator.next().toIntOrNull() ?: return defaultScreen)
+        return DiscussionCommentsScreen(articleId.articleId, "Deeplinking", commentId.commentId)
     }
 }
