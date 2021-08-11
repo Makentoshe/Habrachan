@@ -1,16 +1,14 @@
-package com.makentoshe.habrachan.network.manager
+package com.makentoshe.habrachan.network
 
 import com.makentoshe.habrachan.entity.ArticleId
-import com.makentoshe.habrachan.network.UserSession
+import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.functional.fold
 import com.makentoshe.habrachan.network.api.NativeArticlesApi
-import com.makentoshe.habrachan.network.deserializer.NativeGetArticleDeserializer
-import com.makentoshe.habrachan.network.fold
-import com.makentoshe.habrachan.network.request.NativeGetArticleRequest
-import com.makentoshe.habrachan.network.response.NativeGetArticleResponse
+import com.makentoshe.habrachan.network.manager.GetArticleManager
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-class NativeGetArticleManager(
+class NativeGetArticleManager private constructor(
     private val api: NativeArticlesApi, private val deserializer: NativeGetArticleDeserializer
 ) : GetArticleManager<NativeGetArticleRequest> {
 
@@ -23,21 +21,22 @@ class NativeGetArticleManager(
         api.getArticle(
             request.userSession.client, request.userSession.api, request.userSession.token, request.articleId.articleId
         ).execute().fold({
-            deserializer.body(it.string())
+            deserializer.body(request, it.string())
         }, {
-            deserializer.body(it.string())
+            deserializer.body(request, it.string())
         }).fold({
             Result.success(it.build(request))
-        }, {
-            Result.failure(it)
+        }, { throwable ->
+            Result.failure(NativeGetArticleException(request, throwable.localizedMessage, throwable))
         })
     } catch (exception: Exception) {
-        Result.failure(exception)
+        Result.failure(NativeGetArticleException(request, exception.localizedMessage, exception))
     }
 
-    class Builder(private val client: OkHttpClient, private val deserializer: NativeGetArticleDeserializer) {
+    class Builder(private val client: OkHttpClient) {
 
         private val baseUrl = "https://habr.com/"
+        private val deserializer = NativeGetArticleDeserializer()
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
 

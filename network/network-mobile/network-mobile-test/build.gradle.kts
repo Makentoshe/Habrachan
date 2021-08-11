@@ -14,6 +14,7 @@ dependencies {
     // Core module for access entities
     implementation(project(":entity"))
     implementation(project(":entity:entity-mobile"))
+    implementation(project(":functional"))
     // Network module for access abstracts
     implementation(project(":network"))
     // Network module module for accessing to test classes

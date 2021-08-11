@@ -1,15 +1,16 @@
-package com.makentoshe.habrachan.network.manager
+package com.makentoshe.habrachan.network
 
+import UnitTest
 import com.makentoshe.habrachan.entity.articleId
-import com.makentoshe.habrachan.network.deserializer.NativeGetArticleDeserializer
+import com.makentoshe.habrachan.functional.getOrThrow
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class NativeGetArticleManagerTest : NativeUnitTest() {
+class NativeGetArticleManagerTest : UnitTest() {
 
-    private val manager = NativeGetArticleManager.Builder(OkHttpClient(), NativeGetArticleDeserializer()).build()
+    private val manager = NativeGetArticleManager.Builder(OkHttpClient()).build()
 
     @Test
     fun testShould() = runBlocking {

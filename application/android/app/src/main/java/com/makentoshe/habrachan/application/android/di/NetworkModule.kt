@@ -6,10 +6,10 @@ import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.network.GetContentManager
+import com.makentoshe.habrachan.network.NativeGetArticleManager
 import com.makentoshe.habrachan.network.NativeLoginManager
 import com.makentoshe.habrachan.network.NativeVoteArticleManager
 import com.makentoshe.habrachan.network.NativeVoteCommentManager
-import com.makentoshe.habrachan.network.deserializer.NativeGetArticleDeserializer
 import com.makentoshe.habrachan.network.deserializer.NativeGetArticlesDeserializer
 import com.makentoshe.habrachan.network.deserializer.NativeGetCommentsDeserializer
 import com.makentoshe.habrachan.network.deserializer.NativeGetMeDeserializer
@@ -19,7 +19,6 @@ import com.makentoshe.habrachan.network.manager.GetArticleManager
 import com.makentoshe.habrachan.network.manager.GetArticlesManager
 import com.makentoshe.habrachan.network.manager.GetUserManager
 import com.makentoshe.habrachan.network.manager.NativeGetArticleCommentsManager
-import com.makentoshe.habrachan.network.manager.NativeGetArticleManager
 import com.makentoshe.habrachan.network.manager.NativeGetArticlesManager
 import com.makentoshe.habrachan.network.manager.NativeGetMeManager
 import com.makentoshe.habrachan.network.manager.NativeGetUserManager
@@ -49,7 +48,7 @@ class NetworkModule(context: Context) : Module() {
 
         bind<GetContentManager>().toInstance(GetContentManager(client))
 
-        val getArticleManager = NativeGetArticleManager.Builder(client, NativeGetArticleDeserializer()).build()
+        val getArticleManager = NativeGetArticleManager.Builder(client).build()
         bind<GetArticleManager<out GetArticleRequest2>>().toInstance(getArticleManager)
 
         val getArticlesManager = NativeGetArticlesManager.Builder(client, NativeGetArticlesDeserializer()).build()
