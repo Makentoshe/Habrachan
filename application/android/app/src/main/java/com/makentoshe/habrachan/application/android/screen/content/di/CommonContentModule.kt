@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.application.android.filesystem.FileSystem
 import com.makentoshe.habrachan.application.android.screen.content.ContentFragment
 import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentNavigation
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
-import com.makentoshe.habrachan.network.manager.GetContentManager
+import com.makentoshe.habrachan.network.GetContentManager
 import ru.terrakok.cicerone.Router
 import toothpick.Toothpick
 import toothpick.config.Module

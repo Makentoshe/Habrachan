@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.makentoshe.habrachan.application.core.arena.ArenaException
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.network.exception.GetContentManagerException
+import com.makentoshe.habrachan.network.GetContentException
 import com.makentoshe.habrachan.network.exception.GetUserDeserializerException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
@@ -28,7 +28,7 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
 
     override fun handleException(exception: Throwable?): ExceptionHandler.Entry = when (exception) {
         is ArenaStorageException -> handleArenaStorageException(exception)
-        is GetContentManagerException -> handleContentManagerException(exception)
+        is GetContentException -> handleContentManagerException(exception)
         is ArenaException -> handleArenaException(exception)
         else -> handleUnknownException(exception)
     }
@@ -68,7 +68,7 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
         return ExceptionHandler.Entry(title, description)
     }
 
-    private fun handleContentManagerException(exception: GetContentManagerException) = when (val cause = exception.cause) {
+    private fun handleContentManagerException(exception: GetContentException) = when (val cause = exception.cause) {
         is SSLPeerUnverifiedException -> handleArenaStorageSSlPeerUnverifiedException(cause)
         is UnknownHostException -> handleUnknownHostException(cause)
         is SSLHandshakeException -> handleSSLHandshakeArenaStorageException(cause)

@@ -1,6 +1,6 @@
-package com.makentoshe.habrachan.network.request
+package com.makentoshe.habrachan.network
 
-import com.makentoshe.habrachan.network.UserSession
+import com.makentoshe.habrachan.network.request.Request
 
 data class GetContentRequest(val userSession: UserSession, val url: String) : Request {
 

@@ -7,14 +7,14 @@ import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabas
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
+import com.makentoshe.habrachan.network.GetContentManager
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
-import com.makentoshe.habrachan.network.manager.GetContentManager
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 import javax.inject.Inject
 import javax.inject.Provider
 
-internal class DiscussionCommentsViewModelFactoryProvider: Provider<DiscussionCommentsViewModel.Factory> {
+internal class DiscussionCommentsViewModelFactoryProvider : Provider<DiscussionCommentsViewModel.Factory> {
 
     @Inject
     internal lateinit var context: Context
@@ -23,13 +23,13 @@ internal class DiscussionCommentsViewModelFactoryProvider: Provider<DiscussionCo
     internal lateinit var session: UserSession
 
     @Inject
-    internal lateinit var database : AndroidCacheDatabase
+    internal lateinit var database: AndroidCacheDatabase
 
     @Inject
-    internal lateinit var getContentManager : GetContentManager
+    internal lateinit var getContentManager: GetContentManager
 
     @Inject
-    internal lateinit var getCommentsManager : GetArticleCommentsManager<GetArticleCommentsRequest>
+    internal lateinit var getCommentsManager: GetArticleCommentsManager<GetArticleCommentsRequest>
 
     override fun get(): DiscussionCommentsViewModel.Factory {
         val avatarCache = AvatarArenaCache(database.avatarDao(), context.cacheDir)

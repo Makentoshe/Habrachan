@@ -13,6 +13,8 @@ dependencies {
 
     implementation(project(":entity"))
     implementation(project(":network"))
+    implementation(project(":network:network-common:network-common-content"))
+    implementation(project(":functional"))
 
     // OkHttp - networking
     // https://github.com/square/okhttp/

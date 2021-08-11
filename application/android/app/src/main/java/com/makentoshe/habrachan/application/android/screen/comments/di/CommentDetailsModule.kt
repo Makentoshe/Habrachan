@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.CommentDetailsDialogFragment
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentDetailsViewModel
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
-import com.makentoshe.habrachan.network.manager.GetContentManager
+import com.makentoshe.habrachan.network.GetContentManager
 import toothpick.Toothpick
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject

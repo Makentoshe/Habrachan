@@ -12,7 +12,7 @@ import com.makentoshe.habrachan.application.android.screen.user.navigation.UserN
 import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.application.core.arena.users.GetUserArena
-import com.makentoshe.habrachan.network.manager.GetContentManager
+import com.makentoshe.habrachan.network.GetContentManager
 import com.makentoshe.habrachan.network.manager.GetUserManager
 import com.makentoshe.habrachan.network.request.GetUserRequest
 import toothpick.Toothpick

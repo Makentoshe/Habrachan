@@ -1,7 +1,5 @@
-package com.makentoshe.habrachan.manager
+package com.makentoshe.habrachan.network
 
-import com.makentoshe.habrachan.network.manager.GetContentManager
-import com.makentoshe.habrachan.network.userSession
 import okhttp3.OkHttpClient
 import org.junit.Test
 

@@ -1,6 +1,4 @@
-package com.makentoshe.habrachan.network.response
-
-import com.makentoshe.habrachan.network.request.GetContentRequest
+package com.makentoshe.habrachan.network
 
 data class GetContentResponse(val request: GetContentRequest, val bytes: ByteArray) {
 

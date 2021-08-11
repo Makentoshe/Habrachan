@@ -9,9 +9,9 @@ import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabas
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsSourceFirstArena
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
+import com.makentoshe.habrachan.network.GetContentManager
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
-import com.makentoshe.habrachan.network.manager.GetContentManager
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 import javax.inject.Inject
 

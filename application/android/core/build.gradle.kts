@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":entity:entity-native"))
 
     implementation(project(":network"))
+    implementation(project(":network:network-common:network-common-content"))
 
     implementation(project(":application:core"))
     implementation(project(":application:android:database"))

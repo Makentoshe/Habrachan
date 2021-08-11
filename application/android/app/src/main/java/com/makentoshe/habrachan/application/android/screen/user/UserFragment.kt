@@ -9,17 +9,22 @@ import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.*
+import com.makentoshe.habrachan.application.android.CoreFragment
+import com.makentoshe.habrachan.application.android.ExceptionController
+import com.makentoshe.habrachan.application.android.ExceptionHandler
+import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
+import com.makentoshe.habrachan.application.android.dp2px
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserNavigation
 import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
+import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import com.makentoshe.habrachan.entity.User
 import com.makentoshe.habrachan.entity.timeRegistered
-import com.makentoshe.habrachan.network.response.GetContentResponse
+import com.makentoshe.habrachan.network.GetContentResponse
 import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -28,7 +33,7 @@ import java.text.SimpleDateFormat
 
 class UserFragment : CoreFragment() {
 
-    companion object : Analytics(LogAnalytic()){
+    companion object : Analytics(LogAnalytic()) {
 
         fun build(account: UserAccount) = UserFragment().apply {
             arguments.account = account

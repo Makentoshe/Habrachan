@@ -3,8 +3,8 @@ package com.makentoshe.habrachan.application.android.screen.content.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
+import com.makentoshe.habrachan.network.GetContentResponse
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.response.GetContentResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel

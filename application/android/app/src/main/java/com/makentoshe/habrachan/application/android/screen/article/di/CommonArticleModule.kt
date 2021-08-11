@@ -10,8 +10,8 @@ import com.makentoshe.habrachan.application.android.screen.article.model.Article
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.core.arena.articles.GetArticleArena
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
+import com.makentoshe.habrachan.network.GetContentManager
 import com.makentoshe.habrachan.network.manager.GetArticleManager
-import com.makentoshe.habrachan.network.manager.GetContentManager
 import com.makentoshe.habrachan.network.request.GetArticleRequest2
 import toothpick.Toothpick
 import toothpick.config.Module

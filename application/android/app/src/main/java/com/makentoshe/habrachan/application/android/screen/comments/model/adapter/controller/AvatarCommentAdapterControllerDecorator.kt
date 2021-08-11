@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.application.android.dp2px
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelElement
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentsViewModel
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
-import com.makentoshe.habrachan.network.response.GetContentResponse
+import com.makentoshe.habrachan.network.GetContentResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest

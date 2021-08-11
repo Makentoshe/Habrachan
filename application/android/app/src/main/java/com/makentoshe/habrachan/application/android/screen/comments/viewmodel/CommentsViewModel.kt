@@ -2,9 +2,9 @@ package com.makentoshe.habrachan.application.android.screen.comments.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
+import com.makentoshe.habrachan.network.GetContentRequest
+import com.makentoshe.habrachan.network.GetContentResponse
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.request.GetContentRequest
-import com.makentoshe.habrachan.network.response.GetContentResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -5,8 +5,8 @@ import com.makentoshe.habrachan.application.android.database.dao.ContentDao
 import com.makentoshe.habrachan.application.android.database.record.ContentRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
-import com.makentoshe.habrachan.network.request.GetContentRequest
-import com.makentoshe.habrachan.network.response.GetContentResponse
+import com.makentoshe.habrachan.network.GetContentRequest
+import com.makentoshe.habrachan.network.GetContentResponse
 import java.io.File
 import java.io.FileNotFoundException
 

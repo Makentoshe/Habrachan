@@ -1,10 +1,6 @@
-package com.makentoshe.habrachan.network.manager
+package com.makentoshe.habrachan.network
 
-import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.exception.GetContentManagerException
-import com.makentoshe.habrachan.network.fold
-import com.makentoshe.habrachan.network.request.GetContentRequest
-import com.makentoshe.habrachan.network.response.GetContentResponse
+import com.makentoshe.habrachan.functional.Result
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
@@ -18,10 +14,10 @@ class GetContentManager(private val client: OkHttpClient) {
         client.newCall(Request.Builder().url(request.url).build()).execute().fold({
             Result.success(GetContentResponse(request, it.bytes()))
         }, {
-            Result.failure(GetContentManagerException(request, it.string()))
+            Result.failure(GetContentException(request, message = it.string()))
         })
     } catch (exception: Exception) {
-        Result.failure(GetContentManagerException(request, exception.localizedMessage))
+        Result.failure(GetContentException(request, message = exception.localizedMessage, cause = exception))
     }
 
 }

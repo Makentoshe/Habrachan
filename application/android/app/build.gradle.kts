@@ -89,6 +89,8 @@ dependencies {
     implementation(project(":network:network-mobile"))
     implementation(project(":network:network-mobile:network-mobile-login"))
 
+    implementation(project(":network:network-common:network-common-content"))
+
     implementation(project(":functional"))
 
     // OkHttp
