@@ -13,11 +13,13 @@ dependencies {
 
     // Core module for access entities
     implementation(project(":entity"))
+    implementation(project(":network"))
 
     // Functional module for access support types
     implementation(project(":functional"))
 
-    implementation(project(":network"))
+    // Module for using a test utilities for a network modules
+    implementation(project(":network:network-native:network-native-test"))
 
     // OkHttp
     // https://github.com/square/okhttp/
@@ -35,4 +37,12 @@ dependencies {
     // https://github.com/Kotlin/kotlinx.coroutines
     val coroutines = "1.3.7"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
+
+    val junitVersion = properties["version.test.junit"]
+    testImplementation("junit:junit:$junitVersion")
+
+    // Mockk - mocking library for testing purposes only
+    // https://github.com/mockk/mockk
+    val mockkVersion = properties["version.test.mockk"]
+    testImplementation("io.mockk:mockk:$mockkVersion")
 }
