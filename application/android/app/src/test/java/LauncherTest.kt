@@ -36,11 +36,19 @@ class LauncherTest : TestCase() {
     }
 
     @Test
-    fun testShouldOpenArticleCommentsScreen() {
+    fun testShouldOpenArticleCommentsScreen1() {
         val intent = intent(Uri.parse("https://habr.com/en/post/571418/comments/"))
         val screen = launcher.deeplink(intent) as ArticleCommentsScreen
 
         assertEquals(571418, screen.articleId.articleId)
+    }
+
+    @Test
+    fun testShouldOpenArticleCommentsScreen2() {
+        val intent = intent(Uri.parse("https://habr.com/ru/company/flipperdevices/blog/564570/comments/"))
+        val screen = launcher.deeplink(intent) as ArticleCommentsScreen
+
+        assertEquals(564570, screen.articleId.articleId)
     }
 
     @Test
