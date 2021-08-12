@@ -46,4 +46,9 @@ dependencies {
 
     val junitVersion = properties["version.test.junit"]
     testImplementation("junit:junit:$junitVersion")
+
+    // Mockk - mocking library for testing purposes only
+    // https://github.com/mockk/mockk
+    val mockkVersion = properties["version.test.mockk"]
+    testImplementation("io.mockk:mockk:$mockkVersion")
 }
