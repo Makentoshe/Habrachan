@@ -2,17 +2,16 @@ package com.makentoshe.habrachan.network
 
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.deserializer.NativeGsonDeserializer
-import com.makentoshe.habrachan.network.request.GetArticlesRequest2
 
-class NativeGetArticlesDeserializer : NativeGsonDeserializer() {
+internal class NativeGetArticlesDeserializer : NativeGsonDeserializer() {
 
-    fun body(request: GetArticlesRequest2, json: String): Result<NativeGetArticlesResponse>  = try {
+    fun body(request: NativeGetArticlesRequest, json: String): Result<NativeGetArticlesResponse> = try {
         Result.success(gson.fromJson(json, NativeGetArticlesResponse.Factory::class.java).build(request))
     } catch (exception: Exception) {
-        Result.failure(exception)
+        Result.failure(NativeGetArticlesException(request, json, message = exception.message, cause = exception))
     }
 
-    fun error(request: GetArticlesRequest2, json: String): Result<NativeGetArticlesResponse> {
-        return Result.failure(Exception(json))
+    fun error(request: NativeGetArticlesRequest, json: String): Result<NativeGetArticlesResponse> {
+        return Result.failure(NativeGetArticlesException(request, json))
     }
 }

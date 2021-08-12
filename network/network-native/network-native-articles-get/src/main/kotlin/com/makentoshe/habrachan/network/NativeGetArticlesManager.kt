@@ -7,9 +7,11 @@ import com.makentoshe.habrachan.network.request.SpecType
 import com.makentoshe.habrachan.network.request.TopSpecType
 import com.makentoshe.habrachan.network.response.GetArticlesResponse2
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.Retrofit
 
-class NativeGetArticlesManager(
+class NativeGetArticlesManager internal constructor(
     private val api: NativeArticlesApi, private val deserializer: NativeGetArticlesDeserializer
 ) : GetArticlesManager<NativeGetArticlesRequest, NativeGetArticlesSpec> {
 
@@ -33,15 +35,21 @@ class NativeGetArticlesManager(
 
     @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun articles(request: NativeGetArticlesRequest): Result<GetArticlesResponse2> = try {
-        api.getArticles(
-            request.session.client, request.session.api, request.session.token, request.spec.path, request.page
-        ).execute().fold({
-            deserializer.body(request, it.string())
-        }, {
-            deserializer.error(request, it.string())
-        })
+        getArticlesApi(request).deserialize(request)
     } catch (exception: Exception) {
-        Result.failure(exception)
+        Result.failure(NativeGetArticlesException(request, message = exception.message, cause = exception))
+    }
+
+    private fun getArticlesApi(request: NativeGetArticlesRequest) = api.getArticles(
+        request.session.client, request.session.api, request.session.token, request.spec.path, request.page
+    ).execute()
+
+    private fun Response<ResponseBody>.deserialize(request: NativeGetArticlesRequest): Result<GetArticlesResponse2> {
+        return fold({ successResponseBody ->
+            deserializer.body(request, successResponseBody.string())
+        }, { failureResponseBody ->
+            deserializer.error(request, failureResponseBody.string())
+        })
     }
 
     class Builder(private val client: OkHttpClient) {
