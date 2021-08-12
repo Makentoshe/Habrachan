@@ -1,7 +1,7 @@
 import com.makentoshe.habrachan.network.userSession
 import java.io.File
 import java.io.FileNotFoundException
-import java.util.*
+import java.util.Properties
 
 abstract class UnitTest {
 

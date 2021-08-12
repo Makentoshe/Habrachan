@@ -42,6 +42,11 @@ dependencies {
 
     val junitVersion = properties["version.test.junit"]
     testImplementation("junit:junit:$junitVersion")
+
+    // Mockk - mocking library for testing purposes only
+    // https://github.com/mockk/mockk
+    val mockkVersion = properties["version.test.mockk"]
+    implementation("io.mockk:mockk:$mockkVersion")
 }
 
 // idkw, but "onlyIf" does not disables/skips this task, so this is a workaround

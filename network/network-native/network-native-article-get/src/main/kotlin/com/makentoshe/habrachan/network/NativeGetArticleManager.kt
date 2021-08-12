@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.network.manager.GetArticleManager
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-class NativeGetArticleManager private constructor(
+class NativeGetArticleManager internal constructor(
     private val api: NativeArticlesApi, private val deserializer: NativeGetArticleDeserializer
 ) : GetArticleManager<NativeGetArticleRequest> {
 
@@ -23,11 +23,11 @@ class NativeGetArticleManager private constructor(
         ).execute().fold({
             deserializer.body(request, it.string())
         }, {
-            deserializer.body(request, it.string())
+            deserializer.error(request, it.string())
         }).fold({
             Result.success(it.build(request))
         }, { throwable ->
-            Result.failure(NativeGetArticleException(request, throwable.localizedMessage, throwable))
+            Result.failure(throwable)
         })
     } catch (exception: Exception) {
         Result.failure(NativeGetArticleException(request, exception.localizedMessage, exception))
