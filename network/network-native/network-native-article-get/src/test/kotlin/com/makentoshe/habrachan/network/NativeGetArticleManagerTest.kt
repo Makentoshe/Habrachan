@@ -9,6 +9,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import javax.net.ssl.SSLHandshakeException
 
 class NativeGetArticleManagerTest : RetrofitUnitTest() {
 
@@ -34,19 +35,16 @@ class NativeGetArticleManagerTest : RetrofitUnitTest() {
 
     @Test
     fun testManagerShouldReturnExceptionOnNetworkFailure() = runBlocking {
+        val exception = SSLHandshakeException("Custom network exception for test purposes")
         every {
             mockNativeArticlesApi.getArticle(any(), any(), any(), any(), any(), any(), any())
-        } returns mockedCallResponse {
-            mockedResponse(isSuccessful = false, code = 404) {
-                mockedResponseBody("Sas")
-            }
-        }
+        } throws exception
 
         val request = manager.request(userSession, articleId(0))
         val response = manager.article(request).exceptionOrNull() as NativeGetArticleException
 
         assertEquals(request, response.request)
-        assertEquals(response.message, "Sas")
+        assertEquals(response.cause, exception)
     }
 
     @Test
@@ -72,7 +70,7 @@ class NativeGetArticleManagerTest : RetrofitUnitTest() {
         every {
             mockNativeArticlesApi.getArticle(any(), any(), any(), any(), any(), any(), any())
         } returns mockedCallResponse {
-            mockedResponse(isSuccessful = true, code = 200) {
+            mockedResponse(isSuccessful = false, code = 401) {
                 mockedResponseBody(string)
             }
         }
