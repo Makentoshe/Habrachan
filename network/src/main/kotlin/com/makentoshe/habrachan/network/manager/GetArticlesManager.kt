@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.network.manager
 
+import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.network.request.GetArticlesSpec

@@ -7,10 +7,10 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.network.GetContentManager
 import com.makentoshe.habrachan.network.NativeGetArticleManager
+import com.makentoshe.habrachan.network.NativeGetArticlesManager
 import com.makentoshe.habrachan.network.NativeLoginManager
 import com.makentoshe.habrachan.network.NativeVoteArticleManager
 import com.makentoshe.habrachan.network.NativeVoteCommentManager
-import com.makentoshe.habrachan.network.deserializer.NativeGetArticlesDeserializer
 import com.makentoshe.habrachan.network.deserializer.NativeGetCommentsDeserializer
 import com.makentoshe.habrachan.network.deserializer.NativeGetMeDeserializer
 import com.makentoshe.habrachan.network.deserializer.NativeGetUserDeserializer
@@ -19,7 +19,6 @@ import com.makentoshe.habrachan.network.manager.GetArticleManager
 import com.makentoshe.habrachan.network.manager.GetArticlesManager
 import com.makentoshe.habrachan.network.manager.GetUserManager
 import com.makentoshe.habrachan.network.manager.NativeGetArticleCommentsManager
-import com.makentoshe.habrachan.network.manager.NativeGetArticlesManager
 import com.makentoshe.habrachan.network.manager.NativeGetMeManager
 import com.makentoshe.habrachan.network.manager.NativeGetUserManager
 import com.makentoshe.habrachan.network.manager.VoteArticleManager
@@ -51,7 +50,7 @@ class NetworkModule(context: Context) : Module() {
         val getArticleManager = NativeGetArticleManager.Builder(client).build()
         bind<GetArticleManager<out GetArticleRequest2>>().toInstance(getArticleManager)
 
-        val getArticlesManager = NativeGetArticlesManager.Builder(client, NativeGetArticlesDeserializer()).build()
+        val getArticlesManager = NativeGetArticlesManager.Builder(client).build()
         bind<GetArticlesManager<out GetArticlesRequest2, out GetArticlesSpec>>().toInstance(getArticlesManager)
 
         val nativeMeManager = NativeGetMeManager.Builder(client, NativeGetMeDeserializer()).build()

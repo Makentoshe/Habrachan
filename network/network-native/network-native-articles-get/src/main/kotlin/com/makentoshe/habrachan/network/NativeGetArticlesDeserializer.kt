@@ -1,7 +1,8 @@
-package com.makentoshe.habrachan.network.deserializer
+package com.makentoshe.habrachan.network
 
+import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.network.deserializer.NativeGsonDeserializer
 import com.makentoshe.habrachan.network.request.GetArticlesRequest2
-import com.makentoshe.habrachan.network.response.NativeGetArticlesResponse
 
 class NativeGetArticlesDeserializer : NativeGsonDeserializer() {
 

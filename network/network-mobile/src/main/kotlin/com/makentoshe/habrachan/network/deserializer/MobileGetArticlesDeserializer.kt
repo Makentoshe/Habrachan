@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.network.deserializer
 
+import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.request.MobileGetArticlesRequest
 import com.makentoshe.habrachan.network.response.MobileGetArticlesResponse
 

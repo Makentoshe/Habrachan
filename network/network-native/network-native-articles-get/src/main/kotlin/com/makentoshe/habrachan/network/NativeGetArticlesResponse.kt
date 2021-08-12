@@ -1,10 +1,12 @@
-package com.makentoshe.habrachan.network.response
+package com.makentoshe.habrachan.network
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.natives.Article
 import com.makentoshe.habrachan.entity.natives.ArticleAuthor
 import com.makentoshe.habrachan.entity.natives.NextPage
 import com.makentoshe.habrachan.network.request.GetArticlesRequest2
+import com.makentoshe.habrachan.network.response.GetArticlesResponse2
+import com.makentoshe.habrachan.network.response.Pagination
 
 data class NativeGetArticlesResponse(
     override val request: GetArticlesRequest2,

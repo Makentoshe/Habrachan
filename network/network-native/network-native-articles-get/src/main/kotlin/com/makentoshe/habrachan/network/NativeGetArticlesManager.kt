@@ -1,11 +1,8 @@
-package com.makentoshe.habrachan.network.manager
+package com.makentoshe.habrachan.network
 
-import com.makentoshe.habrachan.network.UserSession
+import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.api.NativeArticlesApi
-import com.makentoshe.habrachan.network.deserializer.NativeGetArticlesDeserializer
-import com.makentoshe.habrachan.network.fold
-import com.makentoshe.habrachan.network.request.NativeGetArticlesRequest
-import com.makentoshe.habrachan.network.request.NativeGetArticlesSpec
+import com.makentoshe.habrachan.network.manager.GetArticlesManager
 import com.makentoshe.habrachan.network.request.SpecType
 import com.makentoshe.habrachan.network.request.TopSpecType
 import com.makentoshe.habrachan.network.response.GetArticlesResponse2
@@ -47,9 +44,10 @@ class NativeGetArticlesManager(
         Result.failure(exception)
     }
 
-    class Builder(private val client: OkHttpClient, private val deserializer: NativeGetArticlesDeserializer) {
+    class Builder(private val client: OkHttpClient) {
 
         private val baseUrl = "https://habr.com/"
+        private val deserializer = NativeGetArticlesDeserializer()
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
 

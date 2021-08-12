@@ -1,6 +1,8 @@
-package com.makentoshe.habrachan.network.request
+package com.makentoshe.habrachan.network
 
-import com.makentoshe.habrachan.network.UserSession
+import com.makentoshe.habrachan.network.request.GetArticlesRequest2
+import com.makentoshe.habrachan.network.request.GetArticlesSpec
+import com.makentoshe.habrachan.network.request.SpecType
 
 /** Request a batch of articles, on selected [page] with selected [spec] */
 data class NativeGetArticlesRequest(
