@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.network.deserializer
 
 import com.makentoshe.habrachan.entity.mobiles.User
+import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.exceptions.MobileGetUserDeserializerException
 import com.makentoshe.habrachan.network.request.MobileGetUserRequest
 import com.makentoshe.habrachan.network.response.MobileGetUserResponse

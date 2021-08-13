@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.application.core.arena.users
 
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.SourceFirstArena
+import com.makentoshe.habrachan.functional.fold
 import com.makentoshe.habrachan.network.manager.GetUserManager
 import com.makentoshe.habrachan.network.request.GetUserRequest
 import com.makentoshe.habrachan.network.response.GetUserResponse
@@ -11,6 +12,6 @@ class GetUserArena(
     cache: ArenaCache<GetUserRequest, GetUserResponse>
 ): SourceFirstArena<GetUserRequest, GetUserResponse>(cache) {
     override suspend fun internalSuspendFetch(key: GetUserRequest): Result<GetUserResponse> {
-        return manager.user(key)
+        return manager.user(key).fold({ kotlin.Result.success(it) }, { kotlin.Result.failure(it) })
     }
 }

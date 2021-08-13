@@ -1,18 +1,20 @@
-package com.makentoshe.habrachan.network.response
+package com.makentoshe.habrachan.network
 
 import com.google.gson.annotations.SerializedName
 import com.makentoshe.habrachan.entity.natives.User
-import com.makentoshe.habrachan.network.request.NativeGetUserRequest
+import com.makentoshe.habrachan.network.response.GetUserResponse
 
 data class NativeGetUserResponse(
-    override val request: NativeGetUserRequest, override val user: User, val serverTime: String
+    override val request: NativeGetUserRequest,
+    override val user: User,
+    val serverTime: String
 ) : GetUserResponse {
 
     class Factory(
         @SerializedName("data")
         val user: User,
         @SerializedName("server_time")
-        val serverTime: String
+        val serverTime: String,
     ) {
         fun build(request: NativeGetUserRequest) = NativeGetUserResponse(request, user, serverTime)
     }

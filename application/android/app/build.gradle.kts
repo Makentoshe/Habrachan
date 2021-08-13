@@ -88,6 +88,7 @@ dependencies {
     implementation(project(":network:network-native:network-native-article-get"))
     implementation(project(":network:network-native:network-native-articles-get"))
     implementation(project(":network:network-native:network-native-comment-vote"))
+    implementation(project(":network:network-native:network-native-user-get"))
     implementation(project(":network:network-mobile"))
     implementation(project(":network:network-mobile:network-mobile-login"))
 

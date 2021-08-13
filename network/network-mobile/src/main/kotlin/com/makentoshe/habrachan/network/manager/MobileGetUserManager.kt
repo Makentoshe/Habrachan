@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.network.manager
 
+import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.MobileUsersApi
 import com.makentoshe.habrachan.network.deserializer.MobileGetUserDeserializer

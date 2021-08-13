@@ -1,14 +1,14 @@
-package com.makentoshe.habrachan.network.exception
+package com.makentoshe.habrachan.network
 
 import com.google.gson.annotations.SerializedName
+import com.makentoshe.habrachan.network.exception.GetUserDeserializerException
 import com.makentoshe.habrachan.network.request.GetUserRequest
 
-class NativeGetUserDeserializerException(
+class NativeGetUserException(
     override val request: GetUserRequest,
-    override val raw: String,
-    val additional: List<String>,
-    val code: Int, // 401
-    override val message: String // Authorization required
+    override val message: String? = null,
+    override val raw: String? = null,
+    override val cause: Throwable? = null
 ) : GetUserDeserializerException() {
 
     data class Factory(
@@ -21,8 +21,8 @@ class NativeGetUserDeserializerException(
         @SerializedName("message")
         val message: String // Authorization required
     ) {
-        fun build(request: GetUserRequest, json: String): NativeGetUserDeserializerException {
-            return NativeGetUserDeserializerException(request, json, additional, code, message)
+        fun build(request: GetUserRequest, json: String): NativeGetUserException {
+            return NativeGetUserException(request, raw = json, message = message)
         }
     }
 }
