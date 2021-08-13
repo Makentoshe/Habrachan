@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.network
 
 import com.makentoshe.habrachan.functional.Result
-import com.makentoshe.habrachan.network.deserializer.NativeGsonDeserializer
 
 internal class NativeGetUserDeserializer : NativeGsonDeserializer() {
 

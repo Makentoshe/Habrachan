@@ -16,7 +16,7 @@ dependencies {
     implementation(project(":entity:entity-native"))
     // Network module for access abstracts
     implementation(project(":network"))
-    implementation(project(":network:network-native"))
+    implementation(project(":network:network-native:network-native-common"))
     implementation(project(":network:network-native:network-native-comment-vote"))
     testImplementation(project(":network:network-native:network-native-test"))
 

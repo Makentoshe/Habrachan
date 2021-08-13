@@ -16,8 +16,7 @@ dependencies {
     implementation(project(":entity:entity-native"))
     // Network module for access abstracts
     implementation(project(":network"))
-    // Network module for access the testable classes
-    implementation(project(":network:network-native"))
+    implementation(project(":network:network-native:network-native-common"))
 
     // Gson
     // https://github.com/google/gson

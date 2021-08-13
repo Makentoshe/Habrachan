@@ -11,20 +11,15 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
+    // Functional module for access support types
+    implementation(project(":functional"))
+
     // Core module for access entities
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
-    implementation(project(":functional"))
 
     // Network module for access abstracts
     implementation(project(":network"))
-    implementation(project(":network:network-native:network-native-common"))
-
-    // Module which will be tested
-    implementation(project(":network:network-native:network-native-article-get"))
-
-    // Module for testing purposes
-    testImplementation(project(":network:network-native:network-native-test"))
 
     // Gson
     // https://github.com/google/gson
@@ -49,12 +44,9 @@ dependencies {
 
     val junitVersion = properties["version.test.junit"]
     testImplementation("junit:junit:$junitVersion")
-}
 
-// idkw, but "onlyIf" does not disables/skips this task, so this is a workaround
-tasks.test.configure {
-    // for ci/cd: this should be managed by build system.
-    // we should disable tests by default (ide), because the REAL api will be invoked on each build
-    // and may cause accident DDoS
-    enabled = project.hasProperty("allow-network-test")
+    // Mockk - mocking library for testing purposes only
+    // https://github.com/mockk/mockk
+    val mockkVersion = properties["version.test.mockk"]
+    testImplementation("io.mockk:mockk:$mockkVersion")
 }

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.network.deserializer
+package com.makentoshe.habrachan.network
 
 import com.google.gson.GsonBuilder
 import com.makentoshe.habrachan.entity.ArticleText

@@ -2,7 +2,6 @@ package com.makentoshe.habrachan.network
 
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.network.request.ArticleVote
-import com.makentoshe.habrachan.network.request.NativeRequest
 import com.makentoshe.habrachan.network.request.VoteArticleRequest
 
 data class NativeVoteArticleRequest(
