@@ -6,18 +6,17 @@ import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.network.GetContentManager
+import com.makentoshe.habrachan.network.NativeGetArticleCommentsManager
 import com.makentoshe.habrachan.network.NativeGetArticleManager
 import com.makentoshe.habrachan.network.NativeGetArticlesManager
 import com.makentoshe.habrachan.network.NativeGetMeManager
 import com.makentoshe.habrachan.network.NativeLoginManager
 import com.makentoshe.habrachan.network.NativeVoteArticleManager
 import com.makentoshe.habrachan.network.NativeVoteCommentManager
-import com.makentoshe.habrachan.network.deserializer.NativeGetCommentsDeserializer
 import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
 import com.makentoshe.habrachan.network.manager.GetArticleManager
 import com.makentoshe.habrachan.network.manager.GetArticlesManager
 import com.makentoshe.habrachan.network.manager.GetUserManager
-import com.makentoshe.habrachan.network.manager.NativeGetArticleCommentsManager
 import com.makentoshe.habrachan.network.manager.VoteArticleManager
 import com.makentoshe.habrachan.network.manager.VoteCommentManager
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
@@ -57,8 +56,7 @@ class NetworkModule(context: Context) : Module() {
         val nativeGetUserManager = com.makentoshe.habrachan.network.NativeGetUserManager.Builder(client).build()
         bind<GetUserManager<out GetUserRequest>>().toInstance(nativeGetUserManager)
 
-        val nativeGetCommentsManager =
-            NativeGetArticleCommentsManager.Builder(client, NativeGetCommentsDeserializer()).build()
+        val nativeGetCommentsManager = NativeGetArticleCommentsManager.Builder(client).build()
         bind<GetArticleCommentsManager<out GetArticleCommentsRequest>>().toInstance(nativeGetCommentsManager)
 
         val nativeVoteArticleManager = NativeVoteArticleManager.Builder(client).build()

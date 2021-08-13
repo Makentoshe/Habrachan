@@ -6,5 +6,5 @@ abstract class GetArticleCommentsDeserializerException : Throwable() {
     abstract val request: GetArticleCommentsRequest
 
     /** Full unparsed error */
-    abstract val raw: String
+    abstract val raw: String?
 }

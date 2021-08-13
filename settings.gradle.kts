@@ -45,3 +45,7 @@ include(":application:android:common:common-comment")
 include(":application:android:common:common-di")
 include("network:network-native:network-native-user-me:network-native-user-me-test")
 findProject(":network:network-native:network-native-user-me:network-native-user-me-test")?.name = "network-native-user-me-test"
+include("network:network-native:network-native-comments-get")
+findProject(":network:network-native:network-native-comments-get")?.name = "network-native-comments-get"
+include("network:network-native:network-native-comments-get:network-native-comments-get-test")
+findProject(":network:network-native:network-native-comments-get:network-native-comments-get-test")?.name = "network-native-comments-get-test"

@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.network.manager
 
 import com.makentoshe.habrachan.entity.articleId
+import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.api.MobileCommentsApi
 import com.makentoshe.habrachan.network.deserializer.MobileGetArticleCommentsDeserializer

@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.application.core.arena.comments
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.SourceFirstArena
 import com.makentoshe.habrachan.entity.Comment
+import com.makentoshe.habrachan.functional.fold
 import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 

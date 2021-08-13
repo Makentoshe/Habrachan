@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.network.deserializer
 
+import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.network.exceptions.MobileGetArticleCommentsDeserializerException
 import com.makentoshe.habrachan.network.request.MobileGetArticleCommentsRequest
 import com.makentoshe.habrachan.network.response.MobileGetArticleCommentsResponse
