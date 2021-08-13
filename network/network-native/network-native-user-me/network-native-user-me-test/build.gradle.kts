@@ -2,6 +2,8 @@ plugins {
     kotlin("jvm")
 }
 
+version = "unspecified"
+
 repositories {
     mavenCentral()
 }
@@ -13,14 +15,16 @@ dependencies {
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
     implementation(project(":functional"))
+
     // Network module for access abstracts
     implementation(project(":network"))
     implementation(project(":network:network-native"))
-    implementation(project(":network:network-native:network-native-user-me"))
+
+    // Module for testing purposes
     testImplementation(project(":network:network-native:network-native-test"))
 
     // Module to test
-    implementation(project(":network:network-native:network-native-login"))
+    implementation(project(":network:network-native:network-native-user-me"))
 
     // Gson
     // https://github.com/google/gson

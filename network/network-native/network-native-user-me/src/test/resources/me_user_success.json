@@ -1,0 +1,54 @@
+{
+  "data": {
+    "id": 1961555,
+    "login": "Makentoshe",
+    "time_registered": "2019-02-05T23:34:19+03:00",
+    "score": 9,
+    "fullname": "Хвостов Максим",
+    "specializm": "Неполноценный разработчик",
+    "sex": 0,
+    "rating": 0,
+    "rating_position": 0,
+    "path": "\/users\/makentoshe\/",
+    "geo": {
+      "country": null,
+      "region": null,
+      "city": null
+    },
+    "counters": {
+      "posts": 2,
+      "comments": 8,
+      "followed": 1,
+      "followers": 0,
+      "favorites": 17
+    },
+    "badges": [
+      {
+        "id": 1,
+        "title": "Захабренный",
+        "alias": "habred",
+        "description": "Пользователь с кармой \u003E0",
+        "url": null,
+        "is_removable": false,
+        "is_disabled": false
+      },
+      {
+        "id": 1024,
+        "title": "Знаток Хабра",
+        "alias": "habr_expert",
+        "description": "За победу в квизе на пятнадцатилетие Хабра",
+        "url": null,
+        "is_removable": true,
+        "is_disabled": false
+      }
+    ],
+    "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+    "is_readonly": false,
+    "is_rc": false,
+    "is_subscribed": false,
+    "common_tags": [],
+    "contacts": [],
+    "is_can_vote": false
+  },
+  "server_time": "2021-08-13T13:02:21+03:00"
+}

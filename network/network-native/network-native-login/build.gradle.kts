@@ -12,12 +12,13 @@ dependencies {
     // Core module for access entities
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
+    implementation(project(":functional"))
     // Network module for access abstracts
     implementation(project(":network"))
     implementation(project(":network:network-native"))
-    testImplementation(project(":network:network-native:network-native-test"))
+    implementation(project(":network:network-native:network-native-user-me"))
 
-    implementation(project(":functional"))
+    testImplementation(project(":network:network-native:network-native-test"))
 
     // Gson
     // https://github.com/google/gson

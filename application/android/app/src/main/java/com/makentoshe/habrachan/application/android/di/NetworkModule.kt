@@ -8,17 +8,16 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.network.GetContentManager
 import com.makentoshe.habrachan.network.NativeGetArticleManager
 import com.makentoshe.habrachan.network.NativeGetArticlesManager
+import com.makentoshe.habrachan.network.NativeGetMeManager
 import com.makentoshe.habrachan.network.NativeLoginManager
 import com.makentoshe.habrachan.network.NativeVoteArticleManager
 import com.makentoshe.habrachan.network.NativeVoteCommentManager
 import com.makentoshe.habrachan.network.deserializer.NativeGetCommentsDeserializer
-import com.makentoshe.habrachan.network.deserializer.NativeGetMeDeserializer
 import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
 import com.makentoshe.habrachan.network.manager.GetArticleManager
 import com.makentoshe.habrachan.network.manager.GetArticlesManager
 import com.makentoshe.habrachan.network.manager.GetUserManager
 import com.makentoshe.habrachan.network.manager.NativeGetArticleCommentsManager
-import com.makentoshe.habrachan.network.manager.NativeGetMeManager
 import com.makentoshe.habrachan.network.manager.VoteArticleManager
 import com.makentoshe.habrachan.network.manager.VoteCommentManager
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
@@ -51,7 +50,7 @@ class NetworkModule(context: Context) : Module() {
         val getArticlesManager = NativeGetArticlesManager.Builder(client).build()
         bind<GetArticlesManager<out GetArticlesRequest2, out GetArticlesSpec>>().toInstance(getArticlesManager)
 
-        val nativeMeManager = NativeGetMeManager.Builder(client, NativeGetMeDeserializer()).build()
+        val nativeMeManager = NativeGetMeManager.Builder(client).build()
         val loginManager = NativeLoginManager.Builder(client, nativeMeManager).build()
         bind<NativeLoginManager>().toInstance(loginManager)
 

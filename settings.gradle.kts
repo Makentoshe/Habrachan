@@ -28,6 +28,8 @@ include(":network:network-native:network-native-login:network-native-login-test"
 include(":network:network-native:network-native-comment-vote")
 include(":network:network-native:network-native-comment-vote:network-native-comment-vote-test")
 include(":network:network-native:network-native-user-get")
+include(":network:network-native:network-native-user-get:network-native-user-get-test")
+include(":network:network-native:network-native-user-me")
 
 include(":application")
 include(":application:core")
@@ -41,5 +43,5 @@ include(":application:android:common")
 include(":application:android:common:common-core")
 include(":application:android:common:common-comment")
 include(":application:android:common:common-di")
-include("network:network-native:network-native-user-get:network-native-user-get-test")
-findProject(":network:network-native:network-native-user-get:network-native-user-get-test")?.name = "network-native-user-get-test"
+include("network:network-native:network-native-user-me:network-native-user-me-test")
+findProject(":network:network-native:network-native-user-me:network-native-user-me-test")?.name = "network-native-user-me-test"

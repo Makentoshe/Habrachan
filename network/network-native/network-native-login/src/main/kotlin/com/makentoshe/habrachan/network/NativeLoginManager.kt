@@ -1,9 +1,9 @@
 package com.makentoshe.habrachan.network
 
 import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.functional.fold
 import com.makentoshe.habrachan.functional.suspendFold
 import com.makentoshe.habrachan.network.api.NativeLoginApi
-import com.makentoshe.habrachan.network.manager.NativeGetMeManager
 import com.makentoshe.habrachan.network.response.LoginResponse
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -58,7 +58,7 @@ class NativeLoginManager private constructor(
         return deserializer.error(request, response.string())
     }
 
-    class Builder(private val client: OkHttpClient, private val manager: NativeGetMeManager?) {
+    class Builder(private val client: OkHttpClient, private val manager: com.makentoshe.habrachan.network.NativeGetMeManager?) {
 
         private val deserializer = NativeLoginDeserializer()
         private val baseUrl = "https://habr.com/"
