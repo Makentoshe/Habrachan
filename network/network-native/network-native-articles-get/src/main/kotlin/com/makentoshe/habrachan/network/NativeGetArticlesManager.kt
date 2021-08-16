@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.network
 
 import com.makentoshe.habrachan.functional.Result
-import com.makentoshe.habrachan.network.api.NativeArticlesApi
 import com.makentoshe.habrachan.network.manager.GetArticlesManager
+import com.makentoshe.habrachan.network.natives.api.NativeArticlesApi
 import com.makentoshe.habrachan.network.request.SpecType
 import com.makentoshe.habrachan.network.request.TopSpecType
 import com.makentoshe.habrachan.network.response.GetArticlesResponse2

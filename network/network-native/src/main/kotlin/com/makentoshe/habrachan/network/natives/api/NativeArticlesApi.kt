@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.network.api
+package com.makentoshe.habrachan.network.natives.api
 
 import okhttp3.ResponseBody
 import retrofit2.Call

@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.network
 import RetrofitUnitTest
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.getOrThrow
-import com.makentoshe.habrachan.network.api.NativeArticlesApi
+import com.makentoshe.habrachan.network.natives.api.NativeArticlesApi
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

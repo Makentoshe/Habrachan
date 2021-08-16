@@ -3,8 +3,8 @@ package com.makentoshe.habrachan.network
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.map
-import com.makentoshe.habrachan.network.api.NativeArticlesApi
 import com.makentoshe.habrachan.network.manager.GetArticleManager
+import com.makentoshe.habrachan.network.natives.api.NativeArticlesApi
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Response

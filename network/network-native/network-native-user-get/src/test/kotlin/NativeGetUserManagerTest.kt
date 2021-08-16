@@ -2,7 +2,7 @@ import com.makentoshe.habrachan.functional.getOrThrow
 import com.makentoshe.habrachan.network.NativeGetUserDeserializer
 import com.makentoshe.habrachan.network.NativeGetUserException
 import com.makentoshe.habrachan.network.NativeGetUserManager
-import com.makentoshe.habrachan.network.api.NativeUsersApi
+import com.makentoshe.habrachan.network.natives.api.NativeUsersApi
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

@@ -82,6 +82,7 @@ dependencies {
     implementation(project(":entity:entity-mobile"))
 
     implementation(project(":network"))
+    implementation(project(":network:network-native"))
     implementation(project(":network:network-native:network-native-common"))
     implementation(project(":network:network-native:network-native-login"))
     implementation(project(":network:network-native:network-native-article-vote"))

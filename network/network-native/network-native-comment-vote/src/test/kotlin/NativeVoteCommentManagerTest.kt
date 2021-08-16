@@ -4,7 +4,7 @@ import com.makentoshe.habrachan.functional.getOrThrow
 import com.makentoshe.habrachan.network.NativeVoteCommentDeserializer
 import com.makentoshe.habrachan.network.NativeVoteCommentException
 import com.makentoshe.habrachan.network.NativeVoteCommentManager
-import com.makentoshe.habrachan.network.api.NativeCommentsApi
+import com.makentoshe.habrachan.network.natives.api.NativeCommentsApi
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
@@ -37,7 +37,11 @@ class NativeVoteCommentManagerTest : UnitTest() {
         val request = manager.request(userSession, commentId(-1), CommentVote.Up)
 
         every {
-            mockNativeCommentsApi.voteUp(request.userSession.client, request.userSession.token, request.commentId.commentId)
+            mockNativeCommentsApi.voteUp(
+                request.userSession.client,
+                request.userSession.token,
+                request.commentId.commentId
+            )
         } returns mockedCallResponse {
             mockedResponse {
                 mockedResponseBody(getResourceString("vote_comment_success.json"))
@@ -56,7 +60,11 @@ class NativeVoteCommentManagerTest : UnitTest() {
         val request = manager.request(userSession, commentId(-1), CommentVote.Down)
 
         every {
-            mockNativeCommentsApi.voteDown(request.userSession.client, request.userSession.token, request.commentId.commentId)
+            mockNativeCommentsApi.voteDown(
+                request.userSession.client,
+                request.userSession.token,
+                request.commentId.commentId
+            )
         } returns mockedCallResponse {
             mockedResponse(isSuccessful = false, code = 400) {
                 mockedResponseBody(getResourceString("vote_comment_failure.json"))
@@ -78,7 +86,11 @@ class NativeVoteCommentManagerTest : UnitTest() {
         val request = manager.request(userSession, commentId(-1), CommentVote.Down)
 
         every {
-            mockNativeCommentsApi.voteDown(request.userSession.client, request.userSession.token, request.commentId.commentId)
+            mockNativeCommentsApi.voteDown(
+                request.userSession.client,
+                request.userSession.token,
+                request.commentId.commentId
+            )
         } throws networkFailureException
 
         val response = manager.vote(request).exceptionOrNull() as NativeVoteCommentException

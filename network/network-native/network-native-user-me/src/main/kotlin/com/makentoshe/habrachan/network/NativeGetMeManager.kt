@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.network
 
 import com.makentoshe.habrachan.functional.Result
-import com.makentoshe.habrachan.network.api.NativeUsersApi
+import com.makentoshe.habrachan.network.natives.api.NativeUsersApi
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Response

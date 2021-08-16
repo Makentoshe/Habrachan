@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.network
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.fold
 import com.makentoshe.habrachan.functional.suspendFold
-import com.makentoshe.habrachan.network.api.NativeLoginApi
+import com.makentoshe.habrachan.network.natives.api.NativeLoginApi
 import com.makentoshe.habrachan.network.response.LoginResponse
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody

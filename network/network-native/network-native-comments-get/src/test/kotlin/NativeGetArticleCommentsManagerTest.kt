@@ -2,7 +2,7 @@ import com.makentoshe.habrachan.functional.getOrThrow
 import com.makentoshe.habrachan.network.NativeGetArticleCommentsDeserializer
 import com.makentoshe.habrachan.network.NativeGetArticleCommentsException
 import com.makentoshe.habrachan.network.NativeGetArticleCommentsManager
-import com.makentoshe.habrachan.network.api.NativeCommentsApi
+import com.makentoshe.habrachan.network.natives.api.NativeCommentsApi
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

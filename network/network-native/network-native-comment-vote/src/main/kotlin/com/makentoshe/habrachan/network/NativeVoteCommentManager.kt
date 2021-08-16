@@ -3,8 +3,8 @@ package com.makentoshe.habrachan.network
 import com.makentoshe.habrachan.entity.CommentId
 import com.makentoshe.habrachan.entity.CommentVote
 import com.makentoshe.habrachan.functional.Result
-import com.makentoshe.habrachan.network.api.NativeCommentsApi
 import com.makentoshe.habrachan.network.manager.VoteCommentManager
+import com.makentoshe.habrachan.network.natives.api.NativeCommentsApi
 import com.makentoshe.habrachan.network.response.VoteCommentResponse2
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody

@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.network
 
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.Result
-import com.makentoshe.habrachan.network.api.NativeCommentsApi
 import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
+import com.makentoshe.habrachan.network.natives.api.NativeCommentsApi
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -18,17 +18,29 @@ class NativeGetArticleCommentsManager internal constructor(
     }
 
     @Suppress("BlockingMethodInNonBlockingContext") // suspend function
-    override suspend fun comments(request: NativeGetArticleCommentsRequest) : Result<NativeGetArticleCommentsResponse> = try {
-        getCommentsApi(request).deserialize(request)
-    } catch (exception: Exception) {
-        Result.failure(NativeGetArticleCommentsException(request, message = exception.localizedMessage, cause = exception))
+    override suspend fun comments(request: NativeGetArticleCommentsRequest): Result<NativeGetArticleCommentsResponse> =
+        try {
+            getCommentsApi(request).deserialize(request)
+        } catch (exception: Exception) {
+            Result.failure(
+                NativeGetArticleCommentsException(
+                    request,
+                    message = exception.localizedMessage,
+                    cause = exception
+                )
+            )
+        }
+
+    private fun getCommentsApi(request: NativeGetArticleCommentsRequest): Response<ResponseBody> {
+        return api.getComments(
+            request.session.client,
+            request.session.token,
+            request.session.api,
+            request.articleId.articleId
+        ).execute()
     }
 
-    private fun getCommentsApi(request: NativeGetArticleCommentsRequest) : Response<ResponseBody> {
-        return api.getComments(request.session.client, request.session.token, request.session.api, request.articleId.articleId).execute()
-    }
-
-    private fun Response<ResponseBody>.deserialize(request: NativeGetArticleCommentsRequest) : Result<NativeGetArticleCommentsResponse> {
+    private fun Response<ResponseBody>.deserialize(request: NativeGetArticleCommentsRequest): Result<NativeGetArticleCommentsResponse> {
         return fold({ successBody ->
             deserializer.body(request, successBody.string())
         }, { failureBody ->

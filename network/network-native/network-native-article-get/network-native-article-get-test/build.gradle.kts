@@ -19,6 +19,7 @@ dependencies {
     // Network module for access abstracts
     implementation(project(":network"))
     implementation(project(":network:network-native:network-native-common"))
+    implementation(project(":network:network-native"))
 
     // Module which will be tested
     implementation(project(":network:network-native:network-native-article-get"))

@@ -45,6 +45,7 @@ dependencies {
 
     implementation(project(":network"))
     implementation(project(":network:network-native:network-native-common"))
+    implementation(project(":network:network-native"))
 
     implementation(project(":application:android:database"))
     implementation(project(":application:android:common:common-core"))
