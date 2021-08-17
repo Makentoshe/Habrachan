@@ -16,5 +16,5 @@ dependencies {
     implementation(project(":functional"))
 
     // inherits from
-    implementation(project(":application:common:arena"))
+    api(project(":application:common:arena"))
 }

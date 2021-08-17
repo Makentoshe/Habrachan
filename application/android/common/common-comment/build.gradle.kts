@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":network:network-native:network-native-common"))
     implementation(project(":network:network-native"))
 
+    implementation(project(":application:common:arena:comments"))
     implementation(project(":application:android:database"))
     implementation(project(":application:android:common:common-core"))
 
@@ -54,12 +55,12 @@ dependencies {
 
     // OkHttp
     // https://github.com/square/okhttp/
-    val okhttp = "4.1.0"
+    val okhttp = dependency.version.okhttp
     implementation("com.squareup.okhttp3:okhttp:$okhttp")
 
     // Markwon
     // https://github.com/noties/Markwon
-    val markwon = "4.3.1"
+    val markwon = dependency.version.androidMarkwon
     implementation("io.noties.markwon:core:$markwon")
     implementation("io.noties.markwon:html:$markwon")
     implementation("io.noties.markwon:image:$markwon")
@@ -72,15 +73,21 @@ dependencies {
 
     // Architecture components
     // https://developer.android.com/topic/libraries/architecture
-    val arch = "1.1.1"
+    val arch = dependency.version.androidArchitecture
     implementation("android.arch.lifecycle:extensions:$arch")
     implementation("android.arch.lifecycle:viewmodel:$arch")
 
+    // Pagination library
+    // https://developer.android.com/topic/libraries/architecture/paging
+    val paginationVersion = dependency.version.androidPaging
+    implementation("androidx.paging:paging-runtime-ktx:$paginationVersion")
+    implementation("androidx.paging:paging-rxjava2:$paginationVersion")
+
     // Coroutines for android ViewModel
-    val coroutinesViewModel = "2.3.0-beta01"
+    val coroutinesViewModel = dependency.version.androidCoroutinesViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutinesViewModel")
 
-    val constraintVersion = "2.0.4"
+    val constraintVersion = dependency.version.androidConstraintLayout
     implementation("androidx.constraintlayout:constraintlayout:$constraintVersion")
 
     val coreVersion = dependency.version.androidCore
