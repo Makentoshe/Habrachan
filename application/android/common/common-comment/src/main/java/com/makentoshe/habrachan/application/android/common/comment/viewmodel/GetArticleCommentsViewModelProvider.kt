@@ -2,14 +2,13 @@ package com.makentoshe.habrachan.application.android.common.comment.viewmodel
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.application.android.common.comment.di.provider.ViewModelKeyProvider
+import com.makentoshe.habrachan.application.android.common.comment.di.provider.ViewModelFragmentProvider
 
 class GetArticleCommentsViewModelProvider(
-    private val fragment: Fragment,
     private val factory: GetArticleCommentsViewModel.Factory,
-) : ViewModelKeyProvider<GetArticleCommentsViewModel> {
+) : ViewModelFragmentProvider<GetArticleCommentsViewModel> {
 
-    override fun get(key: String): GetArticleCommentsViewModel {
-        return ViewModelProviders.of(fragment, factory).get(key, GetArticleCommentsViewModel::class.java)
+    override fun get(fragment: Fragment): GetArticleCommentsViewModel {
+        return ViewModelProviders.of(fragment, factory).get(GetArticleCommentsViewModel::class.java)
     }
 }

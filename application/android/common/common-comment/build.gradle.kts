@@ -53,6 +53,8 @@ dependencies {
 
     implementation(project(":functional"))
 
+    implementation("javax.inject:javax.inject:1")
+
     // OkHttp
     // https://github.com/square/okhttp/
     val okhttp = dependency.version.okhttp

@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.plus
+import javax.inject.Inject
 
 class GetArticleCommentsViewModel(
     private val userSession: UserSession,
@@ -37,7 +38,7 @@ class GetArticleCommentsViewModel(
         }.flow
     }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
 
-    class Factory(
+    class Factory @Inject constructor(
         private val session: UserSession,
         private val articleCommentsArena: ArticleCommentsArena,
     ) : ViewModelProvider.NewInstanceFactory() {
