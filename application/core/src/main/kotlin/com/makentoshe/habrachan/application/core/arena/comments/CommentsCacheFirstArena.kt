@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.functional.fold
 import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 
+@Deprecated(message = " Deprecated, use from another module")
 class CommentsCacheFirstArena(
     val articleCommentsManager: GetArticleCommentsManager<GetArticleCommentsRequest>,
     cache: ArenaCache<GetArticleCommentsRequest, List<Comment>>
