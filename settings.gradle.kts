@@ -36,6 +36,8 @@ include(":network:network-native:network-native-user-me")
 
 include(":application")
 include(":application:core")
+include("application:common:arena")
+include("application:common:arena:comments")
 
 include(":application:android")
 include(":application:android:app")
