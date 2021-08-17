@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 import com.makentoshe.habrachan.network.response.GetArticleCommentsResponse
+import javax.inject.Inject
 
 abstract class ArticleCommentsArena internal constructor(
     private val manager: GetArticleCommentsManager<GetArticleCommentsRequest>
@@ -15,7 +16,7 @@ abstract class ArticleCommentsArena internal constructor(
 
     override suspend fun internalSuspendFetch(key: GetArticleCommentsRequest) = manager.comments(key)
 
-    class Factory(
+    class Factory @Inject constructor(
         private val manager: GetArticleCommentsManager<GetArticleCommentsRequest>,
         private val arenaStorage: ArenaCache<in GetArticleCommentsRequest, GetArticleCommentsResponse>,
     ) {

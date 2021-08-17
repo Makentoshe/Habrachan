@@ -17,4 +17,6 @@ dependencies {
 
     // inherits from
     api(project(":application:common:arena"))
+    
+    implementation("javax.inject:javax.inject:1")
 }
