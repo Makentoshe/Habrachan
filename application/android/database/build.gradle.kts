@@ -52,8 +52,8 @@ dependencies {
     // Room (sql database library)
     // https://developer.android.com/topic/libraries/architecture/room
     val roomVersion = dependency.version.androidRoom
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
+    api("androidx.room:room-runtime:$roomVersion")
+    api("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     val androidxCoreVersion = dependency.version.androidCore
