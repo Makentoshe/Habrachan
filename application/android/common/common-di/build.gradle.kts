@@ -50,17 +50,17 @@ dependencies {
     implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpick")
     testImplementation("com.github.stephanenicolas.toothpick:toothpick-testing-junit5:$toothpick")
 
-    val androidxCoreVersion = properties["version.androidx.core"]
+    val androidxCoreVersion = dependency.version.androidCore
     implementation("androidx.core:core-ktx:$androidxCoreVersion")
 
-    val androidxAppcompatVersion = properties["version.androidx.appcompat"]
+    val androidxAppcompatVersion = dependency.version.androidAppCompat
     implementation("androidx.appcompat:appcompat:$androidxAppcompatVersion")
 
     testImplementation("junit:junit:4.12")
 
-    val runner = properties["version.androidx.test.runner"]
+    val runner = dependency.version.androidTestRunner
     androidTestImplementation("androidx.test:runner:$runner")
 
-    val espresso = properties["version.androidx.test.espresso"]
+    val espresso = dependency.version.androidTestEspresso
     androidTestImplementation("androidx.test.espresso:espresso-core:$espresso")
 }

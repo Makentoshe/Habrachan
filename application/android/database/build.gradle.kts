@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -48,28 +46,28 @@ dependencies {
 
     // Gson
     // https://github.com/google/gson
-    val gsonVersion = properties["version.gson"]
+    val gsonVersion = dependency.version.gson
     implementation("com.google.code.gson:gson:$gsonVersion")
 
     // Room (sql database library)
     // https://developer.android.com/topic/libraries/architecture/room
-    val roomVersion = properties["version.room"]
+    val roomVersion = dependency.version.androidRoom
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
-    val androidxCoreVersion = properties["version.androidx.core"]
+    val androidxCoreVersion = dependency.version.androidCore
     implementation("androidx.core:core-ktx:$androidxCoreVersion")
 
-    val androidxAppcompatVersion = properties["version.androidx.appcompat"]
+    val androidxAppcompatVersion = dependency.version.androidAppCompat
     implementation("androidx.appcompat:appcompat:$androidxAppcompatVersion")
 
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:${dependency.version.junit}")
 
-    val runner = properties["version.androidx.test.runner"]
+    val runner = dependency.version.androidTestRunner
     androidTestImplementation("androidx.test:runner:$runner")
 
-    val espresso = properties["version.androidx.test.espresso"]
+    val espresso = dependency.version.androidTestEspresso
     androidTestImplementation("androidx.test.espresso:espresso-core:$espresso")
 }
 

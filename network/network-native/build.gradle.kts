@@ -41,7 +41,8 @@ dependencies {
     val coroutines = "1.3.7"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
 
-    testImplementation("junit:junit:4.12")
+    val junitVersion = dependency.version.junit
+    testImplementation("junit:junit:$junitVersion")
 }
 
 // Allows to use kotlin.Result type as a return

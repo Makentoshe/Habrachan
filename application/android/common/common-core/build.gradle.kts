@@ -43,23 +43,24 @@ dependencies {
 
     // Material components
     // https://github.com/material-components/material-components-android
-    val material = properties["version.androidx.material"]
+    val material = dependency.version.androidMaterialDesign
     implementation("com.google.android.material:material:$material")
 
-    val core = properties["version.androidx.core"]
+    val core = dependency.version.androidCore
     implementation("androidx.core:core-ktx:$core")
 
-    val appcompat = properties["version.androidx.appcompat"]
+    val appcompat = dependency.version.androidAppCompat
     implementation("androidx.appcompat:appcompat:$appcompat")
 
-    val coroutinesVersion = "1.5.0" //properties["version.coroutines"]
+    val coroutinesVersion = dependency.version.coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$coroutinesVersion")
 
-    testImplementation("junit:junit:4.12")
+    val junitVersion = dependency.version.junit
+    testImplementation("junit:junit:$junitVersion")
 
-    val runner = properties["version.androidx.test.runner"]
-    androidTestImplementation("androidx.test:runner:$runner")
+    val testRunnerVersion = dependency.version.androidTestRunner
+    androidTestImplementation("androidx.test:runner:$testRunnerVersion")
 
-    val espresso = properties["version.androidx.test.espresso"]
+    val espresso = dependency.version.androidTestEspresso
     androidTestImplementation("androidx.test.espresso:espresso-core:$espresso")
 }

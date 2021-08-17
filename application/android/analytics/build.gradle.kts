@@ -30,28 +30,28 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*,jar"))))
 
-    val kotlinVersion = properties["version.kotlin"]
+    val kotlinVersion = dependency.version.kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
-    val slf4jVersion = properties["version.slf4j"]
+    val slf4jVersion = dependency.version.slf4j
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
 
-    val logbackVersion = properties["version.logback"]
+    val logbackVersion = dependency.version.androidLogback
     implementation("com.github.tony19:logback-android:$logbackVersion")
 
-    val androidxCoreVersion = properties["version.androidx.core"]
+    val androidxCoreVersion = dependency.version.androidCore
     implementation ("androidx.core:core-ktx:$androidxCoreVersion")
 
-    val androidxAppcompatVersion = properties["version.androidx.appcompat"]
+    val androidxAppcompatVersion = dependency.version.androidAppCompat
     implementation("androidx.appcompat:appcompat:$androidxAppcompatVersion")
 
-    val junitVersion = properties["version.test.junit"]
+    val junitVersion = dependency.version.junit
     testImplementation("junit:junit:$junitVersion")
 
-    val androidxTestJunitVersion = properties["version.androidx.test.junit"]
+    val androidxTestJunitVersion = dependency.version.androidTestJunit
     androidTestImplementation("androidx.test.ext:junit:$androidxTestJunitVersion")
 
-    val androidxTestEspressoVersion = properties["version.androidx.test.espresso"]
+    val androidxTestEspressoVersion = dependency.version.androidTestEspresso
     androidTestImplementation("androidx.test.espresso:espresso-core:$androidxTestEspressoVersion")
 
 }

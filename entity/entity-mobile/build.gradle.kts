@@ -15,6 +15,6 @@ dependencies {
     
     // Gson
     // https://github.com/google/gson
-    val gson = properties["version.gson"]
+    val gson = dependency.version.gson
     implementation("com.google.code.gson:gson:$gson")
 }

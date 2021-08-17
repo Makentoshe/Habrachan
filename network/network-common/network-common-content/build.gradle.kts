@@ -38,11 +38,11 @@ dependencies {
     val coroutines = "1.3.7"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
 
-    val junitVersion = properties["version.test.junit"]
+    val junitVersion = dependency.version.junit
     testImplementation("junit:junit:$junitVersion")
 
     // Mockk - mocking library for testing purposes only
     // https://github.com/mockk/mockk
-    val mockkVersion = properties["version.test.mockk"]
+    val mockkVersion = dependency.version.mockk
     testImplementation("io.mockk:mockk:$mockkVersion")
 }

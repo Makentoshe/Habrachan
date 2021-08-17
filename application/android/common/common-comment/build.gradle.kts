@@ -67,7 +67,7 @@ dependencies {
 
     // Material components
     // https://github.com/material-components/material-components-android
-    val materialVersion = properties["version.androidx.material"]
+    val materialVersion = dependency.version.androidMaterialDesign
     implementation("com.google.android.material:material:$materialVersion")
 
     // Architecture components
@@ -83,18 +83,18 @@ dependencies {
     val constraintVersion = "2.0.4"
     implementation("androidx.constraintlayout:constraintlayout:$constraintVersion")
 
-    val coreVersion = properties["version.androidx.core"]
+    val coreVersion = dependency.version.androidCore
     implementation("androidx.core:core-ktx:$coreVersion")
 
-    val appcompatVersion = properties["version.androidx.appcompat"]
+    val appcompatVersion = dependency.version.androidAppCompat
     implementation("androidx.appcompat:appcompat:$appcompatVersion")
 
-    val junitVersion = properties["version.test.junit"]
+    val junitVersion = dependency.version.junit
     testImplementation("junit:junit:$junitVersion")
 
-    val runner = properties["version.androidx.test.runner"]
+    val runner = dependency.version.androidTestRunner
     androidTestImplementation("androidx.test:runner:$runner")
 
-    val espresso = properties["version.androidx.test.espresso"]
+    val espresso = dependency.version.androidTestEspresso
     androidTestImplementation("androidx.test.espresso:espresso-core:$espresso")
 }
