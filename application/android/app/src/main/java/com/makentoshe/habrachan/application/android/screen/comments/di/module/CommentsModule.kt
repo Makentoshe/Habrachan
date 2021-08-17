@@ -14,6 +14,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.di.provider.
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.ContentBodyCommentFactoryProvider
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.VoteCommentViewModelFactoryProvider
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
+import com.makentoshe.habrachan.application.common.arena.comments.ArticleCommentsArena
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -43,6 +44,8 @@ class CommentsModule(articleId: Int, articleTitle: String, fragment: Fragment) :
         bind<ContentBodyComment.Factory>().toProvider(ContentBodyCommentFactoryProvider::class)
         bind<VoteCommentViewModel.Factory>().toProvider(VoteCommentViewModelFactoryProvider::class)
         bind<ArticleCommentsViewModelProvider>().toClass(ArticleCommentsViewModelProvider::class)
+
+        bind<ArticleCommentsArena.Factory>().toClass<ArticleCommentsArena.Factory>()
     }
 
 }
