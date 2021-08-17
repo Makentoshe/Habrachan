@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.network.GetContentManager
 import com.makentoshe.habrachan.network.GetContentRequest
 import com.makentoshe.habrachan.network.GetContentResponse
 
+@Deprecated("Use updated one from :application:common:arena:content")
 class ContentArena(
     val manager: GetContentManager,
     cache: ArenaCache<GetContentRequest, GetContentResponse>
