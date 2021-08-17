@@ -1,6 +1,8 @@
 package com.makentoshe.habrachan.application.android.screen.comments.di.module
 
 import androidx.fragment.app.Fragment
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModelProvider
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
@@ -16,13 +18,14 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
-class SpecifiedArticleCommentsModule(private val fragment: ArticleCommentsFragment) : Module() {
+class SpecifiedArticleCommentsModule(fragment: ArticleCommentsFragment) : Module() {
 
     // From CommentsScope
     private val voteCommentViewModelFactory by inject<VoteCommentViewModel.Factory>()
 
     // From ArticleCommentsScope
     private val articleCommentsViewModelProvider by inject<ArticleCommentsViewModelProvider>()
+    private val commentsViewModelFactory by inject<GetArticleCommentsViewModel.Factory>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class, CommentsScope::class, ArticleCommentsScope2::class).inject(this)
@@ -34,5 +37,8 @@ class SpecifiedArticleCommentsModule(private val fragment: ArticleCommentsFragme
         bind<ArticleCommentsViewModel>().toInstance(articleCommentsViewModelProvider.get(fragment))
 
         bind<ContentCommentAdapter>().toProvider(ContentCommentAdapterProvider::class)
+
+        val getArticleCommentsViewModelProvider = GetArticleCommentsViewModelProvider(commentsViewModelFactory)
+        bind<GetArticleCommentsViewModel>().toInstance(getArticleCommentsViewModelProvider.get(fragment))
     }
 }
