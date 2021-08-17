@@ -81,7 +81,7 @@ object Version {
 
     const val androidTestRunner = "1.1.0"
 
-    const val androidTestCore = "1.4.0"
+    const val androidTestCore = "1.2.0"
 
     const val androidTestJunit = "1.1.3"
 }
