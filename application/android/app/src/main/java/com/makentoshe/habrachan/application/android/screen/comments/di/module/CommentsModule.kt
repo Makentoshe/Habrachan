@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.di.module
 
 import android.content.Context
 import androidx.fragment.app.Fragment
+import com.makentoshe.habrachan.application.android.common.arena.ArticleCommentsArenaCache
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
@@ -14,7 +15,10 @@ import com.makentoshe.habrachan.application.android.screen.comments.di.provider.
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.ContentBodyCommentFactoryProvider
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.VoteCommentViewModelFactoryProvider
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
+import com.makentoshe.habrachan.application.common.arena.ArenaCache
 import com.makentoshe.habrachan.application.common.arena.comments.ArticleCommentsArena
+import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
+import com.makentoshe.habrachan.network.response.GetArticleCommentsResponse
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -45,7 +49,9 @@ class CommentsModule(articleId: Int, articleTitle: String, fragment: Fragment) :
         bind<VoteCommentViewModel.Factory>().toProvider(VoteCommentViewModelFactoryProvider::class)
         bind<ArticleCommentsViewModelProvider>().toClass(ArticleCommentsViewModelProvider::class)
 
-        bind<ArticleCommentsArena.Factory>().toClass<ArticleCommentsArena.Factory>()
+        bind<ArticleCommentsArenaCache>().toClass<ArticleCommentsArenaCache>().singleton()
+        bind<ArenaCache<in GetArticleCommentsRequest, GetArticleCommentsResponse>>().toClass<ArticleCommentsArenaCache>().singleton()
+        bind<ArticleCommentsArena.Factory>().toClass<ArticleCommentsArena.Factory>().singleton()
     }
 
 }

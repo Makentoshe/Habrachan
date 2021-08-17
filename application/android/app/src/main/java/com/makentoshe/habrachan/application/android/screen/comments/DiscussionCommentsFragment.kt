@@ -20,7 +20,6 @@ import com.makentoshe.habrachan.application.android.screen.comments.view.Discuss
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
 import kotlinx.android.synthetic.main.fragment_comments_discussion.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
@@ -74,13 +73,13 @@ class DiscussionCommentsFragment : BaseFragment() {
 
         fragment_comments_discussion_recycler.adapter = adapter
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.comments.collectLatest { commentAdapter.submitData(it) }
-        }
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.comment.collectLatest { titleAdapter.submitData(it) }
-        }
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            viewModel.comments.collectLatest { commentAdapter.submitData(it) }
+//        }
+//
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            viewModel.comment.collectLatest { titleAdapter.submitData(it) }
+//        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

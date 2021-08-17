@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.comments.di.module
 
-import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
@@ -15,13 +15,14 @@ class ArticleCommentsModule(private val fragment: ArticleCommentsFragment) : Mod
 
     // From ApplicationScope
     private val session by inject<UserSession>()
-    private val database by inject<AndroidCacheDatabase>()
 
     // From CommentsScope
     private val articleCommentsArenaFactory by inject<ArticleCommentsArena.Factory>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class, CommentsScope::class).inject(this)
-        bind<ArticleCommentsArena>().toInstance(articleCommentsArenaFactory.sourceFirstArena())
+        val articleCommentsArena = articleCommentsArenaFactory.sourceFirstArena()
+        val viewModelFactory = GetArticleCommentsViewModel.Factory(session, articleCommentsArena)
+        bind<GetArticleCommentsViewModel.Factory>().toInstance(viewModelFactory)
     }
 }
