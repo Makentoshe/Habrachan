@@ -10,8 +10,8 @@ import com.makentoshe.habrachan.application.android.common.comment.CommentViewHo
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.BlockViewController
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewControllerNavigator
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelBlank
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelNode
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelBlank
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelNode
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterController
 
 open class ContentCommentAdapter(

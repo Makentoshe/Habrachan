@@ -5,7 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.makentoshe.habrachan.application.android.screen.comments.model.*
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelElement
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelForest
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelNode
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.DISCUSSION_COMMENT_LEVEL_DEPTH
+import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
 import com.makentoshe.habrachan.application.core.arena.comments.CommentsCacheFirstArena
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.network.UserSession

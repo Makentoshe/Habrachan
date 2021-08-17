@@ -7,11 +7,11 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.panel.PanelCommentViewController
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelElement
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentSpec
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.common.core.collectResult
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelElement
 import com.makentoshe.habrachan.entity.CommentVote
 import com.makentoshe.habrachan.network.NativeVoteCommentException
 import com.makentoshe.habrachan.network.response.VoteCommentResponse2

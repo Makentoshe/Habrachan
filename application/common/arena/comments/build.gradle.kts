@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    kotlin("kapt")
 }
 
 version = "unspecified"
@@ -17,6 +18,13 @@ dependencies {
 
     // inherits from
     api(project(":application:common:arena"))
-    
-    implementation("javax.inject:javax.inject:1")
+
+    // Toothpick
+    // https://github.com/stephanenicolas/toothpick
+    val toothpickVersion = dependency.version.toothpick
+    implementation("com.github.stephanenicolas.toothpick:ktp:$toothpickVersion")
+    kapt("com.github.stephanenicolas.toothpick:toothpick-compiler:$toothpickVersion")
+    implementation("com.github.stephanenicolas.toothpick:smoothie:$toothpickVersion")
+    implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpickVersion")
+    testImplementation("com.github.stephanenicolas.toothpick:toothpick-testing-junit5:$toothpickVersion")
 }
