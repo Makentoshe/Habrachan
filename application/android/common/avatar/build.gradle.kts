@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":application:core"))
     implementation(project(":application:android:database"))
     implementation(project(":application:android:analytics"))
+    implementation(project(":application:android:common:common-di"))
 
     implementation(project(":functional"))
 
@@ -60,6 +61,12 @@ dependencies {
     implementation("com.github.stephanenicolas.toothpick:smoothie:$toothpickVersion")
     implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpickVersion")
     testImplementation("com.github.stephanenicolas.toothpick:toothpick-testing-junit5:$toothpickVersion")
+
+    // Architecture components
+    // https://developer.android.com/topic/libraries/architecture
+    val arch = dependency.version.androidArchitecture
+    implementation("android.arch.lifecycle:extensions:$arch")
+    implementation("android.arch.lifecycle:viewmodel:$arch")
 
     val coreVersion = dependency.version.androidCore
     implementation("androidx.core:core-ktx:$coreVersion")
