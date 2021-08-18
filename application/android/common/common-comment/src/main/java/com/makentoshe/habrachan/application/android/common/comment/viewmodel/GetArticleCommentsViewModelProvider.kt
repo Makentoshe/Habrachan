@@ -2,9 +2,10 @@ package com.makentoshe.habrachan.application.android.common.comment.viewmodel
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.makentoshe.habrachan.application.android.common.comment.di.provider.ViewModelFragmentProvider
+import com.makentoshe.habrachan.application.android.common.di.provider.ViewModelFragmentProvider
+import javax.inject.Inject
 
-class GetArticleCommentsViewModelProvider(
+class GetArticleCommentsViewModelProvider @Inject constructor(
     private val factory: GetArticleCommentsViewModel.Factory,
 ) : ViewModelFragmentProvider<GetArticleCommentsViewModel> {
 

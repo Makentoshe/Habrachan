@@ -19,7 +19,8 @@ class ArticleCommentsDataSource(
         params: LoadParams<GetArticleCommentsSpec>,
     ): LoadResult<GetArticleCommentsSpec, CommentModelElement> {
         val articleId = params.key?.articleId ?: throw IllegalArgumentException("ArticleId should be provided.")
-        return arena.suspendFetch(arena.request(session, articleId.articleId)).map { response ->
+        val request = arena.request(session, articleId.articleId)
+        return arena.suspendFetch(request).map { response ->
             CommentModelForest.build(response.data).collect(levelRange)
         }.fold({ flattenForest ->
             LoadResult.Page(flattenForest, prevKey = null, nextKey = null, itemsAfter = 0)

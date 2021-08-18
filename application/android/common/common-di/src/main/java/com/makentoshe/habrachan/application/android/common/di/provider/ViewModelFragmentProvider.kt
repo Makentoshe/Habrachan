@@ -1,9 +1,8 @@
-package com.makentoshe.habrachan.application.android.common.comment.di.provider
+package com.makentoshe.habrachan.application.android.common.di.provider
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 
-// TODO move to common-di module
 /**
  * Provider for a ViewModel instance for a selected fragment.
  *

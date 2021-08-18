@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.common.comment.di.provider
+package com.makentoshe.habrachan.application.android.common.di.provider
 
 import androidx.lifecycle.ViewModel
 
