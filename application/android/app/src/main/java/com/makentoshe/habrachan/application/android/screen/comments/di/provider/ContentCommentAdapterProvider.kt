@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.di.provider
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
@@ -31,11 +32,10 @@ internal class ContentCommentAdapterProvider : Provider<ContentCommentAdapter> {
     lateinit var voteCommentViewModelProvider: VoteCommentViewModelProvider
 
     @Inject
-    lateinit var articleCommentsViewModelProvider: ArticleCommentsViewModelProvider
+    internal lateinit var getAvatarViewModel: GetAvatarViewModel
 
     override fun get(): ContentCommentAdapter {
-        val articleCommentsViewModel = articleCommentsViewModelProvider.get(fragment)
-        val avatarDecorator = AvatarCommentAdapterControllerDecorator(null, fragment.lifecycleScope, articleCommentsViewModel)
+        val avatarDecorator = AvatarCommentAdapterControllerDecorator(null, fragment.lifecycleScope, getAvatarViewModel)
         return contentCommentAdapterChain2(avatarDecorator)
     }
 

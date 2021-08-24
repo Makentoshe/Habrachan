@@ -15,7 +15,7 @@ import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsSpec
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsSpec2
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
@@ -60,8 +60,8 @@ class ArticleCommentsFragment : BaseFragment() {
         val wasViewModelRecreated = articleCommentsViewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
         if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch(Dispatchers.IO) {
             capture(analyticEvent(this@ArticleCommentsFragment.javaClass.simpleName, "articleId=${arguments.articleId}"))
-            val spec = GetArticleCommentsSpec(articleId(arguments.articleId))
-            articleCommentsViewModel.channel.send(spec)
+            val getArticleCommentsSpec = GetArticleCommentsSpec2.ArticleCommentsSpec(articleId(arguments.articleId))
+            articleCommentsViewModel.channel.send(getArticleCommentsSpec)
         }
 
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_comments_article_exception))

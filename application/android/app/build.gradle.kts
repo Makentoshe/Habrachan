@@ -71,10 +71,12 @@ dependencies {
 
     implementation(project(":application:core"))
     implementation(project(":application:common:arena:comments"))
+    implementation(project(":application:common:arena:content"))
     implementation(project(":application:android:core"))
     implementation(project(":application:android:database"))
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:common:arena"))
+    implementation(project(":application:android:common:avatar"))
     implementation(project(":application:android:common:common-core"))
     implementation(project(":application:android:common:common-comment"))
     implementation(project(":application:android:common:common-di"))

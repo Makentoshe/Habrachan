@@ -3,6 +3,10 @@ package com.makentoshe.habrachan.application.android.screen.comments.di.module
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModelProvider
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModelProvider
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
@@ -14,8 +18,6 @@ import com.makentoshe.habrachan.application.android.screen.comments.di.provider.
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.TitleCommentAdapterProvider
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.TitleCommentAdapter
-import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
-import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModelProvider
 import kotlinx.coroutines.CoroutineScope
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -26,16 +28,19 @@ class SpecifiedDiscussionCommentsModule(private val fragment: DiscussionComments
 
     // From CommentsScope
     private val voteCommentViewModelFactory by inject<VoteCommentViewModel.Factory>()
+    private val getAvatarViewModelProvider by inject<GetAvatarViewModelProvider>()
 
-    private val discussionCommentsViewModelProvider by inject<DiscussionCommentsViewModelProvider>()
+    // From DiscussionCommentsScope
+    private val commentsViewModelFactory by inject<GetArticleCommentsViewModel.Factory>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class, CommentsScope::class, DiscussionCommentsScope2::class).inject(this)
         bind<Fragment>().toInstance(fragment)
         bind<CoroutineScope>().toInstance(fragment.lifecycleScope)
+        bind<GetAvatarViewModel>().toInstance(getAvatarViewModelProvider.get(fragment))
 
-        val viewModel = discussionCommentsViewModelProvider.get(fragment)
-        bind<DiscussionCommentsViewModel>().toInstance(viewModel)
+        val getArticleCommentsViewModelProvider = GetArticleCommentsViewModelProvider(commentsViewModelFactory)
+        bind<GetArticleCommentsViewModel>().toInstance(getArticleCommentsViewModelProvider.get(fragment))
 
         val voteCommentViewModelProvider = VoteCommentViewModelProvider(fragment, voteCommentViewModelFactory)
         bind<VoteCommentViewModelProvider>().toInstance(voteCommentViewModelProvider)
