@@ -40,23 +40,10 @@ dependencies {
 
     implementation(kotlin("stdlib"))
 
-    implementation(project(":entity"))
-    implementation(project(":network"))
-    implementation(project(":network:network-common:network-common-content"))
-    implementation(project(":application:common:arena:comments"))
-    implementation(project(":application:android:database"))
-    implementation(project(":application:android:analytics"))
-
-    implementation(project(":functional"))
-
-    // Toothpick
-    // https://github.com/stephanenicolas/toothpick
-    val toothpickVersion = dependency.version.toothpick
-    implementation("com.github.stephanenicolas.toothpick:ktp:$toothpickVersion")
-    kapt("com.github.stephanenicolas.toothpick:toothpick-compiler:$toothpickVersion")
-    implementation("com.github.stephanenicolas.toothpick:smoothie:$toothpickVersion")
-    implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpickVersion")
-    testImplementation("com.github.stephanenicolas.toothpick:toothpick-testing-junit5:$toothpickVersion")
+    // Cicerone
+    // https://github.com/terrakok/Cicerone
+    val ciceroneVersion = dependency.version.cicerone
+    api("ru.terrakok.cicerone:cicerone:$ciceroneVersion")
 
     val coreVersion = dependency.version.androidCore
     implementation("androidx.core:core-ktx:$coreVersion")
