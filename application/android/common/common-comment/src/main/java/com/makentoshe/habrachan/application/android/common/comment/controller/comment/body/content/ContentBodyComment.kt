@@ -9,6 +9,7 @@ import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.ImagesPlugin
 import io.noties.markwon.image.network.OkHttpNetworkSchemeHandler
 import okhttp3.OkHttpClient
+import javax.inject.Inject
 
 class ContentBodyComment(val content: String, context: Context) {
 
@@ -32,7 +33,7 @@ class ContentBodyComment(val content: String, context: Context) {
         markwonBuilder.usePlugins(list).build().setMarkdown(textView, content)
     }
 
-    class Factory(private val context: Context) {
+    class Factory @Inject constructor(private val context: Context) {
 
         private var imageClickPlugin: ImageClickMarkwonPlugin? = null
 

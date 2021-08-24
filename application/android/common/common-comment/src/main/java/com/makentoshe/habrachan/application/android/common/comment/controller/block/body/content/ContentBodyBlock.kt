@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import com.makentoshe.habrachan.application.android.common.comment.R
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.BlockViewControllerNavigator
+import javax.inject.Inject
 
 class ContentBodyBlock internal constructor(val count: Int, val parent: Int, private val context: Context) {
 
@@ -18,7 +19,7 @@ class ContentBodyBlock internal constructor(val count: Int, val parent: Int, pri
         view.setOnClickListener { navigator?.toDiscussionScreen(parent) }
     }
 
-    class Factory(private val context: Context) {
+    class Factory @Inject constructor(private val context: Context) {
 
         private var navigator: BlockViewControllerNavigator? = null
 
