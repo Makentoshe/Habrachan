@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.CommentDetai
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
-class CommentDetailsFragmentModule: FragmentInjector<CommentDetailsDialogFragment>(
+class CommentDetailsFragmentInjector: FragmentInjector<CommentDetailsDialogFragment>(
     fragmentClass = CommentDetailsDialogFragment::class,
     action = {
         val module = CommentDetailsModule(fragment)

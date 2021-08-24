@@ -10,16 +10,19 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsSpec2
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.TitleCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.DiscussionCommentSeparatorItemDecoration
-import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
+import com.makentoshe.habrachan.entity.articleId
+import com.makentoshe.habrachan.entity.commentId
 import kotlinx.android.synthetic.main.fragment_comments_discussion.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
@@ -49,19 +52,22 @@ class DiscussionCommentsFragment : BaseFragment() {
     private val adapter by inject<ConcatAdapter>()
 
     private val navigation by inject<CommentsNavigation>()
-    private val viewModel by inject<DiscussionCommentsViewModel>()
+    private val articleCommentsViewModel by inject<GetArticleCommentsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_comments_discussion, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        println(commentAdapter)
-        val wasViewModelRecreated = viewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
+        val wasViewModelRecreated =
+            articleCommentsViewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
         if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch(Dispatchers.IO) {
             val message = "articleId=${arguments.articleId}, commentId=${arguments.commentId}"
             capture(analyticEvent(this@DiscussionCommentsFragment.javaClass.simpleName, message))
-            viewModel.sendSpecChannel.send(CommentsSpec(arguments.articleId, arguments.commentId))
+            val commentId = commentId(arguments.commentId)
+            val articleId = articleId(arguments.articleId)
+            val articleCommentsSpec = GetArticleCommentsSpec2.DiscussionCommentsSpec(articleId, commentId)
+            articleCommentsViewModel.channel.send(articleCommentsSpec)
         }
 
         fragment_comments_discussion_toolbar.title = arguments.articleTitle
@@ -73,18 +79,18 @@ class DiscussionCommentsFragment : BaseFragment() {
 
         fragment_comments_discussion_recycler.adapter = adapter
 
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            viewModel.comments.collectLatest { commentAdapter.submitData(it) }
-//        }
-//
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            viewModel.comment.collectLatest { titleAdapter.submitData(it) }
-//        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            articleCommentsViewModel.comments.collectLatest { commentAdapter.submitData(it) }
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            articleCommentsViewModel.comment.collectLatest { titleAdapter.submitData(it) }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(VIEW_MODEL_STATE_KEY, viewModel.toString())
+        outState.putString(VIEW_MODEL_STATE_KEY, articleCommentsViewModel.toString())
     }
 
     class Arguments(fragment: DiscussionCommentsFragment) : FragmentArguments(fragment) {
