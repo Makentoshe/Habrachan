@@ -54,7 +54,14 @@ dependencies {
 
     implementation(project(":functional"))
 
-    implementation("javax.inject:javax.inject:1")
+    // Toothpick
+    // https://github.com/stephanenicolas/toothpick
+    val toothpick = dependency.version.toothpick
+    implementation("com.github.stephanenicolas.toothpick:ktp:$toothpick")
+    kapt("com.github.stephanenicolas.toothpick:toothpick-compiler:$toothpick")
+    implementation("com.github.stephanenicolas.toothpick:smoothie:$toothpick")
+    implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpick")
+    testImplementation("com.github.stephanenicolas.toothpick:toothpick-testing-junit5:$toothpick")
 
     // OkHttp
     // https://github.com/square/okhttp/
