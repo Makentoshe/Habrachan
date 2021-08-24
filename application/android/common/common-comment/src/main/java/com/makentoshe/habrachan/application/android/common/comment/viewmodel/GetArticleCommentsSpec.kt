@@ -2,10 +2,22 @@ package com.makentoshe.habrachan.application.android.common.comment.viewmodel
 
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.CommentId
-import com.makentoshe.habrachan.entity.commentId
+import com.makentoshe.habrachan.functional.Option
 
-/**
- * Spec for requesting replies for [commentId] in [articleId].
- * If [commentId] is 0, all replies for the selected article will be returned.
- * */
-data class GetArticleCommentsSpec(val articleId: ArticleId, val commentId: CommentId = commentId(0))
+sealed class GetArticleCommentsSpec2 {
+    abstract val articleId: ArticleId
+    abstract val optionableCommentId: Option<CommentId>
+
+    class ArticleCommentsSpec(
+        override val articleId: ArticleId,
+    ) : GetArticleCommentsSpec2() {
+        override val optionableCommentId: Option<CommentId> = Option.None
+    }
+
+    class DiscussionCommentsSpec(
+        override val articleId: ArticleId,
+        commentId: CommentId,
+    ) : GetArticleCommentsSpec2() {
+        override val optionableCommentId = Option.Value(commentId)
+    }
+}
