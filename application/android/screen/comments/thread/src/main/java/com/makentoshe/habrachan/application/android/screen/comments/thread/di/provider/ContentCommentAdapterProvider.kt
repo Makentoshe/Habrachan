@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.discussion.di.provider
+package com.makentoshe.habrachan.application.android.screen.comments.thread.di.provider
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope

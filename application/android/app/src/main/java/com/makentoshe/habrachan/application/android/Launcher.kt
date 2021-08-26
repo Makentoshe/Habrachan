@@ -7,7 +7,7 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.application.android.screen.comments.articles.navigation.ArticleCommentsScreen
-import com.makentoshe.habrachan.application.android.screen.comments.discussion.navigation.DiscussionCommentsScreen
+import com.makentoshe.habrachan.application.android.screen.comments.thread.navigation.ThreadCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
 import com.makentoshe.habrachan.entity.ArticleId
@@ -92,6 +92,6 @@ class Launcher(private val defaultScreen: Screen) {
     private fun discussionArticleComments(articleId: ArticleId, iterator: Iterator<String>): Screen {
         if (!iterator.hasNext()) return ArticleCommentsScreen(articleId, "Deeplinking")
         val commentId = commentId(iterator.next().toIntOrNull() ?: return defaultScreen)
-        return DiscussionCommentsScreen(articleId.articleId, "Deeplinking", commentId.commentId)
+        return ThreadCommentsScreen(articleId.articleId, "Deeplinking", commentId.commentId)
     }
 }

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.discussion.di
+package com.makentoshe.habrachan.application.android.screen.comments.thread.di
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -11,19 +11,19 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Vot
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
-import com.makentoshe.habrachan.application.android.screen.comments.discussion.DiscussionCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.discussion.di.provider.ContentCommentAdapterProvider
-import com.makentoshe.habrachan.application.android.screen.comments.discussion.di.provider.DiscussionConcatAdapterProvider
-import com.makentoshe.habrachan.application.android.screen.comments.discussion.di.provider.TitleCommentAdapterProvider
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.TitleCommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.thread.ThreadCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.thread.di.provider.ContentCommentAdapterProvider
+import com.makentoshe.habrachan.application.android.screen.comments.thread.di.provider.ThreadConcatAdapterProvider
+import com.makentoshe.habrachan.application.android.screen.comments.thread.di.provider.TitleCommentAdapterProvider
 import kotlinx.coroutines.CoroutineScope
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import toothpick.ktp.delegate.inject
 
-class SpecifiedDiscussionCommentsModule(private val fragment: DiscussionCommentsFragment) : Module() {
+class SpecifiedThreadCommentsModule(private val fragment: ThreadCommentsFragment) : Module() {
 
     // From CommentsScope
     private val voteCommentViewModelFactory by inject<VoteCommentViewModel.Factory>()
@@ -33,7 +33,7 @@ class SpecifiedDiscussionCommentsModule(private val fragment: DiscussionComments
     private val commentsViewModelFactory by inject<GetArticleCommentsViewModel.Factory>()
 
     init {
-        Toothpick.openScopes(ApplicationScope::class, CommentsScope::class, DiscussionCommentsScope2::class).inject(this)
+        Toothpick.openScopes(ApplicationScope::class, CommentsScope::class, ThreadCommentsScope::class).inject(this)
         bind<Fragment>().toInstance(fragment)
         bind<CoroutineScope>().toInstance(fragment.lifecycleScope)
         bind<GetAvatarViewModel>().toInstance(getAvatarViewModelProvider.get(fragment))
@@ -46,7 +46,7 @@ class SpecifiedDiscussionCommentsModule(private val fragment: DiscussionComments
 
         bind<ContentCommentAdapter>().toProvider(ContentCommentAdapterProvider::class).providesSingleton()
         bind<TitleCommentAdapter>().toProvider(TitleCommentAdapterProvider::class).providesSingleton()
-        bind<ConcatAdapter>().toProvider(DiscussionConcatAdapterProvider::class).providesSingleton()
+        bind<ConcatAdapter>().toProvider(ThreadConcatAdapterProvider::class).providesSingleton()
     }
 }
 

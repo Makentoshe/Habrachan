@@ -79,7 +79,7 @@ dependencies {
     implementation(project(":application:android:screen"))
     implementation(project(":application:android:screen:comments"))
     implementation(project(":application:android:screen:comments:article"))
-    implementation(project(":application:android:screen:comments:discussion"))
+    implementation(project(":application:android:screen:comments:thread"))
 
     implementation(project(":application:android:common:navigation"))
     implementation(project(":application:android:common:arena"))
