@@ -1,7 +1,7 @@
-package com.makentoshe.habrachan.application.android.screen.comments.navigation
+package com.makentoshe.habrachan.application.android.screen.comments.discussion.navigation
 
 import androidx.fragment.app.Fragment
-import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.DiscussionCommentsFragment
 import com.makentoshe.habrachan.entity.natives.Article
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 

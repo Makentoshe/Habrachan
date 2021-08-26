@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.di.module
+package com.makentoshe.habrachan.application.android.screen.comments.discussion.di
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -10,12 +10,11 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Get
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
-import com.makentoshe.habrachan.application.android.screen.comments.di.DiscussionCommentsScope2
-import com.makentoshe.habrachan.application.android.screen.comments.di.provider.ContentCommentAdapterProvider
-import com.makentoshe.habrachan.application.android.screen.comments.di.provider.DiscussionConcatAdapterProvider
-import com.makentoshe.habrachan.application.android.screen.comments.di.provider.TitleCommentAdapterProvider
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.DiscussionCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.di.provider.ContentCommentAdapterProvider
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.di.provider.DiscussionConcatAdapterProvider
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.di.provider.TitleCommentAdapterProvider
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.TitleCommentAdapter
 import kotlinx.coroutines.CoroutineScope

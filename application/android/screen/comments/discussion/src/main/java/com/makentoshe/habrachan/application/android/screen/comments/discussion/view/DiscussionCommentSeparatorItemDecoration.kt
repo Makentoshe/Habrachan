@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.view
+package com.makentoshe.habrachan.application.android.screen.comments.discussion.view
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.dp2px
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.R
 import kotlin.math.roundToInt
 
 class DiscussionCommentSeparatorItemDecoration(context: Context) : RecyclerView.ItemDecoration() {

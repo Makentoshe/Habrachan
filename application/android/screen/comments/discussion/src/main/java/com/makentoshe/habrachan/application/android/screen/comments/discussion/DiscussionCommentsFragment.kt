@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments
+package com.makentoshe.habrachan.application.android.screen.comments.discussion
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
-import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
@@ -14,10 +13,10 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Get
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.view.DiscussionCommentSeparatorItemDecoration
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.TitleCommentAdapter
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
-import com.makentoshe.habrachan.application.android.screen.comments.view.DiscussionCommentSeparatorItemDecoration
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.entity.commentId
 import kotlinx.android.synthetic.main.fragment_comments_discussion.*
@@ -51,7 +50,7 @@ class DiscussionCommentsFragment : BaseFragment() {
     private val titleAdapter by inject<TitleCommentAdapter>()
     private val adapter by inject<ConcatAdapter>()
 
-    private val navigation by inject<CommentsNavigation>()
+    private val backwardNavigator by inject<BackwardNavigator>()
     private val articleCommentsViewModel by inject<GetArticleCommentsViewModel>()
 
     override fun onCreateView(
@@ -72,7 +71,7 @@ class DiscussionCommentsFragment : BaseFragment() {
 
         fragment_comments_discussion_toolbar.title = arguments.articleTitle
         fragment_comments_discussion_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-        fragment_comments_discussion_toolbar.setNavigationOnClickListener { navigation.back() }
+        fragment_comments_discussion_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
 
         val separateDecoration = DiscussionCommentSeparatorItemDecoration(requireContext())
         fragment_comments_discussion_recycler.addItemDecoration(separateDecoration)

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.di.provider
+package com.makentoshe.habrachan.application.android.screen.comments.discussion.di.provider
 
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
