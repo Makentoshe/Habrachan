@@ -9,15 +9,15 @@ import com.makentoshe.habrachan.application.android.common.comment.BlockViewHold
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.BlockViewController
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
-import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewControllerNavigator
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelBlank
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelNode
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.UserScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterController
 
 open class ContentCommentAdapter(
     private val commentAdapterController: CommentAdapterController,
     private val contentBodyBlockFactory: ContentBodyBlock.Factory,
-    private val navigation: CommentViewControllerNavigator? = null
+    private val userScreenNavigator: UserScreenNavigator? = null
 ) : BaseCommentAdapter<RecyclerView.ViewHolder>() {
 
     companion object : Analytics(LogAnalytic())
@@ -50,7 +50,7 @@ open class ContentCommentAdapter(
         commentAdapterController.onBindViewHolderComment(holder, position, model)
 
         holder.setOnClickListenerForHeader {
-            navigation?.toUserScreen(model.comment.author.login)
+            userScreenNavigator?.toUserScreen(model.comment.author.login)
         }
     }
 

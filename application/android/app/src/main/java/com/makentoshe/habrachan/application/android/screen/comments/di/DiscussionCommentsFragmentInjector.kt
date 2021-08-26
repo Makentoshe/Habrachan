@@ -2,15 +2,15 @@ package com.makentoshe.habrachan.application.android.screen.comments.di
 
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.di.module.CommentsModule
-import com.makentoshe.habrachan.application.android.screen.comments.di.module.DiscussionCommentsModule
-import com.makentoshe.habrachan.application.android.screen.comments.di.module.SpecifiedDiscussionCommentsModule
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.DiscussionCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.di.DiscussionCommentsModule
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.di.DiscussionCommentsScope2
+import com.makentoshe.habrachan.application.android.screen.comments.discussion.di.SpecifiedDiscussionCommentsModule
 import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
-class DiscussionCommentsFragmentInjector: FragmentInjector<DiscussionCommentsFragment>(
+class DiscussionCommentsFragmentInjector : FragmentInjector<DiscussionCommentsFragment>(
     fragmentClass = DiscussionCommentsFragment::class
 ) {
     override fun inject(injectorScope: FragmentInjectorScope<DiscussionCommentsFragment>) {
@@ -30,7 +30,7 @@ class DiscussionCommentsFragmentInjector: FragmentInjector<DiscussionCommentsFra
         }
 
         val toothpickScope = Toothpick.openScopes(ApplicationScope::class, scope)
-        val module = CommentsModule(injectorScope.fragment)
+        val module = CommentsModule(injectorScope.fragment.arguments.articleId, "Title", injectorScope.fragment)
         captureModuleInstall(module, scope, injectorScope)
         return toothpickScope.installModules(module)
     }

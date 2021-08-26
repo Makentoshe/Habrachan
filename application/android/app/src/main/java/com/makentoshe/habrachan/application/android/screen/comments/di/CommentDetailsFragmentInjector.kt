@@ -3,6 +3,8 @@ package com.makentoshe.habrachan.application.android.screen.comments.di
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.CommentDetailsDialogFragment
+import com.makentoshe.habrachan.application.android.screen.comments.di.module.CommentDetailsModule
+import com.makentoshe.habrachan.application.android.screen.comments.di.module.CommentDetailsScope
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
