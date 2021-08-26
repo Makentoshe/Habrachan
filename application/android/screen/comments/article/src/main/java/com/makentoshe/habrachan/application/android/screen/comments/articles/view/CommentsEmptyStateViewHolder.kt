@@ -1,10 +1,10 @@
-package com.makentoshe.habrachan.application.android.screen.comments.view
+package com.makentoshe.habrachan.application.android.screen.comments.articles.view
 
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.makentoshe.habrachan.R
+import com.makentoshe.habrachan.application.android.screen.comments.articles.R
 
 class CommentsEmptyStateViewHolder(val root: View) {
     val title: TextView = root.findViewById(R.id.layout_empty_state_title)

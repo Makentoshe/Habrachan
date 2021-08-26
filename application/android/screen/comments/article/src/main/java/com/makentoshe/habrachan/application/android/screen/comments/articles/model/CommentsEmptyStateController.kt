@@ -1,8 +1,8 @@
-package com.makentoshe.habrachan.application.android.screen.comments.model
+package com.makentoshe.habrachan.application.android.screen.comments.articles.model
 
 import android.view.View
-import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.screen.comments.view.CommentsEmptyStateViewHolder
+import com.makentoshe.habrachan.application.android.screen.comments.articles.R
+import com.makentoshe.habrachan.application.android.screen.comments.articles.view.CommentsEmptyStateViewHolder
 
 class CommentsEmptyStateController(private val holder: CommentsEmptyStateViewHolder) {
 
