@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.discussion
+package com.makentoshe.habrachan.application.android.screen.comments.thread
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,9 +14,9 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Get
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
-import com.makentoshe.habrachan.application.android.screen.comments.discussion.view.DiscussionCommentSeparatorItemDecoration
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.TitleCommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.thread.view.ThreadCommentSeparatorItemDecoration
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.entity.commentId
 import kotlinx.android.synthetic.main.fragment_comments_discussion.*
@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
-class DiscussionCommentsFragment : BaseFragment() {
+class ThreadCommentsFragment : BaseFragment() {
 
     companion object : Analytics(LogAnalytic()) {
         fun build(
@@ -35,7 +35,7 @@ class DiscussionCommentsFragment : BaseFragment() {
             articleTitle: String,
             /** Parent comment that may be displayed at the top. If 0 nothing will be displayed */
             commentId: Int = 0
-        ) = DiscussionCommentsFragment().apply {
+        ) = ThreadCommentsFragment().apply {
             arguments.articleId = articleId
             arguments.articleTitle = articleTitle
             arguments.commentId = commentId
@@ -62,7 +62,7 @@ class DiscussionCommentsFragment : BaseFragment() {
             articleCommentsViewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
         if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch(Dispatchers.IO) {
             val message = "articleId=${arguments.articleId}, commentId=${arguments.commentId}"
-            capture(analyticEvent(this@DiscussionCommentsFragment.javaClass.simpleName, message))
+            capture(analyticEvent(this@ThreadCommentsFragment.javaClass.simpleName, message))
             val commentId = commentId(arguments.commentId)
             val articleId = articleId(arguments.articleId)
             val articleCommentsSpec = GetArticleCommentsSpec2.DiscussionCommentsSpec(articleId, commentId)
@@ -73,7 +73,7 @@ class DiscussionCommentsFragment : BaseFragment() {
         fragment_comments_discussion_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         fragment_comments_discussion_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
 
-        val separateDecoration = DiscussionCommentSeparatorItemDecoration(requireContext())
+        val separateDecoration = ThreadCommentSeparatorItemDecoration(requireContext())
         fragment_comments_discussion_recycler.addItemDecoration(separateDecoration)
 
         fragment_comments_discussion_recycler.adapter = adapter
@@ -92,7 +92,7 @@ class DiscussionCommentsFragment : BaseFragment() {
         outState.putString(VIEW_MODEL_STATE_KEY, articleCommentsViewModel.toString())
     }
 
-    class Arguments(fragment: DiscussionCommentsFragment) : FragmentArguments(fragment) {
+    class Arguments(fragment: ThreadCommentsFragment) : FragmentArguments(fragment) {
 
         var articleId: Int
             get() = fragmentArguments.getInt(ARTICLE_ID)

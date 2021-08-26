@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.discussion.di.provider
+package com.makentoshe.habrachan.application.android.screen.comments.thread.di.provider
 
 import androidx.recyclerview.widget.ConcatAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.adapte
 import javax.inject.Inject
 import javax.inject.Provider
 
-internal class DiscussionConcatAdapterProvider : Provider<ConcatAdapter> {
+internal class ThreadConcatAdapterProvider : Provider<ConcatAdapter> {
 
     @Inject
     internal lateinit var titleCommentAdapter: TitleCommentAdapter
