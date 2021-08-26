@@ -12,18 +12,13 @@ import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabas
 import com.makentoshe.habrachan.application.android.database.UserSessionDatabase
 import com.makentoshe.habrachan.application.android.database.migration.AndroidCacheDatabaseMigration_1_2
 import com.makentoshe.habrachan.application.android.database.record.UserSessionRecord
-import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.userSession
-import ru.terrakok.cicerone.Cicerone
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 
-annotation class ApplicationScope
-class ApplicationModule(context: Context, cicerone: Cicerone<StackRouter>) : Module() {
+class ApplicationModule(context: Context) : Module() {
 
     private val cacheDatabase = Room.databaseBuilder(
         context, AndroidCacheDatabase::class.java, "HabrachanCache"
@@ -37,9 +32,6 @@ class ApplicationModule(context: Context, cicerone: Cicerone<StackRouter>) : Mod
 
     init {
         bind<AndroidCacheDatabase>().toInstance(cacheDatabase)
-        bind<StackRouter>().toInstance(cicerone.router)
-        bind<Router>().toInstance(cicerone.router)
-        bind<NavigatorHolder>().toInstance(cicerone.navigatorHolder)
         bind<Launcher>().toInstance(Launcher(ArticlesFlowScreen()))
 
         bind<ApplicationStateBroadcastReceiver>().toInstance(applicationStateBroadcastReceiver)

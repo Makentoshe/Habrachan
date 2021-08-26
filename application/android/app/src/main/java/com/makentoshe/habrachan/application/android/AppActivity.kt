@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
-import com.makentoshe.habrachan.application.android.navigation.StackSupportAppNavigator
+import com.makentoshe.habrachan.application.android.common.navigation.StackSupportAppNavigator
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
