@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments
+package com.makentoshe.habrachan.application.android.screen.comments.articles
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.ExceptionController
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.ExceptionViewHolder
@@ -19,10 +18,10 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Get
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsEmptyStateController
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
+import com.makentoshe.habrachan.application.android.screen.comments.articles.model.CommentsEmptyStateController
+import com.makentoshe.habrachan.application.android.screen.comments.articles.view.CommentsEmptyStateViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
-import com.makentoshe.habrachan.application.android.screen.comments.view.CommentsEmptyStateViewHolder
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
 import kotlinx.android.synthetic.main.fragment_comments_article.*
@@ -46,7 +45,7 @@ class ArticleCommentsFragment : BaseFragment() {
 
     private val adapter by inject<ContentCommentAdapter>()
     private val articleCommentsViewModel by inject<GetArticleCommentsViewModel>()
-    private val navigation by inject<CommentsNavigation>()
+    private val backwardNavigator by inject<BackwardNavigator>()
     private val exceptionHandler by inject<ExceptionHandler>()
 
     private lateinit var exceptionController: ExceptionController
@@ -74,7 +73,7 @@ class ArticleCommentsFragment : BaseFragment() {
 
         fragment_comments_article_toolbar.title = arguments.articleTitle
         fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-        fragment_comments_article_toolbar.setNavigationOnClickListener { navigation.back() }
+        fragment_comments_article_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
 
         fragment_comments_article_recycler.adapter = adapter
 

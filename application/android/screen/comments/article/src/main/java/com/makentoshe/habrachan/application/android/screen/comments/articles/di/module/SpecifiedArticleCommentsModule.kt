@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.di.module
+package com.makentoshe.habrachan.application.android.screen.comments.articles.di.module
 
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
@@ -8,10 +8,10 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Get
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.di.ArticleCommentsScope2
+import com.makentoshe.habrachan.application.android.screen.comments.articles.ArticleCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.articles.di.ArticleCommentsScope2
+import com.makentoshe.habrachan.application.android.screen.comments.articles.di.provider.ContentCommentAdapterProvider
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
-import com.makentoshe.habrachan.application.android.screen.comments.di.provider.ContentCommentAdapterProvider
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import toothpick.Toothpick
 import toothpick.config.Module

@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.di.provider
+package com.makentoshe.habrachan.application.android.screen.comments.articles.di.provider
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -6,11 +6,13 @@ import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetA
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.ContentScreenNavigator
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.DiscussionScreenNavigator
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.UserScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.AvatarCommentAdapterControllerDecorator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.BottomPanelCommentAdapterControllerDecorator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.ContentCommentAdapterController
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -26,7 +28,13 @@ internal class ContentCommentAdapterProvider : Provider<ContentCommentAdapter> {
     lateinit var fragment: Fragment
 
     @Inject
-    lateinit var navigation: CommentsNavigation
+    lateinit var userScreenNavigator: UserScreenNavigator
+
+    @Inject
+    lateinit var discussionScreenNavigator: DiscussionScreenNavigator
+
+    @Inject
+    lateinit var contentScreenNavigator: ContentScreenNavigator
 
     @Inject
     lateinit var voteCommentViewModelProvider: VoteCommentViewModelProvider
@@ -45,14 +53,14 @@ internal class ContentCommentAdapterProvider : Provider<ContentCommentAdapter> {
     }
 
     private fun contentCommentAdapterChain3(bottomPanelDecorator: BottomPanelCommentAdapterControllerDecorator): ContentCommentAdapter {
-        val commentContentFactory = contentBodyCommentFactory.setNavigationOnImageClick(navigation)
+        val commentContentFactory = contentBodyCommentFactory.setNavigationOnImageClick(contentScreenNavigator)
         val controller = ContentCommentAdapterController(bottomPanelDecorator, commentContentFactory)
         return contentCommentAdapterChain4(controller)
     }
 
     private fun contentCommentAdapterChain4(contentCommentAdapterController: ContentCommentAdapterController): ContentCommentAdapter {
-        val blockContentFactory = contentBodyBlockFactory.setNavigation(navigation)
-        return ContentCommentAdapter(contentCommentAdapterController, blockContentFactory, navigation)
+        val blockContentFactory = contentBodyBlockFactory.setNavigation(discussionScreenNavigator)
+        return ContentCommentAdapter(contentCommentAdapterController, blockContentFactory, userScreenNavigator)
     }
 
 }
