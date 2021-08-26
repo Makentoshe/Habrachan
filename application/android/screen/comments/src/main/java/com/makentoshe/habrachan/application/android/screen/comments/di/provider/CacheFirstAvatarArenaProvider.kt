@@ -6,15 +6,6 @@ import com.makentoshe.habrachan.network.GetContentManager
 import javax.inject.Inject
 import javax.inject.Provider
 
-class SourceFirstAvatarArenaProvider @Inject constructor(
-    private val manager: GetContentManager,
-    private val arenaStorage: AvatarArenaCache,
-) : Provider<ContentArena> {
-    override fun get(): ContentArena {
-        return ContentArena.Factory(manager, arenaStorage).sourceFirstArena()
-    }
-}
-
 class CacheFirstAvatarArenaProvider @Inject constructor(
     private val manager: GetContentManager,
     private val arenaStorage: AvatarArenaCache,
