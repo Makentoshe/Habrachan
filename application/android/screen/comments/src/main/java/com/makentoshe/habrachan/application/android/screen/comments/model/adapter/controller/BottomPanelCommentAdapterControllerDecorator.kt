@@ -11,6 +11,7 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Vot
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.common.core.collectResult
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.DispatchCommentsScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.R
 import com.makentoshe.habrachan.entity.CommentVote
 import com.makentoshe.habrachan.network.NativeVoteCommentException
@@ -22,6 +23,7 @@ class BottomPanelCommentAdapterControllerDecorator(
     private val commentAdapterController: CommentAdapterController?,
     private val lifecycleScope: CoroutineScope,
     private val voteCommentViewModelProvider: VoteCommentViewModelProvider,
+    private val dispatchCommentsScreenNavigator: DispatchCommentsScreenNavigator,
     private val additional: (PanelCommentViewController) -> Unit = { }
 ) : CommentAdapterController {
 
@@ -74,7 +76,7 @@ class BottomPanelCommentAdapterControllerDecorator(
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_SHORT).show()
         }
         panelCommentViewController.reply.setReplyAction(lifecycleScope, Dispatchers.Main) {
-            Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_SHORT).show()
+            dispatchCommentsScreenNavigator.toDispatchScreen()
         }
         panelCommentViewController.share.setShareAction(lifecycleScope, Dispatchers.Main) {
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_SHORT).show()

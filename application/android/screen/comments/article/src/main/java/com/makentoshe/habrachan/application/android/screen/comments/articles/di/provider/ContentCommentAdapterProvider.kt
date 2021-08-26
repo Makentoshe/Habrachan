@@ -7,7 +7,8 @@ import com.makentoshe.habrachan.application.android.common.comment.controller.bl
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.ContentScreenNavigator
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.DiscussionScreenNavigator
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.DispatchCommentsScreenNavigator
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.ThreadCommentsScreenNavigator
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.UserScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.AvatarCommentAdapterControllerDecorator
@@ -31,7 +32,10 @@ internal class ContentCommentAdapterProvider : Provider<ContentCommentAdapter> {
     lateinit var userScreenNavigator: UserScreenNavigator
 
     @Inject
-    lateinit var discussionScreenNavigator: DiscussionScreenNavigator
+    lateinit var threadCommentsScreenNavigator: ThreadCommentsScreenNavigator
+
+    @Inject
+    lateinit var dispatchCommentsScreenNavigator: DispatchCommentsScreenNavigator
 
     @Inject
     lateinit var contentScreenNavigator: ContentScreenNavigator
@@ -48,7 +52,7 @@ internal class ContentCommentAdapterProvider : Provider<ContentCommentAdapter> {
     }
 
     private fun contentCommentAdapterChain2(avatarDecorator: AvatarCommentAdapterControllerDecorator): ContentCommentAdapter {
-        val bottomPanelDecorator = BottomPanelCommentAdapterControllerDecorator(avatarDecorator, fragment.lifecycleScope, voteCommentViewModelProvider)
+        val bottomPanelDecorator = BottomPanelCommentAdapterControllerDecorator(avatarDecorator, fragment.lifecycleScope, voteCommentViewModelProvider, dispatchCommentsScreenNavigator)
         return contentCommentAdapterChain3(bottomPanelDecorator)
     }
 
@@ -59,7 +63,7 @@ internal class ContentCommentAdapterProvider : Provider<ContentCommentAdapter> {
     }
 
     private fun contentCommentAdapterChain4(contentCommentAdapterController: ContentCommentAdapterController): ContentCommentAdapter {
-        val blockContentFactory = contentBodyBlockFactory.setNavigation(discussionScreenNavigator)
+        val blockContentFactory = contentBodyBlockFactory.setNavigation(threadCommentsScreenNavigator)
         return ContentCommentAdapter(contentCommentAdapterController, blockContentFactory, userScreenNavigator)
     }
 
