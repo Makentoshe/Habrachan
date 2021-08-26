@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.di.provider
+package com.makentoshe.habrachan.application.android.screen.comments.discussion.di.provider
 
 import androidx.recyclerview.widget.ConcatAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
