@@ -3,6 +3,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.thread.di.p
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.DispatchCommentsScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.TitleCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.AvatarCommentAdapterControllerDecorator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.BottomPanelCommentAdapterControllerDecorator
@@ -25,9 +26,12 @@ internal class TitleCommentAdapterProvider : Provider<TitleCommentAdapter> {
     @Inject
     internal lateinit var getAvatarViewModel: GetAvatarViewModel
 
+    @Inject
+    internal lateinit var dispatchCommentsScreenNavigator: DispatchCommentsScreenNavigator
+
     override fun get(): TitleCommentAdapter {
         val avatar = AvatarCommentAdapterControllerDecorator(null, fragmentLifecycleScope, getAvatarViewModel)
-        val bottomPanel = BottomPanelCommentAdapterControllerDecorator(avatar, fragmentLifecycleScope, voteCommentViewModelProvider)
+        val bottomPanel = BottomPanelCommentAdapterControllerDecorator(avatar, fragmentLifecycleScope, voteCommentViewModelProvider, dispatchCommentsScreenNavigator)
         return TitleCommentAdapter(ContentCommentAdapterController(bottomPanel, contentBodyCommentFactory) { controller ->
             controller.body.collapse()
         })
