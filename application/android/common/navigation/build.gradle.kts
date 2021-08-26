@@ -40,6 +40,8 @@ dependencies {
 
     implementation(kotlin("stdlib"))
 
+    implementation(project(":entity"))
+
     // Cicerone
     // https://github.com/terrakok/Cicerone
     val ciceroneVersion = dependency.version.cicerone
