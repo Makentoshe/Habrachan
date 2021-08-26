@@ -1,13 +1,13 @@
 package com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller
 
 import android.content.Context
-import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarSpec
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelElement
 import com.makentoshe.habrachan.application.android.dp2px
+import com.makentoshe.habrachan.application.android.screen.comments.R
 import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.onFailure

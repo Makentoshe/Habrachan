@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.di.module
+package com.makentoshe.habrachan.application.android.screen.comments.di
 
 import android.content.Context
 import androidx.fragment.app.Fragment
@@ -8,35 +8,21 @@ import com.makentoshe.habrachan.application.android.common.comment.controller.bl
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.navigation.StackRouter
-import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
+import com.makentoshe.habrachan.entity.ArticleId
+import com.makentoshe.habrachan.entity.articleId
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
-import toothpick.ktp.delegate.inject
 import java.io.File
 
-class CommentsModule(articleId: Int, articleTitle: String, fragment: Fragment) : Module() {
+class CommentsModule(articleId: ArticleId, articleTitle: String, fragment: Fragment) : Module() {
 
-    constructor(fragment: ArticleCommentsFragment) : this(
-        fragment.arguments.articleId, fragment.arguments.articleTitle, fragment
-    )
-
-    constructor(fragment: DiscussionCommentsFragment) : this(
-        fragment.arguments.articleId, fragment.arguments.articleTitle, fragment
-    )
-
-    // From ApplicationScope
-    private val router by inject<StackRouter>()
+    constructor(articleId: Int, articleTitle: String, fragment: Fragment) : this(articleId(articleId), articleTitle, fragment)
 
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)
-        bind<Context>().toInstance(fragment.requireActivity())
-
-        val navigation = CommentsNavigation(router, articleId, articleTitle, fragment.childFragmentManager)
-        bind<CommentsNavigation>().toInstance(navigation)
+        bind<Context>().toInstance(fragment.requireContext())
+        bind<ArticleId>().toInstance(articleId)
 
         bind<ContentBodyBlock.Factory>().toClass<ContentBodyBlock.Factory>().singleton()
         bind<ContentBodyComment.Factory>().toClass<ContentBodyComment.Factory>().singleton()

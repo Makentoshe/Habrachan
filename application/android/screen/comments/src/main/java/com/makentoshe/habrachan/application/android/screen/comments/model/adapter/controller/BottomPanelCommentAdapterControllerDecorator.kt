@@ -3,7 +3,6 @@ package com.makentoshe.habrachan.application.android.screen.comments.model.adapt
 import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
-import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.panel.PanelCommentViewController
@@ -12,6 +11,7 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Vot
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.common.core.collectResult
+import com.makentoshe.habrachan.application.android.screen.comments.R
 import com.makentoshe.habrachan.entity.CommentVote
 import com.makentoshe.habrachan.network.NativeVoteCommentException
 import com.makentoshe.habrachan.network.response.VoteCommentResponse2
