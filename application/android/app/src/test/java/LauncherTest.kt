@@ -4,6 +4,7 @@ import com.makentoshe.habrachan.application.android.Launcher
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
 import com.makentoshe.habrachan.application.android.screen.comments.articles.navigation.ArticleCommentsScreen
+import com.makentoshe.habrachan.application.android.screen.comments.thread.navigation.ThreadCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
 import junit.framework.TestCase
@@ -19,7 +20,7 @@ class LauncherTest : TestCase() {
     @Test
     fun testShouldOpenDiscussionCommentsScreen1() {
         val intent = intent(Uri.parse("https://habr.com/en/post/571418/#comment_23344290"))
-        val screen = launcher.deeplink(intent) as DiscussionCommentsScreen
+        val screen = launcher.deeplink(intent) as ThreadCommentsScreen
 
         assertEquals(571418, screen.articleId)
         assertEquals(23344290, screen.commentId)
@@ -28,7 +29,7 @@ class LauncherTest : TestCase() {
     @Test
     fun testShouldOpenDiscussionCommentsScreen2() {
         val intent = intent(Uri.parse("https://habr.com/en/post/571418/comments/#comment_23344290"))
-        val screen = launcher.deeplink(intent) as DiscussionCommentsScreen
+        val screen = launcher.deeplink(intent) as ThreadCommentsScreen
 
         assertEquals(571418, screen.articleId)
         assertEquals(23344290, screen.commentId)
