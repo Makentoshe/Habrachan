@@ -2,10 +2,10 @@ package com.makentoshe.habrachan.application.android.screen.comments.di
 
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.di.module.ArticleCommentsModule
-import com.makentoshe.habrachan.application.android.screen.comments.di.module.CommentsModule
-import com.makentoshe.habrachan.application.android.screen.comments.di.module.SpecifiedArticleCommentsModule
+import com.makentoshe.habrachan.application.android.screen.comments.articles.ArticleCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.articles.di.ArticleCommentsScope2
+import com.makentoshe.habrachan.application.android.screen.comments.articles.di.module.ArticleCommentsModule
+import com.makentoshe.habrachan.application.android.screen.comments.articles.di.module.SpecifiedArticleCommentsModule
 import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -45,7 +45,7 @@ class ArticleCommentsFragmentInjector : FragmentInjector<ArticleCommentsFragment
         }
 
         val toothpickScope = Toothpick.openScopes(ApplicationScope::class, scope)
-        val module = CommentsModule(injectorScope.fragment)
+        val module = CommentsModule(injectorScope.fragment.arguments.articleId, "Title", injectorScope.fragment)
         captureModuleInstall(module, scope, injectorScope)
         return toothpickScope.installModules(module)
     }

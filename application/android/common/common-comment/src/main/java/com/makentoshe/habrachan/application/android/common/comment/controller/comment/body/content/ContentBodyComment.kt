@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.application.android.common.comment.controller.c
 import android.content.Context
 import android.widget.TextView
 import com.makentoshe.habrachan.application.android.common.comment.ImageClickMarkwonPlugin
-import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewControllerNavigator
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.ContentScreenNavigator
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.ImagesPlugin
@@ -22,8 +22,8 @@ class ContentBodyComment(val content: String, context: Context) {
 
     private val markwonBuilder = Markwon.builder(context)
 
-    fun setNavigationOnImageClick(navigation: CommentViewControllerNavigator): ContentBodyComment {
-        imageClickPlugin = ImageClickMarkwonPlugin(navigation)
+    fun setNavigationOnImageClick(navigator: ContentScreenNavigator): ContentBodyComment {
+        imageClickPlugin = ImageClickMarkwonPlugin(navigator)
         return this
     }
 
@@ -37,8 +37,8 @@ class ContentBodyComment(val content: String, context: Context) {
 
         private var imageClickPlugin: ImageClickMarkwonPlugin? = null
 
-        fun setNavigationOnImageClick(navigation: CommentViewControllerNavigator): Factory {
-            imageClickPlugin = ImageClickMarkwonPlugin(navigation)
+        fun setNavigationOnImageClick(navigator: ContentScreenNavigator): Factory {
+            imageClickPlugin = ImageClickMarkwonPlugin(navigator)
             return this
         }
 

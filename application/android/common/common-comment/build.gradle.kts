@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":application:android:database"))
     implementation(project(":application:android:common:common-core"))
     implementation(project(":application:android:common:common-di"))
+    implementation(project(":application:android:common:navigation"))
 
     implementation(project(":functional"))
 

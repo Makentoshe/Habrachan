@@ -10,8 +10,7 @@ class ArticlesFragmentInjector: FragmentInjector<ArticlesFragment>(
     fragmentClass = ArticlesFragment::class,
     action = {
         val module = ArticlesModule(fragment)
-        val scope =
-            Toothpick.openScopes(ApplicationScope::class, ArticlesFlowScope::class, ArticlesScope::class, fragment)
+        val scope = Toothpick.openScopes(ApplicationScope::class, ArticlesFlowScope::class, ArticlesScope::class, fragment)
         scope.closeOnDestroy(fragment).installModules(module).inject(fragment)
     }
 )

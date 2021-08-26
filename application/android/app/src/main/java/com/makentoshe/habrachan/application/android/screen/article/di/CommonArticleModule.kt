@@ -3,9 +3,9 @@ package com.makentoshe.habrachan.application.android.screen.article.di
 import com.makentoshe.habrachan.application.android.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.arena.GetArticleArenaCache
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
+import com.makentoshe.habrachan.application.android.common.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.article.model.ArticleHtmlController
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.core.arena.articles.GetArticleArena

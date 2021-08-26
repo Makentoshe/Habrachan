@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.application.android.screen.login.di
 
 import androidx.lifecycle.ViewModelProviders
 import com.makentoshe.habrachan.application.android.AndroidUserSession
+import com.makentoshe.habrachan.application.android.common.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.login.LoginFragment
 import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginNavigation
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.LoginViewModel

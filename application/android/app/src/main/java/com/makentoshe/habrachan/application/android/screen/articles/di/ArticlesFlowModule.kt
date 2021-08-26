@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.articles.di
 
+import com.makentoshe.habrachan.application.android.common.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesFlowFragment
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesFlowAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesNavigation
