@@ -3,8 +3,7 @@ import android.net.Uri
 import com.makentoshe.habrachan.application.android.Launcher
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.ArticleCommentsScreen
-import com.makentoshe.habrachan.application.android.screen.comments.navigation.DiscussionCommentsScreen
+import com.makentoshe.habrachan.application.android.screen.comments.articles.navigation.ArticleCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
 import junit.framework.TestCase

@@ -5,11 +5,12 @@ import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.di.AppActivityInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationModule
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
+import com.makentoshe.habrachan.application.android.di.NavigationModule
 import com.makentoshe.habrachan.application.android.di.NetworkModule
-import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.article.di.ArticleFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFragmentInjector
@@ -49,11 +50,12 @@ class Habrachan : Application() {
 
         LogAnalytic.Factory.registry(BuildConfig.DEBUG)
 
-        val applicationModule = ApplicationModule(applicationContext, Cicerone.create(StackRouter()))
+        val applicationModule = ApplicationModule(applicationContext)
+        val navigationModule = NavigationModule(Cicerone.create(StackRouter()))
         val networkModule = NetworkModule(applicationContext)
 
         val scopes = Toothpick.openScopes(ApplicationScope::class)
-        scopes.installModules(applicationModule, networkModule).inject(this)
+        scopes.installModules(applicationModule, navigationModule, networkModule).inject(this)
 
         registerActivityLifecycleCallbacks(injectActivityLifecycleCallback)
 
