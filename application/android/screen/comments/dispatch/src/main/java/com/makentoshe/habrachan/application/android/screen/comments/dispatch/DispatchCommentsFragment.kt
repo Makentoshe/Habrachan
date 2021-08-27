@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
@@ -18,8 +19,8 @@ import toothpick.ktp.delegate.inject
 class DispatchCommentsFragment : BaseFragment() {
 
     companion object {
-        fun build() = DispatchCommentsFragment().apply {
-
+        fun build(commentId: CommentId) = DispatchCommentsFragment().apply {
+            arguments.commentId = commentId
         }
     }
 
@@ -35,6 +36,8 @@ class DispatchCommentsFragment : BaseFragment() {
         val tintColor = ContextCompat.getColor(requireContext(), R.color.brand_dark)
         fragment_comments_dispatch_toolbar.navigationIcon?.setTint(tintColor)
         fragment_comments_dispatch_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
+
+        Toast.makeText(requireContext(), "${arguments.commentId.commentId}", Toast.LENGTH_SHORT).show()
     }
 
     class Arguments(fragment: DispatchCommentsFragment) : FragmentArguments(fragment) {

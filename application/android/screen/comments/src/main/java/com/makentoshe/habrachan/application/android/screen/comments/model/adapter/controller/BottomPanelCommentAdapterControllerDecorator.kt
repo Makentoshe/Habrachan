@@ -14,6 +14,7 @@ import com.makentoshe.habrachan.application.android.common.core.collectResult
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.DispatchCommentsScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.R
 import com.makentoshe.habrachan.entity.CommentVote
+import com.makentoshe.habrachan.entity.commentId
 import com.makentoshe.habrachan.network.NativeVoteCommentException
 import com.makentoshe.habrachan.network.response.VoteCommentResponse2
 import kotlinx.coroutines.CoroutineScope
@@ -76,7 +77,7 @@ class BottomPanelCommentAdapterControllerDecorator(
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_SHORT).show()
         }
         panelCommentViewController.reply.setReplyAction(lifecycleScope, Dispatchers.Main) {
-            dispatchCommentsScreenNavigator.toDispatchScreen()
+            dispatchCommentsScreenNavigator.toDispatchScreen(commentId(model.comment.commentId))
         }
         panelCommentViewController.share.setShareAction(lifecycleScope, Dispatchers.Main) {
             Toast.makeText(holder.context, R.string.not_implemented, Toast.LENGTH_SHORT).show()
