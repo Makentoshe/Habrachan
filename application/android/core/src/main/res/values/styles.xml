@@ -19,6 +19,20 @@
         <item name="android:tintMode">src_atop</item>
     </style>
 
+    <style name="Habrachan.Toolbar.Discolor" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textColor">@color/brand_dark</item>
+        <item name="android:textColorPrimary">@color/brand_dark</item>
+        <item name="android:textColorSecondary">@color/brand_dark</item>
+        <item name="android:textAppearance">@style/Habrachan.Light.TextAppearance</item>
+        <item name="colorOnPrimary">@color/brand_dark</item>
+        <item name="titleTextColor">@color/brand_dark</item>
+        <item name="android:elevation">0dp</item>
+        <item name="subtitleTextColor">@color/brand_dark</item>
+        <item name="android:tint">@color/brand_dark</item>
+        <item name="android:tintMode">src_atop</item>
+    </style>
+
     <style name="Habrachan.Light.TextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/title</item>
     </style>
@@ -43,6 +57,10 @@
 
     <style name="Habrachan.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Habrachan.Separator" parent="Habrachan.Light">
+        <item name="android:background">@color/separator</item>
     </style>
 
 </resources>

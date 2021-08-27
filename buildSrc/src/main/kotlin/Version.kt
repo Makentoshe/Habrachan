@@ -40,6 +40,8 @@ object Version {
     // https://github.com/umano/AndroidSlidingUpPanel
     const val androidSlidingUpPanel = "3.4.0"
 
+    const val androidCoordinatorLayout = "1.0.0"
+
     // https://github.com/davemorrissey/subsampling-scale-image-view
     const val androidSubsamplingScaleImageView = "3.10.0"
 
