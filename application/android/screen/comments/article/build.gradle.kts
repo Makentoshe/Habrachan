@@ -108,6 +108,7 @@ dependencies {
     // Coroutines for android ViewModel
     val coroutinesViewModel = dependency.version.androidCoroutinesViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutinesViewModel")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$coroutinesViewModel")
 
     // Recycler view additional classes such as ConcatAdapter
     // https://developer.android.com/jetpack/androidx/releases/recyclerview

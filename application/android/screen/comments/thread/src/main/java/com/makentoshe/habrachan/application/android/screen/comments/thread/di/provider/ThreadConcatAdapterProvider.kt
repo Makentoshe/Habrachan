@@ -6,13 +6,9 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.adapte
 import javax.inject.Inject
 import javax.inject.Provider
 
-internal class ThreadConcatAdapterProvider : Provider<ConcatAdapter> {
-
-    @Inject
-    internal lateinit var titleCommentAdapter: TitleCommentAdapter
-
-    @Inject
-    internal lateinit var contentCommentAdapter: ContentCommentAdapter
-
+internal class ThreadConcatAdapterProvider @Inject constructor(
+    private val titleCommentAdapter: TitleCommentAdapter,
+    private val contentCommentAdapter: ContentCommentAdapter,
+) : Provider<ConcatAdapter> {
     override fun get() = ConcatAdapter(titleCommentAdapter, contentCommentAdapter)
 }

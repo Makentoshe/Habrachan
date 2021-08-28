@@ -16,9 +16,12 @@ class CommentAdapterControllerBuilder @Inject constructor(
     private var dispatchCommentsScreenNavigator: DispatchCommentsScreenNavigator,
 ) {
 
-
-    fun build(fragment: Fragment): CommentAdapterController {
-        return ComposeCommentAdapterController(buildAvatar(fragment), buildBody(), buildPanel())
+    fun build(
+        fragment: Fragment,
+        bodyInstallWizard: BodyCommentAdapterController.InstallWizard,
+        panelInstallWizard: PanelCommentAdapterController.InstallWizard,
+    ): ComposeCommentAdapterController {
+        return ComposeCommentAdapterController(buildAvatar(fragment), buildBody(bodyInstallWizard), buildPanel(panelInstallWizard))
     }
 
     fun buildAvatar(fragment: Fragment): AvatarCommentAdapterController {
@@ -26,12 +29,12 @@ class CommentAdapterControllerBuilder @Inject constructor(
         return AvatarCommentAdapterController(lifecycleScope, getAvatarViewModel)
     }
 
-    fun buildBody(): BodyCommentAdapterController {
-        return BodyCommentAdapterController(contentBodyCommentFactory)
+    fun buildBody(installWizard: BodyCommentAdapterController.InstallWizard): BodyCommentAdapterController {
+        return BodyCommentAdapterController(contentBodyCommentFactory, installWizard)
     }
 
-    fun buildPanel(): PanelCommentAdapterController {
-        return PanelCommentAdapterController(lifecycleScope, voteCommentViewModelProvider, dispatchCommentsScreenNavigator)
+    fun buildPanel(installWizard: PanelCommentAdapterController.InstallWizard): PanelCommentAdapterController {
+        return PanelCommentAdapterController(lifecycleScope, voteCommentViewModelProvider, dispatchCommentsScreenNavigator, installWizard)
     }
 
 }

@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
+import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterControllerBuilder
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.CommentId
 import com.makentoshe.habrachan.entity.articleId
@@ -27,6 +27,7 @@ class DispatchCommentsFragment : BaseFragment() {
     override val arguments = Arguments(this)
 
     private val backwardNavigator by inject<BackwardNavigator>()
+    private val controller by inject<CommentAdapterControllerBuilder>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_comments_dispatch, container, false)
@@ -37,7 +38,8 @@ class DispatchCommentsFragment : BaseFragment() {
         fragment_comments_dispatch_toolbar.navigationIcon?.setTint(tintColor)
         fragment_comments_dispatch_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
 
-        Toast.makeText(requireContext(), "${arguments.commentId.commentId}", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(requireContext(), "${arguments.commentId.commentId}", Toast.LENGTH_SHORT).show()
+        println(controller)
     }
 
     class Arguments(fragment: DispatchCommentsFragment) : FragmentArguments(fragment) {

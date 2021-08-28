@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.screen.comments.articles.di.provider
+package com.makentoshe.habrachan.application.android.screen.comments.thread.di.provider
 
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.BodyCommentAdapterController
