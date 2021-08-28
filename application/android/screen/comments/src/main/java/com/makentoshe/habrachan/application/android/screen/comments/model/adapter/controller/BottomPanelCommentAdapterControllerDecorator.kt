@@ -32,8 +32,8 @@ class BottomPanelCommentAdapterControllerDecorator(
         return voteCommentViewModelProvider.get(comment.commentId.toString())
     }
 
-    override fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelElement) {
-        commentAdapterController?.onBindViewHolderComment(holder, position, model)
+    override fun onBindViewHolderComment(holder: CommentViewHolder, model: CommentModelElement) {
+        commentAdapterController?.onBindViewHolderComment(holder, model)
         internalOnBindViewHolderBottomPanel(holder, model)
 
         model.getViewModel().voteCommentFlow.collectResult(lifecycleScope, {

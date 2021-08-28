@@ -19,7 +19,7 @@ class TitleCommentAdapter(
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         val model = getItem(position) ?: return capture(analyticEvent("Comment is null at position $position"))
-        commentAdapterController.onBindViewHolderComment(holder, position, model)
+        commentAdapterController.onBindViewHolderComment(holder, model)
     }
 
 //    private fun onBindViewHolder(holder: CommentViewHolder, model: CommentModelElement) {

@@ -47,7 +47,7 @@ open class ContentCommentAdapter(
     }
 
     protected open fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelNode) {
-        commentAdapterController.onBindViewHolderComment(holder, position, model)
+        commentAdapterController.onBindViewHolderComment(holder, model)
 
         holder.setOnClickListenerForHeader {
             userScreenNavigator?.toUserScreen(model.comment.author.login)

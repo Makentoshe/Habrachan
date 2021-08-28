@@ -23,8 +23,8 @@ class AvatarCommentAdapterControllerDecorator(
     private val lifecycleScope: CoroutineScope,
     private val viewModel: GetAvatarViewModel,
 ) : CommentAdapterController {
-    override fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelElement) {
-        commentAdapterController?.onBindViewHolderComment(holder, position, model)
+    override fun onBindViewHolderComment(holder: CommentViewHolder,  model: CommentModelElement) {
+        commentAdapterController?.onBindViewHolderComment(holder, model)
 
         with(CommentViewController(holder)) {
             setCommentAvatar(holder.context, model.comment.avatar)

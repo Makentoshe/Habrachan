@@ -5,5 +5,5 @@ import com.makentoshe.habrachan.application.android.common.comment.model.forest.
 
 interface CommentAdapterController {
 
-    fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelElement)
+    fun onBindViewHolderComment(holder: CommentViewHolder, model: CommentModelElement)
 }

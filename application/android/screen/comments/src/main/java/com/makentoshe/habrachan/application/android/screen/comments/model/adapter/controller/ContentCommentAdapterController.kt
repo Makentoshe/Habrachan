@@ -11,8 +11,8 @@ class ContentCommentAdapterController(
     private val additional: (CommentViewController) -> Unit = { _ -> }
 ) : CommentAdapterController {
 
-    override fun onBindViewHolderComment(holder: CommentViewHolder, position: Int, model: CommentModelElement) {
-        commentAdapterController?.onBindViewHolderComment(holder, position, model)
+    override fun onBindViewHolderComment(holder: CommentViewHolder, model: CommentModelElement) {
+        commentAdapterController?.onBindViewHolderComment(holder, model)
         CommentViewController(holder).setup(model).apply(additional)
     }
 
