@@ -13,8 +13,9 @@ import com.makentoshe.habrachan.application.android.common.comment.model.forest.
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelNode
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.UserScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterController
+import javax.inject.Inject
 
-open class ContentCommentAdapter(
+open class ContentCommentAdapter @Inject constructor(
     private val commentAdapterController: CommentAdapterController,
     private val contentBodyBlockFactory: ContentBodyBlock.Factory,
     private val userScreenNavigator: UserScreenNavigator? = null

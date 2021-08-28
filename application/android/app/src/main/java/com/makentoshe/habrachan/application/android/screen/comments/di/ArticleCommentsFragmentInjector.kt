@@ -32,7 +32,7 @@ class ArticleCommentsFragmentInjector : FragmentInjector<ArticleCommentsFragment
         }
 
         val toothpickScope = commentsScope(injectorScope).openSubScope(scope)
-        val module = ArticleCommentsModule(injectorScope.fragment)
+        val module = ArticleCommentsModule()
         captureModuleInstall(module, scope, injectorScope)
         return toothpickScope.installModules(module)
     }
