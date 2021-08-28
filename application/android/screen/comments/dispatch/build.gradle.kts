@@ -45,8 +45,18 @@ dependencies {
 
     implementation(project(":entity"))
 
+    implementation(project(":application:common:arena:comments"))
+    implementation(project(":application:common:arena:content"))
+
+    implementation(project(":application:android:common:common-comment"))
     implementation(project(":application:android:common:common-core"))
     implementation(project(":application:android:common:navigation"))
+    implementation(project(":application:android:common:common-di"))
+    implementation(project(":application:android:common:avatar"))
+    implementation(project(":application:android:common:arena"))
+
+//    implementation(project(":application:android:database"))
+//    implementation(project(":application:android:analytics"))
 
     implementation(project(":application:android:screen"))
     implementation(project(":application:android:screen:comments"))
@@ -84,6 +94,7 @@ dependencies {
     // Coroutines for android ViewModel
     val coroutinesViewModel = dependency.version.androidCoroutinesViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutinesViewModel")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$coroutinesViewModel")
 
     // Room
     val roomVersion = dependency.version.androidRoom

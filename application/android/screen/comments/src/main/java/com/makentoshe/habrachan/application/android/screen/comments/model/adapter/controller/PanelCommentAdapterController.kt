@@ -21,15 +21,20 @@ class PanelCommentAdapterController(
     private val lifecycleScope: CoroutineScope,
     private val voteCommentViewModelProvider: VoteCommentViewModelProvider,
     private val dispatchCommentsScreenNavigator: DispatchCommentsScreenNavigator,
+    private val installWizard: InstallWizard = InstallWizard()
 ) : CommentAdapterController {
+
 
     private fun CommentModelElement.getViewModel(): VoteCommentViewModel {
         return voteCommentViewModelProvider.get(comment.commentId.toString())
     }
 
     override fun onBindViewHolderComment(holder: CommentViewHolder, model: CommentModelElement) {
-        val commentViewController = CommentViewController(holder)
+        val commentViewController = CommentViewController(holder).apply { panel.showExpanded() }
+        commentViewController.installPanelState(installWizard)
+
         commentViewController.panel.vote.setCurrentVoteState(model.comment)
+        commentViewController.panel.vote.voteScore.setVoteScore(model.comment)
 
         commentViewController.panel.vote.voteUp.setVoteUpAction(lifecycleScope) {
             model.getViewModel().voteCommentChannel.send(VoteCommentSpec(model.comment, CommentVote.Up))
@@ -48,6 +53,11 @@ class PanelCommentAdapterController(
         })
     }
 
+    private fun CommentViewController.installPanelState(installWizard: InstallWizard) = when (installWizard.panelState) {
+        InstallWizard.PanelState.EXPANDED -> panel.showExpanded()
+        InstallWizard.PanelState.COLLAPSED -> panel.showCollapsed()
+        InstallWizard.PanelState.HIDDEN -> panel.showHidden()
+    }
 
     private fun onVoteCommentSuccess(holder: CommentViewHolder, response: VoteCommentResponse2) {
         val controller = CommentViewController(holder)
@@ -66,5 +76,14 @@ class PanelCommentAdapterController(
             throwable.message ?: throwable.toString()
         }
         Snackbar.make(parentView, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    class InstallWizard(
+        var panelState: PanelState = PanelState.EXPANDED
+    ) {
+
+        enum class PanelState {
+            COLLAPSED, EXPANDED, HIDDEN
+        }
     }
 }

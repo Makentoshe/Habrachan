@@ -13,6 +13,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.articles.di.
 import com.makentoshe.habrachan.application.android.screen.comments.articles.di.provider.CommentAdapterControllerProvider
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
+import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.BodyCommentAdapterController
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterController
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterControllerBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -31,6 +32,7 @@ class SpecifiedArticleCommentsModule(fragment: ArticleCommentsFragment) : Module
 
     init {
         Toothpick.openScopes(ApplicationScope::class, CommentsScope::class, ArticleCommentsScope2::class).inject(this)
+        bind<BodyCommentAdapterController.InstallWizard>().toInstance(BodyCommentAdapterController.InstallWizard())
 
         bind<GetAvatarViewModel>().toInstance(getAvatarViewModelProvider.get(fragment))
         bind<GetArticleCommentsViewModel>().toInstance(commentViewModelProvider.get(fragment))

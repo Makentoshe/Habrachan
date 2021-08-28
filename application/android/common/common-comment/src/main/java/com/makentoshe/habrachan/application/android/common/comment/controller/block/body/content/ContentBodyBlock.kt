@@ -29,9 +29,8 @@ class ContentBodyBlock internal constructor(
     class Factory @Inject constructor(
         private val context: Context,
         private val articleId: ArticleId,
-    ) {
-
         private var navigator: ThreadCommentsScreenNavigator? = null
+    ) {
 
         fun build(count: Int, parent: Int) = ContentBodyBlock(count, parent, context, articleId).apply {
             this.navigator = this@Factory.navigator

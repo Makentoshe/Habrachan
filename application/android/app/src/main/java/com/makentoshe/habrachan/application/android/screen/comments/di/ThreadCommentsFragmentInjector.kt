@@ -3,9 +3,9 @@ package com.makentoshe.habrachan.application.android.screen.comments.di
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.thread.ThreadCommentsFragment
-import com.makentoshe.habrachan.application.android.screen.comments.thread.di.SpecifiedThreadCommentsModule
-import com.makentoshe.habrachan.application.android.screen.comments.thread.di.ThreadCommentsModule
 import com.makentoshe.habrachan.application.android.screen.comments.thread.di.ThreadCommentsScope
+import com.makentoshe.habrachan.application.android.screen.comments.thread.di.module.SpecifiedThreadCommentsModule
+import com.makentoshe.habrachan.application.android.screen.comments.thread.di.module.ThreadCommentsModule
 import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -43,7 +43,7 @@ class ThreadCommentsFragmentInjector : FragmentInjector<ThreadCommentsFragment>(
         }
 
         val toothpickScope = commentsScope(injectorScope).openSubScope(scope)
-        val module = ThreadCommentsModule(injectorScope.fragment)
+        val module = ThreadCommentsModule()
         captureModuleInstall(module, scope, injectorScope)
         return toothpickScope.installModules(module)
     }

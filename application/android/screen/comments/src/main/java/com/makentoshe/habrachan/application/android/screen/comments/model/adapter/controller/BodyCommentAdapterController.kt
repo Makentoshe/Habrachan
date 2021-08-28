@@ -7,14 +7,29 @@ import com.makentoshe.habrachan.application.android.common.comment.model.forest.
 
 class BodyCommentAdapterController(
     private val contentBodyCommentFactory: ContentBodyComment.Factory,
+    private val installWizard: InstallWizard = InstallWizard()
 ) : CommentAdapterController {
 
     override fun onBindViewHolderComment(holder: CommentViewHolder, model: CommentModelElement) {
         val commentViewController = CommentViewController(holder).apply { dispose() }
+        commentViewController.installBodyState(installWizard)
+
         commentViewController.body.avatar.setStubAvatar()
         commentViewController.body.author.setAuthor(model.comment)
         commentViewController.body.timestamp.setTimestamp(model.comment)
         commentViewController.body.level.setLevel(model.level)
         commentViewController.body.content.setContent(contentBodyCommentFactory.build(model.comment.message))
+    }
+
+    private fun CommentViewController.installBodyState(installWizard: InstallWizard) = when (installWizard.bodyState) {
+        InstallWizard.BodyState.EXPANDED -> panel.showExpanded()
+        InstallWizard.BodyState.COLLAPSED -> panel.showCollapsed()
+    }
+
+    class InstallWizard(var bodyState: BodyState = BodyState.EXPANDED) {
+
+        enum class BodyState {
+            COLLAPSED, EXPANDED
+        }
     }
 }
