@@ -14,8 +14,11 @@ import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.ARTICLE_COMMENT_LEVEL_DEPTH
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsSpec2
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.commentsPagingData
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
@@ -24,6 +27,8 @@ import com.makentoshe.habrachan.application.android.screen.comments.articles.vie
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
+import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.functional.suspendFold
 import kotlinx.android.synthetic.main.fragment_comments_article.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -32,7 +37,7 @@ import toothpick.ktp.delegate.inject
 
 class ArticleCommentsFragment : BaseFragment() {
 
-    companion object : Analytics(LogAnalytic()){
+    companion object : Analytics(LogAnalytic()) {
         fun build(articleId: ArticleId, articleTitle: String) = ArticleCommentsFragment().apply {
             arguments.articleId = articleId.articleId
             arguments.articleTitle = articleTitle
@@ -78,12 +83,26 @@ class ArticleCommentsFragment : BaseFragment() {
         fragment_comments_article_recycler.adapter = adapter
 
         lifecycleScope.launch {
-            articleCommentsViewModel.comments.collectLatest {
-                adapter.submitData(it)
-            }
+            articleCommentsViewModel.model.collectLatest { result -> onGetArticleCommentsModel(result) }
         }
 
         adapter.addLoadStateListener(::loadStateListener)
+    }
+
+    private suspend fun onGetArticleCommentsModel(result: Result<GetArticleCommentsModel>) {
+        result.suspendFold({ model ->
+            onGetArticleCommentsModelSuccess(model)
+        }, { throwable ->
+            onGetArticleCommentsModelFailure(throwable)
+        })
+    }
+
+    private suspend fun onGetArticleCommentsModelSuccess(model: GetArticleCommentsModel) {
+        adapter.submitData(model.commentsPagingData(ARTICLE_COMMENT_LEVEL_DEPTH))
+    }
+
+    private fun onGetArticleCommentsModelFailure(throwable: Throwable) {
+        throw throwable
     }
 
     private fun loadStateListener(state: CombinedLoadStates) = when (val refresh = state.refresh) {
