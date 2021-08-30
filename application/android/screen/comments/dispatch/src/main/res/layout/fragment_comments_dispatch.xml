@@ -28,6 +28,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/fragment_comments_dispatch_separator"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <include
+            layout="@layout/layout_comment_item"
+            android:id="@+id/fragment_comments_dispatch_comment" />
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

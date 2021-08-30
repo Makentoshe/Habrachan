@@ -6,16 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
+import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.comment
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
-import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterController
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.CommentId
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.entity.commentId
+import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.functional.fold
 import kotlinx.android.synthetic.main.fragment_comments_dispatch.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
@@ -32,7 +38,6 @@ class DispatchCommentsFragment : BaseFragment() {
     override val arguments = Arguments(this)
 
     private val backwardNavigator by inject<BackwardNavigator>()
-    private val commentAdapterController by inject<CommentAdapterController>()
     private val getArticleCommentsViewModel by inject<GetArticleCommentsViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,18 +49,32 @@ class DispatchCommentsFragment : BaseFragment() {
         fragment_comments_dispatch_toolbar.navigationIcon?.setTint(tintColor)
         fragment_comments_dispatch_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
 
-        println(getArticleCommentsViewModel)
-        lifecycleScope.launch {
-            getArticleCommentsViewModel.comments.collectLatest {
-                println(it)
-            }
+        lifecycleScope.launch(Dispatchers.IO) {
+            getArticleCommentsViewModel.model.collectLatest { onGetArticleCommentsModel(it) }
         }
-        lifecycleScope.launch {
-            getArticleCommentsViewModel.comment.collectLatest {
-                println(it)
-            }
-        }
-//        Toast.makeText(requireContext(), "${arguments.commentId.commentId}", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onGetArticleCommentsModel(result: Result<GetArticleCommentsModel>) = result.fold({ model ->
+        onGetArticleCommentsModelSuccess(model)
+    },{ throwable ->
+        onGetArticleCommentsModelFailure(throwable)
+    })
+
+    private fun onGetArticleCommentsModelSuccess(getArticleCommentsModel: GetArticleCommentsModel) {
+        val commentModelNode = getArticleCommentsModel.comment(arguments.commentId) ?: return onGetArticleCommentsModelFailure(IllegalStateException())
+        val commentViewController = CommentViewController(CommentViewHolder(fragment_comments_dispatch_comment))
+        commentViewController.panel.showHidden()
+        commentViewController.body.expand()
+        commentViewController.body.level.setLevel(0)
+        commentViewController.body.author.setAuthor(commentModelNode.comment)
+        commentViewController.body.timestamp.setTimestamp(commentModelNode.comment)
+        commentViewController.body.avatar.setStubAvatar()
+        commentViewController.body.content.setContent(commentModelNode.comment)
+    }
+
+    private fun onGetArticleCommentsModelFailure(throwable: Throwable) {
+        println(throwable)
+        throw throwable
     }
 
     class Arguments(fragment: DispatchCommentsFragment) : FragmentArguments(fragment) {

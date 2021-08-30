@@ -22,6 +22,7 @@ import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -51,6 +52,10 @@ class GetArticleCommentsViewModel(
     private val internalComments = internalSpecChannel.receiveAsFlow().map { spec ->
         requestArticleComments(spec, articleCommentsArena.request(userSession, spec.articleId.articleId))
     }.flowOn(Dispatchers.IO)
+
+    val model = internalSpecChannel.consumeAsFlow().map { spec ->
+        articleCommentsArena.suspendFetch(articleCommentsArena.request(userSession, spec.articleId.articleId))
+    }.map { result -> result.map { GetArticleCommentsModel(it) } }
 
     /** Flow returns a sorted list of the comments wrapped with PagingData for the specified article */
     val comments = internalComments.filter { it.isSuccess }.map {
@@ -128,4 +133,3 @@ class GetArticleCommentsViewModel(
         }
     }
 }
-
