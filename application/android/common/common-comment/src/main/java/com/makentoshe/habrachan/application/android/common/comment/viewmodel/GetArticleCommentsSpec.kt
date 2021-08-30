@@ -6,18 +6,29 @@ import com.makentoshe.habrachan.functional.Option
 
 sealed class GetArticleCommentsSpec2 {
     abstract val articleId: ArticleId
-    abstract val optionableCommentId: Option<CommentId>
+    abstract val commentIdOption: Option<CommentId>
+
+    override fun toString(): String {
+        return "${this::class.simpleName}(articleId=${articleId.articleId}, commentId=${commentIdOption.getOrNull()?.commentId})"
+    }
 
     class ArticleCommentsSpec(
         override val articleId: ArticleId,
     ) : GetArticleCommentsSpec2() {
-        override val optionableCommentId: Option<CommentId> = Option.None
+        override val commentIdOption: Option<CommentId> = Option.None
     }
 
-    class DiscussionCommentsSpec(
+    class ThreadCommentsSpec(
         override val articleId: ArticleId,
         commentId: CommentId,
     ) : GetArticleCommentsSpec2() {
-        override val optionableCommentId = Option.Value(commentId)
+        override val commentIdOption = Option.Value(commentId)
+    }
+
+    class DispatchCommentsSpec(
+        override val articleId: ArticleId,
+        commentId: CommentId,
+    ) : GetArticleCommentsSpec2() {
+        override val commentIdOption = Option.Value(commentId)
     }
 }
