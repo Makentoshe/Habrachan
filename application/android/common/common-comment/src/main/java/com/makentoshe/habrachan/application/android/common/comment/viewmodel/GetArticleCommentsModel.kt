@@ -15,7 +15,16 @@ fun GetArticleCommentsModel.commentsPagingData(depthLevel: Int): PagingData<Comm
     return PagingData.from(comments(depthLevel))
 }
 
-fun GetArticleCommentsModel.commentPagingData(commentId: CommentId): PagingData<CommentModelNode> {
+fun GetArticleCommentsModel.comments(commentId: CommentId, depthLevel: Int): List<CommentModelElement> {
+    return forest.collect(commentId.commentId, depthLevel)
+}
+
+fun GetArticleCommentsModel.commentsPagingData(commentId: CommentId, depthLevel: Int): PagingData<CommentModelElement> {
+    return PagingData.from(comments(commentId, depthLevel))
+}
+
+
+fun GetArticleCommentsModel.commentPagingData(commentId: CommentId): PagingData<CommentModelElement> {
     return PagingData.from(listOf(comment(commentId) ?: return PagingData.empty()))
 }
 
