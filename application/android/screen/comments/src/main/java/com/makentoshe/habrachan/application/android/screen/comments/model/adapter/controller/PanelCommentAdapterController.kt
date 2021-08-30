@@ -43,7 +43,7 @@ class PanelCommentAdapterController(
             model.getViewModel().voteCommentChannel.send(VoteCommentSpec(model.comment, CommentVote.Down))
         }
         commentViewController.panel.reply.setReplyAction(lifecycleScope, Dispatchers.Main) {
-            dispatchCommentsScreenNavigator.toDispatchScreen(commentId(model.comment.commentId))
+            dispatchCommentsScreenNavigator.toDispatchScreen(model.articleId, commentId(model.comment.commentId))
         }
 
         model.getViewModel().voteCommentFlow.collectResult(lifecycleScope, { response ->

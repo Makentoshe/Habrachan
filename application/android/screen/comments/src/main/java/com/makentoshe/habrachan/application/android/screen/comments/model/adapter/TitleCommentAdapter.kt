@@ -7,9 +7,11 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterController
 import javax.inject.Inject
+import javax.inject.Named
 
 class TitleCommentAdapter @Inject constructor(
-    private val commentAdapterController: CommentAdapterController
+    @Named("TitleCommentAdapterController")
+    private val commentAdapterController: CommentAdapterController,
 ) : BaseCommentAdapter<CommentViewHolder>() {
 
     companion object : Analytics(LogAnalytic())
@@ -22,10 +24,4 @@ class TitleCommentAdapter @Inject constructor(
         val model = getItem(position) ?: return capture(analyticEvent("Comment is null at position $position"))
         commentAdapterController.onBindViewHolderComment(holder, model)
     }
-
-//    private fun onBindViewHolder(holder: CommentViewHolder, model: CommentModelElement) {
-//        CommentViewController(holder).default(model.comment).setLevel(model.level).setCommentAvatar(holder, model)
-//        CommentBodyController(holder).setContent(commentContentFactory.build(model.comment.message)).collapse()
-//        CommentBottomPanelController(holder).hide()
-//    }
 }

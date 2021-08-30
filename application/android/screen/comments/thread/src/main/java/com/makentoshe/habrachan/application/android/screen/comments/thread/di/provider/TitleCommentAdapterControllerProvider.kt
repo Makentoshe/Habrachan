@@ -8,7 +8,8 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.adapte
 import javax.inject.Inject
 import javax.inject.Provider
 
-internal class CommentAdapterControllerProvider @Inject constructor(
+/** Special provider for a TitleCommentAdapter */
+internal class TitleCommentAdapterControllerProvider @Inject constructor(
     private val fragment: Fragment,
     private val commentAdapterControllerBuilder: CommentAdapterControllerBuilder,
 ) : Provider<CommentAdapterController> {
@@ -17,7 +18,11 @@ internal class CommentAdapterControllerProvider @Inject constructor(
         return commentAdapterControllerBuilder.build(fragment, bodyInstallWizard(), panelInstallWizard())
     }
 
-    private fun bodyInstallWizard() = BodyCommentAdapterController.InstallWizard()
+    private fun bodyInstallWizard() = BodyCommentAdapterController.InstallWizard(
+        bodyState = BodyCommentAdapterController.InstallWizard.BodyState.COLLAPSED
+    )
 
-    private fun panelInstallWizard() = PanelCommentAdapterController.InstallWizard()
+    private fun panelInstallWizard() = PanelCommentAdapterController.InstallWizard(
+        panelState = PanelCommentAdapterController.InstallWizard.PanelState.COLLAPSED
+    )
 }
