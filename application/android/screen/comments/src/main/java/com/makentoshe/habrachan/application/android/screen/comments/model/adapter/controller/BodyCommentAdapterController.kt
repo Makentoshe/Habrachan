@@ -22,8 +22,8 @@ class BodyCommentAdapterController(
     }
 
     private fun CommentViewController.installBodyState(installWizard: InstallWizard) = when (installWizard.bodyState) {
-        InstallWizard.BodyState.EXPANDED -> panel.showExpanded()
-        InstallWizard.BodyState.COLLAPSED -> panel.showCollapsed()
+        InstallWizard.BodyState.EXPANDED -> body.expand()
+        InstallWizard.BodyState.COLLAPSED -> body.collapse()
     }
 
     class InstallWizard(var bodyState: BodyState = BodyState.EXPANDED) {

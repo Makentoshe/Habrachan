@@ -17,8 +17,8 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.adapte
 import com.makentoshe.habrachan.application.android.screen.comments.thread.ThreadCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.thread.di.ThreadCommentsScope
 import com.makentoshe.habrachan.application.android.screen.comments.thread.di.provider.CommentAdapterControllerProvider
-import com.makentoshe.habrachan.application.android.screen.comments.thread.di.provider.ContentCommentAdapterProvider
 import com.makentoshe.habrachan.application.android.screen.comments.thread.di.provider.ThreadConcatAdapterProvider
+import com.makentoshe.habrachan.application.android.screen.comments.thread.di.provider.TitleCommentAdapterControllerProvider
 import kotlinx.coroutines.CoroutineScope
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -40,14 +40,13 @@ class SpecifiedThreadCommentsModule(fragment: ThreadCommentsFragment) : Module()
         bind<GetArticleCommentsViewModel>().toInstance(commentViewModelProvider.get(fragment))
 
         bind<Fragment>().toInstance(fragment)
-
-        bind<VoteCommentViewModelProvider>().toClass<VoteCommentViewModelProvider>().singleton()
-
         bind<CoroutineScope>().toInstance(fragment.lifecycleScope)
-        bind<ContentCommentAdapter>().toProvider(ContentCommentAdapterProvider::class).providesSingleton()
-
+        bind<VoteCommentViewModelProvider>().toClass<VoteCommentViewModelProvider>().singleton()
         bind<CommentAdapterControllerBuilder>().toClass<CommentAdapterControllerBuilder>().singleton()
         bind<CommentAdapterController>().toProvider(CommentAdapterControllerProvider::class).providesSingleton()
+        bind<ContentCommentAdapter>().toClass<ContentCommentAdapter>().singleton()
+
+        bind<CommentAdapterController>().withName("TitleCommentAdapterController").toProvider(TitleCommentAdapterControllerProvider::class).providesSingleton()
         bind<TitleCommentAdapter>().toClass<TitleCommentAdapter>().singleton()
         bind<ConcatAdapter>().toProvider(ThreadConcatAdapterProvider::class).providesSingleton()
     }
