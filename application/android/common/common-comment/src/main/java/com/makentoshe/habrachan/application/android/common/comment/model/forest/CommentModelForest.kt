@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.application.android.common.comment.model.forest
 
+import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.Comment
 import java.util.LinkedList
 
@@ -13,7 +14,7 @@ const val DISCUSSION_COMMENT_LEVEL_DEPTH = 3 + 1 /* correction value */
 /**
  * [nodes] all nodes in this forest
  */
-class CommentModelForest private constructor(val nodes: List<CommentModelNode>) {
+class CommentModelForest private constructor(val nodes: List<CommentModelNode>, val articleId: ArticleId) {
 
     val roots = nodes.filter { model -> model.comment.parentId == 0 }
 
@@ -86,7 +87,7 @@ class CommentModelForest private constructor(val nodes: List<CommentModelNode>) 
         // if they have - add to changes map
         nodes.forEach { node ->
             if (node.comment.level == maxLevelDepth && node.childs.isNotEmpty()) {
-                changes[node.comment.commentId] = CommentModelBlank(node.comment, node.count(), node.level + 1)
+                changes[node.comment.commentId] = CommentModelBlank(node.comment, node.count(), node.level + 1, articleId)
             }
         }
 
@@ -101,14 +102,14 @@ class CommentModelForest private constructor(val nodes: List<CommentModelNode>) 
     }
 
     companion object {
-        fun build(comments: List<Comment>): CommentModelForest {
-            val models = comments.map { CommentModelNode(it, it.level) }
+        fun build(articleId: ArticleId, comments: List<Comment>): CommentModelForest {
+            val models = comments.map { CommentModelNode(it, it.level, articleId) }
             val map = comments.map { it.commentId }.zip(models).toMap()
             models.forEach { model ->
                 model.parent = map[model.comment.parentId]
                 model.parent?.childs?.add(model)
             }
-            return CommentModelForest(models)
+            return CommentModelForest(models, articleId)
         }
     }
 }
