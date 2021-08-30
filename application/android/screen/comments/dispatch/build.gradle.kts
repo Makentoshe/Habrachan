@@ -43,20 +43,20 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    implementation(project(":functional"))
     implementation(project(":entity"))
+    implementation(project(":network"))
 
     implementation(project(":application:common:arena:comments"))
     implementation(project(":application:common:arena:content"))
 
+    implementation(project(":application:android:analytics"))
     implementation(project(":application:android:common:common-comment"))
     implementation(project(":application:android:common:common-core"))
     implementation(project(":application:android:common:navigation"))
     implementation(project(":application:android:common:common-di"))
     implementation(project(":application:android:common:avatar"))
     implementation(project(":application:android:common:arena"))
-
-//    implementation(project(":application:android:database"))
-//    implementation(project(":application:android:analytics"))
 
     implementation(project(":application:android:screen"))
     implementation(project(":application:android:screen:comments"))
@@ -108,6 +108,12 @@ dependencies {
     implementation("io.noties.markwon:html:$markwonVersion")
     implementation("io.noties.markwon:image:$markwonVersion")
     implementation("io.noties.markwon:ext-tables:$markwonVersion")
+
+    // Pagination library
+    // https://developer.android.com/topic/libraries/architecture/paging
+    val paginationVersion = dependency.version.androidPaging
+    implementation("androidx.paging:paging-runtime-ktx:$paginationVersion")
+    implementation("androidx.paging:paging-rxjava2:$paginationVersion")
 
     val coreVersion = dependency.version.androidCore
     implementation("androidx.core:core-ktx:$coreVersion")

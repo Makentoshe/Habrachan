@@ -15,9 +15,9 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import java.io.File
 
-class CommentsModule(articleId: ArticleId, articleTitle: String, fragment: Fragment) : Module() {
+class CommentsModule(articleId: ArticleId, fragment: Fragment) : Module() {
 
-    constructor(articleId: Int, articleTitle: String, fragment: Fragment) : this(articleId(articleId), articleTitle, fragment)
+    constructor(articleId: Int, fragment: Fragment) : this(articleId(articleId), fragment)
 
     init {
         Toothpick.openScopes(ApplicationScope::class).inject(this)

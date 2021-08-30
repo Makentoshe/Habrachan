@@ -65,7 +65,7 @@ class ThreadCommentsFragment : BaseFragment() {
             capture(analyticEvent(this@ThreadCommentsFragment.javaClass.simpleName, message))
             val commentId = commentId(arguments.commentId)
             val articleId = articleId(arguments.articleId)
-            val articleCommentsSpec = GetArticleCommentsSpec2.DiscussionCommentsSpec(articleId, commentId)
+            val articleCommentsSpec = GetArticleCommentsSpec2.ThreadCommentsSpec(articleId, commentId)
             articleCommentsViewModel.channel.send(articleCommentsSpec)
         }
 

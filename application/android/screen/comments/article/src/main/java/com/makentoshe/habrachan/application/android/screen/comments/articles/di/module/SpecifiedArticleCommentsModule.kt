@@ -5,12 +5,12 @@ import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModelProvider
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModelProvider
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.articles.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.articles.di.ArticleCommentsScope2
 import com.makentoshe.habrachan.application.android.screen.comments.articles.di.provider.CommentAdapterControllerProvider
+import com.makentoshe.habrachan.application.android.screen.comments.articles.di.provider.SpecifiedGetArticleCommentsViewModelProvider
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.BodyCommentAdapterController
@@ -27,16 +27,18 @@ class SpecifiedArticleCommentsModule(fragment: ArticleCommentsFragment) : Module
     // From CommentsScope
     private val getAvatarViewModelProvider by inject<GetAvatarViewModelProvider>()
 
-    // From ArticleCommentsScope
-    private val commentViewModelProvider by inject<GetArticleCommentsViewModelProvider>()
-
     init {
         Toothpick.openScopes(ApplicationScope::class, CommentsScope::class, ArticleCommentsScope2::class).inject(this)
+
         bind<BodyCommentAdapterController.InstallWizard>().toInstance(BodyCommentAdapterController.InstallWizard())
 
         bind<GetAvatarViewModel>().toInstance(getAvatarViewModelProvider.get(fragment))
-        bind<GetArticleCommentsViewModel>().toInstance(commentViewModelProvider.get(fragment))
 
+        // Binds GetArticleCommentsViewModel
+        bind<ArticleCommentsFragment>().toInstance(fragment)
+        bind<GetArticleCommentsViewModel>().toProvider(SpecifiedGetArticleCommentsViewModelProvider::class).providesSingleton()
+
+        // Binds ContentCommentAdapter
         bind<Fragment>().toInstance(fragment)
         bind<CoroutineScope>().toInstance(fragment.lifecycleScope)
         bind<VoteCommentViewModelProvider>().toClass<VoteCommentViewModelProvider>().singleton()

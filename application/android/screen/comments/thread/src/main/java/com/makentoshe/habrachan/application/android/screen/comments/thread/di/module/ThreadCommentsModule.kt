@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.comments.thread.di.module
 
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModelProvider
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.CacheFirstArticleCommentsArenaProvider
@@ -18,8 +17,8 @@ class ThreadCommentsModule : Module() {
         Toothpick.openScopes(ApplicationScope::class, CommentsScope::class).inject(this)
 
         bind<ArticleCommentsArena>().toProvider(CacheFirstArticleCommentsArenaProvider::class)
-        bind<GetArticleCommentsViewModel.Factory>().toClass<GetArticleCommentsViewModel.Factory>()
 
+        // Binds GetAvatarViewModelProvider
         bind<ContentArena>().toProvider(CacheFirstAvatarArenaProvider::class).singleton()
         bind<GetAvatarViewModelProvider>().toClass<GetAvatarViewModelProvider>().singleton()
     }
