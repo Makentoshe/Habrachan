@@ -40,6 +40,11 @@ sealed class Option<out V> {
         is Value -> this.value
         else -> throw exception()
     }
+
+    companion object {
+        fun <T> from(any: T?) = if (any == null) None else Value(any)
+    }
 }
+
 
 fun <T> T?.toOption(): Option<T> = this?.let { Option.Value(it) } ?: Option.None
