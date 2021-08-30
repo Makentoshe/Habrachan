@@ -11,3 +11,13 @@ interface CommentModelElement {
 
     val articleId: ArticleId
 }
+
+fun CommentModelElement.copy(
+    comment: Comment = this.comment,
+    level: Int = this.level,
+    articleId: ArticleId = this.articleId
+) = object : CommentModelElement {
+    override val comment: Comment = comment
+    override val level: Int = level
+    override val articleId: ArticleId = articleId
+}

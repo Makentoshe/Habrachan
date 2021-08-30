@@ -5,12 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.map
 import androidx.recyclerview.widget.ConcatAdapter
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.DISCUSSION_COMMENT_LEVEL_DEPTH
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.copy
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsSpec2
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.commentPagingData
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.commentsPagingData
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
@@ -19,6 +25,8 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.adapte
 import com.makentoshe.habrachan.application.android.screen.comments.thread.view.ThreadCommentSeparatorItemDecoration
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.entity.commentId
+import com.makentoshe.habrachan.functional.Result
+import com.makentoshe.habrachan.functional.suspendFold
 import kotlinx.android.synthetic.main.fragment_comments_discussion.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -79,12 +87,27 @@ class ThreadCommentsFragment : BaseFragment() {
         fragment_comments_discussion_recycler.adapter = adapter
 
         lifecycleScope.launch(Dispatchers.IO) {
-            articleCommentsViewModel.comments.collectLatest { commentAdapter.submitData(it) }
+            articleCommentsViewModel.model.collectLatest { result -> onGetArticleCommentsModel(result) }
         }
+    }
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            articleCommentsViewModel.comment.collectLatest { titleAdapter.submitData(it) }
-        }
+    private suspend fun onGetArticleCommentsModel(result: Result<GetArticleCommentsModel>) {
+        result.suspendFold({ model ->
+            onGetArticleCommentsModelSuccess(model)
+        }, { throwable ->
+            onGetArticleCommentsModelFailure(throwable)
+        })
+    }
+
+    private suspend fun onGetArticleCommentsModelSuccess(model: GetArticleCommentsModel) {
+        val commentId = commentId(arguments.commentId)
+        commentAdapter.submitData(model.commentsPagingData(commentId, DISCUSSION_COMMENT_LEVEL_DEPTH))
+        titleAdapter.submitData(model.commentPagingData(commentId).map { it.copy(level = 0) })
+    }
+
+    private fun onGetArticleCommentsModelFailure(throwable: Throwable) {
+        println(throwable)
+        throw throwable
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
