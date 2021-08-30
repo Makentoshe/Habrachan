@@ -19,8 +19,9 @@ import toothpick.ktp.delegate.inject
 class DispatchCommentsFragment : BaseFragment() {
 
     companion object {
-        fun build(commentId: CommentId) = DispatchCommentsFragment().apply {
+        fun build(articleId: ArticleId, commentId: CommentId) = DispatchCommentsFragment().apply {
             arguments.commentId = commentId
+            arguments.articleId = articleId
         }
     }
 
