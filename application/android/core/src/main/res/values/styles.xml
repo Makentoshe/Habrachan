@@ -63,4 +63,9 @@
         <item name="android:background">@color/separator</item>
     </style>
 
+    <style name="Habrachan.BottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="behavior_peekHeight">@dimen/heightL</item>
+        <item name="behavior_hideable">false</item>
+    </style>
+
 </resources>
