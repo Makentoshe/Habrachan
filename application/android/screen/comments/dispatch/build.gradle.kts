@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":functional"))
     implementation(project(":entity"))
     implementation(project(":network"))
+    implementation(project(":network:network-common:network-common-content"))
 
     implementation(project(":application:common:arena:comments"))
     implementation(project(":application:common:arena:content"))
