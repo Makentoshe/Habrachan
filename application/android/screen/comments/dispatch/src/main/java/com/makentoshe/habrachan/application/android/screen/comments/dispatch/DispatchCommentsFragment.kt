@@ -1,3 +1,5 @@
+@file:Suppress("FoldInitializerAndIfToElvis")
+
 package com.makentoshe.habrachan.application.android.screen.comments.dispatch
 
 import android.os.Bundle
@@ -6,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleModel
+import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleViewModel
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsModel
@@ -39,6 +43,7 @@ class DispatchCommentsFragment : BaseFragment() {
 
     private val backwardNavigator by inject<BackwardNavigator>()
     private val getArticleCommentsViewModel by inject<GetArticleCommentsViewModel>()
+    private val getArticleViewModel by inject<GetArticleViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_comments_dispatch, container, false)
@@ -52,16 +57,21 @@ class DispatchCommentsFragment : BaseFragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             getArticleCommentsViewModel.model.collectLatest { onGetArticleCommentsModel(it) }
         }
+        lifecycleScope.launch(Dispatchers.IO) {
+            getArticleViewModel.model.collectLatest { onGetArticleModel(it) }
+        }
     }
 
     private fun onGetArticleCommentsModel(result: Result<GetArticleCommentsModel>) = result.fold({ model ->
         onGetArticleCommentsModelSuccess(model)
-    },{ throwable ->
+    }, { throwable ->
         onGetArticleCommentsModelFailure(throwable)
     })
 
     private fun onGetArticleCommentsModelSuccess(getArticleCommentsModel: GetArticleCommentsModel) {
-        val commentModelNode = getArticleCommentsModel.comment(arguments.commentId) ?: return onGetArticleCommentsModelFailure(IllegalStateException())
+        val commentModelNode = getArticleCommentsModel.comment(arguments.commentId)
+        if (commentModelNode == null) return onGetArticleCommentsModelFailure(IllegalStateException())
+
         val commentViewController = CommentViewController(CommentViewHolder(fragment_comments_dispatch_comment))
         commentViewController.panel.showHidden()
         commentViewController.body.expand()
@@ -75,6 +85,22 @@ class DispatchCommentsFragment : BaseFragment() {
     private fun onGetArticleCommentsModelFailure(throwable: Throwable) {
         println(throwable)
         throw throwable
+    }
+
+    private fun onGetArticleModel(result: Result<GetArticleModel>) {
+        result.fold({ model ->
+            onGetArticleModelSuccess(model)
+        }, { throwable ->
+            onGetArticleModelFailure(throwable)
+        })
+    }
+
+    private fun onGetArticleModelSuccess(model: GetArticleModel) = lifecycleScope.launch(Dispatchers.Main) {
+        fragment_comments_dispatch_toolbar.title = model.response2.article.title
+    }
+
+    private fun onGetArticleModelFailure(throwable: Throwable) {
+
     }
 
     class Arguments(fragment: DispatchCommentsFragment) : FragmentArguments(fragment) {

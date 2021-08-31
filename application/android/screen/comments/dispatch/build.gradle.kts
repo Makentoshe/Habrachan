@@ -52,6 +52,7 @@ dependencies {
 
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:common:common-comment"))
+    implementation(project(":application:android:common:article"))
     implementation(project(":application:android:common:common-core"))
     implementation(project(":application:android:common:navigation"))
     implementation(project(":application:android:common:common-di"))
