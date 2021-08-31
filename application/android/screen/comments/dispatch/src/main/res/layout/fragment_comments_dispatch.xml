@@ -11,8 +11,8 @@
         android:id="@+id/fragment_comments_dispatch_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        app:title="@string/app_name"
-        app:subtitle="Reply to comment"
+        app:title="@string/comments_dispatch_article_title_initial"
+        app:subtitle="@string/comments_dispatch_article_subtitle"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:layout_constraintTop_toTopOf="parent" />
 

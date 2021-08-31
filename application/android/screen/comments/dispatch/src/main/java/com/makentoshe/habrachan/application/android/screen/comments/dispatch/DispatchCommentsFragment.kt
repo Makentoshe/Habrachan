@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleModel
 import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleViewModel
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
@@ -32,7 +35,7 @@ import toothpick.ktp.delegate.inject
 
 class DispatchCommentsFragment : BaseFragment() {
 
-    companion object {
+    companion object : Analytics(LogAnalytic()) {
         fun build(articleId: ArticleId, commentId: CommentId) = DispatchCommentsFragment().apply {
             arguments.commentId = commentId
             arguments.articleId = articleId
@@ -100,7 +103,8 @@ class DispatchCommentsFragment : BaseFragment() {
     }
 
     private fun onGetArticleModelFailure(throwable: Throwable) {
-
+        capture(analyticEvent(throwable) { "Error while loading an Article(${arguments.articleId.articleId})" })
+        fragment_comments_dispatch_toolbar.setTitle(R.string.comments_dispatch_article_title_error)
     }
 
     class Arguments(fragment: DispatchCommentsFragment) : FragmentArguments(fragment) {
