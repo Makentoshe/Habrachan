@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.application.android.common.arena.ArticleCommentsArenaCache
 import com.makentoshe.habrachan.application.android.common.arena.AvatarArenaCache
+import com.makentoshe.habrachan.application.android.common.article.arena.ArticleArenaCache
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
@@ -32,5 +33,7 @@ class CommentsModule(articleId: ArticleId, fragment: Fragment) : Module() {
 
         bind<File>().toInstance(fragment.requireActivity().cacheDir)
         bind<AvatarArenaCache>().toClass<AvatarArenaCache>().singleton()
+
+        bind<ArticleArenaCache>().toClass<ArticleArenaCache>().singleton()
     }
 }
