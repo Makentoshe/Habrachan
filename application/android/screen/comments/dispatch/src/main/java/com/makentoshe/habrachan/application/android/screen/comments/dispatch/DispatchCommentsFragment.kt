@@ -2,6 +2,7 @@
 
 package com.makentoshe.habrachan.application.android.screen.comments.dispatch
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleModel
 import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleViewModel
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarSpec
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsModel
@@ -27,6 +30,7 @@ import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.entity.commentId
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.fold
+import com.makentoshe.habrachan.network.GetContentResponse
 import kotlinx.android.synthetic.main.fragment_comments_dispatch.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -47,6 +51,7 @@ class DispatchCommentsFragment : BaseFragment() {
     private val backwardNavigator by inject<BackwardNavigator>()
     private val getArticleCommentsViewModel by inject<GetArticleCommentsViewModel>()
     private val getArticleViewModel by inject<GetArticleViewModel>()
+    private val getAvatarViewModel by inject<GetAvatarViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_comments_dispatch, container, false)
@@ -81,8 +86,32 @@ class DispatchCommentsFragment : BaseFragment() {
         commentViewController.body.level.setLevel(0)
         commentViewController.body.author.setAuthor(commentModelNode.comment)
         commentViewController.body.timestamp.setTimestamp(commentModelNode.comment)
-        commentViewController.body.avatar.setStubAvatar()
         commentViewController.body.content.setContent(commentModelNode.comment)
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val getAvatarSpec = commentModelNode.comment.avatar?.let(::GetAvatarSpec)
+            if (getAvatarSpec == null) return@launch commentViewController.body.avatar.setStubAvatar()
+
+            getAvatarViewModel.requestAvatar(getAvatarSpec).collectLatest { onGetAvatarModel(it) }
+        }
+    }
+
+    private fun onGetAvatarModel(result: Result<GetContentResponse>) {
+        result.fold({ response ->
+            onGetAvatarSuccess(response)
+        }, { throwable ->
+            onGetAvatarFailure(throwable)
+        })
+    }
+
+    private fun onGetAvatarSuccess(response: GetContentResponse) {
+        val bitmap = BitmapFactory.decodeStream(response.bytes.inputStream())
+        CommentViewController(CommentViewHolder(fragment_comments_dispatch_comment)).body.avatar.setAvatar(bitmap)
+    }
+
+    private fun onGetAvatarFailure(throwable: Throwable) {
+        capture(analyticEvent(throwable) { "Error while loading an avatar" })
+        CommentViewController(CommentViewHolder(fragment_comments_dispatch_comment)).body.avatar.setStubAvatar()
     }
 
     private fun onGetArticleCommentsModelFailure(throwable: Throwable) {
@@ -98,7 +127,7 @@ class DispatchCommentsFragment : BaseFragment() {
         })
     }
 
-    private fun onGetArticleModelSuccess(model: GetArticleModel) = lifecycleScope.launch(Dispatchers.Main) {
+    private fun onGetArticleModelSuccess(model: GetArticleModel) {
         fragment_comments_dispatch_toolbar.title = model.response2.article.title
     }
 

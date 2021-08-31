@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.comments.dispatch.di.module
 
 import com.makentoshe.habrachan.application.android.common.article.di.CacheFirstArticleArenaProvider
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModelProvider
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
@@ -25,5 +26,8 @@ class DispatchCommentsModule : Module() {
         bind<ArticleCommentsArena>().toProvider(CacheFirstArticleCommentsArenaProvider::class)
 
         bind<ArticleArena>().toProvider(CacheFirstArticleArenaProvider::class)
+
+        bind<ContentArena>().toProvider(CacheFirstAvatarArenaProvider::class).singleton()
+        bind<GetAvatarViewModelProvider>().toClass<GetAvatarViewModelProvider>().singleton()
     }
 }
