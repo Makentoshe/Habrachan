@@ -18,7 +18,7 @@ object Version {
     const val okhttp = "4.1.0"
 
     // for testing purposes - any module
-    const val junit = "4.13.2"
+    const val junit = "4.13"
 
     const val mockk = "1.9.1"
 
@@ -76,6 +76,9 @@ object Version {
 
     // http://robolectric.org
     const val androidTestRobolectric = "4.3.1"
+
+    // https://stackoverflow.com/questions/48049131/cannot-resolve-symbol-instanttaskexecutorrule
+    const val androidTestArchitecture = "2.1.0"
 
     const val androidTestEspresso = "3.2.0"
 
