@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.comment.model.GetArticleCommentsModel
+import com.makentoshe.habrachan.application.android.common.comment.model.commentPagingData
+import com.makentoshe.habrachan.application.android.common.comment.model.commentsPagingData
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.DISCUSSION_COMMENT_LEVEL_DEPTH
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.copy
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsSpec2
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.commentPagingData
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.commentsPagingData
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
