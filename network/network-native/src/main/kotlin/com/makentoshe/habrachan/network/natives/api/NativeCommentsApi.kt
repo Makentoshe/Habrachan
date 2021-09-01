@@ -32,4 +32,13 @@ interface NativeCommentsApi {
         @Header("token") token: String,
         @Path("id") commentId: Int
     ): Call<ResponseBody>
+
+    @PUT("/api/v1/comments/{articleId}")
+    fun postComment(
+        @Header("client") clientKey: String,
+        @Header("token") token: String,
+        @Path("articleId") articleId: Int,
+        @Query("text") text: String,
+        @Query("parent_id") commentId: Int = 0
+    ) : Call<ResponseBody>
 }
