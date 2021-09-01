@@ -60,3 +60,5 @@ include(":application:android:common:common-comment")
 include(":application:android:common:common-di")
 include(":network:network-native:network-native-user-me:network-native-user-me-test")
 include(":application:android:screen:comments:dispatch")
+include("network:network-native:network-native-comment-post")
+findProject(":network:network-native:network-native-comment-post")?.name = "network-native-comment-post"
