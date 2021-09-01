@@ -22,7 +22,7 @@ import javax.inject.Inject
 class PostCommentViewModel(
     private val userSession: UserSession,
     private val postCommentArena: PostCommentArena,
-    initialPostCommentSpecOption: Option<PostCommentSpec> = Option.None
+    initialPostCommentSpecOption: Option<PostCommentSpec>
 ) : ViewModel() {
 
     companion object : Analytics(LogAnalytic())
@@ -52,10 +52,11 @@ class PostCommentViewModel(
     class Factory @Inject constructor(
         private val userSession: UserSession,
         private val postCommentArena: PostCommentArena,
+        private val initialPostCommentSpecOption: Option<PostCommentSpec>
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return PostCommentViewModel(userSession, postCommentArena) as T
+            return PostCommentViewModel(userSession, postCommentArena, initialPostCommentSpecOption) as T
         }
     }
 }

@@ -87,6 +87,7 @@ dependencies {
     implementation(project(":application:android:common:avatar"))
     implementation(project(":application:android:common:common-core"))
     implementation(project(":application:android:common:common-comment"))
+    implementation(project(":application:android:common:comment"))
     implementation(project(":application:android:common:common-di"))
 
     implementation(project(":entity"))
@@ -101,6 +102,7 @@ dependencies {
     implementation(project(":network:network-native:network-native-article-get"))
     implementation(project(":network:network-native:network-native-articles-get"))
     implementation(project(":network:network-native:network-native-comment-vote"))
+    implementation(project(":network:network-native:network-native-comment-post"))
     implementation(project(":network:network-native:network-native-comments-get"))
     implementation(project(":network:network-native:network-native-user-get"))
     implementation(project(":network:network-native:network-native-user-me"))

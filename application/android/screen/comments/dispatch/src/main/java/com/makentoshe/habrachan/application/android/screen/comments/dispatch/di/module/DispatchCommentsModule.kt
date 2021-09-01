@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.di.provider.
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.CacheFirstAvatarArenaProvider
 import com.makentoshe.habrachan.application.common.arena.article.ArticleArena
 import com.makentoshe.habrachan.application.common.arena.comments.ArticleCommentsArena
+import com.makentoshe.habrachan.application.common.arena.comments.PostCommentArena
 import com.makentoshe.habrachan.application.common.arena.content.ContentArena
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -29,5 +30,7 @@ class DispatchCommentsModule : Module() {
 
         bind<ContentArena>().toProvider(CacheFirstAvatarArenaProvider::class).singleton()
         bind<GetAvatarViewModelProvider>().toClass<GetAvatarViewModelProvider>().singleton()
+
+        bind<PostCommentArena>().toProvider(DefaultPostCommentArenaProvider::class).providesSingleton()
     }
 }
