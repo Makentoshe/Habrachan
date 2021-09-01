@@ -20,6 +20,8 @@ import com.makentoshe.habrachan.application.android.common.comment.CommentViewHo
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.model.GetArticleCommentsModel
 import com.makentoshe.habrachan.application.android.common.comment.model.comment
+import com.makentoshe.habrachan.application.android.common.comment.posting.PostCommentModel
+import com.makentoshe.habrachan.application.android.common.comment.posting.PostCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
@@ -52,6 +54,7 @@ class DispatchCommentsFragment : BaseFragment() {
     private val getArticleCommentsViewModel by inject<GetArticleCommentsViewModel>()
     private val getArticleViewModel by inject<GetArticleViewModel>()
     private val getAvatarViewModel by inject<GetAvatarViewModel>()
+    private val postCommentViewModel by inject<PostCommentViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_comments_dispatch, container, false)
@@ -67,6 +70,9 @@ class DispatchCommentsFragment : BaseFragment() {
         }
         lifecycleScope.launch(Dispatchers.IO) {
             getArticleViewModel.model.collectLatest { onGetArticleModel(it) }
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            postCommentViewModel.model.collectLatest { onPostCommentModel(it) }
         }
     }
 
@@ -134,6 +140,22 @@ class DispatchCommentsFragment : BaseFragment() {
     private fun onGetArticleModelFailure(throwable: Throwable) {
         capture(analyticEvent(throwable) { "Error while loading an Article(${arguments.articleId.articleId})" })
         fragment_comments_dispatch_toolbar.setTitle(R.string.comments_dispatch_article_title_error)
+    }
+
+    private fun onPostCommentModel(result: Result<PostCommentModel>) {
+        result.fold({ model ->
+            onPostCommentModelSuccess(model)
+        }, { throwable ->
+            onPostCommentModelFailure(throwable)
+        })
+    }
+
+    private fun onPostCommentModelSuccess(model: PostCommentModel) {
+        TODO()
+    }
+
+    private fun onPostCommentModelFailure(throwable: Throwable) {
+        TODO()
     }
 
     class Arguments(fragment: DispatchCommentsFragment) : FragmentArguments(fragment) {

@@ -11,12 +11,14 @@ import com.makentoshe.habrachan.network.NativeGetArticleManager
 import com.makentoshe.habrachan.network.NativeGetArticlesManager
 import com.makentoshe.habrachan.network.NativeGetMeManager
 import com.makentoshe.habrachan.network.NativeLoginManager
+import com.makentoshe.habrachan.network.NativePostCommentManager
 import com.makentoshe.habrachan.network.NativeVoteArticleManager
 import com.makentoshe.habrachan.network.NativeVoteCommentManager
 import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
 import com.makentoshe.habrachan.network.manager.GetArticleManager
 import com.makentoshe.habrachan.network.manager.GetArticlesManager
 import com.makentoshe.habrachan.network.manager.GetUserManager
+import com.makentoshe.habrachan.network.manager.PostCommentManager
 import com.makentoshe.habrachan.network.manager.VoteArticleManager
 import com.makentoshe.habrachan.network.manager.VoteCommentManager
 import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
@@ -24,6 +26,7 @@ import com.makentoshe.habrachan.network.request.GetArticleRequest2
 import com.makentoshe.habrachan.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.network.request.GetArticlesSpec
 import com.makentoshe.habrachan.network.request.GetUserRequest
+import com.makentoshe.habrachan.network.request.PostCommentRequest
 import com.makentoshe.habrachan.network.request.VoteArticleRequest
 import com.makentoshe.habrachan.network.request.VoteCommentRequest2
 import okhttp3.OkHttpClient
@@ -64,6 +67,9 @@ class NetworkModule(context: Context) : Module() {
 
         val nativeVoteCommentManager = NativeVoteCommentManager.Builder(client).build()
         bind<VoteCommentManager<out VoteCommentRequest2>>().toInstance(nativeVoteCommentManager)
+
+        val nativePostCommentManager = NativePostCommentManager.Builder(client).build()
+        bind<PostCommentManager<out PostCommentRequest>>().toInstance(nativePostCommentManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
