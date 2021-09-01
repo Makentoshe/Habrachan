@@ -21,6 +21,7 @@ import com.makentoshe.habrachan.application.android.common.comment.controller.co
 import com.makentoshe.habrachan.application.android.common.comment.model.GetArticleCommentsModel
 import com.makentoshe.habrachan.application.android.common.comment.model.comment
 import com.makentoshe.habrachan.application.android.common.comment.posting.PostCommentModel
+import com.makentoshe.habrachan.application.android.common.comment.posting.PostCommentSpec
 import com.makentoshe.habrachan.application.android.common.comment.posting.PostCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
@@ -64,6 +65,8 @@ class DispatchCommentsFragment : BaseFragment() {
         val tintColor = ContextCompat.getColor(requireContext(), R.color.brand_dark)
         fragment_comments_dispatch_toolbar.navigationIcon?.setTint(tintColor)
         fragment_comments_dispatch_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
+
+        fragment_comments_dispatch_bottom_send.setOnClickListener { onPostCommentSendClick() }
 
         lifecycleScope.launch(Dispatchers.IO) {
             getArticleCommentsViewModel.model.collectLatest { onGetArticleCommentsModel(it) }
@@ -156,6 +159,15 @@ class DispatchCommentsFragment : BaseFragment() {
 
     private fun onPostCommentModelFailure(throwable: Throwable) {
         TODO()
+    }
+
+    private fun onPostCommentSendClick() = lifecycleScope.launch(Dispatchers.IO) {
+        val message = fragment_comments_dispatch_sheet_edit_text.text.toString()
+        if (message.isBlank()) return@launch
+
+        val postCommentSpec = PostCommentSpec(arguments.articleId, message, arguments.commentId)
+        capture(analyticEvent { "Post comment: $postCommentSpec" })
+//        postCommentViewModel.channel.send(postCommentSpec)
     }
 
     class Arguments(fragment: DispatchCommentsFragment) : FragmentArguments(fragment) {
