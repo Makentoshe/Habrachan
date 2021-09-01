@@ -14,11 +14,11 @@ import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.comment.model.GetArticleCommentsModel
+import com.makentoshe.habrachan.application.android.common.comment.model.commentsPagingData
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.ARTICLE_COMMENT_LEVEL_DEPTH
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsSpec2
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.commentsPagingData
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
@@ -61,9 +61,15 @@ class ArticleCommentsFragment : BaseFragment() {
     ): View? = inflater.inflate(R.layout.fragment_comments_article, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val wasViewModelRecreated = articleCommentsViewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
+        val wasViewModelRecreated =
+            articleCommentsViewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
         if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch(Dispatchers.IO) {
-            capture(analyticEvent(this@ArticleCommentsFragment.javaClass.simpleName, "articleId=${arguments.articleId}"))
+            capture(
+                analyticEvent(
+                    this@ArticleCommentsFragment.javaClass.simpleName,
+                    "articleId=${arguments.articleId}"
+                )
+            )
             val getArticleCommentsSpec = GetArticleCommentsSpec2.ArticleCommentsSpec(articleId(arguments.articleId))
             articleCommentsViewModel.channel.send(getArticleCommentsSpec)
         }
@@ -71,7 +77,8 @@ class ArticleCommentsFragment : BaseFragment() {
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_comments_article_exception))
         exceptionController.setRetryButton { adapter.retry() }
 
-        emptyStateController = CommentsEmptyStateController(CommentsEmptyStateViewHolder(fragment_comments_article_empty_state))
+        emptyStateController =
+            CommentsEmptyStateController(CommentsEmptyStateViewHolder(fragment_comments_article_empty_state))
         emptyStateController.buttonOnClickListener {
             Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
         }

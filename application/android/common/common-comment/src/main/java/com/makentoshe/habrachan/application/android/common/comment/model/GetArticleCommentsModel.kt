@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.common.comment.viewmodel
+package com.makentoshe.habrachan.application.android.common.comment.model
 
 import androidx.paging.PagingData
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelElement

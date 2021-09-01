@@ -18,9 +18,9 @@ import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetA
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsModel
+import com.makentoshe.habrachan.application.android.common.comment.model.GetArticleCommentsModel
+import com.makentoshe.habrachan.application.android.common.comment.model.comment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.comment
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator

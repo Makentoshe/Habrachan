@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.comment.model.GetArticleCommentsModel
 import com.makentoshe.habrachan.application.common.arena.comments.ArticleCommentsArena
 import com.makentoshe.habrachan.functional.Option
 import com.makentoshe.habrachan.functional.map
