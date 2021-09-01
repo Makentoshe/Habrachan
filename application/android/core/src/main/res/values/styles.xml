@@ -59,12 +59,24 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="Habrachan.Button.Icon" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="iconPadding">0dp</item>
+        <item name="tint">@color/brand_dark</item>
+        <item name="tintMode">src_atop</item>
+        <item name="android:tint">@color/brand_dark</item>
+        <item name="android:tintMode">src_atop</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="backgroundColor">@android:color/transparent</item>
+        <item name="strokeColor">@android:color/transparent</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
     <style name="Habrachan.Separator" parent="Habrachan.Light">
         <item name="android:background">@color/separator</item>
     </style>
 
     <style name="Habrachan.BottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="behavior_peekHeight">@dimen/heightL</item>
+        <item name="behavior_peekHeight">@dimen/heightLL</item>
         <item name="behavior_hideable">false</item>
     </style>
 

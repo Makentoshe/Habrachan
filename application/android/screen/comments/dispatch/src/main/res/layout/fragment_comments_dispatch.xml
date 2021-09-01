@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/fragment_comments_dispatch_toolbar"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="@id/fragment_comments_dispatch_bottom_barrier">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -63,20 +63,55 @@
                 android:layout_height="@dimen/separator_height"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/fragment_comments_dispatch_sheet_edit_text"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/fragment_comments_dispatch_sheet_scroll"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@null"
-                android:gravity="top"
-                android:inputType="textImeMultiLine"
-                android:hint="Jot something down"
+                android:layout_height="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_comments_dispatch_sheet_separator"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent">
 
+                <EditText
+                    android:id="@+id/fragment_comments_dispatch_sheet_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:isScrollContainer="true"
+                    android:hint="Jot something down"
+                    android:layout_marginTop="@dimen/dimenS"
+                    android:layout_marginHorizontal="@dimen/dimenS" />
+
+            </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/fragment_comments_dispatch_bottom_barrier"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:constraint_referenced_ids="fragment_comments_dispatch_bottom_send, fragment_comments_dispatch_bottom_todo" />
+
+    <TextView
+        android:id="@+id/fragment_comments_dispatch_bottom_todo"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/heightLL"
+        android:background="@color/background"
+        android:gravity="center"
+        android:text="This feature is not implemented yet, but the space is taken"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fragment_comments_dispatch_bottom_send"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Habrachan.Button.Icon"
+        android:id="@+id/fragment_comments_dispatch_bottom_send"
+        android:layout_width="@dimen/heightLL"
+        android:layout_height="@dimen/heightLL"
+        app:icon="@drawable/ic_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
