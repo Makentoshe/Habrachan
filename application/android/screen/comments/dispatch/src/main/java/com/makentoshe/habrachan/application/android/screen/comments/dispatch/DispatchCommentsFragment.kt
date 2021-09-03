@@ -63,6 +63,8 @@ class DispatchCommentsFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.setOnClickListener { /* a simple hack until we fixed a stacked screens issue */ }
+
         val tintColor = ContextCompat.getColor(requireContext(), R.color.brand_dark)
         fragment_comments_dispatch_toolbar.navigationIcon?.setTint(tintColor)
         fragment_comments_dispatch_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
@@ -160,7 +162,12 @@ class DispatchCommentsFragment : BaseFragment() {
     }
 
     private fun onPostCommentModelSuccess(model: PostCommentModel) {
-        TODO()
+        val snackbar = Snackbar.make(requireView(), R.string.comments_dispatch_comment_posting_success, Snackbar.LENGTH_SHORT)
+        snackbar.addCallback(object : Snackbar.Callback() {
+            override fun onShown(sb: Snackbar?) {
+                backwardNavigator.toPreviousScreen()
+            }
+        }).show()
     }
 
     private fun onPostCommentModelFailure(throwable: Throwable) {
