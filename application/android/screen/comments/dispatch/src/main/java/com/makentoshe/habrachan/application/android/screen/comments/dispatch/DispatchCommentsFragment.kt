@@ -146,6 +146,11 @@ class DispatchCommentsFragment : BaseFragment() {
     }
 
     private fun onPostCommentModel(result: Result<PostCommentModel>) {
+        lifecycleScope.launch(Dispatchers.Main) {
+            fragment_comments_dispatch_bottom_progress.visibility = View.GONE
+            fragment_comments_dispatch_bottom_send.visibility = View.VISIBLE
+        }
+
         result.fold({ model ->
             onPostCommentModelSuccess(model)
         }, { throwable ->
@@ -167,7 +172,12 @@ class DispatchCommentsFragment : BaseFragment() {
 
         val postCommentSpec = PostCommentSpec(arguments.articleId, message, arguments.commentId)
         capture(analyticEvent { "Post comment: $postCommentSpec" })
-//        postCommentViewModel.channel.send(postCommentSpec)
+        postCommentViewModel.channel.send(postCommentSpec)
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            fragment_comments_dispatch_bottom_progress.visibility = View.VISIBLE
+            fragment_comments_dispatch_bottom_send.visibility = View.GONE
+        }
     }
 
     class Arguments(fragment: DispatchCommentsFragment) : FragmentArguments(fragment) {

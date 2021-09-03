@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/fragment_comments_dispatch_toolbar"
-        app:layout_constraintBottom_toBottomOf="@id/fragment_comments_dispatch_bottom_barrier">
+        app:layout_constraintBottom_toBottomOf="@id/fragment_comments_dispatch_bottom_barrier_horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -89,9 +89,10 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/fragment_comments_dispatch_bottom_barrier"
+        android:id="@+id/fragment_comments_dispatch_bottom_barrier_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:barrierDirection="top"
         app:constraint_referenced_ids="fragment_comments_dispatch_bottom_send, fragment_comments_dispatch_bottom_todo" />
 
     <TextView
@@ -102,8 +103,15 @@
         android:gravity="center"
         android:text="This feature is not implemented yet, but the space is taken"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/fragment_comments_dispatch_bottom_send"
+        app:layout_constraintEnd_toStartOf="@id/fragment_comments_dispatch_bottom_barrier_vertical"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/fragment_comments_dispatch_bottom_barrier_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="fragment_comments_dispatch_bottom_send, fragment_comments_dispatch_bottom_progress" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Habrachan.Button.Icon"
@@ -111,6 +119,16 @@
         android:layout_width="@dimen/heightLL"
         android:layout_height="@dimen/heightLL"
         app:icon="@drawable/ic_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+        android:visibility="gone"
+        style="@style/Habrachan.Progress"
+        android:id="@+id/fragment_comments_dispatch_bottom_progress"
+        android:layout_width="@dimen/heightLL"
+        android:layout_height="@dimen/heightLL"
+        android:padding="@dimen/dimenM"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
