@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
@@ -163,7 +164,8 @@ class DispatchCommentsFragment : BaseFragment() {
     }
 
     private fun onPostCommentModelFailure(throwable: Throwable) {
-        TODO()
+        capture(analyticEvent(throwable) { "Error while posting a comment" })
+        Snackbar.make(requireView(), R.string.comments_dispatch_comment_posting_error, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun onPostCommentSendClick() = lifecycleScope.launch(Dispatchers.IO) {
@@ -171,7 +173,7 @@ class DispatchCommentsFragment : BaseFragment() {
         if (message.isBlank()) return@launch
 
         val postCommentSpec = PostCommentSpec(arguments.articleId, message, arguments.commentId)
-        capture(analyticEvent { "Post comment: $postCommentSpec" })
+        capture(this@DispatchCommentsFragment.analyticEvent { "Post comment: $postCommentSpec" })
         postCommentViewModel.channel.send(postCommentSpec)
 
         lifecycleScope.launch(Dispatchers.Main) {
