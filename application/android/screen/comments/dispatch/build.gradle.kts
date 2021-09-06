@@ -58,7 +58,7 @@ dependencies {
     implementation(project(":application:android:common:comment:posting"))
     implementation(project(":application:android:common:comment:getting"))
     implementation(project(":application:android:common"))
-    implementation(project(":application:android:common:navigation"))
+    implementation(project(":application:android:navigation"))
     implementation(project(":application:android:common:di"))
     implementation(project(":application:android:common:avatar"))
     implementation(project(":application:android:common:arena"))

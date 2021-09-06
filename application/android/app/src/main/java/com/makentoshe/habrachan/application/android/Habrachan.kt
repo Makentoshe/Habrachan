@@ -5,12 +5,12 @@ import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.common.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.di.AppActivityInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationModule
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.di.NavigationModule
 import com.makentoshe.habrachan.application.android.di.NetworkModule
+import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.article.di.ArticleFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFragmentInjector

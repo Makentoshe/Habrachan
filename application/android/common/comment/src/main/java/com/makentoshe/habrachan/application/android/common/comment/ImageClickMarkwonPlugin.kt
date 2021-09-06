@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.application.android.common.comment
 
 import android.text.style.ClickableSpan
 import android.view.View
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.ContentScreenNavigator
+import com.makentoshe.habrachan.application.android.navigation.navigator.ContentScreenNavigator
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.MarkwonSpansFactory
 import io.noties.markwon.Prop

@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.application.android.navigation
 
-import com.makentoshe.habrachan.application.android.common.navigation.StackRouter
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.ThreadCommentsScreenNavigator
+import com.makentoshe.habrachan.application.android.navigation.navigator.ThreadCommentsScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.thread.navigation.ThreadCommentsScreen
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.CommentId

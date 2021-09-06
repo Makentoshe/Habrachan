@@ -3,9 +3,9 @@ package com.makentoshe.habrachan.application.android.screen.user.di
 import com.makentoshe.habrachan.application.android.arena.ContentArenaCache
 import com.makentoshe.habrachan.application.android.arena.GetUserArenaCache
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
-import com.makentoshe.habrachan.application.android.common.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
+import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.user.UserFragment
 import com.makentoshe.habrachan.application.android.screen.user.di.provider.UserViewModelFactoryProvider
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserNavigation

@@ -9,7 +9,7 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Vot
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
 import com.makentoshe.habrachan.application.android.common.core.collectResult
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.DispatchCommentsScreenNavigator
+import com.makentoshe.habrachan.application.android.navigation.navigator.DispatchCommentsScreenNavigator
 import com.makentoshe.habrachan.entity.CommentVote
 import com.makentoshe.habrachan.entity.commentId
 import com.makentoshe.habrachan.network.NativeVoteCommentException
