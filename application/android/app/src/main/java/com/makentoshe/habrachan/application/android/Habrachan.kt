@@ -15,7 +15,6 @@ import com.makentoshe.habrachan.application.android.screen.article.di.ArticleFra
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.comments.di.ArticleCommentsFragmentInjector
-import com.makentoshe.habrachan.application.android.screen.comments.di.CommentDetailsFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.comments.di.DispatchCommentsFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.comments.di.ThreadCommentsFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.content.di.ContentFragmentInjector
@@ -42,7 +41,7 @@ class Habrachan : Application() {
         UserFragmentInjector(),
         ArticleCommentsFragmentInjector(),
         ThreadCommentsFragmentInjector(),
-        CommentDetailsFragmentInjector(),
+//        CommentDetailsFragmentInjector(),
         DispatchCommentsFragmentInjector(),
     )
 

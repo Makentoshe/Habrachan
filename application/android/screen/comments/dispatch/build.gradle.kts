@@ -52,12 +52,14 @@ dependencies {
     implementation(project(":application:common:arena:content"))
 
     implementation(project(":application:android:analytics"))
-    implementation(project(":application:android:common:common-comment"))
     implementation(project(":application:android:common:article"))
     implementation(project(":application:android:common:comment"))
-    implementation(project(":application:android:common:common-core"))
+    implementation(project(":application:android:common:comment:voting"))
+    implementation(project(":application:android:common:comment:posting"))
+    implementation(project(":application:android:common:comment:getting"))
+    implementation(project(":application:android:common"))
     implementation(project(":application:android:common:navigation"))
-    implementation(project(":application:android:common:common-di"))
+    implementation(project(":application:android:common:di"))
     implementation(project(":application:android:common:avatar"))
     implementation(project(":application:android:common:arena"))
 

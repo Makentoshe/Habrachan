@@ -85,10 +85,9 @@ dependencies {
     implementation(project(":application:android:common:navigation"))
     implementation(project(":application:android:common:arena"))
     implementation(project(":application:android:common:avatar"))
-    implementation(project(":application:android:common:common-core"))
-    implementation(project(":application:android:common:common-comment"))
+    implementation(project(":application:android:common"))
     implementation(project(":application:android:common:comment"))
-    implementation(project(":application:android:common:common-di"))
+    implementation(project(":application:android:common:di"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
