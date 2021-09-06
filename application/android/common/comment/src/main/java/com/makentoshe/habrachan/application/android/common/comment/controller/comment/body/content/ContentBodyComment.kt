@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.application.android.common.comment.controller.c
 import android.content.Context
 import android.widget.TextView
 import com.makentoshe.habrachan.application.android.common.comment.ImageClickMarkwonPlugin
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.ContentScreenNavigator
+import com.makentoshe.habrachan.application.android.navigation.navigator.ContentScreenNavigator
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.ImagesPlugin

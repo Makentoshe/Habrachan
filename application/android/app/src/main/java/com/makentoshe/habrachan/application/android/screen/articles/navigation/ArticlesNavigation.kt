@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.articles.navigation
 
-import com.makentoshe.habrachan.application.android.common.navigation.StackRouter
+import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
 import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginScreen
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount

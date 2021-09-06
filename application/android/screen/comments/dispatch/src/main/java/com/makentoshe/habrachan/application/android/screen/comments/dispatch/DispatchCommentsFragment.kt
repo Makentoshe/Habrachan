@@ -27,7 +27,7 @@ import com.makentoshe.habrachan.application.android.common.comment.posting.PostC
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
+import com.makentoshe.habrachan.application.android.navigation.navigator.BackwardNavigator
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.CommentId
 import com.makentoshe.habrachan.entity.articleId

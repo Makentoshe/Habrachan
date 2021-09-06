@@ -1,16 +1,16 @@
 package com.makentoshe.habrachan.application.android.di
 
-import com.makentoshe.habrachan.application.android.common.navigation.StackRouter
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.ContentScreenNavigator
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.DispatchCommentsScreenNavigator
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.ThreadCommentsScreenNavigator
-import com.makentoshe.habrachan.application.android.common.navigation.navigator.UserScreenNavigator
 import com.makentoshe.habrachan.application.android.navigation.BackwardNavigatorImpl
 import com.makentoshe.habrachan.application.android.navigation.ContentScreenNavigatorImpl
 import com.makentoshe.habrachan.application.android.navigation.DispatchCommentsScreenNavigatorImpl
+import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.navigation.ThreadCommentsScreenNavigatorImpl
 import com.makentoshe.habrachan.application.android.navigation.UserScreenNavigatorImpl
+import com.makentoshe.habrachan.application.android.navigation.navigator.BackwardNavigator
+import com.makentoshe.habrachan.application.android.navigation.navigator.ContentScreenNavigator
+import com.makentoshe.habrachan.application.android.navigation.navigator.DispatchCommentsScreenNavigator
+import com.makentoshe.habrachan.application.android.navigation.navigator.ThreadCommentsScreenNavigator
+import com.makentoshe.habrachan.application.android.navigation.navigator.UserScreenNavigator
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router

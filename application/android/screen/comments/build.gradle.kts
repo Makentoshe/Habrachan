@@ -50,7 +50,7 @@ dependencies {
     implementation(project(":application:android:database"))
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:screen"))
-    implementation(project(":application:android:common:navigation"))
+    implementation(project(":application:android:navigation"))
     implementation(project(":application:android:common:arena"))
     implementation(project(":application:android:common:article"))
     implementation(project(":application:android:common:avatar"))

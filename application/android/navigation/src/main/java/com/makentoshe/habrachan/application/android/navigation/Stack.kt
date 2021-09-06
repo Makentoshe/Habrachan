@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.common.navigation
+package com.makentoshe.habrachan.application.android.navigation
 
 import ru.terrakok.cicerone.Screen
 import ru.terrakok.cicerone.commands.Command

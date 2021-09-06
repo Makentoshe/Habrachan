@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.common.navigation.navigator
+package com.makentoshe.habrachan.application.android.navigation.navigator
 
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.CommentId
