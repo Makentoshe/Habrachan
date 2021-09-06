@@ -11,10 +11,10 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
-import com.makentoshe.habrachan.application.android.common.core.fragment.BaseBottomSheetDialogFragment
-import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
+import com.makentoshe.habrachan.application.android.common.fragment.BaseBottomSheetDialogFragment
+import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
+import com.makentoshe.habrachan.application.android.common.toBitmap
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.CommentDetailsViewModel
-import com.makentoshe.habrachan.application.android.toBitmap
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.fold
 import kotlinx.coroutines.Dispatchers

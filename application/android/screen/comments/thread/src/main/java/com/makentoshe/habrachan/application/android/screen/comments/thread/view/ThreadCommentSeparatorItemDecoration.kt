@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.makentoshe.habrachan.application.android.dp2px
+import com.makentoshe.habrachan.application.android.common.dp2px
 import com.makentoshe.habrachan.application.android.screen.comments.thread.R
 import kotlin.math.roundToInt
 

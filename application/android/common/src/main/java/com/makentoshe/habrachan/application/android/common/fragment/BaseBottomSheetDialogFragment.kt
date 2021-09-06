@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.common.core.fragment
+package com.makentoshe.habrachan.application.android.common.fragment
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

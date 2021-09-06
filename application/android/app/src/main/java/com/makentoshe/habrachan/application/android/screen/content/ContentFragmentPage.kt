@@ -19,10 +19,10 @@ import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.toBitmap
 import com.makentoshe.habrachan.application.android.filesystem.FileSystem
 import com.makentoshe.habrachan.application.android.screen.content.model.ContentActionBroadcastReceiver
 import com.makentoshe.habrachan.application.android.screen.content.viewmodel.ContentViewModel
-import com.makentoshe.habrachan.application.android.toBitmap
 import com.makentoshe.habrachan.network.GetContentResponse
 import kotlinx.android.synthetic.main.fragment_content_page.*
 import kotlinx.coroutines.CoroutineScope

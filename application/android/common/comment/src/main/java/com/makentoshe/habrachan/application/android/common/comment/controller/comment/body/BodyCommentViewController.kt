@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.application.android.common.comment.controller.co
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyCommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.level.LevelBodyCommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.timestamp.TimestampBodyCommentViewController
-import com.makentoshe.habrachan.application.android.common.core.dp2px
+import com.makentoshe.habrachan.application.android.common.dp2px
 
 class BodyCommentViewController internal constructor(private val holder: CommentViewHolder) {
 

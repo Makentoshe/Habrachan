@@ -19,8 +19,8 @@ import com.makentoshe.habrachan.application.android.common.comment.model.comment
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.ARTICLE_COMMENT_LEVEL_DEPTH
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsSpec2
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
-import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
-import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
+import com.makentoshe.habrachan.application.android.common.fragment.BaseFragment
+import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.navigation.navigator.BackwardNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.articles.model.CommentsEmptyStateController
 import com.makentoshe.habrachan.application.android.screen.comments.articles.view.CommentsEmptyStateViewHolder

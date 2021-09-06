@@ -17,11 +17,11 @@ import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
-import com.makentoshe.habrachan.application.android.dp2px
+import com.makentoshe.habrachan.application.android.common.dp2px
+import com.makentoshe.habrachan.application.android.common.toRoundedDrawable
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
 import com.makentoshe.habrachan.application.android.screen.user.navigation.UserNavigation
 import com.makentoshe.habrachan.application.android.screen.user.viewmodel.UserViewModel
-import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import com.makentoshe.habrachan.entity.User
 import com.makentoshe.habrachan.entity.timeRegistered
 import com.makentoshe.habrachan.network.GetContentResponse

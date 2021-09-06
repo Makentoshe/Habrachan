@@ -57,7 +57,7 @@ dependencies {
     implementation(project(":application:android:common:arena"))
     implementation(project(":application:android:common:avatar"))
     implementation(project(":application:android:common"))
-    implementation(project(":application:android:common:di"))
+    implementation(project(":application:android:di"))
     implementation(project(":application:android:common:comment"))
     implementation(project(":application:android:common:comment:voting"))
     implementation(project(":application:android:common:comment:getting"))

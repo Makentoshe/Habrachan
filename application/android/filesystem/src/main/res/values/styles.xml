@@ -1,0 +1,83 @@
+<resources>
+
+    <style name="Habrachan.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#ff9cc2ce</item>
+        <item name="colorAccent">#ff9cc2ce</item>
+        <item name="colorPrimaryDark">#ff728e96</item>
+    </style>
+
+    <style name="Habrachan.Light.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:textAppearance">@style/Habrachan.Light.TextAppearance</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="android:elevation">0dp</item>
+        <item name="subtitleTextColor">@android:color/white</item>
+        <item name="android:tint">@android:color/white</item>
+        <item name="android:tintMode">src_atop</item>
+    </style>
+
+    <style name="Habrachan.Toolbar.Discolor" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textColor">@color/brand_dark</item>
+        <item name="android:textColorPrimary">@color/brand_dark</item>
+        <item name="android:textColorSecondary">@color/brand_dark</item>
+        <item name="android:textAppearance">@style/Habrachan.Light.TextAppearance</item>
+        <item name="colorOnPrimary">@color/brand_dark</item>
+        <item name="titleTextColor">@color/brand_dark</item>
+        <item name="android:elevation">0dp</item>
+        <item name="subtitleTextColor">@color/brand_dark</item>
+        <item name="android:tint">@color/brand_dark</item>
+        <item name="android:tintMode">src_atop</item>
+    </style>
+
+    <style name="Habrachan.Light.TextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/title</item>
+    </style>
+
+    <style name="Habrachan.Text" parent="Habrachan.Light">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="Habrachan.Text.Main">
+        <item name="android:textSize">@dimen/textML</item>
+    </style>
+
+    <style name="Habrachan.Text.Main.Bold">
+        <item name="android:textSize">@dimen/textML</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Habrachan.Text.Support">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/dimmed</item>
+    </style>
+
+    <style name="Habrachan.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Habrachan.Button.Icon" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="iconPadding">0dp</item>
+        <item name="tint">@color/brand_dark</item>
+        <item name="tintMode">src_atop</item>
+        <item name="android:tint">@color/brand_dark</item>
+        <item name="android:tintMode">src_atop</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="backgroundColor">@android:color/transparent</item>
+        <item name="strokeColor">@android:color/transparent</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <style name="Habrachan.Separator" parent="Habrachan.Light">
+        <item name="android:background">@color/separator</item>
+    </style>
+
+    <style name="Habrachan.BottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="behavior_peekHeight">@dimen/heightLL</item>
+        <item name="behavior_hideable">false</item>
+    </style>
+
+</resources>

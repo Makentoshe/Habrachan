@@ -4,7 +4,6 @@ import com.makentoshe.habrachan.application.android.arena.ContentArenaCache
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.filesystem.FileSystem
 import com.makentoshe.habrachan.application.android.screen.content.ContentFragment
 import com.makentoshe.habrachan.application.android.screen.content.navigation.ContentNavigation
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
@@ -25,7 +24,7 @@ class CommonContentModule(injectorScope: FragmentInjector.FragmentInjectorScope<
         Toothpick.openScopes(ApplicationScope::class).inject(this)
 
         bind<ContentNavigation>().toInstance(ContentNavigation(router))
-        bind<FileSystem>().toInstance(FileSystem.pictures(injectorScope.context))
+        bind<com.makentoshe.habrachan.application.android.filesystem.FileSystem>().toInstance(com.makentoshe.habrachan.application.android.filesystem.FileSystem.pictures(injectorScope.context))
 
         val contentArenaCache = ContentArenaCache(cacheDatabase.contentDao(), injectorScope.context.cacheDir)
         val getContentArena = ContentArena(getContentManager, contentArenaCache)

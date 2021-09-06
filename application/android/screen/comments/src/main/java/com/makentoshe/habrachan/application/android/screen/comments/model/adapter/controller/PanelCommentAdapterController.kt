@@ -2,13 +2,13 @@ package com.makentoshe.habrachan.application.android.screen.comments.model.adapt
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
+import com.makentoshe.habrachan.application.android.common.collectResult
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelElement
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentSpec
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
-import com.makentoshe.habrachan.application.android.common.core.collectResult
 import com.makentoshe.habrachan.application.android.navigation.navigator.DispatchCommentsScreenNavigator
 import com.makentoshe.habrachan.entity.CommentVote
 import com.makentoshe.habrachan.entity.commentId

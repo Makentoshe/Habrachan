@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android
+package com.makentoshe.habrachan.application.android.common
 
 import android.content.res.Resources
 import android.graphics.Bitmap
