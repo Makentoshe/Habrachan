@@ -54,8 +54,8 @@ dependencies {
 
     implementation(project(":functional"))
 
-    // Inherits
-    api(project(":application:common:arena:article"))
+    // Inherits from
+    api(project(":application:android:common:comment"))
 
     // Toothpick
     // https://github.com/stephanenicolas/toothpick

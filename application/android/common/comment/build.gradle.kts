@@ -47,39 +47,62 @@ dependencies {
     implementation(project(":network:network-native:network-native-common"))
     implementation(project(":network:network-native"))
 
-    implementation(project(":application:android:analytics"))
     implementation(project(":application:android:database"))
-    implementation(project(":application:android:common:common-core"))
-    implementation(project(":application:android:common:common-di"))
+    implementation(project(":application:android:analytics"))
+    implementation(project(":application:android:common"))
+    implementation(project(":application:android:common:di"))
+    implementation(project(":application:android:common:navigation"))
 
     implementation(project(":functional"))
 
-    // Inherits
+    // Inherits from
     api(project(":application:common:arena:comments"))
 
     // Toothpick
     // https://github.com/stephanenicolas/toothpick
-    val toothpickVersion = dependency.version.toothpick
-    implementation("com.github.stephanenicolas.toothpick:ktp:$toothpickVersion")
-    kapt("com.github.stephanenicolas.toothpick:toothpick-compiler:$toothpickVersion")
-    implementation("com.github.stephanenicolas.toothpick:smoothie:$toothpickVersion")
-    implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpickVersion")
-    testImplementation("com.github.stephanenicolas.toothpick:toothpick-testing-junit5:$toothpickVersion")
+    val toothpick = dependency.version.toothpick
+    implementation("com.github.stephanenicolas.toothpick:ktp:$toothpick")
+    kapt("com.github.stephanenicolas.toothpick:toothpick-compiler:$toothpick")
+    implementation("com.github.stephanenicolas.toothpick:smoothie:$toothpick")
+    implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpick")
+    testImplementation("com.github.stephanenicolas.toothpick:toothpick-testing-junit5:$toothpick")
 
     // OkHttp
     // https://github.com/square/okhttp/
-    val okhttpVersion = dependency.version.okhttp
-    implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
+    val okhttp = dependency.version.okhttp
+    implementation("com.squareup.okhttp3:okhttp:$okhttp")
+
+    // Markwon
+    // https://github.com/noties/Markwon
+    val markwon = dependency.version.androidMarkwon
+    implementation("io.noties.markwon:core:$markwon")
+    implementation("io.noties.markwon:html:$markwon")
+    implementation("io.noties.markwon:image:$markwon")
+    implementation("io.noties.markwon:ext-tables:$markwon")
+
+    // Material components
+    // https://github.com/material-components/material-components-android
+    val materialVersion = dependency.version.androidMaterialDesign
+    implementation("com.google.android.material:material:$materialVersion")
 
     // Architecture components
     // https://developer.android.com/topic/libraries/architecture
-    val architectureVersion = dependency.version.androidArchitecture
-    implementation("android.arch.lifecycle:extensions:$architectureVersion")
-    implementation("android.arch.lifecycle:viewmodel:$architectureVersion")
+    val arch = dependency.version.androidArchitecture
+    implementation("android.arch.lifecycle:extensions:$arch")
+    implementation("android.arch.lifecycle:viewmodel:$arch")
+
+    // Pagination library
+    // https://developer.android.com/topic/libraries/architecture/paging
+    val paginationVersion = dependency.version.androidPaging
+    implementation("androidx.paging:paging-runtime-ktx:$paginationVersion")
+    implementation("androidx.paging:paging-rxjava2:$paginationVersion")
 
     // Coroutines for android ViewModel
-    val coroutinesViewModelVersion = dependency.version.androidCoroutinesViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutinesViewModelVersion")
+    val coroutinesViewModel = dependency.version.androidCoroutinesViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutinesViewModel")
+
+    val constraintVersion = dependency.version.androidConstraintLayout
+    implementation("androidx.constraintlayout:constraintlayout:$constraintVersion")
 
     val coreVersion = dependency.version.androidCore
     implementation("androidx.core:core-ktx:$coreVersion")
@@ -90,18 +113,9 @@ dependencies {
     val junitVersion = dependency.version.junit
     testImplementation("junit:junit:$junitVersion")
 
-    // Mockk - mocking library for testing purposes only
-    // https://github.com/mockk/mockk
-    val mockkVersion = dependency.version.mockk
-    testImplementation("io.mockk:mockk:$mockkVersion")
+    val runner = dependency.version.androidTestRunner
+    androidTestImplementation("androidx.test:runner:$runner")
 
-    // Robolectric - unit tests with android environment
-    // http://robolectric.org
-    val robolectricVersion = dependency.version.androidTestRobolectric
-    testImplementation("org.robolectric:robolectric:$robolectricVersion")
-
-    // For testing with android architecture
-    // https://stackoverflow.com/questions/48049131/cannot-resolve-symbol-instanttaskexecutorrule
-    val testArchitectureVersion = dependency.version.androidTestArchitecture
-    testImplementation("androidx.arch.core:core-testing:$testArchitectureVersion")
+    val espresso = dependency.version.androidTestEspresso
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espresso")
 }

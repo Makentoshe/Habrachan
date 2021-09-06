@@ -47,7 +47,7 @@ class NativePostCommentManager internal constructor(
 
     class Builder(private val client: OkHttpClient) {
 
-        private val baseUrl = "https://habr.com/"
+        private val baseUrl = "https://habrфывцукцуеук.com/"
         private val deserializer = NativePostCommentDeserializer()
 
         private fun getRetrofit() = Retrofit.Builder().client(client).baseUrl(baseUrl).build()
