@@ -6,9 +6,9 @@ import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetA
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelElement
-import com.makentoshe.habrachan.application.android.dp2px
+import com.makentoshe.habrachan.application.android.common.dp2px
+import com.makentoshe.habrachan.application.android.common.toRoundedDrawable
 import com.makentoshe.habrachan.application.android.screen.comments.R
-import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.onFailure
 import com.makentoshe.habrachan.functional.onSuccess

@@ -22,7 +22,8 @@ import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.dp2px
+import com.makentoshe.habrachan.application.android.common.dp2px
+import com.makentoshe.habrachan.application.android.common.toRoundedDrawable
 import com.makentoshe.habrachan.application.android.screen.article.model.ArticleHtmlController
 import com.makentoshe.habrachan.application.android.screen.article.model.ArticleShareController
 import com.makentoshe.habrachan.application.android.screen.article.model.HabrachanWebViewClient
@@ -30,7 +31,6 @@ import com.makentoshe.habrachan.application.android.screen.article.model.Habrach
 import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleNavigation
 import com.makentoshe.habrachan.application.android.screen.article.viewmodel.ArticleViewModel2
-import com.makentoshe.habrachan.application.android.toRoundedDrawable
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.fold

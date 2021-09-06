@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.common.core
+package com.makentoshe.habrachan.application.android.common
 
 import android.content.Context
 import java.text.SimpleDateFormat

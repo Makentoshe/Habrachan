@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.common.core
+package com.makentoshe.habrachan.application.android.common
 
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.fold

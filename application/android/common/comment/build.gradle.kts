@@ -50,7 +50,7 @@ dependencies {
     implementation(project(":application:android:database"))
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:common"))
-    implementation(project(":application:android:common:di"))
+    implementation(project(":application:android:di"))
     implementation(project(":application:android:navigation"))
 
     implementation(project(":functional"))

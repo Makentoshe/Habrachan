@@ -83,11 +83,12 @@ dependencies {
     implementation(project(":application:android:screen:comments:dispatch"))
 
     implementation(project(":application:android:navigation"))
+    implementation(project(":application:android:filesystem"))
     implementation(project(":application:android:common:arena"))
     implementation(project(":application:android:common:avatar"))
     implementation(project(":application:android:common"))
     implementation(project(":application:android:common:comment"))
-    implementation(project(":application:android:common:di"))
+    implementation(project(":application:android:di"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))

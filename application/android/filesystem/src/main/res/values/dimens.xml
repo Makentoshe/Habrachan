@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_text_size">20sp</dimen>
+    <dimen name="toolbar_height_with_subtitle">64dp</dimen>
+
+    <!-- Toolbar Light differences -->
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="toolbar_separator_height">0px</dimen>
+
+    <!-- Text -->
+    <dimen name="textML">16sp</dimen>
+
+    <!-- Margins and Paddings -->
+    <dimen name="dimen2XL">24dp</dimen>
+    <dimen name="dimenXL">20dp</dimen>
+    <dimen name="dimenL">16dp</dimen>
+    <dimen name="dimenM">12dp</dimen>
+    <dimen name="dimenS">8dp</dimen>
+    <dimen name="dimenXS">4dp</dimen>
+    <dimen name="dimen2XS">2dp</dimen>
+
+    <!-- Elements -->
+    <dimen name="heightXS">16dp</dimen>
+    <dimen name="heightXSL">18dp</dimen>
+    <dimen name="heightS">24dp</dimen>
+    <dimen name="heightM">32dp</dimen>
+    <dimen name="heightML">36dp</dimen>
+    <dimen name="heightL">48dp</dimen>
+    <dimen name="heightLL">56dp</dimen>
+    <dimen name="separator_height">1dp</dimen>
+
+    <!-- Radius -->
+    <dimen name="radiusS">4dp</dimen>
+    <dimen name="radiusNone">0dp</dimen>
+</resources>

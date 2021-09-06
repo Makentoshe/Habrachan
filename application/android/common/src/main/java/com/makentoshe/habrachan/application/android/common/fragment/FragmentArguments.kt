@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.common.core.fragment
+package com.makentoshe.habrachan.application.android.common.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

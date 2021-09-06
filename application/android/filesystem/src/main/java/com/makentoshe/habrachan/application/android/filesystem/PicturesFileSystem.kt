@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.os.Environment
 import android.provider.MediaStore
-import com.makentoshe.habrachan.application.android.R
 import java.io.File
 
 class PicturesFileSystem(private val context: Context) : FileSystem {
