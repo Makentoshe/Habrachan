@@ -81,6 +81,8 @@ dependencies {
     implementation(project(":application:android:screen:comments:article"))
     implementation(project(":application:android:screen:comments:thread"))
     implementation(project(":application:android:screen:comments:dispatch"))
+    implementation(project(":application:android:screen:articles"))
+    implementation(project(":application:android:screen:articles:flow"))
 
     implementation(project(":application:android:navigation"))
     implementation(project(":application:android:filesystem"))

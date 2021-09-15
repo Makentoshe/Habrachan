@@ -16,7 +16,6 @@ import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.common.dp2px
 import com.makentoshe.habrachan.application.android.common.toRoundedDrawable
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
@@ -85,7 +84,6 @@ class UserFragment : CoreFragment() {
 
         lifecycleScope.launch {
             viewModel.logoffFlow.collectLatest {
-                ApplicationStateBroadcastReceiver.signOut(requireActivity())
                 navigation.back()
             }
         }

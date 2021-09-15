@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Habrachan</string>
+
+    <string name="not_implemented">Not implemented</string>
+
+    <string name="articles_flow_menu_search">Search</string>
+
+    <string name="articles_time_format">%1$s in %2$s</string>
+    <string name="articles_footer_content_end">This is the end of the content</string>
+
+    <string name="articles_type_all">All articles</string>
+    <string name="articles_type_interesting">Interesting</string>
+    <string name="articles_type_subscription">By subscription</string>
+    <string name="articles_type_top">Top</string>
+    <string name="articles_type_search">Search</string>
+
+    <string name="articles_search_preposition">by</string>
+    <string name="articles_search_type_date">Date</string>
+    <string name="articles_search_type_relevance">Relevance</string>
+    <string name="articles_search_type_rating">Rating</string>
+
+    <string name="articles_top_preposition">Top of %1$s</string>
+    <string name="articles_top_type_alltime">All-time</string>
+    <string name="articles_top_type_yearly">Yearly</string>
+    <string name="articles_top_type_monthly">Monthly</string>
+    <string name="articles_top_type_weekly">Weekly</string>
+    <string name="articles_top_type_daily">Daily</string>
+
+</resources>
