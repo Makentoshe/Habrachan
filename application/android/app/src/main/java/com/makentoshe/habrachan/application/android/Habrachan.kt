@@ -12,8 +12,8 @@ import com.makentoshe.habrachan.application.android.di.NavigationModule
 import com.makentoshe.habrachan.application.android.di.NetworkModule
 import com.makentoshe.habrachan.application.android.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.article.di.ArticleFragmentInjector
-import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFragmentInjector
+import com.makentoshe.habrachan.application.android.screen.articles.flow.di.ArticlesFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.comments.di.ArticleCommentsFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.comments.di.DispatchCommentsFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.comments.di.ThreadCommentsFragmentInjector
@@ -33,6 +33,7 @@ class Habrachan : Application() {
     private val injectActivityLifecycleCallback = AppActivityInjector(
         MainFlowFragmentInjector(),
         ArticlesFlowFragmentInjector(),
+//        ArticlesFlowFragmentInjector(),
         ArticlesFragmentInjector(),
         ArticleFragmentInjector(),
         ContentFragmentInjector(),

@@ -3,7 +3,6 @@ package com.makentoshe.habrachan.application.android
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.navigation.StackSupportAppNavigator
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -16,7 +15,6 @@ class AppActivity : AppCompatActivity() {
 
     private val navigatorHolder by inject<NavigatorHolder>()
     private val router by inject<Router>()
-    private val applicationStateBroadcastReceiver by inject<ApplicationStateBroadcastReceiver>()
     private val launcher by inject<Launcher>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,16 +33,6 @@ class AppActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         navigatorHolder.removeNavigator()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        registerReceiver(applicationStateBroadcastReceiver, ApplicationStateBroadcastReceiver.filter)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        unregisterReceiver(applicationStateBroadcastReceiver)
     }
 
 }

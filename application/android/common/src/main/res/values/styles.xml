@@ -76,4 +76,20 @@
         <item name="android:textSize">@dimen/textMS</item>
     </style>
 
+    <style name="Habrachan.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:textAppearance">@style/Habrachan.Toolbar.TextAppearance</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="android:elevation">0dp</item>
+        <item name="subtitleTextColor">@android:color/white</item>
+        <item name="android:tint">@android:color/white</item>
+        <item name="android:tintMode">src_atop</item>
+    </style>
+
+    <style name="Habrachan.Toolbar.TextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/title</item>
+    </style>
 </resources>

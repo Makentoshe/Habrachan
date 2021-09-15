@@ -41,6 +41,11 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(project(":functional"))
 
+    implementation(project(":network"))
+    implementation(project(":entity"))
+
+    implementation(project(":application:android:database"))
+
     // Material components
     // https://github.com/material-components/material-components-android
     val material = dependency.version.androidMaterialDesign

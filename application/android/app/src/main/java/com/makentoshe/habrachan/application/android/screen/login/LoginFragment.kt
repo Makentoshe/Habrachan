@@ -8,7 +8,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.CoreFragment
-import com.makentoshe.habrachan.application.android.broadcast.ApplicationStateBroadcastReceiver
 import com.makentoshe.habrachan.application.android.screen.login.model.NativeLoginSpec
 import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginNavigation
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.LoginViewModel
@@ -81,7 +80,6 @@ class LoginFragment : CoreFragment() {
     }
 
     private fun onLoginSuccess(response: LoginResponse) {
-        ApplicationStateBroadcastReceiver.signIn(requireActivity())
         if (arguments.shouldNavigateToUserScreenAfterLogin) {
             return navigation.toUserScreen(response.user)
         }
