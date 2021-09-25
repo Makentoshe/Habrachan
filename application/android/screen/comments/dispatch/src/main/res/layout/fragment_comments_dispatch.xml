@@ -118,6 +118,7 @@
         android:id="@+id/fragment_comments_dispatch_bottom_send"
         android:layout_width="@dimen/heightLL"
         android:layout_height="@dimen/heightLL"
+        android:enabled="false"
         app:icon="@drawable/ic_send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

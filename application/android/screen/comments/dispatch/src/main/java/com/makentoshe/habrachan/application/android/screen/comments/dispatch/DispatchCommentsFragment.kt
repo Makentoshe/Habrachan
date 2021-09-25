@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.application.android.analytics.Analytics
@@ -70,6 +71,10 @@ class DispatchCommentsFragment : BaseFragment() {
         fragment_comments_dispatch_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
 
         fragment_comments_dispatch_bottom_send.setOnClickListener { onPostCommentSendClick() }
+
+        fragment_comments_dispatch_sheet_edit_text.doAfterTextChanged {
+            fragment_comments_dispatch_bottom_send.isEnabled = !it.isNullOrBlank()
+        }
 
         lifecycleScope.launch(Dispatchers.IO) {
             getArticleCommentsViewModel.model.collectLatest { onGetArticleCommentsModel(it) }
