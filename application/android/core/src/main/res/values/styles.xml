@@ -80,4 +80,9 @@
         <item name="behavior_hideable">false</item>
     </style>
 
+    <style name="Habrachan.FloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="backgroundTint">@color/brand</item>
+        <item name="tint">@color/title</item>
+    </style>
+
 </resources>

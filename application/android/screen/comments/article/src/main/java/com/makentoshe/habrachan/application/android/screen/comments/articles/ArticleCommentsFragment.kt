@@ -89,6 +89,10 @@ class ArticleCommentsFragment : BaseFragment() {
 
         fragment_comments_article_recycler.adapter = adapter
 
+        fragment_comments_article_fab.setOnClickListener {
+            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
+        }
+
         lifecycleScope.launch {
             articleCommentsViewModel.model.collectLatest { result -> onGetArticleCommentsModel(result) }
         }

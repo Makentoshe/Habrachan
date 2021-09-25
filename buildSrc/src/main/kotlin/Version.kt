@@ -51,7 +51,7 @@ object Version {
     const val androidArchitecture = "1.1.1"
 
     // https://github.com/material-components/material-components-android
-    const val androidMaterialDesign = "1.3.0-alpha01"
+    const val androidMaterialDesign = "1.4.0"
 
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
     const val androidRecyclerView = "1.2.0-beta01"
