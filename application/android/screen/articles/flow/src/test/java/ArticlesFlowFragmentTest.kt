@@ -3,14 +3,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.makentoshe.habrachan.application.android.common.AndroidUserSession2
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.navigation.navigator.LoginScreenNavigator
-import com.makentoshe.habrachan.application.android.navigation.navigator.MeScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.articles.flow.ArticlesFlowFragment
 import com.makentoshe.habrachan.application.android.screen.articles.flow.R
 import com.makentoshe.habrachan.application.android.screen.articles.flow.di.ArticlesFlowScope
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesFlowAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.AvailableSpecTypes
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.TabLayoutMediatorController
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.LoginScreenNavigator
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.MeScreenNavigator
 import com.makentoshe.habrachan.network.request.SpecType
 import io.mockk.every
 import io.mockk.mockk

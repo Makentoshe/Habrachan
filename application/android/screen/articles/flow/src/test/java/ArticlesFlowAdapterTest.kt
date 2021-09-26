@@ -1,5 +1,5 @@
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesFactory
+import com.makentoshe.habrachan.application.android.screen.articles.common.navigation.ArticlesPageFactory
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesFlowAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.AvailableSpecTypes
 import com.makentoshe.habrachan.network.request.SpecType
@@ -14,10 +14,10 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ArticlesFlowAdapterTest {
 
-    private val mockArticlesFactory = mockk<ArticlesFactory>(relaxed = true)
+    private val mockArticlesPageFactory = mockk<com.makentoshe.habrachan.application.android.screen.articles.common.navigation.ArticlesPageFactory>(relaxed = true)
     private val mockAvailableSpecTypes = mockk<AvailableSpecTypes>()
     private val articlesFlowAdapter = ArticlesFlowAdapter(
-        mockk(relaxed = true), mockArticlesFactory, mockAvailableSpecTypes,
+        mockk(relaxed = true), mockArticlesPageFactory, mockAvailableSpecTypes,
     )
 
     @Before
@@ -38,6 +38,6 @@ class ArticlesFlowAdapterTest {
 
         articlesFlowAdapter.createFragment(5)
 
-        verify { mockArticlesFactory.build(mockSpecType) }
+        verify { mockArticlesPageFactory.build(mockSpecType) }
     }
 }

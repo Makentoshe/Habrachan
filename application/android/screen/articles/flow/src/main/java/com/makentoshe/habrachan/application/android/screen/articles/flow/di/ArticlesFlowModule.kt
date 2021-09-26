@@ -24,6 +24,7 @@ class ArticlesFlowModule(fragment: ArticlesFlowFragment) : Module() {
 
         bind<AvailableSpecTypes>().toProvider(AvailableSpecTypesProvider::class).singleton()
         bind<TabLayoutMediatorController>().toClass<TabLayoutMediatorController>().singleton()
+
         bind<ArticlesFlowAdapter>().toClass<ArticlesFlowAdapter>()
     }
 }

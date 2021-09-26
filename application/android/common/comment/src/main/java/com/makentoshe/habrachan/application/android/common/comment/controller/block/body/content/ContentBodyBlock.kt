@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.TextView
 import com.makentoshe.habrachan.application.android.common.comment.R
-import com.makentoshe.habrachan.application.android.navigation.navigator.ThreadCommentsScreenNavigator
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.ThreadCommentsScreenNavigator
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.commentId
 import javax.inject.Inject
