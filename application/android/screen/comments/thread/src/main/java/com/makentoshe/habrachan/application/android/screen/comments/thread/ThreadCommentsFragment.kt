@@ -19,7 +19,7 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Get
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.common.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
-import com.makentoshe.habrachan.application.android.navigation.navigator.BackwardNavigator
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.BackwardNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.TitleCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.thread.view.ThreadCommentSeparatorItemDecoration

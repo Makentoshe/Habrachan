@@ -11,7 +11,7 @@ import com.makentoshe.habrachan.application.android.common.comment.controller.bl
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelBlank
 import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelNode
-import com.makentoshe.habrachan.application.android.navigation.navigator.UserScreenNavigator
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.UserScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.controller.CommentAdapterController
 import javax.inject.Inject
 

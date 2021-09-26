@@ -1,24 +1,28 @@
 package com.makentoshe.habrachan.application.android.screen.articles.flow
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.AndroidUserSession2
 import com.makentoshe.habrachan.application.android.common.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
-import com.makentoshe.habrachan.application.android.navigation.navigator.LoginScreenNavigator
-import com.makentoshe.habrachan.application.android.navigation.navigator.MeScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesFlowAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.TabLayoutMediatorController
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.LoginScreenNavigator
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.MeScreenNavigator
 import com.makentoshe.habrachan.network.request.SpecType
 import kotlinx.android.synthetic.main.fragment_flow_articles.*
 import toothpick.ktp.delegate.inject
 
 class ArticlesFlowFragment : BaseFragment() {
 
-    companion object {
+    companion object : Analytics(LogAnalytic()) {
         fun build(specs: List<SpecType>) = ArticlesFlowFragment().apply {
             arguments.specs = specs
         }
@@ -32,11 +36,17 @@ class ArticlesFlowFragment : BaseFragment() {
     private val userSession by inject<AndroidUserSession2>()
     private val tabLayoutMediatorController by inject<TabLayoutMediatorController>()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        capture(analyticEvent("") { "${this@ArticlesFlowFragment} Attach(${arguments.specs})" })
+    }
+
     override fun internalOnCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
         return inflater.inflate(R.layout.fragment_flow_articles, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        capture(analyticEvent("") { "${this@ArticlesFlowFragment} OnViewCreated($savedInstanceState)" })
         fragment_flow_articles_viewpager.adapter = adapter
         tabLayoutMediatorController.attach(fragment_flow_articles_tabs, fragment_flow_articles_viewpager)
 

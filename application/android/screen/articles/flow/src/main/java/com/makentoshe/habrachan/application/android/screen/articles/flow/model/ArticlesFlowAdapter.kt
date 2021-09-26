@@ -2,11 +2,12 @@ package com.makentoshe.habrachan.application.android.screen.articles.flow.model
 
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.flow.ArticlesFlowFragment
+import com.makentoshe.habrachan.application.android.screen.articles.flow.navigation.ArticlesPageFactory
 import javax.inject.Inject
 
 class ArticlesFlowAdapter @Inject constructor(
     fragment: ArticlesFlowFragment,
-    private val factory: ArticlesFactory,
+    private val factory: ArticlesPageFactory,
     private val specTypes: AvailableSpecTypes,
 ) : FragmentStateAdapter(fragment) {
 

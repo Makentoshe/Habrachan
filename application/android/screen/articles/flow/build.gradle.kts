@@ -62,6 +62,7 @@ dependencies {
 
     implementation(project(":application:android:screen"))
     implementation(project(":application:android:screen:articles"))
+    implementation(project(":application:android:screen:articles:page"))
 
     // Toothpick
     // https://github.com/stephanenicolas/toothpick

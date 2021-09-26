@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModelProvider
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModelProvider
-import com.makentoshe.habrachan.application.android.navigation.navigator.DispatchCommentsScreenNavigator
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.DispatchCommentsScreenNavigator
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
