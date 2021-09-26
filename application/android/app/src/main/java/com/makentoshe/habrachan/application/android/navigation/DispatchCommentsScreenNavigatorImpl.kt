@@ -10,7 +10,12 @@ import javax.inject.Inject
 class DispatchCommentsScreenNavigatorImpl @Inject constructor(
     private val router: StackRouter
 ): DispatchCommentsScreenNavigator {
+
     override fun toDispatchScreen(articleId: ArticleId, commentId: CommentId) {
         router.stack(DispatchCommentsScreen(articleId, commentId))
+    }
+
+    override fun toDispatchScreen(articleId: ArticleId) {
+        router.stack(DispatchCommentsScreen(articleId))
     }
 }

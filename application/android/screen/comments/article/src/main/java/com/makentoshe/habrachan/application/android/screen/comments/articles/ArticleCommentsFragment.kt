@@ -22,6 +22,7 @@ import com.makentoshe.habrachan.application.android.common.comment.viewmodel.Get
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.navigation.navigator.BackwardNavigator
+import com.makentoshe.habrachan.application.android.common.navigation.navigator.DispatchCommentsScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.articles.model.CommentsEmptyStateController
 import com.makentoshe.habrachan.application.android.screen.comments.articles.view.CommentsEmptyStateViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
@@ -51,6 +52,7 @@ class ArticleCommentsFragment : BaseFragment() {
     private val adapter by inject<ContentCommentAdapter>()
     private val articleCommentsViewModel by inject<GetArticleCommentsViewModel>()
     private val backwardNavigator by inject<BackwardNavigator>()
+    private val dispatchCommentsNavigator by inject<DispatchCommentsScreenNavigator>()
     private val exceptionHandler by inject<ExceptionHandler>()
 
     private lateinit var exceptionController: ExceptionController
@@ -64,12 +66,7 @@ class ArticleCommentsFragment : BaseFragment() {
         val wasViewModelRecreated =
             articleCommentsViewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
         if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch(Dispatchers.IO) {
-            capture(
-                analyticEvent(
-                    this@ArticleCommentsFragment.javaClass.simpleName,
-                    "articleId=${arguments.articleId}"
-                )
-            )
+            capture(analyticEvent(this@ArticleCommentsFragment.javaClass.simpleName, "articleId=${arguments.articleId}"))
             val getArticleCommentsSpec = GetArticleCommentsSpec2.ArticleCommentsSpec(articleId(arguments.articleId))
             articleCommentsViewModel.channel.send(getArticleCommentsSpec)
         }
@@ -90,6 +87,7 @@ class ArticleCommentsFragment : BaseFragment() {
         fragment_comments_article_recycler.adapter = adapter
 
         fragment_comments_article_fab.setOnClickListener {
+            dispatchCommentsNavigator.toDispatchScreen(articleId(arguments.articleId))
             Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
         }
 

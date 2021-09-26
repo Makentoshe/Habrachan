@@ -65,6 +65,11 @@ class DispatchCommentsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.setOnClickListener { /* a simple hack until we fixed a stacked screens issue */ }
+        if (arguments.commentId.commentId == 0) {
+            fragment_comments_dispatch_toolbar.setSubtitle(R.string.comments_dispatch_article_subtitle_article)
+        } else {
+            fragment_comments_dispatch_toolbar.setSubtitle(R.string.comments_dispatch_article_subtitle_comment)
+        }
 
         val tintColor = ContextCompat.getColor(requireContext(), R.color.brand_dark)
         fragment_comments_dispatch_toolbar.navigationIcon?.setTint(tintColor)
@@ -94,6 +99,11 @@ class DispatchCommentsFragment : BaseFragment() {
     })
 
     private fun onGetArticleCommentsModelSuccess(getArticleCommentsModel: GetArticleCommentsModel) {
+        if (arguments.commentId.commentId == 0) {
+            fragment_comments_dispatch_comment.visibility = View.GONE
+            return
+        }
+
         val commentModelNode = getArticleCommentsModel.comment(arguments.commentId)
         if (commentModelNode == null) return onGetArticleCommentsModelFailure(IllegalStateException())
 
@@ -167,7 +177,8 @@ class DispatchCommentsFragment : BaseFragment() {
     }
 
     private fun onPostCommentModelSuccess(model: PostCommentModel) {
-        val snackbar = Snackbar.make(requireView(), R.string.comments_dispatch_comment_posting_success, Snackbar.LENGTH_SHORT)
+        val snackbar =
+            Snackbar.make(requireView(), R.string.comments_dispatch_comment_posting_success, Snackbar.LENGTH_SHORT)
         snackbar.addCallback(object : Snackbar.Callback() {
             override fun onShown(sb: Snackbar?) {
                 backwardNavigator.toPreviousScreen()
@@ -201,7 +212,7 @@ class DispatchCommentsFragment : BaseFragment() {
             set(value) = fragmentArguments.putInt(ARTICLE_ID, value.articleId)
 
         var commentId: CommentId
-            get() = commentId(fragmentArguments.getInt(COMMENT_ID))
+            get() = commentId(fragmentArguments.getInt(COMMENT_ID, 0))
             set(value) = fragmentArguments.putInt(COMMENT_ID, value.commentId)
 
         companion object {

@@ -6,7 +6,8 @@
 
     <string name="comments_dispatch_article_title_error">Could not load article title</string>
     <string name="comments_dispatch_article_title_initial">Loading article title…</string>
-    <string name="comments_dispatch_article_subtitle">Reply to comment below</string>
+    <string name="comments_dispatch_article_subtitle_comment">Reply to comment below</string>
+    <string name="comments_dispatch_article_subtitle_article">Reply to article</string>
     <string name="comments_dispatch_comment_posting_error">Sending comment was failed</string>
     <string name="comments_dispatch_comment_posting_success">Your comment was successfully posted</string>
 </resources>
