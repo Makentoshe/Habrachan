@@ -35,7 +35,7 @@ class GetArticlesViewModel(
     }
 
     init {
-        capture(analyticEvent { "Initialized ${this@GetArticlesViewModel}" })
+        capture(analyticEvent { "Initialized" })
         initialGetArticlesSpecOption.fold({}) { getArticlesSpec ->
             capture(analyticEvent { "Send initial $getArticlesSpec" })
             viewModelScope.launch(Dispatchers.IO) {

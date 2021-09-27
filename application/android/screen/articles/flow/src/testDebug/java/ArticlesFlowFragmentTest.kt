@@ -57,8 +57,9 @@ class ArticlesFlowFragmentTest {
         every { androidUserSession2.isLoggedIn } returns true
         every { androidUserSession2.user?.login } returns "UnitTestLogin"
 
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents) {
-            ArticlesFlowFragment.build(AvailableSpecTypes()).also { toothpickScope.closeOnDestroy(it).inject(it) }
+        val fragment = ArticlesFlowFragment.build(AvailableSpecTypes())
+        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = fragment.requireArguments()) {
+            fragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             assertEquals("UnitTestLogin", fragment.fragment_flow_articles_toolbar.subtitle)
         }.moveToState(Lifecycle.State.DESTROYED) // release di
@@ -68,8 +69,9 @@ class ArticlesFlowFragmentTest {
     fun testShouldCheckUserLoginIfUserLoggedOff() {
         every { androidUserSession2.isLoggedIn } returns false
 
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents) {
-            ArticlesFlowFragment.build(AvailableSpecTypes()).also { toothpickScope.closeOnDestroy(it).inject(it) }
+        val fragment = ArticlesFlowFragment.build(AvailableSpecTypes())
+        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = fragment.requireArguments()) {
+            fragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             assertEquals(null, fragment.fragment_flow_articles_toolbar.subtitle)
         }.moveToState(Lifecycle.State.DESTROYED) // release di
@@ -79,8 +81,9 @@ class ArticlesFlowFragmentTest {
     fun testShouldCheckToolbarNavigationIconIfUserLoggedOff() {
         every { androidUserSession2.isLoggedIn } returns false
 
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents) {
-            ArticlesFlowFragment.build(AvailableSpecTypes()).also { toothpickScope.closeOnDestroy(it).inject(it) }
+        val fragment = ArticlesFlowFragment.build(AvailableSpecTypes())
+        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = fragment.requireArguments()) {
+            fragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             assertEquals(R.drawable.ic_account_outline, fragment.fragment_flow_articles_toolbar.tag)
         }.moveToState(Lifecycle.State.DESTROYED) // release di
@@ -90,8 +93,9 @@ class ArticlesFlowFragmentTest {
     fun testShouldCheckToolbarNavigationIconIfUserLoggedIn() {
         every { androidUserSession2.isLoggedIn } returns true
 
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents) {
-            ArticlesFlowFragment.build(AvailableSpecTypes()).also { toothpickScope.closeOnDestroy(it).inject(it) }
+        val fragment = ArticlesFlowFragment.build(AvailableSpecTypes())
+        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = fragment.requireArguments()) {
+            fragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             assertEquals(R.drawable.ic_account, fragment.fragment_flow_articles_toolbar.tag)
         }.moveToState(Lifecycle.State.DESTROYED) // release di
@@ -99,8 +103,9 @@ class ArticlesFlowFragmentTest {
 
     @Test
     fun testShouldCheckViewPagerAdapter() {
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents) {
-            ArticlesFlowFragment.build(AvailableSpecTypes()).also { toothpickScope.closeOnDestroy(it).inject(it) }
+        val fragment = ArticlesFlowFragment.build(AvailableSpecTypes())
+        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = fragment.requireArguments()) {
+            fragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             assertEquals(articlesFlowAdapter, fragment.fragment_flow_articles_viewpager.adapter)
         }.moveToState(Lifecycle.State.DESTROYED) // release di
@@ -108,8 +113,9 @@ class ArticlesFlowFragmentTest {
 
     @Test
     fun testShouldCheckTabLayoutMediatorController() {
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents) {
-            ArticlesFlowFragment.build(AvailableSpecTypes()).also { toothpickScope.closeOnDestroy(it).inject(it) }
+        val fragment = ArticlesFlowFragment.build(AvailableSpecTypes())
+        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = fragment.requireArguments()) {
+            fragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             verify { tabLayoutMediatorController.attach(any(), any()) }
         }.moveToState(Lifecycle.State.DESTROYED) // release di
