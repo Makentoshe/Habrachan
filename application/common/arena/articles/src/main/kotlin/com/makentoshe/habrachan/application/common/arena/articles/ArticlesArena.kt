@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.manager.GetArticlesManager
 import com.makentoshe.habrachan.network.request.GetArticlesRequest2
 import com.makentoshe.habrachan.network.request.GetArticlesSpec
+import com.makentoshe.habrachan.network.request.SpecType
 import com.makentoshe.habrachan.network.response.GetArticlesResponse2
 import javax.inject.Inject
 
@@ -15,6 +16,10 @@ abstract class ArticlesArena internal constructor(
 
     fun request(userSession: UserSession, page: Int, spec: GetArticlesSpec): GetArticlesRequest2 {
         return manager.request(userSession, page, spec)
+    }
+
+    fun request(userSession: UserSession, page: Int, specType: SpecType): GetArticlesRequest2? {
+        return manager.request(userSession, page, specType)
     }
 
     override suspend fun internalSuspendFetch(key: GetArticlesRequest2) = manager.articles(key)

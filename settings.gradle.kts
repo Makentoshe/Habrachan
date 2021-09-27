@@ -69,3 +69,6 @@ include(":application:android:common:comment:getting")
 include(":application:android:common:comment:posting")
 include(":network:network-native:network-native-user-me:network-native-user-me-test")
 include("network:network-native:network-native-comment-post")
+include(":application:android:common:articles")
+include("application:common:arena:articles")
+findProject(":application:common:arena:articles")?.name = "articles"
