@@ -28,12 +28,21 @@ fun analyticEvent(title: String, throwable: Throwable? = null, message: Analytic
 }
 
 /** Allows to define eventTitle using class name */
-fun analyticEvent(`class`: KClass<Any>, message: String, throwable: Throwable? = null) =
-    analyticEvent(`class`.simpleName.toString(), message, throwable)
+fun analyticEvent(`class`: KClass<Any>, message: String, throwable: Throwable? = null): AnalyticEvent {
+    return analyticEvent(`class`.simpleName.toString(), message, throwable)
+}
 
 /** Allows to define eventTitle from a current call context */
-fun Any.analyticEvent(message: String, throwable: Throwable? = null) =
-    analyticEvent(this::class.java.simpleName, message, throwable)
+fun Any.analyticEvent(message: String, throwable: Throwable? = null): AnalyticEvent {
+    val title = "${this::class.java.simpleName}(${Integer.toHexString(this.hashCode())})"
+    return analyticEvent(title, message, throwable)
+}
 
-fun Any.analyticEvent(throwable: Throwable? = null, message: AnalyticEvent.() -> String) =
-    analyticEvent(this::class.java.simpleName, throwable, message)
+fun Any.analyticEvent(throwable: Throwable? = null, message: AnalyticEvent.() -> String): AnalyticEvent {
+    val title = "${this::class.java.simpleName}(${Integer.toHexString(this.hashCode())})"
+    return analyticEvent(title, throwable, message)
+}
+
+fun Any.analyticEventAddrless(throwable: Throwable? = null, message: AnalyticEvent.() -> String): AnalyticEvent {
+    return analyticEvent(this::class.java.simpleName, throwable, message)
+}

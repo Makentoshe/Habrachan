@@ -47,6 +47,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(kotlin("stdlib"))
+    implementation(project(":functional"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
@@ -56,6 +57,7 @@ dependencies {
     implementation(project(":application:core"))
     implementation(project(":application:android:di"))
     implementation(project(":application:android:common"))
+    implementation(project(":application:android:common:articles"))
     implementation(project(":application:android:database"))
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:navigation"))

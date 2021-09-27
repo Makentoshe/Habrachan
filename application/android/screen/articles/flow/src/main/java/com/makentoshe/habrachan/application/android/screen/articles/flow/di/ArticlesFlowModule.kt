@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.articles.flow.di
 
 import android.content.res.Resources
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
+import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesScope
 import com.makentoshe.habrachan.application.android.screen.articles.flow.ArticlesFlowFragment
 import com.makentoshe.habrachan.application.android.screen.articles.flow.di.provider.AvailableSpecTypesProvider
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesFlowAdapter
@@ -18,7 +19,7 @@ annotation class ArticlesFlowScope
 class ArticlesFlowModule(fragment: ArticlesFlowFragment) : Module() {
 
     init {
-        Toothpick.openScopes(ApplicationScope::class).inject(this)
+        Toothpick.openScopes(ApplicationScope::class, ArticlesScope::class).inject(this)
         bind<Resources>().toInstance(fragment.resources)
         bind<ArticlesFlowFragment>().toInstance(fragment)
 

@@ -18,6 +18,7 @@ import com.makentoshe.habrachan.application.android.screen.content.di.ContentFra
 import com.makentoshe.habrachan.application.android.screen.login.di.LoginFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.user.di.UserFragmentInjector
+import com.maketoshe.habrachan.application.android.screen.articles.page.di.ArticlesPageFragmentInjector
 import ru.terrakok.cicerone.Cicerone
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
@@ -29,7 +30,7 @@ class Habrachan : Application() {
     private val injectActivityLifecycleCallback = AppActivityInjector(
         MainFlowFragmentInjector(),
         ArticlesFlowFragmentInjector(),
-//        ArticlesFlowFragmentInjector(),
+        ArticlesPageFragmentInjector(),
         ArticlesFragmentInjector(),
         ArticleFragmentInjector(),
         ContentFragmentInjector(),
