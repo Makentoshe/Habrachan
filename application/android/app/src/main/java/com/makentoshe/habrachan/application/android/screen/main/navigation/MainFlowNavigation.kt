@@ -1,12 +1,10 @@
 package com.makentoshe.habrachan.application.android.screen.main.navigation
 
+//import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
+//import com.makentoshe.habrachan.navigation.main.menu.MenuScreen
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.makentoshe.habrachan.R
-import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
-import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesScreen
-//import com.makentoshe.habrachan.navigation.main.login.LoginFlowScreen
-//import com.makentoshe.habrachan.navigation.main.menu.MenuScreen
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class MainFlowNavigation(private val fragmentManager: FragmentManager) {
@@ -15,8 +13,8 @@ class MainFlowNavigation(private val fragmentManager: FragmentManager) {
     private var currentScreen: SupportAppScreen? = null
 
     fun navigateToArticlesFlowScreen() {
-        val newScreen = ArticlesFlowScreen()
-        navigateToScreen(newScreen)
+//        val newScreen = ArticlesFlowScreen()
+//        navigateToScreen(newScreen)
     }
 
     fun navigateToAccountScreen() {
