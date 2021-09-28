@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.application.android.di
 
-import com.makentoshe.habrachan.application.android.screen.articles.navigation.*
+import com.makentoshe.habrachan.application.android.navigation.*
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.*
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
