@@ -10,6 +10,6 @@ class ArenaException(
         get() = sourceException ?: cacheException
 
     override fun toString(): String {
-        return "{\nsource=$sourceException,\ncache=$cacheException,\nmessage=$message\n}"
+        return "${javaClass.simpleName}(source=$sourceException,cache=$cacheException,message=$message)"
     }
 }

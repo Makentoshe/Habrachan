@@ -3,6 +3,9 @@ package com.makentoshe.habrachan.application.android.common.articles.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
@@ -13,9 +16,11 @@ import com.makentoshe.habrachan.network.UserSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 class GetArticlesViewModel(
@@ -30,9 +35,9 @@ class GetArticlesViewModel(
 
     val channel: SendChannel<GetArticlesSpec> get() = internalChannel
 
-    val model = internalChannel.receiveAsFlow().map { spec ->
-        GetArticlesModel(spec, GetArticlesDataSource(userSession, articlesArena))
-    }
+    val pagingData = internalChannel.receiveAsFlow().flatMapConcat { spec ->
+        Pager(PagingConfig(spec.pageSize), spec) { GetArticlesDataSource(userSession, articlesArena) }.flow
+    }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
 
     init {
         capture(analyticEvent { "Initialized" })

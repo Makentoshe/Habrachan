@@ -33,7 +33,7 @@ fun analyticEvent(`class`: KClass<Any>, message: String, throwable: Throwable? =
 }
 
 /** Allows to define eventTitle from a current call context */
-fun Any.analyticEvent(message: String, throwable: Throwable? = null): AnalyticEvent {
+fun Any.analyticEvent(message: String = "", throwable: Throwable? = null): AnalyticEvent {
     val title = "${this::class.java.simpleName}(${Integer.toHexString(this.hashCode())})"
     return analyticEvent(title, message, throwable)
 }

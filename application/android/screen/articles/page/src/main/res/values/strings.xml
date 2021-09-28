@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="articles_retry">Retry</string>
+    <string name="articles_time_format">%1$s in %2$s</string>
+    <string name="articles_footer_finish">This is the end of the content</string>
+
+    <string name="articles_footer_exception_title">Undefined pagination error</string>
+    <string name="articles_footer_exception_message">Footer Message</string>
+
+    <string name="articles_initial_exception_title">Unknown error</string>
+</resources>

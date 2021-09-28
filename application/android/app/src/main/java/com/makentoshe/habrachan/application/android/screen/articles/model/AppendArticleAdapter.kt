@@ -10,7 +10,8 @@ import com.makentoshe.habrachan.application.android.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.view.AppendViewHolder
 
 class AppendArticleAdapter(
-    private val adapter: PagingDataAdapter<*, *>, private val exceptionHandler: ExceptionHandler
+    private val adapter: PagingDataAdapter<*, *>,
+    private val exceptionHandler: ExceptionHandler,
 ) : LoadStateAdapter<AppendViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): AppendViewHolder {

@@ -7,10 +7,11 @@ import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.request.SpecType
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,25 +31,22 @@ class GetArticlesViewModelTest {
     private val mockArticlesArena = mockk<ArticlesArena>()
 
     @Test
-    fun testShouldReturnModelInitially() = runBlocking {
+    fun testShouldReturnPagingDataInitially() = runBlocking {
         val viewModel = GetArticlesViewModel(mockUserSession, mockArticlesArena, Option.Value(getArticleSpec))
-        val model = viewModel.model.first()
-
-        assertEquals(getArticleSpec, model.spec)
+        assertNotNull(viewModel.pagingData.firstOrNull())
     }
 
     @Test
     fun testShouldReturnModelByChannelInvoke() = runBlocking {
         val viewModel = GetArticlesViewModel(mockUserSession, mockArticlesArena, Option.None)
         launch { viewModel.channel.send(getArticleSpec) }
-        val model = viewModel.model.first()
 
-        assertEquals(getArticleSpec, model.spec)
+        assertNotNull(viewModel.pagingData.firstOrNull())
     }
 
     @Test(timeout = 500, expected = TestTimedOutException::class) // Job has not completed yet
     fun testShouldNotReturnModel() = runBlocking {
-        GetArticlesViewModel(mockUserSession, mockArticlesArena, Option.None).model.first(); Unit
+        assertNull(GetArticlesViewModel(mockUserSession, mockArticlesArena, Option.None).pagingData.firstOrNull())
     }
 
 }
