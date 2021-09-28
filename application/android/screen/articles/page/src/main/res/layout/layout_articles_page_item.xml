@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?><!-- TODO refactor layout -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingStart="@dimen/dimenML"
+    android:paddingTop="@dimen/dimenMS"
+    android:paddingEnd="@dimen/dimenML"
+    android:paddingBottom="@dimen/dimenMS">
+
+    <TextView
+        android:id="@+id/time_published"
+        style="@style/Habrachan.Text.Support"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/author_login"
+        style="@style/Habrachan.Text.Support"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/Habrachan.Text.Title.Bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_published" />
+
+    <TextView
+        android:id="@+id/hubs_titles"
+        style="@style/Habrachan.Text.Support"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimenMS"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:barrierMargin="@dimen/dimenMS"
+        app:constraint_referenced_ids="hubs_titles" />
+
+    <ImageView
+        android:id="@+id/score_imageview"
+        android:layout_width="@dimen/heightXS"
+        android:layout_height="@dimen/heightXS"
+        app:srcCompat="@drawable/ic_equalizer"
+        app:tintMode="src_atop"
+        app:tint="@color/colorPrimaryDark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/barrier" />
+
+    <TextView
+        android:id="@+id/score_textview"
+        style="@style/Habrachan.Text.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimenSM"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/score_imageview"
+        app:layout_constraintStart_toEndOf="@+id/score_imageview"
+        tools:text="234234234" />
+
+    <ImageView
+        android:id="@+id/reading_count_imageview"
+        android:layout_width="@dimen/heightXS"
+        android:layout_height="@dimen/heightXS"
+        android:layout_marginStart="@dimen/dimenL"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_eye"
+        app:tint="@color/colorPrimaryDark"
+        app:tintMode="src_atop"
+        app:layout_constraintBottom_toBottomOf="@+id/score_imageview"
+        app:layout_constraintStart_toEndOf="@+id/score_textview"
+        app:layout_constraintTop_toTopOf="@+id/score_imageview" />
+
+    <TextView
+        android:id="@+id/reading_count_textview"
+        style="@style/Habrachan.Text.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimenSM"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/reading_count_imageview"
+        app:layout_constraintStart_toEndOf="@+id/reading_count_imageview"
+        tools:text="234345345" />
+
+    <ImageView
+        android:id="@+id/comments_count_imageview"
+        android:layout_width="@dimen/heightXS"
+        android:layout_height="@dimen/heightXS"
+        android:layout_marginStart="@dimen/dimenL"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_comment"
+        app:tint="@color/colorPrimaryDark"
+        app:tintMode="src_atop"
+        app:layout_constraintBottom_toBottomOf="@+id/reading_count_imageview"
+        app:layout_constraintStart_toEndOf="@+id/reading_count_textview"
+        app:layout_constraintTop_toTopOf="@+id/reading_count_imageview" />
+
+    <TextView
+        android:id="@+id/comments_count_textview"
+        style="@style/Habrachan.Text.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimenMS"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/comments_count_imageview"
+        app:layout_constraintStart_toEndOf="@+id/comments_count_imageview" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

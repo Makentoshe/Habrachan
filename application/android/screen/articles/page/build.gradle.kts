@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":application:android:database"))
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:navigation"))
+    implementation(project(":application:android:exception"))
 
     implementation(project(":application:android:screen"))
     implementation(project(":application:android:screen:articles"))
@@ -89,6 +90,12 @@ dependencies {
     val coroutinesViewModel = dependency.version.androidCoroutinesViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutinesViewModel")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$coroutinesViewModel")
+
+    // Pagination library
+    // https://developer.android.com/topic/libraries/architecture/paging
+    val paginationVersion = dependency.version.androidPaging
+    implementation("androidx.paging:paging-runtime-ktx:$paginationVersion")
+    implementation("androidx.paging:paging-rxjava2:$paginationVersion")
 
     val coreVersion = dependency.version.androidCore
     implementation("androidx.core:core-ktx:$coreVersion")

@@ -9,10 +9,10 @@ import com.makentoshe.habrachan.R
 import com.makentoshe.habrachan.application.android.ExceptionHandler
 
 class AppendViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val title: TextView = view.findViewById(R.id.fragment_articles_footer_title)
-    val message: TextView = view.findViewById(R.id.fragment_articles_footer_message)
+    val title: TextView = view.findViewById(R.id.fragment_page_articles_footer_title)
+    val message: TextView = view.findViewById(R.id.fragment_page_articles_message)
     val progress: ProgressBar = view.findViewById(R.id.fragment_articles_footer_progress)
-    val retry: Button = view.findViewById(R.id.fragment_articles_footer_retry)
+    val retry: Button = view.findViewById(R.id.fragment_page_articles_retry)
 
     fun loading() {
         title.visibility = View.INVISIBLE

@@ -17,13 +17,13 @@ class GetArticlesDataSource(
 
     override suspend fun load(params: LoadParams<GetArticlesSpec>): LoadResult<GetArticlesSpec, ArticlesModelElement> {
         val articlesSpec = params.key
-        capture(analyticEvent(javaClass.simpleName, "articlesSpec=${articlesSpec.toString()}"))
+        capture(analyticEvent { "articlesSpec=$articlesSpec" })
         if (articlesSpec == null) {
             return LoadResult.Error(IllegalArgumentException("Could not receive ArticlesSpec"))
         }
 
         val request = arena.request(session, articlesSpec.page, articlesSpec.specType)
-        capture(analyticEvent(javaClass.simpleName, "request=$request"))
+        capture(analyticEvent { "request=$request" })
         if (request == null) {
             return LoadResult.Error(IllegalArgumentException("GetArticlesRequest is null in ArticlesDataSource"))
         }

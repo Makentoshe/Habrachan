@@ -53,7 +53,7 @@ class ArticlesFragment : CoreFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_articles, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_page_articles, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val wasViewModelRecreated = viewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
@@ -76,11 +76,11 @@ class ArticlesFragment : CoreFragment() {
         }
 
         val itemDecoration = ArticleItemDecoration.from(requireContext())
-        fragment_articles_recycler.addItemDecoration(itemDecoration)
-        fragment_articles_recycler.adapter = adapter.withLoadStateFooter(appendAdapter)
+        fragment_page_articles_recycler.addItemDecoration(itemDecoration)
+        fragment_page_articles_recycler.adapter = adapter.withLoadStateFooter(appendAdapter)
         adapter.addLoadStateListener(::onLoadStateChanged)
 
-        fragment_articles_swipe.setOnRefreshListener {
+        fragment_page_articles_swipe.setOnRefreshListener {
             adapter.refresh()
         }
     }
@@ -94,29 +94,29 @@ class ArticlesFragment : CoreFragment() {
     }
 
     private fun showContentState() {
-        fragment_articles_swipe.isRefreshing = false
-        fragment_articles_swipe.visibility = View.VISIBLE
-        fragment_articles_progress.visibility = View.GONE
+        fragment_page_articles_swipe.isRefreshing = false
+        fragment_page_articles_swipe.visibility = View.VISIBLE
+        fragment_page_articles_progress.visibility = View.GONE
     }
 
     private fun showContentLoading() {
         exceptionController.hide()
         if (adapter.itemCount <= 0) {
-            fragment_articles_progress.visibility = View.VISIBLE
+            fragment_page_articles_progress.visibility = View.VISIBLE
         }
     }
 
     private fun showContentError(throwable: Throwable) {
-        fragment_articles_swipe.isRefreshing = false
-        fragment_articles_progress.visibility = View.GONE
-        fragment_articles_swipe.visibility = View.GONE
+        fragment_page_articles_swipe.isRefreshing = false
+        fragment_page_articles_progress.visibility = View.GONE
+        fragment_page_articles_swipe.visibility = View.GONE
         exceptionController.render(exceptionHandler.handleException(throwable))
     }
 
     private fun showLoadingState() {
         exceptionController.hide()
-        fragment_articles_progress.visibility = View.VISIBLE
-        fragment_articles_swipe.visibility = View.GONE
+        fragment_page_articles_progress.visibility = View.VISIBLE
+        fragment_page_articles_swipe.visibility = View.GONE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
