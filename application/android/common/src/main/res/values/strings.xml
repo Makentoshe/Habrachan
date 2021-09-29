@@ -9,4 +9,8 @@
     <string name="comments_dispatch_article_subtitle">Reply to comment below</string>
     <string name="comments_dispatch_comment_posting_error">Sending comment was failed</string>
     <string name="comments_dispatch_comment_posting_success">Your comment was successfully posted</string>
+
+    <string name="articles_default_search_all">All articles</string>
+    <string name="articles_default_search_interesting">Interesting</string>
+    <string name="articles_default_search_daily_top">Top of daily</string>
 </resources>

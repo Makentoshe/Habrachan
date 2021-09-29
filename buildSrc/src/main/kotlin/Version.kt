@@ -32,7 +32,7 @@ object Version {
     const val androidMarkwon = "4.3.1"
 
     // Android dependent versions: works in android modules only
-    const val androidRoom = "2.2.5"
+    const val androidRoom = "2.4.0-alpha04"
 
     // https://github.com/Karumi/Dexter/
     const val androidDexter = "6.2.2"
