@@ -23,5 +23,6 @@ class NavigationModule(cicerone: Cicerone<StackRouter>) : Module() {
         bind<UserScreenNavigator>().toClass<UserScreenNavigatorImpl>()
         bind<MeScreenNavigator>().toClass<MeScreenNavigatorImpl>()
         bind<LoginScreenNavigator>().toClass<LoginScreenNavigatorImpl>()
+        bind<ArticleScreenNavigator>().toClass<ArticleScreenNavigatorImpl>()
     }
 }

@@ -23,6 +23,7 @@ class AppActivity : AppCompatActivity() {
 
         if (savedInstanceState != null) return
         router.newRootScreen(launcher.launch(intent))
+//        router.newRootScreen(ArticlesPageScreen(SpecType.All))
     }
 
     override fun onResumeFragments() {

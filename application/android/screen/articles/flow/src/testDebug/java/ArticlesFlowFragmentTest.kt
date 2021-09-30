@@ -18,6 +18,7 @@ import io.mockk.verify
 import kotlinx.android.synthetic.main.fragment_flow_articles.*
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import toothpick.Toothpick
@@ -29,6 +30,7 @@ import toothpick.smoothie.lifecycle.closeOnDestroy
 class ArticlesFlowFragmentTest {
 
     private val specTypes = arrayListOf(SpecType.All, SpecType.Interesting)
+    private val articlesFlowAdapterFactory = mockk<ArticlesFlowAdapter.Factory>()
     private var articlesFlowAdapter = mockk<ArticlesFlowAdapter>(relaxed = true)
     private val meScreenNavigator = mockk<MeScreenNavigator>()
     private val loginScreenNavigator = mockk<LoginScreenNavigator>()
@@ -36,7 +38,7 @@ class ArticlesFlowFragmentTest {
     private val tabLayoutMediatorController = mockk<TabLayoutMediatorController>(relaxed = true)
 
     private val defaultModule = module {
-        bind<ArticlesFlowAdapter>().toInstance(articlesFlowAdapter)
+        bind<ArticlesFlowAdapter.Factory>().toInstance(articlesFlowAdapterFactory)
         bind<MeScreenNavigator>().toInstance(meScreenNavigator)
         bind<LoginScreenNavigator>().toInstance(loginScreenNavigator)
         bind<AndroidUserSession2>().toInstance(androidUserSession2)
@@ -46,6 +48,11 @@ class ArticlesFlowFragmentTest {
 
     private val toothpickRootScope = Toothpick.openScope(ApplicationScope::class)
     private val toothpickScope = toothpickRootScope.openSubScope(ArticlesFlowScope::class).installModules(defaultModule)
+
+    @Before
+    fun before() {
+        every { articlesFlowAdapterFactory.build(any()) } returns articlesFlowAdapter
+    }
 
     @After
     fun after() {

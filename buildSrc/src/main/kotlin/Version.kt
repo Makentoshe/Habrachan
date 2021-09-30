@@ -59,6 +59,9 @@ object Version {
     // https://developer.android.com/topic/libraries/architecture/paging
     const val androidPaging = "3.0.0-alpha11"
 
+    // https://developer.android.com/reference/androidx/lifecycle/Lifecycle
+    const val androidLifecycle = "2.4.0-beta01"
+
     // https://github.com/opacapp/multiline-collapsingtoolbar
     const val androidCollapsingToolbar = "27.1.1"
 

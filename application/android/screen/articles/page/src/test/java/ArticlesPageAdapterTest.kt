@@ -4,8 +4,10 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.paging.PagingData
 import androidx.test.core.app.ApplicationProvider
 import com.makentoshe.habrachan.application.android.common.articles.model.ArticlesModelElement
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.ArticleScreenNavigator
 import com.makentoshe.habrachan.entity.Article
 import com.maketoshe.habrachan.application.android.screen.articles.page.R
+import com.maketoshe.habrachan.application.android.screen.articles.page.databinding.LayoutArticlesPageItemBinding
 import com.maketoshe.habrachan.application.android.screen.articles.page.model.ArticlesPageAdapter
 import com.maketoshe.habrachan.application.android.screen.articles.page.view.ArticlesPageItemViewHolder
 import io.mockk.every
@@ -19,7 +21,8 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class ArticlesPageAdapterTest {
 
-    private val adapter = ArticlesPageAdapter()
+    private val mockArticleScreenNavigator = mockk<ArticleScreenNavigator>()
+    private val adapter = ArticlesPageAdapter(mockArticleScreenNavigator)
 
     @Test
     fun testShouldInitializeArticle() = runBlocking {
@@ -37,8 +40,6 @@ class ArticlesPageAdapterTest {
     private fun buildViewHolder(): ArticlesPageItemViewHolder {
         val applicationContext = ApplicationProvider.getApplicationContext<Context>()
         val themedContext = ContextThemeWrapper(applicationContext, R.style.Theme_MaterialComponents)
-        val inflater = LayoutInflater.from(themedContext)
-        val view = inflater.inflate(R.layout.layout_articles_page_item, null, false)
-        return spyk(ArticlesPageItemViewHolder(view))
+        return spyk(ArticlesPageItemViewHolder(LayoutArticlesPageItemBinding.inflate(LayoutInflater.from(themedContext))))
     }
 }

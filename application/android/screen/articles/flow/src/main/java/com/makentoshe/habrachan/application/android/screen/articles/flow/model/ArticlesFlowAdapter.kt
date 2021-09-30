@@ -15,4 +15,13 @@ class ArticlesFlowAdapter @Inject constructor(
     override fun getItemCount() = specTypes.size
 
     override fun createFragment(position: Int) = factory.build(specTypes[position])
+
+    class Factory @Inject constructor(
+        private val factory: ArticlesPageFactory,
+        private val specTypes: AvailableSpecTypes,
+    ) {
+        fun build(fragment: ArticlesFlowFragment): ArticlesFlowAdapter {
+            return ArticlesFlowAdapter(fragment, factory, specTypes)
+        }
+    }
 }

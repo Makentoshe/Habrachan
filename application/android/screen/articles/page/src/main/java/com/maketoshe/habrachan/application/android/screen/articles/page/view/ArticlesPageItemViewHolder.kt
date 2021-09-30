@@ -8,16 +8,18 @@ import com.makentoshe.habrachan.application.android.common.time
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.timePublished
 import com.maketoshe.habrachan.application.android.screen.articles.page.R
+import com.maketoshe.habrachan.application.android.screen.articles.page.databinding.LayoutArticlesPageItemBinding
 
-class ArticlesPageItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val context: Context = itemView.context
-    val title: TextView = itemView.findViewById(R.id.title)
-    val author: TextView = itemView.findViewById(R.id.author_login)
-    val time: TextView = itemView.findViewById(R.id.time_published)
-    val hubs: TextView = itemView.findViewById(R.id.hubs_titles)
-    val scoreCount: TextView = itemView.findViewById(R.id.score_textview)
-    val readingCount: TextView = itemView.findViewById(R.id.reading_count_textview)
-    val commentsCount: TextView = itemView.findViewById(R.id.comments_count_textview)
+class ArticlesPageItemViewHolder(binding: LayoutArticlesPageItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    val context: Context = binding.root.context
+
+    val title: TextView = binding.layoutArticlesPageItemTitle
+    val author: TextView = binding.layoutArticlesPageItemAuthorLogin
+    val time: TextView = binding.layoutArticlesPageItemTimePublished
+    val hubs: TextView = binding.layoutArticlesPageItemHubsTitles
+    val scoreCount: TextView = binding.layoutArticlesPageItemScoreTextview
+    val readingCount: TextView = binding.layoutArticlesPageItemReadingCountTextview
+    val commentsCount: TextView = binding.layoutArticlesPageItemCommentsCountTextview
 }
 
 fun ArticlesPageItemViewHolder.initialize(article: Article) {
@@ -31,5 +33,5 @@ fun ArticlesPageItemViewHolder.initialize(article: Article) {
 }
 
 fun ArticlesPageItemViewHolder.setOnClickListener(action: (View) -> Unit) {
-   itemView.setOnClickListener(action)
+    itemView.setOnClickListener(action)
 }

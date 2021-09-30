@@ -5,7 +5,7 @@ import android.net.Uri
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen
+import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen2
 import com.makentoshe.habrachan.application.android.screen.comments.articles.navigation.ArticleCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.comments.thread.navigation.ThreadCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
@@ -66,7 +66,7 @@ class Launcher(private val defaultScreen: Screen) {
             }
         }
 
-        return ArticleScreen(articleId)
+        return ArticleScreen2(articleId)
     }
 
     private fun users(iterator: Iterator<String>) : Screen {
