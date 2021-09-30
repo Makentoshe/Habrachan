@@ -13,7 +13,7 @@
     android:paddingBottom="@dimen/dimenMS">
 
     <TextView
-        android:id="@+id/time_published"
+        android:id="@+id/layout_articles_page_item_time_published"
         style="@style/Habrachan.Text.Support"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/author_login"
+        android:id="@+id/layout_articles_page_item_author_login"
         style="@style/Habrachan.Text.Support"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,53 +29,53 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/layout_articles_page_item_title"
         style="@style/Habrachan.Text.Title.Bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/time_published" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_articles_page_item_time_published" />
 
     <TextView
-        android:id="@+id/hubs_titles"
+        android:id="@+id/layout_articles_page_item_hubs_titles"
         style="@style/Habrachan.Text.Support"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimenMS"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_articles_page_item_title" />
 
     <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
+        android:id="@+id/layout_articles_page_item_barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:barrierMargin="@dimen/dimenMS"
-        app:constraint_referenced_ids="hubs_titles" />
+        app:constraint_referenced_ids="layout_articles_page_item_hubs_titles" />
 
     <ImageView
-        android:id="@+id/score_imageview"
+        android:id="@+id/layout_articles_page_item_score_imageview"
         android:layout_width="@dimen/heightXS"
         android:layout_height="@dimen/heightXS"
         app:srcCompat="@drawable/ic_equalizer"
         app:tintMode="src_atop"
         app:tint="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/barrier" />
+        app:layout_constraintTop_toTopOf="@id/layout_articles_page_item_barrier" />
 
     <TextView
-        android:id="@+id/score_textview"
+        android:id="@+id/layout_articles_page_item_score_textview"
         style="@style/Habrachan.Text.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimenSM"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@+id/score_imageview"
-        app:layout_constraintStart_toEndOf="@+id/score_imageview"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_articles_page_item_score_imageview"
+        app:layout_constraintStart_toEndOf="@+id/layout_articles_page_item_score_imageview"
         tools:text="234234234" />
 
     <ImageView
-        android:id="@+id/reading_count_imageview"
+        android:id="@+id/layout_articles_page_item_reading_count_imageview"
         android:layout_width="@dimen/heightXS"
         android:layout_height="@dimen/heightXS"
         android:layout_marginStart="@dimen/dimenL"
@@ -83,23 +83,23 @@
         app:srcCompat="@drawable/ic_eye"
         app:tint="@color/colorPrimaryDark"
         app:tintMode="src_atop"
-        app:layout_constraintBottom_toBottomOf="@+id/score_imageview"
-        app:layout_constraintStart_toEndOf="@+id/score_textview"
-        app:layout_constraintTop_toTopOf="@+id/score_imageview" />
+        app:layout_constraintBottom_toBottomOf="@+id/layout_articles_page_item_score_imageview"
+        app:layout_constraintStart_toEndOf="@+id/layout_articles_page_item_score_textview"
+        app:layout_constraintTop_toTopOf="@+id/layout_articles_page_item_score_imageview" />
 
     <TextView
-        android:id="@+id/reading_count_textview"
+        android:id="@+id/layout_articles_page_item_reading_count_textview"
         style="@style/Habrachan.Text.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimenSM"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@+id/reading_count_imageview"
-        app:layout_constraintStart_toEndOf="@+id/reading_count_imageview"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_articles_page_item_reading_count_imageview"
+        app:layout_constraintStart_toEndOf="@+id/layout_articles_page_item_reading_count_imageview"
         tools:text="234345345" />
 
     <ImageView
-        android:id="@+id/comments_count_imageview"
+        android:id="@+id/layout_articles_page_item_comments_count_imageview"
         android:layout_width="@dimen/heightXS"
         android:layout_height="@dimen/heightXS"
         android:layout_marginStart="@dimen/dimenL"
@@ -107,18 +107,18 @@
         app:srcCompat="@drawable/ic_comment"
         app:tint="@color/colorPrimaryDark"
         app:tintMode="src_atop"
-        app:layout_constraintBottom_toBottomOf="@+id/reading_count_imageview"
-        app:layout_constraintStart_toEndOf="@+id/reading_count_textview"
-        app:layout_constraintTop_toTopOf="@+id/reading_count_imageview" />
+        app:layout_constraintBottom_toBottomOf="@+id/layout_articles_page_item_reading_count_imageview"
+        app:layout_constraintStart_toEndOf="@+id/layout_articles_page_item_reading_count_textview"
+        app:layout_constraintTop_toTopOf="@+id/layout_articles_page_item_reading_count_imageview" />
 
     <TextView
-        android:id="@+id/comments_count_textview"
+        android:id="@+id/layout_articles_page_item_comments_count_textview"
         style="@style/Habrachan.Text.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimenMS"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@+id/comments_count_imageview"
-        app:layout_constraintStart_toEndOf="@+id/comments_count_imageview" />
+        app:layout_constraintBottom_toBottomOf="@+id/layout_articles_page_item_comments_count_imageview"
+        app:layout_constraintStart_toEndOf="@+id/layout_articles_page_item_comments_count_imageview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

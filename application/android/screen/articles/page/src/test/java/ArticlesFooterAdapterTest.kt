@@ -9,14 +9,17 @@ import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.common.arena.ArenaException
 import com.makentoshe.habrachan.network.exception.GetArticlesException
 import com.maketoshe.habrachan.application.android.screen.articles.page.R
+import com.maketoshe.habrachan.application.android.screen.articles.page.databinding.LayoutArticlesFooterBinding
 import com.maketoshe.habrachan.application.android.screen.articles.page.model.ArticlesFooterAdapter
 import com.maketoshe.habrachan.application.android.screen.articles.page.model.ArticlesPageAdapter
 import com.maketoshe.habrachan.application.android.screen.articles.page.view.ArticlesFooterViewHolder
 import com.maketoshe.habrachan.application.android.screen.articles.page.view.finish
 import com.maketoshe.habrachan.application.android.screen.articles.page.view.loading
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.spyk
+import io.mockk.verify
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -28,24 +31,6 @@ class ArticlesFooterAdapterTest {
     private val mockArticlesPageAdapter = mockk<ArticlesPageAdapter>()
     private val mockExceptionHandler = mockk<ExceptionHandler>()
     private val adapter = ArticlesFooterAdapter(mockArticlesPageAdapter, mockExceptionHandler)
-
-    @Before
-    fun before() {
-        mockkStatic(LayoutInflater::class)
-    }
-
-    @Test
-    fun testShouldCreateArticlesFooterViewHolder() {
-        val mockLayoutInflater = mockk<LayoutInflater>()
-        every { LayoutInflater.from(any()) } returns mockLayoutInflater
-
-        val mockView = mockk<View>(relaxed = true)
-        every { mockLayoutInflater.inflate(R.layout.layout_articles_footer, any(), false) } returns mockView
-
-        val viewHolder = adapter.onCreateViewHolder(mockk(relaxed = true), mockk<LoadState>())
-
-        assertEquals(mockView, viewHolder.itemView)
-    }
 
     @Test
     fun testShouldBindViewHolderOnPaginationEnd() {
@@ -120,9 +105,7 @@ class ArticlesFooterAdapterTest {
     private fun viewHolder(): ArticlesFooterViewHolder {
         val applicationContext = ApplicationProvider.getApplicationContext<Context>()
         val themedContext = ContextThemeWrapper(applicationContext, R.style.Theme_MaterialComponents)
-        val inflater = LayoutInflater.from(themedContext)
-        val view = inflater.inflate(R.layout.layout_articles_footer, null, false)
-        return spyk(ArticlesFooterViewHolder(view))
+        return spyk(ArticlesFooterViewHolder(LayoutArticlesFooterBinding.inflate(LayoutInflater.from(themedContext))))
     }
 
 }

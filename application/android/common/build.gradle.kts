@@ -34,6 +34,9 @@ android {
 
         kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -50,6 +53,9 @@ dependencies {
     // https://github.com/material-components/material-components-android
     val material = dependency.version.androidMaterialDesign
     implementation("com.google.android.material:material:$material")
+
+    val lifecycle = dependency.version.androidLifecycle
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle")
 
     val core = dependency.version.androidCore
     implementation("androidx.core:core-ktx:$core")

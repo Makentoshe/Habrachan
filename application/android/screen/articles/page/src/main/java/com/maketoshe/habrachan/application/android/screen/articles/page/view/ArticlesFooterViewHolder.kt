@@ -1,19 +1,21 @@
 package com.maketoshe.habrachan.application.android.screen.articles.page.view
 
+import android.content.Context
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.maketoshe.habrachan.application.android.screen.articles.page.R
+import com.maketoshe.habrachan.application.android.screen.articles.page.databinding.LayoutArticlesFooterBinding
 
-class ArticlesFooterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val context = view.context
+class ArticlesFooterViewHolder(binding: LayoutArticlesFooterBinding) : RecyclerView.ViewHolder(binding.root) {
+    val context: Context = binding.root.context
 
-    val title: TextView by lazy { view.findViewById(R.id.fragment_page_articles_footer_title) }
-    val message: TextView by lazy { view.findViewById(R.id.fragment_page_articles_footer_message) }
-    val progress: ProgressBar by lazy { view.findViewById(R.id.fragment_articles_footer_progress) }
-    val retry: Button by lazy { view.findViewById(R.id.fragment_page_articles_footer_retry) }
+    val title: TextView by lazy { binding.fragmentPageArticlesFooterTitle }
+    val message: TextView by lazy { binding.fragmentPageArticlesFooterMessage }
+    val progress: ProgressBar by lazy { binding.fragmentArticlesFooterProgress }
+    val retry: Button by lazy { binding.fragmentPageArticlesFooterRetry }
 }
 
 fun ArticlesFooterViewHolder.loading() {

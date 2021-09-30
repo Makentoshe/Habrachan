@@ -13,10 +13,6 @@ android {
         exclude("META-INF/*.kotlin_module")
     }
 
-    useLibrary("android.test.runner")
-    useLibrary("android.test.base")
-    useLibrary("android.test.mock")
-
     compileSdkVersion(29)
     defaultConfig {
         minSdkVersion(21)
@@ -38,11 +34,6 @@ android {
 
         kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-    buildFeatures {
-        viewBinding = true
-    }
-
-    testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 dependencies {
@@ -57,15 +48,13 @@ dependencies {
     implementation(project(":network"))
 
     implementation(project(":application:core"))
-    implementation(project(":application:android:di"))
-    implementation(project(":application:android:common"))
     implementation(project(":application:android:database"))
+    implementation(project(":application:android:di"))
     implementation(project(":application:android:analytics"))
+    implementation(project(":application:android:common"))
     implementation(project(":application:android:navigation"))
 
     implementation(project(":application:android:screen"))
-    implementation(project(":application:android:screen:articles"))
-    implementation(project(":application:android:screen:articles:page"))
 
     // Toothpick
     // https://github.com/stephanenicolas/toothpick
@@ -75,6 +64,11 @@ dependencies {
     implementation("com.github.stephanenicolas.toothpick:smoothie:$toothpickVersion")
     implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpickVersion")
     testImplementation("com.github.stephanenicolas.toothpick:toothpick-testing-junit5:$toothpickVersion")
+
+    // Gson
+    // https://github.com/google/gson
+    val gsonVersion = dependency.version.gson
+    implementation("com.google.code.gson:gson:$gsonVersion")
 
     // Material components
     // https://github.com/material-components/material-components-android
@@ -101,41 +95,6 @@ dependencies {
     val constraintVersion = dependency.version.androidConstraintLayout
     implementation("androidx.constraintlayout:constraintlayout:$constraintVersion")
 
-    val androidFragmentVersion = dependency.version.androidFragment
-    debugImplementation("androidx.fragment:fragment-testing:$androidFragmentVersion")
-
     val junitVersion = dependency.version.junit
     testImplementation("junit:junit:$junitVersion")
-
-    // Core library
-    val testCoreVersion = dependency.version.androidTestCore
-    debugImplementation("androidx.test:core:$testCoreVersion")
-    testImplementation("androidx.test:core-ktx:$testCoreVersion")
-
-    // Assertions
-    val extJUnitVersion = dependency.version.androidTestJunit
-    testImplementation("androidx.test.ext:junit:$extJUnitVersion")
-    testImplementation("androidx.test.ext:junit-ktx:$extJUnitVersion")
-
-    // AndroidJUnitRunner
-    val testRunnerVersion = dependency.version.androidTestRunner
-    testImplementation("androidx.test:runner:$testRunnerVersion")
-
-    // JUnit Rules
-    val testRulesVersion = dependency.version.androidTestRules
-    testImplementation("androidx.test:rules:$testRulesVersion")
-
-    val espressoCoreVersion = dependency.version.androidTestEspresso
-    testImplementation("androidx.test.espresso:espresso-core:$espressoCoreVersion")
-
-    // Robolectric
-    // http://robolectric.org
-    val robolectricVersion = dependency.version.androidTestRobolectric
-    testImplementation("org.robolectric:robolectric:$robolectricVersion")
-
-    // Mockk
-    // https://github.com/mockk/mockk
-    val mockkVersion = dependency.version.mockk
-    testImplementation("io.mockk:mockk:$mockkVersion")
-    androidTestImplementation("io.mockk:mockk-android:$mockkVersion")
 }

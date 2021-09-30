@@ -1,9 +1,7 @@
 package com.maketoshe.habrachan.application.android.screen.articles.page
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
@@ -11,22 +9,23 @@ import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.articles.viewmodel.GetArticlesViewModel
-import com.makentoshe.habrachan.application.android.common.fragment.BaseFragment
+import com.makentoshe.habrachan.application.android.common.binding.viewBinding
+import com.makentoshe.habrachan.application.android.common.fragment.BindableBaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
 import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.common.arena.ArenaException
 import com.makentoshe.habrachan.network.request.SpecType
+import com.maketoshe.habrachan.application.android.screen.articles.page.databinding.FragmentPageArticlesBinding
 import com.maketoshe.habrachan.application.android.screen.articles.page.model.ArticlesFooterAdapter
 import com.maketoshe.habrachan.application.android.screen.articles.page.model.ArticlesPageAdapter
 import com.maketoshe.habrachan.application.android.screen.articles.page.view.ArticlesPageItemDecoration
-import kotlinx.android.synthetic.main.fragment_page_articles.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import toothpick.ktp.delegate.inject
 
-class ArticlesPageFragment : BaseFragment() {
+class ArticlesPageFragment : BindableBaseFragment() {
 
     companion object : Analytics(LogAnalytic()) {
 
@@ -36,6 +35,7 @@ class ArticlesPageFragment : BaseFragment() {
     }
 
     override val arguments = Arguments(this)
+    override val binding: FragmentPageArticlesBinding by viewBinding()
 
     private val exceptionHandler by inject<ExceptionHandler>()
     private val getArticlesViewModel by inject<GetArticlesViewModel>()
@@ -47,17 +47,13 @@ class ArticlesPageFragment : BaseFragment() {
         capture(analyticEvent { "Create(${arguments.spec})" })
     }
 
-    override fun internalOnCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_page_articles, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fragment_page_articles_recycler.adapter = adapter.withLoadStateFooter(footerAdapter)
-        fragment_page_articles_recycler.addItemDecoration(ArticlesPageItemDecoration.from(requireContext()))
+        binding.fragmentPageArticlesRecycler.adapter = adapter.withLoadStateFooter(footerAdapter)
+        binding.fragmentPageArticlesRecycler.addItemDecoration(ArticlesPageItemDecoration.from(requireContext()))
         adapter.addLoadStateListener(::onLoadStateChanged)
 
-        fragment_page_articles_retry.setOnClickListener { adapter.retry() }
-        fragment_page_articles_swipe.setOnRefreshListener { adapter.refresh() }
+        binding.fragmentPageArticlesRetry.setOnClickListener { adapter.retry() }
+        binding.fragmentPageArticlesSwipe.setOnRefreshListener { adapter.refresh() }
 
         lifecycleScope.launch(Dispatchers.IO) {
             getArticlesViewModel.pagingData.collectLatest { data ->
@@ -75,16 +71,16 @@ class ArticlesPageFragment : BaseFragment() {
     private fun onLoadStateChangedLoading() {
         if (adapter.itemCount > 0) return
 
-        fragment_page_articles_progress.visibility = View.VISIBLE
-        fragment_page_articles_title.visibility = View.GONE
-        fragment_page_articles_message.visibility = View.GONE
-        fragment_page_articles_retry.visibility = View.GONE
+        binding.fragmentPageArticlesProgress.visibility = View.VISIBLE
+        binding.fragmentPageArticlesTitle.visibility = View.GONE
+        binding.fragmentPageArticlesMessage.visibility = View.GONE
+        binding.fragmentPageArticlesRetry.visibility = View.GONE
     }
 
     private fun onLoadStateChangedContent() {
-        fragment_page_articles_swipe.isRefreshing = false
-        fragment_page_articles_swipe.visibility = View.VISIBLE
-        fragment_page_articles_progress.visibility = View.GONE
+        binding.fragmentPageArticlesSwipe.isRefreshing = false
+        binding.fragmentPageArticlesSwipe.visibility = View.VISIBLE
+        binding.fragmentPageArticlesProgress.visibility = View.GONE
     }
 
     private fun onLoadStateChangedError(throwable: Throwable) {
@@ -97,17 +93,17 @@ class ArticlesPageFragment : BaseFragment() {
     }
 
     private fun onLoadStateChangedError(exceptionEntry: ExceptionEntry) {
-        fragment_page_articles_swipe.isRefreshing = false
-        fragment_page_articles_progress.visibility = View.GONE
-        fragment_page_articles_swipe.visibility = View.GONE
+        binding.fragmentPageArticlesSwipe.isRefreshing = false
+        binding.fragmentPageArticlesSwipe.visibility = View.GONE
+        binding.fragmentPageArticlesProgress.visibility = View.GONE
 
-        fragment_page_articles_title.visibility = View.VISIBLE
-        fragment_page_articles_title.text = exceptionEntry.title
+        binding.fragmentPageArticlesTitle.visibility = View.VISIBLE
+        binding.fragmentPageArticlesTitle.text = exceptionEntry.title
 
-        fragment_page_articles_message.visibility = View.VISIBLE
-        fragment_page_articles_message.text = exceptionEntry.message
+        binding.fragmentPageArticlesMessage.visibility = View.VISIBLE
+        binding.fragmentPageArticlesMessage.text = exceptionEntry.message
 
-        fragment_page_articles_retry.visibility = View.VISIBLE
+        binding.fragmentPageArticlesRetry.visibility = View.VISIBLE
     }
 
     class Arguments(fragment: ArticlesPageFragment) : FragmentArguments(fragment) {
