@@ -1,211 +1,199 @@
 package com.makentoshe.habrachan.application.android.screen.article
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
+import android.webkit.WebView
+import androidx.annotation.StringRes
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.common.fragment.BaseFragment
+import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleModel
+import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleSpec
+import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleViewModel
+import com.makentoshe.habrachan.application.android.common.article.voting.viewmodel.VoteArticleSpec
+import com.makentoshe.habrachan.application.android.common.article.voting.viewmodel.VoteArticleViewModel
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarSpec
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
+import com.makentoshe.habrachan.application.android.common.binding.viewBinding
+import com.makentoshe.habrachan.application.android.common.dp2px
+import com.makentoshe.habrachan.application.android.common.fragment.BindableBaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
+import com.makentoshe.habrachan.application.android.common.toRoundedDrawable
+import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
+import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
+import com.makentoshe.habrachan.application.android.screen.article.databinding.FragmentArticleBinding
+import com.makentoshe.habrachan.application.android.screen.article.model.*
+import com.makentoshe.habrachan.application.android.screen.article.view.*
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.ArticleCommentsScreenNavigator
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.BackwardNavigator
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.ContentScreenNavigator
+import com.makentoshe.habrachan.application.common.arena.ArenaException
+import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.ArticleId
+import com.makentoshe.habrachan.entity.articleId
+import com.makentoshe.habrachan.functional.Option
+import com.makentoshe.habrachan.functional.fold
+import com.makentoshe.habrachan.network.GetContentResponse
+import com.makentoshe.habrachan.network.exception.GetArticleException
+import com.makentoshe.habrachan.network.request.ArticleVote
+import com.makentoshe.habrachan.network.response.VoteArticleResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import toothpick.ktp.delegate.inject
 
-class ArticleFragment : BaseFragment() /*,HabrachanWebViewClientListener*/ {
+class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
 
     companion object : Analytics(LogAnalytic()) {
 
-        fun build(articleId: ArticleId) = ArticleFragment().apply {
-            arguments.articleId = articleId.articleId
+        fun build(articleId: ArticleId, articleTitle: Option<String>) = ArticleFragment().apply {
+            arguments.articleId = articleId
+            arguments.articleTitle = articleTitle
         }
-
     }
 
     override val arguments = Arguments(this)
-//    private val webViewClient = HabrachanWebViewClient(this)
-//
-//    private val viewModel2 by inject<ArticleViewModel2>()
-//    private val navigator by inject<ArticleNavigation>()
-//
-//    private val exceptionHandler by inject<ExceptionHandler>()
-//    private lateinit var exceptionController: ExceptionController
-//
-//    private val articleShareController by inject<ArticleShareController>()
-//    private val articleHtmlController by inject<ArticleHtmlController>()
-//    private val javaScriptInterface by inject<JavaScriptInterface>()
+    override val binding: FragmentArticleBinding by viewBinding()
+    private val webViewClient = HabrachanWebViewClient(this)
+
+    private val getAvatarViewModel by inject<GetAvatarViewModel>()
+    private val getArticleViewModel by inject<GetArticleViewModel>()
+    private val voteArticleViewModel by inject<VoteArticleViewModel>()
+
+    private val exceptionHandler by inject<ExceptionHandler>()
+    private val contentScreenNavigator by inject<ContentScreenNavigator>()
+    private val commentsScreenNavigator by inject<ArticleCommentsScreenNavigator>()
+    private val backwardNavigator by inject<BackwardNavigator>()
+
+    private val articleShareController by inject<ArticleShareController>()
+    private val articleHtmlController by inject<ArticleHtmlController>()
+    private val javaScriptInterface by inject<JavaScriptInterface>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         capture(analyticEvent { "OnCreate($savedInstanceState)" })
+        super.onCreate(savedInstanceState)
     }
 
-    override fun internalOnCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_article, container, false)
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        arguments.articleTitle.onNotEmpty(binding::showToolbarContent)
+        binding.initializeWebView(webViewClient, javaScriptInterface)
+        binding.fragmentArticleExceptionRetry.setOnClickListener { onArticleRetry() }
+        binding.fragmentArticleBottomComments.setOnClickListener {
+            commentsScreenNavigator.toArticleCommentsScreen(arguments.articleId, arguments.articleTitle)
+        }
+        binding.fragmentArticleAppbarCollapsingToolbar.setNavigationOnClickListener {
+            backwardNavigator.toPreviousScreen()
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            getArticleViewModel.model.collectLatest { result ->
+                result.fold(::onArticleSuccess, ::onArticleFailure)
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            javaScriptInterface.imageSourceFlow.collectLatest { imageSource ->
+                contentScreenNavigator.toContentScreen(imageSource)
+            }
+        }
+
+        childFragmentManager.setFragmentResultListener(
+            ArticleVoteDownReasonDialogFragment.request,
+            this@ArticleFragment
+        ) { _, result ->
+            val reason = result.getSerializable(ArticleVoteDownReasonDialogFragment.key) as ArticleVote.Down.Reason
+            lifecycleScope.launch(Dispatchers.IO) {
+                voteArticleViewModel.channel.send(VoteArticleSpec(arguments.articleId, ArticleVote.Down(reason)))
+            }
+        }
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        exceptionController = ExceptionController(ExceptionViewHolder(fragment_article_exception))
-//
-//        val wasViewModelRecreated = viewModel2.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
-//        if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch {
-//            capture(analyticEvent(this@ArticleFragment.javaClass.simpleName, arguments.articleId.toString()))
-//            viewModel2.articleSpecChannel.send(ArticleViewModel2.ArticleSpec(arguments.articleId))
-//        }
-//        lifecycleScope.launch {
-//            viewModel2.avatar.collectLatest { response ->
-//                response.fold(::onAvatarReceivedSuccess, ::onAvatarReceivedFailure)
-//            }
-//        }
-//        lifecycleScope.launch {
-//            viewModel2.article.collectLatest { response ->
-//                response.fold(::onArticleReceivedSuccess, ::onArticleReceivedFailure)
-//            }
-//        }
-//        lifecycleScope.launch {
-//            javaScriptInterface.imageSourceChannel.receiveAsFlow().collectLatest {
-//                navigator.toArticleContentScreen(it)
-//            }
-//        }
-//        lifecycleScope.launch {
-//            viewModel2.voteArticle.collectLatest { response ->
-//                response.fold(::onVoteArticleSuccess, ::onVoteArticleFailure)
-//            }
-//        }
-//
-//        exceptionController.setRetryButton {
-//            exceptionController.hide()
-//            fragment_article_progress.visibility = View.VISIBLE
-//            lifecycleScope.launch {
-//                viewModel2.articleSpecChannel.send(ArticleViewModel2.ArticleSpec(arguments.articleId))
-//            }
-//        }
-//
-//        fragment_article_webview.webViewClient = webViewClient
-//        fragment_article_webview.settings.javaScriptEnabled = true
-//        fragment_article_webview.addJavascriptInterface(javaScriptInterface, "JSInterface")
-//
-//        fragment_article_toolbar.overflowIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_overflow)
-//        fragment_article_toolbar.inflateMenu(R.menu.menu_article_overflow)
-//        fragment_article_toolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
-//
-//        fragment_article_bottom_voteup.setOnClickListener {
-//            val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Up)
-//            capture(analyticEvent("Votedown(spec=$spec)"))
-//            lifecycleScope.launch(Dispatchers.IO) {
-//                viewModel2.voteArticleSpecChannel.send(spec)
-//            }
-//        }
-//
-//        fragment_article_bottom_votedown.setOnClickListener {
-//            lifecycleScope.launch(Dispatchers.IO) {
-//                ArticleVoteDownReasonDialogFragment.show(childFragmentManager)
-//            }
-//        }
-//
-//        @Suppress("USELESS_CAST")
-//        val fragmentManager = childFragmentManager as FragmentManager
-//        fragmentManager.setFragmentResultListener(ArticleVoteDownReasonDialogFragment.request, this) { _, result ->
-//            val reason = result.getSerializable(ArticleVoteDownReasonDialogFragment.key) as ArticleVote.Down.Reason
-//            val spec = ArticleViewModel2.VoteArticleSpec(articleId(arguments.articleId), ArticleVote.Down(reason))
-//            capture(analyticEvent("Votedown(spec=$spec)"))
-//            lifecycleScope.launch(Dispatchers.IO) {
-//                viewModel2.voteArticleSpecChannel.send(spec)
-//            }
-//        }
-//    }
-//
-//    // TODO make separate class for creating html urls
-//    private fun onOverflowMenuItemClick(item: MenuItem): Boolean = when (item.itemId) {
-//        R.id.action_share -> articleShareController.share(requireActivity())
-//        else -> false
-//    }
-//
-//    // TODO disable appbar collapse on error
-//    private fun onArticleReceivedSuccess(response: GetArticleResponse2) {
-//        onArticleReceivedToolbar(response)
-//        onArticleReceivedBottomBar(response)
-//
-//        fragment_article_progress.visibility = View.GONE
-//        fragment_article_scroll.visibility = View.VISIBLE
-//
-//        try {
-//            val articleHtml = articleHtmlController.render(response.article)
-//            val base64content = Base64.encodeToString(articleHtml.toByteArray(), Base64.DEFAULT)
-//            fragment_article_webview.loadData(base64content, "text/html; charset=UTF-8", "base64")
-//        } catch (e: Exception) {
-//            exceptionController.render(exceptionHandler.handleException(e))
-//            fragment_article_appbar.isEnabled = false
-//        }
-//
-//        fragment_article_author.setOnClickListener {
-//            navigator.navigateToUserScreen(response.article.author.login)
-//        }
-//    }
-//
-//    private fun onArticleReceivedToolbar(response: GetArticleResponse2) {
-//        fragment_article_toolbar.setNavigationOnClickListener { navigator.back() }
-//        fragment_article_toolbar.title = response.article.title
-//        fragment_article_calculator.text = response.article.title
-//        fragment_article_login.text = response.article.author.login
-//        fragment_article_appbar.setExpanded(true, true)
-//    }
-//
-//    private fun onArticleReceivedBottomBar(response: GetArticleResponse2) {
-//        fragment_article_bottom_voteview.text = response.article.score.toString()
-//        fragment_article_bottom_reading_count.text = response.article.readingCount.toString()
-//        fragment_article_bottom_comments_count.text = response.article.commentsCount.toString()
-//        fragment_article_bottom.visibility = View.VISIBLE
-//        fragment_article_bottom_comments.setOnClickListener {
-//            navigator.toArticleCommentsScreen(response.article)
-//        }
-//
-//        when (response.article.vote.value) {
-//            1.0 -> setVoteUpIcon()
-//            -1.0 -> setVoteDownIcon()
-//        }
-//    }
-//
-//    private fun onArticleReceivedFailure(exception: Throwable) {
-//        fragment_article_progress.visibility = View.GONE
-//        exceptionController.render(exceptionHandler.handleException(exception))
-//    }
-//
-//    private fun onAvatarReceivedSuccess(response: GetContentResponse) {
-//        val bitmap = response.bytes.toRoundedDrawable(resources, dp2px(R.dimen.radiusS))
-//        fragment_article_avatar_image.setImageDrawable(bitmap)
-//        fragment_article_avatar_image.visibility = View.VISIBLE
-//
-//        fragment_article_avatar_progress.visibility = View.GONE
-//    }
-//
-//    private fun onAvatarReceivedFailure(throwable: Throwable?) {
-//        val tintColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.title))
-//        fragment_article_avatar_image.imageTintList = tintColor
-//        fragment_article_avatar_image.imageTintMode = PorterDuff.Mode.SRC_ATOP
-//        fragment_article_avatar_image.setImageResource(R.drawable.ic_account_stub)
-//        fragment_article_avatar_image.visibility = View.VISIBLE
-//
-//        fragment_article_avatar_progress.visibility = View.GONE
-//    }
-//
-//    private fun onVoteArticleSuccess(response: VoteArticleResponse) {
-//        fragment_article_bottom_voteview.text = response.score.toString()
-//        when (response.request.articleVote) {
-//            is ArticleVote.Up -> setVoteUpIcon()
-//            is ArticleVote.Down -> setVoteDownIcon()
-//        }
-//    }
-//
-//    private fun setVoteUpIcon() = fragment_article_bottom_voteup.apply {
-//        setColorFilter(ContextCompat.getColor(requireContext(), R.color.positive))
-//    }.setImageResource(R.drawable.ic_arrow_bold_solid)
-//
-//    private fun setVoteDownIcon() = fragment_article_bottom_votedown.apply {
-//        setColorFilter(ContextCompat.getColor(requireContext(), R.color.negative))
-//    }.setImageResource(R.drawable.ic_arrow_bold_solid)
-//
-//    // todo show a snackbar with description
-//    private fun onVoteArticleFailure(throwable: Throwable?) {
+    private fun onArticleSuccess(getArticleModel: GetArticleModel) = lifecycleScope.launch(Dispatchers.Main) {
+        onArticleSuccess(getArticleModel.response2.article)
+    }
+
+    private fun onArticleSuccess(article: Article) {
+        try {
+            binding.hideProgress().showToolbarContent(article.title, Option.from(article.author.login))
+            binding.showContent(articleHtmlController.render(article))
+            binding.showBottom(article.votesCount, article.readingCount, article.commentsCount, article.vote)
+        } catch (exception: Throwable) {
+            binding.hideProgress().showException(exceptionHandler.handle(exception))
+        }
+
+        binding.fragmentArticleAppbarCollapsingToolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
+
+        binding.fragmentArticleBottomVoteup.setOnClickListener { onArticleVoteUp() }
+        binding.fragmentArticleBottomVotedown.setOnClickListener { onArticleVoteDown() }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            voteArticleViewModel.model.collectLatest { result ->
+                result.fold(::onArticleVoteSuccess, ::onArticleVoteFailure)
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            getAvatarViewModel.requestAvatar(GetAvatarSpec(article.author.avatar)).collectLatest { result ->
+                result.fold(::onAvatarSuccess, ::onAvatarFailure)
+            }
+        }
+    }
+
+    private fun onAvatarSuccess(response: GetContentResponse) = lifecycleScope.launch(Dispatchers.Main) {
+        binding.showToolbarAvatar(response.bytes.toRoundedDrawable(resources, dp2px(R.dimen.radiusS)))
+    }
+
+    private fun onAvatarFailure(throwable: Throwable) = lifecycleScope.launch(Dispatchers.Main) {
+        binding.showToolbarAvatarStub()
+    }
+
+    private fun onArticleFailure(throwable: Throwable) {
+        val arenaException = throwable as? ArenaException
+            ?: return onArticleFailure(exceptionHandler.handle(throwable))
+
+        val getArticleException = arenaException.sourceException as? GetArticleException
+            ?: return onArticleFailure(exceptionHandler.handle(arenaException))
+
+        onArticleFailure(getArticleException.cause?.let(exceptionHandler::handle) ?: exceptionHandler.handle(throwable))
+    }
+
+    private fun onArticleRetry() = lifecycleScope.launch(Dispatchers.Main) {
+        binding.showProgress().hideException().showToolbarAvatarProgress()
+
+        val getArticleSpec = GetArticleSpec(arguments.articleId)
+        lifecycleScope.launch(Dispatchers.IO) {
+            getArticleViewModel.channel.send(getArticleSpec)
+        }
+    }
+
+    private fun onArticleFailure(exceptionEntry: ExceptionEntry) {
+        binding.hideProgress().showException(exceptionEntry).showToolbarAvatarStub()
+    }
+
+    private fun onArticleVoteUp() = lifecycleScope.launch(Dispatchers.IO) {
+        voteArticleViewModel.channel.send(VoteArticleSpec(arguments.articleId, ArticleVote.Up))
+    }
+
+    private fun onArticleVoteDown() = lifecycleScope.launch(Dispatchers.Main) {
+        ArticleVoteDownReasonDialogFragment.show(childFragmentManager)
+    }
+
+    private fun onArticleVoteSuccess(response: VoteArticleResponse) = lifecycleScope.launch(Dispatchers.Main) {
+        binding.fragmentArticleBottomVoteview.text = response.score.toString()
+        when (response.request.articleVote) {
+            is ArticleVote.Up -> binding.setVoteUpIcon()
+            is ArticleVote.Down -> binding.setVoteDownIcon()
+        }
+    }
+
+    private fun onArticleVoteFailure(throwable: Throwable) {
+        return showSnackbar(exceptionHandler.handle(throwable).message, "Got it")
+
 //        if (throwable !is NativeVoteArticleException) return
 //
 //        if (throwable.code == 401) return showSnackbar(
@@ -217,32 +205,42 @@ class ArticleFragment : BaseFragment() /*,HabrachanWebViewClientListener*/ {
 //        if (throwable.code == 400 && throwable.request.articleVote is ArticleVote.Down) return showSnackbar(
 //            R.string.article_vote_action_negative_describe_text, R.string.article_vote_action_negative_describe_button
 //        )
-//    }
-//
-//    private fun showSnackbar(
-//        @StringRes
-//        stringText: Int,
-//        @StringRes
-//        actionString: Int, action: (View) -> Unit = {}
-//    ) = Snackbar.make(requireView(), stringText, Snackbar.LENGTH_LONG).setAction(actionString, action).show()
-//
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        outState.putString(VIEW_MODEL_STATE_KEY, viewModel2.toString())
-//    }
-//
-//    override fun onWebReceivedError(
-//        view: WebView?, errorCode: Int, description: String?, failingUrl: String?
-//    ) = onArticleReceivedFailure(Exception(description))
+    }
+
+    // TODO make separate class for creating html urls
+    private fun onOverflowMenuItemClick(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_share -> articleShareController.share(requireActivity())
+        else -> false
+    }
+
+    private fun showSnackbar(
+        @StringRes stringText: Int,
+        @StringRes actionString: Int, action: (View) -> Unit = {}
+    ) = Snackbar.make(requireView(), stringText, Snackbar.LENGTH_LONG).setAction(actionString, action).show()
+
+    private fun showSnackbar(
+        text: String,
+        actionText: String,
+        action: (View) -> Unit = {}
+    ) = Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG).setAction(actionText, action).show()
+
+    override fun onWebReceivedError(
+        view: WebView?, errorCode: Int, description: String?, failingUrl: String?
+    ) = onArticleFailure(Exception(description))
 
     class Arguments(articleFragment: ArticleFragment) : FragmentArguments(articleFragment) {
 
-        var articleId: Int
-            set(value) = fragmentArguments.putInt(ID, value)
-            get() = fragmentArguments.getInt(ID, -1)
+        var articleId: ArticleId
+            get() = articleId(fragmentArguments.getInt(ARTICLE_ID))
+            set(value) = fragmentArguments.putInt(ARTICLE_ID, value.articleId)
+
+        var articleTitle: Option<String>
+            get() = Option.from(fragmentArguments.getString(ARTICLE_TITLE))
+            set(value) = fragmentArguments.putString(ARTICLE_TITLE, value.getOrNull())
 
         companion object {
-            private const val ID = "ArticleId"
+            private const val ARTICLE_ID = "ArticleId"
+            private const val ARTICLE_TITLE = "ArticleTitle"
         }
     }
 }

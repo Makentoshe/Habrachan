@@ -6,42 +6,182 @@
     android:layout_height="match_parent">
 
     <ProgressBar
-        android:id="@+id/fragment_article_progress"
         style="@style/Habrachan.Progress"
+        android:id="@+id/fragment_article_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dimenMS"
         android:background="@android:color/transparent"
+        android:padding="@dimen/dimenMS"
         android:translationZ="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/fragment_article_bottom">-->
+    <TextView
+        android:visibility="gone"
+        style="@style/Habrachan.Text.Main"
+        android:id="@+id/fragment_article_exception_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@id/fragment_article_exception_message"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-<!--        <include layout="@layout/fragment_article_toolbar" />-->
+    <TextView
+        android:visibility="gone"
+        style="@style/Habrachan.Text.Support"
+        android:id="@+id/fragment_article_exception_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen2XL"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@id/fragment_article_exception_retry"
+        app:layout_constraintTop_toBottomOf="@id/fragment_article_exception_title" />
 
-<!--        <com.makentoshe.habrachan.application.android.screen.article.view.CustomNestedScrollView-->
-<!--            android:visibility="gone"-->
-<!--            android:id="@+id/fragment_article_scroll"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:scrollbars="vertical"-->
-<!--            app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        style="@style/Habrachan.Button.Text"
+        android:id="@+id/fragment_article_exception_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="@string/layout_exception_retry"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_article_exception_message" />
 
-<!--            <WebView-->
-<!--                android:id="@+id/fragment_article_webview"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content" />-->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-<!--        </com.makentoshe.habrachan.application.android.screen.article.view.CustomNestedScrollView>-->
+        <com.google.android.material.appbar.AppBarLayout
+            android:visibility="gone"
+            android:id="@+id/fragment_article_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:expanded="false">
 
-<!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+            <net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
+                android:theme="@style/Habrachan.Toolbar"
+                android:id="@+id/article_fragment_appbar_collapsing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:maxLines="12"
+                app:expandedTitleMarginTop="@dimen/heightLL"
+                app:expandedTitleMarginStart="@dimen/dimen2XL"
+                app:expandedTitleMarginEnd="@dimen/dimen2XL"
+                app:expandedTitleMarginBottom="@dimen/dimen2XL"
+                app:collapsedTitleTextAppearance="@style/Habrachan.TextAppearance.Collapsed"
+                app:expandedTitleTextAppearance="@style/Habrachan.TextAppearance.Expanded"
+                app:expandedTitleGravity="center_horizontal|top"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                app:toolbarId="@id/fragment_article_appbar_collapsing_toolbar">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:visibility="gone"
+                    style="@style/Habrachan.Toolbar"
+                    android:id="@+id/fragment_article_appbar_collapsing_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/heightLL"
+                    app:navigationIcon="@drawable/ic_arrow_back"
+                    app:layout_collapseMode="pin" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fragment_article_toolbar_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="?attr/actionBarSize"
+                    android:layout_marginBottom="@dimen/dimenMS"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.7">
+
+                    <!-- Invisible view helps to calculate and hold an optimal title height -->
+                    <TextView
+                        android:visibility="invisible"
+                        android:id="@+id/fragment_article_toolbar_calculator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_horizontal|top"
+                        android:textAppearance="@style/Habrachan.TextAppearance.Expanded"
+                        android:layout_marginEnd="@dimen/dimen2XL"
+                        android:layout_marginStart="@dimen/dimen2XL"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <ImageView
+                        android:visibility="invisible"
+                        android:id="@+id/fragment_article_toolbar_avatar"
+                        android:layout_width="@dimen/heightM"
+                        android:layout_height="@dimen/heightM"
+                        android:layout_marginStart="@dimen/dimenL"
+                        android:layout_marginTop="@dimen/dimenML"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_article_toolbar_calculator" />
+
+                    <ProgressBar
+                        style="@style/Habrachan.Progress"
+                        android:id="@+id/fragment_article_toolbar_avatar_progress"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:indeterminateTint="@color/title"
+                        app:layout_constraintStart_toStartOf="@id/fragment_article_toolbar_avatar"
+                        app:layout_constraintTop_toTopOf="@id/fragment_article_toolbar_avatar"
+                        app:layout_constraintEnd_toEndOf="@id/fragment_article_toolbar_avatar"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_article_toolbar_avatar" />
+
+                    <TextView
+                        style="@style/Habrachan.Text.Main"
+                        android:id="@+id/fragment_article_toolbar_login"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:textColor="@color/title"
+                        android:gravity="start|center_vertical"
+                        android:layout_marginStart="@dimen/dimenMS"
+                        app:layout_constraintTop_toTopOf="@id/fragment_article_toolbar_avatar"
+                        app:layout_constraintStart_toEndOf="@id/fragment_article_toolbar_avatar"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_article_toolbar_avatar" />
+
+                    <!-- "Container" view for handling clicks on avatar or nickname -->
+                    <View
+                        android:id="@+id/fragment_article_toolbar_author"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintStart_toStartOf="@id/fragment_article_toolbar_avatar"
+                        app:layout_constraintEnd_toEndOf="@id/fragment_article_toolbar_login"
+                        app:layout_constraintTop_toTopOf="@id/fragment_article_toolbar_avatar"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_article_toolbar_avatar" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.makentoshe.habrachan.application.android.screen.article.view.CustomNestedScrollView
+            android:visibility="gone"
+            android:id="@+id/fragment_article_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <WebView
+                android:id="@+id/fragment_article_webview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.makentoshe.habrachan.application.android.screen.article.view.CustomNestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <LinearLayout
         android:visibility="gone"
