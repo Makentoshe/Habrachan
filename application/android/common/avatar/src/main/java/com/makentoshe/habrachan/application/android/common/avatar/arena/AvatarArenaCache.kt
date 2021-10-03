@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.application.android.common.arena
+package com.makentoshe.habrachan.application.android.common.avatar.arena
 
 import android.util.Log
 import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase

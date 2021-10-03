@@ -45,7 +45,11 @@ class ContentActionBroadcastReceiver(private val scope: CoroutineScope) : Broadc
     ) : androidx.lifecycle.LifecycleObserver {
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        fun onDestroy() = activity.unregisterReceiver(broadcastReceiver)
+        fun onDestroy() = try {
+            activity.unregisterReceiver(broadcastReceiver)
+        } catch (exception: IllegalStateException) {
+            // Ignore java.lang.IllegalArgumentException: Receiver not registered: com.makentoshe.habrachan.application.android.screen.content.model.ContentActionBroadcastReceiver@ac95c3a
+        }
 
     }
 

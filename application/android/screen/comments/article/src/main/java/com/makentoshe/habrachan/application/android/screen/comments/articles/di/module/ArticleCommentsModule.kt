@@ -1,9 +1,9 @@
 package com.makentoshe.habrachan.application.android.screen.comments.articles.di.module
 
+import com.makentoshe.habrachan.application.android.common.avatar.di.CacheFirstAvatarArenaProvider
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModelProvider
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
-import com.makentoshe.habrachan.application.android.screen.comments.di.provider.CacheFirstAvatarArenaProvider
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.SourceFirstArticleCommentsArenaProvider
 import com.makentoshe.habrachan.application.common.arena.comments.ArticleCommentsArena
 import com.makentoshe.habrachan.application.common.arena.content.ContentArena

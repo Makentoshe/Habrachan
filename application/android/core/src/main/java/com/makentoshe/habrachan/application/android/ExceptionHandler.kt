@@ -98,7 +98,7 @@ class ExceptionHandlerImpl(private val context: Context) : ExceptionHandler {
 }
 
 data class ExceptionViewHolder(val root: View) {
-    val titleView: TextView = root.findViewById(R.id.layout_exception_title)
+    val titleView: TextView = root.findViewById(R.id.fragment_article_exception_title)
     val messageView: TextView = root.findViewById(R.id.layout_exception_message)
     val retryButton: Button = root.findViewById(R.id.layout_exception_retry)
 }

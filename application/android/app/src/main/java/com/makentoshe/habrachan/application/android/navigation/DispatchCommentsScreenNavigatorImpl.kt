@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class DispatchCommentsScreenNavigatorImpl @Inject constructor(
     private val router: StackRouter
-): DispatchCommentsScreenNavigator {
+) : DispatchCommentsScreenNavigator {
     override fun toDispatchScreen(articleId: ArticleId, commentId: CommentId) {
         router.stack(DispatchCommentsScreen(articleId, commentId))
     }

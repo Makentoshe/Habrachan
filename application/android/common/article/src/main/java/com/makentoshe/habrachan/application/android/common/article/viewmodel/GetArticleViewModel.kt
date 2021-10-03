@@ -13,6 +13,7 @@ import com.makentoshe.habrachan.network.UserSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -32,10 +33,12 @@ class GetArticleViewModel(
 
     val model = internalChannel.receiveAsFlow().map { spec ->
         articleArena.suspendFetch(articleArena.request(userSession, spec.articleId))
-    }.map { result -> result.map { response -> GetArticleModel(response) } }
+    }.map { result ->
+        result.map { response -> GetArticleModel(response) }
+    }.flowOn(Dispatchers.IO)
 
     init {
-        capture(analyticEvent { "Initialized ${this@GetArticleViewModel}" })
+        capture(analyticEvent { "Initialized" })
         initialGetArticleSpecOption.fold({}) { getArticleSpec ->
             capture(analyticEvent { "Send initial $getArticleSpec" })
             viewModelScope.launch(Dispatchers.IO) {

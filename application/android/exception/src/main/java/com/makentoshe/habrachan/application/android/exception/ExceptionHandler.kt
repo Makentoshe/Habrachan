@@ -25,7 +25,7 @@ class ExceptionHandler(private val context: Context) {
 
     private fun unknownHandle(exception: Throwable): ExceptionEntry {
         val title = context.getString(R.string.exception_handler_unknown_title)
-        val message = context.getString(R.string.exception_handler_unknown_message)
+        val message = exception.toString()
         return ExceptionEntry(title, message)
     }
 }
