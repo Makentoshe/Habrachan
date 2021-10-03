@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.di.*
+import com.makentoshe.habrachan.application.android.screen.article.di.ArticleFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.flow.di.ArticlesFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.comments.articles.di.ArticleCommentsFragmentInjector
@@ -29,7 +30,7 @@ class Habrachan : Application() {
         MainFlowFragmentInjector(),
         ArticlesFlowFragmentInjector(),
         ArticlesPageFragmentInjector(),
-//        ArticleFragmentInjector(),
+        ArticleFragmentInjector(),
         ContentFragmentInjector(),
         ContentFragmentPageInjector(),
         LoginFragmentInjector(),

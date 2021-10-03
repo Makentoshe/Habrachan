@@ -7,7 +7,7 @@
     app:expanded="false">
 
     <net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
-        android:id="@+id/article_fragment_content_toolbar_collapsing"
+        android:id="@+id/article_fragment_appbar_collapsing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="?attr/habrachanToolbar"
@@ -20,11 +20,11 @@
         app:expandedTitleTextAppearance="@style/Habrachan.TextAppearance.CollapsingToolbar.Expanded"
         app:expandedTitleGravity="center_horizontal|top"
         app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-        app:toolbarId="@id/fragment_article_toolbar">
+        app:toolbarId="@id/fragment_article_appbar_collapsing_toolbar">
 
         <androidx.appcompat.widget.Toolbar
             style="?attr/habrachanToolbar"
-            android:id="@+id/fragment_article_toolbar"
+            android:id="@+id/fragment_article_appbar_collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_arrow_back"
@@ -43,7 +43,7 @@
             <!-- Invisible view helps to calculate and hold an optimal title height -->
             <TextView
                 android:visibility="invisible"
-                android:id="@+id/fragment_article_calculator"
+                android:id="@+id/fragment_article_toolbar_calculator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -57,48 +57,48 @@
 
             <ImageView
                 android:visibility="invisible"
-                android:id="@+id/fragment_article_avatar_image"
+                android:id="@+id/fragment_article_toolbar_avatar"
                 android:layout_width="@dimen/heightM"
                 android:layout_height="@dimen/heightM"
                 app:tint="@android:color/transparent"
                 android:layout_marginStart="@dimen/dimenL"
                 android:layout_marginTop="@dimen/dimenML"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_article_calculator" />
+                app:layout_constraintTop_toBottomOf="@id/fragment_article_toolbar_calculator" />
 
             <ProgressBar
                 style="@style/Habrachan.Progress"
-                android:id="@+id/fragment_article_avatar_progress"
+                android:id="@+id/fragment_article_toolbar_avatar_progress"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:indeterminateTint="@color/title"
-                app:layout_constraintStart_toStartOf="@id/fragment_article_avatar_image"
-                app:layout_constraintTop_toTopOf="@id/fragment_article_avatar_image"
-                app:layout_constraintEnd_toEndOf="@id/fragment_article_avatar_image"
-                app:layout_constraintBottom_toBottomOf="@id/fragment_article_avatar_image" />
+                app:layout_constraintStart_toStartOf="@id/fragment_article_toolbar_avatar"
+                app:layout_constraintTop_toTopOf="@id/fragment_article_toolbar_avatar"
+                app:layout_constraintEnd_toEndOf="@id/fragment_article_toolbar_avatar"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_article_toolbar_avatar" />
 
             <TextView
                 style="@style/Habrachan.Text.Main"
-                android:id="@+id/fragment_article_login"
+                android:id="@+id/fragment_article_toolbar_login"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:textColor="@color/title"
                 android:gravity="start|center_vertical"
                 android:layout_marginStart="@dimen/dimenMS"
-                app:layout_constraintTop_toTopOf="@id/fragment_article_avatar_image"
-                app:layout_constraintStart_toEndOf="@id/fragment_article_avatar_image"
-                app:layout_constraintBottom_toBottomOf="@id/fragment_article_avatar_image" />
+                app:layout_constraintTop_toTopOf="@id/fragment_article_toolbar_avatar"
+                app:layout_constraintStart_toEndOf="@id/fragment_article_toolbar_avatar"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_article_toolbar_avatar" />
 
             <!-- "Container" view for handling clicks on avatar or nickname -->
             <View
-                android:id="@+id/fragment_article_author"
+                android:id="@+id/fragment_article_toolbar_author"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@android:color/transparent"
-                app:layout_constraintStart_toStartOf="@id/fragment_article_avatar_image"
-                app:layout_constraintEnd_toEndOf="@id/fragment_article_login"
-                app:layout_constraintTop_toTopOf="@id/fragment_article_avatar_image"
-                app:layout_constraintBottom_toBottomOf="@id/fragment_article_avatar_image" />
+                app:layout_constraintStart_toStartOf="@id/fragment_article_toolbar_avatar"
+                app:layout_constraintEnd_toEndOf="@id/fragment_article_toolbar_login"
+                app:layout_constraintTop_toTopOf="@id/fragment_article_toolbar_avatar"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_article_toolbar_avatar" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,12 +3,14 @@ package com.makentoshe.habrachan.application.android.screen.comments.di
 import android.content.Context
 import androidx.fragment.app.Fragment
 import com.makentoshe.habrachan.application.android.common.arena.ArticleCommentsArenaCache
-import com.makentoshe.habrachan.application.android.common.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.common.article.arena.ArticleArenaCache
+import com.makentoshe.habrachan.application.android.common.article.di.SourceFirstArticleArenaProvider
+import com.makentoshe.habrachan.application.android.common.avatar.arena.AvatarArenaCache
 import com.makentoshe.habrachan.application.android.common.comment.controller.block.body.content.ContentBodyBlock
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.VoteCommentViewModel
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
+import com.makentoshe.habrachan.application.common.arena.article.ArticleArena
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
 import toothpick.Toothpick
@@ -35,5 +37,6 @@ class CommentsModule(articleId: ArticleId, fragment: Fragment) : Module() {
         bind<AvatarArenaCache>().toClass<AvatarArenaCache>().singleton()
 
         bind<ArticleArenaCache>().toClass<ArticleArenaCache>().singleton()
+        bind<ArticleArena>().toProvider(SourceFirstArticleArenaProvider::class)
     }
 }

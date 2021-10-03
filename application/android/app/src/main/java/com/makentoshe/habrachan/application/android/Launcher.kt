@@ -13,6 +13,7 @@ import com.makentoshe.habrachan.application.android.screen.user.navigation.UserS
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.entity.commentId
+import com.makentoshe.habrachan.functional.Option
 import ru.terrakok.cicerone.Screen
 
 /**
@@ -86,11 +87,11 @@ class Launcher(private val defaultScreen: Screen) {
             }
         }
 
-        return ArticleCommentsScreen(articleId, "Deeplinking")
+        return ArticleCommentsScreen(articleId, Option.from("Deeplinking"))
     }
 
     private fun discussionArticleComments(articleId: ArticleId, iterator: Iterator<String>): Screen {
-        if (!iterator.hasNext()) return ArticleCommentsScreen(articleId, "Deeplinking")
+        if (!iterator.hasNext()) return ArticleCommentsScreen(articleId, Option.from("Deeplinking"))
         val commentId = commentId(iterator.next().toIntOrNull() ?: return defaultScreen)
         return ThreadCommentsScreen(articleId.articleId, "Deeplinking", commentId.commentId)
     }

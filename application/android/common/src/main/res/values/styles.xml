@@ -92,4 +92,13 @@
     <style name="Habrachan.Toolbar.TextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/title</item>
     </style>
+
+    <style name="Habrachan.TextAppearance.Collapsed" parent="Theme.MaterialComponents">
+        <item name="android:textSize">@dimen/textM</item>
+    </style>
+
+    <style name="Habrachan.TextAppearance.Expanded" parent="Theme.MaterialComponents">
+        <item name="android:textSize">24sp</item>
+    </style>
+
 </resources>

@@ -35,7 +35,7 @@ class GetAvatarViewModel(
         if (GetContentRequest.Avatar.stubs.contains(avatar.url)) {
             return avatarArena.request(userSession, avatar.url)
         }
-        return avatarArena.request(userSession, "https:${avatar.url}")
+        return avatarArena.request(userSession, avatar.url)
     }
 
     class Factory @Inject constructor(

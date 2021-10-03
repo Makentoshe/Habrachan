@@ -27,6 +27,7 @@ import com.makentoshe.habrachan.application.android.screen.comments.articles.vie
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
+import com.makentoshe.habrachan.functional.Option
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.suspendFold
 import kotlinx.android.synthetic.main.fragment_comments_article.*
@@ -38,9 +39,9 @@ import toothpick.ktp.delegate.inject
 class ArticleCommentsFragment : BaseFragment() {
 
     companion object : Analytics(LogAnalytic()) {
-        fun build(articleId: ArticleId, articleTitle: String) = ArticleCommentsFragment().apply {
+        fun build(articleId: ArticleId, articleTitleOption: Option<String>) = ArticleCommentsFragment().apply {
             arguments.articleId = articleId.articleId
-            arguments.articleTitle = articleTitle
+            arguments.articleTitle = articleTitleOption.getOrNull() ?: "Loading article..."
         }
 
         private const val VIEW_MODEL_STATE_KEY = "ViewModel"

@@ -22,7 +22,7 @@ class NativeGetArticleManager internal constructor(
     override suspend fun article(request: NativeGetArticleRequest): Result<NativeGetArticleResponse> = try {
         getArticleApi(request).deserialize(request)
     } catch (exception: Exception) {
-        Result.failure(NativeGetArticleException(request, exception.localizedMessage, exception))
+        Result.failure(NativeGetArticleException(request, message = exception.localizedMessage, cause = exception))
     }
 
     private fun getArticleApi(request: NativeGetArticleRequest) = api.getArticle(

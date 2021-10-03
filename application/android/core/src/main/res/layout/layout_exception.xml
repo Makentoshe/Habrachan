@@ -8,7 +8,7 @@
 
     <TextView
         style="@style/Habrachan.Text.Main"
-        android:id="@+id/layout_exception_title"
+        android:id="@+id/fragment_article_exception_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal" />

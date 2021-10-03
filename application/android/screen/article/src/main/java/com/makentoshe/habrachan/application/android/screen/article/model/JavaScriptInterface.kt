@@ -2,16 +2,15 @@ package com.makentoshe.habrachan.application.android.screen.article.model
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class JavaScriptInterface(private val coroutineScope: CoroutineScope) {
+class JavaScriptInterface @Inject constructor(private val coroutineScope: CoroutineScope) {
 
-    val imageSourceChannel = Channel<String>()
+    private val imageSourceChannel = Channel<String>()
 
-    @android.webkit.JavascriptInterface
-    fun showToast() {
-        println("SAS ASA ANUS PSA")
-    }
+    val imageSourceFlow = imageSourceChannel.receiveAsFlow()
 
     @android.webkit.JavascriptInterface
     fun onImageClickedListener(imageSource: String) = coroutineScope.launch {

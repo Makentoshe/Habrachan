@@ -21,6 +21,11 @@ sealed class Option<out V> {
         is Value<V> -> ifSome(value)
     }
 
+    inline fun onNotEmpty(action: (V) -> Unit ): Option<V> {
+        if (this is Value) action(value)
+        return this
+    }
+
     inline fun <B> map(f: (V) -> B): Option<B> = flatMap { a -> Value(f(a)) }
 
     inline fun <B> flatMap(f: (V) -> Option<B>): Option<B> = when (this) {

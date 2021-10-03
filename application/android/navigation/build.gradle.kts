@@ -41,6 +41,7 @@ dependencies {
     implementation(kotlin("stdlib"))
 
     implementation(project(":entity"))
+    implementation(project(mapOf("path" to ":functional")))
 
     // Cicerone
     // https://github.com/terrakok/Cicerone
