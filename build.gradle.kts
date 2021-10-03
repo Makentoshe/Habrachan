@@ -11,7 +11,6 @@ allprojects {
 }
 
 buildscript {
-    val kotlin_version by extra("1.5.30")
     repositories {
         google()
         jcenter()

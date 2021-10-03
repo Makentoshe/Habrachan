@@ -75,3 +75,10 @@ include(":application:android:common:comment:posting")
 include(":network:network-native:network-native-user-me:network-native-user-me-test")
 include("network:network-native:network-native-comment-post")
 include(":application:android:screen:article")
+include("habrachan")
+include("habrachan:api")
+findProject(":habrachan:api")?.name = "api"
+include("habrachan:api:android")
+findProject(":habrachan:api:android")?.name = "android"
+include("habrachan:entity")
+findProject(":habrachan:entity")?.name = "entity"
