@@ -73,3 +73,8 @@ include(":application:android:common:comment:posting")
 include(":network:network-native:network-native-user-me:network-native-user-me-test")
 include("network:network-native:network-native-comment-post")
 include(":application:android:screen:article")
+include(":application:android:common:article:voting")
+include("application:common:arena:article:voting")
+findProject(":application:common:arena:article:voting")?.name = "voting"
+include("application:common:arena:article-voting")
+findProject(":application:common:arena:article-voting")?.name = "article-voting"
