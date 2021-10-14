@@ -4,6 +4,7 @@ import com.makentoshe.habrachan.delegate.*
 import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.article.ArticlePropertiesDelegate
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
+import com.makentoshe.habrachan.entity.article.author.ArticleAuthorPropertiesDelegate
 import com.makentoshe.habrachan.entity.article.component.articleId
 import com.makentoshe.habrachan.entity.article.component.articleTitle
 import com.makentoshe.habrachan.entity.article.flow.ArticleFlow
@@ -14,7 +15,7 @@ import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolum
 import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.optionStringReadonlyProperty
 import kotlinx.serialization.json.*
 
-fun article(
+fun articleProperties(
     id: Int,
     title: String,
     text: String?,
@@ -27,30 +28,28 @@ fun article(
     author: ArticleAuthor,
     hubs: List<ArticleHub>,
     flows: List<ArticleFlow>,
-): Article {
-    val properties = mapOf(
-        "id" to JsonPrimitive(id),
-        "titleHtml" to JsonPrimitive(title),
-        "timePublished" to JsonPrimitive(timePublishedString),
-        "author" to JsonObject(author.parameters),
-        "textHtml" to JsonPrimitive(text),
-        "statistics" to JsonObject(
-            mapOf(
-                "score" to JsonPrimitive(score),
-                "commentsCount" to JsonPrimitive(commentsCount),
-                "favoritesCount" to JsonPrimitive(favoritesCount),
-                "readingCount" to JsonPrimitive(readingCount),
-                "votesCount" to JsonPrimitive(votesCount)
-            )
-        ),
-        "flows" to JsonArray(flows.map { JsonObject(it.parameters) }),
-        "hubs" to JsonArray(hubs.map { JsonObject(it.parameters) })
-    )
-    return Article(properties, ArticlePropertiesDelegateImpl(properties))
-}
+) = mapOf(
+    "id" to JsonPrimitive(id),
+    "titleHtml" to JsonPrimitive(title),
+    "timePublished" to JsonPrimitive(timePublishedString),
+    "author" to JsonObject(author.parameters),
+    "textHtml" to JsonPrimitive(text),
+    "statistics" to JsonObject(
+        mapOf(
+            "score" to JsonPrimitive(score),
+            "commentsCount" to JsonPrimitive(commentsCount),
+            "favoritesCount" to JsonPrimitive(favoritesCount),
+            "readingCount" to JsonPrimitive(readingCount),
+            "votesCount" to JsonPrimitive(votesCount)
+        )
+    ),
+    "flows" to JsonArray(flows.map { JsonObject(it.parameters) }),
+    "hubs" to JsonArray(hubs.map { JsonObject(it.parameters) })
+)
 
 data class ArticlePropertiesDelegateImpl(
-    override val parameters: Map<String, JsonElement>
+    override val parameters: Map<String, JsonElement>,
+    private val articleAuthorPropertiesDelegateFactory: (Map<String, JsonElement>) -> ArticleAuthorPropertiesDelegate,
 ) : ArticlePropertiesDelegate, AnyWithVolumeParameters<JsonElement> {
 
     override val articleId by requireReadonlyProperty("id") { jsonElement ->
@@ -66,25 +65,10 @@ data class ArticlePropertiesDelegateImpl(
     }
 
     override val author by requireReadonlyProperty("author") { jsonElement ->
-        ArticleAuthor(jsonElement.jsonObject.toMap())
+        val parameters = jsonElement.jsonObject.toMap()
+        ArticleAuthor(parameters, articleAuthorPropertiesDelegateFactory(parameters))
     }
 }
-
-val Article.articleId by requireReadonlyProperty(
-    "id", map = { jsonElement -> articleId(jsonElement.jsonPrimitive.int) }
-)
-
-val Article.articleTitle by requireReadonlyProperty(
-    "titleHtml", map = { jsonElement -> articleTitle(jsonElement.jsonPrimitive.content) }
-)
-
-val Article.timePublished by requireReadonlyProperty(
-    "timePublished", map = { jsonElement -> timePublished(jsonElement.jsonPrimitive.content) }
-)
-
-val Article.author by requireReadonlyProperty(
-    "author", map = { jsonElement -> ArticleAuthor(jsonElement.jsonObject.toMap()) }
-)
 
 val Article.flows by requireListReadonlyProperty(
     "flows", mapElement = { flow -> ArticleFlow(flow.toMap()) }

@@ -3,24 +3,32 @@ package com.makentoshe.habrachan.entity.android
 import com.makentoshe.habrachan.delegate.requireFloatReadonlyProperty
 import com.makentoshe.habrachan.delegate.requireReadonlyProperty
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
+import com.makentoshe.habrachan.entity.article.author.ArticleAuthorPropertiesDelegate
+import com.makentoshe.habrachan.entity.article.author.component.AuthorAvatar
 import com.makentoshe.habrachan.entity.article.author.component.authorId
 import com.makentoshe.habrachan.entity.article.author.component.authorLogin
+import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
 import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.optionReadonlyProperty
 import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.optionStringReadonlyProperty
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonPrimitive
 
-val ArticleAuthor.authorId by requireReadonlyProperty("id") { jsonElement ->
-    authorId(jsonElement.jsonPrimitive.int)
-}
+data class ArticleAuthorPropertiesDelegateImpl(
+    override val parameters: Map<String, JsonElement>
+) : ArticleAuthorPropertiesDelegate, AnyWithVolumeParameters<JsonElement> {
 
-val ArticleAuthor.authorLogin by requireReadonlyProperty("login") { jsonElement ->
-    authorLogin(jsonElement.jsonPrimitive.content)
-}
+    override val authorId by requireReadonlyProperty("id") { jsonElement ->
+        authorId(jsonElement.jsonPrimitive.int)
+    }
 
-val ArticleAuthor.authorAvatar by optionReadonlyProperty("avatar") { jsonElement ->
-    val url = jsonElement.jsonPrimitive.content
-    if (url == "https://habr.com/images/avatars/stub-user-middle.gif") null else url
+    override val authorLogin by requireReadonlyProperty("login") { jsonElement ->
+        authorLogin(jsonElement.jsonPrimitive.content)
+    }
+
+    override val authorAvatar by optionReadonlyProperty("avatar") { jsonElement ->
+        AuthorAvatar(jsonElement.jsonPrimitive.content)
+    }
 }
 
 val ArticleAuthor.fullname by optionStringReadonlyProperty("fullname")

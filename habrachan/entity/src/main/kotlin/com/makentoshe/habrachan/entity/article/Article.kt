@@ -19,3 +19,11 @@ interface ArticlePropertiesDelegate {
     val timePublished : Require<TimePublished>
     val author: Require<ArticleAuthor>
 }
+
+val Article.articleId get() = delegate.articleId
+
+val Article.articleTitle get() = delegate.title
+
+val Article.timePublished get() = delegate.timePublished
+
+val Article.author get() = delegate.author
