@@ -82,3 +82,25 @@ include("habrachan:api:android")
 findProject(":habrachan:api:android")?.name = "android"
 include("habrachan:entity")
 findProject(":habrachan:entity")?.name = "entity"
+include("habrachan:network")
+findProject(":habrachan:network")?.name = "network"
+include("habrachan:network:articles-get")
+findProject(":habrachan:network:articles-get")?.name = "articles-get"
+include("habrachan:api:mobile")
+findProject(":habrachan:api:mobile")?.name = "mobile"
+include("habrachan:api:android")
+findProject(":habrachan:api:android")?.name = "android"
+include("habrachan:entity:mobile")
+findProject(":habrachan:entity:mobile")?.name = "mobile"
+include("habrachan:entity:android")
+findProject(":habrachan:entity:android")?.name = "android"
+include("habrachan:network:articles-get:mobile")
+findProject(":habrachan:network:articles-get:mobile")?.name = "mobile"
+include("habrachan:network:articles-get:android")
+findProject(":habrachan:network:articles-get:android")?.name = "android"
+include("habrachan:network:login")
+findProject(":habrachan:network:login")?.name = "login"
+include("habrachan:network:login:mobile")
+findProject(":habrachan:network:login:mobile")?.name = "mobile"
+include("habrachan:network:login:android")
+findProject(":habrachan:network:login:android")?.name = "android"
