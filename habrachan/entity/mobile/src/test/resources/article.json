@@ -1,0 +1,141 @@
+{
+  "id": "581278",
+  "timePublished": "2021-10-03T15:25:43+00:00",
+  "isCorporative": false,
+  "lang": "ru",
+  "titleHtml": "Бум винила, вдогонку за прошлым",
+  "leadData": {
+    "textHtml": "<p>В комментариях к моей первой статье я вдруг столкнулся с тем, что несмотря на то, что тема была посвящена DIY и непосредственно процессу создания глубоко переработанного проигрывателя на базе винтажа, в основном комментарии были посвящены винилу, звуку, а не самой идее. </p><p>Более того, меня признали как аудиофила, зазвучали вопросы о золотых проводах, коннекторах, смазанных кровью девственниц, ну и прочей ерунды. Поэтому я решил написать такое эссе, про винил и музыку, которое - просто мой личный взгляд на музыку, носители, ситуацию в целом, ну и просто пообщаться. </p><p>Скорее - статья не ответ, а вопрос всем любителям музыки. </p>",
+    "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/38e/a87/aab/38ea87aab8b009a3c2178bed6f9f699d.jpg",
+    "buttonTextHtml": "Читать далее",
+    "image": {
+      "url": "https://habrastorage.org/getpro/habr/upload_files/38e/a87/aab/38ea87aab8b009a3c2178bed6f9f699d.jpg",
+      "fit": "cover",
+      "positionY": 0,
+      "positionX": 0
+    }
+  },
+  "editorVersion": "2.0",
+  "postType": "article",
+  "postLabels": [],
+  "author": {
+    "scoreStats": {
+      "score": 10,
+      "votesCount": 20
+    },
+    "rating": 12.3,
+    "relatedData": null,
+    "contacts": [],
+    "authorContacts": [],
+    "paymentDetails": {
+      "paymentYandexMoney": null,
+      "paymentPayPalMe": null,
+      "paymentWebmoney": null
+    },
+    "id": "365505",
+    "alias": "Gromushka",
+    "fullname": "Александр",
+    "avatarUrl": null,
+    "speciality": "Программист"
+  },
+  "statistics": {
+    "commentsCount": 4,
+    "favoritesCount": 0,
+    "readingCount": 705,
+    "score": 2,
+    "votesCount": 2
+  },
+  "hubs": [
+    {
+      "relatedData": null,
+      "id": "21988",
+      "alias": "sound",
+      "type": "collective",
+      "title": "Sound",
+      "titleHtml": "Sound",
+      "isProfiled": false
+    }
+  ],
+  "flows": [
+    {
+      "id": "7",
+      "alias": "popsci",
+      "title": "PopSci"
+    }
+  ],
+  "relatedData": null,
+  "textHtml": "testTextHtml",
+  "tags": [
+    {
+      "titleHtml": "винил"
+    },
+    {
+      "titleHtml": "маркетинг"
+    },
+    {
+      "titleHtml": "музыка"
+    },
+    {
+      "titleHtml": "музыкальная индустрия"
+    }
+  ],
+  "metadata": {
+    "stylesUrls": [],
+    "scriptUrls": [],
+    "shareImageUrl": "https://habrastorage.org/getpro/habr/upload_files/38e/a87/aab/38ea87aab8b009a3c2178bed6f9f699d.jpg",
+    "shareImageWidth": 1200,
+    "shareImageHeight": 630,
+    "vkShareImageUrl": "https://habrastorage.org/getpro/habr/upload_files/38e/a87/aab/38ea87aab8b009a3c2178bed6f9f699d.jpg",
+    "schemaJsonLd": "{\"@context\":\"http:\\/\\/schema.org\",\"@type\":\"Article\",\"mainEntityOfPage\":{\"@type\":\"WebPage\",\"@id\":\"https:\\/\\/habr.com\\/ru\\/post\\/581278\\/\"},\"headline\":\"Бум винила, вдогонку за прошлым\",\"datePublished\":\"2021-10-03T18:25:43+03:00\",\"dateModified\":\"2021-10-03T18:25:43+03:00\",\"author\":{\"@type\":\"Person\",\"name\":\"Александр\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Habr\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https:\\/\\/habrastorage.org\\/webt\\/a_\\/lk\\/9m\\/a_lk9mjkccjox-zccjrpfolmkmq.png\"}},\"description\":\"ПредисловиеВ комментариях к моей первой статье я вдруг столкнулся с тем, что несмотря на то, что тема была посвящена DIY и непосредственно процессу создания глуб...\",\"url\":\"https:\\/\\/habr.com\\/ru\\/post\\/581278\\/#post-content-body\",\"about\":[\"h_sound\",\"f_popsci\"],\"image\":[\"https:\\/\\/habr.com\\/share\\/publication\\/581278\\/42b2ec3cd9d3a3c7d3a47816b7f08081\\/\"]}",
+    "metaDescription": "ПредисловиеВ комментариях к моей первой статье я вдруг столкнулся с тем, что несмотря на то, что тема была посвящена DIY и непосредственно процессу создания глубоко переработанного проигрывателя на...",
+    "mainImageUrl": null,
+    "amp": false
+  },
+  "polls": [
+    {
+      "id": "35960",
+      "timeElapsed": null,
+      "answersType": "radio",
+      "votesCount": 24,
+      "passCount": 3,
+      "textHtml": "Слушаете винил?",
+      "relatedData": null,
+      "variants": [
+        {
+          "id": "169490",
+          "textHtml": "Нет и не планирую",
+          "votesCount": 17,
+          "percent": 70.83,
+          "selected": false
+        },
+        {
+          "id": "169492",
+          "textHtml": "У меня нет большой стерео системы",
+          "votesCount": 2,
+          "percent": 8.33,
+          "selected": false
+        },
+        {
+          "id": "169494",
+          "textHtml": "Да, но мало",
+          "votesCount": 5,
+          "percent": 20.83,
+          "selected": false
+        },
+        {
+          "id": "169496",
+          "textHtml": "Основной источник",
+          "votesCount": 0,
+          "percent": 0,
+          "selected": false
+        }
+      ]
+    }
+  ],
+  "commentsEnabled": true,
+  "votesEnabled": true,
+  "status": "published",
+  "plannedPublishTime": null,
+  "checked": null,
+  "isEditorial": false
+}

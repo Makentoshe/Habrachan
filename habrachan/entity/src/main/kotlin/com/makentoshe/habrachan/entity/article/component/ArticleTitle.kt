@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.entity
+package com.makentoshe.habrachan.entity.article.component
 
 interface ArticleTitle {
     val articleTitle: String

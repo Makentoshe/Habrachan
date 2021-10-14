@@ -1,0 +1,149 @@
+{
+  "id": 582308,
+  "is_corporative": 1,
+  "is_tutorial": false,
+  "time_published": "2021-10-08T13:09:50+03:00",
+  "time_interesting": null,
+  "comments_count": 16,
+  "score": 139,
+  "votes_count": 15,
+  "favorites_count": 0,
+  "lang": "ru",
+  "tags_string": "DeFi, децентрализованные системы, brave, brave браузер, слежка в сети",
+  "title": "Слежка и трекеры в Web 3.0",
+  "preview_html": "<p>Мы недавно опубликовали исследование «<a href=\"https://arxiv.org/abs/2109.06836\"><u>Конфиденциальность и вопросы безопасности в Веб 3.0» на сайте arXiv</u></a>, и хотим вкратце описать наши выводы и рассказать, что они значат для пользователей Brave.</p><p>Децентрализованные финансы (DeFi) напоминают финансовый Дикий Запад: новые сайты появляются и исчезают каждый день, люди зарабатывают и теряют огромные деньги, а гарантии безопасности и вообще какой бы то ни было осмысленный контроль за происходящим отсутствуют. Какую роль безопасность и конфиденциальность играют во всём этом? Разберёмся.</p>",
+  "text_cut": "Читать далее",
+  "text_html": "test_text_html",
+  "is_comments_hide": 0,
+  "editor_version": 2,
+  "hubs": [
+    {
+      "id": 22678,
+      "alias": "brave",
+      "title": "Блог компании Brave",
+      "is_membership": false,
+      "is_profiled": false,
+      "is_company": true,
+      "icon": "",
+      "path": "company/brave/"
+    },
+    {
+      "id": 19257,
+      "alias": "browsers",
+      "title": "Браузеры",
+      "is_membership": false,
+      "is_profiled": false,
+      "is_company": false,
+      "icon": "",
+      "path": "hub/browsers/"
+    },
+    {
+      "id": 21986,
+      "alias": "cryptocurrency",
+      "title": "Криптовалюты",
+      "is_membership": false,
+      "is_profiled": false,
+      "is_company": false,
+      "icon": "",
+      "path": "hub/cryptocurrency/"
+    }
+  ],
+  "flows": [
+    {
+      "id": 1,
+      "name": "Разработка",
+      "alias": "develop",
+      "url": "https://habr.com/ru/flows/develop/",
+      "path": "/flows/develop/"
+    },
+    {
+      "id": 7,
+      "name": "Научпоп",
+      "alias": "popsci",
+      "url": "https://habr.com/ru/flows/popsci/",
+      "path": "/flows/popsci/"
+    }
+  ],
+  "is_recovery_mode": false,
+  "reading_count": 275,
+  "metadata": {
+    "meta_image": "https://habrastorage.org/getpro/habr/upload_files/06d/851/355/06d851355e6cf3e734bce2e315dc26c4.png",
+    "lead_image": "https://habrastorage.org/getpro/habr/upload_files/06d/851/355/06d851355e6cf3e734bce2e315dc26c4.png",
+    "lead_image_info": {
+      "url": "https://habrastorage.org/getpro/habr/upload_files/06d/851/355/06d851355e6cf3e734bce2e315dc26c4.png",
+      "fit": "cover",
+      "positionY": 0,
+      "positionX": 0
+    }
+  },
+  "path": "/company/brave/blog/582308/",
+  "full_url": "https://habr.com/ru/company/brave/blog/582308/",
+  "author": {
+    "id": 2578349,
+    "login": "BraveSoftware",
+    "time_registered": "2021-01-19T18:04:40+03:00",
+    "score": 19,
+    "fullname": null,
+    "specializm": "sas",
+    "sex": 0,
+    "rating": 3.6,
+    "vote": 0,
+    "note": {
+      "text": null
+    },
+    "contacts": [],
+    "rating_position": 780,
+    "path": "/users/bravesoftware/",
+    "geo": {
+      "country": null,
+      "region": null,
+      "city": null
+    },
+    "counters": {
+      "posts": 12,
+      "comments": 69,
+      "followed": 0,
+      "followers": 10,
+      "favorites": 0
+    },
+    "badges": [
+      {
+        "id": 1,
+        "title": "Захабренный",
+        "alias": "habred",
+        "description": "Пользователь с кармой >0",
+        "url": null,
+        "is_removable": false,
+        "is_disabled": false
+      }
+    ],
+    "avatar": "https://habr.com/images/avatars/stub-user-middle.gif",
+    "is_readonly": false,
+    "is_rc": false,
+    "is_subscribed": false,
+    "common_tags": [],
+    "is_can_vote": true
+  },
+  "has_polls": false,
+  "url": "https://habr.com/ru/company/brave/blog/582308/",
+  "source_author": "Brave",
+  "source_link": "https://brave.com/research-paper-privacy-and-security-issues-in-web-3-0/",
+  "post_type": 2,
+  "post_type_str": "translation",
+  "vote": null,
+  "is_can_vote": true,
+  "voting": {
+    "score": 0,
+    "voteCount": {
+      "total": 0,
+      "positive": 0,
+      "negative": 0
+    },
+    "vote": null,
+    "reasonMap": null
+  },
+  "is_habred": true,
+  "is_interesting": false,
+  "is_favorite": false,
+  "comments_new": null
+}
