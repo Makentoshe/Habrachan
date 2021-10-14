@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.functional
+package com.makentoshe.habrachan
 
 sealed class Option<out V> {
 
