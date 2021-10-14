@@ -7,6 +7,7 @@ import com.makentoshe.habrachan.delegate.requireStringReadonlyProperty
 import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.article.ArticlePropertiesDelegate
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
+import com.makentoshe.habrachan.entity.article.author.ArticleAuthorPropertiesDelegate
 import com.makentoshe.habrachan.entity.article.component.articleId
 import com.makentoshe.habrachan.entity.article.component.articleTitle
 import com.makentoshe.habrachan.entity.article.flow.ArticleFlow
@@ -19,7 +20,8 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
 data class ArticlePropertiesDelegateImpl(
-    override val parameters: Map<String, JsonElement>
+    override val parameters: Map<String, JsonElement>,
+    private val articleAuthorPropertiesDelegateFactory: (Map<String, JsonElement>) -> ArticleAuthorPropertiesDelegate,
 ) : ArticlePropertiesDelegate, AnyWithVolumeParameters<JsonElement> {
 
     override val articleId by requireReadonlyProperty("id") { jsonElement ->
@@ -35,25 +37,10 @@ data class ArticlePropertiesDelegateImpl(
     }
 
     override val author by requireReadonlyProperty("author") { jsonElement ->
-        ArticleAuthor(jsonElement.jsonObject.toMap())
+        val parameters = jsonElement.jsonObject.toMap()
+        ArticleAuthor(parameters, articleAuthorPropertiesDelegateFactory(parameters))
     }
 }
-
-val Article.articleId by requireReadonlyProperty(
-    "id", map = { jsonElement -> articleId(jsonElement.jsonPrimitive.int) }
-)
-
-val Article.articleTitle by requireReadonlyProperty(
-    "title", map = { jsonElement -> articleTitle(jsonElement.jsonPrimitive.content) }
-)
-
-val Article.timePublished by requireReadonlyProperty(
-    "time_published", map = { jsonElement -> timePublished(jsonElement.jsonPrimitive.content) }
-)
-
-val Article.author by requireReadonlyProperty(
-    "author", map = { jsonElement -> ArticleAuthor(jsonElement.jsonObject.toMap()) }
-)
 
 val Article.flows by requireListReadonlyProperty(
     "flows", mapElement = { flow -> ArticleFlow(flow.toMap()) }
