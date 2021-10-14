@@ -1,6 +1,18 @@
 object Version {
 
-    const val kotlin = "1.4.20"
+    const val kotlin = "1.5.31"
+
+    // https://github.com/Kotlin/kotlinx.serialization#using-the-plugins-block
+    const val serialization = "1.5.31"
+
+    // https://github.com/Kotlin/kotlinx.serialization#dependency-on-the-json-library
+    const val serializationJson = "1.3.0"
+
+    // https://github.com/Kotlin/kotlinx.serialization/blob/master/formats/README.md#properties
+    const val serializationProperties = "1.3.0"
+
+    // https://github.com/ktorio/ktor
+    const val ktorHttpClient = "1.6.4"
 
     const val gson = "2.8.6"
 
