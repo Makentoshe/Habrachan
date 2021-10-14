@@ -1,0 +1,2154 @@
+{
+  "pagesCount": 50,
+  "articleIds": [
+    "582600",
+    "582592",
+    "582590",
+    "582588",
+    "582554",
+    "582584",
+    "582556",
+    "582574",
+    "582572",
+    "564880",
+    "582566",
+    "582562",
+    "582552",
+    "582550",
+    "582508",
+    "582530",
+    "582110",
+    "582546",
+    "582534",
+    "582532"
+  ],
+  "articleRefs": {
+    "564880": {
+      "id": "564880",
+      "timePublished": "2021-10-09T19:39:15+00:00",
+      "isCorporative": true,
+      "lang": "ru",
+      "titleHtml": "Новая суббота и очередное посещение барахолки — теперь без карантинных ограничений и с кучей интересностей",
+      "editorVersion": "1.0",
+      "postType": "article",
+      "postLabels": [],
+      "author": {
+        "id": "2621483",
+        "alias": "DRoman0v",
+        "fullname": "Denis",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/126/32f/feb/12632ffebec0f851ba0ec665f3ed6c55.jpg",
+        "speciality": "Инженер"
+      },
+      "statistics": {
+        "commentsCount": 3,
+        "favoritesCount": 2,
+        "readingCount": 2983,
+        "score": 15,
+        "votesCount": 17
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "14740",
+          "alias": "selectel",
+          "type": "corporative",
+          "title": "Selectel corporate blog",
+          "titleHtml": "Selectel corporate blog",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21894",
+          "alias": "gadgets",
+          "type": "collective",
+          "title": "Gadgets",
+          "titleHtml": "Gadgets",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21898",
+          "alias": "hardware",
+          "type": "collective",
+          "title": "Computer hardware",
+          "titleHtml": "Computer hardware",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21906",
+          "alias": "history",
+          "type": "collective",
+          "title": "History of IT",
+          "titleHtml": "History of IT",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21930",
+          "alias": "antikvariat",
+          "type": "collective",
+          "title": "Old hardware",
+          "titleHtml": "Old hardware",
+          "isProfiled": false
+        }
+      ],
+      "flows": [
+        {
+          "id": "7",
+          "alias": "popsci",
+          "title": "PopSci"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 3,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T19:39:15+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<div style=\"text-align:center;\"><img src=\"https://habrastorage.org/webt/wu/no/pk/wunopk_nwoqpj-zykw95ezr71d0.jpeg\"></div><br>\r\nПривет, Хабр! Сегодня я снова посетил свою любимую субботнюю барахолку. В прошлый раз в комментариях я видел замечания, что та суббота выдалась не особо удачной — попадался, в основном, электронный мусор. Если и так, то прошлая неудача с лихвой компенсировалась новым походом.<br>\r\n<br>\r\nДело в том, что у нас сняли карантинные ограничения для рынков подобного типа, так что теперь продавцов стало в 2 раза больше. До этого им приходилось меняться, установив очередность выхода «на работу» по спискам. Теперь же никаких ограничений нет — торгуют все! Ну и результаты не заставили себя ждать, о новом походе и улове — под катом. <br>",
+        "imageUrl": null,
+        "buttonTextHtml": "Читать дальше &rarr;",
+        "image": null
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "барахолки"
+        },
+        {
+          "titleHtml": "испания"
+        },
+        {
+          "titleHtml": "гаджеты"
+        }
+      ]
+    },
+    "582110": {
+      "id": "582110",
+      "timePublished": "2021-10-09T15:00:01+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Разбор работы LVDS портов и DMA на отечественном DSP 1967ВН028",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [
+        {
+          "type": "tutorial",
+          "data": null
+        }
+      ],
+      "author": {
+        "id": "2718593",
+        "alias": "mikrizh",
+        "fullname": null,
+        "avatarUrl": "",
+        "speciality": ""
+      },
+      "statistics": {
+        "commentsCount": 1,
+        "favoritesCount": 7,
+        "readingCount": 1163,
+        "score": 7,
+        "votesCount": 7
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "595",
+          "alias": "assembler",
+          "type": "collective",
+          "title": "Assembler",
+          "titleHtml": "Assembler",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "19737",
+          "alias": "controllers",
+          "type": "collective",
+          "title": "Programming microcontrollers",
+          "titleHtml": "Programming microcontrollers",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 1,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T15:00:01+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>В продолжение моих заметок, посвященных разбору функционала процессора от фирмы Миландр 1967ВН28, рассмотрим способы общения с внешними устройствами. В данном процессоре есть возможности общения по следующим информационным каналам. Порты LINK (LVDS) и также имеется параллельный интерфейс, предназначенный для работы с внешней памятью. Этой заметке разберем работу с интерфейсом LINK. </p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/cd1/9f2/829/cd19f2829eda62326825243202813302.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/cd1/9f2/829/cd19f2829eda62326825243202813302.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "dma"
+        },
+        {
+          "titleHtml": "lvds"
+        },
+        {
+          "titleHtml": "DSP"
+        },
+        {
+          "titleHtml": "1967BH028"
+        }
+      ]
+    },
+    "582508": {
+      "id": "582508",
+      "timePublished": "2021-10-09T15:18:40+00:00",
+      "isCorporative": true,
+      "lang": "ru",
+      "titleHtml": "Кто реализовал обмен данными по WebRTC с помощью звука",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [],
+      "author": {
+        "id": "2691015",
+        "alias": "mirhifi",
+        "fullname": "«Мир Hi-Fi»",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/dfb/713/edb/dfb713edbeed85de6588bd27d6c43229.jpg",
+        "speciality": "Пользователь"
+      },
+      "statistics": {
+        "commentsCount": 2,
+        "favoritesCount": 9,
+        "readingCount": 2180,
+        "score": 2,
+        "votesCount": 2
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "18822",
+          "alias": "audiomania",
+          "type": "corporative",
+          "title": "Аудиомания corporate blog",
+          "titleHtml": "Аудиомания corporate blog",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "20688",
+          "alias": "research",
+          "type": "collective",
+          "title": "Research and forecasts in IT",
+          "titleHtml": "Research and forecasts in IT",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21918",
+          "alias": "soft",
+          "type": "collective",
+          "title": "Software",
+          "titleHtml": "Software",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21988",
+          "alias": "sound",
+          "type": "collective",
+          "title": "Sound",
+          "titleHtml": "Sound",
+          "isProfiled": false
+        }
+      ],
+      "flows": [
+        {
+          "id": "3",
+          "alias": "management",
+          "title": "Management"
+        },
+        {
+          "id": "7",
+          "alias": "popsci",
+          "title": "PopSci"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 2,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T15:18:40+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Всем знаком тот шипящий и скрипящий звук, которым обменивались модемы dial-up во время коннекта. Сегодня эти устройства до сих пор используют в удаленных регионах планеты, однако идея подключения с помощью звука находит разве что нишевые применения. Одно из них — установка соединения по WebRTC.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/eba/932/8b5/eba9328b518b53bfb999e901a148f9e7.jpg",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/eba/932/8b5/eba9328b518b53bfb999e901a148f9e7.jpg",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "wave-share"
+        },
+        {
+          "titleHtml": "webrtc"
+        },
+        {
+          "titleHtml": "звук"
+        },
+        {
+          "titleHtml": "аудиомания"
+        },
+        {
+          "titleHtml": "передача данных"
+        },
+        {
+          "titleHtml": "браузеры"
+        }
+      ]
+    },
+    "582530": {
+      "id": "582530",
+      "timePublished": "2021-10-09T15:02:30+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Kotlin Symbol Processing. Работаем с аннотациями по-новому",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [
+        {
+          "type": "tutorial",
+          "data": null
+        }
+      ],
+      "author": {
+        "id": "128280",
+        "alias": "anioutka",
+        "fullname": "Анна Жаркова",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/abc/686/402/abc68640208c443185b15194039396b1.jpg",
+        "speciality": "Lead mobile developer, Kotlin GDE"
+      },
+      "statistics": {
+        "commentsCount": 3,
+        "favoritesCount": 7,
+        "readingCount": 1351,
+        "score": 4,
+        "votesCount": 4
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "548",
+          "alias": "ios_dev",
+          "type": "collective",
+          "title": "Development for iOS",
+          "titleHtml": "Development for iOS",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": true
+          },
+          "id": "6345",
+          "alias": "mobile_dev",
+          "type": "collective",
+          "title": "Development of mobile applications",
+          "titleHtml": "Development of mobile applications",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": true
+          },
+          "id": "17107",
+          "alias": "android_dev",
+          "type": "collective",
+          "title": "Development for Android",
+          "titleHtml": "Development for Android",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": true
+          },
+          "id": "19441",
+          "alias": "kotlin",
+          "type": "collective",
+          "title": "Kotlin",
+          "titleHtml": "Kotlin",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 3,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T15:02:30+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p><em>Всем доброго дня! С вами Анна Жаркова, ведущий мобильный разработчик компании Usetech. В феврале 2021 года компания Google анонсировали экспериментальный релиз технологии </em><a href=\"https://github.com/google/ksp\" rel=\"noopener noreferrer nofollow\"><em>Kotlin Symbol Processing</em></a><em> (совместима с Kotlin с 1.4.30), как более эффективную альтернативу KAPT (Kotlin Annotation Processing Tool). Она сразу привлекла внимание многих разработчиков, помышляющих о внедрении аннотаций в мультиплатформенные проекты, несмотря на рекомендации создателей не использовать ее в продакте. В сентябре вышел первый стабильный релиз, и теперь она официальна готова к работе в боевых проектах. В этой статье предлагаю рассмотреть нюансы работы с KSP как в приложениях для Android, так и Kotlin Multiplatform. </em></p><p>Итак, начнем с назначения. Kotlin Symbol Processing предназначена для разработки легковесных плагинов компиляции Kotlin и процессоров аннотаций. Последние нас и интересуют. По сути аннотации нужны в приложении для того, чтобы упростить работу и избавить нас от лишнего кода. Например, когда нам нужно проанализировать код для определенной цели и затем сделать какие-то действия. Либо убрать лишнюю абстракцию из приложения. Гораздо привлекательнее выглядит добавить буквально 1 команду над конкретным объектом/методом/типов, и вместо того, чтобы писать тонны бойлерплейта для каждого случая, поручить это библиотеке, которая сделает все сама. </p><p>Давайте посмотрим, как работает в своей механике процессор аннотаций. Например, такой, как мы используем в Java коде.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/0b7/abc/554/0b7abc55425a9b1a32206bcbb1e03442.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/0b7/abc/554/0b7abc55425a9b1a32206bcbb1e03442.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "kotlin"
+        },
+        {
+          "titleHtml": "kotlin multiplatform"
+        },
+        {
+          "titleHtml": "kotlin multiplatform mobile"
+        },
+        {
+          "titleHtml": "ksp"
+        },
+        {
+          "titleHtml": "kotlin symbol processing"
+        }
+      ]
+    },
+    "582532": {
+      "id": "582532",
+      "timePublished": "2021-10-09T12:24:16+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Создание собственных RequestBody и ResponseBody",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [
+        {
+          "type": "sandbox",
+          "data": null
+        }
+      ],
+      "author": {
+        "id": "1440424",
+        "alias": "andrew_slz",
+        "fullname": "Андрей Сулыз",
+        "avatarUrl": "",
+        "speciality": "Java Developer"
+      },
+      "statistics": {
+        "commentsCount": 0,
+        "favoritesCount": 10,
+        "readingCount": 1242,
+        "score": 0,
+        "votesCount": 0
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "375",
+          "alias": "java",
+          "type": "collective",
+          "title": "Java",
+          "titleHtml": "Java",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 0,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T12:24:16+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Думаю, что многие из вас сталкивались с добавлением собственных <em>HttpMessageConverter</em> в своём проекте. Ну или хотя бы слышали за такую возможность. Однако, возникают ситуации, когда мы хотим не только добавить свой собственный конвертер, но и создать собственную аннотацию для явного обозначения того, что тело ответа или запроса будут обработаны нестандартными способами <em>Spring</em>. Более того, данные аннотации могут содержать дополнительную информацию, которая потребуется вашему конвертеру. </p><p>Как вы увидите дальше, поддержка аннотации для обработки ответа перекликается с поддержкой обработки запроса. Однако, в данной статье мне хотелось бы также продемонстрировать возможность добавление поддержки нового параметра метода контроллера в ситуации, когда из одного тела запроса требуется тянуть два разных объекта.</p>",
+        "imageUrl": null,
+        "buttonTextHtml": "Читать далее",
+        "image": null
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "java"
+        },
+        {
+          "titleHtml": "spring framework"
+        },
+        {
+          "titleHtml": "spring mvc"
+        }
+      ]
+    },
+    "582534": {
+      "id": "582534",
+      "timePublished": "2021-10-09T12:35:07+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Аппроксимация синуса: полиномы Чебышёва vs. ряды Маклорена",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [],
+      "author": {
+        "id": "206198",
+        "alias": "avitek",
+        "fullname": "Виктор",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/c00/d48/ac3/c00d48ac3c91962be444232915ce3cba.jpg",
+        "speciality": "разработка электроники, программирование"
+      },
+      "statistics": {
+        "commentsCount": 15,
+        "favoritesCount": 21,
+        "readingCount": 2237,
+        "score": 2,
+        "votesCount": 6
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "8000",
+          "alias": "algorithms",
+          "type": "collective",
+          "title": "Algorithms",
+          "titleHtml": "Algorithms",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "17812",
+          "alias": "maths",
+          "type": "collective",
+          "title": "Mathematics",
+          "titleHtml": "Mathematics",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 15,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T12:35:07+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>В комментариях к моей <a href=\"https://habr.com/ru/post/577256/\" rel=\"noopener noreferrer nofollow\">статье</a> про быстрое вычисление синуса был задан <a href=\"https://habr.com/ru/post/577256/#comment_23472572\" rel=\"noopener noreferrer nofollow\">вопрос</a>: \"А чем не устроило разложение в ряд Тейлора?\"<br><br>Краткий ответ таков: хоть приближение при помощи рядов Тейлора (точнее - рядами Маклорена) и даёт меньшую ошибку при том же количестве вычислений, но оно не позволяет разбить аргумент на произвольное количество интервалов и тем самым увеличить точность вычислений.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/4b3/ed0/d8b/4b3ed0d8baa153b39191ae62d7989fd7.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/4b3/ed0/d8b/4b3ed0d8baa153b39191ae62d7989fd7.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "C"
+        },
+        {
+          "titleHtml": "математика"
+        },
+        {
+          "titleHtml": "аппроксимация"
+        }
+      ]
+    },
+    "582546": {
+      "id": "582546",
+      "timePublished": "2021-10-09T14:31:06+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Несколько технических вопросов к ДЭГ",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [
+        {
+          "type": "sandbox",
+          "data": null
+        }
+      ],
+      "author": {
+        "id": "1597485",
+        "alias": "PFFyodor",
+        "fullname": "Федор",
+        "avatarUrl": "",
+        "speciality": "Программист"
+      },
+      "statistics": {
+        "commentsCount": 5,
+        "favoritesCount": 12,
+        "readingCount": 2688,
+        "score": 19,
+        "votesCount": 23
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "210",
+          "alias": "it_testing",
+          "type": "collective",
+          "title": "IT systems testing",
+          "titleHtml": "IT systems testing",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "397",
+          "alias": "analysis_design",
+          "type": "collective",
+          "title": "System Analysis and Design",
+          "titleHtml": "System Analysis and Design",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 5,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T14:31:06+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Нет никого, кто не слышал бы о спорах вокруг электронного голосования. Претензии от оппозиции, выглядят верными, а сопротивление со стороны держателей БД, которое противоречит заявленным принципам, которые должны быть заложены в системе, выглядит как попытка скрыть правду.</p><p>Главный редактор эХО Москвы, Венедиктов, который упорно проталкивал ЭГ, и утверждает, что всё честно, и никто его ни в чём, обратном, не убедил.</p><p>Вопрос технический и интересный. И поэтому, я изучил <a href=\"https://habr.com/ru/post/579350/#_=_\" rel=\"noopener noreferrer nofollow\">Что же не так с ДЭГ в Москве?</a> от Жижина. Зашёл на <a href=\"https://observer.mos.ru/all/\" rel=\"noopener noreferrer nofollow\">https://observer.mos.ru/all/</a> и скачал дампы базы данных, которые лежат там, PostgreSQL server и попробовал разобраться, что именно не так.</p>",
+        "imageUrl": null,
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/88e/dd0/209/88edd02092d109c275aa116bf2071b85.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "ДЭГ"
+        },
+        {
+          "titleHtml": "электронно"
+        }
+      ]
+    },
+    "582550": {
+      "id": "582550",
+      "timePublished": "2021-10-09T15:53:44+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Анализ статей Хабрахабр",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [],
+      "author": {
+        "id": "262357",
+        "alias": "urticazoku",
+        "fullname": null,
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/668/5ff/baf/6685ffbaff7df8ed99dd8702e17f95e3.jpg",
+        "speciality": "Пользователь"
+      },
+      "statistics": {
+        "commentsCount": 13,
+        "favoritesCount": 16,
+        "readingCount": 2233,
+        "score": 15,
+        "votesCount": 15
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "359",
+          "alias": "programming",
+          "type": "collective",
+          "title": "Programming",
+          "titleHtml": "Programming",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "8000",
+          "alias": "algorithms",
+          "type": "collective",
+          "title": "Algorithms",
+          "titleHtml": "Algorithms",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "18202",
+          "alias": "data_visualization",
+          "type": "collective",
+          "title": "Data visualization",
+          "titleHtml": "Data visualization",
+          "isProfiled": false
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 13,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T15:53:44+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Решила повторить исследование, сделанное в 2017 году и посмотреть, что изменилось за 5 лет. Ссылка на предыдущую статью <a href=\"https://habr.com/ru/post/321206/\" rel=\"noopener noreferrer nofollow\">Анализ статей Хабрахабр и Geektimes</a>. Дизайн сайта изменился, поэтому делала все в jupyter python, а не wolfram mathematica. Далеко не все графики удалось воспроизвести заново. Получился анализ более чем 260000 статей.</p>",
+        "imageUrl": "https://habrastorage.org/r/w1560/files/b52/da5/359/b52da53597c1466da00afeab9d751c05.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/r/w1560/files/b52/da5/359/b52da53597c1466da00afeab9d751c05.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "хабрахабр"
+        },
+        {
+          "titleHtml": "парсинг"
+        },
+        {
+          "titleHtml": "обработка данных"
+        },
+        {
+          "titleHtml": "визуализация"
+        },
+        {
+          "titleHtml": "статистика"
+        },
+        {
+          "titleHtml": "поиск закономерностей"
+        }
+      ]
+    },
+    "582552": {
+      "id": "582552",
+      "timePublished": "2021-10-09T16:01:12+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Apollo 3.0 для работы с GraphQL в многомодульном Android приложении",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [],
+      "author": {
+        "id": "2787295",
+        "alias": "Winged90",
+        "fullname": null,
+        "avatarUrl": "",
+        "speciality": ""
+      },
+      "statistics": {
+        "commentsCount": 0,
+        "favoritesCount": 6,
+        "readingCount": 586,
+        "score": 0,
+        "votesCount": 0
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": true
+          },
+          "id": "17107",
+          "alias": "android_dev",
+          "type": "collective",
+          "title": "Development for Android",
+          "titleHtml": "Development for Android",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 0,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T16:01:12+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Давайте рассмотрим, каким образом настроить и использовать последнюю на данный момент версию клиента apollo в многомодульном приложении под android.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/c19/922/4d9/c199224d910ec542772f2b46f9b4cb5b.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/c19/922/4d9/c199224d910ec542772f2b46f9b4cb5b.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "android"
+        },
+        {
+          "titleHtml": "kotlin"
+        },
+        {
+          "titleHtml": "apollo"
+        },
+        {
+          "titleHtml": "многомодульность в android"
+        }
+      ]
+    },
+    "582554": {
+      "id": "582554",
+      "timePublished": "2021-10-10T06:00:01+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "OTA обновление устройств с Linux",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [
+        {
+          "type": "tutorial",
+          "data": null
+        }
+      ],
+      "author": {
+        "id": "2359769",
+        "alias": "bao-eng",
+        "fullname": null,
+        "avatarUrl": "",
+        "speciality": ""
+      },
+      "statistics": {
+        "commentsCount": 2,
+        "favoritesCount": 17,
+        "readingCount": 1052,
+        "score": 2,
+        "votesCount": 2
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "36",
+          "alias": "linux",
+          "type": "collective",
+          "title": "Configuring Linux",
+          "titleHtml": "Configuring Linux",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "19727",
+          "alias": "linux_dev",
+          "type": "collective",
+          "title": "Development for Linux",
+          "titleHtml": "Development for Linux",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "19739",
+          "alias": "iot_dev",
+          "type": "collective",
+          "title": "Development for IOT",
+          "titleHtml": "Development for IOT",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21476",
+          "alias": "raspberrypi",
+          "type": "collective",
+          "title": "Development for Raspberry Pi",
+          "titleHtml": "Development for Raspberry Pi",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21970",
+          "alias": "internet_of_things",
+          "type": "collective",
+          "title": "IOT",
+          "titleHtml": "IOT",
+          "isProfiled": false
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        },
+        {
+          "id": "6",
+          "alias": "admin",
+          "title": "Administrating"
+        },
+        {
+          "id": "7",
+          "alias": "popsci",
+          "title": "PopSci"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 2,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-09T06:00:01+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p><abbr title=\"Обновление по воздуху (англ. over-the-air, OTA)\">OTA</abbr> A/B обновление образа rootfs для IoT устройств с Linux при помощи проекта <a href=\"https://mender.io/\" rel=\"noopener noreferrer nofollow\">Mender</a>. Как обновить образ системы на множестве удалённых устройств. Демонстрация на примере Raspberry Pi.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/54f/85c/92c/54f85c92c0d8fb65d31bf82ad0629cbd.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/54f/85c/92c/54f85c92c0d8fb65d31bf82ad0629cbd.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "mender"
+        },
+        {
+          "titleHtml": "ota"
+        },
+        {
+          "titleHtml": "linux"
+        },
+        {
+          "titleHtml": "iot"
+        },
+        {
+          "titleHtml": "интернет вещей"
+        },
+        {
+          "titleHtml": "обновление по воздуху"
+        },
+        {
+          "titleHtml": "raspberry"
+        }
+      ]
+    },
+    "582556": {
+      "id": "582556",
+      "timePublished": "2021-10-09T19:59:25+00:00",
+      "isCorporative": true,
+      "lang": "ru",
+      "titleHtml": "Примечательная напольная акустика для небольших помещений — обсуждаем две пары колонок от ELAC и Old School",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [],
+      "author": {
+        "id": "542738",
+        "alias": "Audioman",
+        "fullname": null,
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/7fd/66e/5a3/7fd66e5a3b645f7ecdd9c99e5893c15d.png",
+        "speciality": ""
+      },
+      "statistics": {
+        "commentsCount": 1,
+        "favoritesCount": 9,
+        "readingCount": 2897,
+        "score": 3,
+        "votesCount": 7
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "18822",
+          "alias": "audiomania",
+          "type": "corporative",
+          "title": "Аудиомания corporate blog",
+          "titleHtml": "Аудиомания corporate blog",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21954",
+          "alias": "Peripheral",
+          "type": "collective",
+          "title": "Periphery",
+          "titleHtml": "Periphery",
+          "isProfiled": false
+        }
+      ],
+      "flows": [
+        {
+          "id": "7",
+          "alias": "popsci",
+          "title": "PopSci"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 1,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T19:59:25+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Ранее мы поговорили о <a href=\"https://habr.com/ru/company/audiomania/blog/579946/\">вертушках</a> в сегменте «до 60 тысяч рублей», а сегодня вновь возвращаемся к напольникам. На этот раз смотрим на флагманские модели.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/711/0bf/4b1/7110bf4b1d70733a7bb6c64723eeb7b2.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/711/0bf/4b1/7110bf4b1d70733a7bb6c64723eeb7b2.png",
+          "fit": "cover",
+          "positionY": 60.227272727273,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "аудиомания"
+        },
+        {
+          "titleHtml": "напольная акустика"
+        },
+        {
+          "titleHtml": "Old School Monitor Two"
+        },
+        {
+          "titleHtml": "ELAC Solano FS 287"
+        },
+        {
+          "titleHtml": "колонки"
+        }
+      ]
+    },
+    "582562": {
+      "id": "582562",
+      "timePublished": "2021-10-09T17:47:46+00:00",
+      "isCorporative": true,
+      "lang": "ru",
+      "titleHtml": "Стоит ли изучать PHP в 2021 году?",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [
+        {
+          "type": "translation",
+          "data": {
+            "originalAuthorName": "Code Like A Girl",
+            "originalUrl": "https://code.likeagirl.io/is-php-worth-learning-in-2021-4e263ebd601e"
+          }
+        }
+      ],
+      "author": {
+        "id": "1547287",
+        "alias": "MaxRokatansky",
+        "fullname": "OTUS",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/b9f/baf/5f9/b9fbaf5f96ae52973706a0716bd9216e.jpg",
+        "speciality": "Редактор"
+      },
+      "statistics": {
+        "commentsCount": 30,
+        "favoritesCount": 2,
+        "readingCount": 6970,
+        "score": -52,
+        "votesCount": 64
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21052",
+          "alias": "otus",
+          "type": "corporative",
+          "title": "OTUS corporate blog",
+          "titleHtml": "OTUS corporate blog",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "260",
+          "alias": "php",
+          "type": "collective",
+          "title": "PHP",
+          "titleHtml": "PHP",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "359",
+          "alias": "programming",
+          "type": "collective",
+          "title": "Programming",
+          "titleHtml": "Programming",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 30,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T17:47:46+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Возможно, вы слышали, что PHP&nbsp;— бесполезный и вымирающий язык программирования, но каковы факты?</p><p>Язык PHP является преемником проекта PHP/FI, <a href=\"https://www.php.net/manual/ru/history.php.php\"><u>созданного в 1994&nbsp;г.</u></a> Расмусом Лердорфом для отслеживания просмотров своего онлайн-резюме. Это был простой набор бинарных файлов для CGI (англ. Common Gateway Interface&nbsp;— «интерфейс общего шлюза»), написанных на языке C. В 1995&nbsp;г. Расмус опубликовал исходный код своего проекта и призвал пользователей присоединиться к его совершенствованию.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/86b/4db/468/86b4db46892f3b0df95e677380440c32.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/86b/4db/468/86b4db46892f3b0df95e677380440c32.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "php"
+        },
+        {
+          "titleHtml": "php developer"
+        },
+        {
+          "titleHtml": "Software Development"
+        }
+      ]
+    },
+    "582566": {
+      "id": "582566",
+      "timePublished": "2021-10-09T18:59:20+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Как я портировал игру с VisualBasic 6 на С++, сделав её кросс-платформенной",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [
+        {
+          "type": "sandbox",
+          "data": null
+        }
+      ],
+      "author": {
+        "id": "354897",
+        "alias": "Wohlstand",
+        "fullname": "Виталий Новичков",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/859/5e3/100/8595e3100bc38b0275dd5fb55d62484c.png",
+        "speciality": "Инженер-Программист С++"
+      },
+      "statistics": {
+        "commentsCount": 16,
+        "favoritesCount": 21,
+        "readingCount": 3120,
+        "score": 36,
+        "votesCount": 36
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "559",
+          "alias": "cpp",
+          "type": "collective",
+          "title": "C++",
+          "titleHtml": "C++",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "7773",
+          "alias": "gamedev",
+          "type": "collective",
+          "title": "Game development",
+          "titleHtml": "Game development",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21980",
+          "alias": "games",
+          "type": "collective",
+          "title": "Games and game consoles",
+          "titleHtml": "Games and game consoles",
+          "isProfiled": false
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        },
+        {
+          "id": "7",
+          "alias": "popsci",
+          "title": "PopSci"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 16,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T18:59:20+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Всем доброго времени суток! Это моя история о том, как я портировал исходный код одной фанатской Windows-игры о Марио с VisualBasic 6 на C++, и с какими трудностями я столкнулся в процессе создания порта.</p><p>Эта статья рассказывает о портировании Super Mario Bros. X, фанатской игры Эндрю Спинкса, созданную им в 2009 году, которую он затем бросил 2011 году в пользу более серьёзного и масштабного проекта в лице Terraria.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/b84/34d/e10/b8434de10fe3c2069bea42427273f279.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/b84/34d/e10/b8434de10fe3c2069bea42427273f279.png",
+          "fit": "cover",
+          "positionY": 3.6363636363636,
+          "positionX": 50.384615384615
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "VB6"
+        },
+        {
+          "titleHtml": "C++"
+        },
+        {
+          "titleHtml": "VisualBasic 6"
+        },
+        {
+          "titleHtml": "разработка игры"
+        },
+        {
+          "titleHtml": "портирование"
+        }
+      ]
+    },
+    "582572": {
+      "id": "582572",
+      "timePublished": "2021-10-09T19:44:42+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Знакомство с невидимками",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [],
+      "author": {
+        "id": "2568695",
+        "alias": "phanerozoi_evidence",
+        "fullname": "Фанерозой",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/dcc/862/561/dcc862561429f2ed85090ac53e39cf7d.jpg",
+        "speciality": "Биологи, врач, научный популяризатор, палеонтолог"
+      },
+      "statistics": {
+        "commentsCount": 4,
+        "favoritesCount": 13,
+        "readingCount": 3116,
+        "score": 30,
+        "votesCount": 32
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "20742",
+          "alias": "read",
+          "type": "collective",
+          "title": "Reading room",
+          "titleHtml": "Reading room",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "21910",
+          "alias": "popular_science",
+          "type": "collective",
+          "title": "Popular science",
+          "titleHtml": "Popular science",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "22750",
+          "alias": "biology",
+          "type": "collective",
+          "title": "Biology",
+          "titleHtml": "Biology",
+          "isProfiled": false
+        }
+      ],
+      "flows": [
+        {
+          "id": "3",
+          "alias": "management",
+          "title": "Management"
+        },
+        {
+          "id": "7",
+          "alias": "popsci",
+          "title": "PopSci"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 4,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T19:44:42+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>После работ Везалия и Гарвея анатомия и физиология сформировались как самостоятельные науки. Принципиальное строение и функции человеческого тела стали понятны учёным. Однако для окончательного понимания учёным надо было выяснить, из каких мельчайших самостоятельных единиц состоят тела животных и растений. Долгое время для этого не существовало необходимых инструментов и методик.<br>Всё изменилось после изобретения микроскопа. Учёным открылся удивительный мир микроструктур организма и невидимый мир микроскопических живых существ.<br>Но микроскоп появился не с помощью волшебной палочки. Созданию этого прибора предшествовала длительная и кропотливая работа.<br>Итак, начнём наш рассказ.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/c9c/f96/573/c9cf96573f8c9852a000c1010b5925d6.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/c9c/f96/573/c9cf96573f8c9852a000c1010b5925d6.png",
+          "fit": "cover",
+          "positionY": 20.909090909091,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "медицина"
+        },
+        {
+          "titleHtml": "микромир"
+        },
+        {
+          "titleHtml": "микробиология"
+        },
+        {
+          "titleHtml": "микроскопия"
+        },
+        {
+          "titleHtml": "история науки"
+        },
+        {
+          "titleHtml": "биология"
+        }
+      ]
+    },
+    "582574": {
+      "id": "582574",
+      "timePublished": "2021-10-09T19:52:37+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Serialize Reference в Unity",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [
+        {
+          "type": "sandbox",
+          "data": null
+        }
+      ],
+      "author": {
+        "id": "1830321",
+        "alias": "medzumi",
+        "fullname": "Павел",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/af4/f8f/e95/af4f8fe95318ba3e4dd5a93e112d90e5.png",
+        "speciality": "Unity Developer"
+      },
+      "statistics": {
+        "commentsCount": 0,
+        "favoritesCount": 4,
+        "readingCount": 615,
+        "score": -2,
+        "votesCount": 2
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "17831",
+          "alias": "unity",
+          "type": "collective",
+          "title": "Unity3D",
+          "titleHtml": "Unity3D",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 0,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-08T19:52:37+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Всем добрый день. Эта про относительно новую фичу Serialize Reference. Появилась она в 2019 версии. </p>",
+        "imageUrl": null,
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/b3b/b42/849/b3bb428495344694db5aa2ba35975c39.png",
+          "fit": "cover",
+          "positionY": 7.5,
+          "positionX": 42.948717948718
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "unity"
+        },
+        {
+          "titleHtml": "c#"
+        },
+        {
+          "titleHtml": "serialization"
+        },
+        {
+          "titleHtml": "serializereference"
+        }
+      ]
+    },
+    "582584": {
+      "id": "582584",
+      "timePublished": "2021-10-10T05:05:07+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Мои собеседования 2021 edition",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [],
+      "author": {
+        "id": "11657",
+        "alias": "kronos",
+        "fullname": "Самсонов Иван",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/3cd/1f9/592/3cd1f959296fa2118a52da090a16b9d4.jpg",
+        "speciality": "Инженер"
+      },
+      "statistics": {
+        "commentsCount": 19,
+        "favoritesCount": 29,
+        "readingCount": 4530,
+        "score": 15,
+        "votesCount": 17
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "20740",
+          "alias": "career",
+          "type": "collective",
+          "title": "IT career",
+          "titleHtml": "IT career",
+          "isProfiled": false
+        }
+      ],
+      "flows": [
+        {
+          "id": "3",
+          "alias": "management",
+          "title": "Management"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 19,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-09T05:05:07+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p><strong>Внимание</strong>: повествование будет идти в стиле \"здравствуй дорогой дневничок\", без критики и срывов покровов. Я строго против публичной критики компаний в разрезе процесса интервью. Хотят устраивать 5 алгораундов - их дело, они будут платить тебе деньги и вправе решать как они собеседуют. С другой стороны, я считаю, что могу высказывать свое мнение без конкретных имен. Все описанные компании не российские. Извиняюсь за англицизмы.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/283/3da/af7/2833daaf7e7b0a1e761dd0ce23927d7e.jpeg",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/283/3da/af7/2833daaf7e7b0a1e761dd0ce23927d7e.jpeg",
+          "fit": "cover",
+          "positionY": 8.1818181818182,
+          "positionX": 0.38461538461538
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "собеседование"
+        },
+        {
+          "titleHtml": "интервью"
+        }
+      ]
+    },
+    "582588": {
+      "id": "582588",
+      "timePublished": "2021-10-10T07:08:43+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Подробное руководство по инверсии зависимостей. Часть 1",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [
+        {
+          "type": "sandbox",
+          "data": null
+        }
+      ],
+      "author": {
+        "id": "2743681",
+        "alias": "aa0ndrey",
+        "fullname": "Андрей Алексеев",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/077/99f/a77/07799fa77542720dfb96f45e235b1aae.jpg",
+        "speciality": ""
+      },
+      "statistics": {
+        "commentsCount": 1,
+        "favoritesCount": 8,
+        "readingCount": 599,
+        "score": 2,
+        "votesCount": 4
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "375",
+          "alias": "java",
+          "type": "collective",
+          "title": "Java",
+          "titleHtml": "Java",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "397",
+          "alias": "analysis_design",
+          "type": "collective",
+          "title": "System Analysis and Design",
+          "titleHtml": "System Analysis and Design",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "7504",
+          "alias": "refactoring",
+          "type": "collective",
+          "title": "Designing and refactoring",
+          "titleHtml": "Designing and refactoring",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 1,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-09T07:08:43+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Инверсия зависимостей - один из принципов SOLID, который лежит в основе построения гексагональной архитектуры приложения. Существует множество статей, которые раскрывают суть принципа и объясняют как его применять. И, возможно, читатель уже знаком с ними. Но в рамках данной статьи будет продемонстрирован подробный разбор \"тактических\" приемов для успешного использования инверсии зависимостей и, возможно, в этом смысле даже искушенный читатель сможет найти для себя что-то новое. Примеры представлены на языке программирования Java с соответствующим окружением, но при этом для чтения достаточно понимания похожих языков программирования.</p>",
+        "imageUrl": null,
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/874/d22/2a9/874d222a9f29d03e6ab0428dbf7f3d0b.jpg",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "инверсия зависимостей"
+        },
+        {
+          "titleHtml": "архитектура"
+        },
+        {
+          "titleHtml": "архитектура приложений"
+        },
+        {
+          "titleHtml": "паттерны"
+        },
+        {
+          "titleHtml": "паттерны проектирования"
+        }
+      ]
+    },
+    "582590": {
+      "id": "582590",
+      "timePublished": "2021-10-10T07:08:55+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Иммитация игры Just Pop It",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [],
+      "author": {
+        "id": "2569045",
+        "alias": "KiberneticWorm",
+        "fullname": "Dmitry Tsyvtsyn",
+        "avatarUrl": "//habrastorage.org/getpro/habr/avatars/194/5eb/d0a/1945ebd0a00e35a7bdfc285234209869.jpg",
+        "speciality": "Android developer"
+      },
+      "statistics": {
+        "commentsCount": 1,
+        "favoritesCount": 1,
+        "readingCount": 263,
+        "score": -1,
+        "votesCount": 1
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": true
+          },
+          "id": "17107",
+          "alias": "android_dev",
+          "type": "collective",
+          "title": "Development for Android",
+          "titleHtml": "Development for Android",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": true
+          },
+          "id": "19441",
+          "alias": "kotlin",
+          "type": "collective",
+          "title": "Kotlin",
+          "titleHtml": "Kotlin",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 1,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-09T07:08:55+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Недавно я добавил новую фигурку в мое приложение...</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/dcb/f0b/757/dcbf0b75715f69d5c3b6a254ce19cbdd.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/dcb/f0b/757/dcbf0b75715f69d5c3b6a254ce19cbdd.png",
+          "fit": "cover",
+          "positionY": 1.1363636363636,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "customview"
+        },
+        {
+          "titleHtml": "pop"
+        },
+        {
+          "titleHtml": "android"
+        },
+        {
+          "titleHtml": "kotlin"
+        },
+        {
+          "titleHtml": "absolute"
+        },
+        {
+          "titleHtml": "math"
+        }
+      ]
+    },
+    "582592": {
+      "id": "582592",
+      "timePublished": "2021-10-10T07:38:35+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Мое понимание красивого кода, спустя почти 10 лет ООП- кодинга",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [],
+      "author": {
+        "id": "2794655",
+        "alias": "PythonAnalyst",
+        "fullname": null,
+        "avatarUrl": "",
+        "speciality": "Python, BigData, Analysis"
+      },
+      "statistics": {
+        "commentsCount": 27,
+        "favoritesCount": 15,
+        "readingCount": 1925,
+        "score": -6,
+        "votesCount": 14
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "359",
+          "alias": "programming",
+          "type": "collective",
+          "title": "Programming",
+          "titleHtml": "Programming",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "7504",
+          "alias": "refactoring",
+          "type": "collective",
+          "title": "Designing and refactoring",
+          "titleHtml": "Designing and refactoring",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "20682",
+          "alias": "pm",
+          "type": "collective",
+          "title": "Project management",
+          "titleHtml": "Project management",
+          "isProfiled": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        },
+        {
+          "id": "3",
+          "alias": "management",
+          "title": "Management"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 27,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-09T07:38:35+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p>Для начала небольшой тест, который позволит выяснить стоит ли вам читать эту статью дальше: перед вами задача прочитать информацию из текстового файла, немного  преобразовать ее (например, агрегировать по- недельно) и показать результат пользователю. Вы мысленно набросали примерно такой план: читаю файл, преобразую, отображаю? Тогда не задумываясь нажимайте кнопку \"Читать далее\", поскольку эта статья написана именно для вас.</p>",
+        "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/74c/1ca/081/74c1ca0816a7a74cb01a96321a7d924b.png",
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/74c/1ca/081/74c1ca0816a7a74cb01a96321a7d924b.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "чистый код"
+        },
+        {
+          "titleHtml": "архитектура"
+        }
+      ]
+    },
+    "582600": {
+      "id": "582600",
+      "timePublished": "2021-10-10T08:47:56+00:00",
+      "isCorporative": false,
+      "lang": "ru",
+      "titleHtml": "Хотели как в FAANG, а вышло как всегда или Опыт собеседования в Тинькофф в 3 актах",
+      "editorVersion": "2.0",
+      "postType": "article",
+      "postLabels": [
+        {
+          "type": "sandbox",
+          "data": null
+        }
+      ],
+      "author": {
+        "id": "2800283",
+        "alias": "arkashaErema",
+        "fullname": null,
+        "avatarUrl": "",
+        "speciality": ""
+      },
+      "statistics": {
+        "commentsCount": 1,
+        "favoritesCount": 8,
+        "readingCount": 1102,
+        "score": 8,
+        "votesCount": 10
+      },
+      "hubs": [
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "375",
+          "alias": "java",
+          "type": "collective",
+          "title": "Java",
+          "titleHtml": "Java",
+          "isProfiled": true
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "20740",
+          "alias": "career",
+          "type": "collective",
+          "title": "IT career",
+          "titleHtml": "IT career",
+          "isProfiled": false
+        },
+        {
+          "relatedData": {
+            "isSubscribed": false
+          },
+          "id": "22026",
+          "alias": "itcompanies",
+          "type": "collective",
+          "title": "IT-companies",
+          "titleHtml": "IT-companies",
+          "isProfiled": false
+        }
+      ],
+      "flows": [
+        {
+          "id": "1",
+          "alias": "develop",
+          "title": "Development"
+        },
+        {
+          "id": "3",
+          "alias": "management",
+          "title": "Management"
+        }
+      ],
+      "relatedData": {
+        "unreadCommentsCount": 1,
+        "vote": {
+          "value": null,
+          "voteTimeExpired": "2021-11-09T08:47:56+00:00"
+        },
+        "bookmarked": false,
+        "canComment": true,
+        "canEdit": false,
+        "canVote": true,
+        "canViewVotes": false
+      },
+      "leadData": {
+        "textHtml": "<p><strong>Предисловие</strong>\r\n\r\nОколо года назад я задался целью получить оффер от FAANG. Как следствие, постоянной частью моей жизни стали тематические форумы, площадки и вся сопутствующая атрибутика. Спустя какое-то время я попробовал себя на собеседованиях в околоFAANGoвые компании: Lyft, Spotify, Booking и т. д, где-то успешно, где-то не очень. В это же время мне порекомендовали попробовать пройти собеседование в Тинькофф банк, который внедрил <em>схожий</em> процесс.\r\n\r\nПосле стандартного общения с HR менеджером была получена ссылка на описание <a href=\"https://github.com/TinkoffCreditSystems/career/blob/main/interview.md\" rel=\"noopener noreferrer nofollow\">процесса собеседования</a>. “Хм, почти что <abbr title=\"Facebook, Amazon, Apple, Netflix, Google\">FAANG</abbr> + тех. интервью по Primary Skill”, - подумал я и сказал, что готов приступать. В тот же час было назначено 2 интервью: техническое и coding, а вот 3 этап, system design, нужно было заслужить успешным прохождением первых двух. Почему именно эти 2 части являлись основополагающими, осталось неясным.</p><p><strong>Акт первый, технический</strong>  </p><p>В назначенный час я встретился со своим интервьюером. Собеседование выглядело “добротным” и стандартным в заданной проф. области, оттого местами скучным. Было много задач на ревью кода и обсуждения специфики языка, в частности...</p>",
+        "imageUrl": null,
+        "buttonTextHtml": "Читать далее",
+        "image": {
+          "url": "https://habrastorage.org/getpro/habr/upload_files/f41/c24/bd9/f41c24bd977a5f6aceb597d275f5a1e9.jpg",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "status": "published",
+      "plannedPublishTime": null,
+      "checked": null,
+      "tags": [
+        {
+          "titleHtml": "собеседование"
+        }
+      ]
+    }
+  }
+}
