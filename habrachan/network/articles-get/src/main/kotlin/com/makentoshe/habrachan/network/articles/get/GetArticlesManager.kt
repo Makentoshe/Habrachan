@@ -16,9 +16,10 @@ abstract class GetArticlesManager(private val client: HttpClient) {
 
     protected abstract fun url(request: GetArticlesRequest): HabrArticlesFilterApi
 
+    protected abstract fun articles(json: String): Articles
+
     suspend fun execute(request: GetArticlesRequest): Either<GetArticlesResponse, GetArticlesException> = try {
-        val articles = Articles(Json.decodeFromString<JsonObject>(ktorResponse(request).readText()).toMap())
-        Either.Left(GetArticlesResponse(request, articles))
+        Either.Left(GetArticlesResponse(request, articles(ktorResponse(request).readText())))
     } catch (exception: ClientRequestException) {
         val parameters = Json.decodeFromString<JsonObject>(exception.response.readText()).toMap()
         Either.Right(GetArticlesException(request, exception, parameters))

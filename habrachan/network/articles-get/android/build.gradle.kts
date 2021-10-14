@@ -13,6 +13,7 @@ dependencies {
 
     implementation(project(":habrachan"))
     implementation(project(":habrachan:entity"))
+    implementation(project(":habrachan:entity:android"))
     implementation(project(":habrachan:api"))
     implementation(project(":habrachan:api:android"))
     implementation(project(":habrachan:network"))
