@@ -1,0 +1,2795 @@
+{
+  "pages": 50,
+  "next_page": {
+    "url": "https:\/\/habr.com\/api\/v1\/posts\/all?page=3",
+    "int": 3
+  },
+  "sorted_by": "time_published",
+  "data": [
+    {
+      "id": 582556,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T22:59:25+03:00",
+      "time_interesting": null,
+      "comments_count": 2,
+      "score": 2,
+      "votes_count": 10,
+      "favorites_count": 10,
+      "lang": "ru",
+      "tags_string": "аудиомания, напольная акустика, Old School Monitor Two, ELAC Solano FS 287, колонки",
+      "title": "Примечательная напольная акустика для небольших помещений — обсуждаем две пары колонок от ELAC и Old School",
+      "preview_html": "\u003Cp\u003EРанее мы поговорили о \u003Ca href=\u0022https:\/\/habr.com\/ru\/company\/audiomania\/blog\/579946\/\u0022\u003Eвертушках\u003C\/a\u003E в сегменте «до 60 тысяч рублей», а сегодня вновь возвращаемся к напольникам. На этот раз смотрим на флагманские модели.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 18822,
+          "alias": "audiomania",
+          "title": "Блог компании Аудиомания",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": true,
+          "icon": "",
+          "path": "company\/audiomania\/"
+        },
+        {
+          "id": 21954,
+          "alias": "Peripheral",
+          "title": "Периферия",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/peripheral\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 7,
+          "name": "Научпоп",
+          "alias": "popsci",
+          "url": "https:\/\/habr.com\/ru\/flows\/popsci\/",
+          "path": "\/flows\/popsci\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 4645,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/711\/0bf\/4b1\/7110bf4b1d70733a7bb6c64723eeb7b2.png",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/711\/0bf\/4b1\/7110bf4b1d70733a7bb6c64723eeb7b2.png",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/711\/0bf\/4b1\/7110bf4b1d70733a7bb6c64723eeb7b2.png",
+          "fit": "cover",
+          "positionY": 60.227272727273,
+          "positionX": 0
+        }
+      },
+      "path": "\/company\/audiomania\/blog\/582556\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/audiomania\/blog\/582556\/",
+      "author": {
+        "id": 542738,
+        "login": "Audioman",
+        "time_registered": "2014-01-29T19:32:45+04:00",
+        "score": 86.7,
+        "fullname": null,
+        "specializm": null,
+        "sex": 0,
+        "rating": 15,
+        "contacts": [],
+        "rating_position": 361,
+        "path": "\/users\/audioman\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 542,
+          "comments": 158,
+          "followed": 7,
+          "followers": 251,
+          "favorites": 746
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 7,
+            "title": "Старожил",
+            "alias": "oldresident",
+            "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/7fd\/66e\/5a3\/7fd66e5a3b645f7ecdd9c99e5893c15d.png",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/company\/audiomania\/blog\/582556\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 2,
+        "voteCount": {
+          "total": 10,
+          "positive": 6,
+          "negative": 4
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": false,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582574,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T22:52:37+03:00",
+      "time_interesting": null,
+      "comments_count": 0,
+      "score": -2,
+      "votes_count": 2,
+      "favorites_count": 5,
+      "lang": "ru",
+      "tags_string": "unity, c#, serialization, serializereference",
+      "title": "Serialize Reference в Unity",
+      "preview_html": "\u003Cp\u003EВсем добрый день. Эта про относительно новую фичу Serialize Reference. Появилась она в 2019 версии. \u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 17831,
+          "alias": "unity",
+          "title": "Unity",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/unity\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 800,
+      "metadata": {
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/b3b\/b42\/849\/b3bb428495344694db5aa2ba35975c39.png",
+          "fit": "cover",
+          "positionY": 7.5,
+          "positionX": 42.948717948718
+        }
+      },
+      "path": "\/post\/582574\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582574\/",
+      "author": {
+        "id": 1830321,
+        "login": "medzumi",
+        "time_registered": "2018-09-14T19:32:00+03:00",
+        "score": 3,
+        "fullname": "Павел",
+        "specializm": "Unity Developer",
+        "sex": 1,
+        "rating": -2,
+        "contacts": [],
+        "rating_position": 0,
+        "path": "\/users\/medzumi\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Санкт-Петербург и область",
+          "city": "Санкт-Петербург"
+        },
+        "counters": {
+          "posts": 1,
+          "comments": 0,
+          "followed": 0,
+          "followers": 0,
+          "favorites": 3
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/af4\/f8f\/e95\/af4f8fe95318ba3e4dd5a93e112d90e5.png",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582574\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": -2,
+        "voteCount": {
+          "total": 2,
+          "positive": 0,
+          "negative": 2
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": false,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582572,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T22:44:42+03:00",
+      "time_interesting": "2021-10-09T23:12:50+03:00",
+      "comments_count": 6,
+      "score": 45,
+      "votes_count": 47,
+      "favorites_count": 18,
+      "lang": "ru",
+      "tags_string": "медицина, микромир, микробиология, микроскопия, история науки, биология",
+      "title": "Знакомство с невидимками",
+      "preview_html": "\u003Cp\u003EПосле работ Везалия и Гарвея анатомия и физиология сформировались как самостоятельные науки. Принципиальное строение и функции человеческого тела стали понятны учёным. Однако для окончательного понимания учёным надо было выяснить, из каких мельчайших самостоятельных единиц состоят тела животных и растений. Долгое время для этого не существовало необходимых инструментов и методик.\u003Cbr\u003EВсё изменилось после изобретения микроскопа. Учёным открылся удивительный мир микроструктур организма и невидимый мир микроскопических живых существ.\u003Cbr\u003EНо микроскоп появился не с помощью волшебной палочки. Созданию этого прибора предшествовала длительная и кропотливая работа.\u003Cbr\u003EИтак, начнём наш рассказ.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 20742,
+          "alias": "read",
+          "title": "Читальный зал",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/read\/"
+        },
+        {
+          "id": 21910,
+          "alias": "popular_science",
+          "title": "Научно-популярное",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/popular_science\/"
+        },
+        {
+          "id": 22750,
+          "alias": "biology",
+          "title": "Биология",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/biology\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 3,
+          "name": "Менеджмент",
+          "alias": "management",
+          "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+          "path": "\/flows\/management\/"
+        },
+        {
+          "id": 7,
+          "name": "Научпоп",
+          "alias": "popsci",
+          "url": "https:\/\/habr.com\/ru\/flows\/popsci\/",
+          "path": "\/flows\/popsci\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 5861,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/c9c\/f96\/573\/c9cf96573f8c9852a000c1010b5925d6.png",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/c9c\/f96\/573\/c9cf96573f8c9852a000c1010b5925d6.png",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/c9c\/f96\/573\/c9cf96573f8c9852a000c1010b5925d6.png",
+          "fit": "cover",
+          "positionY": 20.909090909091,
+          "positionX": 0
+        }
+      },
+      "path": "\/post\/582572\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582572\/",
+      "author": {
+        "id": 2568695,
+        "login": "phanerozoi_evidence",
+        "time_registered": "2021-01-10T01:29:20+03:00",
+        "score": 54.7,
+        "fullname": "Фанерозой",
+        "specializm": "Биологи, врач, научный популяризатор, палеонтолог",
+        "sex": 1,
+        "rating": 104.8,
+        "contacts": [],
+        "rating_position": 42,
+        "path": "\/users\/phanerozoi_evidence\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Санкт-Петербург и область",
+          "city": "Санкт-Петербург"
+        },
+        "counters": {
+          "posts": 55,
+          "comments": 953,
+          "followed": 19,
+          "followers": 88,
+          "favorites": 3
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/dcc\/862\/561\/dcc862561429f2ed85090ac53e39cf7d.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582572\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 45,
+        "voteCount": {
+          "total": 47,
+          "positive": 46,
+          "negative": 1
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 564880,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T22:39:15+03:00",
+      "time_interesting": "2021-10-09T23:54:38+03:00",
+      "comments_count": 3,
+      "score": 18,
+      "votes_count": 24,
+      "favorites_count": 3,
+      "lang": "ru",
+      "tags_string": "барахолки, испания, гаджеты",
+      "title": "Новая суббота и очередное посещение барахолки — теперь без карантинных ограничений и с кучей интересностей",
+      "preview_html": "\u003Cdiv style=\u0022text-align:center;\u0022\u003E\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/wu\/no\/pk\/wunopk_nwoqpj-zykw95ezr71d0.jpeg\u0022\u003E\u003C\/div\u003E\u003Cbr\u003E\r\nПривет, Хабр! Сегодня я снова посетил свою любимую субботнюю барахолку. В прошлый раз в комментариях я видел замечания, что та суббота выдалась не особо удачной — попадался, в основном, электронный мусор. Если и так, то прошлая неудача с лихвой компенсировалась новым походом.\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nДело в том, что у нас сняли карантинные ограничения для рынков подобного типа, так что теперь продавцов стало в 2 раза больше. До этого им приходилось меняться, установив очередность выхода «на работу» по спискам. Теперь же никаких ограничений нет — торгуют все! Ну и результаты не заставили себя ждать, о новом походе и улове — под катом. \u003Cbr\u003E",
+      "text_cut": "Читать дальше \u0026rarr;",
+      "is_comments_hide": 0,
+      "editor_version": 1,
+      "hubs": [
+        {
+          "id": 14740,
+          "alias": "selectel",
+          "title": "Блог компании Selectel",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": true,
+          "icon": "",
+          "path": "company\/selectel\/"
+        },
+        {
+          "id": 21894,
+          "alias": "gadgets",
+          "title": "Гаджеты",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/gadgets\/"
+        },
+        {
+          "id": 21898,
+          "alias": "hardware",
+          "title": "Компьютерное железо",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/hardware\/"
+        },
+        {
+          "id": 21906,
+          "alias": "history",
+          "title": "История IT",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/history\/"
+        },
+        {
+          "id": 21930,
+          "alias": "antikvariat",
+          "title": "Старое железо",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/antikvariat\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 7,
+          "name": "Научпоп",
+          "alias": "popsci",
+          "url": "https:\/\/habr.com\/ru\/flows\/popsci\/",
+          "path": "\/flows\/popsci\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 4224,
+      "metadata": {
+        "meta_image": "",
+        "lead_image": null
+      },
+      "path": "\/company\/selectel\/blog\/564880\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/selectel\/blog\/564880\/",
+      "author": {
+        "id": 2621483,
+        "login": "DRoman0v",
+        "time_registered": "2021-03-02T08:07:37+03:00",
+        "score": 60,
+        "fullname": "Denis",
+        "specializm": "Инженер",
+        "sex": 1,
+        "rating": 111,
+        "contacts": [],
+        "rating_position": 37,
+        "path": "\/users\/droman0v\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Москва и Московская обл.",
+          "city": "Москва"
+        },
+        "counters": {
+          "posts": 25,
+          "comments": 1,
+          "followed": 2,
+          "followers": 30,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 3,
+            "title": "Автор",
+            "alias": "author",
+            "description": "Пользователь, опубликовавший 10 и более топиков; рейтинг каждого топика должен быть более 50 баллов",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/126\/32f\/feb\/12632ffebec0f851ba0ec665f3ed6c55.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/company\/selectel\/blog\/564880\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 18,
+        "voteCount": {
+          "total": 24,
+          "positive": 21,
+          "negative": 3
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582566,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T21:59:20+03:00",
+      "time_interesting": "2021-10-09T22:25:12+03:00",
+      "comments_count": 22,
+      "score": 52,
+      "votes_count": 54,
+      "favorites_count": 33,
+      "lang": "ru",
+      "tags_string": "VB6, C++, VisualBasic 6, разработка игры, портирование",
+      "title": "Как я портировал игру с VisualBasic 6 на С++, сделав её кросс-платформенной",
+      "preview_html": "\u003Cp\u003EВсем доброго времени суток! Это моя история о том, как я портировал исходный код одной фанатской Windows-игры о Марио с VisualBasic 6 на C++, и с какими трудностями я столкнулся в процессе создания порта.\u003C\/p\u003E\u003Cp\u003EЭта статья рассказывает о портировании Super Mario Bros. X, фанатской игры Эндрю Спинкса, созданную им в 2009 году, которую он затем бросил 2011 году в пользу более серьёзного и масштабного проекта в лице Terraria.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 559,
+          "alias": "cpp",
+          "title": "C++",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/cpp\/"
+        },
+        {
+          "id": 7773,
+          "alias": "gamedev",
+          "title": "Разработка игр",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/gamedev\/"
+        },
+        {
+          "id": 21980,
+          "alias": "games",
+          "title": "Игры и игровые приставки",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/games\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        },
+        {
+          "id": 7,
+          "name": "Научпоп",
+          "alias": "popsci",
+          "url": "https:\/\/habr.com\/ru\/flows\/popsci\/",
+          "path": "\/flows\/popsci\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 5511,
+      "metadata": {
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/b84\/34d\/e10\/b8434de10fe3c2069bea42427273f279.png",
+          "fit": "cover",
+          "positionY": 3.6363636363636,
+          "positionX": 50.384615384615
+        },
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/b84\/34d\/e10\/b8434de10fe3c2069bea42427273f279.png",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/b84\/34d\/e10\/b8434de10fe3c2069bea42427273f279.png"
+      },
+      "path": "\/post\/582566\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582566\/",
+      "author": {
+        "id": 354897,
+        "login": "Wohlstand",
+        "time_registered": "2013-04-07T23:14:09+04:00",
+        "score": 18.7,
+        "fullname": "Виталий Новичков",
+        "specializm": "Инженер-Программист С++",
+        "sex": 1,
+        "rating": 52.1,
+        "contacts": [],
+        "rating_position": 99,
+        "path": "\/users\/wohlstand\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Москва и Московская обл.",
+          "city": "Москва"
+        },
+        "counters": {
+          "posts": 1,
+          "comments": 35,
+          "followed": 1,
+          "followers": 1,
+          "favorites": 1
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/859\/5e3\/100\/8595e3100bc38b0275dd5fb55d62484c.png",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582566\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 52,
+        "voteCount": {
+          "total": 54,
+          "positive": 53,
+          "negative": 1
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582562,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T20:47:46+03:00",
+      "time_interesting": null,
+      "comments_count": 38,
+      "score": -56,
+      "votes_count": 74,
+      "favorites_count": 7,
+      "lang": "ru",
+      "tags_string": "php, php developer, Software Development",
+      "title": "Стоит ли изучать PHP в 2021 году?",
+      "preview_html": "\u003Cp\u003EВозможно, вы слышали, что PHP\u0026nbsp;— бесполезный и вымирающий язык программирования, но каковы факты?\u003C\/p\u003E\u003Cp\u003EЯзык PHP является преемником проекта PHP\/FI, \u003Ca href=\u0022https:\/\/www.php.net\/manual\/ru\/history.php.php\u0022\u003E\u003Cu\u003Eсозданного в 1994\u0026nbsp;г.\u003C\/u\u003E\u003C\/a\u003E Расмусом Лердорфом для отслеживания просмотров своего онлайн-резюме. Это был простой набор бинарных файлов для CGI (англ. Common Gateway Interface\u0026nbsp;— «интерфейс общего шлюза»), написанных на языке C. В 1995\u0026nbsp;г. Расмус опубликовал исходный код своего проекта и призвал пользователей присоединиться к его совершенствованию.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 21052,
+          "alias": "otus",
+          "title": "Блог компании OTUS",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": true,
+          "icon": "",
+          "path": "company\/otus\/"
+        },
+        {
+          "id": 260,
+          "alias": "php",
+          "title": "PHP",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/php\/"
+        },
+        {
+          "id": 359,
+          "alias": "programming",
+          "title": "Программирование",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/programming\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 9697,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/86b\/4db\/468\/86b4db46892f3b0df95e677380440c32.png",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/86b\/4db\/468\/86b4db46892f3b0df95e677380440c32.png",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/86b\/4db\/468\/86b4db46892f3b0df95e677380440c32.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "path": "\/company\/otus\/blog\/582562\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/otus\/blog\/582562\/",
+      "author": {
+        "id": 1547287,
+        "login": "MaxRokatansky",
+        "time_registered": "2017-09-07T13:51:33+03:00",
+        "score": 31.7,
+        "fullname": "OTUS",
+        "specializm": "Редактор",
+        "sex": 1,
+        "rating": 8.7,
+        "contacts": [],
+        "rating_position": 521,
+        "path": "\/users\/maxrokatansky\/",
+        "geo": {
+          "country": "Россия",
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 1210,
+          "comments": 273,
+          "followed": 4,
+          "followers": 438,
+          "favorites": 21
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 102,
+            "title": "Бета-тестер",
+            "alias": "tester",
+            "description": "Участвует в тестировании новой функциональности",
+            "url": "https:\/\/habr.com\/beta\/welcome\/",
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/b9f\/baf\/5f9\/b9fbaf5f96ae52973706a0716bd9216e.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/company\/otus\/blog\/582562\/",
+      "source_author": "Code Like A Girl",
+      "source_link": "https:\/\/code.likeagirl.io\/is-php-worth-learning-in-2021-4e263ebd601e",
+      "post_type": 2,
+      "post_type_str": "translation",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": -56,
+        "voteCount": {
+          "total": 74,
+          "positive": 9,
+          "negative": 65
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": false,
+      "is_interesting": false,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582552,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T19:01:12+03:00",
+      "time_interesting": null,
+      "comments_count": 0,
+      "score": 0,
+      "votes_count": 0,
+      "favorites_count": 6,
+      "lang": "ru",
+      "tags_string": "android, kotlin, apollo, многомодульность в android",
+      "title": "Apollo 3.0 для работы с GraphQL в многомодульном Android приложении",
+      "preview_html": "\u003Cp\u003EДавайте рассмотрим, каким образом настроить и использовать последнюю на данный момент версию клиента apollo в многомодульном приложении под android.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 17107,
+          "alias": "android_dev",
+          "title": "Разработка под Android",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/android_dev\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 739,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/c19\/922\/4d9\/c199224d910ec542772f2b46f9b4cb5b.png",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/c19\/922\/4d9\/c199224d910ec542772f2b46f9b4cb5b.png",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/c19\/922\/4d9\/c199224d910ec542772f2b46f9b4cb5b.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "path": "\/post\/582552\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582552\/",
+      "author": {
+        "id": 2787295,
+        "login": "Winged90",
+        "time_registered": "2021-09-13T21:48:42+03:00",
+        "score": 7,
+        "fullname": null,
+        "specializm": null,
+        "sex": 0,
+        "rating": 6,
+        "contacts": [],
+        "rating_position": 622,
+        "path": "\/users\/winged90\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 3,
+          "comments": 0,
+          "followed": 0,
+          "followers": 1,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582552\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 0,
+        "voteCount": {
+          "total": 0,
+          "positive": 0,
+          "negative": 0
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": false,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582550,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T18:53:44+03:00",
+      "time_interesting": "2021-10-09T20:32:05+03:00",
+      "comments_count": 19,
+      "score": 17,
+      "votes_count": 17,
+      "favorites_count": 17,
+      "lang": "ru",
+      "tags_string": "хабрахабр, парсинг, обработка данных, визуализация, статистика, поиск закономерностей",
+      "title": "Анализ статей Хабрахабр",
+      "preview_html": "\u003Cp\u003EРешила повторить исследование, сделанное в 2017 году и посмотреть, что изменилось за 5 лет. Ссылка на предыдущую статью \u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/321206\/\u0022 rel=\u0022noopener noreferrer nofollow\u0022\u003EАнализ статей Хабрахабр и Geektimes\u003C\/a\u003E. Дизайн сайта изменился, поэтому делала все в jupyter python, а не wolfram mathematica. Далеко не все графики удалось воспроизвести заново. Получился анализ более чем 260000 статей.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 359,
+          "alias": "programming",
+          "title": "Программирование",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/programming\/"
+        },
+        {
+          "id": 8000,
+          "alias": "algorithms",
+          "title": "Алгоритмы",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/algorithms\/"
+        },
+        {
+          "id": 18202,
+          "alias": "data_visualization",
+          "title": "Визуализация данных",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/data_visualization\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 2816,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/r\/w1560\/files\/b52\/da5\/359\/b52da53597c1466da00afeab9d751c05.png",
+        "lead_image": "https:\/\/habrastorage.org\/r\/w1560\/files\/b52\/da5\/359\/b52da53597c1466da00afeab9d751c05.png",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/r\/w1560\/files\/b52\/da5\/359\/b52da53597c1466da00afeab9d751c05.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "path": "\/post\/582550\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582550\/",
+      "author": {
+        "id": 262357,
+        "login": "urticazoku",
+        "time_registered": "2012-11-13T13:23:16+04:00",
+        "score": 80.7,
+        "fullname": null,
+        "specializm": "Пользователь",
+        "sex": 0,
+        "rating": 17,
+        "contacts": [],
+        "rating_position": 339,
+        "path": "\/users\/urticazoku\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 25,
+          "comments": 350,
+          "followed": 193,
+          "followers": 50,
+          "favorites": 1974
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 7,
+            "title": "Старожил",
+            "alias": "oldresident",
+            "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 102,
+            "title": "Бета-тестер",
+            "alias": "tester",
+            "description": "Участвует в тестировании новой функциональности",
+            "url": "https:\/\/habr.com\/beta\/welcome\/",
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 1018,
+            "title": "Дед Мороз",
+            "alias": "habra_adm",
+            "description": "Пользователь, отправивший подарок в Клубе анонимных Дедов Морозов",
+            "url": null,
+            "is_removable": true,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/668\/5ff\/baf\/6685ffbaff7df8ed99dd8702e17f95e3.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582550\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 17,
+        "voteCount": {
+          "total": 17,
+          "positive": 17,
+          "negative": 0
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582508,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T18:18:40+03:00",
+      "time_interesting": null,
+      "comments_count": 2,
+      "score": 3,
+      "votes_count": 3,
+      "favorites_count": 11,
+      "lang": "ru",
+      "tags_string": "wave-share, webrtc, звук, аудиомания, передача данных, браузеры",
+      "title": "Кто реализовал обмен данными по WebRTC с помощью звука",
+      "preview_html": "\u003Cp\u003EВсем знаком тот шипящий и скрипящий звук, которым обменивались модемы dial-up во время коннекта. Сегодня эти устройства до сих пор используют в удаленных регионах планеты, однако идея подключения с помощью звука находит разве что нишевые применения. Одно из них — установка соединения по WebRTC.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 18822,
+          "alias": "audiomania",
+          "title": "Блог компании Аудиомания",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": true,
+          "icon": "",
+          "path": "company\/audiomania\/"
+        },
+        {
+          "id": 20688,
+          "alias": "research",
+          "title": "Исследования и прогнозы в IT",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/research\/"
+        },
+        {
+          "id": 21918,
+          "alias": "soft",
+          "title": "Софт",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/soft\/"
+        },
+        {
+          "id": 21988,
+          "alias": "sound",
+          "title": "Звук",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/sound\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 3,
+          "name": "Менеджмент",
+          "alias": "management",
+          "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+          "path": "\/flows\/management\/"
+        },
+        {
+          "id": 7,
+          "name": "Научпоп",
+          "alias": "popsci",
+          "url": "https:\/\/habr.com\/ru\/flows\/popsci\/",
+          "path": "\/flows\/popsci\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 2704,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/eba\/932\/8b5\/eba9328b518b53bfb999e901a148f9e7.jpg",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/eba\/932\/8b5\/eba9328b518b53bfb999e901a148f9e7.jpg",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/eba\/932\/8b5\/eba9328b518b53bfb999e901a148f9e7.jpg",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "path": "\/company\/audiomania\/blog\/582508\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/audiomania\/blog\/582508\/",
+      "author": {
+        "id": 2691015,
+        "login": "mirhifi",
+        "time_registered": "2021-04-28T16:56:58+03:00",
+        "score": 17,
+        "fullname": "«Мир Hi-Fi»",
+        "specializm": "Пользователь",
+        "sex": 0,
+        "rating": 20.5,
+        "contacts": [],
+        "rating_position": 289,
+        "path": "\/users\/mirhifi\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 28,
+          "comments": 1,
+          "followed": 0,
+          "followers": 19,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/dfb\/713\/edb\/dfb713edbeed85de6588bd27d6c43229.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/company\/audiomania\/blog\/582508\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 3,
+        "voteCount": {
+          "total": 3,
+          "positive": 3,
+          "negative": 0
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": false,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582530,
+      "is_corporative": 0,
+      "is_tutorial": true,
+      "time_published": "2021-10-09T18:02:30+03:00",
+      "time_interesting": "2021-10-10T14:34:15+03:00",
+      "comments_count": 5,
+      "score": 7,
+      "votes_count": 7,
+      "favorites_count": 9,
+      "lang": "ru",
+      "tags_string": "kotlin, kotlin multiplatform, kotlin multiplatform mobile, ksp, kotlin symbol processing",
+      "title": "Kotlin Symbol Processing. Работаем с аннотациями по-новому",
+      "preview_html": "\u003Cp\u003E\u003Cem\u003EВсем доброго дня! С вами Анна Жаркова, ведущий мобильный разработчик компании Usetech. В феврале 2021 года компания Google анонсировали экспериментальный релиз технологии \u003C\/em\u003E\u003Ca href=\u0022https:\/\/github.com\/google\/ksp\u0022 rel=\u0022noopener noreferrer nofollow\u0022\u003E\u003Cem\u003EKotlin Symbol Processing\u003C\/em\u003E\u003C\/a\u003E\u003Cem\u003E (совместима с Kotlin с 1.4.30), как более эффективную альтернативу KAPT (Kotlin Annotation Processing Tool). Она сразу привлекла внимание многих разработчиков, помышляющих о внедрении аннотаций в мультиплатформенные проекты, несмотря на рекомендации создателей не использовать ее в продакте. В сентябре вышел первый стабильный релиз, и теперь она официальна готова к работе в боевых проектах. В этой статье предлагаю рассмотреть нюансы работы с KSP как в приложениях для Android, так и Kotlin Multiplatform. \u003C\/em\u003E\u003C\/p\u003E\u003Cp\u003EИтак, начнем с назначения. Kotlin Symbol Processing предназначена для разработки легковесных плагинов компиляции Kotlin и процессоров аннотаций. Последние нас и интересуют. По сути аннотации нужны в приложении для того, чтобы упростить работу и избавить нас от лишнего кода. Например, когда нам нужно проанализировать код для определенной цели и затем сделать какие-то действия. Либо убрать лишнюю абстракцию из приложения. Гораздо привлекательнее выглядит добавить буквально 1 команду над конкретным объектом\/методом\/типов, и вместо того, чтобы писать тонны бойлерплейта для каждого случая, поручить это библиотеке, которая сделает все сама. \u003C\/p\u003E\u003Cp\u003EДавайте посмотрим, как работает в своей механике процессор аннотаций. Например, такой, как мы используем в Java коде.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 548,
+          "alias": "ios_dev",
+          "title": "Разработка под iOS",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/ios_dev\/"
+        },
+        {
+          "id": 6345,
+          "alias": "mobile_dev",
+          "title": "Разработка мобильных приложений",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/mobile_dev\/"
+        },
+        {
+          "id": 17107,
+          "alias": "android_dev",
+          "title": "Разработка под Android",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/android_dev\/"
+        },
+        {
+          "id": 19441,
+          "alias": "kotlin",
+          "title": "Kotlin",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/kotlin\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 1845,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/0b7\/abc\/554\/0b7abc55425a9b1a32206bcbb1e03442.png",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/0b7\/abc\/554\/0b7abc55425a9b1a32206bcbb1e03442.png",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/0b7\/abc\/554\/0b7abc55425a9b1a32206bcbb1e03442.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "path": "\/post\/582530\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582530\/",
+      "author": {
+        "id": 128280,
+        "login": "anioutka",
+        "time_registered": "2011-12-07T06:55:57+04:00",
+        "score": 26,
+        "fullname": "Анна Жаркова",
+        "specializm": "Lead mobile developer, Kotlin GDE",
+        "sex": 2,
+        "rating": 27,
+        "contacts": [],
+        "rating_position": 214,
+        "path": "\/users\/anioutka\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Алтайский край",
+          "city": "Барнаул"
+        },
+        "counters": {
+          "posts": 12,
+          "comments": 64,
+          "followed": 14,
+          "followers": 31,
+          "favorites": 209
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/abc\/686\/402\/abc68640208c443185b15194039396b1.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582530\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 7,
+        "voteCount": {
+          "total": 7,
+          "positive": 7,
+          "negative": 0
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582110,
+      "is_corporative": 0,
+      "is_tutorial": true,
+      "time_published": "2021-10-09T18:00:01+03:00",
+      "time_interesting": "2021-10-09T22:16:40+03:00",
+      "comments_count": 1,
+      "score": 11,
+      "votes_count": 11,
+      "favorites_count": 8,
+      "lang": "ru",
+      "tags_string": "dma, lvds, DSP, 1967BH028",
+      "title": "Разбор работы LVDS портов и DMA на отечественном DSP 1967ВН028",
+      "preview_html": "\u003Cp\u003EВ продолжение моих заметок, посвященных разбору функционала процессора от фирмы Миландр 1967ВН28, рассмотрим способы общения с внешними устройствами. В данном процессоре есть возможности общения по следующим информационным каналам. Порты LINK (LVDS) и также имеется параллельный интерфейс, предназначенный для работы с внешней памятью. Этой заметке разберем работу с интерфейсом LINK. \u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 595,
+          "alias": "assembler",
+          "title": "Assembler",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/assembler\/"
+        },
+        {
+          "id": 19737,
+          "alias": "controllers",
+          "title": "Программирование микроконтроллеров",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/controllers\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 1524,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/cd1\/9f2\/829\/cd19f2829eda62326825243202813302.png",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/cd1\/9f2\/829\/cd19f2829eda62326825243202813302.png",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/cd1\/9f2\/829\/cd19f2829eda62326825243202813302.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "path": "\/post\/582110\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582110\/",
+      "author": {
+        "id": 2718593,
+        "login": "mikrizh",
+        "time_registered": "2021-06-02T13:47:47+03:00",
+        "score": 13,
+        "fullname": null,
+        "specializm": null,
+        "sex": 0,
+        "rating": 29,
+        "contacts": [],
+        "rating_position": 202,
+        "path": "\/users\/mikrizh\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 3,
+          "comments": 5,
+          "followed": 1,
+          "followers": 1,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582110\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 11,
+        "voteCount": {
+          "total": 11,
+          "positive": 11,
+          "negative": 0
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582546,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T17:31:06+03:00",
+      "time_interesting": "2021-10-09T19:16:06+03:00",
+      "comments_count": 9,
+      "score": 24,
+      "votes_count": 28,
+      "favorites_count": 13,
+      "lang": "ru",
+      "tags_string": "ДЭГ, электронно",
+      "title": "Несколько технических вопросов к ДЭГ",
+      "preview_html": "\u003Cp\u003EНет никого, кто не слышал бы о спорах вокруг электронного голосования. Претензии от оппозиции, выглядят верными, а сопротивление со стороны держателей БД, которое противоречит заявленным принципам, которые должны быть заложены в системе, выглядит как попытка скрыть правду.\u003C\/p\u003E\u003Cp\u003EГлавный редактор эХО Москвы, Венедиктов, который упорно проталкивал ЭГ, и утверждает, что всё честно, и никто его ни в чём, обратном, не убедил.\u003C\/p\u003E\u003Cp\u003EВопрос технический и интересный. И поэтому, я изучил \u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/579350\/#_=_\u0022 rel=\u0022noopener noreferrer nofollow\u0022\u003EЧто же не так с ДЭГ в Москве?\u003C\/a\u003E от Жижина. Зашёл на \u003Ca href=\u0022https:\/\/observer.mos.ru\/all\/\u0022 rel=\u0022noopener noreferrer nofollow\u0022\u003Ehttps:\/\/observer.mos.ru\/all\/\u003C\/a\u003E и скачал дампы базы данных, которые лежат там, PostgreSQL server и попробовал разобраться, что именно не так.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 210,
+          "alias": "it_testing",
+          "title": "Тестирование IT-систем",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/it_testing\/"
+        },
+        {
+          "id": 397,
+          "alias": "analysis_design",
+          "title": "Анализ и проектирование систем",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/analysis_design\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 3563,
+      "metadata": {
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/88e\/dd0\/209\/88edd02092d109c275aa116bf2071b85.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "path": "\/post\/582546\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582546\/",
+      "author": {
+        "id": 1597485,
+        "login": "PFFyodor",
+        "time_registered": "2017-12-15T16:03:19+03:00",
+        "score": 8,
+        "fullname": "Федор",
+        "specializm": "Программист",
+        "sex": 0,
+        "rating": 24,
+        "contacts": [],
+        "rating_position": 248,
+        "path": "\/users\/pffyodor\/",
+        "geo": {
+          "country": "Россия",
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 1,
+          "comments": 0,
+          "followed": 0,
+          "followers": 0,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582546\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 24,
+        "voteCount": {
+          "total": 28,
+          "positive": 26,
+          "negative": 2
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582534,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T15:35:07+03:00",
+      "time_interesting": null,
+      "comments_count": 24,
+      "score": 3,
+      "votes_count": 7,
+      "favorites_count": 26,
+      "lang": "ru",
+      "tags_string": "C, математика, аппроксимация",
+      "title": "Аппроксимация синуса: полиномы Чебышёва vs. ряды Маклорена",
+      "preview_html": "\u003Cp\u003EВ комментариях к моей \u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/577256\/\u0022 rel=\u0022noopener noreferrer nofollow\u0022\u003Eстатье\u003C\/a\u003E про быстрое вычисление синуса был задан \u003Ca href=\u0022https:\/\/habr.com\/ru\/post\/577256\/#comment_23472572\u0022 rel=\u0022noopener noreferrer nofollow\u0022\u003Eвопрос\u003C\/a\u003E: \u0022А чем не устроило разложение в ряд Тейлора?\u0022\u003Cbr\u003E\u003Cbr\u003EКраткий ответ таков: хоть приближение при помощи рядов Тейлора (точнее - рядами Маклорена) и даёт меньшую ошибку при том же количестве вычислений, но оно не позволяет разбить аргумент на произвольное количество интервалов и тем самым увеличить точность вычислений.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 8000,
+          "alias": "algorithms",
+          "title": "Алгоритмы",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/algorithms\/"
+        },
+        {
+          "id": 17812,
+          "alias": "maths",
+          "title": "Математика",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/maths\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 2654,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/4b3\/ed0\/d8b\/4b3ed0d8baa153b39191ae62d7989fd7.png",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/4b3\/ed0\/d8b\/4b3ed0d8baa153b39191ae62d7989fd7.png",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/4b3\/ed0\/d8b\/4b3ed0d8baa153b39191ae62d7989fd7.png",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "path": "\/post\/582534\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582534\/",
+      "author": {
+        "id": 206198,
+        "login": "avitek",
+        "time_registered": "2012-07-03T15:53:38+04:00",
+        "score": 16,
+        "fullname": "Виктор",
+        "specializm": "разработка электроники, программирование",
+        "sex": 1,
+        "rating": 24.3,
+        "contacts": [],
+        "rating_position": 241,
+        "path": "\/users\/avitek\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Ростовская обл.",
+          "city": "Ростов-на-Дону"
+        },
+        "counters": {
+          "posts": 2,
+          "comments": 19,
+          "followed": 4,
+          "followers": 4,
+          "favorites": 9
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/c00\/d48\/ac3\/c00d48ac3c91962be444232915ce3cba.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582534\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 3,
+        "voteCount": {
+          "total": 7,
+          "positive": 5,
+          "negative": 2
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": false,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582532,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T15:24:16+03:00",
+      "time_interesting": null,
+      "comments_count": 0,
+      "score": 1,
+      "votes_count": 1,
+      "favorites_count": 12,
+      "lang": "ru",
+      "tags_string": "java, spring framework, spring mvc",
+      "title": "Создание собственных RequestBody и ResponseBody",
+      "preview_html": "\u003Cp\u003EДумаю, что многие из вас сталкивались с добавлением собственных \u003Cem\u003EHttpMessageConverter\u003C\/em\u003E в своём проекте. Ну или хотя бы слышали за такую возможность. Однако, возникают ситуации, когда мы хотим не только добавить свой собственный конвертер, но и создать собственную аннотацию для явного обозначения того, что тело ответа или запроса будут обработаны нестандартными способами \u003Cem\u003ESpring\u003C\/em\u003E. Более того, данные аннотации могут содержать дополнительную информацию, которая потребуется вашему конвертеру. \u003C\/p\u003E\u003Cp\u003EКак вы увидите дальше, поддержка аннотации для обработки ответа перекликается с поддержкой обработки запроса. Однако, в данной статье мне хотелось бы также продемонстрировать возможность добавление поддержки нового параметра метода контроллера в ситуации, когда из одного тела запроса требуется тянуть два разных объекта.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 375,
+          "alias": "java",
+          "title": "Java",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/java\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 1441,
+      "metadata": {
+        "meta_image": "",
+        "lead_image": "",
+        "lead_image_info": null
+      },
+      "path": "\/post\/582532\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582532\/",
+      "author": {
+        "id": 1440424,
+        "login": "andrew_slz",
+        "time_registered": "2017-03-18T08:31:45+03:00",
+        "score": 2,
+        "fullname": "Андрей Сулыз",
+        "specializm": "Java Developer",
+        "sex": 1,
+        "rating": 1,
+        "contacts": [],
+        "rating_position": 1072,
+        "path": "\/users\/andrew_slz\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Санкт-Петербург и область",
+          "city": "Санкт-Петербург"
+        },
+        "counters": {
+          "posts": 1,
+          "comments": 0,
+          "followed": 0,
+          "followers": 1,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582532\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 1,
+        "voteCount": {
+          "total": 1,
+          "positive": 1,
+          "negative": 0
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": false,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582526,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T14:14:30+03:00",
+      "time_interesting": null,
+      "comments_count": 3,
+      "score": 2,
+      "votes_count": 14,
+      "favorites_count": 8,
+      "lang": "ru",
+      "tags_string": "связанный список, lisp, скобки, безумие",
+      "title": "Разворачиваем техническое интервью",
+      "preview_html": "\u003Cp\u003EЕсли вы хотите устроиться на работу колдуном-программистом, вам придется пройти собеседование с написанием кода на бумажке. Все инженеры периодически их проходят - иногда в качестве утреннего ритуала, вместе с аккуратным расставлением окошек терминала по астральному плану, компульсивным выполнением команды \u003Ccode\u003Els \u003C\/code\u003Eво всех папках (на всякий случай, если за ночь что-либо поменялось). С теми же чувствами другие копаются в дальнем ящике на кухне, где лежат всякие отвертки, бесхозные патрубки, и прочие пластмассовые изделия - белые вороны среди бытовых принадлежностей, чье первоначальное предназначение давно забыто (а может и никогда не было известно), но о которых мы все равно вынуждены заботиться.\u003C\/p\u003E\u003Cp\u003EСегодня мы обсудим один из типичных вопросов на таком интервью - развернуть связанный список.\u003C\/p\u003E\u003Cp\u003EПервым делом вам нужен список. Вы очищаете рабочее пространство от ненужных окон терминала, насыпаете соль в виде двух защитных скобочек и уходите в рекурсию, призывая список из бездны:\u003C\/p\u003E\u003Cp\u003E\u003Ccode\u003E(defn cons [h t] #(if % h t))\u003C\/code\u003E\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 84,
+          "alias": "crazydev",
+          "title": "Ненормальное программирование",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/crazydev\/"
+        },
+        {
+          "id": 642,
+          "alias": "lisp",
+          "title": "Lisp",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/lisp\/"
+        },
+        {
+          "id": 20742,
+          "alias": "read",
+          "title": "Читальный зал",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/read\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        },
+        {
+          "id": 3,
+          "name": "Менеджмент",
+          "alias": "management",
+          "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+          "path": "\/flows\/management\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 2015,
+      "metadata": {
+        "meta_image": "",
+        "lead_image": "",
+        "lead_image_info": null
+      },
+      "path": "\/post\/582526\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582526\/",
+      "author": {
+        "id": 50000,
+        "login": "impwx",
+        "time_registered": "2009-07-11T10:58:04+04:00",
+        "score": 182.2,
+        "fullname": "Андрей",
+        "specializm": "Программист",
+        "sex": 1,
+        "rating": 1,
+        "contacts": [],
+        "rating_position": 1147,
+        "path": "\/users\/impwx\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Москва и Московская обл.",
+          "city": "Москва"
+        },
+        "counters": {
+          "posts": 29,
+          "comments": 1886,
+          "followed": 5,
+          "followers": 57,
+          "favorites": 103
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 3,
+            "title": "Автор",
+            "alias": "author",
+            "description": "Пользователь, опубликовавший 10 и более топиков; рейтинг каждого топика должен быть более 50 баллов",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 7,
+            "title": "Старожил",
+            "alias": "oldresident",
+            "description": "Пользователь, зарегистрированный более 3-х лет назад, с кармой больше 50",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 11,
+            "title": "Переводчик",
+            "alias": "translator",
+            "description": "Пользователь, опубликовавший не менее 5 переводов, которые набрали более 50 баллов",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 102,
+            "title": "Бета-тестер",
+            "alias": "tester",
+            "description": "Участвует в тестировании новой функциональности",
+            "url": "https:\/\/habr.com\/beta\/welcome\/",
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/7ee\/22a\/b94\/7ee22ab9492fc66bb567d974fcfcf095.png",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582526\/",
+      "source_author": "Kyle Kingbury (Aphyr)",
+      "source_link": "https:\/\/aphyr.com\/posts\/340-reversing-the-technical-interview",
+      "post_type": 2,
+      "post_type_str": "translation",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 2,
+        "voteCount": {
+          "total": 14,
+          "positive": 8,
+          "negative": 6
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": false,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582524,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T13:38:38+03:00",
+      "time_interesting": null,
+      "comments_count": 0,
+      "score": 2,
+      "votes_count": 6,
+      "favorites_count": 10,
+      "lang": "ru",
+      "tags_string": "продукт, анализ, swift, swift  разработка, мобильные приложения",
+      "title": "Анализ такой анализ. Часть 1",
+      "preview_html": "\u003Cp\u003EКак он мимо анализа пройти не смог...\u003C\/p\u003E",
+      "text_cut": "Далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 19583,
+          "alias": "dev_management",
+          "title": "Управление разработкой",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/dev_management\/"
+        },
+        {
+          "id": 20706,
+          "alias": "mobile_monetization",
+          "title": "Монетизация мобильных приложений",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/mobile_monetization\/"
+        },
+        {
+          "id": 20724,
+          "alias": "mobileanalytics",
+          "title": "Аналитика мобильных приложений",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/mobileanalytics\/"
+        },
+        {
+          "id": 20726,
+          "alias": "productpm",
+          "title": "Управление продуктом",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/productpm\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 3,
+          "name": "Менеджмент",
+          "alias": "management",
+          "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+          "path": "\/flows\/management\/"
+        },
+        {
+          "id": 4,
+          "name": "Маркетинг",
+          "alias": "marketing",
+          "url": "https:\/\/habr.com\/ru\/flows\/marketing\/",
+          "path": "\/flows\/marketing\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 1335,
+      "metadata": {
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/08d\/19f\/a88\/08d19fa886d59434ddf9938ae5e2dcdf.jpeg",
+          "fit": "cover",
+          "positionY": 99.545454545455,
+          "positionX": 21.153846153846
+        }
+      },
+      "path": "\/post\/582524\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582524\/",
+      "author": {
+        "id": 2340147,
+        "login": "Alek78ndr",
+        "time_registered": "2020-04-18T21:08:23+03:00",
+        "score": 2,
+        "fullname": "Александр",
+        "specializm": "iOS-разработка",
+        "sex": 1,
+        "rating": 2,
+        "contacts": [],
+        "rating_position": 894,
+        "path": "\/users\/alek78ndr\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Москва и Московская обл.",
+          "city": "Москва"
+        },
+        "counters": {
+          "posts": 1,
+          "comments": 0,
+          "followed": 0,
+          "followers": 0,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582524\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 2,
+        "voteCount": {
+          "total": 6,
+          "positive": 4,
+          "negative": 2
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": false,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582520,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T13:28:23+03:00",
+      "time_interesting": "2021-10-09T14:04:22+03:00",
+      "comments_count": 92,
+      "score": 83,
+      "votes_count": 111,
+      "favorites_count": 53,
+      "lang": "ru",
+      "tags_string": "озеро, США, бурение скважин, шахта, экология, техногенная катастрофа",
+      "title": "Углубляем озеро в 100 раз",
+      "preview_html": "\u003Cp\u003EДавеча произошёл один весьма забавный случай. Настолько забавный, что не могу не поведать.\u003C\/p\u003E\u003Cp\u003EИтак, дано: небольшое пресноводное озеро, не озеро даже – скорее огромная лужа, глубиной три с мелочью метра. Вопрос: как без смс и регистрации утопить там две буровые установки, одиннадцать(!) барж и буксир? Причём без читерства, типа штормов, ураганов и прочих бедствий? Интересно? Сейчас я вам всё расскажу.\u003C\/p\u003E\u003Cp\u003EОсенью далёкого 1980 года на озере Пенёр, что в штате Луизиана, компания Wilson Brothers Corporation искала нефть по заказу компании Texaco. На дворе конец ноября, погода ясная, установка исправная, буровики опытные — ну что может пойти не так? Поэтому, когда утром двадцатого бур заклинило на глубине трёхсот семидесяти метров, никто не мог и предположить, во что это в итоге выльется.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 21910,
+          "alias": "popular_science",
+          "title": "Научно-популярное",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/popular_science\/"
+        },
+        {
+          "id": 21982,
+          "alias": "lifehacks",
+          "title": "Лайфхаки для гиков",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/lifehacks\/"
+        },
+        {
+          "id": 22012,
+          "alias": "Ecology",
+          "title": "Экология",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/ecology\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 7,
+          "name": "Научпоп",
+          "alias": "popsci",
+          "url": "https:\/\/habr.com\/ru\/flows\/popsci\/",
+          "path": "\/flows\/popsci\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 44440,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/027\/f04\/401\/027f04401e48874b095e597d10081ce4.jpg",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/027\/f04\/401\/027f04401e48874b095e597d10081ce4.jpg",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/027\/f04\/401\/027f04401e48874b095e597d10081ce4.jpg",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "path": "\/post\/582520\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582520\/",
+      "author": {
+        "id": 2643015,
+        "login": "Catx2",
+        "time_registered": "2021-03-11T19:22:12+03:00",
+        "score": 176.2,
+        "fullname": "Cat.Cat",
+        "specializm": "Обозреватель",
+        "sex": 0,
+        "rating": 126.8,
+        "contacts": [],
+        "rating_position": 29,
+        "path": "\/users\/catx2\/",
+        "geo": {
+          "country": "Россия",
+          "region": "Санкт-Петербург и область",
+          "city": "Санкт-Петербург"
+        },
+        "counters": {
+          "posts": 58,
+          "comments": 85,
+          "followed": 5,
+          "followers": 316,
+          "favorites": 34
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          },
+          {
+            "id": 3,
+            "title": "Автор",
+            "alias": "author",
+            "description": "Пользователь, опубликовавший 10 и более топиков; рейтинг каждого топика должен быть более 50 баллов",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habrastorage.org\/getpro\/habr\/avatars\/520\/031\/fd7\/520031fd7a55be336e2f2d0534ef32e5.jpg",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/post\/582520\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 83,
+        "voteCount": {
+          "total": 111,
+          "positive": 97,
+          "negative": 14
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582462,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T13:13:33+03:00",
+      "time_interesting": "2021-10-09T13:50:57+03:00",
+      "comments_count": 1,
+      "score": 9,
+      "votes_count": 9,
+      "favorites_count": 18,
+      "lang": "ru",
+      "tags_string": "ios, ios development, ios разработка, ios programming, программирование, карьера, карьера программиста, карьера в it-индустрии, карьера в it, карьера ит-специалиста",
+      "title": "Как я прошел путь от игрушек на Objective-C к реальным проектам на Swift в большой компании",
+      "preview_html": "\u003Cp\u003EПривет, Хабр! Когда я был ещё совсем мал и только тянулся к разработке, я тоже почитывал Хабр и не раз видел статьи, где описывался путь с нуля до оффера. Иногда это были и вовсе удивительные истории о переходе в новую профессию, читая которые\u0026nbsp;словно проживаешь жизнь другого человека.\u003C\/p\u003E\u003Cp\u003EНо теперь и мне есть о чём рассказать. Сразу скажу, что этот пост вряд ли чем-то удивит людей с опытом 3+ лет, но надеюсь,\u0026nbsp;мой путь поможет другим людям, которые, как и я когда-то, только смотрят в сторону программирования. Ведь все мы, когда-то были начинающими. И так, меня зовут Александр Рубцов, я iOS-разработчик и это история моего пути в разработку…\u003C\/p\u003E",
+      "text_cut": "Читать дальше",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 20822,
+          "alias": "ru_mts",
+          "title": "Блог компании МТС",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": true,
+          "icon": "",
+          "path": "company\/ru_mts\/"
+        },
+        {
+          "id": 359,
+          "alias": "programming",
+          "title": "Программирование",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/programming\/"
+        },
+        {
+          "id": 548,
+          "alias": "ios_dev",
+          "title": "Разработка под iOS",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/ios_dev\/"
+        },
+        {
+          "id": 20696,
+          "alias": "study",
+          "title": "Учебный процесс в IT",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/study\/"
+        },
+        {
+          "id": 20740,
+          "alias": "career",
+          "title": "Карьера в IT-индустрии",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/career\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 1,
+          "name": "Разработка",
+          "alias": "develop",
+          "url": "https:\/\/habr.com\/ru\/flows\/develop\/",
+          "path": "\/flows\/develop\/"
+        },
+        {
+          "id": 3,
+          "name": "Менеджмент",
+          "alias": "management",
+          "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+          "path": "\/flows\/management\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 2012,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/bf1\/9e9\/188\/bf19e91880d294dc68bcf2f1a63329bd.jpg",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/bf1\/9e9\/188\/bf19e91880d294dc68bcf2f1a63329bd.jpg",
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/bf1\/9e9\/188\/bf19e91880d294dc68bcf2f1a63329bd.jpg",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        }
+      },
+      "path": "\/company\/ru_mts\/blog\/582462\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/ru_mts\/blog\/582462\/",
+      "author": {
+        "id": 2802083,
+        "login": "Lemonbrush",
+        "time_registered": "2021-10-07T19:33:52+03:00",
+        "score": 2,
+        "fullname": null,
+        "specializm": null,
+        "sex": 0,
+        "rating": 9,
+        "contacts": [],
+        "rating_position": 507,
+        "path": "\/users\/lemonbrush\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 1,
+          "comments": 0,
+          "followed": 0,
+          "followers": 3,
+          "favorites": 0
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/company\/ru_mts\/blog\/582462\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 9,
+        "voteCount": {
+          "total": 9,
+          "positive": 9,
+          "negative": 0
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582518,
+      "is_corporative": 0,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T13:04:40+03:00",
+      "time_interesting": "2021-10-09T14:38:55+03:00",
+      "comments_count": 88,
+      "score": 42,
+      "votes_count": 94,
+      "favorites_count": 62,
+      "lang": "ru",
+      "tags_string": "токсичность, джуниор, эффект даннинга-крюгера",
+      "title": "Амбициозные junior\u0027ы идут по головам",
+      "preview_html": "\u003Cp\u003EХочу сегодня поднять тему про джуниоров. Точнее про джуниоров, которые в силу своей неопытности после первых карьерных успехов начинают думать, что они не такие как все, что они умнее более опытных разработчиков и уже всё знают и с окружающими можно не считаться.\u003C\/p\u003E\u003Cp\u003EЕсли человек начинает наглеть, начинает постоянно отвлекать вас или коллег, хотя задачу он может решить самостоятельно (и его не волнует, что у вас тоже много задач и высокая нагрузка), когда приходит на работу \u0022заниматься своими делами\u0022, начинает \u0022высасывать энергию\u0022 из коллектива, то само собой что-то необходимо команде предпринимать.\u003C\/p\u003E",
+      "text_cut": "Читать далее",
+      "is_comments_hide": 0,
+      "editor_version": 2,
+      "hubs": [
+        {
+          "id": 20736,
+          "alias": "hr_management",
+          "title": "Управление персоналом",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/hr_management\/"
+        },
+        {
+          "id": 20740,
+          "alias": "career",
+          "title": "Карьера в IT-индустрии",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/career\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 3,
+          "name": "Менеджмент",
+          "alias": "management",
+          "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+          "path": "\/flows\/management\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 33053,
+      "metadata": {
+        "lead_image_info": {
+          "url": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/161\/c2d\/e06\/161c2de06d8e25c5342fa05184182cb7.jpg",
+          "fit": "cover",
+          "positionY": 0,
+          "positionX": 0
+        },
+        "meta_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/161\/c2d\/e06\/161c2de06d8e25c5342fa05184182cb7.jpg",
+        "lead_image": "https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/161\/c2d\/e06\/161c2de06d8e25c5342fa05184182cb7.jpg"
+      },
+      "path": "\/post\/582518\/",
+      "full_url": "https:\/\/habr.com\/ru\/post\/582518\/",
+      "author": {
+        "id": 2780019,
+        "login": "zloy4elover",
+        "time_registered": "2021-09-01T15:37:12+03:00",
+        "score": 9,
+        "fullname": null,
+        "specializm": null,
+        "sex": 0,
+        "rating": 42,
+        "contacts": [],
+        "rating_position": 139,
+        "path": "\/users\/zloy4elover\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 1,
+          "comments": 0,
+          "followed": 0,
+          "followers": 0,
+          "favorites": 1
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": true,
+      "url": "https:\/\/habr.com\/ru\/post\/582518\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 42,
+        "voteCount": {
+          "total": 94,
+          "positive": 68,
+          "negative": 26
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    },
+    {
+      "id": 582436,
+      "is_corporative": 1,
+      "is_tutorial": false,
+      "time_published": "2021-10-09T13:00:02+03:00",
+      "time_interesting": "2021-10-09T15:18:03+03:00",
+      "comments_count": 21,
+      "score": 28,
+      "votes_count": 30,
+      "favorites_count": 30,
+      "lang": "ru",
+      "tags_string": "нейроинтерфейс, ruvds_статьи_выходного_дня, мозг",
+      "title": "Нейроинтерфейсы «мозг-компьютер»: фундаментальная невозможность, или…?",
+      "preview_html": "\u003Ca href=\u0022https:\/\/habr.com\/ru\/company\/ruvds\/blog\/582436\/\u0022\u003E\u003Cdiv style=\u0022text-align:center;\u0022\u003E\u003Cimg src=\u0022https:\/\/habrastorage.org\/webt\/zy\/pe\/34\/zype34ugs_ysiknok6oquxzmdhq.png\u0022\u003E\u003C\/div\u003E\u003C\/a\u003E\u003Cbr\u003E\r\nНедавние \u003Ca href=\u0022https:\/\/www.nature.com\/articles\/s41928-021-00646-1\u0022 rel=\u0022nofollow noopener noreferrer\u0022\u003Eэксперименты \u003C\/a\u003Eучёных Гарвардского университета и инженеров Samsung по созданию нейроморфных чипов вновь напомнили о старой идее: можно ли соединить человеческий мозг и компьютер напрямую? Примерно как в классике \u003Ca href=\u0022https:\/\/habr.com\/ru\/company\/ruvds\/blog\/573998\/\u0022\u003Eкиберпанка\u003C\/a\u003E, «Нейроманте», «Матрице» и \u003Ca href=\u0022https:\/\/habr.com\/ru\/company\/ruvds\/blog\/576158\/\u0022\u003E«Ghost in the Shell»\u003C\/a\u003E: всовываешь в имплантированный разъём штекер, и заходишь в компьютерную сеть мозгом, без посредства глаз и пальцев. Откуда скачиваешь, скажем, умение ездить на скейтборде и разговаривать на языке маори. \u003Cbr\u003E\r\n\u003Cbr\u003E\r\nДва с половиной года тому назад мы с Полиной Нескучной тоже заинтересовались вопросом хотя бы теоретической возможности выучить кун-фу или управление вертолётом, загрузив его «прямо в мозг». Поэтому взяли для портала Warhead.su интервью о перспективах нейроинтерфейсов, brain-computer interface (BCI): у молекулярного биолога Ирины Якутенко, нейробиолога Светланы Ястребовой, и конгитивиста, популяризатора науки Аси Казанцевой. С ним можно ознакомиться по \u003Ca href=\u0022https:\/\/warhead.su\/2019\/03\/31\/kak-v-matritse-mozhno-li-zagruzit-v-sebya-kungfu\u0022 rel=\u0022nofollow noopener noreferrer\u0022\u003Eссылке тут\u003C\/a\u003E. \u003Cbr\u003E\r\nНу а я вкратце перескажу то, к каким выводам тогда пришли специалисты – и добавлю некоторое количество появившейся с тех пор новой информации.",
+      "text_cut": "Читать дальше \u0026rarr;",
+      "is_comments_hide": 0,
+      "editor_version": 1,
+      "hubs": [
+        {
+          "id": 19791,
+          "alias": "ruvds",
+          "title": "Блог компании RUVDS.com",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": true,
+          "icon": "",
+          "path": "company\/ruvds\/"
+        },
+        {
+          "id": 20742,
+          "alias": "read",
+          "title": "Читальный зал",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/read\/"
+        },
+        {
+          "id": 21984,
+          "alias": "sci-fi",
+          "title": "Научная фантастика",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/sci-fi\/"
+        },
+        {
+          "id": 21990,
+          "alias": "brain",
+          "title": "Мозг",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/brain\/"
+        },
+        {
+          "id": 22014,
+          "alias": "futurenow",
+          "title": "Будущее здесь",
+          "is_membership": false,
+          "is_profiled": false,
+          "is_company": false,
+          "icon": "",
+          "path": "hub\/futurenow\/"
+        }
+      ],
+      "flows": [
+        {
+          "id": 3,
+          "name": "Менеджмент",
+          "alias": "management",
+          "url": "https:\/\/habr.com\/ru\/flows\/management\/",
+          "path": "\/flows\/management\/"
+        },
+        {
+          "id": 7,
+          "name": "Научпоп",
+          "alias": "popsci",
+          "url": "https:\/\/habr.com\/ru\/flows\/popsci\/",
+          "path": "\/flows\/popsci\/"
+        }
+      ],
+      "is_recovery_mode": false,
+      "reading_count": 4457,
+      "metadata": {
+        "meta_image": "https:\/\/habrastorage.org\/webt\/zy\/pe\/34\/zype34ugs_ysiknok6oquxzmdhq.png",
+        "lead_image": null
+      },
+      "path": "\/company\/ruvds\/blog\/582436\/",
+      "full_url": "https:\/\/habr.com\/ru\/company\/ruvds\/blog\/582436\/",
+      "author": {
+        "id": 2744859,
+        "login": "Erwinmal",
+        "time_registered": "2021-07-05T18:32:01+03:00",
+        "score": 55,
+        "fullname": "Алексей Костенков",
+        "specializm": null,
+        "sex": 1,
+        "rating": 146,
+        "contacts": [],
+        "rating_position": 26,
+        "path": "\/users\/erwinmal\/",
+        "geo": {
+          "country": null,
+          "region": null,
+          "city": null
+        },
+        "counters": {
+          "posts": 14,
+          "comments": 2,
+          "followed": 0,
+          "followers": 21,
+          "favorites": 115
+        },
+        "badges": [
+          {
+            "id": 1,
+            "title": "Захабренный",
+            "alias": "habred",
+            "description": "Пользователь с кармой \u003E0",
+            "url": null,
+            "is_removable": false,
+            "is_disabled": false
+          }
+        ],
+        "avatar": "https:\/\/habr.com\/images\/avatars\/stub-user-middle.gif",
+        "is_readonly": false,
+        "is_rc": false,
+        "is_subscribed": false,
+        "common_tags": []
+      },
+      "has_polls": false,
+      "url": "https:\/\/habr.com\/ru\/company\/ruvds\/blog\/582436\/",
+      "post_type": 1,
+      "post_type_str": "simple",
+      "vote": null,
+      "is_can_vote": false,
+      "voting": {
+        "score": 28,
+        "voteCount": {
+          "total": 30,
+          "positive": 29,
+          "negative": 1
+        },
+        "vote": null,
+        "reasonMap": null
+      },
+      "is_habred": true,
+      "is_interesting": true,
+      "is_favorite": false,
+      "comments_new": null
+    }
+  ],
+  "server_time": "2021-10-10T20:55:28+03:00"
+}
