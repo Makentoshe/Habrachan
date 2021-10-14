@@ -1,5 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.jvm") version Dependency.version.kotlin
+    kotlin("plugin.serialization") version Dependency.version.serialization
 }
 
 allprojects {
