@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.entity.android.flows
 import com.makentoshe.habrachan.entity.android.title
 import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.article.flow.ArticleFlow
+import io.mockk.mockk
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
@@ -22,7 +23,7 @@ class ArticleFlowTest {
         get() = Json.decodeFromString<JsonObject>(json).toMap()
 
     private val flow: ArticleFlow
-        get() = Article(properties, ArticlePropertiesDelegateImpl(properties)).flows.value.first()
+        get() = Article(properties, ArticlePropertiesDelegateImpl(properties, mockk()) ).flows.value.first()
 
     @Test
     fun `test should check id property`() {

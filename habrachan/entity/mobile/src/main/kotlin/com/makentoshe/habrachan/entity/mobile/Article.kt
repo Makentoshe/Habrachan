@@ -68,14 +68,14 @@ data class ArticlePropertiesDelegateImpl(
         val parameters = jsonElement.jsonObject.toMap()
         ArticleAuthor(parameters, articleAuthorPropertiesDelegateFactory(parameters))
     }
+
+    override val hubs by requireListReadonlyProperty("hubs") { hub ->
+        ArticleHub(hub.toMap())
+    }
 }
 
 val Article.flows by requireListReadonlyProperty(
     "flows", mapElement = { flow -> ArticleFlow(flow.toMap()) }
-)
-
-val Article.hubs by requireListReadonlyProperty(
-    "hubs", mapElement = { hub -> ArticleHub(hub.toMap()) }
 )
 
 val Article.tags by requireListReadonlyProperty(

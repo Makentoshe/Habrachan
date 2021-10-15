@@ -1,7 +1,8 @@
 @file:Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 
 import com.makentoshe.habrachan.entity.android.*
-import com.makentoshe.habrachan.entity.article.Article
+import com.makentoshe.habrachan.entity.article.*
+import io.mockk.mockk
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.*
 import org.junit.Assert.assertEquals
@@ -16,7 +17,7 @@ class ArticleTest {
         get() = Json.decodeFromString<JsonObject>(json).toMap()
 
     private val article: Article
-        get() = Article(properties, ArticlePropertiesDelegateImpl(properties))
+        get() = Article(properties, ArticlePropertiesDelegateImpl(properties) { mockk() })
 
     @Test
     fun `test should check articleId property`() {
