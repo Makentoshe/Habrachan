@@ -2,11 +2,12 @@
 
 import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.article.hub.ArticleHub
+import com.makentoshe.habrachan.entity.article.hub.hubId
+import com.makentoshe.habrachan.entity.article.hub.title
 import com.makentoshe.habrachan.entity.article.hubs
+import com.makentoshe.habrachan.entity.mobile.ArticleAuthorPropertiesDelegateImpl
+import com.makentoshe.habrachan.entity.mobile.ArticleHubPropertiesDelegateImpl
 import com.makentoshe.habrachan.entity.mobile.ArticlePropertiesDelegateImpl
-import com.makentoshe.habrachan.entity.mobile.hubId
-import com.makentoshe.habrachan.entity.mobile.title
-import io.mockk.mockk
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
@@ -22,8 +23,14 @@ class ArticleHubTest {
     private val properties: Map<String, JsonElement>
         get() = Json.decodeFromString<JsonObject>(json).toMap()
 
+    private val articlePropertiesDelegate
+        get() = ArticlePropertiesDelegateImpl(
+            parameters = properties,
+            articleAuthorPropertiesDelegateFactory = { ArticleAuthorPropertiesDelegateImpl(it) },
+            articleHubPropertiesDelegateFactory = { ArticleHubPropertiesDelegateImpl(it) })
+
     private val hub: ArticleHub
-        get() = Article(properties, ArticlePropertiesDelegateImpl(properties) { mockk() }).hubs.value.first()
+        get() = Article(properties, articlePropertiesDelegate).hubs.value.first()
 
     @Test
     fun `test should check id property`() {

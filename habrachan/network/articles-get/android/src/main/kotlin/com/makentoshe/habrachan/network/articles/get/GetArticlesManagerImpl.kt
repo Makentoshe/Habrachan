@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.api.android.articles.build
 import com.makentoshe.habrachan.api.android.articles.filter
 import com.makentoshe.habrachan.api.articles.api.HabrArticlesFilterApi
 import com.makentoshe.habrachan.entity.android.ArticleAuthorPropertiesDelegateImpl
+import com.makentoshe.habrachan.entity.android.ArticleHubPropertiesDelegateImpl
 import com.makentoshe.habrachan.entity.android.ArticlePropertiesDelegateImpl
 import com.makentoshe.habrachan.network.articles.get.entity.Articles
 import com.makentoshe.habrachan.network.articles.get.entity.ArticlesPropertiesDelegateImpl
@@ -23,9 +24,7 @@ class GetArticlesManagerImpl(client: HttpClient) : GetArticlesManager(client) {
     override fun articles(json: String): Articles {
         val parameters = Json.decodeFromString<JsonObject>(json).toMap()
         return Articles(parameters, ArticlesPropertiesDelegateImpl(parameters) { articleParameters ->
-            ArticlePropertiesDelegateImpl(articleParameters) { articleAuthorParameters ->
-                ArticleAuthorPropertiesDelegateImpl(articleAuthorParameters)
-            }
+            ArticlePropertiesDelegateImpl(articleParameters, ::ArticleAuthorPropertiesDelegateImpl, ::ArticleHubPropertiesDelegateImpl)
         })
     }
 

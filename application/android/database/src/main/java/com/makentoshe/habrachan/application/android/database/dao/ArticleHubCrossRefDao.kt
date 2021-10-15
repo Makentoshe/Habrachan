@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.makentoshe.habrachan.application.android.database.record.ArticleHubCrossRef
-import com.makentoshe.habrachan.entity.ArticleId
 
 @Dao
 interface ArticleHubCrossRefDao {
@@ -17,6 +16,15 @@ interface ArticleHubCrossRefDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(articleHubCrossRef: ArticleHubCrossRef)
 
+    @Query("SELECT * FROM ArticleHubCrossRef WHERE articleId = :articleId")
+    fun getByArticleId(articleId: Int): List<ArticleHubCrossRef>
+
+    @Query("SELECT * FROM ArticleHubCrossRef WHERE hubId = :hubId")
+    fun getByHubId(hubId: Int): List<ArticleHubCrossRef>
+
     @Query("DELETE FROM ArticleHubCrossRef WHERE articleId = :articleId")
     fun clearByArticleId(articleId: Int)
+
+    @Query("DELETE FROM ArticleHubCrossRef WHERE hubId= :hubId")
+    fun clearByHubId(hubId: Int)
 }

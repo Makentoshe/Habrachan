@@ -37,7 +37,8 @@ class ArticlesArenaCache @Inject constructor(
     /** [type] is a cache type. Can be ALL, INTERESTING, TOP, SUBSCRIBE */
     private fun fetch(key: GetArticlesRequest2, type: String): Result<GetArticlesResponse2> = try {
         val offset = (key.page - 1) * GetArticlesRequest2.DEFAULT_PAGE_SIZE
-        val articleRecords = cacheDatabase.articlesDao().getTimePublishedDescSorted(offset, GetArticlesRequest2.DEFAULT_PAGE_SIZE, type)
+        val articleRecords =
+            cacheDatabase.articlesDao().getTimePublishedDescSorted(offset, GetArticlesRequest2.DEFAULT_PAGE_SIZE, type)
         val articles = articleRecords.map { it.toArticle() }
 
         capture(analyticEvent { "Fetched ${articles.size} articles with offset: $offset" })
@@ -94,3 +95,4 @@ class ArticlesArenaCache @Inject constructor(
         }
     }
 }
+

@@ -37,12 +37,21 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
     implementation(kotlin("stdlib"))
+
+    implementation(project(":habrachan"))
+    implementation(project(":habrachan:entity"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
 
     implementation(project(":network"))
+    
+    // kotlinx.serialization - Json and other stuff serializing/deserializing
+    // https://github.com/Kotlin/kotlinx.serialization
+    val kotlinSerializationJsonVersion = dependency.version.serializationJson
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationJsonVersion")
 
     // Gson
     // https://github.com/google/gson
