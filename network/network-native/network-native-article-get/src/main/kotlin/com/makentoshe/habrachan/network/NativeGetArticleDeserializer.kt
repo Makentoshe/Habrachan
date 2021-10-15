@@ -7,7 +7,7 @@ internal class NativeGetArticleDeserializer : NativeGsonDeserializer() {
     fun body(request: NativeGetArticleRequest, json: String): Result<NativeGetArticleResponse.Factory> = try {
         Result.success(gson.fromJson(json, NativeGetArticleResponse.Factory::class.java))
     } catch (exception: Exception) {
-        Result.failure(NativeGetArticleException(request, json, cause = exception))
+        Result.failure(NativeGetArticleException(request, json, cause = exception, message = exception.message))
     }
 
     fun error(request: NativeGetArticleRequest, json: String): Result<NativeGetArticleResponse.Factory> {
