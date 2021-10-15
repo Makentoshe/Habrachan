@@ -8,6 +8,7 @@ import com.makentoshe.habrachan.entity.article.component.ArticleText
 import com.makentoshe.habrachan.entity.article.component.ArticleTitle
 import com.makentoshe.habrachan.entity.article.hub.ArticleHub
 import com.makentoshe.habrachan.entity.component.TimePublished
+import com.makentoshe.habrachan.entity.component.timePublished
 import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
 import kotlinx.serialization.json.JsonElement
 
@@ -73,3 +74,53 @@ val Article.readingCount get() = delegate.readingCount
 val Article.votesCount get() = delegate.votesCount
 
 val Article.scoresCount get() = delegate.scoresCount
+
+
+fun article(
+    articleId: Int,
+    articleTitle: String,
+    articleAuthor: ArticleAuthor,
+    timePublished: String,
+    articleHubs: List<ArticleHub>,
+    articleText: String?,
+    commentsCount: Int,
+    favoritesCount: Int,
+    readingCount: Int,
+    votesCount: Int,
+    scoresCount: Int,
+    articleParameters: Map<String, JsonElement> = emptyMap()
+) = Article(articleParameters, object : ArticlePropertiesDelegate {
+
+    override val articleId: Require<ArticleId>
+        get() = Require(ArticleId(articleId))
+
+    override val articleText: Option<ArticleText>
+        get() = Option.from(articleText?.let(::ArticleText))
+
+    override val title: Require<ArticleTitle>
+        get() = Require(ArticleTitle(articleTitle))
+
+    override val author: Require<ArticleAuthor>
+        get() = Require(articleAuthor)
+
+    override val timePublished: Require<TimePublished>
+        get() = Require(timePublished(timePublished))
+
+    override val hubs: Require<List<ArticleHub>>
+        get() = Require(articleHubs)
+
+    override val commentsCount: Require<Int>
+        get() = Require(commentsCount)
+
+    override val favoritesCount: Require<Int>
+        get() = Require(favoritesCount)
+
+    override val readingCount: Require<Int>
+        get() = Require(readingCount)
+
+    override val votesCount: Require<Int>
+        get() = Require(votesCount)
+
+    override val scoresCount: Require<Int>
+        get() = Require(scoresCount)
+})

@@ -50,6 +50,12 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(kotlin("stdlib"))
+
+    implementation(project(":habrachan"))
+    implementation(project(":habrachan:entity"))
+    implementation(project(":habrachan:network"))
+    implementation(project(":habrachan:network:articles-get"))
+
     implementation(project(":functional"))
 
     implementation(project(":entity"))

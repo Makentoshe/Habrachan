@@ -31,7 +31,7 @@ class ArticlesPageFragmentInjector : FragmentInjector<ArticlesPageFragment>(
         }
 
         val toothpickScope = articlesScope(injectorScope).openSubScope(scope)
-        val module = ArticlesPageModule()
+        val module = CommonArticlesPageModule()
         captureModuleInstall(module, scope, injectorScope)
         return toothpickScope.installModules(module)
     }

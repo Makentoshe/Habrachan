@@ -12,6 +12,13 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
+    implementation(project(":habrachan"))
+    implementation(project(":habrachan:api"))
+    implementation(project(":habrachan:entity"))
+    implementation(project(":habrachan:network"))
+    implementation(project(":habrachan:network:articles-get"))
+
+
     implementation(project(":entity"))
     implementation(project(":network"))
     implementation(project(":functional"))

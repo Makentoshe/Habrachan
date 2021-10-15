@@ -22,10 +22,14 @@ class ArticleAuthorTest {
     private val properties: Map<String, JsonElement>
         get() = Json.decodeFromString<JsonObject>(json).toMap()
 
+    private val articlePropertiesDelegate
+        get() = ArticlePropertiesDelegateImpl(
+            parameters = properties,
+            articleAuthorPropertiesDelegateFactory = { ArticleAuthorPropertiesDelegateImpl(it) },
+            articleHubPropertiesDelegateFactory = { ArticleHubPropertiesDelegateImpl(it) })
+
     private val author: ArticleAuthor
-        get() = Article(properties, ArticlePropertiesDelegateImpl(properties) { parameters ->
-            ArticleAuthorPropertiesDelegateImpl(parameters)
-        }).author.value
+        get() = Article(properties, articlePropertiesDelegate).author.value
 
     @Test
     fun `test should check authorId property`() {

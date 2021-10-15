@@ -14,4 +14,13 @@ interface ArticlesPropertiesDelegate {
     val articles: Require<List<Article>>
 }
 
-val Articles.articles : Require<List<Article>> get() = delegate.articles
+val Articles.articles: Require<List<Article>> get() = delegate.articles
+
+/**
+ * This factory method allows to declare a custom [Articles] instance only with delegate.
+ *
+ * In this case any parameters delegates will not work correctly.
+ * */
+fun articles(list: List<Article>) = Articles(emptyMap(), object : ArticlesPropertiesDelegate {
+    override val articles = Require(list)
+})

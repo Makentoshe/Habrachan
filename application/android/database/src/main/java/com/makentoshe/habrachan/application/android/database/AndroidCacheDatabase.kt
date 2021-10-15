@@ -21,11 +21,17 @@ import com.makentoshe.habrachan.application.android.database.record.*
         FlowRecord2::class,
         HubRecord2::class,
 
+        ArticleRecord3::class,
+        ArticleAuthorRecord3::class,
+        ArticleHubRecord3::class,
+        ArticleAuthorCrossRef::class,
+
+
         ArticleRecord2::class,
         ArticleHubCrossRef::class,
         ArticleFlowCrossRef::class,
         ArticleAuthorRecord::class,
-    ], version = 8
+    ], version = 9
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
@@ -35,11 +41,25 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * */
     abstract fun articlesDao(): ArticlesDao2
 
+    abstract fun articlesDao3(): ArticlesDao3
+
     /**
      * Stores authors from last searches. Potential infinite.
      * That means that the cache should be released occasionally.
      */
     abstract fun articleAuthorDao(): ArticleAuthorDao
+
+    /**
+     * Stores authors from last searches. Potential infinite.
+     * That means that the cache should be released occasionally.
+     */
+    abstract fun articleAuthorDao3(): ArticleAuthorDao3
+
+    /**
+     * Stores authors from last searches. Potential infinite.
+     * That means that the cache should be released occasionally.
+     */
+    abstract fun articleAuthorCrossRefDao(): ArticleAuthorArticleCrossRefDao3
 
     /**
      * Stores indexed avatars paths. The real files stores in file system cache.
@@ -58,6 +78,12 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * so we do not care of releasing cache memory
      */
     abstract fun hubDao(): HubDao2
+
+    /**
+     * Stores different articles hubs. Do not infinite,
+     * so we do not care of releasing cache memory
+     */
+    abstract fun hubDao3(): HubDao3
 
     /**
      * Stores different user badges. Do not infinite,

@@ -13,6 +13,7 @@ import com.makentoshe.habrachan.entity.article.component.ArticleText
 import com.makentoshe.habrachan.entity.article.component.ArticleTitle
 import com.makentoshe.habrachan.entity.article.flow.ArticleFlow
 import com.makentoshe.habrachan.entity.article.hub.ArticleHub
+import com.makentoshe.habrachan.entity.article.hub.ArticleHubPropertiesDelegate
 import com.makentoshe.habrachan.entity.component.timePublished
 import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
 import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.optionReadonlyProperty
@@ -24,6 +25,7 @@ import kotlinx.serialization.json.jsonPrimitive
 data class ArticlePropertiesDelegateImpl(
     override val parameters: Map<String, JsonElement>,
     private val articleAuthorPropertiesDelegateFactory: (Map<String, JsonElement>) -> ArticleAuthorPropertiesDelegate,
+    private val articleHubPropertiesDelegateFactory: (Map<String, JsonElement>) -> ArticleHubPropertiesDelegate,
 ) : ArticlePropertiesDelegate, AnyWithVolumeParameters<JsonElement> {
 
     override val articleId by requireReadonlyProperty("id") { jsonElement ->
@@ -44,7 +46,8 @@ data class ArticlePropertiesDelegateImpl(
     }
 
     override val hubs by requireListReadonlyProperty("hubs") { hub ->
-        ArticleHub(hub.toMap())
+        val parameters = hub.toMap()
+        ArticleHub(parameters, articleHubPropertiesDelegateFactory(parameters))
     }
 
     override val articleText by optionReadonlyProperty("text_html") { jsonElement ->

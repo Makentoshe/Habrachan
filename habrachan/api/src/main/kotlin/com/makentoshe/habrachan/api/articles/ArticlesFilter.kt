@@ -3,7 +3,6 @@ package com.makentoshe.habrachan.api.articles
 import com.makentoshe.habrachan.Option
 
 /** This is a default filter interface that should not be used directly */
-
 sealed class ArticlesFilter {
     abstract val key: String
     abstract val value: String

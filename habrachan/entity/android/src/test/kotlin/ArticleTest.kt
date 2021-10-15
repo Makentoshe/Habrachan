@@ -2,7 +2,6 @@
 
 import com.makentoshe.habrachan.entity.android.*
 import com.makentoshe.habrachan.entity.article.*
-import io.mockk.mockk
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.*
 import org.junit.Assert.assertEquals
@@ -16,8 +15,14 @@ class ArticleTest {
     private val properties: Map<String, JsonElement>
         get() = Json.decodeFromString<JsonObject>(json).toMap()
 
+    private val articlePropertiesDelegate
+        get() = ArticlePropertiesDelegateImpl(
+            parameters = properties,
+            articleAuthorPropertiesDelegateFactory = { ArticleAuthorPropertiesDelegateImpl(it) },
+            articleHubPropertiesDelegateFactory = { ArticleHubPropertiesDelegateImpl(it) })
+
     private val article: Article
-        get() = Article(properties, ArticlePropertiesDelegateImpl(properties) { mockk() })
+        get() = Article(properties, articlePropertiesDelegate)
 
     @Test
     fun `test should check articleId property`() {
