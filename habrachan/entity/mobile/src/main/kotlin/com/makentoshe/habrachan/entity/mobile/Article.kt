@@ -5,14 +5,15 @@ import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.article.ArticlePropertiesDelegate
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthorPropertiesDelegate
-import com.makentoshe.habrachan.entity.article.component.articleId
-import com.makentoshe.habrachan.entity.article.component.articleTitle
+import com.makentoshe.habrachan.entity.article.component.ArticleId
+import com.makentoshe.habrachan.entity.article.component.ArticleText
+import com.makentoshe.habrachan.entity.article.component.ArticleTitle
 import com.makentoshe.habrachan.entity.article.flow.ArticleFlow
 import com.makentoshe.habrachan.entity.article.hub.ArticleHub
 import com.makentoshe.habrachan.entity.article.tag.ArticleTag
 import com.makentoshe.habrachan.entity.component.timePublished
 import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.optionStringReadonlyProperty
+import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.optionReadonlyProperty
 import kotlinx.serialization.json.*
 
 fun articleProperties(
@@ -53,11 +54,11 @@ data class ArticlePropertiesDelegateImpl(
 ) : ArticlePropertiesDelegate, AnyWithVolumeParameters<JsonElement> {
 
     override val articleId by requireReadonlyProperty("id") { jsonElement ->
-        articleId(jsonElement.jsonPrimitive.int)
+        ArticleId(jsonElement.jsonPrimitive.int)
     }
 
     override val title by requireReadonlyProperty("titleHtml") { jsonElement ->
-        articleTitle(jsonElement.jsonPrimitive.content)
+        ArticleTitle(jsonElement.jsonPrimitive.content)
     }
 
     override val timePublished by requireReadonlyProperty("timePublished") { jsonElement ->
@@ -72,6 +73,20 @@ data class ArticlePropertiesDelegateImpl(
     override val hubs by requireListReadonlyProperty("hubs") { hub ->
         ArticleHub(hub.toMap())
     }
+
+    override val articleText by optionReadonlyProperty("textHtml") { jsonElement ->
+        ArticleText(jsonElement.jsonPrimitive.content)
+    }
+
+    override val commentsCount by requireIntReadonlyProperty("statistics", "commentsCount")
+
+    override val favoritesCount by requireIntReadonlyProperty("statistics", "favoritesCount")
+
+    override val readingCount by requireIntReadonlyProperty("statistics", "readingCount")
+
+    override val votesCount by requireIntReadonlyProperty("statistics", "votesCount")
+
+    override val scoresCount by requireIntReadonlyProperty("statistics", "score")
 }
 
 val Article.flows by requireListReadonlyProperty(
@@ -95,15 +110,3 @@ val Article.commentsEnabled by requireBooleanReadonlyProperty("commentsEnabled")
 val Article.votesEnabled by requireBooleanReadonlyProperty("votesEnabled")
 
 val Article.isEditorial by requireBooleanReadonlyProperty("isEditorial")
-
-val Article.textHtml by optionStringReadonlyProperty("textHtml")
-
-val Article.commentsCount by requireIntReadonlyProperty("statistics", "commentsCount")
-
-val Article.favoritesCount by requireIntReadonlyProperty("statistics", "favoritesCount")
-
-val Article.readingCount by requireIntReadonlyProperty("statistics", "readingCount")
-
-val Article.votesCount by requireIntReadonlyProperty("statistics", "votesCount")
-
-val Article.scoreCount by requireIntReadonlyProperty("statistics", "score")

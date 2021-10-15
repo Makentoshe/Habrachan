@@ -5,7 +5,7 @@ import com.makentoshe.habrachan.api.android.articles.*
 import com.makentoshe.habrachan.api.articles.ArticlesVote
 import com.makentoshe.habrachan.api.articles.DownVoteReason
 import com.makentoshe.habrachan.api.articles.filter.DailyArticlesPeriod
-import com.makentoshe.habrachan.entity.article.component.articleId
+import com.makentoshe.habrachan.entity.article.component.ArticleId
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -46,16 +46,16 @@ class HabrArticlesApiTest {
     @Test
     fun `test should check built article request`() {
         val parameters = AdditionalRequestParameters(queries = mapOf("page" to "1"))
-        val request = api.articles().article(articleId(123)).build(parameters)
+        val request = api.articles().article(ArticleId(123)).build(parameters)
 
-        assertEquals("https://habr.com/api/v1/post/123", api.articles().article(articleId(123)).path)
+        assertEquals("https://habr.com/api/v1/post/123", api.articles().article(ArticleId(123)).path)
         assertEquals("1", request.queries["page"])
     }
 
     @Test
     fun `test should build vote down article request`() {
         val downVote = ArticlesVote.Down(DownVoteReason.DisagreeWithTheArticle)
-        val request = api.articles().article(articleId(39)).vote(downVote).build(AdditionalRequestParameters())
+        val request = api.articles().article(ArticleId(39)).vote(downVote).build(AdditionalRequestParameters())
 
         assertEquals("https://habr.com/api/v1/post/39/vote", request.path)
         assertEquals("-1", request.queries["vote"])
@@ -64,7 +64,7 @@ class HabrArticlesApiTest {
 
     @Test
     fun `test should build vote up article request`() {
-        val request = api.articles().article(articleId(39)).vote(ArticlesVote.Up).build(AdditionalRequestParameters())
+        val request = api.articles().article(ArticleId(39)).vote(ArticlesVote.Up).build(AdditionalRequestParameters())
 
         assertEquals("https://habr.com/api/v1/post/39/vote", request.path)
         assertEquals("1", request.queries["vote"])

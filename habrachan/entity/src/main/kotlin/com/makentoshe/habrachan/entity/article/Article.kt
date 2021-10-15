@@ -1,8 +1,10 @@
 package com.makentoshe.habrachan.entity.article
 
+import com.makentoshe.habrachan.Option
 import com.makentoshe.habrachan.Require
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
 import com.makentoshe.habrachan.entity.article.component.ArticleId
+import com.makentoshe.habrachan.entity.article.component.ArticleText
 import com.makentoshe.habrachan.entity.article.component.ArticleTitle
 import com.makentoshe.habrachan.entity.article.hub.ArticleHub
 import com.makentoshe.habrachan.entity.component.TimePublished
@@ -30,14 +32,44 @@ interface ArticlePropertiesDelegate {
 
     /** In which hubs article was posted */
     val hubs: Require<List<ArticleHub>>
+
+    /** How many comments [Article] already have */
+    val commentsCount: Require<Int>
+
+    /** How many users added this article to their bookmarks */
+    val favoritesCount: Require<Int>
+
+    /** How many article was read. Each user can read article multiple times. */
+    val readingCount: Require<Int>
+
+    /** The median of users likeability for article */
+    val scoresCount: Require<Int>
+
+    /** How many users make a vote for article */
+    val votesCount: Require<Int>
+
+    /** This field is option due to various apis. Part of them does not return an article text */
+    val articleText: Option<ArticleText>
 }
 
 val Article.articleId get() = delegate.articleId
 
 val Article.articleTitle get() = delegate.title
 
+val Article.articleText get() = delegate.articleText
+
 val Article.timePublished get() = delegate.timePublished
 
 val Article.author get() = delegate.author
 
 val Article.hubs get() = delegate.hubs
+
+val Article.commentsCount get() = delegate.commentsCount
+
+val Article.favoritesCount get() = delegate.favoritesCount
+
+val Article.readingCount get() = delegate.readingCount
+
+val Article.votesCount get() = delegate.votesCount
+
+val Article.scoresCount get() = delegate.scoresCount

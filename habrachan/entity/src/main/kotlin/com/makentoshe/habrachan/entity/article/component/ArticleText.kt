@@ -1,4 +1,4 @@
 package com.makentoshe.habrachan.entity.article.component
 
-interface ArticleText {
-}
+@JvmInline
+value class ArticleText(val html: String)

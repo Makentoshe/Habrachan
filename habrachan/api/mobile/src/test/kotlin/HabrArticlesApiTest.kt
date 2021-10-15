@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.api.articles.filter.DailyArticlesPeriod
 import com.makentoshe.habrachan.api.mobile.MobileHabrApi
 import com.makentoshe.habrachan.api.mobile.articles
 import com.makentoshe.habrachan.api.mobile.articles.*
-import com.makentoshe.habrachan.entity.article.component.articleId
+import com.makentoshe.habrachan.entity.article.component.ArticleId
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -28,7 +28,7 @@ class HabrArticlesApiTest {
 
     @Test
     fun `test should check built article request`() {
-        assertEquals("https://habr.com/kek/v2/articles/123", api.articles().article(articleId(123)).path)
+        assertEquals("https://habr.com/kek/v2/articles/123", api.articles().article(ArticleId(123)).path)
     }
 
     @Test
@@ -42,7 +42,7 @@ class HabrArticlesApiTest {
     @Test
     fun `test should build vote down article request`() {
         val downVote = ArticlesVote.Down(DownVoteReason.DisagreeWithTheArticle)
-        val request = api.articles().article(articleId(39)).vote(downVote).build(AdditionalRequestParameters())
+        val request = api.articles().article(ArticleId(39)).vote(downVote).build(AdditionalRequestParameters())
 
         assertEquals("https://habr.com/kek/v2/articles/39/vote", request.path)
         assertEquals("-1", request.queries["vote"])
@@ -51,7 +51,7 @@ class HabrArticlesApiTest {
 
     @Test
     fun `test should build vote up article request`() {
-        val request = api.articles().article(articleId(39)).vote(ArticlesVote.Up).build(AdditionalRequestParameters())
+        val request = api.articles().article(ArticleId(39)).vote(ArticlesVote.Up).build(AdditionalRequestParameters())
 
         assertEquals("https://habr.com/kek/v2/articles/39/vote", request.path)
         assertEquals("1", request.queries["vote"])

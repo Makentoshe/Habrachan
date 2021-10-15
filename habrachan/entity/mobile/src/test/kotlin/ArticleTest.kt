@@ -37,7 +37,7 @@ class ArticleTest {
 
     @Test
     fun `test should check textHtml property`() {
-        assertEquals("testTextHtml", article.textHtml.getOrNull())
+        assertEquals("testTextHtml", article.articleText.getOrNull()?.html)
     }
 
     @Test
@@ -103,7 +103,7 @@ class ArticleTest {
 
     @Test
     fun `test should check scoreCount property`() {
-        assertEquals(2, article.scoreCount.value)
+        assertEquals(2, article.scoresCount.value)
     }
 
     @Test
