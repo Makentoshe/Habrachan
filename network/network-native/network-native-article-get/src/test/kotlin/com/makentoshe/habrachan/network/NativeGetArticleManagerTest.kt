@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.network
 
 import RetrofitUnitTest
+import com.google.gson.JsonSyntaxException
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.getOrThrow
 import com.makentoshe.habrachan.network.natives.api.NativeArticlesApi
@@ -61,7 +62,7 @@ class NativeGetArticleManagerTest : RetrofitUnitTest() {
         val response = manager.article(request).exceptionOrNull() as NativeGetArticleException
 
         assertEquals(request, response.request)
-        assertEquals(response.message, "Sas")
+        assert(response.cause is JsonSyntaxException)
     }
 
     @Test
@@ -79,7 +80,7 @@ class NativeGetArticleManagerTest : RetrofitUnitTest() {
         val response = manager.article(request).exceptionOrNull() as NativeGetArticleException
 
         assertEquals(request, response.request)
-        assertEquals(response.message, string)
+        assertEquals(string, response.raw)
     }
 
 }
