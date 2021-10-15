@@ -2,10 +2,15 @@
 
 import com.makentoshe.habrachan.Option
 import com.makentoshe.habrachan.entity.article.Article
+import com.makentoshe.habrachan.entity.article.author
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
+import com.makentoshe.habrachan.entity.article.author.authorAvatar
+import com.makentoshe.habrachan.entity.article.author.authorId
+import com.makentoshe.habrachan.entity.article.author.authorLogin
 import com.makentoshe.habrachan.entity.mobile.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -15,10 +20,13 @@ class ArticleAuthorTest {
     private val json: String
         get() = javaClass.classLoader.getResourceAsStream("article.json").readAllBytes().decodeToString()
 
-    private val properties = Json.decodeFromString<JsonObject>(json).toMap()
+    private val properties: Map<String, JsonElement>
+        get() = Json.decodeFromString<JsonObject>(json).toMap()
 
     private val author: ArticleAuthor
-        get() = Article(properties, ArticlePropertiesDelegateImpl(properties)).author.value
+        get() = Article(properties, ArticlePropertiesDelegateImpl(properties) {
+            ArticleAuthorPropertiesDelegateImpl(it)
+        }).author.value
 
     @Test
     fun `test should check authorId property`() {

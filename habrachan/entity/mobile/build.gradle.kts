@@ -22,4 +22,9 @@ dependencies {
 
     val junitVersion = dependency.version.junit
     testImplementation("junit:junit:$junitVersion")
+
+    // Mockk - mocking library for testing purposes only
+    // https://github.com/mockk/mockk
+    val mockkVersion = dependency.version.mockk
+    testImplementation("io.mockk:mockk:$mockkVersion")
 }

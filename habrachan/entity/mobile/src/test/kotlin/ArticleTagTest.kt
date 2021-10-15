@@ -4,6 +4,7 @@ import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.mobile.ArticlePropertiesDelegateImpl
 import com.makentoshe.habrachan.entity.mobile.tags
 import com.makentoshe.habrachan.entity.mobile.title
+import io.mockk.mockk
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
@@ -20,7 +21,7 @@ class ArticleTagTest {
         get() = Json.decodeFromString<JsonObject>(json).toMap()
 
     private val article: Article
-        get() = Article(properties, ArticlePropertiesDelegateImpl(properties))
+        get() = Article(properties, ArticlePropertiesDelegateImpl(properties, mockk()))
 
     @Test
     fun `test should check title property`() {

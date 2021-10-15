@@ -8,7 +8,6 @@ import com.makentoshe.habrachan.api.mobile.articles.sortArticlesFilter
 import com.makentoshe.habrachan.functional.Either
 import com.makentoshe.habrachan.network.articles.get.GetArticlesManagerImpl
 import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
-import com.makentoshe.habrachan.network.articles.get.entity.articles
 import com.makentoshe.habrachan.network.articles.get.entity.pages
 import com.makentoshe.habrachan.network.articles.get.networkCode
 import com.makentoshe.habrachan.network.articles.get.networkMessage
@@ -35,7 +34,7 @@ class GetArticlesManagerImplTest {
 
         assertEquals(request, response.value.request)
         assertEquals(50, response.value.articles.pages.value)
-        assertEquals(20, response.value.articles.articles.value.size)
+        assertEquals(20, response.value.articles.delegate.articles.value.size)
     }
 
     @Test
