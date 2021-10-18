@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.application.android.common.articles.viewmodel
 
-import com.makentoshe.habrachan.network.request.SpecType
+import com.makentoshe.habrachan.api.articles.ArticlesFilter
 
 data class GetArticlesSpec(
-    val page: Int, val specType: SpecType, val pageSize: Int = 20
+    val articlesFilters: Set<ArticlesFilter>,  val pageSize: Int = 20
 )
