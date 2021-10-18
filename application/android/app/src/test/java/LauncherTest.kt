@@ -2,6 +2,7 @@ import android.content.Intent
 import android.net.Uri
 import com.makentoshe.habrachan.application.android.Launcher
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen2
+import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesUserSearch
 import com.makentoshe.habrachan.application.android.screen.articles.flow.navigation.ArticlesFlowScreen
 import com.makentoshe.habrachan.application.android.screen.comments.articles.navigation.ArticleCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.comments.thread.navigation.ThreadCommentsScreen
@@ -15,7 +16,8 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class LauncherTest : TestCase() {
 
-    private val launcher = Launcher(ArticlesFlowScreen())
+    private val articlesUserSearches = listOf(ArticlesUserSearch("Sas", true))
+    private val launcher = Launcher(ArticlesFlowScreen(articlesUserSearches))
 
     @Test
     fun testShouldOpenDiscussionCommentsScreen1() {
