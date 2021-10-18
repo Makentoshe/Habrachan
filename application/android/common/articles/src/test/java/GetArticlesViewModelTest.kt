@@ -1,10 +1,9 @@
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.makentoshe.habrachan.application.android.common.articles.viewmodel.GetArticlesSpec
 import com.makentoshe.habrachan.application.android.common.articles.viewmodel.GetArticlesViewModel
-import com.makentoshe.habrachan.application.common.arena.articles.ArticlesArena
+import com.makentoshe.habrachan.application.common.arena.articles.ArticlesArena3
 import com.makentoshe.habrachan.functional.Option
 import com.makentoshe.habrachan.network.UserSession
-import com.makentoshe.habrachan.network.request.SpecType
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.firstOrNull
@@ -25,10 +24,10 @@ class GetArticlesViewModelTest {
     @get:Rule
     internal var instantExecutorRule = InstantTaskExecutorRule()
 
-    private val getArticleSpec = GetArticlesSpec(2, SpecType.All, 500)
+    private val getArticleSpec = GetArticlesSpec(setOf(mockk(relaxed = true)))
 
     private val mockUserSession = mockk<UserSession>()
-    private val mockArticlesArena = mockk<ArticlesArena>()
+    private val mockArticlesArena = mockk<ArticlesArena3>()
 
     @Test
     fun testShouldReturnPagingDataInitially() = runBlocking {
