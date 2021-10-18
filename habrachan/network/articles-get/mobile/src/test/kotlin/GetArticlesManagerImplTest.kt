@@ -6,11 +6,11 @@ import com.makentoshe.habrachan.api.mobile.articles.RatingArticlesSort
 import com.makentoshe.habrachan.api.mobile.articles.pageArticlesFilter
 import com.makentoshe.habrachan.api.mobile.articles.sortArticlesFilter
 import com.makentoshe.habrachan.functional.Either
-import com.makentoshe.habrachan.network.articles.get.GetArticlesManagerImpl
 import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
-import com.makentoshe.habrachan.network.articles.get.entity.pages
-import com.makentoshe.habrachan.network.articles.get.networkCode
-import com.makentoshe.habrachan.network.articles.get.networkMessage
+import com.makentoshe.habrachan.network.articles.get.mobile.GetArticlesManagerImpl
+import com.makentoshe.habrachan.network.articles.get.mobile.entity.pages
+import com.makentoshe.habrachan.network.articles.get.mobile.networkCode
+import com.makentoshe.habrachan.network.articles.get.mobile.networkMessage
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.*

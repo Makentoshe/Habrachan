@@ -7,8 +7,12 @@ import com.makentoshe.habrachan.api.android.articles.topArticlesFilter
 import com.makentoshe.habrachan.api.articles.and
 import com.makentoshe.habrachan.api.articles.filter.WeeklyArticlesPeriod
 import com.makentoshe.habrachan.functional.Either
-import com.makentoshe.habrachan.network.articles.get.*
-import com.makentoshe.habrachan.network.articles.get.entity.*
+import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
+import com.makentoshe.habrachan.network.articles.get.android.GetArticlesManagerImpl
+import com.makentoshe.habrachan.network.articles.get.android.entity.*
+import com.makentoshe.habrachan.network.articles.get.android.networkAdditional
+import com.makentoshe.habrachan.network.articles.get.android.networkCode
+import com.makentoshe.habrachan.network.articles.get.android.networkMessage
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.*
