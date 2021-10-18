@@ -4,4 +4,6 @@ package com.makentoshe.habrachan.application.common.arena
 class ArenaStorageException(
     override val message: String,
     override val cause: Throwable? = null,
-) : Exception()
+) : Exception() {
+    constructor(cause: Throwable?) : this(cause?.message ?: "", cause)
+}
