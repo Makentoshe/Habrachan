@@ -15,7 +15,7 @@ class ArticlesPageFragmentInjector : FragmentInjector<ArticlesPageFragment>(
 
     // separated for all comment screens and for specified article screen
     override fun inject(injectorScope: FragmentInjectorScope<ArticlesPageFragment>) {
-        val scope = ArticlesPageScope(injectorScope.fragment.arguments.spec)
+        val scope = ArticlesPageScope(injectorScope.fragment.arguments.index)
 
         val toothpickScope = articlesPageScope(injectorScope).openSubScope(scope)
         val module = SpecifiedArticlesPageModule(injectorScope.fragment)

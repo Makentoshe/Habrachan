@@ -9,7 +9,6 @@ import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
 import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesScope
 import com.makentoshe.habrachan.application.common.arena.ArenaException
-import com.makentoshe.habrachan.network.request.SpecType
 import com.maketoshe.habrachan.application.android.screen.articles.page.ArticlesPageFragment
 import com.maketoshe.habrachan.application.android.screen.articles.page.R
 import com.maketoshe.habrachan.application.android.screen.articles.page.di.ArticlesPageScope
@@ -38,10 +37,9 @@ class ArticlesPageFragmentTest {
         bind<ArticlesPageAdapter>().toInstance(mockArticlesPageAdapter)
     }
 
-    private val spec = SpecType.Interesting
     private val toothpickScope = Toothpick.openScopes(
         ApplicationScope::class, ArticlesScope::class, ArticlesPageScope::class
-    ).openSubScope(ArticlesPageScope(spec)).installModules(toothpickModule)
+    ).openSubScope(ArticlesPageScope(0)).installModules(toothpickModule)
 
     @Before
     fun before() {
@@ -369,7 +367,7 @@ class ArticlesPageFragmentTest {
     private fun `launch and resume fragment than execute`(
         action: ArticlesPageFragment.() -> Unit
     ): FragmentScenario<ArticlesPageFragment> {
-        return ArticlesPageFragment.build(SpecType.All).`launch this fragment and execute` {
+        return ArticlesPageFragment.build(0).`launch this fragment and execute` {
             toothpickScope.closeOnDestroy(this).inject(this)
         }.`then resume and execute`(action)
     }
