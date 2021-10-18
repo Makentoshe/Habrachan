@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.network.articles.get
+package com.makentoshe.habrachan.network.articles.get.android
 
 import com.makentoshe.habrachan.api.android.AndroidHabrApi
 import com.makentoshe.habrachan.api.android.articles
@@ -8,8 +8,10 @@ import com.makentoshe.habrachan.api.articles.api.HabrArticlesFilterApi
 import com.makentoshe.habrachan.entity.android.ArticleAuthorPropertiesDelegateImpl
 import com.makentoshe.habrachan.entity.android.ArticleHubPropertiesDelegateImpl
 import com.makentoshe.habrachan.entity.android.ArticlePropertiesDelegateImpl
+import com.makentoshe.habrachan.network.articles.get.GetArticlesManager
+import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
+import com.makentoshe.habrachan.network.articles.get.android.entity.ArticlesPropertiesDelegateImpl
 import com.makentoshe.habrachan.network.articles.get.entity.Articles
-import com.makentoshe.habrachan.network.articles.get.entity.ArticlesPropertiesDelegateImpl
 import io.ktor.client.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

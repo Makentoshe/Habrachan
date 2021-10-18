@@ -24,8 +24,11 @@ dependencies {
     val kotlinSerializationJsonVersion = dependency.version.serializationJson
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationJsonVersion")
 
-    implementation("io.ktor:ktor-client-core:1.6.4")
-    testImplementation("io.ktor:ktor-client-mock:1.6.4")
+    // Ktor client
+    val ktorHttpClientVersion = dependency.version.ktorHttpClient
+    implementation("io.ktor:ktor-client-core:$ktorHttpClientVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorHttpClientVersion")
+    testImplementation("io.ktor:ktor-client-mock:$ktorHttpClientVersion")
 
     val junitVersion = dependency.version.junit
     testImplementation("junit:junit:$junitVersion")

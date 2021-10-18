@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.network.articles.get.entity
+package com.makentoshe.habrachan.network.articles.get.android.entity
 
 import com.makentoshe.habrachan.delegate.requireIntReadonlyProperty
 import com.makentoshe.habrachan.delegate.requireStringReadonlyProperty
