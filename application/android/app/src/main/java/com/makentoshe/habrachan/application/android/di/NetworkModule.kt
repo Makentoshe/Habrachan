@@ -1,45 +1,31 @@
 package com.makentoshe.habrachan.application.android.di
 
-import android.content.Context
 import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.network.GetContentManager
-import com.makentoshe.habrachan.network.NativeGetArticleCommentsManager
-import com.makentoshe.habrachan.network.NativeGetArticleManager
-import com.makentoshe.habrachan.network.NativeGetArticlesManager
-import com.makentoshe.habrachan.network.NativeGetMeManager
-import com.makentoshe.habrachan.network.NativeLoginManager
-import com.makentoshe.habrachan.network.NativePostCommentManager
-import com.makentoshe.habrachan.network.NativeVoteArticleManager
-import com.makentoshe.habrachan.network.NativeVoteCommentManager
-import com.makentoshe.habrachan.network.manager.GetArticleCommentsManager
-import com.makentoshe.habrachan.network.manager.GetArticleManager
-import com.makentoshe.habrachan.network.manager.GetArticlesManager
-import com.makentoshe.habrachan.network.manager.GetUserManager
-import com.makentoshe.habrachan.network.manager.PostCommentManager
-import com.makentoshe.habrachan.network.manager.VoteArticleManager
-import com.makentoshe.habrachan.network.manager.VoteCommentManager
-import com.makentoshe.habrachan.network.request.GetArticleCommentsRequest
-import com.makentoshe.habrachan.network.request.GetArticleRequest2
-import com.makentoshe.habrachan.network.request.GetArticlesRequest2
-import com.makentoshe.habrachan.network.request.GetArticlesSpec
-import com.makentoshe.habrachan.network.request.GetUserRequest
-import com.makentoshe.habrachan.network.request.PostCommentRequest
-import com.makentoshe.habrachan.network.request.VoteArticleRequest
-import com.makentoshe.habrachan.network.request.VoteCommentRequest2
+import com.makentoshe.habrachan.network.*
+import com.makentoshe.habrachan.network.articles.get.GetArticlesManager
+import com.makentoshe.habrachan.network.articles.get.mobile.GetArticlesManagerImpl
+import com.makentoshe.habrachan.network.manager.*
+import com.makentoshe.habrachan.network.request.*
+import io.ktor.client.*
+import io.ktor.client.engine.okhttp.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
 import javax.net.ssl.HostnameVerifier
 
-class NetworkModule(context: Context) : Module() {
+class NetworkModule : Module() {
 
     companion object : Analytics(LogAnalytic())
 
     private val client = OkHttpClient.Builder().followRedirects(true).addLoggingInterceptor().build()
+
+    private val ktorHttpClient = HttpClient(OkHttp) {
+        engine { preconfigured = client }
+    }
 
     init {
         bind<OkHttpClient>().toInstance(client)
@@ -49,14 +35,13 @@ class NetworkModule(context: Context) : Module() {
         val getArticleManager = NativeGetArticleManager.Builder(client).build()
         bind<GetArticleManager<out GetArticleRequest2>>().toInstance(getArticleManager)
 
-        val getArticlesManager = NativeGetArticlesManager.Builder(client).build()
-        bind<GetArticlesManager<out GetArticlesRequest2, out GetArticlesSpec>>().toInstance(getArticlesManager)
+        bind<GetArticlesManager>().toInstance(GetArticlesManagerImpl(ktorHttpClient))
 
         val nativeMeManager = NativeGetMeManager.Builder(client).build()
         val loginManager = NativeLoginManager.Builder(client, nativeMeManager).build()
         bind<NativeLoginManager>().toInstance(loginManager)
 
-        val nativeGetUserManager = com.makentoshe.habrachan.network.NativeGetUserManager.Builder(client).build()
+        val nativeGetUserManager = NativeGetUserManager.Builder(client).build()
         bind<GetUserManager<out GetUserRequest>>().toInstance(nativeGetUserManager)
 
         val nativeGetCommentsManager = NativeGetArticleCommentsManager.Builder(client).build()

@@ -49,7 +49,7 @@ class Habrachan : Application() {
 
         val applicationModule = ApplicationModule(applicationContext)
         val navigationModule = NavigationModule(Cicerone.create(StackRouter()))
-        val networkModule = NetworkModule(applicationContext)
+        val networkModule = NetworkModule()
 
         val scopes = Toothpick.openScopes(ApplicationScope::class)
         scopes.installModules(applicationModule, navigationModule, networkModule).inject(this)

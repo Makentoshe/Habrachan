@@ -14,13 +14,13 @@ android {
         exclude("META-INF/NOTICE*")
         exclude("META-INF/*.kotlin_module")
     }
-    compileSdkVersion(29)
+    compileSdkVersion(dependency.build.compileSdkVersion)
     defaultConfig {
         applicationId = "com.makentoshe.habrachan"
-        minSdkVersion(21)
-        targetSdkVersion(29)
-        versionCode = 9
-        versionName = "0.7.2"
+        minSdkVersion(dependency.build.minSdkVersion)
+        targetSdkVersion(dependency.build.targetSdkVersion)
+        versionCode = dependency.build.versionCode
+        versionName = dependency.build.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
 //        val localPropertiesFile = project.rootProject.file("local.properties")
@@ -60,7 +60,6 @@ android {
 
 repositories {
     google()
-    jcenter()
     mavenCentral()
 }
 
@@ -68,6 +67,13 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*,jar"))))
 
     implementation(kotlin("stdlib"))
+
+    implementation(project(":habrachan"))
+    implementation(project(":habrachan:api"))
+    implementation(project(":habrachan:api:mobile"))
+    implementation(project(":habrachan:network"))
+    implementation(project(":habrachan:network:articles-get"))
+    implementation(project(":habrachan:network:articles-get:mobile"))
 
     implementation(project(":application:core"))
     implementation(project(":application:common:arena:comments"))
@@ -121,6 +127,11 @@ dependencies {
     // https://github.com/square/okhttp/
     val okhttpVersion = dependency.version.okhttp
     implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
+
+    // Ktor client
+    val ktorHttpClientVersion = dependency.version.ktorHttpClient
+    implementation("io.ktor:ktor-client-core:$ktorHttpClientVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorHttpClientVersion")
 
     // Retrofit
     // https://github.com/square/retrofit
