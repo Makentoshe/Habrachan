@@ -14,6 +14,7 @@ import com.makentoshe.habrachan.application.android.common.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.screen.articles.flow.databinding.FragmentFlowArticlesBinding
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesFlowAdapter
+import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesUserSearch
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.TabLayoutMediatorController
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.LoginScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.MeScreenNavigator
@@ -24,31 +25,31 @@ import toothpick.ktp.delegate.inject
 class ArticlesFlowFragment : BaseFragment() {
 
     companion object : Analytics(LogAnalytic()) {
-        fun build(specs: List<SpecType>) = ArticlesFlowFragment().apply {
-            arguments.specs = specs
+        fun build(articlesUserSearches: List<ArticlesUserSearch>) = ArticlesFlowFragment().apply {
+            arguments.userSearchesCount = articlesUserSearches.size
         }
     }
 
     override val arguments = Arguments(this)
     private val binding: FragmentFlowArticlesBinding by attachBinding()
 
-    private val adapterFactory by inject<ArticlesFlowAdapter.Factory>()
     private val meScreenNavigator by inject<MeScreenNavigator>()
     private val loginScreenNavigator by inject<LoginScreenNavigator>()
     private val userSession by inject<AndroidUserSession2>()
     private val tabLayoutMediatorController by inject<TabLayoutMediatorController>()
+    private val adapter by inject<ArticlesFlowAdapter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         capture(analyticEvent { "OnCreate($savedInstanceState)" })
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_flow_articles, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fragment_flow_articles_viewpager.adapter = adapterFactory.build(this)
+        fragment_flow_articles_viewpager.adapter = adapter
         tabLayoutMediatorController.attach(fragment_flow_articles_tabs, fragment_flow_articles_viewpager)
 
         if (userSession.isLoggedIn) updateToolbarLogin() else updateToolbarLogout()
@@ -73,12 +74,18 @@ class ArticlesFlowFragment : BaseFragment() {
 
     class Arguments(fragment: ArticlesFlowFragment) : FragmentArguments(fragment) {
 
+        @Suppress("UNCHECKED_CAST")
         var specs: List<SpecType>
             get() = fragmentArguments.get(SPECS) as? ArrayList<SpecType> ?: emptyList()
             set(value) = fragmentArguments.putSerializable(SPECS, ArrayList(value))
 
+        var userSearchesCount: Int
+            get() = fragmentArguments.getInt(USER_SEARCHES)
+            set(value) = fragmentArguments.putInt(USER_SEARCHES, value)
+
         companion object {
             private const val SPECS = "Specs"
+            private const val USER_SEARCHES = "UserSearches"
         }
     }
 }
