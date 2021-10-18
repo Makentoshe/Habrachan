@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabas
 import com.makentoshe.habrachan.application.android.database.record.*
 import com.makentoshe.habrachan.application.common.arena.ArenaCache3
 import com.makentoshe.habrachan.application.common.arena.ArenaStorageException
+import com.makentoshe.habrachan.application.common.arena.EmptyArenaStorageException
 import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.article.articleId
 import com.makentoshe.habrachan.entity.article.author
@@ -21,6 +22,7 @@ import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
 import com.makentoshe.habrachan.network.articles.get.GetArticlesResponse
 import com.makentoshe.habrachan.network.articles.get.entity.articles
 import javax.inject.Inject
+
 
 class ArticlesArenaCache3 @Inject constructor(
     private val cacheDatabase: AndroidCacheDatabase
@@ -35,7 +37,7 @@ class ArticlesArenaCache3 @Inject constructor(
         val page = key.extractPageNumberFromRequest()
         if (page is Either.Right) page else fetch(key, (page as Either.Left).value, key.filters.typeString)
     } catch (exception: Exception) {
-        Either.Right(ArenaStorageException(exception.message ?: "", exception))
+        Either.Right(ArenaStorageException(exception))
     }
 
     private fun fetch(key: GetArticlesRequest, page: Int, type: String): Either<GetArticlesResponse, ArenaStorageException> {
@@ -43,7 +45,12 @@ class ArticlesArenaCache3 @Inject constructor(
         val articleRecords = cacheDatabase.articlesDao3().getDescSortedByTimePublished(offset, SIZE, type)
         val articles = articleRecords.map { articleRecord -> fetchArticle(articleRecord) }
 
-        return Either.Left(GetArticlesResponse(key, articles(articles)))
+        println(articles.size)
+        return if (articles.isEmpty()) {
+            Either.Right(ArenaStorageException(EmptyArenaStorageException("ArenaStorage is empty")))
+        } else {
+            Either.Left(GetArticlesResponse(key, articles(articles)))
+        }
     }
 
     private fun fetchArticle(articleRecord: ArticleRecord3): Article {
@@ -87,6 +94,7 @@ class ArticlesArenaCache3 @Inject constructor(
     private fun carry(key: GetArticlesRequest, value: GetArticlesResponse, type: String, page: Int) {
         if (page == 1) clearTablesBeforeCarrying(key, value, type)
 
+        capture(analyticEvent { "${value.articles.articles.value.size}" })
         value.articles.articles.value.forEach { article -> carryArticle(article, type) }
     }
 
