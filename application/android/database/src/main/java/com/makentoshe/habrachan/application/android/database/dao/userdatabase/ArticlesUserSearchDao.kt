@@ -1,9 +1,9 @@
-package com.makentoshe.habrachan.application.android.database.dao
+package com.makentoshe.habrachan.application.android.database.dao.userdatabase
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.makentoshe.habrachan.application.android.database.record.ArticlesUserSearchRecord
+import com.makentoshe.habrachan.application.android.database.record.userdatabase.ArticlesUserSearchRecord
 
 @Dao
 interface ArticlesUserSearchDao {
