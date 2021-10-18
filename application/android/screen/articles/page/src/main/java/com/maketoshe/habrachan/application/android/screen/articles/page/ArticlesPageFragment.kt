@@ -15,7 +15,6 @@ import com.makentoshe.habrachan.application.android.common.fragment.FragmentArgu
 import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
 import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.common.arena.ArenaException
-import com.makentoshe.habrachan.network.request.SpecType
 import com.maketoshe.habrachan.application.android.screen.articles.page.databinding.FragmentPageArticlesBinding
 import com.maketoshe.habrachan.application.android.screen.articles.page.model.ArticlesFooterAdapter
 import com.maketoshe.habrachan.application.android.screen.articles.page.model.ArticlesPageAdapter
@@ -29,8 +28,8 @@ class ArticlesPageFragment : BindableBaseFragment() {
 
     companion object : Analytics(LogAnalytic()) {
 
-        fun build(spec: SpecType) = ArticlesPageFragment().apply {
-            arguments.spec = spec
+        fun build(index: Int) = ArticlesPageFragment().apply {
+            arguments.index = index
         }
     }
 
@@ -44,7 +43,7 @@ class ArticlesPageFragment : BindableBaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        capture(analyticEvent { "Create(${arguments.spec})" })
+        capture(analyticEvent { "Create(index=${arguments.index})" })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -108,11 +107,12 @@ class ArticlesPageFragment : BindableBaseFragment() {
 
     class Arguments(fragment: ArticlesPageFragment) : FragmentArguments(fragment) {
 
-        var spec: SpecType
-            get() = fragmentArguments.get(SPEC) as SpecType
-            set(value) = fragmentArguments.putSerializable(SPEC, value)
+        var index: Int
+            get() = fragmentArguments.getInt(INDEX)
+            set(value) = fragmentArguments.putInt(INDEX, value)
 
         companion object {
+            private const val INDEX = "Index"
             private const val SPEC = "Spec"
         }
     }

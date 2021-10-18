@@ -1,3 +1,5 @@
+@file:Suppress("GradlePackageUpdate") // Gradle can't properly handle dependencies versions
+
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -17,10 +19,10 @@ android {
     useLibrary("android.test.base")
     useLibrary("android.test.mock")
 
-    compileSdkVersion(29)
+    compileSdkVersion(dependency.build.compileSdkVersion)
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(29)
+        minSdkVersion(dependency.build.minSdkVersion)
+        targetSdkVersion(dependency.build.targetSdkVersion)
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -49,9 +51,11 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation(kotlin("stdlib"))
+    val kotlinVersion = dependency.version.kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
     implementation(project(":habrachan"))
+    implementation(project(":habrachan:api"))
     implementation(project(":habrachan:entity"))
     implementation(project(":habrachan:network"))
     implementation(project(":habrachan:network:articles-get"))
@@ -138,9 +142,6 @@ dependencies {
     // JUnit Rules
     val testRulesVersion = dependency.version.androidTestRules
     testImplementation("androidx.test:rules:$testRulesVersion")
-
-    val espressoCoreVersion = dependency.version.androidTestEspresso
-    testImplementation("androidx.test.espresso:espresso-core:$espressoCoreVersion")
 
     // Robolectric
     // http://robolectric.org

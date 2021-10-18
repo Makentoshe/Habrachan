@@ -6,8 +6,10 @@ import androidx.paging.PagingDataAdapter
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.common.articles.model.ArticlesModelElement
+import com.makentoshe.habrachan.application.android.common.articles.model.ArticleModel
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.ArticleScreenNavigator
+import com.makentoshe.habrachan.entity.article.articleId
+import com.makentoshe.habrachan.entity.articleId
 import com.maketoshe.habrachan.application.android.screen.articles.page.databinding.LayoutArticlesPageItemBinding
 import com.maketoshe.habrachan.application.android.screen.articles.page.view.ArticlesPageItemViewHolder
 import com.maketoshe.habrachan.application.android.screen.articles.page.view.initialize
@@ -16,7 +18,7 @@ import javax.inject.Inject
 
 class ArticlesPageAdapter @Inject constructor(
     private val articleScreenNavigator: ArticleScreenNavigator,
-) : PagingDataAdapter<ArticlesModelElement, ArticlesPageItemViewHolder>(ArticlesDiffUtilItemCallback()) {
+) : PagingDataAdapter<ArticleModel, ArticlesPageItemViewHolder>(ArticlesDiffUtilItemCallback()) {
 
     companion object : Analytics(LogAnalytic())
 
@@ -30,7 +32,8 @@ class ArticlesPageAdapter @Inject constructor(
 
         holder.initialize(model.article)
         holder.setOnClickListener {
-            articleScreenNavigator.toArticleScreen(model.article)
+            val newArticleId = model.article.articleId.value
+            articleScreenNavigator.toArticleScreen(articleId(newArticleId.articleId))
         }
     }
 }
