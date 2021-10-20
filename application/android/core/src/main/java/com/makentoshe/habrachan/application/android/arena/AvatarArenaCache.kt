@@ -45,7 +45,7 @@ class AvatarArenaCache(
     override fun carry(key: GetContentRequest, value: GetContentResponse) {
         if (avatarDao.count() > limit) {
             capture(Log.INFO) { "Removing oldest $clearStep elements from cache" }
-            avatarDao.last(clearStep).forEach { record ->
+            for (record in avatarDao.last(clearStep)) {
                 avatarDao.delete(record)
                 File(cacheRoot, record.location).delete()
             }

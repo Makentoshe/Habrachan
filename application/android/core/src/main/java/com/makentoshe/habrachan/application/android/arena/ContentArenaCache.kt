@@ -41,7 +41,7 @@ class ContentArenaCache(
     override fun carry(key: GetContentRequest, value: GetContentResponse) {
         if (contentDao.count() > limit) {
             capture(Log.INFO) { "Removing oldest $clearStep elements from cache" }
-            contentDao.last(clearStep).forEach { record ->
+            for (record in contentDao.last(clearStep)) {
                 contentDao.delete(record)
                 File(cacheRoot, record.path).delete()
             }
