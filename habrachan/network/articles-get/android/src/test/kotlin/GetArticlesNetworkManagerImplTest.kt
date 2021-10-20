@@ -6,7 +6,7 @@ import com.makentoshe.habrachan.api.android.articles.pageArticlesFilter
 import com.makentoshe.habrachan.api.android.articles.topArticlesFilter
 import com.makentoshe.habrachan.api.articles.and
 import com.makentoshe.habrachan.api.articles.filter.WeeklyArticlesPeriod
-import com.makentoshe.habrachan.functional.Either
+import com.makentoshe.habrachan.functional.Either2
 import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
 import com.makentoshe.habrachan.network.articles.get.android.GetArticlesManagerImpl
 import com.makentoshe.habrachan.network.articles.get.android.entity.*
@@ -39,7 +39,7 @@ class GetArticlesNetworkManagerImplTest {
         val filters = allArticlesFilter() and pageArticlesFilter(2)
         val request = GetArticlesRequest(parameters, filters)
 
-        val response = requireManagerWithJson(json, HttpStatusCode.OK).execute(request) as Either.Left
+        val response = requireManagerWithJson(json, HttpStatusCode.OK).execute(request) as Either2.Left
 
         assertEquals(request, response.value.request)
         assertEquals(50, response.value.articles.pages.value)
@@ -56,7 +56,7 @@ class GetArticlesNetworkManagerImplTest {
         val filters = pageArticlesFilter(2) and topArticlesFilter(WeeklyArticlesPeriod)
         val request = GetArticlesRequest(AdditionalRequestParameters(), filters)
 
-        val response = requireManagerWithJson(json, HttpStatusCode.Unauthorized).execute(request) as Either.Right
+        val response = requireManagerWithJson(json, HttpStatusCode.Unauthorized).execute(request) as Either2.Right
 
         assertEquals(request, response.value.request)
         assertEquals(HttpStatusCode.Unauthorized.value, response.value.networkCode.getOrThrow())
@@ -69,7 +69,7 @@ class GetArticlesNetworkManagerImplTest {
         val filters = pageArticlesFilter(2) and topArticlesFilter(WeeklyArticlesPeriod)
         val request = GetArticlesRequest(AdditionalRequestParameters(), filters)
 
-        val response = requireManagerWithException(UnresolvedAddressException()).execute(request) as Either.Right
+        val response = requireManagerWithException(UnresolvedAddressException()).execute(request) as Either2.Right
 
         assertEquals(request, response.value.request)
         assert(response.value.cause is UnresolvedAddressException)

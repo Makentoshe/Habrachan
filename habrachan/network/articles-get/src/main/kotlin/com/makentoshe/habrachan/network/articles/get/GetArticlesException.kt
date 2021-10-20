@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.network.articles.get
 
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
+import com.makentoshe.habrachan.AnyWithVolumeParameters
 import kotlinx.serialization.json.JsonElement
 
 data class GetArticlesException(

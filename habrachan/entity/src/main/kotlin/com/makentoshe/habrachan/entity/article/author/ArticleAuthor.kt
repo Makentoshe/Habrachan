@@ -1,9 +1,9 @@
 package com.makentoshe.habrachan.entity.article.author
 
-import com.makentoshe.habrachan.Option
-import com.makentoshe.habrachan.Require
+import com.makentoshe.habrachan.AnyWithVolumeParameters
 import com.makentoshe.habrachan.entity.article.author.component.*
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
+import com.makentoshe.habrachan.functional.Option2
+import com.makentoshe.habrachan.functional.Require2
 import kotlinx.serialization.json.JsonElement
 
 data class ArticleAuthor(
@@ -12,9 +12,9 @@ data class ArticleAuthor(
 ) : AnyWithVolumeParameters<JsonElement>
 
 interface ArticleAuthorPropertiesDelegate {
-    val authorId: Require<AuthorId>
-    val authorLogin: Require<AuthorLogin>
-    val authorAvatar: Option<AuthorAvatar>
+    val authorId: Require2<AuthorId>
+    val authorLogin: Require2<AuthorLogin>
+    val authorAvatar: Option2<AuthorAvatar>
 }
 
 val ArticleAuthor.authorId get() = delegate.authorId
@@ -29,12 +29,12 @@ fun articleAuthor(
     authorAvatar: String?,
     parameters: Map<String, JsonElement> = emptyMap(),
 ) = ArticleAuthor(parameters, object : ArticleAuthorPropertiesDelegate {
-    override val authorId: Require<AuthorId>
-        get() = Require(authorId(authorId))
+    override val authorId: Require2<AuthorId>
+        get() = Require2(authorId(authorId))
 
-    override val authorLogin: Require<AuthorLogin>
-        get() = Require(authorLogin(authorLogin))
+    override val authorLogin: Require2<AuthorLogin>
+        get() = Require2(authorLogin(authorLogin))
 
-    override val authorAvatar: Option<AuthorAvatar>
-        get() = Option.from(authorAvatar?.let(::AuthorAvatar))
+    override val authorAvatar: Option2<AuthorAvatar>
+        get() = Option2.from(authorAvatar?.let(::AuthorAvatar))
 })

@@ -1,52 +1,55 @@
 package com.makentoshe.habrachan.delegate
 
-import com.makentoshe.habrachan.Require
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
+import com.makentoshe.habrachan.AnyWithVolumeParameters
+import com.makentoshe.habrachan.functional.Require2
 import kotlinx.serialization.json.*
 import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-abstract class RequireReadonlyProperty<Owner, Type>: ReadOnlyProperty<Owner, Require<Type>>
+abstract class Require2ReadonlyProperty<Owner, Type>: ReadOnlyProperty<Owner, Require2<Type>>
 
-abstract class RequireReadWriteProperty<Owner, Type>: ReadWriteProperty<Owner, Require<Type>>
+abstract class Require2ReadWriteProperty<Owner, Type>: ReadWriteProperty<Owner, Require2<Type>>
 
-class JsonElementRequireReadonlyProperty<Type>(
+class JsonElementRequire2ReadonlyProperty<Type>(
     private vararg val keys: String,
     private val map: (JsonElement) -> Type
-) : RequireReadonlyProperty<AnyWithVolumeParameters<JsonElement>, Type>() {
+) : Require2ReadonlyProperty<AnyWithVolumeParameters<JsonElement>, Type>() {
 
-    override fun getValue(thisRef: AnyWithVolumeParameters<JsonElement>, property: KProperty<*>): Require<Type> {
+    override fun getValue(thisRef: AnyWithVolumeParameters<JsonElement>, property: KProperty<*>): Require2<Type> = try {
         val initial = thisRef.parameters[keys.first()]
-        return Require(keys.drop(1).fold(initial) { jsonElement, key -> jsonElement!!.jsonObject[key] }?.let(map))
+        Require2(keys.drop(1).fold(initial) { jsonElement, key -> jsonElement!!.jsonObject[key] }?.let(map))
+    } catch (exception: IllegalArgumentException) {
+        val message = "IllegalArgumentException(message=${exception.message}, parameters=${thisRef.parameters})"
+        throw IllegalArgumentException(message, exception.cause)
     }
 
 }
 
-fun <Type> requireReadonlyProperty(vararg keys: String, map: (JsonElement) -> Type): JsonElementRequireReadonlyProperty<Type> {
-    return JsonElementRequireReadonlyProperty(*keys, map = map)
+fun <Type> requireReadonlyProperty(vararg keys: String, map: (JsonElement) -> Type): JsonElementRequire2ReadonlyProperty<Type> {
+    return JsonElementRequire2ReadonlyProperty(*keys, map = map)
 }
 
-fun requireStringReadonlyProperty(vararg keys: String): JsonElementRequireReadonlyProperty<String> {
-    return JsonElementRequireReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.content }
+fun requireStringReadonlyProperty(vararg keys: String): JsonElementRequire2ReadonlyProperty<String> {
+    return JsonElementRequire2ReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.content }
 }
 
-fun requireBooleanReadonlyProperty(vararg keys: String): JsonElementRequireReadonlyProperty<Boolean> {
-    return JsonElementRequireReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.boolean }
+fun requireBooleanReadonlyProperty(vararg keys: String): JsonElementRequire2ReadonlyProperty<Boolean> {
+    return JsonElementRequire2ReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.boolean }
 }
 
-fun requireIntReadonlyProperty(vararg keys: String): JsonElementRequireReadonlyProperty<Int> {
-    return JsonElementRequireReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.int }
+fun requireIntReadonlyProperty(vararg keys: String): JsonElementRequire2ReadonlyProperty<Int> {
+    return JsonElementRequire2ReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.int }
 }
 
-fun requireFloatReadonlyProperty(vararg keys: String): JsonElementRequireReadonlyProperty<Float> {
-    return JsonElementRequireReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.float }
+fun requireFloatReadonlyProperty(vararg keys: String): JsonElementRequire2ReadonlyProperty<Float> {
+    return JsonElementRequire2ReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.float }
 }
 
-fun requireDoubleReadonlyProperty(vararg keys: String): JsonElementRequireReadonlyProperty<Double> {
-    return JsonElementRequireReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.double }
+fun requireDoubleReadonlyProperty(vararg keys: String): JsonElementRequire2ReadonlyProperty<Double> {
+    return JsonElementRequire2ReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.double }
 }
 
-fun <Type> requireListReadonlyProperty(vararg keys: String, mapElement: (JsonObject) -> Type): JsonElementRequireReadonlyProperty<List<Type>> {
-    return JsonElementRequireReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonArray.filterIsInstance<JsonObject>().map(mapElement) }
+fun <Type> requireListReadonlyProperty(vararg keys: String, mapElement: (JsonObject) -> Type): JsonElementRequire2ReadonlyProperty<List<Type>> {
+    return JsonElementRequire2ReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonArray.filterIsInstance<JsonObject>().map(mapElement) }
 }

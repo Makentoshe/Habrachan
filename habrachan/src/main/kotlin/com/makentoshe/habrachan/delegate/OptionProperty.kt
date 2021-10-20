@@ -1,26 +1,25 @@
-package com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate
+package com.makentoshe.habrachan.delegate
 
-import com.makentoshe.habrachan.Option
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
+import com.makentoshe.habrachan.AnyWithVolumeParameters
+import com.makentoshe.habrachan.functional.Option2
 import kotlinx.serialization.json.*
 import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-abstract class OptionReadWriteProperty<Owner, Type>: ReadWriteProperty<Owner, Option<Type>>
+abstract class OptionReadWriteProperty<Owner, Type>: ReadWriteProperty<Owner, Option2<Type>>
 
-abstract class OptionReadonlyProperty<Owner, Type>: ReadOnlyProperty<Owner, Option<Type>>
+abstract class OptionReadonlyProperty<Owner, Type>: ReadOnlyProperty<Owner, Option2<Type>>
 
-/** Property for delegation a specified property that requireable for [Article], like id or author */
 class JsonElementOptionReadonlyProperty<Type>(
     private vararg val keys: String,
     private val map: (JsonElement) -> Type
 ) : OptionReadonlyProperty<AnyWithVolumeParameters<JsonElement>, Type>() {
 
-    override fun getValue(thisRef: AnyWithVolumeParameters<JsonElement>, property: KProperty<*>): Option<Type> {
+    override fun getValue(thisRef: AnyWithVolumeParameters<JsonElement>, property: KProperty<*>): Option2<Type> {
         val initial = thisRef.parameters[keys.first()]
-        if (initial is JsonNull) return Option.None
-        return Option.from(keys.drop(1).fold(initial) { jsonElement, key -> jsonElement!!.jsonObject[key] }?.let(map))
+        if (initial is JsonNull) return Option2.None
+        return Option2.from(keys.drop(1).fold(initial) { jsonElement, key -> jsonElement!!.jsonObject[key] }?.let(map))
     }
 }
 

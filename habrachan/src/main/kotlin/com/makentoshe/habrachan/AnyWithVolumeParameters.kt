@@ -1,9 +1,9 @@
-package com.makentoshe.habrachan.functional.com.makentoshe.habrachan
+package com.makentoshe.habrachan
 
-import com.makentoshe.habrachan.Option
-import com.makentoshe.habrachan.Require
-import com.makentoshe.habrachan.delegate.RequireReadonlyProperty
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.OptionReadonlyProperty
+import com.makentoshe.habrachan.delegate.OptionReadonlyProperty
+import com.makentoshe.habrachan.delegate.Require2ReadonlyProperty
+import com.makentoshe.habrachan.functional.Option2
+import com.makentoshe.habrachan.functional.Require2
 import kotlin.reflect.KProperty
 
 interface AnyWithVolumeParameters<Type> {
@@ -14,22 +14,22 @@ interface AnyWithVolumeParameters<Type> {
 class AnyWithVolumeParametersOptionReadonlyProperty<Owner: AnyWithVolumeParameters<Type>, Type>(
     private val key: String,
 ) : OptionReadonlyProperty<Owner, Type>() {
-    override fun getValue(thisRef: Owner, property: KProperty<*>): Option<Type> {
-        return Option.from(thisRef.parameters[key])
+    override fun getValue(thisRef: Owner, property: KProperty<*>): Option2<Type> {
+        return Option2.from(thisRef.parameters[key])
     }
 }
 
 /** Property for delegation a specified property that requireable for [AnyWithVolumeParameters], like password or login */
-class AnyWithVolumeParametersRequireReadonlyProperty<Owner: AnyWithVolumeParameters<Type>, Type>(
+class AnyWithVolumeParametersRequire2ReadonlyProperty<Owner: AnyWithVolumeParameters<Type>, Type>(
     private val key: String,
-) : RequireReadonlyProperty<Owner, Type>() {
-    override fun getValue(thisRef: Owner, property: KProperty<*>): Require<Type> {
-        return Require(thisRef.parameters[key])
+) : Require2ReadonlyProperty<Owner, Type>() {
+    override fun getValue(thisRef: Owner, property: KProperty<*>): Require2<Type> {
+        return Require2(thisRef.parameters[key])
     }
 }
 
 fun <Owner: AnyWithVolumeParameters<Type>, Type> requireReadonlyProperty(
     key: String,
-): AnyWithVolumeParametersRequireReadonlyProperty<Owner, Type> {
-    return AnyWithVolumeParametersRequireReadonlyProperty(key)
+): AnyWithVolumeParametersRequire2ReadonlyProperty<Owner, Type> {
+    return AnyWithVolumeParametersRequire2ReadonlyProperty(key)
 }

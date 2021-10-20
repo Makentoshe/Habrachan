@@ -1,9 +1,9 @@
-package com.makentoshe.habrachan.functional.com.makentoshe.habrachan
+package com.makentoshe.habrachan
 
-import com.makentoshe.habrachan.Option
-import com.makentoshe.habrachan.Require
-import com.makentoshe.habrachan.delegate.RequireReadonlyProperty
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.OptionReadonlyProperty
+import com.makentoshe.habrachan.delegate.OptionReadonlyProperty
+import com.makentoshe.habrachan.delegate.Require2ReadonlyProperty
+import com.makentoshe.habrachan.functional.Option2
+import com.makentoshe.habrachan.functional.Require2
 import kotlin.reflect.KProperty
 
 interface AnyWithFlatParameters {
@@ -15,24 +15,24 @@ class AnyWithFlatParametersOptionReadonlyProperty<Owner: AnyWithFlatParameters, 
     private val key: String,
     private val map: (String) -> Type,
 ) : OptionReadonlyProperty<Owner, Type>() {
-    override fun getValue(thisRef: Owner, property: KProperty<*>): Option<Type> {
-        return Option.from(thisRef.parameters[key]?.let(map))
+    override fun getValue(thisRef: Owner, property: KProperty<*>): Option2<Type> {
+        return Option2.from(thisRef.parameters[key]?.let(map))
     }
 }
 
 /** Property for delegation a specified property that requireable for [AnyWithFlatParameters], like password or login */
-class AnyWithFlatParametersRequireReadonlyProperty<Owner: AnyWithFlatParameters, Type>(
+class AnyWithFlatParametersRequire2ReadonlyProperty<Owner: AnyWithFlatParameters, Type>(
     private val key: String,
     private val map: (String) -> Type
-) : RequireReadonlyProperty<Owner, Type>() {
-    override fun getValue(thisRef: Owner, property: KProperty<*>): Require<Type> {
-        return Require(thisRef.parameters[key]?.let(map))
+) : Require2ReadonlyProperty<Owner, Type>() {
+    override fun getValue(thisRef: Owner, property: KProperty<*>): Require2<Type> {
+        return Require2(thisRef.parameters[key]?.let(map))
     }
 }
 
 fun <Owner: AnyWithFlatParameters, Type> requireReadonlyProperty(
     key: String,
     map: (String) -> Type,
-): AnyWithFlatParametersRequireReadonlyProperty<Owner, Type> {
-    return AnyWithFlatParametersRequireReadonlyProperty(key, map)
+): AnyWithFlatParametersRequire2ReadonlyProperty<Owner, Type> {
+    return AnyWithFlatParametersRequire2ReadonlyProperty(key, map)
 }

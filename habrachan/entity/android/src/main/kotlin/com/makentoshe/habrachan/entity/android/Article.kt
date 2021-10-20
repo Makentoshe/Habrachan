@@ -1,9 +1,7 @@
 package com.makentoshe.habrachan.entity.android
 
-import com.makentoshe.habrachan.delegate.requireIntReadonlyProperty
-import com.makentoshe.habrachan.delegate.requireListReadonlyProperty
-import com.makentoshe.habrachan.delegate.requireReadonlyProperty
-import com.makentoshe.habrachan.delegate.requireStringReadonlyProperty
+import com.makentoshe.habrachan.AnyWithVolumeParameters
+import com.makentoshe.habrachan.delegate.*
 import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.article.ArticlePropertiesDelegate
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
@@ -15,8 +13,6 @@ import com.makentoshe.habrachan.entity.article.flow.ArticleFlow
 import com.makentoshe.habrachan.entity.article.hub.ArticleHub
 import com.makentoshe.habrachan.entity.article.hub.ArticleHubPropertiesDelegate
 import com.makentoshe.habrachan.entity.component.timePublished
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.optionReadonlyProperty
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonObject

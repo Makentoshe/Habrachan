@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.api.articles
 
-import com.makentoshe.habrachan.Option
+import com.makentoshe.habrachan.functional.Option2
 
 /** This is a default filter interface that should not be used directly */
 sealed class ArticlesFilter {
@@ -72,12 +72,12 @@ infix fun ArticlesFilter.and(filter: ArticlesFilter) = arrayOf(this, filter)
 
 infix fun Array<ArticlesFilter>.and(filter: ArticlesFilter) = plus(filter)
 
-fun Array<out ArticlesFilter>.findFilter(name: String): Option<ArticlesFilter> {
-    return Option.from(find { filter -> filter.key == name })
+fun Array<out ArticlesFilter>.findFilter(name: String): Option2<ArticlesFilter> {
+    return Option2.from(find { filter -> filter.key == name })
 }
 
-fun List<ArticlesFilter>.findFilter(name: String): Option<ArticlesFilter> {
-    return Option.from(find { filter -> filter.key == name })
+fun List<ArticlesFilter>.findFilter(name: String): Option2<ArticlesFilter> {
+    return Option2.from(find { filter -> filter.key == name })
 }
 
 fun Array<out ArticlesFilter>.toMap() = associate { it.key to it.value }

@@ -1,5 +1,8 @@
 package com.makentoshe.habrachan.entity.android
 
+import com.makentoshe.habrachan.AnyWithVolumeParameters
+import com.makentoshe.habrachan.delegate.optionReadonlyProperty
+import com.makentoshe.habrachan.delegate.optionStringReadonlyProperty
 import com.makentoshe.habrachan.delegate.requireFloatReadonlyProperty
 import com.makentoshe.habrachan.delegate.requireReadonlyProperty
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
@@ -7,9 +10,6 @@ import com.makentoshe.habrachan.entity.article.author.ArticleAuthorPropertiesDel
 import com.makentoshe.habrachan.entity.article.author.component.AuthorAvatar
 import com.makentoshe.habrachan.entity.article.author.component.authorId
 import com.makentoshe.habrachan.entity.article.author.component.authorLogin
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.optionReadonlyProperty
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.optionStringReadonlyProperty
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonPrimitive

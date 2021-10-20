@@ -11,8 +11,8 @@ import com.makentoshe.habrachan.api.login.LoginAuthBuilder
 import com.makentoshe.habrachan.api.login.api.HabrLoginAuthApi
 import com.makentoshe.habrachan.api.login.entity.Email
 import com.makentoshe.habrachan.api.login.entity.Password
-import com.makentoshe.habrachan.functional.Either
-import com.makentoshe.habrachan.toRequire
+import com.makentoshe.habrachan.functional.Either2
+import com.makentoshe.habrachan.functional.toRequire2
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.logging.*
@@ -30,14 +30,14 @@ class LoginNetworkManager(private val client: HttpClient) {
         return AndroidHabrApi.login().auth(request.loginAuth).build(request.parameters)
     }
 
-    suspend fun execute(request: LoginRequest) : Either<LoginResponse, LoginException> = try {
+    suspend fun execute(request: LoginRequest) : Either2<LoginResponse, LoginException> = try {
         val map = Json.decodeFromString<JsonObject>(ktorResponse(request).readText()).toMap()
-        Either.Left(LoginResponse(request, LoginSession(map)))
+        Either2.Left(LoginResponse(request, LoginSession(map)))
     } catch (exception: ClientRequestException) {
         val parameters = Json.decodeFromString<JsonObject>(exception.response.readText()).toMap()
-        Either.Right(LoginException(request, exception, parameters))
+        Either2.Right(LoginException(request, exception, parameters))
     } catch (exception: Exception) {
-        Either.Right(LoginException(request, exception, emptyMap()))
+        Either2.Right(LoginException(request, exception, emptyMap()))
     }
 
     private fun ktorUrl(url: HabrLoginAuthApi): Url {
@@ -67,11 +67,11 @@ fun main() = runBlocking {
         "apiKey" to "173984950848a2d27c0cc1c76ccf3d6d3dc8255b"
     ))
     val authBuilder = LoginAuthBuilder {
-        this.email = Email("mkliverout@gmail.com").toRequire()
-        this.password = Password("HabrMakentoshe1243568790").toRequire()
-        this.clientSecret = ClientSecret("41ce71d623e04eab2cb8c00cf36bc14ec3aaf6d3").toRequire()
-        this.clientId = ClientId("85cab69095196f3.89453480").toRequire()
-        this.grantType = GrantType("password").toRequire()
+        this.email = Email("mkliverout@gmail.com").toRequire2()
+        this.password = Password("HabrMakentoshe1243568790").toRequire2()
+        this.clientSecret = ClientSecret("41ce71d623e04eab2cb8c00cf36bc14ec3aaf6d3").toRequire2()
+        this.clientId = ClientId("85cab69095196f3.89453480").toRequire2()
+        this.grantType = GrantType("password").toRequire2()
     }
     // email=mkliverout%40gmail.com&password=HabrMakentoshe1243568790&client_secret=41ce71d623e04eab2cb8c00cf36bc14ec3aaf6d3&client_id=85cab69095196f3.89453480&grant_type=password
     // email=mkliverout%40gmail.com&password=HabrMakentoshe1243568790&client_secret=41ce71d623e04eab2cb8c00cf36bc14ec3aaf6d3&client_id=85cab69095196f3.89453480&grant_type=password
