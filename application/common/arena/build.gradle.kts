@@ -11,5 +11,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
+    implementation(project(":habrachan"))
+
     implementation(project(":functional"))
 }
