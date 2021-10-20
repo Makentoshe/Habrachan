@@ -8,7 +8,8 @@ import com.makentoshe.habrachan.application.android.screen.user.model.UserAccoun
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.application.core.arena.users.GetUserArena
 import com.makentoshe.habrachan.entity.User
-import com.makentoshe.habrachan.functional.Either
+import com.makentoshe.habrachan.functional.Either2
+import com.makentoshe.habrachan.network.GetContentResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -31,10 +32,10 @@ class UserViewModel(
     val accountChannel = Channel<UserAccount>()
 
     /** Internal proxy for [userFlow] */
-    private val userChannel = Channel<Either<User, Throwable>>()
+    private val userChannel = Channel<Either2<User, Throwable>>()
 
     /** Receives a [User] instance from [userChannel] */
-    val userFlow: Flow<Either<User, Throwable>> = userChannel.receiveAsFlow()
+    val userFlow: Flow<Either2<User, Throwable>> = userChannel.receiveAsFlow()
 
     /** Send a [User] to receive a user avatar from [avatarFlow] */
     private val avatarChannel = Channel<User>()
@@ -42,7 +43,7 @@ class UserViewModel(
     /** Receives an [GetContentResponse] instance */
     val avatarFlow = avatarChannel.receiveAsFlow().map { user ->
         val request = getContentArena.manager.request(userSession, user.avatar)
-        getContentArena.suspendFetch(request).fold({ Either.Left(it) }, { Either.Right(it) })
+        getContentArena.suspendFetch(request).fold({ Either2.Left(it) }, { Either2.Right(it) })
     }.flowOn(Dispatchers.IO)
 
     init {
@@ -60,23 +61,23 @@ class UserViewModel(
         // pre show a user
         val user = userSession.user
         if (user != null) {
-            userChannel.send(Either.Left(user))
+            userChannel.send(Either2.Left(user))
             avatarChannel.send(user)
         }
 
         // if could not pre show and couldn't make request
         val login = account.login ?: user?.login
-            ?: return userChannel.send(Either.Right(IllegalStateException("There is no stored user, and login is null")))
+            ?: return userChannel.send(Either2.Right(IllegalStateException("There is no stored user, and login is null")))
 
         requestUser(UserAccount.User(login))
     }
 
     private suspend fun requestUser(account: UserAccount.User) {
         getUserArena.suspendFetch(getUserArena.manager.request(userSession, account.login)).fold({
-            userChannel.send(Either.Left(it.user))
+            userChannel.send(Either2.Left(it.user))
             avatarChannel.send(it.user)
         }, {
-            userChannel.send(Either.Right(it))
+            userChannel.send(Either2.Right(it))
         })
     }
 
