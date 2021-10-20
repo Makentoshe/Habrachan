@@ -1,10 +1,10 @@
 object Build {
 
-    const val compileSdkVersion = 31
+    const val compileSdkVersion = 29
 
     const val minSdkVersion = 21
 
-    const val targetSdkVersion = 31
+    const val targetSdkVersion = 29
 
     const val versionCode = 9
 

@@ -30,9 +30,9 @@ object Version {
     const val okhttp = "4.1.0"
 
     // for testing purposes - any module
-    const val junit = "4.13.2"
+    const val junit = "4.13"
 
-    const val mockk = "1.12.0"
+    const val mockk = "1.9.1"
 
     // https://github.com/stephanenicolas/toothpick
     const val toothpick = "3.1.0"
@@ -57,19 +57,19 @@ object Version {
     // https://github.com/davemorrissey/subsampling-scale-image-view
     const val androidSubsamplingScaleImageView = "3.10.0"
 
-    const val androidCoroutinesViewModel = "2.3.1"
+    const val androidCoroutinesViewModel = "2.3.0-beta01"
 
     // https://developer.android.com/topic/libraries/architecture
     const val androidArchitecture = "1.1.1"
 
     // https://github.com/material-components/material-components-android
-    const val androidMaterialDesign = "1.4.0"
+    const val androidMaterialDesign = "1.3.0-alpha01"
 
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
     const val androidRecyclerView = "1.2.0-beta01"
 
     // https://developer.android.com/topic/libraries/architecture/paging
-    const val androidPaging = "3.0.0"
+    const val androidPaging = "3.0.0-alpha11"
 
     // https://developer.android.com/reference/androidx/lifecycle/Lifecycle
     const val androidLifecycle = "2.4.0-beta01"
@@ -81,27 +81,27 @@ object Version {
 
     const val androidGifDrawable = "1.2.19"
 
-    const val androidFragment = "1.3.4"
+    const val androidFragment = "1.3.0-alpha06"
 
     const val androidAppCompat = "1.3.1"
 
-    const val androidConstraintLayout = "2.1.1"
+    const val androidConstraintLayout = "2.1.0"
 
-    const val androidCore = "1.6.0"
+    const val androidCore = "1.3.0"
 
     // http://robolectric.org
-    const val androidTestRobolectric = "4.6.1"
+    const val androidTestRobolectric = "4.3.1"
 
     // https://stackoverflow.com/questions/48049131/cannot-resolve-symbol-instanttaskexecutorrule
     const val androidTestArchitecture = "2.1.0"
 
-    const val androidTestEspresso = "3.4.0"
+    const val androidTestEspresso = "3.2.0"
 
     const val androidTestRules = "1.2.0"
 
-    const val androidTestRunner = "1.4.0"
+    const val androidTestRunner = "1.1.0"
 
-    const val androidTestCore = "1.4.0"
+    const val androidTestCore = "1.2.0"
 
     const val androidTestJunit = "1.1.3"
 }
