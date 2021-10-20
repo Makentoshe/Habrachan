@@ -26,14 +26,18 @@ class ArticlesPageAdapter @Inject constructor(
         return ArticlesPageItemViewHolder(LayoutArticlesPageItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    override fun onBindViewHolder(holder: ArticlesPageItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ArticlesPageItemViewHolder, position: Int) = try {
         val model = getItem(position)
-            ?: return capture(analyticEvent(throwable = NoSuchElementException("Comment is null at position $position")))
-
-        holder.initialize(model.article)
-        holder.setOnClickListener {
-            val newArticleId = model.article.articleId.value
-            articleScreenNavigator.toArticleScreen(articleId(newArticleId.articleId))
+        if (model == null) {
+            capture(analyticEvent(throwable = NoSuchElementException("Comment is null at position $position")))
+        } else {
+            holder.initialize(model.article)
+            holder.setOnClickListener {
+                val newArticleId = model.article.articleId.value
+                articleScreenNavigator.toArticleScreen(articleId(newArticleId.articleId))
+            }
         }
+    } catch (exception: Exception) {
+        capture(analyticEvent(throwable = exception))
     }
 }
