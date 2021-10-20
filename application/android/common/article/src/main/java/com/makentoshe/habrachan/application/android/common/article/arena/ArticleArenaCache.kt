@@ -49,7 +49,7 @@ class ArticleArenaCache @Inject constructor(
 //            cacheDatabase.flowDao().insert(FlowRecord2(flow))
 //            cacheDatabase.articleFlowCrossRefDao().insert(ArticleFlowCrossRef(value.article.articleId, flow.flowId))
 //        }
-        value.article.hubs.forEach { hub ->
+        for (hub in value.article.hubs) {
             cacheDatabase.hubDao().insert(HubRecord2(hub))
             cacheDatabase.articleHubCrossRefDao().insert(ArticleHubCrossRef(value.article.articleId, hub.hubId))
         }

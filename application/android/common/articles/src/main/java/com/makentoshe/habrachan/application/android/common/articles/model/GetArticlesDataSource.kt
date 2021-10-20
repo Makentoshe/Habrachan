@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.application.android.common.articles.model
 
 import androidx.paging.PagingSource
-import com.makentoshe.habrachan.Option
 import com.makentoshe.habrachan.api.AdditionalRequestParameters
 import com.makentoshe.habrachan.api.articles.ArticlesFilter
 import com.makentoshe.habrachan.api.articles.findFilter
@@ -12,6 +11,7 @@ import com.makentoshe.habrachan.application.android.common.articles.viewmodel.Ge
 import com.makentoshe.habrachan.application.common.arena.ArenaException
 import com.makentoshe.habrachan.application.common.arena.articles.ArticlesArena3
 import com.makentoshe.habrachan.entity.article.Article
+import com.makentoshe.habrachan.functional.Option2
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
 import com.makentoshe.habrachan.network.articles.get.GetArticlesResponse
@@ -60,16 +60,16 @@ class GetArticlesDataSource(
         }, { it })
     }
 
-    private fun buildNextPageArticlesFilter(currentPageArticlesFilter: ArticlesFilter): ArticlesFilter? {
+    private fun buildNextPageArticlesFilter(currentPageArticlesFilter: ArticlesFilter): ArticlesFilter {
         return currentPageArticlesFilter.new { oldValue -> oldValue.toInt().plus(1).toString() }
     }
 
-    private fun buildNextArticlesFilters(response: GetArticlesResponse): Option<Set<ArticlesFilter>> {
-        if (response.articles.articles.value.isEmpty()) return Option.None
+    private fun buildNextArticlesFilters(response: GetArticlesResponse): Option2<Set<ArticlesFilter>> {
+        if (response.articles.articles.value.isEmpty()) return Option2.None
 
         val currentPageArticlesFilter = getCurrentPageArticlesFilter(response)
         val nextPageArticlesFilter = buildNextPageArticlesFilter(currentPageArticlesFilter)
-        return Option.from(response.request.filters.mapNotNull {
+        return Option2.from(response.request.filters.map {
             if (it.key == "page") nextPageArticlesFilter else it
         }.toSet())
     }
