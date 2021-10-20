@@ -13,12 +13,12 @@ android {
         exclude("META-INF/*.kotlin_module")
     }
 
-    compileSdkVersion(29)
+    compileSdkVersion(dependency.build.compileSdkVersion)
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        minSdkVersion(dependency.build.minSdkVersion)
+        targetSdkVersion(dependency.build.targetSdkVersion)
+        versionCode = dependency.build.versionCode
+        versionName = dependency.build.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFile("consumer-rules.pro")
     }
