@@ -48,7 +48,7 @@ class AvatarArenaCache @Inject constructor(
     override fun carry(key: GetContentRequest, value: GetContentResponse) {
         if (database.avatarDao().count() > limit) {
             capture(Log.INFO) { "Removing oldest $clearStep elements from cache" }
-            database.avatarDao().last(clearStep).forEach { record ->
+            for (record in database.avatarDao().last(clearStep)) {
                 database.avatarDao().delete(record)
                 File(cacheRoot, record.location).delete()
             }

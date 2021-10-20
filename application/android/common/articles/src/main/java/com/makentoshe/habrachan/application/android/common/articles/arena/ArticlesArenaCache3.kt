@@ -17,7 +17,7 @@ import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
 import com.makentoshe.habrachan.entity.article.hub.ArticleHub
 import com.makentoshe.habrachan.entity.article.hub.hubId
 import com.makentoshe.habrachan.entity.article.hubs
-import com.makentoshe.habrachan.functional.Either
+import com.makentoshe.habrachan.functional.Either2
 import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
 import com.makentoshe.habrachan.network.articles.get.GetArticlesResponse
 import com.makentoshe.habrachan.network.articles.get.entity.articles
@@ -32,24 +32,23 @@ class ArticlesArenaCache3 @Inject constructor(
         private const val SIZE = 20
     }
 
-    override fun fetch(key: GetArticlesRequest): Either<GetArticlesResponse, ArenaStorageException> = try {
+    override fun fetch(key: GetArticlesRequest): Either2<GetArticlesResponse, ArenaStorageException> = try {
         capture(analyticEvent { "Fetch articles from cache by key: $key" })
         val page = key.extractPageNumberFromRequest()
-        if (page is Either.Right) page else fetch(key, (page as Either.Left).value, key.filters.typeString)
+        if (page is Either2.Right) page else fetch(key, (page as Either2.Left).value, key.filters.typeString)
     } catch (exception: Exception) {
-        Either.Right(ArenaStorageException(exception))
+        Either2.Right(ArenaStorageException(exception))
     }
 
-    private fun fetch(key: GetArticlesRequest, page: Int, type: String): Either<GetArticlesResponse, ArenaStorageException> {
+    private fun fetch(key: GetArticlesRequest, page: Int, type: String): Either2<GetArticlesResponse, ArenaStorageException> {
         val offset = (page - 1) * SIZE
         val articleRecords = cacheDatabase.articlesDao3().getDescSortedByTimePublished(offset, SIZE, type)
         val articles = articleRecords.map { articleRecord -> fetchArticle(articleRecord) }
 
-        println(articles.size)
         return if (articles.isEmpty()) {
-            Either.Right(ArenaStorageException(EmptyArenaStorageException("ArenaStorage is empty")))
+            Either2.Right(ArenaStorageException(EmptyArenaStorageException("ArenaStorage is empty")))
         } else {
-            Either.Left(GetArticlesResponse(key, articles(articles)))
+            Either2.Left(GetArticlesResponse(key, articles(articles)))
         }
     }
 
@@ -77,8 +76,7 @@ class ArticlesArenaCache3 @Inject constructor(
     }
 
     private fun fetchArticleHub(articleHubCrossRef: ArticleHubCrossRef): ArticleHub {
-        val articleHubRecord = cacheDatabase.hubDao3().getByHubId(articleHubCrossRef.hubId)
-        if (articleHubRecord == null) throw IllegalStateException("")
+        val articleHubRecord = cacheDatabase.hubDao3().getByHubId(articleHubCrossRef.hubId) ?: throw IllegalStateException("")
 
         return articleHubRecord.toArticleHub()
     }
@@ -88,19 +86,19 @@ class ArticlesArenaCache3 @Inject constructor(
     }
 
     private fun carry(key: GetArticlesRequest, value: GetArticlesResponse, type: String) {
-        key.extractPageNumberFromRequest().fold({ page -> carry(key, value, type, page) }) {}
+        key.extractPageNumberFromRequest().fold({ page -> carry(value, type, page) }) {}
     }
 
-    private fun carry(key: GetArticlesRequest, value: GetArticlesResponse, type: String, page: Int) {
-        if (page == 1) clearTablesBeforeCarrying(key, value, type)
+    private fun carry(value: GetArticlesResponse, type: String, page: Int) {
+        if (page == 1) clearTablesBeforeCarrying(type)
 
         capture(analyticEvent { "${value.articles.articles.value.size}" })
         value.articles.articles.value.forEach { article -> carryArticle(article, type) }
     }
 
-    private fun clearTablesBeforeCarrying(key: GetArticlesRequest, value: GetArticlesResponse, type: String) {
+    private fun clearTablesBeforeCarrying(type: String) {
         capture(analyticEvent { "Clear hubs related with ArticlesCache(type=$type)" })
-        cacheDatabase.articlesDao3().getAll(type).forEach { articleRecord ->
+        for (articleRecord in cacheDatabase.articlesDao3().getAll(type))  {
             cacheDatabase.articleHubCrossRefDao().clearByArticleId(articleRecord.articleId)
         }
 
@@ -108,15 +106,10 @@ class ArticlesArenaCache3 @Inject constructor(
         cacheDatabase.articlesDao().clear(type)
     }
 
-    private fun carryArticle(article: Article, type: String) {
+    private fun carryArticle(article: Article, type: String) = try {
         cacheDatabase.articlesDao3().insert(ArticleRecord3(type, article))
         cacheDatabase.articleAuthorDao3().insert(ArticleAuthorRecord3(article.author.value))
-        cacheDatabase.articleAuthorCrossRefDao().insert(
-            ArticleAuthorCrossRef(
-                article.articleId.value.articleId,
-                article.author.value.delegate.authorId.value.authorId
-            )
-        )
+        cacheDatabase.articleAuthorCrossRefDao().insert(ArticleAuthorCrossRef(article.articleId.value.articleId, article.author.value.delegate.authorId.value.authorId))
         article.hubs.value.onEach { hub ->
             cacheDatabase.hubDao3().insert(ArticleHubRecord3(hub))
         }.map { hub ->
@@ -124,22 +117,24 @@ class ArticlesArenaCache3 @Inject constructor(
         }.forEach { articleHubCrossRef ->
             cacheDatabase.articleHubCrossRefDao().insert(articleHubCrossRef)
         }
+    } catch (exception: Exception) {
+        capture(analyticEvent(throwable = exception))
     }
 
     private val Array<out ArticlesFilter>.typeString get() = joinToString(", ")
 
-    private fun GetArticlesRequest.extractPageNumberFromRequest(): Either<Int, ArenaStorageException> {
+    private fun GetArticlesRequest.extractPageNumberFromRequest(): Either2<Int, ArenaStorageException> {
         val filter = filters.findFilter("page")
         return if (filter.isEmpty) {
             val exception = ArenaStorageException("Error: could not find a \"page\" filter in ${filters.toList()}.")
-            Either.Right(exception.also { capture(analyticEvent(throwable = it)) })
+            Either2.Right(exception.also { capture(analyticEvent(throwable = it)) })
         } else {
             val page = filter.getOrThrow().value.toIntOrNull()
             if (page == null) {
                 val exception = ArenaStorageException("Error: could not select a page number in $filter")
-                return Either.Right(exception.also { capture(analyticEvent(throwable = it)) })
+                return Either2.Right(exception.also { capture(analyticEvent(throwable = it)) })
             } else {
-                Either.Left(page)
+                Either2.Left(page)
             }
         }
     }
