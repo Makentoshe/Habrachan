@@ -1,6 +1,6 @@
-package com.makentoshe.habrachan
+package com.makentoshe.habrachan.functional
 
-class Require<out V>(private val internalValue: V?) {
+class Require2<out V>(private val internalValue: V?) {
 
     val value: V
         get() = internalValue ?: throw IllegalStateException("Value is null")
@@ -8,11 +8,11 @@ class Require<out V>(private val internalValue: V?) {
     val nullableValue: V?
         get() = internalValue
 
-    inline fun onValueNotNull(action: (V) -> Unit): Require<V> {
+    inline fun onValueNotNull(action: (V) -> Unit): Require2<V> {
         nullableValue?.let(action)
 
         return this
     }
 }
 
-fun <T> Any?.toRequire() = Require<T>(this as T)
+fun <T> T?.toRequire2() = Require2<T>(this)

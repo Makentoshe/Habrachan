@@ -1,17 +1,17 @@
-package com.makentoshe.habrachan
+package com.makentoshe.habrachan.functional
 
-sealed class Option<out V> {
+sealed class Option2<out V> {
 
     abstract val isEmpty: Boolean
 
     abstract val isNotEmpty: Boolean
 
-    data class Value<V>(val value: V) : Option<V>() {
+    data class Value<V>(val value: V) : Option2<V>() {
         override val isEmpty: Boolean = false
         override val isNotEmpty: Boolean = !isEmpty
     }
 
-    object None : Option<Nothing>() {
+    object None : Option2<Nothing>() {
         override val isEmpty: Boolean = true
         override val isNotEmpty: Boolean = !isEmpty
     }
@@ -21,19 +21,19 @@ sealed class Option<out V> {
         is Value<V> -> ifSome(value)
     }
 
-    inline fun onNotEmpty(action: (V) -> Unit ): Option<V> {
+    inline fun onNotEmpty(action: (V) -> Unit ): Option2<V> {
         if (this is Value) action(value)
         return this
     }
 
-    inline fun <B> map(f: (V) -> B): Option<B> = flatMap { a -> Value(f(a)) }
+    inline fun <B> map(f: (V) -> B): Option2<B> = flatMap { a -> Value(f(a)) }
 
-    inline fun <B> flatMap(f: (V) -> Option<B>): Option<B> = when (this) {
+    inline fun <B> flatMap(f: (V) -> Option2<B>): Option2<B> = when (this) {
         is None -> this
         is Value -> f(value)
     }
 
-    inline fun filter(predicate: (V) -> Boolean): Option<V> =
+    inline fun filter(predicate: (V) -> Boolean): Option2<V> =
         flatMap { a -> if (predicate(a)) Value(a) else None }
 
     fun getOrNull(): V? = when (this) {
@@ -52,4 +52,4 @@ sealed class Option<out V> {
 }
 
 
-fun <T> T?.toOption(): Option<T> = this?.let { Option.Value(it) } ?: Option.None
+fun <T> T?.toOption(): Option2<T> = this?.let { Option2.Value(it) } ?: Option2.None

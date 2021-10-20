@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.entity.article
 
-import com.makentoshe.habrachan.Option
-import com.makentoshe.habrachan.Require
+import com.makentoshe.habrachan.AnyWithVolumeParameters
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
 import com.makentoshe.habrachan.entity.article.component.ArticleId
 import com.makentoshe.habrachan.entity.article.component.ArticleText
@@ -9,7 +8,8 @@ import com.makentoshe.habrachan.entity.article.component.ArticleTitle
 import com.makentoshe.habrachan.entity.article.hub.ArticleHub
 import com.makentoshe.habrachan.entity.component.TimePublished
 import com.makentoshe.habrachan.entity.component.timePublished
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
+import com.makentoshe.habrachan.functional.Option2
+import com.makentoshe.habrachan.functional.Require2
 import kotlinx.serialization.json.JsonElement
 
 data class Article(
@@ -22,35 +22,35 @@ data class Article(
  * mostly important in any instance of [Article] and should be in one call access.
  * */
 interface ArticlePropertiesDelegate {
-    /** Required to make requests and storing in datebase as a primary key*/
-    val articleId: Require<ArticleId>
+    /** Require2d to make requests and storing in datebase as a primary key*/
+    val articleId: Require2<ArticleId>
 
-    val title: Require<ArticleTitle>
+    val title: Require2<ArticleTitle>
 
-    val timePublished: Require<TimePublished>
+    val timePublished: Require2<TimePublished>
 
-    val author: Require<ArticleAuthor>
+    val author: Require2<ArticleAuthor>
 
     /** In which hubs article was posted */
-    val hubs: Require<List<ArticleHub>>
+    val hubs: Require2<List<ArticleHub>>
 
     /** How many comments [Article] already have */
-    val commentsCount: Require<Int>
+    val commentsCount: Require2<Int>
 
     /** How many users added this article to their bookmarks */
-    val favoritesCount: Require<Int>
+    val favoritesCount: Require2<Int>
 
     /** How many article was read. Each user can read article multiple times. */
-    val readingCount: Require<Int>
+    val readingCount: Require2<Int>
 
     /** The median of users likeability for article */
-    val scoresCount: Require<Int>
+    val scoresCount: Require2<Int>
 
     /** How many users make a vote for article */
-    val votesCount: Require<Int>
+    val votesCount: Require2<Int>
 
     /** This field is option due to various apis. Part of them does not return an article text */
-    val articleText: Option<ArticleText>
+    val articleText: Option2<ArticleText>
 }
 
 val Article.articleId get() = delegate.articleId
@@ -91,36 +91,36 @@ fun article(
     articleParameters: Map<String, JsonElement> = emptyMap()
 ) = Article(articleParameters, object : ArticlePropertiesDelegate {
 
-    override val articleId: Require<ArticleId>
-        get() = Require(ArticleId(articleId))
+    override val articleId: Require2<ArticleId>
+        get() = Require2(ArticleId(articleId))
 
-    override val articleText: Option<ArticleText>
-        get() = Option.from(articleText?.let(::ArticleText))
+    override val articleText: Option2<ArticleText>
+        get() = Option2.from(articleText?.let(::ArticleText))
 
-    override val title: Require<ArticleTitle>
-        get() = Require(ArticleTitle(articleTitle))
+    override val title: Require2<ArticleTitle>
+        get() = Require2(ArticleTitle(articleTitle))
 
-    override val author: Require<ArticleAuthor>
-        get() = Require(articleAuthor)
+    override val author: Require2<ArticleAuthor>
+        get() = Require2(articleAuthor)
 
-    override val timePublished: Require<TimePublished>
-        get() = Require(timePublished(timePublished))
+    override val timePublished: Require2<TimePublished>
+        get() = Require2(timePublished(timePublished))
 
-    override val hubs: Require<List<ArticleHub>>
-        get() = Require(articleHubs)
+    override val hubs: Require2<List<ArticleHub>>
+        get() = Require2(articleHubs)
 
-    override val commentsCount: Require<Int>
-        get() = Require(commentsCount)
+    override val commentsCount: Require2<Int>
+        get() = Require2(commentsCount)
 
-    override val favoritesCount: Require<Int>
-        get() = Require(favoritesCount)
+    override val favoritesCount: Require2<Int>
+        get() = Require2(favoritesCount)
 
-    override val readingCount: Require<Int>
-        get() = Require(readingCount)
+    override val readingCount: Require2<Int>
+        get() = Require2(readingCount)
 
-    override val votesCount: Require<Int>
-        get() = Require(votesCount)
+    override val votesCount: Require2<Int>
+        get() = Require2(votesCount)
 
-    override val scoresCount: Require<Int>
-        get() = Require(scoresCount)
+    override val scoresCount: Require2<Int>
+        get() = Require2(scoresCount)
 })

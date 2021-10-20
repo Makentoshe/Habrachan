@@ -1,10 +1,10 @@
 package com.makentoshe.habrachan.network.articles.get.mobile.entity
 
+import com.makentoshe.habrachan.AnyWithVolumeParameters
 import com.makentoshe.habrachan.delegate.requireIntReadonlyProperty
 import com.makentoshe.habrachan.delegate.requireReadonlyProperty
 import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.article.ArticlePropertiesDelegate
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
 import com.makentoshe.habrachan.network.articles.get.entity.Articles
 import com.makentoshe.habrachan.network.articles.get.entity.ArticlesPropertiesDelegate
 import kotlinx.serialization.json.JsonElement

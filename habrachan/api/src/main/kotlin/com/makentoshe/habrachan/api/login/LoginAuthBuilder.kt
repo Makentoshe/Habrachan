@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.api.login
 
-import com.makentoshe.habrachan.Require
-import com.makentoshe.habrachan.delegate.RequireReadWriteProperty
+import com.makentoshe.habrachan.delegate.Require2ReadWriteProperty
+import com.makentoshe.habrachan.functional.Require2
 import kotlin.reflect.KProperty
 
 class LoginAuthBuilder(
@@ -18,16 +18,16 @@ class LoginAuthBuilder(
     }
 }
 
-class LoginAuthBuilderRequireReadWriteProperty<Type>(
+class LoginAuthBuilderRequire2ReadWriteProperty<Type>(
     private val key: String,
     private val readMap: (String) -> Type,
     private val writeMap: (Type) -> String,
-) : RequireReadWriteProperty<LoginAuthBuilder, Type>() {
-    override fun getValue(thisRef: LoginAuthBuilder, property: KProperty<*>): Require<Type> {
-        return Require(thisRef.mutableParameters[key]?.let(readMap))
+) : Require2ReadWriteProperty<LoginAuthBuilder, Type>() {
+    override fun getValue(thisRef: LoginAuthBuilder, property: KProperty<*>): Require2<Type> {
+        return Require2(thisRef.mutableParameters[key]?.let(readMap))
     }
 
-    override fun setValue(thisRef: LoginAuthBuilder, property: KProperty<*>, value: Require<Type>) {
+    override fun setValue(thisRef: LoginAuthBuilder, property: KProperty<*>, value: Require2<Type>) {
         thisRef.mutableParameters[key] = value.value.let(writeMap)
     }
 }
@@ -36,4 +36,4 @@ fun <Type> requireReadWriteProperty(
     key: String,
     readMap: (String) -> Type,
     writeMap: (Type) -> String,
-) = LoginAuthBuilderRequireReadWriteProperty(key, readMap, writeMap)
+) = LoginAuthBuilderRequire2ReadWriteProperty(key, readMap, writeMap)

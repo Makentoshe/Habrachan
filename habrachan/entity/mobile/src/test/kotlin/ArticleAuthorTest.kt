@@ -1,6 +1,5 @@
 @file:Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 
-import com.makentoshe.habrachan.Option
 import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.article.author
 import com.makentoshe.habrachan.entity.article.author.ArticleAuthor
@@ -8,6 +7,7 @@ import com.makentoshe.habrachan.entity.article.author.authorAvatar
 import com.makentoshe.habrachan.entity.article.author.authorId
 import com.makentoshe.habrachan.entity.article.author.authorLogin
 import com.makentoshe.habrachan.entity.mobile.*
+import com.makentoshe.habrachan.functional.Option2
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
@@ -59,7 +59,7 @@ class ArticleAuthorTest {
 
     @Test
     fun `test should check avatar property`() {
-        assertEquals(Option.None, author.authorAvatar)
+        assertEquals(Option2.None, author.authorAvatar)
     }
 
 }

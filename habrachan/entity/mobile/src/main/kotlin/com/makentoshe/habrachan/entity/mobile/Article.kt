@@ -1,5 +1,6 @@
 package com.makentoshe.habrachan.entity.mobile
 
+import com.makentoshe.habrachan.AnyWithVolumeParameters
 import com.makentoshe.habrachan.delegate.*
 import com.makentoshe.habrachan.entity.article.Article
 import com.makentoshe.habrachan.entity.article.ArticlePropertiesDelegate
@@ -13,8 +14,6 @@ import com.makentoshe.habrachan.entity.article.hub.ArticleHub
 import com.makentoshe.habrachan.entity.article.hub.ArticleHubPropertiesDelegate
 import com.makentoshe.habrachan.entity.article.tag.ArticleTag
 import com.makentoshe.habrachan.entity.component.timePublished
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.AnyWithVolumeParameters
-import com.makentoshe.habrachan.functional.com.makentoshe.habrachan.delegate.optionReadonlyProperty
 import kotlinx.serialization.json.*
 
 fun articleProperties(

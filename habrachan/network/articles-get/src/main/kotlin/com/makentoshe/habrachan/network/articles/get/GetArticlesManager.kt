@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.network.articles.get
 
 import com.makentoshe.habrachan.api.articles.api.HabrArticlesFilterApi
-import com.makentoshe.habrachan.functional.Either
+import com.makentoshe.habrachan.functional.Either2
 import com.makentoshe.habrachan.network.articles.get.entity.Articles
 import io.ktor.client.*
 import io.ktor.client.features.*
@@ -18,13 +18,13 @@ abstract class GetArticlesManager(private val client: HttpClient) {
 
     protected abstract fun articles(json: String): Articles
 
-    suspend fun execute(request: GetArticlesRequest): Either<GetArticlesResponse, GetArticlesException> = try {
-        Either.Left(GetArticlesResponse(request, articles(ktorResponse(request).readText())))
+    suspend fun execute(request: GetArticlesRequest): Either2<GetArticlesResponse, GetArticlesException> = try {
+        Either2.Left(GetArticlesResponse(request, articles(ktorResponse(request).readText())))
     } catch (exception: ClientRequestException) {
         val parameters = Json.decodeFromString<JsonObject>(exception.response.readText()).toMap()
-        Either.Right(GetArticlesException(request, exception, parameters))
+        Either2.Right(GetArticlesException(request, exception, parameters))
     } catch (exception: Exception) {
-        Either.Right(GetArticlesException(request, exception, emptyMap()))
+        Either2.Right(GetArticlesException(request, exception, emptyMap()))
     }
 
     private fun ktorUrl(url: HabrArticlesFilterApi): Url {

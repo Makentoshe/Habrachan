@@ -10,7 +10,7 @@ import com.makentoshe.habrachan.api.mobile.articles.*
 import com.makentoshe.habrachan.entity.mobile.ArticleAuthorPropertiesDelegateImpl
 import com.makentoshe.habrachan.entity.mobile.ArticleHubPropertiesDelegateImpl
 import com.makentoshe.habrachan.entity.mobile.ArticlePropertiesDelegateImpl
-import com.makentoshe.habrachan.functional.Either
+import com.makentoshe.habrachan.functional.Either2
 import com.makentoshe.habrachan.network.articles.get.GetArticlesManager
 import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
 import com.makentoshe.habrachan.network.articles.get.entity.Articles
@@ -41,6 +41,6 @@ fun main() = runBlocking {
     val response = GetArticlesManagerImpl(HttpClient()).execute(request)
     println(response)
 
-    println((response as Either.Left).value.request)
+    println((response as Either2.Left).value.request)
 
 }

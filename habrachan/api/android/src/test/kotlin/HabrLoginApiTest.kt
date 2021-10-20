@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.api.android.login.entity.GrantType
 import com.makentoshe.habrachan.api.login.LoginAuthBuilder
 import com.makentoshe.habrachan.api.login.entity.Email
 import com.makentoshe.habrachan.api.login.entity.Password
-import com.makentoshe.habrachan.toRequire
+import com.makentoshe.habrachan.functional.toRequire2
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -20,11 +20,11 @@ class HabrLoginApiTest {
     fun `test should build login post request`() {
         val parameters = AdditionalRequestParameters(headers = mapOf("token" to "asd"))
         val loginAuthBuilder = LoginAuthBuilder {
-            email = Email("my-email@custom.com").toRequire()
-            password = Password("MyStrongPassword").toRequire()
-            clientSecret = ClientSecret("ClientSecret41ce").toRequire()
-            clientId = ClientId("ClientId.9432").toRequire()
-            grantType = GrantType("password").toRequire()
+            email = Email("my-email@custom.com").toRequire2()
+            password = Password("MyStrongPassword").toRequire2()
+            clientSecret = ClientSecret("ClientSecret41ce").toRequire2()
+            clientId = ClientId("ClientId.9432").toRequire2()
+            grantType = GrantType("password").toRequire2()
         }
         val request = api.login().auth(loginAuthBuilder.build()).build(parameters)
 

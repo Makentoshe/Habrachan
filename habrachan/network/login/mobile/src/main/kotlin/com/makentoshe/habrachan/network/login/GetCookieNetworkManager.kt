@@ -5,7 +5,7 @@ import com.makentoshe.habrachan.api.mobile.login
 import com.makentoshe.habrachan.api.mobile.login.api.HabrLoginCookiesApi
 import com.makentoshe.habrachan.api.mobile.login.build
 import com.makentoshe.habrachan.api.mobile.login.cookies
-import com.makentoshe.habrachan.functional.Either
+import com.makentoshe.habrachan.functional.Either2
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
@@ -18,15 +18,15 @@ import kotlinx.serialization.json.JsonObject
 
 class GetCookieNetworkManager(private val client: HttpClient) {
 
-    suspend fun execute(request: GetCookieRequest): Either<GetCookieResponse, GetCookieException> = try {
+    suspend fun execute(request: GetCookieRequest): Either2<GetCookieResponse, GetCookieException> = try {
         val api = MobileHabrApi.login().cookies().build(request.parameters)
         val ktorResponse = ktorCookiesRequest(api).call.response
-        Either.Left(GetCookieResponse(request, ktorResponse.internalQueries, ktorResponse.internalHeaders))
+        Either2.Left(GetCookieResponse(request, ktorResponse.internalQueries, ktorResponse.internalHeaders))
     } catch (exception: ClientRequestException) {
         val parameters = Json.decodeFromString<JsonObject>(exception.response.readText()).toMap()
-        Either.Right(GetCookieException(request, exception, parameters))
+        Either2.Right(GetCookieException(request, exception, parameters))
     } catch (exception: Exception) {
-        Either.Right(GetCookieException(request, exception, emptyMap()))
+        Either2.Right(GetCookieException(request, exception, emptyMap()))
     }
 
     private fun ktorCookiesUrl(url: HabrLoginCookiesApi): Url {
