@@ -23,20 +23,19 @@ class ArticleHtmlController @Inject constructor(private val resources: Resources
         val body = document.body().prependChild(customJsBundle()).prependChild(customCssBundleNode())
 
         // Tables processing
-        body.select("table").filter {
-            it.select("img").isNotEmpty()
-        }.forEach {
-            it.addClass("table_img")
+        for (table in body.select("table")) {
+            if (table.select("img").isEmpty()) break
+            table.addClass("table_img")
         }
 
         // Spoilers processing
-        body.select(".spoiler").forEach { spoiler ->
+        for (spoiler in body.select(".spoiler"))  {
             val spoilerTitleNode = spoiler.select(".spoiler_title")
             spoilerTitleNode.attr("onclick", "onSpoilerClickedListener(this)")
         }
 
         // Images processing
-        body.select("img").forEach { image ->
+        for (image in body.select("img")) {
             // TODO check case when image placed in <a> tag and implement dialog for making decision
             image.attr("onclick", "onImageClickedListener(this);")
 
