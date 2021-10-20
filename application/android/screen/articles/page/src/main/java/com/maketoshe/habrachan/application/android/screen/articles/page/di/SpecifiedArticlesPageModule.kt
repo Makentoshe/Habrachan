@@ -8,7 +8,7 @@ import com.makentoshe.habrachan.application.android.database.record.userdatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesScope
-import com.makentoshe.habrachan.functional.Option
+import com.makentoshe.habrachan.functional.Option2
 import com.maketoshe.habrachan.application.android.screen.articles.page.ArticlesPageFragment
 import com.maketoshe.habrachan.application.android.screen.articles.page.di.provider.GetArticlesViewModelProvider
 import com.maketoshe.habrachan.application.android.screen.articles.page.model.ArticlesFooterAdapter
@@ -26,7 +26,7 @@ class SpecifiedArticlesPageModule(fragment: ArticlesPageFragment) : Module() {
         Toothpick.openScopes(ApplicationScope::class, ArticlesScope::class, ArticlesPageScope::class).inject(this)
         bind<ArticlesPageFragment>().toInstance(fragment)
 
-        bind<Option<GetArticlesSpec>>().toInstance(Option.Value(GetArticlesSpec(articleFilters(fragment.arguments))))
+        bind<Option2<GetArticlesSpec>>().toInstance(Option2.Value(GetArticlesSpec(articleFilters(fragment.arguments))))
         bind<ExceptionHandler>().toInstance(ExceptionHandler(fragment.requireContext()))
 
         bind<GetArticlesViewModel>().toProvider(GetArticlesViewModelProvider::class).singleton()
