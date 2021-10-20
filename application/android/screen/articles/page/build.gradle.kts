@@ -60,8 +60,6 @@ dependencies {
     implementation(project(":habrachan:network"))
     implementation(project(":habrachan:network:articles-get"))
 
-    implementation(project(":functional"))
-
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
 
