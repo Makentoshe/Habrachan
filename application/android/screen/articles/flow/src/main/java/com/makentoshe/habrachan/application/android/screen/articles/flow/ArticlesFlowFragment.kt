@@ -37,7 +37,6 @@ class ArticlesFlowFragment : BaseFragment() {
     private val loginScreenNavigator by inject<LoginScreenNavigator>()
     private val userSession by inject<AndroidUserSession2>()
     private val tabLayoutMediatorController by inject<TabLayoutMediatorController>()
-    private val adapter by inject<ArticlesFlowAdapter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +48,7 @@ class ArticlesFlowFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fragment_flow_articles_viewpager.adapter = adapter
+        fragment_flow_articles_viewpager.adapter = ArticlesFlowAdapter(this, arguments.userSearchesCount)
         tabLayoutMediatorController.attach(fragment_flow_articles_tabs, fragment_flow_articles_viewpager)
 
         if (userSession.isLoggedIn) updateToolbarLogin() else updateToolbarLogout()
