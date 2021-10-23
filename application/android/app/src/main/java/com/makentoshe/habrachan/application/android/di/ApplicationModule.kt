@@ -5,8 +5,8 @@ import androidx.room.Room
 import com.makentoshe.habrachan.BuildConfig.API_KEY
 import com.makentoshe.habrachan.BuildConfig.CLIENT_KEY
 import com.makentoshe.habrachan.api.articles.ArticlesFilter
+import com.makentoshe.habrachan.api.articles.DailyArticlesPeriod
 import com.makentoshe.habrachan.api.articles.and
-import com.makentoshe.habrachan.api.articles.filter.DailyArticlesPeriod
 import com.makentoshe.habrachan.api.mobile.articles.*
 import com.makentoshe.habrachan.application.android.AndroidUserSession
 import com.makentoshe.habrachan.application.android.ExceptionHandler
@@ -28,6 +28,7 @@ import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.userSession
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
+
 
 class ApplicationModule(private val context: Context) : Module() {
 
@@ -67,6 +68,7 @@ class ApplicationModule(private val context: Context) : Module() {
         if (userDatabase.articlesUserSearchDao().getAll().isNotEmpty()) return
 
         initializeDefaultAllArticlesUserSearchRecord()
+        initializeDefaultMostReadingArticlesUserSearchRecord()
         initializeDefaultTopDailyArticlesUserSearchRecord()
     }
 
@@ -79,9 +81,6 @@ class ApplicationModule(private val context: Context) : Module() {
         (sortArticlesFilter(RatingArticlesSort) and pageArticlesFilter(1)).forEach { filter ->
             initializeArticlesFilterRecord(filter, articlesUserSearchRecord)
         }
-
-        val all = userDatabase.articlesFilterDao().getAll()
-        println(all)
     }
 
     private fun initializeArticlesFilterRecord(
@@ -102,6 +101,18 @@ class ApplicationModule(private val context: Context) : Module() {
         userDatabase.articlesUserSearchDao().insert(articlesUserSearchRecord)
 
         (sortArticlesFilter(DateArticlesSort) and periodArticlesFilter(DailyArticlesPeriod) and pageArticlesFilter(1)).forEach { filter ->
+            initializeArticlesFilterRecord(filter, articlesUserSearchRecord)
+        }
+    }
+
+    private fun initializeDefaultMostReadingArticlesUserSearchRecord() {
+        val title = context.getString(R.string.articles_default_search_most_reading)
+
+        val articlesUserSearchRecord = ArticlesUserSearchRecord(title, true)
+        userDatabase.articlesUserSearchDao().insert(articlesUserSearchRecord)
+
+        // Page uses only for successful storing in the cache
+        (mostReadingArticlesFilter() and pageArticlesFilter(1)).forEach { filter ->
             initializeArticlesFilterRecord(filter, articlesUserSearchRecord)
         }
     }
