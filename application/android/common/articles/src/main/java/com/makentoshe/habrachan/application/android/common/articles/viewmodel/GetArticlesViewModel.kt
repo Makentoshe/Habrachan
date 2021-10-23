@@ -14,6 +14,7 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.articles.model.ArticleModel
 import com.makentoshe.habrachan.application.android.common.articles.model.GetArticlesDataSource
+import com.makentoshe.habrachan.application.android.common.articles.model.GetArticlesPaginator
 import com.makentoshe.habrachan.application.common.arena.articles.ArticlesArena3
 import com.makentoshe.habrachan.functional.Option2
 import com.makentoshe.habrachan.network.UserSession
@@ -43,7 +44,7 @@ class GetArticlesViewModel(
 
     @OptIn(FlowPreview::class)
     val pagingData = internalChannel.receiveAsFlow().flatMapConcat { spec ->
-        Pager(PagingConfig(spec.pageSize), spec) { GetArticlesDataSource(userSession, articlesArena) }.flow
+        Pager(PagingConfig(spec.pageSize), spec) { GetArticlesDataSource(userSession, articlesArena, GetArticlesPaginator()) }.flow
     }.map { it.map(::ArticleModel) }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
 
     init {
