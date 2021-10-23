@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.network.articles.get.android.entity
 
 import com.makentoshe.habrachan.AnyWithVolumeParameters
+import com.makentoshe.habrachan.delegate.optionIntReadonlyProperty
 import com.makentoshe.habrachan.delegate.optionReadonlyProperty
-import com.makentoshe.habrachan.delegate.requireIntReadonlyProperty
 import com.makentoshe.habrachan.delegate.requireListReadonlyProperty
 import com.makentoshe.habrachan.delegate.requireStringReadonlyProperty
 import com.makentoshe.habrachan.entity.article.Article
@@ -20,9 +20,9 @@ data class ArticlesPropertiesDelegateImpl(
     override val articles by requireListReadonlyProperty("data") { jsonObject ->
         jsonObject.toMap().let { Article(it, articlePropertiesDelegateFactory(it)) }
     }
-}
 
-val Articles.pages by requireIntReadonlyProperty("pages")
+    override val totalPages by optionIntReadonlyProperty("pages")
+}
 
 val Articles.sortedBy by requireStringReadonlyProperty("sorted_by")
 
