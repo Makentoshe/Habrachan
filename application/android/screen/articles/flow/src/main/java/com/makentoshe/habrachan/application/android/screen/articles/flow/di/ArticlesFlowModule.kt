@@ -6,7 +6,6 @@ import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesScope
 import com.makentoshe.habrachan.application.android.screen.articles.flow.ArticlesFlowFragment
 import com.makentoshe.habrachan.application.android.screen.articles.flow.di.provider.ArticlesFlowAdapterProvider
-import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesFlowAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.TabLayoutMediatorController
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.toArticlesUserSearch
 import toothpick.Toothpick
@@ -30,6 +29,6 @@ class ArticlesFlowModule(fragment: ArticlesFlowFragment) : Module() {
         val searches = userDatabase.articlesUserSearchDao().getAll().map { it.toArticlesUserSearch() }
         bind<TabLayoutMediatorController>().toInstance(TabLayoutMediatorController(searches))
 
-        bind<ArticlesFlowAdapter>().toProviderInstance(ArticlesFlowAdapterProvider(fragment, searches.size))
+        bind<ArticlesFlowAdapterProvider>().toInstance(ArticlesFlowAdapterProvider(fragment))
     }
 }
