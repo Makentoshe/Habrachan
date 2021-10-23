@@ -13,7 +13,7 @@ import com.makentoshe.habrachan.application.android.common.binding.attachBinding
 import com.makentoshe.habrachan.application.android.common.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.screen.articles.flow.databinding.FragmentFlowArticlesBinding
-import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesFlowAdapter
+import com.makentoshe.habrachan.application.android.screen.articles.flow.di.provider.ArticlesFlowAdapterProvider
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesUserSearch
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.TabLayoutMediatorController
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.LoginScreenNavigator
@@ -37,6 +37,8 @@ class ArticlesFlowFragment : BaseFragment() {
     private val loginScreenNavigator by inject<LoginScreenNavigator>()
     private val userSession by inject<AndroidUserSession2>()
     private val tabLayoutMediatorController by inject<TabLayoutMediatorController>()
+    private val adapterProvider by inject<ArticlesFlowAdapterProvider>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +50,7 @@ class ArticlesFlowFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fragment_flow_articles_viewpager.adapter = ArticlesFlowAdapter(this, arguments.userSearchesCount)
+        fragment_flow_articles_viewpager.adapter = adapterProvider.get()
         tabLayoutMediatorController.attach(fragment_flow_articles_tabs, fragment_flow_articles_viewpager)
 
         if (userSession.isLoggedIn) updateToolbarLogin() else updateToolbarLogout()
