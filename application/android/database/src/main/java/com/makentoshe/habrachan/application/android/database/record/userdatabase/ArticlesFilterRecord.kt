@@ -20,7 +20,7 @@ data class ArticlesFilterRecord(
 
 fun ArticlesFilterRecord.toArticlesFilter(): Option2<ArticlesFilter> = Option2.from(
     when (internalType) {
-        "PathArticlesFilter" -> ArticlesFilter.PathArticlesFilter(key, value)
+        "PathArticlesFilter" -> ArticlesFilter.PathArticlesFilter(value)
         "QueryArticlesFilter" -> ArticlesFilter.QueryArticlesFilter(key, value)
         else -> null
     }
