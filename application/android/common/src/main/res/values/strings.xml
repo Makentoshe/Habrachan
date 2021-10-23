@@ -13,4 +13,5 @@
     <string name="articles_default_search_all">All articles</string>
     <string name="articles_default_search_interesting">Interesting</string>
     <string name="articles_default_search_daily_top">Top of daily</string>
+    <string name="articles_default_search_most_reading">Most reading</string>
 </resources>
