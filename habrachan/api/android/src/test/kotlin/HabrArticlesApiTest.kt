@@ -3,8 +3,8 @@ import com.makentoshe.habrachan.api.android.AndroidHabrApi
 import com.makentoshe.habrachan.api.android.articles
 import com.makentoshe.habrachan.api.android.articles.*
 import com.makentoshe.habrachan.api.articles.ArticlesVote
+import com.makentoshe.habrachan.api.articles.DailyArticlesPeriod
 import com.makentoshe.habrachan.api.articles.DownVoteReason
-import com.makentoshe.habrachan.api.articles.filter.DailyArticlesPeriod
 import com.makentoshe.habrachan.entity.article.component.ArticleId
 import org.junit.Assert.assertEquals
 import org.junit.Test

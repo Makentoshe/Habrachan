@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.api.articles.filter
+package com.makentoshe.habrachan.api.articles
 
 abstract class ArticlesPeriod(val value: String) {
     override fun toString(): String {

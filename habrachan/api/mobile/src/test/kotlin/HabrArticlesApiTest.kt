@@ -1,8 +1,8 @@
 import com.makentoshe.habrachan.api.AdditionalRequestParameters
 import com.makentoshe.habrachan.api.articles.ArticlesVote
+import com.makentoshe.habrachan.api.articles.DailyArticlesPeriod
 import com.makentoshe.habrachan.api.articles.DownVoteReason
 import com.makentoshe.habrachan.api.articles.and
-import com.makentoshe.habrachan.api.articles.filter.DailyArticlesPeriod
 import com.makentoshe.habrachan.api.mobile.MobileHabrApi
 import com.makentoshe.habrachan.api.mobile.articles
 import com.makentoshe.habrachan.api.mobile.articles.*
@@ -20,7 +20,7 @@ class HabrArticlesApiTest {
         val filters = sortArticlesFilter(DateArticlesSort) and periodArticlesFilter(DailyArticlesPeriod)
         val request = api.articles().filter(*filters).build(parameters)
 
-        assertEquals("https://habr.com/kek/v2/articles", request.path)
+        assertEquals("https://habr.com/kek/v2/articles/", request.path)
         assertEquals(DateArticlesSort.value, request.queries["sort"])
         assertEquals(DailyArticlesPeriod.value, request.queries["period"])
         assertEquals("asd", request.headers["token"])
@@ -34,7 +34,7 @@ class HabrArticlesApiTest {
     @Test
     fun `test should build most reading articles request`() {
         val parameters = AdditionalRequestParameters(queries = mapOf("page" to "1"))
-        val request = api.articles().mostReading().build(parameters)
+        val request = api.articles().filter(mostReadingArticlesFilter()).build(parameters)
 
         assertEquals("https://habr.com/kek/v2/articles/most-reading", request.path)
     }
