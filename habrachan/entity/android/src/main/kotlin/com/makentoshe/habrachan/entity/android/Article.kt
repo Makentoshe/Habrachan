@@ -50,15 +50,15 @@ data class ArticlePropertiesDelegateImpl(
         ArticleText(jsonElement.jsonPrimitive.content)
     }
 
-    override val commentsCount by requireIntReadonlyProperty("comments_count")
+    override val commentsCount by requireReadonlyProperty(intPropertyMapper("comments_count"))
 
-    override val favoritesCount by requireIntReadonlyProperty("favorites_count")
+    override val favoritesCount by requireReadonlyProperty(intPropertyMapper("favorites_count"))
 
-    override val readingCount by requireIntReadonlyProperty("reading_count")
+    override val readingCount by requireReadonlyProperty(intPropertyMapper("reading_count"))
 
-    override val votesCount by requireIntReadonlyProperty("votes_count")
+    override val votesCount by requireReadonlyProperty(intPropertyMapper("votes_count"))
 
-    override val scoresCount by requireIntReadonlyProperty("score")
+    override val scoresCount by requireReadonlyProperty(intPropertyMapper("score"))
 }
 
 val Article.flows by requireListReadonlyProperty(
@@ -69,10 +69,10 @@ val Article.tags by requireReadonlyProperty("tags_string") { jsonElement ->
     jsonElement.jsonPrimitive.content.split(", ").map(::articleTag)
 }
 
-val Article.isCorporative by requireIntReadonlyProperty("is_corporative")
+val Article.isCorporative by requireReadonlyProperty(intPropertyMapper("is_corporative"))
 
 val Article.lang by requireStringReadonlyProperty("lang")
 
-val Article.editorVersion by requireIntReadonlyProperty("editor_version")
+val Article.editorVersion by requireReadonlyProperty(intPropertyMapper("editor_version"))
 
 val Article.postType by requireStringReadonlyProperty("post_type_str")

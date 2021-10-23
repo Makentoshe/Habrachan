@@ -7,8 +7,8 @@ import com.makentoshe.habrachan.api.mobile.articles.pageArticlesFilter
 import com.makentoshe.habrachan.api.mobile.articles.sortArticlesFilter
 import com.makentoshe.habrachan.functional.Either2
 import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
+import com.makentoshe.habrachan.network.articles.get.entity.totalPages
 import com.makentoshe.habrachan.network.articles.get.mobile.GetArticlesManagerImpl
-import com.makentoshe.habrachan.network.articles.get.mobile.entity.pages
 import com.makentoshe.habrachan.network.articles.get.mobile.networkCode
 import com.makentoshe.habrachan.network.articles.get.mobile.networkMessage
 import io.ktor.client.*
@@ -33,7 +33,7 @@ class GetArticlesManagerImplTest {
         val response = requireManagerWithJson(json, HttpStatusCode.OK).execute(request) as Either2.Left
 
         assertEquals(request, response.value.request)
-        assertEquals(50, response.value.articles.pages.value)
+        assertEquals(50, response.value.articles.totalPages.getOrNull())
         assertEquals(20, response.value.articles.delegate.articles.value.size)
     }
 

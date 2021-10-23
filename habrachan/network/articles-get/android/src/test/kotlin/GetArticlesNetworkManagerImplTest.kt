@@ -4,8 +4,8 @@ import com.makentoshe.habrachan.api.AdditionalRequestParameters
 import com.makentoshe.habrachan.api.android.articles.allArticlesFilter
 import com.makentoshe.habrachan.api.android.articles.pageArticlesFilter
 import com.makentoshe.habrachan.api.android.articles.topArticlesFilter
+import com.makentoshe.habrachan.api.articles.WeeklyArticlesPeriod
 import com.makentoshe.habrachan.api.articles.and
-import com.makentoshe.habrachan.api.articles.filter.WeeklyArticlesPeriod
 import com.makentoshe.habrachan.functional.Either2
 import com.makentoshe.habrachan.network.articles.get.GetArticlesRequest
 import com.makentoshe.habrachan.network.articles.get.android.GetArticlesManagerImpl
@@ -13,6 +13,7 @@ import com.makentoshe.habrachan.network.articles.get.android.entity.*
 import com.makentoshe.habrachan.network.articles.get.android.networkAdditional
 import com.makentoshe.habrachan.network.articles.get.android.networkCode
 import com.makentoshe.habrachan.network.articles.get.android.networkMessage
+import com.makentoshe.habrachan.network.articles.get.entity.totalPages
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.*
@@ -42,7 +43,7 @@ class GetArticlesNetworkManagerImplTest {
         val response = requireManagerWithJson(json, HttpStatusCode.OK).execute(request) as Either2.Left
 
         assertEquals(request, response.value.request)
-        assertEquals(50, response.value.articles.pages.value)
+        assertEquals(50, response.value.articles.totalPages.getOrNull())
         assertEquals("2021-10-10T20:55:28+03:00", response.value.articles.serverTime.value)
         assertEquals("time_published", response.value.articles.sortedBy.value)
         assertEquals("https://habr.com/api/v1/posts/all?page=3", response.value.articles.nextPage.getOrThrow().url.value)

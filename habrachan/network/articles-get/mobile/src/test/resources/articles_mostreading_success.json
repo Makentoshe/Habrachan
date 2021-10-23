@@ -1,0 +1,1854 @@
+{
+  "articles": {
+    "articleIds": [
+      "584572",
+      "584616",
+      "584828",
+      "583930",
+      "584578",
+      "584224",
+      "584844",
+      "584152",
+      "584628",
+      "584858",
+      "584856",
+      "584662",
+      "584852",
+      "584830",
+      "584850",
+      "584420",
+      "584766",
+      "584514",
+      "583058",
+      "584798"
+    ],
+    "articleRefs": {
+      "583058": {
+        "id": "583058",
+        "timePublished": "2021-10-20T09:00:02+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Самую холодную капельку во Вселенной уронили с высокой колокольни",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "1832999",
+          "alias": "Yermack",
+          "fullname": null,
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/690/140/823/690140823f555d03574a59d46f648d24.jpg",
+          "speciality": "Пользователь"
+        },
+        "statistics": {
+          "commentsCount": 32,
+          "favoritesCount": 52,
+          "readingCount": 27520,
+          "score": 98,
+          "votesCount": 102
+        },
+        "hubs": [
+          {
+            "id": "19791",
+            "alias": "ruvds",
+            "type": "corporative",
+            "title": "RUVDS.com corporate blog",
+            "titleHtml": "RUVDS.com corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "18840",
+            "alias": "julia",
+            "type": "collective",
+            "title": "Julia",
+            "titleHtml": "Julia",
+            "isProfiled": true
+          },
+          {
+            "id": "21910",
+            "alias": "popular_science",
+            "type": "collective",
+            "title": "Popular science",
+            "titleHtml": "Popular science",
+            "isProfiled": false
+          },
+          {
+            "id": "21968",
+            "alias": "physics",
+            "type": "collective",
+            "title": "Physics",
+            "titleHtml": "Physics",
+            "isProfiled": false
+          },
+          {
+            "id": "22018",
+            "alias": "quantum",
+            "type": "collective",
+            "title": "Quantum technologies",
+            "titleHtml": "Quantum technologies",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          },
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci",
+            "titleHtml": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 32,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-19T09:00:02+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<a href=\"https://habr.com/ru/company/ruvds/blog/583058/\"><div style=\"text-align:center;\"><img src=\"https://habrastorage.org/getpro/habr/upload_files/d73/44d/03a/d7344d03a2c68fbc4baccd468b660c09.PNG\"></div></a><br>\r\nИ остались довольны результатом. Теперь хотят отправить ее на орбиту Земли.<br>\r\n<br>\r\nСегодня мы попробуем разобраться в физике пятого состояния материи и выясним, зачем ее сбрасывать с башни.",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "583930": {
+        "id": "583930",
+        "timePublished": "2021-10-20T14:00:13+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Ася Казанцева: Движение улучшает мозг",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "320053",
+          "alias": "MagisterLudi",
+          "fullname": "Алексей JetHackers Стаценко",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/58b/b18/cc9/58bb18cc940f2ce0aaedcb35d3ea21b8.jpg",
+          "speciality": "Строю реактивный ранец, он же Jetpack"
+        },
+        "statistics": {
+          "commentsCount": 55,
+          "favoritesCount": 113,
+          "readingCount": 10986,
+          "score": 28,
+          "votesCount": 48
+        },
+        "hubs": [
+          {
+            "id": "17357",
+            "alias": "timeweb",
+            "type": "corporative",
+            "title": "Timeweb corporate blog",
+            "titleHtml": "Timeweb corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "21910",
+            "alias": "popular_science",
+            "type": "collective",
+            "title": "Popular science",
+            "titleHtml": "Popular science",
+            "isProfiled": false
+          },
+          {
+            "id": "21990",
+            "alias": "brain",
+            "type": "collective",
+            "title": "Brain",
+            "titleHtml": "Brain",
+            "isProfiled": false
+          },
+          {
+            "id": "21996",
+            "alias": "health",
+            "type": "collective",
+            "title": "Health",
+            "titleHtml": "Health",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci",
+            "titleHtml": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 55,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-19T14:00:13+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<div style=\"text-align:center;\"><img src=\"https://habrastorage.org/webt/6r/-u/ab/6r-uabsbffdfmriqsgni9hjb5aa.jpeg\" alt=\"image\"></div><br>\r\nУ Аси Казанцевой есть три видеозаписи лекции «Как спорт влияет на мозг?» (<a href=\"https://www.youtube.com/watch?v=J0q78ph-2QQ\" rel=\"nofollow noopener noreferrer\">раз</a>, <a href=\"https://www.youtube.com/watch?v=V9wfZGSmqmw\" rel=\"nofollow noopener noreferrer\">два</a>, <a href=\"https://www.youtube.com/watch?v=sTSIiFIS0xU\" rel=\"nofollow noopener noreferrer\">три</a>). Кому лень смотреть, предлагаю глянуть мой опорный конспект на 5-10 минут и понять, почему лучше быть бегуном, чем качком.<br>\r\n<br>\r\n<ul>\r\n<li>Кардио влияет на мозг лучше силовых.</li>\r\n<li>Даже единоразовая часовая тренировка улучшает работу мозга.</li>\r\n<li>Если сильно упарываться, то в мозг поступает <i>меньше</i> кислорода.</li>\r\n<li>Человек бегает эффективнее лошади (на длинные/долгие дистанции).</li>\r\n<li>Бегать добровольно лучше, чем по принуждению.</li>\r\n<li>Если ты тренился 30 лет, а потом бросил — то мозг засыхает.</li>\r\n<li>Даже 15 минут ходьбы в день дает +3 года жизни.</li>\r\n</ul>",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584152": {
+        "id": "584152",
+        "timePublished": "2021-10-21T13:22:16+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Создание собственного корпуса для сервера. Думаете, просто?",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2781537",
+          "alias": "Sem790",
+          "fullname": "Семён",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/3b6/cd5/5e8/3b6cd55e8ece4ce35e8734ee70bc5cc5.jpg",
+          "speciality": "Менеджер проектов IT департамента"
+        },
+        "statistics": {
+          "commentsCount": 23,
+          "favoritesCount": 9,
+          "readingCount": 3170,
+          "score": 28,
+          "votesCount": 30
+        },
+        "hubs": [
+          {
+            "id": "14740",
+            "alias": "selectel",
+            "type": "corporative",
+            "title": "Selectel corporate blog",
+            "titleHtml": "Selectel corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "6398",
+            "alias": "it-infrastructure",
+            "type": "collective",
+            "title": "IT Infrastructure",
+            "titleHtml": "IT Infrastructure",
+            "isProfiled": true
+          },
+          {
+            "id": "19796",
+            "alias": "prototyping",
+            "type": "collective",
+            "title": "Prototyping",
+            "titleHtml": "Prototyping",
+            "isProfiled": true
+          },
+          {
+            "id": "21898",
+            "alias": "hardware",
+            "type": "collective",
+            "title": "Computer hardware",
+            "titleHtml": "Computer hardware",
+            "isProfiled": false
+          },
+          {
+            "id": "21950",
+            "alias": "desktops",
+            "type": "collective",
+            "title": "Desktop PC's",
+            "titleHtml": "Desktop PC's",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "6",
+            "alias": "admin",
+            "title": "Administrating",
+            "titleHtml": "Administrating"
+          },
+          {
+            "id": "2",
+            "alias": "design",
+            "title": "Design",
+            "titleHtml": "Design"
+          },
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci",
+            "titleHtml": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 23,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T13:22:16+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<div style=\"text-align:center;\"><img src=\"https://habrastorage.org/webt/kx/pq/sg/kxpqsg-_8dcdlp4y9mb5dbim6aw.png\"></div><br>\r\nПривет, %username%. Меня зовут Семён Климов, я менеджер проектов технического департамента в Selectel. Сегодня я расскажу, как мы разрабатывали корпусы серверов из линейки <a href=\"https://slc.tl/vW0XS\" rel=\"nofollow noopener noreferrer\">Chipcore</a> (выделенные серверы по доступной цене). В далеком 2016 году перед нами встала нетривиальная задача: необходимо уйти от стеллажей с объемными системными блоками и привести железо к более компактному виду, который бы позволял размещать бо́льшее количество серверов на единицу площади.<br>",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584224": {
+        "id": "584224",
+        "timePublished": "2021-10-21T11:44:38+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Какие процессы происходят в организме перед тем, как выбросится кортизол?",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2568695",
+          "alias": "phanerozoi_evidence",
+          "fullname": "Фанерозой",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/dcc/862/561/dcc862561429f2ed85090ac53e39cf7d.jpg",
+          "speciality": "Биологи, врач, научный популяризатор, палеонтолог"
+        },
+        "statistics": {
+          "commentsCount": 0,
+          "favoritesCount": 25,
+          "readingCount": 4047,
+          "score": 16,
+          "votesCount": 20
+        },
+        "hubs": [
+          {
+            "id": "17357",
+            "alias": "timeweb",
+            "type": "corporative",
+            "title": "Timeweb corporate blog",
+            "titleHtml": "Timeweb corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "21910",
+            "alias": "popular_science",
+            "type": "collective",
+            "title": "Popular science",
+            "titleHtml": "Popular science",
+            "isProfiled": false
+          },
+          {
+            "id": "21990",
+            "alias": "brain",
+            "type": "collective",
+            "title": "Brain",
+            "titleHtml": "Brain",
+            "isProfiled": false
+          },
+          {
+            "id": "21996",
+            "alias": "health",
+            "type": "collective",
+            "title": "Health",
+            "titleHtml": "Health",
+            "isProfiled": false
+          },
+          {
+            "id": "22750",
+            "alias": "biology",
+            "type": "collective",
+            "title": "Biology",
+            "titleHtml": "Biology",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci",
+            "titleHtml": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 0,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T11:44:38+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<blockquote><b><i>Автор:</i> <i>нейрофизиолог научно-просветительского проекта <a href=\"https://vk.com/phanerozoi\" rel=\"nofollow noopener noreferrer\">Фанерозой</a>, Анастасия Маркова</i></b></blockquote><br>\r\n<img src=\"https://habrastorage.org/webt/c0/ni/nc/c0nincgfjziswkqxg7lreklki_u.png\" alt=\"image\"><br>\r\nНаша жизнь — это череда стрессов, поэтому название этого гормона на букву «К» всем хорошо известно. В этой статье я разберу, какие механизмы приводят к его производству, ведь все, что происходит в нашем организме так или иначе чем-то регулируется.",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584420": {
+        "id": "584420",
+        "timePublished": "2021-10-19T21:36:16+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Сможете ли вы решить задачки со вступительных экзаменов в Оксфордский университет?",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "translation",
+            "data": {
+              "originalAuthorName": "Alex Bellos",
+              "originalUrl": "https://www.theguardian.com/science/2021/jul/12/can-you-solve-it-oxford-university-admissions-questions"
+            }
+          }
+        ],
+        "author": {
+          "id": "60351",
+          "alias": "SLY_G",
+          "fullname": "Вячеслав Голованов",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/329/fc8/9e5/329fc89e55a9132bf200ff315065f3f7.jpg",
+          "speciality": "Научпоп. Проповедую в храме науки."
+        },
+        "statistics": {
+          "commentsCount": 81,
+          "favoritesCount": 171,
+          "readingCount": 38582,
+          "score": 67,
+          "votesCount": 73
+        },
+        "hubs": [
+          {
+            "id": "287",
+            "alias": "zadachki",
+            "type": "collective",
+            "title": "Entertaining tasks",
+            "titleHtml": "Entertaining tasks",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 4,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-18T21:36:16+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<img src=\"https://habrastorage.org/getpro/habr/post_images/dd1/82a/64f/dd182a64fce5d646ffaf425ab71f0106.jpg\"><br>\r\n<br>\r\nЕсть ли у вас необходимый запас знаний для изучения философии в Оксфорде? Предлагаем вашему вниманию загадки на эпистемическую логику – то есть, связанные с рассуждениями о самом знании. Но я знаю, что вы знаете, что я знаю, что вы это знаете.<br>\r\n<br>\r\nВсе три задачки в последние годы задавались во время собеседований при поступлении в Оксфордский университет на философский факультет. В каждой из задач есть первоначальный вопрос, и почти все кандидаты правильно ответили на него. Далее в тексте идут дополнительные вопросы, с которыми справились только лучшие из лучших.<br>",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584514": {
+        "id": "584514",
+        "timePublished": "2021-10-20T10:00:09+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Зарплаты разработчиков в первой половине 2021: квалификации и основные языки",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "1303866",
+          "alias": "habr_career",
+          "fullname": "Хабр Карьера",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/f55/eba/556/f55eba556d44f143a2af69452d2c2d03.png",
+          "speciality": "Помогаем строить карьеру в IT"
+        },
+        "statistics": {
+          "commentsCount": 84,
+          "favoritesCount": 39,
+          "readingCount": 29256,
+          "score": 48,
+          "votesCount": 56
+        },
+        "hubs": [
+          {
+            "id": "20566",
+            "alias": "habr_career",
+            "type": "corporative",
+            "title": "Хабр Карьера corporate blog",
+            "titleHtml": "Хабр Карьера corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "20688",
+            "alias": "research",
+            "type": "collective",
+            "title": "Research and forecasts in IT",
+            "titleHtml": "Research and forecasts in IT",
+            "isProfiled": false
+          },
+          {
+            "id": "20736",
+            "alias": "hr_management",
+            "type": "collective",
+            "title": "Personnel Management",
+            "titleHtml": "Personnel Management",
+            "isProfiled": true
+          },
+          {
+            "id": "20740",
+            "alias": "career",
+            "type": "collective",
+            "title": "IT career",
+            "titleHtml": "IT career",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management",
+            "titleHtml": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 84,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-19T10:00:09+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>Мы уже вовсю собираем данные для зарплатного отчета за второе полугодие 2021, а пока продолжаем анализировать данные <a href=\"https://habr.com/ru/article/569026/\"><u>за первое</u></a>. Сегодня рассказываем о том, сколько зарабатывали разработчики разных языков и квалификаций и как их зарплаты изменились по сравнению <a href=\"https://habr.com/ru/company/habr_career/blog/547556/\"><u>со второй половиной 2020</u></a>.</p><p>Краткие выводы такие: в квалификациях выросли все, кроме джунов, лиды заняли первое место. Если говорить об основных языках программирования, то больше всех выросли зарплаты разработчиков Objective-С, Ruby on Rails и Swift, а 1С-разработчики — единственные, кто остался на прежнем уровне. Подробнее обо всех изменениях рассказываем и показываем на графиках дальше.</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/f28/556/0b8/f285560b83a5d7428844ea7445ee9c3a.png",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/f28/556/0b8/f285560b83a5d7428844ea7445ee9c3a.png",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584572": {
+        "id": "584572",
+        "timePublished": "2021-10-21T15:12:57+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "20 вещей, которые я узнал за 20 лет работы инженером-программистом",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "translation",
+            "data": {
+              "originalAuthorName": "Justin Etheredge",
+              "originalUrl": "https://www.simplethread.com/20-things-ive-learned-in-my-20-years-as-a-software-engineer/"
+            }
+          }
+        ],
+        "author": {
+          "id": "2278",
+          "alias": "SergeAx",
+          "fullname": "Сергей Аксёнов",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/55c/8da/9e9/55c8da9e9d6dc9b04ef93ca44670ebdf.jpg",
+          "speciality": "Создатель и руководитель инженерных команд"
+        },
+        "statistics": {
+          "commentsCount": 12,
+          "favoritesCount": 65,
+          "readingCount": 4677,
+          "score": 48,
+          "votesCount": 50
+        },
+        "hubs": [
+          {
+            "id": "18232",
+            "alias": "funcorp",
+            "type": "corporative",
+            "title": "FUNCORP corporate blog",
+            "titleHtml": "FUNCORP corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Programming",
+            "titleHtml": "Programming",
+            "isProfiled": true
+          },
+          {
+            "id": "20740",
+            "alias": "career",
+            "type": "collective",
+            "title": "IT career",
+            "titleHtml": "IT career",
+            "isProfiled": false
+          },
+          {
+            "id": "20742",
+            "alias": "read",
+            "type": "collective",
+            "title": "Reading room",
+            "titleHtml": "Reading room",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          },
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management",
+            "titleHtml": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 12,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T15:12:57+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>Наткнулся на любопытный материал, в котором автор систематизировал и записал свой опыт инженера-программиста в 20 тезисов. Я работаю в коммерческой разработке ПО больше 25 лет, и этот текст отозвался во мне практически каждой буквой — большинство советов я тоже регулярно практикую, не облекая их в формат ёмких афоризмов. В общем, решил сделать перевод.</p><p>Особенно отзываются пункты «стройте компактные системы» и «лучший код — это отсутствие кода». Последний совет я превращаю в цитату из какого-то второсортного фильма про самураев: «Лучшая победа — та, которую ты одержал, не доставая меч из ножен» (думаю, сослуживцы за моей спиной уже закатывают глаза). И, конечно, бесконечные разговоры про легендарных 10x-программистов постоянно хочется прервать советом не связываться с 0,1x-программистами (которые реально существуют, в отличие от 10x).</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/e7b/53f/f15/e7b53ff15c5fc192308ebc14f0770baa.jpg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/e7b/53f/f15/e7b53ff15c5fc192308ebc14f0770baa.jpg",
+            "fit": "cover",
+            "positionY": 64.318181818182,
+            "positionX": 2.1794871794872
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584578": {
+        "id": "584578",
+        "timePublished": "2021-10-20T13:38:40+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Как я случайно заблокировал 10 000 телефонов в Южной Америке",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "translation",
+            "data": {
+              "originalAuthorName": "Shantnu Tiwari",
+              "originalUrl": "https://new.pythonforengineers.com/blog/the-day-i/"
+            }
+          }
+        ],
+        "author": {
+          "id": "64252",
+          "alias": "Cloud4Y",
+          "fullname": "Cloud4Y",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/c2d/d0d/c05/c2dd0dc05834aebeb86bb76e35caeaab.png",
+          "speciality": "Корпоративный облачный провайдер"
+        },
+        "statistics": {
+          "commentsCount": 41,
+          "favoritesCount": 20,
+          "readingCount": 17493,
+          "score": 26,
+          "votesCount": 32
+        },
+        "hubs": [
+          {
+            "id": "17352",
+            "alias": "cloud4y",
+            "type": "corporative",
+            "title": "Cloud4Y corporate blog",
+            "titleHtml": "Cloud4Y corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "50",
+            "alias": "infosecurity",
+            "type": "collective",
+            "title": "Information Security",
+            "titleHtml": "Information Security",
+            "isProfiled": true
+          },
+          {
+            "id": "6345",
+            "alias": "mobile_dev",
+            "type": "collective",
+            "title": "Development of mobile applications",
+            "titleHtml": "Development of mobile applications",
+            "isProfiled": true
+          },
+          {
+            "id": "19281",
+            "alias": "mobile_testing",
+            "type": "collective",
+            "title": "Mobile applications testing",
+            "titleHtml": "Mobile applications testing",
+            "isProfiled": true
+          },
+          {
+            "id": "20742",
+            "alias": "read",
+            "type": "collective",
+            "title": "Reading room",
+            "titleHtml": "Reading room",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          },
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management",
+            "titleHtml": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 41,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-19T13:38:40+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>Перед вами — забавная и поучительная история <a href=\"https://new.pythonforengineers.com/blog/the-day-i/\">Шантну Тивари</a>, небрежность которого привела к крайне печальным последствиям: более десяти тысяч телефонов в Южной Америке в один момент оказались заблокированными. Люди не могли даже позвонить, не говоря уж про более сложные действия. О том, как это было — под катом.</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/1c4/c0a/b5c/1c4c0ab5ccf661a3bb7f4624b20066e1.jpg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/1c4/c0a/b5c/1c4c0ab5ccf661a3bb7f4624b20066e1.jpg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584616": {
+        "id": "584616",
+        "timePublished": "2021-10-20T15:57:00+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Почему любой Android снимает видео хуже iPhone?",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "19074",
+          "alias": "mcpro",
+          "fullname": "mcpro",
+          "avatarUrl": null,
+          "speciality": null
+        },
+        "statistics": {
+          "commentsCount": 337,
+          "favoritesCount": 85,
+          "readingCount": 55361,
+          "score": 157,
+          "votesCount": 183
+        },
+        "hubs": [
+          {
+            "id": "6345",
+            "alias": "mobile_dev",
+            "type": "collective",
+            "title": "Development of mobile applications",
+            "titleHtml": "Development of mobile applications",
+            "isProfiled": true
+          },
+          {
+            "id": "17107",
+            "alias": "android_dev",
+            "type": "collective",
+            "title": "Development for Android",
+            "titleHtml": "Development for Android",
+            "isProfiled": true
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 337,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-19T15:57:00+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>Привет, камрады, киноделы и просто читатели!&nbsp;</p><p>Некоторые из вас меня знают как разработчика Андроид-приложения <strong>mcpro24fps</strong>, предназначенного для профессиональной видеосъёмки на телефон. И сегодня я бы хотел обсудить такую тему: «Почему iPhone остается лидером в видеосъёмке?» </p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/08c/4fc/9d1/08c4fc9d14fc5f56226cbf2f2afe8cf0.jpg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/08c/4fc/9d1/08c4fc9d14fc5f56226cbf2f2afe8cf0.jpg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584628": {
+        "id": "584628",
+        "timePublished": "2021-10-21T08:29:48+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Архитектура и особенности процессора Эльбрус 2000",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2172",
+          "alias": "dzavalishin",
+          "fullname": "Дмитрий Завалишин",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/cf4/8fd/97e/cf48fd97e3c1043d83e95b8835d9e27d.jpg",
+          "speciality": "Архитектор"
+        },
+        "statistics": {
+          "commentsCount": 35,
+          "favoritesCount": 25,
+          "readingCount": 4908,
+          "score": 33,
+          "votesCount": 35
+        },
+        "hubs": [
+          {
+            "id": "14332",
+            "alias": "oleg-bunin",
+            "type": "corporative",
+            "title": "Конференции Олега Бунина (Онтико) corporate blog",
+            "titleHtml": "Конференции Олега Бунина (Онтико) corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "4",
+            "alias": "hi",
+            "type": "collective",
+            "title": "High performance",
+            "titleHtml": "High performance",
+            "isProfiled": true
+          },
+          {
+            "id": "17189",
+            "alias": "itstandarts",
+            "type": "collective",
+            "title": "IT Standards",
+            "titleHtml": "IT Standards",
+            "isProfiled": true
+          },
+          {
+            "id": "21898",
+            "alias": "hardware",
+            "type": "collective",
+            "title": "Computer hardware",
+            "titleHtml": "Computer hardware",
+            "isProfiled": false
+          },
+          {
+            "id": "21956",
+            "alias": "cpu",
+            "type": "collective",
+            "title": "CPU",
+            "titleHtml": "CPU",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          },
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci",
+            "titleHtml": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 35,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T08:29:48+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>В чем принципиальные особенности процессора российской разработки Эльбрус? О ней в последнее время много говорят: как хвалят, так и ругают. Но давайте углубимся в архитектуру процессора, чтобы все-таки понять в чем его плюсы и минусы.</p><p>Расскажу, что такое скрытый и явный параллелизм, как используются предикаты и осуществляется подготовка переходов. Почему Эльбрусу не нужны push и pop команды и в чем особенности его регистрового окна. Какая защита от атак есть у российского процессора и какие возможности дает защищенный режим.</p><p>Данная статья — транскрипт моего <a href=\"https://clck.ru/YLgF7\">выступления</a> на конференции HighLoad++.</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/767/6e4/7d8/7676e47d8ae8074da186db86666a74d4.jpg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/767/6e4/7d8/7676e47d8ae8074da186db86666a74d4.jpg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584662": {
+        "id": "584662",
+        "timePublished": "2021-10-20T22:15:33+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Ускоряем pow",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2403655",
+          "alias": "alordash",
+          "fullname": "Алексей",
+          "avatarUrl": null,
+          "speciality": "Пользователь"
+        },
+        "statistics": {
+          "commentsCount": 16,
+          "favoritesCount": 50,
+          "readingCount": 5001,
+          "score": 35,
+          "votesCount": 35
+        },
+        "hubs": [
+          {
+            "id": "4",
+            "alias": "hi",
+            "type": "collective",
+            "title": "High performance",
+            "titleHtml": "High performance",
+            "isProfiled": true
+          },
+          {
+            "id": "375",
+            "alias": "java",
+            "type": "collective",
+            "title": "Java",
+            "titleHtml": "Java",
+            "isProfiled": true
+          },
+          {
+            "id": "559",
+            "alias": "cpp",
+            "type": "collective",
+            "title": "C++",
+            "titleHtml": "C++",
+            "isProfiled": true
+          },
+          {
+            "id": "7149",
+            "alias": "asp",
+            "type": "collective",
+            "title": "ASP",
+            "titleHtml": "ASP",
+            "isProfiled": true
+          },
+          {
+            "id": "17718",
+            "alias": "csharp",
+            "type": "collective",
+            "title": "C#",
+            "titleHtml": "C#",
+            "isProfiled": true
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 16,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-19T22:15:33+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>В этой статье я хочу поделиться несколькими нестандартными алгоритмами для быстрого возведения числа в степень, а также продемонстрировать их реализацию и сравнить их быстродействие в C++, C# и Java.</p><p>Сравнить точность алгоритмов можно прямо сейчас на <a href=\"https://alordash.github.io/FastExponentiation/publish/wwwroot/\" rel=\"noopener noreferrer nofollow\">этой странице</a>.</p><p>В конце будет краткая памятка по тому, где и когда лучше применять какой из методов. При правильном выборе можно добиться увеличения скорости вычислений в 5 раз при погрешности ~1%, а иногда и вовсе без неё.</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/cd4/660/447/cd46604474f82fde278d880fd92a5c1c.png",
+          "buttonTextHtml": "Ускорь мои степени!",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/cd4/660/447/cd46604474f82fde278d880fd92a5c1c.png",
+            "fit": "cover",
+            "positionY": 2.9545454545455,
+            "positionX": 52.051282051282
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584766": {
+        "id": "584766",
+        "timePublished": "2021-10-21T11:19:55+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Google окончательно удалила код протокола FTP из Chrome",
+        "editorVersion": "2.0",
+        "postType": "news",
+        "postLabels": [],
+        "author": {
+          "id": "2770983",
+          "alias": "ondlusha",
+          "fullname": "Andrei Pronin",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/5e1/b86/64f/5e1b8664f850b3d55e3694bc5a7ce177.png",
+          "speciality": "Жру на лист"
+        },
+        "statistics": {
+          "commentsCount": 31,
+          "favoritesCount": 4,
+          "readingCount": 5979,
+          "score": 8,
+          "votesCount": 8
+        },
+        "hubs": [
+          {
+            "id": "50",
+            "alias": "infosecurity",
+            "type": "collective",
+            "title": "Information Security",
+            "titleHtml": "Information Security",
+            "isProfiled": true
+          },
+          {
+            "id": "19257",
+            "alias": "browsers",
+            "type": "collective",
+            "title": "Browsers",
+            "titleHtml": "Browsers",
+            "isProfiled": false
+          },
+          {
+            "id": "22026",
+            "alias": "itcompanies",
+            "type": "collective",
+            "title": "IT-companies",
+            "titleHtml": "IT-companies",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          },
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management",
+            "titleHtml": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 4,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T11:19:55+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>Команда разработчиков Chromium полностью <a href=\"https://chromestatus.com/feature/6246151319715840\" rel=\"noopener noreferrer nofollow\">отключила</a> поддержку протокола FTP вместе с релизом браузера Chrome 95.&nbsp;</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/582/a54/f74/582a54f748ffec2d86dfb34a44bee4a7.png",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/582/a54/f74/582a54f748ffec2d86dfb34a44bee4a7.png",
+            "fit": "cover",
+            "positionY": 0.45454545454545,
+            "positionX": 7.4358974358974
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584798": {
+        "id": "584798",
+        "timePublished": "2021-10-21T12:55:22+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Карго-культ вокруг DevOps: как навредить проекту из лучших побуждений",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2810455",
+          "alias": "devops_man",
+          "fullname": null,
+          "avatarUrl": null,
+          "speciality": null
+        },
+        "statistics": {
+          "commentsCount": 7,
+          "favoritesCount": 10,
+          "readingCount": 1785,
+          "score": 13,
+          "votesCount": 13
+        },
+        "hubs": [
+          {
+            "id": "13658",
+            "alias": "luxoft",
+            "type": "corporative",
+            "title": "Luxoft corporate blog",
+            "titleHtml": "Luxoft corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "359",
+            "alias": "programming",
+            "type": "collective",
+            "title": "Programming",
+            "titleHtml": "Programming",
+            "isProfiled": true
+          },
+          {
+            "id": "19583",
+            "alias": "dev_management",
+            "type": "collective",
+            "title": "Development Management",
+            "titleHtml": "Development Management",
+            "isProfiled": true
+          },
+          {
+            "id": "20788",
+            "alias": "devops",
+            "type": "collective",
+            "title": "DevOps",
+            "titleHtml": "DevOps",
+            "isProfiled": true
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          },
+          {
+            "id": "6",
+            "alias": "admin",
+            "title": "Administrating",
+            "titleHtml": "Administrating"
+          },
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management",
+            "titleHtml": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 7,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T12:55:22+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>Привет, Хабр!<br><br>Сегодня я расскажу как с помощью DevOps-практик не только не помочь, но и навредить проекту.<br><br>DevOps родился для того, чтобы команды разработки и поддержки работали эффективно и слаженно. Но иногда использование его практик может привести к реальным провалам.</p>",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать далее",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584828": {
+        "id": "584828",
+        "timePublished": "2021-10-21T15:24:32+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "В Facebook не могут определиться с выбором нового названия соцсети",
+        "editorVersion": "2.0",
+        "postType": "news",
+        "postLabels": [],
+        "author": {
+          "id": "2770983",
+          "alias": "ondlusha",
+          "fullname": "Andrei Pronin",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/5e1/b86/64f/5e1b8664f850b3d55e3694bc5a7ce177.png",
+          "speciality": "Жру на лист"
+        },
+        "statistics": {
+          "commentsCount": 11,
+          "favoritesCount": 1,
+          "readingCount": 2732,
+          "score": 8,
+          "votesCount": 8
+        },
+        "hubs": [
+          {
+            "id": "20744",
+            "alias": "media_management",
+            "type": "collective",
+            "title": "Media management",
+            "titleHtml": "Media management",
+            "isProfiled": true
+          },
+          {
+            "id": "21924",
+            "alias": "social_networks",
+            "type": "collective",
+            "title": "Social networks and communities",
+            "titleHtml": "Social networks and communities",
+            "isProfiled": false
+          },
+          {
+            "id": "22026",
+            "alias": "itcompanies",
+            "type": "collective",
+            "title": "IT-companies",
+            "titleHtml": "IT-companies",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management",
+            "titleHtml": "Management"
+          },
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci",
+            "titleHtml": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 11,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T15:24:32+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>По данным Platformer, Марк Цукерберг <a href=\"https://www.platformer.news/p/why-facebook-is-rebranding\" rel=\"noopener noreferrer nofollow\">не может выбрать</a> название, приуроченное к ребрендингу Facebook.</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/975/6a3/f0d/9756a3f0dd43229f3cbfd57748827350.png",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/975/6a3/f0d/9756a3f0dd43229f3cbfd57748827350.png",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584830": {
+        "id": "584830",
+        "timePublished": "2021-10-21T15:27:26+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Софт-скиллы в IT: необходимость или косвенный навык?",
+        "editorVersion": "1.0",
+        "postType": "article",
+        "postLabels": [],
+        "author": {
+          "id": "2660423",
+          "alias": "daria_bambi",
+          "fullname": "Дарья Аксёнова",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/19d/e60/4a8/19de604a857035d96c2f940e810b9f3d.jpg",
+          "speciality": "Редактор блога Timeweb"
+        },
+        "statistics": {
+          "commentsCount": 2,
+          "favoritesCount": 4,
+          "readingCount": 1031,
+          "score": 0,
+          "votesCount": 8
+        },
+        "hubs": [
+          {
+            "id": "17357",
+            "alias": "timeweb",
+            "type": "corporative",
+            "title": "Timeweb corporate blog",
+            "titleHtml": "Timeweb corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "20696",
+            "alias": "study",
+            "type": "collective",
+            "title": "Studying in IT",
+            "titleHtml": "Studying in IT",
+            "isProfiled": false
+          },
+          {
+            "id": "20736",
+            "alias": "hr_management",
+            "type": "collective",
+            "title": "Personnel Management",
+            "titleHtml": "Personnel Management",
+            "isProfiled": true
+          },
+          {
+            "id": "20740",
+            "alias": "career",
+            "type": "collective",
+            "title": "IT career",
+            "titleHtml": "IT career",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management",
+            "titleHtml": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 2,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T15:27:26+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "Привет!<br>\r\n<br>\r\nРебята из Timeweb записывают классный подкаст “Релиз в пятницу”. Они обсуждают актуальные темы из мира IT: говорят о грейдах, мотивации команды, DevOps-практиках и даже TikTok’е. На прошлой неделе темой выпуска стали великие и ужасные софт-скиллы: что это, для чего нужно (нужно ли?) и кому. Выделила для себя пару интересных моментов и расшифровала запись для всех читателей “Хабра”.<br>\r\n<br>\r\n<img src=\"https://habrastorage.org/webt/qm/ie/wg/qmiewg6vmccqb-mrledxytus6qm.png\"><br>",
+          "imageUrl": null,
+          "buttonTextHtml": "Читать дальше &rarr;",
+          "image": null
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584844": {
+        "id": "584844",
+        "timePublished": "2021-10-21T15:52:06+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Разработчики Resident Evil 4 VR убрали из игры непристойные сцены",
+        "editorVersion": "2.0",
+        "postType": "news",
+        "postLabels": [],
+        "author": {
+          "id": "1782611",
+          "alias": "Travis_Macrif",
+          "fullname": "Руслан",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/9af/987/8b0/9af9878b02f82d2e0864184d83479017.jpg",
+          "speciality": "Редактор Хабра"
+        },
+        "statistics": {
+          "commentsCount": 4,
+          "favoritesCount": 0,
+          "readingCount": 1547,
+          "score": 2,
+          "votesCount": 2
+        },
+        "hubs": [
+          {
+            "id": "7773",
+            "alias": "gamedev",
+            "type": "collective",
+            "title": "Game development",
+            "titleHtml": "Game development",
+            "isProfiled": true
+          },
+          {
+            "id": "20904",
+            "alias": "arvrdev",
+            "type": "collective",
+            "title": "Development for AR and VR",
+            "titleHtml": "Development for AR and VR",
+            "isProfiled": true
+          },
+          {
+            "id": "21940",
+            "alias": "arvr",
+            "type": "collective",
+            "title": "AR and VR",
+            "titleHtml": "AR and VR",
+            "isProfiled": false
+          },
+          {
+            "id": "21980",
+            "alias": "games",
+            "type": "collective",
+            "title": "Games and game consoles",
+            "titleHtml": "Games and game consoles",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          },
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci",
+            "titleHtml": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 4,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T15:52:06+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>Создатели VR-версии Resident Evil 4 Armature Studio <a href=\"https://www.eurogamer.net/articles/2021-10-20-resident-evil-4-vr-version-includes-several-dialogue-cuts\" rel=\"noopener noreferrer nofollow\">подвергли игру цензуре</a>, поскольку в таком виде она больше подойдет современной аудитории. Речь идет о нескольких репликах между персонажами хоррора и эпизодах игры.</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/a56/fe7/b2b/a56fe7b2ba8c72fe5d7dde2abc9ef996.jpg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/a56/fe7/b2b/a56fe7b2ba8c72fe5d7dde2abc9ef996.jpg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584850": {
+        "id": "584850",
+        "timePublished": "2021-10-21T16:40:43+00:00",
+        "isCorporative": true,
+        "lang": "ru",
+        "titleHtml": "Инженеры МГУ создали первого российского робота-собаку",
+        "editorVersion": "2.0",
+        "postType": "news",
+        "postLabels": [],
+        "author": {
+          "id": "2750327",
+          "alias": "usa_habro_user",
+          "fullname": null,
+          "avatarUrl": null,
+          "speciality": null
+        },
+        "statistics": {
+          "commentsCount": 2,
+          "favoritesCount": 0,
+          "readingCount": 542,
+          "score": 2,
+          "votesCount": 4
+        },
+        "hubs": [
+          {
+            "id": "22626",
+            "alias": "itsoft",
+            "type": "corporative",
+            "title": "ITSOFT corporate blog",
+            "titleHtml": "ITSOFT corporate blog",
+            "isProfiled": false
+          },
+          {
+            "id": "19735",
+            "alias": "robo_dev",
+            "type": "collective",
+            "title": "Robotics development",
+            "titleHtml": "Robotics development",
+            "isProfiled": true
+          },
+          {
+            "id": "21902",
+            "alias": "robot",
+            "type": "collective",
+            "title": "Robotics",
+            "titleHtml": "Robotics",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "1",
+            "alias": "develop",
+            "title": "Development",
+            "titleHtml": "Development"
+          },
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci",
+            "titleHtml": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 2,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T16:40:43+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p><strong>Работы над созданием собственного четвероного робота вели специалисты НИИ механики МГУ и проекта «Братья Вольт». 20 октября они представили новую разработку — первого российского четвероногого робота.</strong></p><p>Масса работа составляет 15 килограмм. Ноги сделаны из двухсекционных элементов, в движение «конечности» приводят электродвигатели. Каркас корпуса сделан из алюминия и пластика, с применением технологий 3D-печати.</p><p>Разработка велась с 2019 года, полностью «с нуля». Сегодня инженеры смогли реализовать базовые функции, вроде ходьбы с разной скоростью.</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/33f/0b0/01a/33f0b001a3b2fe5016b258161237384c.gif",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/33f/0b0/01a/33f0b001a3b2fe5016b258161237384c.gif",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584852": {
+        "id": "584852",
+        "timePublished": "2021-10-21T16:53:15+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Представлено новое отечественное приложение для дистанционного обучения школьников",
+        "editorVersion": "2.0",
+        "postType": "news",
+        "postLabels": [],
+        "author": {
+          "id": "2439571",
+          "alias": "Maeu",
+          "fullname": null,
+          "avatarUrl": null,
+          "speciality": null
+        },
+        "statistics": {
+          "commentsCount": 0,
+          "favoritesCount": 0,
+          "readingCount": 497,
+          "score": 0,
+          "votesCount": 0
+        },
+        "hubs": [
+          {
+            "id": "20696",
+            "alias": "study",
+            "type": "collective",
+            "title": "Studying in IT",
+            "titleHtml": "Studying in IT",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "3",
+            "alias": "management",
+            "title": "Management",
+            "titleHtml": "Management"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 0,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T16:53:15+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>Похоже на то, что грядет новый локдаун, “выходные дни” с 28 октября по 7 ноября вполне могут быть продлены. А это значит дистанционное обучение, удаленка и т.п. Что касается дистанционного обучения, то возможностей становится все больше. так, на днях образовательная компания “ЯКласс”, резидент Фонда “Сколково”, запустила мобильное приложение для дистанционного обучения школьников.&nbsp;</p><p>База “Якласс” содержит огромное количество заданий&nbsp; по 16 предметам школьной программы, ЕГЭ, ОГЭ и ВПР, плюс около 1500 видеоуроков. Учителя при помощи этой базы могут проводить уроки, а школьники - участвовать в них и выполнять домашние задания. </p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/1a9/3bf/f2c/1a93bff2c34186548c44cd05cd3a5a8f.png",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/1a9/3bf/f2c/1a93bff2c34186548c44cd05cd3a5a8f.png",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584856": {
+        "id": "584856",
+        "timePublished": "2021-10-21T17:00:07+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "XP-PEN Artist 22E Pro — запоздалая рецензия на графический дисплей",
+        "editorVersion": "2.0",
+        "postType": "article",
+        "postLabels": [
+          {
+            "type": "recovery",
+            "data": null
+          }
+        ],
+        "author": {
+          "id": "2608437",
+          "alias": "moskIToff",
+          "fullname": null,
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/4f8/ea9/218/4f8ea9218deb109d36024c672717d797.jpg",
+          "speciality": "Java новичок"
+        },
+        "statistics": {
+          "commentsCount": 0,
+          "favoritesCount": 1,
+          "readingCount": 495,
+          "score": 0,
+          "votesCount": 2
+        },
+        "hubs": [
+          {
+            "id": "19802",
+            "alias": "graph_design",
+            "type": "collective",
+            "title": "Graphic design",
+            "titleHtml": "Graphic design",
+            "isProfiled": true
+          }
+        ],
+        "flows": [
+          {
+            "id": "2",
+            "alias": "design",
+            "title": "Design",
+            "titleHtml": "Design"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 0,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T17:00:07+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>&nbsp;</p><p>Рецензия на графический дисплей для художников и дизайнеров - XP-PEN Artist 22E Pro.</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/e5d/08c/e62/e5d08ce621ef381dd9fe6662563a354b.png",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/e5d/08c/e62/e5d08ce621ef381dd9fe6662563a354b.png",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      },
+      "584858": {
+        "id": "584858",
+        "timePublished": "2021-10-21T17:07:05+00:00",
+        "isCorporative": false,
+        "lang": "ru",
+        "titleHtml": "Ученые назвали московских кошек и собак частью «экосистемных услуг»",
+        "editorVersion": "2.0",
+        "postType": "news",
+        "postLabels": [],
+        "author": {
+          "id": "1782611",
+          "alias": "Travis_Macrif",
+          "fullname": "Руслан",
+          "avatarUrl": "//habrastorage.org/getpro/habr/avatars/9af/987/8b0/9af9878b02f82d2e0864184d83479017.jpg",
+          "speciality": "Редактор Хабра"
+        },
+        "statistics": {
+          "commentsCount": 1,
+          "favoritesCount": 0,
+          "readingCount": 511,
+          "score": 0,
+          "votesCount": 0
+        },
+        "hubs": [
+          {
+            "id": "22012",
+            "alias": "Ecology",
+            "type": "collective",
+            "title": "Ecology",
+            "titleHtml": "Ecology",
+            "isProfiled": false
+          }
+        ],
+        "flows": [
+          {
+            "id": "7",
+            "alias": "popsci",
+            "title": "PopSci",
+            "titleHtml": "PopSci"
+          }
+        ],
+        "relatedData": {
+          "unreadCommentsCount": 1,
+          "vote": {
+            "value": null,
+            "voteTimeExpired": "2021-11-20T17:07:05+00:00"
+          },
+          "bookmarked": false,
+          "canComment": true,
+          "canEdit": false,
+          "canVote": true,
+          "canViewVotes": false
+        },
+        "leadData": {
+          "textHtml": "<p>Научная группа из российских и иностранных ученых провела исследование и <a href=\"https://rscf.ru/news/presidential-program/uchenye-nazvali-moskovskikh-koshek-i-sobak-chastyu-ekosistemnykh-uslug/\" rel=\"noopener noreferrer nofollow\">призвала </a>приравнять собак и кошек к благам, получаемым человеком от окружающей среды. Они опросили 229 жителей Москвы и пришли к выводу, что нужно учитывать пространство для взаимодействия с домашними животными на улице при градостроительстве.</p>",
+          "imageUrl": "https://habrastorage.org/getpro/habr/upload_files/4b9/d78/763/4b9d787638a4a09443009dd74d22e771.jpg",
+          "buttonTextHtml": "Читать далее",
+          "image": {
+            "url": "https://habrastorage.org/getpro/habr/upload_files/4b9/d78/763/4b9d787638a4a09443009dd74d22e771.jpg",
+            "fit": "cover",
+            "positionY": 0,
+            "positionX": 0
+          }
+        },
+        "status": "published",
+        "plannedPublishTime": null,
+        "checked": null
+      }
+    }
+  },
+  "promoPost": {
+    "title": "Что ждёт open source в финтехе? Пройти опрос и узнать, как ответили другие",
+    "link_url": "https://u.habr.com/osnova_opros_chs",
+    "type": "poll",
+    "lang": "ru",
+    "is_external": 0,
+    "label": "Опрос"
+  }
+}

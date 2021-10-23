@@ -80,15 +80,15 @@ data class ArticlePropertiesDelegateImpl(
         ArticleText(jsonElement.jsonPrimitive.content)
     }
 
-    override val commentsCount by requireIntReadonlyProperty("statistics", "commentsCount")
+    override val commentsCount by requireReadonlyProperty(intPropertyMapper("statistics", "commentsCount"))
 
-    override val favoritesCount by requireIntReadonlyProperty("statistics", "favoritesCount")
+    override val favoritesCount by requireReadonlyProperty(intPropertyMapper("statistics", "favoritesCount"))
 
-    override val readingCount by requireIntReadonlyProperty("statistics", "readingCount")
+    override val readingCount by requireReadonlyProperty(intPropertyMapper("statistics", "readingCount"))
 
-    override val votesCount by requireIntReadonlyProperty("statistics", "votesCount")
+    override val votesCount by requireReadonlyProperty(intPropertyMapper("statistics", "votesCount"))
 
-    override val scoresCount by requireIntReadonlyProperty("statistics", "score")
+    override val scoresCount by requireReadonlyProperty(intPropertyMapper("statistics", "score"))
 }
 
 val Article.flows by requireListReadonlyProperty(
