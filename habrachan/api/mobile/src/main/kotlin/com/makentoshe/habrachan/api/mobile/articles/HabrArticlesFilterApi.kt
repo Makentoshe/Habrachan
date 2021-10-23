@@ -2,11 +2,11 @@ package com.makentoshe.habrachan.api.mobile.articles
 
 import com.makentoshe.habrachan.api.AdditionalRequestParameters
 import com.makentoshe.habrachan.api.articles.ArticlesFilter
+import com.makentoshe.habrachan.api.articles.ArticlesPeriod
 import com.makentoshe.habrachan.api.articles.ArticlesSort
 import com.makentoshe.habrachan.api.articles.api.HabrArticlesApiBuilder
 import com.makentoshe.habrachan.api.articles.api.HabrArticlesFilterApi
 import com.makentoshe.habrachan.api.articles.api.HabrArticlesFilterApiBuilder
-import com.makentoshe.habrachan.api.articles.filter.ArticlesPeriod
 
 /** Works with */
 object DateArticlesSort : ArticlesSort("date")
@@ -23,10 +23,18 @@ fun sortArticlesFilter(value: ArticlesSort) = ArticlesFilter.QueryArticlesFilter
 
 fun pageArticlesFilter(value: Int) = ArticlesFilter.QueryArticlesFilter("page", value.toString())
 
+fun mostReadingArticlesFilter() = ArticlesFilter.PathArticlesFilter("most-reading")
+
 fun HabrArticlesApiBuilder.filter(vararg filters: ArticlesFilter): HabrArticlesFilterApiBuilder {
     return HabrArticlesFilterApiBuilder(path, filters.toList())
 }
 
 fun HabrArticlesFilterApiBuilder.build(parameters: AdditionalRequestParameters): HabrArticlesFilterApi {
-    return HabrArticlesFilterApi(path, parameters.queries.plus(filters.map { it.key to it.value }), parameters.headers)
+    val filterQueries = filters.filterIsInstance<ArticlesFilter.QueryArticlesFilter>()
+    val apiQueries = parameters.queries.plus(filterQueries.map { it.pair })
+
+    val filterPaths = filters.filterIsInstance<ArticlesFilter.PathArticlesFilter>()
+    val apiPath = this.path.plus("/${filterPaths.joinToString("/") { it.value }}")
+
+    return HabrArticlesFilterApi(apiPath, apiQueries, parameters.headers)
 }

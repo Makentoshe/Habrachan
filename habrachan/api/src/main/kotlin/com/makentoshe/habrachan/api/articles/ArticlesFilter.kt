@@ -31,11 +31,12 @@ sealed class ArticlesFilter {
      *
      * For example, `pathArticlesFilter("post", "all")` becomes .../post/all/.
      * */
-    data class PathArticlesFilter(override val key: String, override val value: String) : ArticlesFilter() {
-        constructor(pair: Pair<String, String>) : this(pair.first, pair.second)
+    data class PathArticlesFilter(override val value: String) : ArticlesFilter() {
+
+        override val key: String get() = value
 
         override fun new(valueMap: (String) -> String): PathArticlesFilter {
-            return PathArticlesFilter(key, valueMap(value))
+            return PathArticlesFilter(valueMap(value))
         }
 
         override val type: String
@@ -43,7 +44,7 @@ sealed class ArticlesFilter {
     }
 
     override fun toString(): String {
-        return "ArticlesFilter(key=$key, value=$value)"
+        return "$type(key=$key, value=$value)"
     }
 
     val pair: Pair<String, String>
