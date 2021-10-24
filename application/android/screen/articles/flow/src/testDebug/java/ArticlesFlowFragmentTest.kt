@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.articles.flow.ArticlesFlowFragment
 import com.makentoshe.habrachan.application.android.screen.articles.flow.R
 import com.makentoshe.habrachan.application.android.screen.articles.flow.di.ArticlesFlowScope
+import com.makentoshe.habrachan.application.android.screen.articles.flow.di.provider.ArticlesFlowAdapterProvider
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesFlowAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesUserSearch
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.TabLayoutMediatorController
@@ -27,14 +28,19 @@ import toothpick.smoothie.lifecycle.closeOnDestroy
 @RunWith(AndroidJUnit4::class)
 class ArticlesFlowFragmentTest {
 
+    private var articlesFlowAdapterProvider = mockk<ArticlesFlowAdapterProvider>()
     private var articlesFlowAdapter = mockk<ArticlesFlowAdapter>(relaxed = true)
     private val meScreenNavigator = mockk<MeScreenNavigator>()
     private val loginScreenNavigator = mockk<LoginScreenNavigator>()
     private val androidUserSession2 = mockk<AndroidUserSession2>(relaxed = true)
     private val tabLayoutMediatorController = mockk<TabLayoutMediatorController>(relaxed = true)
 
+    init {
+        every { articlesFlowAdapterProvider.get() } returns articlesFlowAdapter
+    }
+
     private val defaultModule = module {
-        bind<ArticlesFlowAdapter>().toInstance(articlesFlowAdapter)
+        bind<ArticlesFlowAdapterProvider>().toInstance(articlesFlowAdapterProvider)
         bind<MeScreenNavigator>().toInstance(meScreenNavigator)
         bind<LoginScreenNavigator>().toInstance(loginScreenNavigator)
         bind<AndroidUserSession2>().toInstance(androidUserSession2)
@@ -55,7 +61,10 @@ class ArticlesFlowFragmentTest {
         every { androidUserSession2.user?.login } returns "UnitTestLogin"
 
         val articlesFlowFragment = ArticlesFlowFragment.build(listOf(ArticlesUserSearch("Test", true)))
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = articlesFlowFragment.requireArguments()) {
+        launchFragmentInContainer(
+            themeResId = R.style.Theme_MaterialComponents,
+            fragmentArgs = articlesFlowFragment.requireArguments()
+        ) {
             articlesFlowFragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             assertEquals("UnitTestLogin", fragment.fragment_flow_articles_toolbar.subtitle)
@@ -67,7 +76,10 @@ class ArticlesFlowFragmentTest {
         every { androidUserSession2.isLoggedIn } returns false
 
         val articlesFlowFragment = ArticlesFlowFragment.build(listOf(ArticlesUserSearch("Test", true)))
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = articlesFlowFragment.requireArguments()) {
+        launchFragmentInContainer(
+            themeResId = R.style.Theme_MaterialComponents,
+            fragmentArgs = articlesFlowFragment.requireArguments()
+        ) {
             articlesFlowFragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             assertEquals(null, fragment.fragment_flow_articles_toolbar.subtitle)
@@ -79,7 +91,10 @@ class ArticlesFlowFragmentTest {
         every { androidUserSession2.isLoggedIn } returns false
 
         val articlesFlowFragment = ArticlesFlowFragment.build(listOf(ArticlesUserSearch("Test", true)))
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = articlesFlowFragment.requireArguments()) {
+        launchFragmentInContainer(
+            themeResId = R.style.Theme_MaterialComponents,
+            fragmentArgs = articlesFlowFragment.requireArguments()
+        ) {
             articlesFlowFragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             assertEquals(R.drawable.ic_account_outline, fragment.fragment_flow_articles_toolbar.tag)
@@ -91,7 +106,10 @@ class ArticlesFlowFragmentTest {
         every { androidUserSession2.isLoggedIn } returns true
 
         val articlesFlowFragment = ArticlesFlowFragment.build(listOf(ArticlesUserSearch("Test", true)))
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = articlesFlowFragment.requireArguments()) {
+        launchFragmentInContainer(
+            themeResId = R.style.Theme_MaterialComponents,
+            fragmentArgs = articlesFlowFragment.requireArguments()
+        ) {
             articlesFlowFragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             assertEquals(R.drawable.ic_account, fragment.fragment_flow_articles_toolbar.tag)
@@ -101,7 +119,10 @@ class ArticlesFlowFragmentTest {
     @Test
     fun testShouldCheckViewPagerAdapter() {
         val articlesFlowFragment = ArticlesFlowFragment.build(listOf(ArticlesUserSearch("Test", true)))
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = articlesFlowFragment.requireArguments()) {
+        launchFragmentInContainer(
+            themeResId = R.style.Theme_MaterialComponents,
+            fragmentArgs = articlesFlowFragment.requireArguments()
+        ) {
             articlesFlowFragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment { fragment ->
             assertEquals(articlesFlowAdapter, fragment.fragment_flow_articles_viewpager.adapter)
@@ -111,7 +132,10 @@ class ArticlesFlowFragmentTest {
     @Test
     fun testShouldCheckTabLayoutMediatorController() {
         val articlesFlowFragment = ArticlesFlowFragment.build(listOf(ArticlesUserSearch("Test", true)))
-        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents, fragmentArgs = articlesFlowFragment.requireArguments()) {
+        launchFragmentInContainer(
+            themeResId = R.style.Theme_MaterialComponents,
+            fragmentArgs = articlesFlowFragment.requireArguments()
+        ) {
             articlesFlowFragment.also { toothpickScope.closeOnDestroy(it).inject(it) }
         }.moveToState(Lifecycle.State.RESUMED).onFragment {
             verify { tabLayoutMediatorController.attach(any(), any()) }
