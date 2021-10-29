@@ -37,8 +37,26 @@ sealed class Either2<out TLeft, out TRight> {
         return fold({ Left(fl(it)) }, { Right(fr(it)) })
     }
 
+    inline fun onRight(f: (TRight) -> Unit) : Either2<TLeft, TRight> {
+        if (this is Right) f(this.value)
+        return this
+    }
+
+    inline fun onLeft(f: (TLeft) -> Unit) : Either2<TLeft, TRight> {
+        if (this is Left) f(this.value)
+        return this
+    }
+
     fun isLeft(): Boolean = isLeft
 
     fun isRight(): Boolean = isRight
 
+}
+
+fun <TLeft> Either2<TLeft, Unit>.left(): TLeft {
+    return (this as Either2.Left).value
+}
+
+fun <TRight> Either2<Unit, TRight>.right(): TRight {
+    return (this as Either2.Right).value
 }

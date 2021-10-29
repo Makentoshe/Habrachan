@@ -104,3 +104,5 @@ include("habrachan:network:login:mobile")
 findProject(":habrachan:network:login:mobile")?.name = "mobile"
 include("habrachan:network:login:android")
 findProject(":habrachan:network:login:android")?.name = "android"
+include("application:android:screen:login")
+findProject(":application:android:screen:login")?.name = "login"
