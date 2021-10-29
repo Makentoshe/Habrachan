@@ -17,7 +17,7 @@ val LoginAuth.email by requireReadonlyProperty(
 )
 
 val LoginAuth.state by requireReadonlyProperty(
-    key = "email",
+    key = "state",
     map = { string -> State(string) },
 )
 
