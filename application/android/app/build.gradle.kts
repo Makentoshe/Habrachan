@@ -74,6 +74,8 @@ dependencies {
     implementation(project(":habrachan:network"))
     implementation(project(":habrachan:network:articles-get"))
     implementation(project(":habrachan:network:articles-get:mobile"))
+    implementation(project(":habrachan:network:login:mobile"))
+    implementation(project(":habrachan:network:login:android"))
 
     implementation(project(":application:core"))
     implementation(project(":application:common:arena:comments"))
@@ -91,6 +93,7 @@ dependencies {
     implementation(project(":application:android:screen:articles:flow"))
     implementation(project(":application:android:screen:articles:page"))
     implementation(project(":application:android:screen:article"))
+    implementation(project(":application:android:screen:login"))
 
     implementation(project(":application:android:navigation"))
     implementation(project(":application:android:filesystem"))

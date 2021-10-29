@@ -8,7 +8,7 @@ import javax.inject.Inject
 class LoginScreenNavigatorImpl @Inject constructor(
     private val router: StackRouter,
 ) : LoginScreenNavigator {
-    override fun toLoginScreen(shouldNavigateToUserScreenAfterLogin: Boolean) {
-        router.navigateTo(LoginScreen(shouldNavigateToUserScreenAfterLogin))
+    override fun toLoginScreen() {
+        router.navigateTo(LoginScreen())
     }
 }

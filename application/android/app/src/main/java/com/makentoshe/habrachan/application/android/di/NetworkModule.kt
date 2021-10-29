@@ -7,6 +7,8 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.network.*
 import com.makentoshe.habrachan.network.articles.get.GetArticlesManager
 import com.makentoshe.habrachan.network.articles.get.mobile.GetArticlesManagerImpl
+import com.makentoshe.habrachan.network.login.GetCookieManager
+import com.makentoshe.habrachan.network.login.GetLoginManager
 import com.makentoshe.habrachan.network.manager.*
 import com.makentoshe.habrachan.network.request.*
 import io.ktor.client.*
@@ -55,6 +57,12 @@ class NetworkModule : Module() {
 
         val nativePostCommentManager = NativePostCommentManager.Builder(client).build()
         bind<PostCommentManager<out PostCommentRequest>>().toInstance(nativePostCommentManager)
+
+        val getCookieManager = GetCookieManager(ktorHttpClient)
+        bind<GetCookieManager>().toInstance(getCookieManager)
+
+        val getLoginManager = GetLoginManager(ktorHttpClient)
+        bind<GetLoginManager>().toInstance(getLoginManager)
     }
 
     private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {

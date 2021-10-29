@@ -16,7 +16,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
-class GetCookieNetworkManager(private val client: HttpClient) {
+class GetCookieManager(private val client: HttpClient) {
 
     suspend fun execute(request: GetCookieRequest): Either2<GetCookieResponse, GetCookieException> = try {
         val api = MobileHabrApi.login().cookies().build(request.parameters)

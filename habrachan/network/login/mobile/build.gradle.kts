@@ -23,8 +23,6 @@ dependencies {
     val kotlinSerializationJsonVersion = dependency.version.serializationJson
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationJsonVersion")
 
-    implementation("ch.qos.logback:logback-classic:1.2.6")
-
     val ktorHttpClientVersion = dependency.version.ktorHttpClient
     implementation("io.ktor:ktor-client-core:$ktorHttpClientVersion")
     implementation("io.ktor:ktor-client-cio:$ktorHttpClientVersion")

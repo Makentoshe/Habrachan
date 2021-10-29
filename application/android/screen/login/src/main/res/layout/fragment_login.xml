@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        style="@style/Habrachan.Toolbar"
+        android:id="@+id/fragment_login_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightLL"
+        app:title="Authorization"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back" />
+
+    <ProgressBar
+        style="@style/Habrachan.Progress"
+        android:id="@+id/fragment_login_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:visibility="gone"
+        style="@style/Habrachan.Text.Main.Bold"
+        android:id="@+id/fragment_login_exception_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginHorizontal="@dimen/dimen2XL"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:visibility="gone"
+        style="@style/Habrachan.Text.Support"
+        android:id="@+id/fragment_login_exception_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dimenML"
+        android:layout_marginHorizontal="@dimen/dimenMS"
+        app:layout_constraintTop_toBottomOf="@id/fragment_login_exception_title" />
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        style="@style/Habrachan.Button.Text"
+        android:id="@+id/fragment_login_exception_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_login_retry"
+        app:layout_constraintTop_toBottomOf="@id/fragment_login_exception_message"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <WebView
+        android:visibility="gone"
+        android:id="@+id/fragment_login_webview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:nestedScrollingEnabled="false"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/fragment_login_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

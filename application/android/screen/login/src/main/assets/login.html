@@ -1,0 +1,139 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+
+    <link href="/css/1631696504/main.css" rel="stylesheet" media="all"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#77a2b6">
+    <meta name="application-name" content="account.habr"/>
+    <meta name="msapplication-TileColor" content="#77a2b6">
+    <meta name="theme-color" content="#77a2b6">
+</head>
+
+<body>
+<div class="layout">
+    <div class="layout__notice" id="global_notices"></div>
+
+    <div class="layout__page layout__page_thin">
+        <div class="shadow-box">
+            <form action="/ajax/login/" class="form form_login s-form validateble" id="login_form" method="post" data-remote="true" novalidate>
+                <input type="hidden" name="state" value="e18ba9264452acd66817ee637b2ee553"/>
+                <input type="hidden" name="consumer" value="habr"/>
+
+                <fieldset class="form__fields">
+
+                    <div class="form__field s-field">
+                        <label for="email_field" class="form__field-label">Email</label>
+                        <input type="email" class="form__field-input" value="" name="email" data-required="true" id="email_field" data-validate_url="/ajax/validate/email/"/>
+                    </div>
+
+                    <div class="form__field s-field">
+                        <label for="password_field" class="form__field-label">Password</label>
+                        <input type="password" class="form__field-input" value="" data-required="true" name="password" id="password_field"/>
+                    </div>
+
+                    <div class="form__field hidden" id="captcha-s-field">
+                        <input name="captcha" type="hidden"/>
+
+                        <div class="captcha">
+                            <div id="captcha_widget"></div>
+                            <input type="hidden" name="captcha_type" value="recaptcha"/>
+                        </div>
+                        <script type="text/javascript">
+                            var widgetId1;
+                            var verifyCallback = function (response) {
+                                $('.item.captcha').closest('.s-with-error').removeClass('s-with-error').find('.s-error').remove();
+                                $('.item.captcha input[name="captcha_type"]').trigger('change');
+                            };
+                            var onloadCallback = function () {
+                                widgetId1 = grecaptcha.render('captcha_widget', {
+                                    'sitekey': '6LftHuoSAAAAAORONRXn_6xb2f_QCtXqfbRPfY2e',
+                                    'callback': verifyCallback,
+                                    'theme': 'light'
+                                });
+                            };
+                        </script>
+                        <script>
+                            function reloadRecaptcha() {
+                                // reload captcha
+                                grecaptcha.reset(widgetId1);
+                            }
+                        </script>
+                        <script async defer src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=ru'></script>
+                    </div>
+
+                    <div class="form__buttons s-buttons">
+                        <button type="submit" name="go" class="button button_wide button_primary" onclick="showAndroidToast(this)">Log in</button>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/js/1631696504/raven.min.js"></script>
+<script>Raven.config('https://a50395132210441f86e84f713231e270@sentry.srv.habr.com/10').install()</script>
+
+<script src="/js/1631696504/jquery-3.4.1.min.js"></script>
+<script src="/js/1631696504/jquery.form.min.js"></script>
+<script src="/js/1631696504/jquery.scrollTo.js"></script>
+<script src="/js/1631696504/jquery.jgrowl.js"></script>
+<script src="/js/1631696504/jquery.cookie.js"></script>
+<script src="/js/1631696504/chosen.jquery.js"></script>
+<script src="/js/1631696504/form.validator.js"></script>
+<script src="/js/1631696504/main.js"></script>
+<script>
+    function gInit() {
+        $('.google').on('click', function () {
+            gapi.auth.authorize({
+                scope: ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"],
+                client_id: "472084966048-ut99mpprfh1n8ees0r26kr1183u1q4r0.apps.googleusercontent.com",
+                redirect_uri: "postmessage",
+                immediate: false,
+                response_type: 'code',
+                state: "de62a2dc1c2926c617fb4125dc9a97e8",
+                access_type: "offline",
+                cookie_policy: "single_host_origin"
+            }, signInCallback);
+            return false;
+        });
+        $('.google').removeClass('hidden');
+    }
+
+    function signInCallback(authResult) {
+        console.log(authResult);
+        if (authResult['code']) {
+            window.location.href = '/social/callback/google/?state=' + authResult['state'] + '&code=' + authResult['code'];
+        } else if (authResult['error']) {
+            // Произошла ошибка.
+            // Возможные коды ошибок:
+            //   "access_denied" – пользователь отказался предоставить приложению доступ к данным
+            //   "immediate_failed" – не удалось выполнить автоматический вход пользователя
+            console.log('There was an error: ' + authResult['error']);
+            return;
+        }
+    }
+
+    $(document).ready(function () {
+        $('.remind').on('click', function () {
+            var email = $('input[name="email"]').val();
+            $.cookie('email', email, {path: '/'});
+        })
+    })
+</script>
+<script type="text/javascript" async="async" src="https://plus.google.com/js/client:plusone.js?onload=gInit"></script>
+
+<script type="text/javascript">
+    function showAndroidToast(toast) {
+        const inputs = document.getElementsByClassName("form__field-input")
+        AndroidLoginInterface.performLogin(inputs[0].value, inputs[1].value);
+    }
+</script>
+
+</body>
+</html>

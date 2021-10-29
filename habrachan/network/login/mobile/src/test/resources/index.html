@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>Log in — Habr Account</title>
+
+    <link href="/css/1631696504/main.css" rel="stylesheet" media="all" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#77a2b6">
+    <meta name="application-name" content="account.habr"/>
+    <meta name="msapplication-TileColor" content="#77a2b6">
+    <meta name="theme-color" content="#77a2b6">
+
+    <meta name="robots" content="noindex"/>
+</head>
+
+<body>
+<div class="layout">
+    <div class="layout__notice" id="global_notices"></div>
+    <div class="layout__header">
+        <div class="layout__header-inner layout__header-inner_clean">
+            <a href="https://account.habr.com/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" class="layout__header-logo">
+                <svg class="logo logo_clean">
+                    <use xlink:href="/img/icons-sprite.svg#logo_en"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <div class="layout__page layout__page_thin">
+        <div class="shadow-box">
+            <div class="shadow-box__title">Log in</div>
+            <form action="/ajax/login/" class="form form_login s-form validateble" id="login_form" method="post" data-remote="true" novalidate >
+                <input type="hidden" name="state" value="43d6fc5679d9f36a6292cb1bdb6a7711"/>
+                <input type="hidden" name="consumer" value="habr"/>
+
+
+
+
+                <fieldset class="form__fields">
+
+                    <div class="form__field s-field">
+                        <label for="email_field" class="form__field-label">Email</label>
+                        <input type="email" class="form__field-input" value="" name="email" data-required="true"  id="email_field" data-validate_url="/ajax/validate/email/" />
+                    </div>
+
+                    <div class="form__field s-field">
+                        <label for="password_field" class="form__field-label">Password</label>
+                        <input type="password" class="form__field-input" value="" data-required="true" name="password" id="password_field" />
+                    </div>
+
+                    <div class="form__field hidden" id="captcha-s-field">
+                        <input name="captcha" type="hidden" />
+
+                        <div class="captcha">
+                            <div id="captcha_widget"></div>
+                            <input type="hidden" name="captcha_type" value="recaptcha"/>
+                        </div>
+                        <script type="text/javascript">
+                            var widgetId1;
+                            var verifyCallback = function(response) {
+                                $('.item.captcha').closest('.s-with-error').removeClass('s-with-error').find('.s-error').remove();
+                                $('.item.captcha input[name="captcha_type"]').trigger('change');
+                            };
+                            var onloadCallback = function() {
+                                widgetId1 = grecaptcha.render('captcha_widget', {
+                                    'sitekey' : '6LftHuoSAAAAAORONRXn_6xb2f_QCtXqfbRPfY2e',
+                                    'callback' : verifyCallback,
+                                    'theme' : 'light'
+                                });
+                            };
+                        </script>
+                        <script>
+                            function reloadRecaptcha(){
+                                // reload captcha
+                                grecaptcha.reset(widgetId1);
+                            }
+                        </script>
+                        <script async defer src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=ru'></script>
+
+
+                    </div>
+
+                    <div class="form__buttons s-buttons">
+                        <button type="submit" name="go" class="button button_wide button_primary">
+                            Log in
+                        </button>
+                        <a href="https://account.habr.com/login/reminder/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" class="form__remind-password-link">
+                            Forgot password?
+                        </a>
+                    </div>
+
+                    <div class="form__field form__field_socials js_socials-buttons ">
+                        <label class="form__field-label">Or log in with</label>
+                        <div class="socials-buttons s-buttons ">
+                            <a href="https://account.habr.com/ajax/social/login/facebook/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" data-remote="true" data-method="post" data-post-consumer="habr"  data-post-state="43d6fc5679d9f36a6292cb1bdb6a7711"  class="socials-buttons__button socials-buttons__button_facebook" title="Log in with Facebook">
+                                <svg width="36" height="36">
+                                    <use xlink:href="/img/icons-sprite.svg#facebook"/>
+                                </svg>
+                            </a>
+
+                            <a href="https://account.habr.com/ajax/social/login/vkontakte/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" data-remote="true" data-method="post" data-post-consumer="habr" data-post-state="43d6fc5679d9f36a6292cb1bdb6a7711"  class="socials-buttons__button socials-buttons__button_vkontakte" title="Log in with VK">
+                                <svg width="36" height="36">
+                                    <use xlink:href="/img/icons-sprite.svg#vk"/>
+                                </svg>
+                            </a>
+
+                            <a href="https://account.habr.com/ajax/social/login/twitter/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" data-remote="true" data-method="post" data-post-consumer="habr" data-post-state="43d6fc5679d9f36a6292cb1bdb6a7711"  class="socials-buttons__button socials-buttons__button_twitter" title="Log in with Twitter">
+                                <svg width="36" height="36">
+                                    <use xlink:href="/img/icons-sprite.svg#twitter"/>
+                                </svg>
+                            </a>
+
+                            <a href="https://account.habr.com/ajax/social/login/github/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" data-remote="true" data-date='{ code: "code", userid: "userid" }' data-method="post" data-post-consumer="habr" data-post-state="43d6fc5679d9f36a6292cb1bdb6a7711"  class="socials-buttons__button socials-buttons__button_github" title="Log in with Github">
+                                <svg width="36" height="36">
+                                    <use xlink:href="/img/icons-sprite.svg#github"/>
+                                </svg>
+                            </a>
+
+                            <a href="https://account.habr.com/ajax/social/login/liveid/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" data-remote="true" data-method="post" data-post-consumer="habr" data-post-state="43d6fc5679d9f36a6292cb1bdb6a7711"  class="socials-buttons__button socials-buttons__button_liveid" title="Log in with LiveID">
+                                <svg width="36" height="36" viewBox="0 0 32 32">
+                                    <use xlink:href="/img/icons-sprite.svg#liveid"/>
+                                </svg>
+                            </a>
+
+                            <a  href="#" class="socials-buttons__button socials-buttons__button_google google hidden" title="Log in with Google">
+                                <svg width="36" height="36" viewBox="0 0 32 32">
+                                    <use xlink:href="/img/icons-sprite.svg#google"/>
+                                </svg>
+                            </a>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="shadow-box shadow-box_additionals">
+            <span class="form-additional-message">Have no account yet?&nbsp;<a href="https://account.habr.com/register/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" class="form-additional-message__link">Sign up</a></span>
+        </div>
+        <div class="layout__footer">
+            <div class="layout__footer-inner">
+                <div class="footer-links">
+                    <a href="?hl=ru_RU" class="footer-links__link">
+                        <svg class="footer-links__icon footer-links__icon-ball" width="16" height="16">
+                            <use xlink:href="/img/icons-sprite.svg#globus"/>
+                        </svg>
+                        Русский
+                    </a>
+                    <a href="https://account.habr.com/info/about/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" class="footer-links__link">About</a>
+                    <a href="https://account.habr.com/feedback/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" class="footer-links__link">Feedback</a>
+                    <a href="https://account.habr.com/info/agreement/?consumer=habr&state=43d6fc5679d9f36a6292cb1bdb6a7711" class="footer-links__link">User agreement</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/js/1631696504/raven.min.js"></script>
+<script>Raven.config('https://a50395132210441f86e84f713231e270@sentry.srv.habr.com/10').install()</script>
+
+<script src="/js/1631696504/jquery-3.4.1.min.js"></script>
+<script src="/js/1631696504/jquery.form.min.js"></script>
+<script src="/js/1631696504/jquery.scrollTo.js"></script>
+<script src="/js/1631696504/jquery.jgrowl.js"></script>
+<script src="/js/1631696504/jquery.cookie.js"></script>
+<script src="/js/1631696504/chosen.jquery.js"></script>
+<script src="/js/1631696504/form.validator.js"></script>
+<script src="/js/1631696504/main.js"></script>
+<script>
+    function gInit() {
+        $('.google').on('click', function(){
+            gapi.auth.authorize({
+                scope:["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"],
+                client_id:"472084966048-ut99mpprfh1n8ees0r26kr1183u1q4r0.apps.googleusercontent.com",
+                redirect_uri:"postmessage",
+                immediate:false,
+                response_type:'code',
+                state:"8e6481ed9161a8a6e811232a207f9cdc",
+                access_type:"offline",
+                cookie_policy:"single_host_origin"
+            }, signInCallback);
+            return false;
+        });
+        $('.google').removeClass('hidden');
+    }
+
+    function signInCallback(authResult) {
+        console.log(authResult);
+        if (authResult['code']) {
+            window.location.href = '/social/callback/google/?state='+authResult['state']+'&code='+authResult['code'];
+        } else if (authResult['error']) {
+            // Произошла ошибка.
+            // Возможные коды ошибок:
+            //   "access_denied" – пользователь отказался предоставить приложению доступ к данным
+            //   "immediate_failed" – не удалось выполнить автоматический вход пользователя
+            console.log('There was an error: ' + authResult['error']);
+            return;
+        }
+    }
+
+    $(document).ready(function(){
+        $('.remind').on('click', function(){
+            var email = $('input[name="email"]').val();
+            $.cookie('email', email, {path: '/' } );
+        })
+    })
+</script>
+<script type="text/javascript" async="async" src="https://plus.google.com/js/client:plusone.js?onload=gInit"></script>
+
+
+
+<script>
+    var g_hl = 'en';
+</script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter24049429 = new Ya.Metrika({id:24049429,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/24049429" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    //ga('create', 'UA-726094-15', 'auto');
+    ga('create', 'UA-726094-15', {
+        'cookieDomain': 'none'
+    });
+    ga('create', 'UA-726094-24', 'auto', { 'name': 'HGM', 'allowLinker': true });
+    ga('HGM.require', 'linker');
+    ga('HGM.linker:autoLink', ['toster.ru', 'habr.com', 'account.habr.com', 'm.habr.com']);
+
+    ga('send', 'pageview');
+    ga('HGM.send', 'pageview');
+</script>
+
+
+</body>
+</html>
