@@ -7,7 +7,7 @@ import com.makentoshe.habrachan.functional.Require2
 import kotlin.reflect.KProperty
 
 interface AnyWithFlatParameters {
-    val parameters: Map<String, String>
+    val parameters: Map<String, String?>
 }
 
 /** Property for delegation a specified property that optional for [AnyWithFlatParameters] */
