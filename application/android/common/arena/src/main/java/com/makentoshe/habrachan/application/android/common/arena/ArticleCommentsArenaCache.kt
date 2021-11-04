@@ -3,8 +3,8 @@ package com.makentoshe.habrachan.application.android.common.arena
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
-import com.makentoshe.habrachan.application.android.database.record.CommentRecord
+import com.makentoshe.habrachan.application.android.database.cache.AndroidCacheDatabase
+import com.makentoshe.habrachan.application.android.database.cache.record.CommentRecord
 import com.makentoshe.habrachan.application.common.arena.ArenaCache
 import com.makentoshe.habrachan.application.common.arena.ArenaStorageException
 import com.makentoshe.habrachan.entity.Comment

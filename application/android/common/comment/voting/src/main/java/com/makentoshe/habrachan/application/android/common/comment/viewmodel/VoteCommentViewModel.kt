@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.application.android.common.comment.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
+import com.makentoshe.habrachan.application.android.database.cache.AndroidCacheDatabase
 import com.makentoshe.habrachan.entity.CommentId
 import com.makentoshe.habrachan.functional.onSuccess
 import com.makentoshe.habrachan.network.UserSession

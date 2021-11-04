@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.application.android.arena
 
-import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
+import com.makentoshe.habrachan.application.android.database.cache.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.network.request.GetUserRequest
 import com.makentoshe.habrachan.network.response.GetUserResponse

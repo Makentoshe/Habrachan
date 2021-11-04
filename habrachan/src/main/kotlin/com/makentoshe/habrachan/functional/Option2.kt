@@ -6,14 +6,20 @@ sealed class Option2<out V> {
 
     abstract val isNotEmpty: Boolean
 
+    abstract val nullableValue: V?
+
     data class Value<V>(val value: V) : Option2<V>() {
         override val isEmpty: Boolean = false
         override val isNotEmpty: Boolean = !isEmpty
+
+        override val nullableValue: V? = value
     }
 
     object None : Option2<Nothing>() {
         override val isEmpty: Boolean = true
         override val isNotEmpty: Boolean = !isEmpty
+
+        override val nullableValue: Nothing? = null
     }
 
     inline fun <R> fold(ifEmpty: () -> R, ifSome: (V) -> R): R = when (this) {
@@ -21,7 +27,7 @@ sealed class Option2<out V> {
         is Value<V> -> ifSome(value)
     }
 
-    inline fun onNotEmpty(action: (V) -> Unit ): Option2<V> {
+    inline fun onNotEmpty(action: (V) -> Unit): Option2<V> {
         if (this is Value) action(value)
         return this
     }
@@ -53,3 +59,5 @@ sealed class Option2<out V> {
 
 
 fun <T> T?.toOption(): Option2<T> = this?.let { Option2.Value(it) } ?: Option2.None
+
+fun <T> T?.toOption2(): Option2<T> = this?.let { Option2.Value(it) } ?: Option2.None

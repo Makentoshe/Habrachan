@@ -5,8 +5,8 @@ import com.makentoshe.habrachan.api.articles.findFilter
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
-import com.makentoshe.habrachan.application.android.database.record.*
+import com.makentoshe.habrachan.application.android.database.cache.AndroidCacheDatabase
+import com.makentoshe.habrachan.application.android.database.cache.record.*
 import com.makentoshe.habrachan.application.common.arena.ArenaCache3
 import com.makentoshe.habrachan.application.common.arena.ArenaStorageException
 import com.makentoshe.habrachan.application.common.arena.EmptyArenaStorageException

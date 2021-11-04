@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.articles.flow.di
 
 import android.content.res.Resources
-import com.makentoshe.habrachan.application.android.database.UserSessionDatabase
+import com.makentoshe.habrachan.application.android.database.user.UserSessionDatabase
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesScope
 import com.makentoshe.habrachan.application.android.screen.articles.flow.ArticlesFlowFragment

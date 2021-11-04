@@ -3,11 +3,11 @@ package com.makentoshe.habrachan.application.android.common.article.arena
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
-import com.makentoshe.habrachan.application.android.database.record.ArticleAuthorRecord
-import com.makentoshe.habrachan.application.android.database.record.ArticleHubCrossRef
-import com.makentoshe.habrachan.application.android.database.record.ArticleRecord2
-import com.makentoshe.habrachan.application.android.database.record.HubRecord2
+import com.makentoshe.habrachan.application.android.database.cache.AndroidCacheDatabase
+import com.makentoshe.habrachan.application.android.database.cache.record.ArticleAuthorRecord
+import com.makentoshe.habrachan.application.android.database.cache.record.ArticleHubCrossRef
+import com.makentoshe.habrachan.application.android.database.cache.record.ArticleRecord2
+import com.makentoshe.habrachan.application.android.database.cache.record.HubRecord2
 import com.makentoshe.habrachan.application.common.arena.ArenaCache
 import com.makentoshe.habrachan.application.common.arena.ArenaStorageException
 import com.makentoshe.habrachan.functional.Result
