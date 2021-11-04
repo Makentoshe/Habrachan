@@ -77,6 +77,9 @@ object Version {
     // https://github.com/opacapp/multiline-collapsingtoolbar
     const val androidCollapsingToolbar = "27.1.1"
 
+    // https://developer.android.com/topic/security/data
+    const val androidSecurityCrypto = "1.1.0-alpha03"
+
     const val androidLogback = "2.0.0"
 
     const val androidGifDrawable = "1.2.19"

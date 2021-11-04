@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.application.android.arena
 
 import android.util.Log
-import com.makentoshe.habrachan.application.android.database.AvatarDao
-import com.makentoshe.habrachan.application.android.database.record.AvatarRecord
+import com.makentoshe.habrachan.application.android.database.cache.dao.AvatarDao
+import com.makentoshe.habrachan.application.android.database.cache.record.AvatarRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.network.GetContentRequest

@@ -2,8 +2,8 @@ package com.makentoshe.habrachan.application.android.arena
 
 import android.util.Log
 import com.makentoshe.habrachan.application.android.BuildConfig
-import com.makentoshe.habrachan.application.android.database.dao.CommentDao
-import com.makentoshe.habrachan.application.android.database.record.CommentRecord
+import com.makentoshe.habrachan.application.android.database.cache.dao.CommentDao
+import com.makentoshe.habrachan.application.android.database.cache.record.CommentRecord
 import com.makentoshe.habrachan.application.core.arena.ArenaCache
 import com.makentoshe.habrachan.application.core.arena.ArenaStorageException
 import com.makentoshe.habrachan.entity.Comment

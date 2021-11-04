@@ -1,7 +1,7 @@
 package com.makentoshe.habrachan.application.android.common
 
-import com.makentoshe.habrachan.application.android.database.dao.UserSessionDao
-import com.makentoshe.habrachan.application.android.database.record.UserSessionRecord
+import com.makentoshe.habrachan.application.android.database.cache.dao.UserSessionDao
+import com.makentoshe.habrachan.application.android.database.cache.record.UserSessionRecord
 import com.makentoshe.habrachan.entity.User
 import com.makentoshe.habrachan.network.UserSession
 

@@ -2,7 +2,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.makentoshe.habrachan.application.android.database.dao.CommentDao
+import com.makentoshe.habrachan.application.android.database.cache.dao.CommentDao
 import com.makentoshe.habrachan.application.core.arena.image.ContentArena
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.toResult

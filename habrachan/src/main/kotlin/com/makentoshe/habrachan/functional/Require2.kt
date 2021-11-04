@@ -13,6 +13,22 @@ class Require2<out V>(private val internalValue: V?) {
 
         return this
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Require2<*>
+
+        if (internalValue != other.internalValue) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return internalValue?.hashCode() ?: 0
+    }
+
 }
 
 fun <T> T?.toRequire2() = Require2<T>(this)

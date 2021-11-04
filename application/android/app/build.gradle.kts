@@ -204,6 +204,11 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:$paginationVersion")
     implementation("androidx.paging:paging-rxjava2:$paginationVersion")
 
+    // Android EncryptedSharedPreferences and other encryption stuff
+    // https://developer.android.com/topic/security/data
+    val androidSecurityCryptoVersion = dependency.version.androidSecurityCrypto
+    implementation("androidx.security:security-crypto:$androidSecurityCryptoVersion")
+
     // Subsampling scale image view
     // https://github.com/davemorrissey/subsampling-scale-image-view
     val subsamplingScaleImageViewVersion = dependency.version.androidSubsamplingScaleImageView

@@ -3,8 +3,8 @@ package com.maketoshe.habrachan.application.android.screen.articles.page.di
 import com.makentoshe.habrachan.api.articles.ArticlesFilter
 import com.makentoshe.habrachan.application.android.common.articles.viewmodel.GetArticlesSpec
 import com.makentoshe.habrachan.application.android.common.articles.viewmodel.GetArticlesViewModel
-import com.makentoshe.habrachan.application.android.database.UserSessionDatabase
-import com.makentoshe.habrachan.application.android.database.record.userdatabase.toArticlesFilter
+import com.makentoshe.habrachan.application.android.database.user.UserSessionDatabase
+import com.makentoshe.habrachan.application.android.database.user.record.toArticlesFilter
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesScope

@@ -1,7 +1,7 @@
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.makentoshe.habrachan.application.android.common.article.voting.viewmodel.VoteArticleSpec
 import com.makentoshe.habrachan.application.android.common.article.voting.viewmodel.VoteArticleViewModel
-import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
+import com.makentoshe.habrachan.application.android.database.cache.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.common.article.voting.VoteArticleArena
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.Result

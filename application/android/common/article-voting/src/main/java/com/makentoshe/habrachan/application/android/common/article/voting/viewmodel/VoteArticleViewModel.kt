@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.database.AndroidCacheDatabase
+import com.makentoshe.habrachan.application.android.database.cache.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.common.article.voting.VoteArticleArena
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.functional.onSuccess
