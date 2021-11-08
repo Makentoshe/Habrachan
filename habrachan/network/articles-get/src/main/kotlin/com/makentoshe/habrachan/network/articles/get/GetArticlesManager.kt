@@ -28,7 +28,8 @@ abstract class GetArticlesManager(private val client: HttpClient) {
     }
 
     private fun ktorUrl(url: HabrArticlesFilterApi): Url {
-        return Url(url.path.plus("?").plus(url.queriesString))
+//        return Url(url.path.plus("?").plus(url.queriesString))
+        return Url(url.path)
     }
 
     private suspend fun ktorRequest(request: GetArticlesRequest): HttpResponse {
@@ -38,6 +39,7 @@ abstract class GetArticlesManager(private val client: HttpClient) {
     private suspend fun ktorRequest(api: HabrArticlesFilterApi): HttpResponse {
         return client.request(ktorUrl(api)) {
             api.headers.forEach { (key, value) -> header(key, value) }
+            api.queries.forEach { (key, value) -> parameter(key, value) }
         }
     }
 
