@@ -13,6 +13,10 @@ sealed class Option2<out V> {
         override val isNotEmpty: Boolean = !isEmpty
 
         override val nullableValue: V? = value
+
+        override fun toString(): String {
+            return "Option(value=$value)"
+        }
     }
 
     object None : Option2<Nothing>() {
@@ -20,6 +24,10 @@ sealed class Option2<out V> {
         override val isNotEmpty: Boolean = !isEmpty
 
         override val nullableValue: Nothing? = null
+
+        override fun toString(): String {
+            return "Option(None)"
+        }
     }
 
     inline fun <R> fold(ifEmpty: () -> R, ifSome: (V) -> R): R = when (this) {
@@ -50,6 +58,12 @@ sealed class Option2<out V> {
     inline fun getOrThrow(exception: () -> Throwable = { IllegalStateException() }): V = when (this) {
         is Value -> this.value
         else -> throw exception()
+    }
+
+    @Suppress("USELESS_CAST") //  without casting toString will be recursive
+    override fun toString() : String = when(this) {
+        is Value -> (this as Value).toString()
+        else -> (this as None).toString()
     }
 
     companion object {
