@@ -6,6 +6,7 @@ import com.makentoshe.habrachan.api.android.login.auth
 import com.makentoshe.habrachan.api.android.login.build
 import com.makentoshe.habrachan.api.login.api.HabrLoginAuthApi
 import com.makentoshe.habrachan.functional.Either2
+import com.makentoshe.habrachan.network.login.entity.LoginSession
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
