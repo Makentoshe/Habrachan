@@ -47,7 +47,7 @@ abstract class AndroidUserSessionController :
         with(sharedPreferences.edit()) {
             this.putString(CLIENT_API, androidUserSession.api.nullableValue?.string)
             this.putString(CLIENT_ID, androidUserSession.client.nullableValue?.string)
-            this.putString(TOKEN, androidUserSession.token.nullableValue?.string)
+            this.putString(TOKEN, androidUserSession.accessToken.nullableValue?.string)
             this.putString(HABR_SESSION_ID, androidUserSession.habrSessionId.nullableValue?.string)
         }.commit()
     }
@@ -55,9 +55,9 @@ abstract class AndroidUserSessionController :
     override fun get(): AndroidUserSession? {
         val api = sharedPreferences.getString(CLIENT_API, null)?.let(::ClientApi)?.toRequire2() ?: return null
         val client = sharedPreferences.getString(CLIENT_ID, null)?.let(::ClientId)?.toRequire2() ?: return null
-        val token = sharedPreferences.getString(TOKEN, null)?.let(::Token).toOption2()
+        val accessToken = sharedPreferences.getString(TOKEN, null)?.let(::AccessToken).toOption2()
         val habrSessionId = sharedPreferences.getString(HABR_SESSION_ID, null)?.let(::HabrSessionIdCookie).toOption2()
-        return AndroidUserSession(client, api, token, habrSessionId)
+        return AndroidUserSession(client, api, accessToken, habrSessionId)
     }
 
     override fun accept(t: (AndroidUserSessionControllerApply.() -> Unit)) {
@@ -67,10 +67,10 @@ abstract class AndroidUserSessionController :
     data class AndroidUserSessionControllerApply internal constructor(val old: AndroidUserSession?) {
         var client: Require2<ClientId> = old?.client ?: Require2(null)
         var api: Require2<ClientApi> = old?.api ?: Require2(null)
-        var token: Option2<Token> = old?.token ?: Option2.None
+        var accessToken: Option2<AccessToken> = old?.accessToken ?: Option2.None
         var habrSessionId: Option2<HabrSessionIdCookie> = old?.habrSessionId ?: Option2.None
 
-        fun apply() = AndroidUserSession(client, api, token, habrSessionId)
+        fun apply() = AndroidUserSession(client, api, accessToken, habrSessionId)
     }
 }
 

@@ -6,33 +6,57 @@ import com.makentoshe.habrachan.functional.Require2
 import com.makentoshe.habrachan.functional.toRequire2
 
 @JvmInline
-value class ClientId(val string: String)
+value class ClientId(val string: String) {
+    val name: String get() = NAME
+
+    companion object {
+        const val NAME = "client"
+    }
+}
 
 @JvmInline
-value class HabrSessionIdCookie(val string: String)
+value class HabrSessionIdCookie(val string: String) {
+    val name: String get() = NAME
+
+    companion object {
+        const val NAME = "habrsession_id"
+    }
+}
 
 @JvmInline
-value class Token(val string: String)
+value class AccessToken(val string: String) {
+    val name: String get() = NAME
+
+    companion object {
+        const val NAME = "token"
+    }
+}
 
 @JvmInline
-value class ClientApi(val string: String)
+value class ClientApi(val string: String) {
+    val name: String get() = NAME
+
+    companion object {
+        const val NAME = "apiKey"
+    }
+}
 
 data class AndroidUserSession(
     val client: Require2<ClientId>,
     val api: Require2<ClientApi>,
-    val token: Option2<Token>,
+    val accessToken: Option2<AccessToken>,
     val habrSessionId: Option2<HabrSessionIdCookie>,
 ) {
 
     constructor(
         client: ClientId,
         api: ClientApi,
-        token: Token?,
+        accessToken: AccessToken?,
         habrSessionId: HabrSessionIdCookie?
     ) : this(
         client.toRequire2(),
         api.toRequire2(),
-        Option2.from(token),
+        Option2.from(accessToken),
         Option2.from(habrSessionId),
     )
 }
@@ -40,11 +64,14 @@ data class AndroidUserSession(
 fun AndroidUserSession.toRequestParameters(): AdditionalRequestParameters {
     val queries = mapOf("fl" to "en%2Cru")
 
-    val headers = hashMapOf(
-        "apiKey" to api.value.string,
-        "client" to client.value.string,
-    )
-    token.onNotEmpty { headers["token"] = it.string }
+    val cookies = hashMapOf<String, String>()
+    habrSessionId.onNotEmpty { cookies[it.name] = it.string }
 
-    return AdditionalRequestParameters(headers, queries)
+    val headers = hashMapOf(
+        api.value.name to api.value.string,
+        client.value.name to client.value.string,
+    )
+    accessToken.onNotEmpty { headers[it.name] = it.string }
+
+    return AdditionalRequestParameters(headers, queries, cookies)
 }

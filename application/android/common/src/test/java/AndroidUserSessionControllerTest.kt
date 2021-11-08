@@ -17,7 +17,7 @@ abstract class AndroidUserSessionControllerTest {
         `create encrypted controller`(`with encryption` = `create encryption`()).accept {
             this.api = Require2(null)
             this.client = Require2(null)
-            this.token = Option2.None
+            this.accessToken = Option2.None
             this.habrSessionId = Option2.None
         }
     }
@@ -34,7 +34,7 @@ abstract class AndroidUserSessionControllerTest {
         controller.accept {
 //            this.api = Require2(ClientApi("client_api"))
             this.client = Require2(ClientId("client_id"))
-            this.token = Option2.from(Token("token"))
+            this.accessToken = Option2.from(AccessToken("token"))
             this.habrSessionId = Option2.None
         }
         controller.get().`should be null`()
@@ -46,7 +46,7 @@ abstract class AndroidUserSessionControllerTest {
         controller.accept {
             this.api = Require2(ClientApi("client_api"))
 //            this.client = Require2(ClientId("client_id"))
-            this.token = Option2.from(Token("token"))
+            this.accessToken = Option2.from(AccessToken("token"))
             this.habrSessionId = Option2.None
         }
         controller.get().`should be null`()
@@ -68,7 +68,7 @@ abstract class AndroidUserSessionControllerTest {
         val androidUserSession = controller.get().`shouldn't be null`()
         androidUserSession?.client `should be` clientRequire
         androidUserSession?.api `should be` apiRequire
-        androidUserSession?.token `should be` Option2.None
+        androidUserSession?.accessToken `should be` Option2.None
         androidUserSession?.habrSessionId `should be` habrSessionIdOption
     }
 
@@ -76,20 +76,20 @@ abstract class AndroidUserSessionControllerTest {
     fun `test should check that nonnull returns when habr session id param wasn't provided for storing`() {
         val apiRequire = Require2(ClientApi("client api"))
         val clientRequire = Require2(ClientId("client id"))
-        val tokenOption = Option2.from(Token("token"))
+        val accessTokenOption = Option2.from(AccessToken("token"))
 
         val controller = `create encrypted controller`(`with encryption` = `create encryption`())
         controller.accept {
             this.api = apiRequire
             this.client = clientRequire
-            this.token = tokenOption
+            this.accessToken = accessTokenOption
 //            this.habrSessionId = habrSessionIdOption
         }
 
         val androidUserSession = controller.get().`shouldn't be null`()
         androidUserSession?.client `should be` clientRequire
         androidUserSession?.api `should be` apiRequire
-        androidUserSession?.token `should be` tokenOption
+        androidUserSession?.accessToken `should be` accessTokenOption
         androidUserSession?.habrSessionId `should be` Option2.None
     }
 
@@ -97,27 +97,27 @@ abstract class AndroidUserSessionControllerTest {
     fun `test should check that second accept attempt allowed`() {
         val apiRequire = Require2(ClientApi("client api"))
         val clientRequire = Require2(ClientId("client id"))
-        val tokenOption = Option2.from(Token("token"))
+        val accessTokenOption = Option2.from(AccessToken("token"))
         val habrSessionIdOption = Option2.from(HabrSessionIdCookie("cookie"))
 
         val controller = `create encrypted controller`(`with encryption` = `create encryption`())
         controller.accept {
             this.api = apiRequire
             this.client = clientRequire
-            this.token = tokenOption
+            this.accessToken = accessTokenOption
 //            this.habrSessionId = habrSessionIdOption
         }
         controller.accept {
             this.api `should be` apiRequire
             this.client `should be` clientRequire
-            this.token `should be` tokenOption
+            this.accessToken `should be` accessTokenOption
             this.habrSessionId = habrSessionIdOption
         }
 
         val androidUserSession = controller.get().`shouldn't be null`()
         androidUserSession?.client `should be` clientRequire
         androidUserSession?.api `should be` apiRequire
-        androidUserSession?.token `should be` tokenOption
+        androidUserSession?.accessToken `should be` accessTokenOption
         androidUserSession?.habrSessionId `should be` habrSessionIdOption
     }
 
