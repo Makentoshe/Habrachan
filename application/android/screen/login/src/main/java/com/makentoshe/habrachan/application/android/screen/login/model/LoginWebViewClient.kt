@@ -2,6 +2,8 @@ package com.makentoshe.habrachan.application.android.screen.login.model
 
 import android.content.Context
 import android.webkit.*
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.GetCookieModel
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.GetCookieSpec
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.GetCookieViewModel
@@ -17,13 +19,18 @@ class LoginWebViewClient(
     private val cookieViewModel: GetCookieViewModel,
 ) : WebViewClient() {
 
+    companion object: Analytics(LogAnalytic())
+
     private val cookieManager = CookieManager.getInstance()
 
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-        val cookies = HttpCookie.parse(cookieManager.getCookie(request.url.toString()))
+        // might be null, for example after captcha, so just allow this request and catch it on the next one.
+        val responseCookie = cookieManager.getCookie(request.url.toString()) ?: return false
+
+        val cookies = HttpCookie.parse(responseCookie)
         return cookies.filter { it.name == "habrsession_id" }.onEach { cookie ->
             coroutineScope.launch(Dispatchers.IO) {
-                cookieViewModel.cookieChannel.send(GetCookieSpec.Login(listOf(cookie.toString())))
+                cookieViewModel.cookieChannel.send(GetCookieSpec.Login(listOf(cookie)))
             }
         }.any()
     }
