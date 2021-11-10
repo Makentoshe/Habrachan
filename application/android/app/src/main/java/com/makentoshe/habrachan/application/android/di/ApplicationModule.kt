@@ -23,7 +23,7 @@ import com.makentoshe.habrachan.application.android.database.user.record.Article
 import com.makentoshe.habrachan.application.android.database.user.record.ArticlesUserSearchArticlesFilterCrossRef
 import com.makentoshe.habrachan.application.android.database.user.record.ArticlesUserSearchRecord
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.toArticlesUserSearch
-import com.makentoshe.habrachan.application.android.screen.login.navigation.LoginScreen
+import com.makentoshe.habrachan.application.android.screen.articles.flow.navigation.ArticlesFlowScreen
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.userSession
 import toothpick.config.Module
@@ -61,7 +61,7 @@ class ApplicationModule(private val context: Context) : Module() {
         initializeDefaultUserSearches()
 
         val defaultUserSearches = userDatabase.articlesUserSearchDao().getAll().map { it.toArticlesUserSearch() }
-        bind<Launcher>().toInstance(Launcher(LoginScreen()))
+        bind<Launcher>().toInstance(Launcher(ArticlesFlowScreen(defaultUserSearches)))
     }
 
     private fun initializeDefaultUserSearches() {
