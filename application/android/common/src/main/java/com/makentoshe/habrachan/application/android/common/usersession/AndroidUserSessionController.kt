@@ -7,8 +7,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.util.Consumer
-import androidx.core.util.Supplier
-import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.ironz.binaryprefs.BinaryPreferencesBuilder
@@ -19,16 +17,7 @@ import com.makentoshe.habrachan.functional.Require2
 import com.makentoshe.habrachan.functional.toOption2
 import com.makentoshe.habrachan.functional.toRequire2
 import java.io.File
-import javax.inject.Provider
 import kotlin.random.Random
-
-class AndroidUserSessionEncryption(
-    val filename: String,
-    val mainKeyAlias: String,
-    val scheme: EncryptedFile.FileEncryptionScheme,
-)
-
-interface AndroidUserSessionProvider : Provider<AndroidUserSession?>, Supplier<AndroidUserSession?>
 
 abstract class AndroidUserSessionController :
     Consumer<AndroidUserSessionController.AndroidUserSessionControllerApply.() -> Unit>, AndroidUserSessionProvider {
