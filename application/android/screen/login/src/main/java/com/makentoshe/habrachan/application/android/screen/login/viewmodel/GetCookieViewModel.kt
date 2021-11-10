@@ -18,9 +18,9 @@ import com.makentoshe.habrachan.network.login.GetCookieRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
-import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,55 +32,53 @@ class GetCookieViewModel(
 
     companion object : Analytics(LogAnalytic())
 
-    private val internalCookieChannel = Channel<GetCookieSpec>()
+    private val internalCookieChannel = Channel<GetCookieSpec.Request>()
+    val cookieChannel: SendChannel<GetCookieSpec.Request> get() = internalCookieChannel
 
-    val cookieChannel: SendChannel<GetCookieSpec> get() = internalCookieChannel
+    val cookieModel = internalCookieChannel.receiveAsFlow().map {
+        receiveRequestCookieSpec()
+    }.flowOn(Dispatchers.IO)
 
-    private val internalCookieModel = MutableSharedFlow<Either2<GetCookieModel.Request, GetCookieException>>()
-    val cookieModel: SharedFlow<Either2<GetCookieModel.Request, GetCookieException>> get() = internalCookieModel
+    private val internalLoginChannel = Channel<GetCookieSpec.Login>()
+    val loginChannel: SendChannel<GetCookieSpec.Login> get() = internalLoginChannel
 
-    private val internalLoginModel = MutableSharedFlow<Either2<GetCookieModel.Login, NoSuchElementException>>()
-    val loginModel: SharedFlow<Either2<GetCookieModel.Login, NoSuchElementException>> get() = internalLoginModel
+    val loginModel = internalLoginChannel.receiveAsFlow().map { getCookieSpecLogin ->
+        receiveLoginCookieSpec(getCookieSpecLogin)
+    }.flowOn(Dispatchers.IO)
 
     init {
         capture(analyticEvent { "Initialized" })
-        initialGetCookieSpecOption.fold({}) { getCookieSpec ->
+        initialGetCookieSpecOption.onNotEmpty { getCookieSpec ->
             capture(analyticEvent { "Send initial $getCookieSpec" })
             viewModelScope.launch(Dispatchers.IO) {
-                internalCookieChannel.send(getCookieSpec)
+                when (getCookieSpec) {
+                    is GetCookieSpec.Request -> internalCookieChannel.send(getCookieSpec)
+                    is GetCookieSpec.Login -> internalLoginChannel.send(getCookieSpec)
+                }
             }
         }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            internalCookieChannel.consumeEach { getCookieSpec -> consumeCookieSpec(getCookieSpec) }
-        }
     }
 
-    private suspend fun consumeCookieSpec(getCookieSpec: GetCookieSpec) = when (getCookieSpec) {
-        is GetCookieSpec.Request -> consumeRequestCookieSpec()
-        is GetCookieSpec.Login -> consumeLoginCookieSpec(getCookieSpec)
-    }
-
-    private suspend fun consumeRequestCookieSpec() {
+    private suspend fun receiveRequestCookieSpec(): Either2<GetCookieModel.Request, GetCookieException> {
         val response = getCookieManager.execute(GetCookieRequest(AdditionalRequestParameters()))
-        internalCookieModel.emit(response.bimap({ GetCookieModel.Request(it) }, { it }))
+        return response.bimap({ GetCookieModel.Request(it) }, { it })
     }
 
-    private suspend fun consumeLoginCookieSpec(getCookieSpec: GetCookieSpec.Login) {
-        val habrSessionIdHttpCookie = getCookieSpec.cookies.find { it.name == "habrsession_id" }
-            ?: return sessionCookieNotFoundException(NoSuchElementException("habrsession_id"))
+    private fun receiveLoginCookieSpec(getCookieSpec: GetCookieSpec.Login): Either2<GetCookieModel.Login, Throwable> {
+        val habrSessionIdHttpCookie = getCookieSpec.cookies.find { it.name == HabrSessionIdCookie.NAME }
+            ?: return sessionCookieNotFoundException(NoSuchElementException(HabrSessionIdCookie.NAME))
 
         val habrSessionIdCookie = HabrSessionIdCookie(habrSessionIdHttpCookie.value)
         androidUserSessionController.accept {
             this.habrSessionId = habrSessionIdCookie.toOption2()
         }
 
-        internalLoginModel.emit(Either2.Left(GetCookieModel.Login(habrSessionIdCookie)))
+        return Either2.Left(GetCookieModel.Login(habrSessionIdCookie))
     }
 
-    private suspend fun sessionCookieNotFoundException(exception: NoSuchElementException) {
-        internalLoginModel.emit(Either2.Right(exception))
+    private fun sessionCookieNotFoundException(exception: NoSuchElementException): Either2.Right<Throwable> {
         capture(analyticEvent(throwable = exception))
+        return Either2.Right(exception)
     }
 
     class Factory @Inject constructor(
@@ -90,7 +88,11 @@ class GetCookieViewModel(
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return GetCookieViewModel(getCookieManager, androidUserSessionController, initialGetCookieSpecOption) as T
+            return GetCookieViewModel(
+                getCookieManager,
+                androidUserSessionController,
+                initialGetCookieSpecOption
+            ) as T
         }
     }
 }

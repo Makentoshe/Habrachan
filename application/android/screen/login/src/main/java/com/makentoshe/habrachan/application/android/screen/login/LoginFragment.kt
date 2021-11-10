@@ -12,13 +12,13 @@ import com.makentoshe.habrachan.application.android.common.binding.viewBinding
 import com.makentoshe.habrachan.application.android.common.fragment.BindableBaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.BackwardNavigator
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.MeScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.login.databinding.FragmentLoginBinding
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginJavascriptInterface
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginWebViewClient
 import com.makentoshe.habrachan.application.android.screen.login.model.ZippedLoginModel
-import com.makentoshe.habrachan.application.android.screen.login.view.onCookiesLoaded
-import com.makentoshe.habrachan.application.android.screen.login.view.onFailureCaused
-import com.makentoshe.habrachan.application.android.screen.login.view.onProgressState
+import com.makentoshe.habrachan.application.android.screen.login.view.*
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.*
 import com.makentoshe.habrachan.functional.Either2
 import kotlinx.coroutines.Dispatchers
@@ -43,10 +43,13 @@ class LoginFragment : BindableBaseFragment() {
     private val loginViewModel by inject<GetLoginViewModel>()
     private val loginJavascriptInterface by inject<LoginJavascriptInterface>()
 
+    private val backwardNavigator by inject<BackwardNavigator>()
+    private val meScreenNavigator by inject<MeScreenNavigator>()
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.fragmentLoginWebview.settings.javaScriptEnabled = true
-        binding.fragmentLoginWebview.addJavascriptInterface(loginJavascriptInterface, "AndroidLoginInterface")
+        binding.onCreateWebView(loginJavascriptInterface)
+        binding.onCreateToolbar(backwardNavigator)
 
         binding.fragmentLoginExceptionRetry.setOnClickListener {
             binding.onProgressState()
@@ -83,8 +86,9 @@ class LoginFragment : BindableBaseFragment() {
     }
 
     private fun onZippedLoginModel(zippedLoginModel: ZippedLoginModel) = lifecycleScope.launch(Dispatchers.Main) {
-        capture(analyticEvent { zippedLoginModel.toString() })
+        capture(this@LoginFragment.analyticEvent { zippedLoginModel.toString() })
         Toast.makeText(requireContext(), "Navigate to User screen", Toast.LENGTH_LONG).show()
+        meScreenNavigator.toMeScreen()
     }
 
     private fun mobileLoginModelFlow() = cookieViewModel.loginModel.map {
