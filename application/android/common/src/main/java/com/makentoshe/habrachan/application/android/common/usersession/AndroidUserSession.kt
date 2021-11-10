@@ -61,8 +61,10 @@ data class AndroidUserSession(
     )
 }
 
+val AndroidUserSession.isUserLoggedIn: Boolean get() = accessToken.isNotEmpty and habrSessionId.isNotEmpty
+
 fun AndroidUserSession.toRequestParameters(): AdditionalRequestParameters {
-    val queries = mapOf("fl" to "en%2Cru")
+    val queries = mapOf("fl" to "en,ru")
 
     val cookies = hashMapOf<String, String>()
     habrSessionId.onNotEmpty { cookies[it.name] = it.string }
