@@ -29,6 +29,10 @@ class Require2<out V>(private val internalValue: V?) {
         return internalValue?.hashCode() ?: 0
     }
 
+    override fun toString(): String {
+        return "Require($nullableValue)"
+    }
+
 }
 
 fun <T> T?.toRequire2() = Require2<T>(this)
