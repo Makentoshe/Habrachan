@@ -17,12 +17,12 @@ android {
     useLibrary("android.test.base")
     useLibrary("android.test.mock")
 
-    compileSdkVersion(29)
+    compileSdkVersion(dependency.build.compileSdkVersion)
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        minSdkVersion(dependency.build.minSdkVersion)
+        targetSdkVersion(dependency.build.targetSdkVersion)
+        versionCode = dependency.build.versionCode
+        versionName = dependency.build.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFile("consumer-rules.pro")
     }
@@ -50,6 +50,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(kotlin("stdlib"))
+    implementation(project(":habrachan"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
