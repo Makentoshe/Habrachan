@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
-import com.makentoshe.habrachan.application.android.common.AndroidUserSession2
 import com.makentoshe.habrachan.application.android.common.binding.attachBinding
 import com.makentoshe.habrachan.application.android.common.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
+import com.makentoshe.habrachan.application.android.common.usersession.AndroidUserSessionProvider
+import com.makentoshe.habrachan.application.android.common.usersession.isUserLoggedIn
 import com.makentoshe.habrachan.application.android.screen.articles.flow.databinding.FragmentFlowArticlesBinding
 import com.makentoshe.habrachan.application.android.screen.articles.flow.di.provider.ArticlesFlowAdapterProvider
 import com.makentoshe.habrachan.application.android.screen.articles.flow.model.ArticlesUserSearch
@@ -34,7 +36,7 @@ class ArticlesFlowFragment : BaseFragment() {
 
     private val meScreenNavigator by inject<MeScreenNavigator>()
     private val loginScreenNavigator by inject<LoginScreenNavigator>()
-    private val userSession by inject<AndroidUserSession2>()
+    private val androidUserSessionProvider by inject<AndroidUserSessionProvider>()
     private val tabLayoutMediatorController by inject<TabLayoutMediatorController>()
     private val adapterProvider by inject<ArticlesFlowAdapterProvider>()
 
@@ -52,10 +54,10 @@ class ArticlesFlowFragment : BaseFragment() {
         fragment_flow_articles_viewpager.adapter = adapterProvider.get()
         tabLayoutMediatorController.attach(fragment_flow_articles_tabs, fragment_flow_articles_viewpager)
 
-        if (userSession.isLoggedIn) updateToolbarLogin() else updateToolbarLogout()
+        if (androidUserSessionProvider.get()?.isUserLoggedIn == true) updateToolbarLogin() else updateToolbarLogout()
         binding.fragmentFlowArticlesToolbar.setNavigationOnClickListener {
-//            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
-            if (userSession.isLoggedIn) meScreenNavigator.toMeScreen() else loginScreenNavigator.toLoginScreen()
+            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
+//            navigateToUserOrLoginScreen()
         }
     }
 
@@ -69,7 +71,14 @@ class ArticlesFlowFragment : BaseFragment() {
         binding.fragmentFlowArticlesToolbar.setNavigationIcon(R.drawable.ic_account)
         binding.fragmentFlowArticlesToolbar.tag = R.drawable.ic_account
         binding.fragmentFlowArticlesToolbar.setTitle(R.string.app_name)
-        binding.fragmentFlowArticlesToolbar.subtitle = userSession.user?.login
+
+//        binding.fragmentFlowArticlesToolbar.subtitle = userSession.user?.login
+    }
+
+    private fun navigateToUserOrLoginScreen() = if (androidUserSessionProvider.get()?.isUserLoggedIn == true) {
+        meScreenNavigator.toMeScreen()
+    } else {
+        loginScreenNavigator.toLoginScreen()
     }
 
     class Arguments(fragment: ArticlesFlowFragment) : FragmentArguments(fragment) {

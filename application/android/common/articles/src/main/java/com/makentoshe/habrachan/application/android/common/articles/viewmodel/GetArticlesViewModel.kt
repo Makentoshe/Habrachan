@@ -15,9 +15,9 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.application.android.common.articles.model.ArticleModel
 import com.makentoshe.habrachan.application.android.common.articles.model.GetArticlesDataSource
 import com.makentoshe.habrachan.application.android.common.articles.model.GetArticlesPaginator
+import com.makentoshe.habrachan.application.android.common.usersession.AndroidUserSessionProvider
 import com.makentoshe.habrachan.application.common.arena.articles.ArticlesArena3
 import com.makentoshe.habrachan.functional.Option2
-import com.makentoshe.habrachan.network.UserSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
@@ -31,7 +31,7 @@ import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 class GetArticlesViewModel(
-    private val userSession: UserSession,
+    private val androidUserSessionProvider: AndroidUserSessionProvider,
     private val articlesArena: ArticlesArena3,
     initialGetArticlesSpecOption: Option2<GetArticlesSpec>
 ) : ViewModel() {
@@ -44,7 +44,9 @@ class GetArticlesViewModel(
 
     @OptIn(FlowPreview::class)
     val pagingData = internalChannel.receiveAsFlow().flatMapConcat { spec ->
-        Pager(PagingConfig(spec.pageSize), spec) { GetArticlesDataSource(userSession, articlesArena, GetArticlesPaginator()) }.flow
+        Pager(PagingConfig(spec.pageSize), spec) {
+            GetArticlesDataSource(androidUserSessionProvider, articlesArena, GetArticlesPaginator())
+        }.flow
     }.map { it.map(::ArticleModel) }.flowOn(Dispatchers.IO).cachedIn(viewModelScope.plus(Dispatchers.IO))
 
     init {
@@ -58,13 +60,13 @@ class GetArticlesViewModel(
     }
 
     class Factory @Inject constructor(
-        private val userSession: UserSession,
+        private val androidUserSessionProvider: AndroidUserSessionProvider,
         private val articlesArena: ArticlesArena3,
         private val initialGetArticlesSpecOption: Option2<GetArticlesSpec>,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return GetArticlesViewModel(userSession, articlesArena, initialGetArticlesSpecOption) as T
+            return GetArticlesViewModel(androidUserSessionProvider, articlesArena, initialGetArticlesSpecOption) as T
         }
     }
 }
