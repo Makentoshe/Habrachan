@@ -90,8 +90,6 @@ dependencies {
     implementation(project(":application:android:screen:comments:thread"))
     implementation(project(":application:android:screen:comments:dispatch"))
     implementation(project(":application:android:screen:articles"))
-    implementation(project(":application:android:screen:articles:flow"))
-    implementation(project(":application:android:screen:articles:page"))
     implementation(project(":application:android:screen:article"))
     implementation(project(":application:android:screen:login"))
 
@@ -113,7 +111,6 @@ dependencies {
     implementation(project(":network:network-native:network-native-login"))
     implementation(project(":network:network-native:network-native-article-vote"))
     implementation(project(":network:network-native:network-native-article-get"))
-    implementation(project(":network:network-native:network-native-articles-get"))
     implementation(project(":network:network-native:network-native-comment-vote"))
     implementation(project(":network:network-native:network-native-comment-post"))
     implementation(project(":network:network-native:network-native-comments-get"))

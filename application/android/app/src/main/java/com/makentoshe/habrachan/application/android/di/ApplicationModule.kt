@@ -22,8 +22,8 @@ import com.makentoshe.habrachan.application.android.database.user.migration.user
 import com.makentoshe.habrachan.application.android.database.user.record.ArticlesFilterRecord
 import com.makentoshe.habrachan.application.android.database.user.record.ArticlesUserSearchArticlesFilterCrossRef
 import com.makentoshe.habrachan.application.android.database.user.record.ArticlesUserSearchRecord
-import com.makentoshe.habrachan.application.android.screen.articles.flow.model.toArticlesUserSearch
-import com.makentoshe.habrachan.application.android.screen.articles.flow.navigation.ArticlesFlowScreen
+import com.makentoshe.habrachan.application.android.screen.articles.model.toArticlesUserSearch
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.userSession
 import toothpick.config.Module

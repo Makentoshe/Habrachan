@@ -8,7 +8,8 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.application.android.common.BuildVersionProviderImpl
 import com.makentoshe.habrachan.application.android.di.*
 import com.makentoshe.habrachan.application.android.screen.article.di.ArticleFragmentInjector
-import com.makentoshe.habrachan.application.android.screen.articles.flow.di.ArticlesFlowFragmentInjector
+import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFlowFragmentInjector
+import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesPageFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.comments.articles.di.ArticleCommentsFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.comments.dispatch.DispatchCommentsFragmentInjector
@@ -18,7 +19,6 @@ import com.makentoshe.habrachan.application.android.screen.content.di.ContentFra
 import com.makentoshe.habrachan.application.android.screen.login.di.LoginFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.user.di.UserFragmentInjector
-import com.maketoshe.habrachan.application.android.screen.articles.page.di.ArticlesPageFragmentInjector
 import ru.terrakok.cicerone.Cicerone
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
@@ -56,7 +56,7 @@ class Habrachan : Application() {
         val userModule = UserModule(applicationContext, buildVersionProvider)
 
         val scopes = Toothpick.openScopes(ApplicationScope::class)
-        scopes.installModules(applicationModule, navigationModule, networkModule, userModule).inject(this)
+        scopes.installModules(applicationModule, userModule, navigationModule, networkModule).inject(this)
 
         registerActivityLifecycleCallbacks(injectActivityLifecycleCallback)
 
