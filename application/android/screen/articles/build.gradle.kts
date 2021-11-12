@@ -13,12 +13,12 @@ android {
         exclude("META-INF/*.kotlin_module")
     }
 
-    compileSdkVersion(29)
+    compileSdkVersion(dependency.build.compileSdkVersion)
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        minSdkVersion(dependency.build.minSdkVersion)
+        targetSdkVersion(dependency.build.targetSdkVersion)
+        versionCode = dependency.build.versionCode
+        versionName = dependency.build.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFile("consumer-rules.pro")
     }
@@ -34,13 +34,24 @@ android {
 
         kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    buildFeatures {
+        viewBinding = true
+    }
+    testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation(kotlin("stdlib"))
+    val kotlinVersion = dependency.version.kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+
+    implementation(project(":habrachan"))
+    implementation(project(":habrachan:api"))
+    implementation(project(":habrachan:entity"))
+    implementation(project(":habrachan:network"))
+    implementation(project(":habrachan:network:articles-get"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))
@@ -52,6 +63,9 @@ dependencies {
     implementation(project(":application:android:di"))
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:common"))
+    implementation(project(":application:android:common:articles"))
+    implementation(project(":application:android:navigation"))
+    implementation(project(":application:android:exception"))
 
     implementation(project(":application:android:screen"))
 
@@ -94,6 +108,44 @@ dependencies {
     val constraintVersion = dependency.version.androidConstraintLayout
     implementation("androidx.constraintlayout:constraintlayout:$constraintVersion")
 
+    val androidFragmentVersion = dependency.version.androidFragment
+    debugImplementation("androidx.fragment:fragment-testing:$androidFragmentVersion")
+
     val junitVersion = dependency.version.junit
     testImplementation("junit:junit:$junitVersion")
+
+    // Pagination library
+    // https://developer.android.com/topic/libraries/architecture/paging
+    val paginationVersion = dependency.version.androidPaging
+    implementation("androidx.paging:paging-runtime-ktx:$paginationVersion")
+    implementation("androidx.paging:paging-rxjava2:$paginationVersion")
+
+    // Core library
+    val testCoreVersion = dependency.version.androidTestCore
+    debugImplementation("androidx.test:core:$testCoreVersion")
+    testImplementation("androidx.test:core-ktx:$testCoreVersion")
+
+    // Assertions
+    val extJUnitVersion = dependency.version.androidTestJunit
+    testImplementation("androidx.test.ext:junit:$extJUnitVersion")
+    testImplementation("androidx.test.ext:junit-ktx:$extJUnitVersion")
+
+    // AndroidJUnitRunner
+    val testRunnerVersion = dependency.version.androidTestRunner
+    testImplementation("androidx.test:runner:$testRunnerVersion")
+
+    // JUnit Rules
+    val testRulesVersion = dependency.version.androidTestRules
+    testImplementation("androidx.test:rules:$testRulesVersion")
+
+    // Robolectric
+    // http://robolectric.org
+    val robolectricVersion = dependency.version.androidTestRobolectric
+    testImplementation("org.robolectric:robolectric:$robolectricVersion")
+
+    // Mockk
+    // https://github.com/mockk/mockk
+    val mockkVersion = dependency.version.mockk
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    androidTestImplementation("io.mockk:mockk-android:$mockkVersion")
 }

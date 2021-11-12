@@ -59,8 +59,6 @@ include(":application:android:screen:comments:article")
 include(":application:android:screen:comments:thread")
 include(":application:android:screen:comments:dispatch")
 include(":application:android:screen:articles")
-include(":application:android:screen:articles:flow")
-include(":application:android:screen:articles:page")
 
 include(":application:android:common")
 include(":application:android:common:arena")

@@ -1,8 +1,0 @@
-{
-  "code": 401,
-  "message": "Authorization required",
-  "additional": [
-    "TOKEN_PROBLEM"
-  ],
-  "data": {}
-}
