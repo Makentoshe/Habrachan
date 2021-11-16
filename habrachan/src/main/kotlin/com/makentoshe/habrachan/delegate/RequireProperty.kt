@@ -65,26 +65,6 @@ fun <Type> requireReadonlyProperty(
     return JsonElementRequire2ReadonlyProperty2(*mappers)
 }
 
-interface JsonElementPropertyMapper<Type> {
-    val keys: Array<out String>
-    val map: (JsonElement) -> Type?
-}
-
-fun <Type> propertyMapper(vararg keys: String, map: (JsonElement) -> Type?) = object : JsonElementPropertyMapper<Type> {
-    override val keys: Array<out String> = keys
-    override val map: (JsonElement) -> Type? = map
-}
-
-fun intPropertyMapper(vararg keys: String) = object: JsonElementPropertyMapper<Int> {
-    override val keys: Array<out String> = keys
-    override val map: (JsonElement) -> Int? = { jsonElement -> jsonElement.jsonPrimitive.int }
-}
-
-fun stringPropertyMapper(vararg keys: String) = object : JsonElementPropertyMapper<String> {
-    override val keys: Array<out String> = keys
-    override val map: (JsonElement) -> String? = { jsonElement -> jsonElement.jsonPrimitive.contentOrNull }
-}
-
 class JsonElementRequire2ReadonlyProperty2<Type>(
     private vararg val jsonElementPropertyMappers: JsonElementPropertyMapper<Type>
 ) : Require2ReadonlyProperty<AnyWithVolumeParameters<JsonElement>, Type>() {

@@ -23,9 +23,3 @@ class StringRequire2ReadonlyProperty<Type>(
     }
 
 }
-
-fun <Type> requireReadonlyProperty(
-    vararg keys: String, map: (String) -> Type
-): StringRequire2ReadonlyProperty<Type> {
-    return StringRequire2ReadonlyProperty(*keys, map = map)
-}

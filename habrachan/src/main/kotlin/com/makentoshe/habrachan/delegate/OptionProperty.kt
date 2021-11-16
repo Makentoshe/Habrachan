@@ -7,9 +7,9 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-abstract class OptionReadWriteProperty<Owner, Type>: ReadWriteProperty<Owner, Option2<Type>>
+abstract class OptionReadWriteProperty<Owner, Type> : ReadWriteProperty<Owner, Option2<Type>>
 
-abstract class OptionReadonlyProperty<Owner, Type>: ReadOnlyProperty<Owner, Option2<Type>>
+abstract class OptionReadonlyProperty<Owner, Type> : ReadOnlyProperty<Owner, Option2<Type>>
 
 class JsonElementOptionReadonlyProperty<Type>(
     private vararg val keys: String,
@@ -23,8 +23,17 @@ class JsonElementOptionReadonlyProperty<Type>(
     }
 }
 
-fun <Type> optionReadonlyProperty(vararg keys: String, map: (JsonElement) -> Type): JsonElementOptionReadonlyProperty<Type> {
+fun <Type> optionReadonlyProperty(
+    vararg keys: String,
+    map: (JsonElement) -> Type
+): JsonElementOptionReadonlyProperty<Type> {
     return JsonElementOptionReadonlyProperty(*keys, map = map)
+}
+
+fun <Type> optionReadonlyProperty(
+    vararg mappers: JsonElementPropertyMapper<Type>
+): OptionReadonlyProperty<AnyWithVolumeParameters<JsonElement>, Type> {
+    return JsonElementOption2ReadonlyProperty(*mappers)
 }
 
 fun optionStringReadonlyProperty(vararg keys: String): JsonElementOptionReadonlyProperty<String> {
@@ -35,8 +44,29 @@ fun optionIntReadonlyProperty(vararg keys: String): JsonElementOptionReadonlyPro
     return JsonElementOptionReadonlyProperty(*keys) { jsonElement -> jsonElement.jsonPrimitive.int }
 }
 
-fun <Type> optionListReadonlyProperty(vararg keys: String, mapElement: (JsonElement) -> Type): JsonElementOptionReadonlyProperty<List<Type>> {
+fun <Type> optionListReadonlyProperty(
+    vararg keys: String,
+    mapElement: (JsonElement) -> Type
+): JsonElementOptionReadonlyProperty<List<Type>> {
     return JsonElementOptionReadonlyProperty(*keys) { jsonElement ->
         jsonElement.jsonArray.map(mapElement)
+    }
+}
+
+class JsonElementOption2ReadonlyProperty<Type>(
+    private vararg val jsonElementPropertyMappers: JsonElementPropertyMapper<Type>,
+) : OptionReadonlyProperty<AnyWithVolumeParameters<JsonElement>, Type>() {
+
+    override fun getValue(thisRef: AnyWithVolumeParameters<JsonElement>, property: KProperty<*>) = Option2.from(
+        jsonElementPropertyMappers.mapNotNull { mapper -> getMapperValue(mapper, thisRef) }.firstOrNull()
+    )
+
+    private fun getMapperValue(
+        mapper: JsonElementPropertyMapper<Type>,
+        thisRef: AnyWithVolumeParameters<JsonElement>,
+    ): Type? {
+        val initial = mapper.keys.firstOrNull()?.let(thisRef.parameters::get)
+        val jsonElement = mapper.keys.drop(1).fold(initial) { jsonElement, key -> jsonElement?.jsonObject?.get(key) }
+        return if (jsonElement == null) null else mapper.map(jsonElement)
     }
 }

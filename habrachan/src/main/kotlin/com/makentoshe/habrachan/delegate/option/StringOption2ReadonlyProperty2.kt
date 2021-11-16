@@ -23,9 +23,3 @@ class StringOption2ReadonlyProperty<Type>(
     }
 
 }
-
-fun <Type> optionReadonlyProperty(
-    vararg keys: String, map: (String) -> Type
-): StringOption2ReadonlyProperty<Type> {
-    return StringOption2ReadonlyProperty(*keys, map = map)
-}
