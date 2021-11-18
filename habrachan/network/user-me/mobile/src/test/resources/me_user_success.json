@@ -1,0 +1,50 @@
+{
+  "id": "1961555",
+  "alias": "Makentoshe",
+  "fullname": "Хвостов Максим",
+  "avatarUrl": null,
+  "groups": [
+    "normal"
+  ],
+  "settings": {
+    "miscSettings": {
+      "viewCommentsRefresh": true,
+      "enableShortcuts": true,
+      "hideAdv": true,
+      "digestSubscription": null
+    },
+    "langSettings": {
+      "hl": "en",
+      "fl": "en,ru"
+    },
+    "chargeSettings": {
+      "postVoteCount": 10,
+      "commentVoteCount": 20
+    },
+    "permissionSettings": {
+      "canAddComplaints": false,
+      "canCreateVoices": false
+    }
+  },
+  "crc32": "2612327884",
+  "gaUid": "3423668c935b1bf923a407cef909f343",
+  "availableInvitesCount": 0,
+  "email": "mkliverout@gmail.com",
+  "scoreStats": {
+    "score": 10,
+    "votesCount": 10
+  },
+  "ppaBalance": null,
+  "unreadConversationCount": 0,
+  "notificationUnreadCounters": {
+    "posts_and_comments": 0,
+    "subscribers": 0,
+    "mentions": 0,
+    "system": 0,
+    "applications": 0
+  },
+  "notices": [],
+  "rssKey": "79d71c6c1b51c44e2be8c4bf2e05e4dd",
+  "companiesAdmin": [],
+  "ppg": null
+}

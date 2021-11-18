@@ -31,3 +31,7 @@ fun booleanPropertyMapper(vararg keys: String) = object : JsonElementPropertyMap
     override val keys: Array<out String> = keys
     override val map: (JsonElement) -> Boolean? = { jsonElement -> jsonElement.jsonPrimitive.booleanOrNull }
 }
+
+fun <Type> listPropertyMapper(vararg keys: String, map: (JsonElement) -> Type?) = propertyMapper(*keys) { jsonElement ->
+    jsonElement.jsonArray.map(map)
+}
