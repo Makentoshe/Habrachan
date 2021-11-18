@@ -1,4 +1,4 @@
-package com.makentoshe.habrachan.entity.mobile.me
+package com.makentoshe.habrachan.entity.me.mobile
 
 import com.makentoshe.habrachan.AnyWithVolumeParameters
 import com.makentoshe.habrachan.delegate.propertyMapper

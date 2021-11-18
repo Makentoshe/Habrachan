@@ -58,6 +58,7 @@ include(":application:android:screen:comments")
 include(":application:android:screen:comments:article")
 include(":application:android:screen:comments:thread")
 include(":application:android:screen:comments:dispatch")
+include(":application:android:screen:login")
 include(":application:android:screen:articles")
 
 include(":application:android:common")
@@ -73,34 +74,21 @@ include(":application:android:common:comment:posting")
 include(":network:network-native:network-native-user-me:network-native-user-me-test")
 include("network:network-native:network-native-comment-post")
 include(":application:android:screen:article")
-include("habrachan")
-include("habrachan:api")
-findProject(":habrachan:api")?.name = "api"
-include("habrachan:api:android")
-findProject(":habrachan:api:android")?.name = "android"
-include("habrachan:entity")
-findProject(":habrachan:entity")?.name = "entity"
-include("habrachan:network")
-findProject(":habrachan:network")?.name = "network"
-include("habrachan:network:articles-get")
-findProject(":habrachan:network:articles-get")?.name = "articles-get"
-include("habrachan:api:mobile")
-findProject(":habrachan:api:mobile")?.name = "mobile"
-include("habrachan:api:android")
-findProject(":habrachan:api:android")?.name = "android"
-include("habrachan:entity:mobile")
-findProject(":habrachan:entity:mobile")?.name = "mobile"
-include("habrachan:entity:android")
-findProject(":habrachan:entity:android")?.name = "android"
-include("habrachan:network:articles-get:mobile")
-findProject(":habrachan:network:articles-get:mobile")?.name = "mobile"
-include("habrachan:network:articles-get:android")
-findProject(":habrachan:network:articles-get:android")?.name = "android"
-include("habrachan:network:login")
-findProject(":habrachan:network:login")?.name = "login"
-include("habrachan:network:login:mobile")
-findProject(":habrachan:network:login:mobile")?.name = "mobile"
-include("habrachan:network:login:android")
-findProject(":habrachan:network:login:android")?.name = "android"
-include("application:android:screen:login")
-findProject(":application:android:screen:login")?.name = "login"
+
+include(":habrachan")
+include(":habrachan:api")
+include(":habrachan:api:android")
+include(":habrachan:entity")
+include(":habrachan:network")
+include(":habrachan:network:articles-get")
+include(":habrachan:api:mobile")
+include(":habrachan:api:android")
+include(":habrachan:entity:mobile")
+include(":habrachan:entity:android")
+include(":habrachan:network:articles-get:mobile")
+include(":habrachan:network:articles-get:android")
+include(":habrachan:network:login")
+include(":habrachan:network:login:mobile")
+include(":habrachan:network:login:android")
+include(":habrachan:network:user-me")
+include(":habrachan:network:user-me:mobile")
