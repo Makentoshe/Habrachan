@@ -93,3 +93,5 @@ include(":habrachan:network:login:android")
 include(":habrachan:network:user-me")
 include(":habrachan:network:user-me:mobile")
 include(":habrachan:network:user-get")
+include("application:common:arena:user-get")
+findProject(":application:common:arena:user-get")?.name = "user-get"
