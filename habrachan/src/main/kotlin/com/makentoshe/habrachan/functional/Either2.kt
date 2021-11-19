@@ -53,10 +53,18 @@ sealed class Either2<out TLeft, out TRight> {
 
 }
 
-fun <TLeft> Either2<TLeft, Unit>.left(): TLeft {
+fun <TLeft> Either2<TLeft, Any>.left(): TLeft {
     return (this as Either2.Left).value
+}
+
+fun <TLeft> Either2<TLeft, Any>.leftOrNull(): TLeft? {
+    return (this as? Either2.Left)?.value
 }
 
 fun <TRight> Either2<Unit, TRight>.right(): TRight {
     return (this as Either2.Right).value
+}
+
+fun <TRight> Either2<Any, TRight>.rightOrNull(): TRight? {
+    return (this as? Either2.Right)?.value
 }
