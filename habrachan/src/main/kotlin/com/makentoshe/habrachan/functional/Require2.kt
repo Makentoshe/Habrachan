@@ -36,3 +36,5 @@ class Require2<out V>(private val internalValue: V?) {
 }
 
 fun <T> T?.toRequire2() = Require2<T>(this)
+
+fun <T> Require2<T>.toOption2() = Option2.from(nullableValue)
