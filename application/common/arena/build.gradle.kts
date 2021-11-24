@@ -14,4 +14,7 @@ dependencies {
     implementation(project(":habrachan"))
 
     implementation(project(":functional"))
+
+    val versionKotlinCoroutines = dependency.version.coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$versionKotlinCoroutines")
 }
