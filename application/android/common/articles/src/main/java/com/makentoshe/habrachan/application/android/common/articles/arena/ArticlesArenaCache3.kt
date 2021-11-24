@@ -46,7 +46,7 @@ class ArticlesArenaCache3 @Inject constructor(
         val articles = articleRecords.map { articleRecord -> fetchArticle(articleRecord) }
 
         return if (articles.isEmpty()) {
-            Either2.Right(ArenaStorageException(EmptyArenaStorageException("ArenaStorage is empty")))
+            Either2.Right(ArenaStorageException(EmptyArenaStorageException()))
         } else {
             Either2.Left(GetArticlesResponse(key, articles(articles)))
         }
