@@ -13,12 +13,12 @@ android {
         exclude("META-INF/*.kotlin_module")
     }
 
-    compileSdkVersion(29)
+    compileSdkVersion(dependency.build.compileSdkVersion)
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        minSdkVersion(dependency.build.minSdkVersion)
+        targetSdkVersion(dependency.build.targetSdkVersion)
+        versionCode = dependency.build.versionCode
+        versionName = dependency.build.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFile("consumer-rules.pro")
     }
@@ -39,7 +39,19 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(kotlin("stdlib"))
+
     implementation(project(":application:android:analytics"))
+
+    // OkHttp
+    // https://github.com/square/okhttp/
+    val okhttpVersion = dependency.version.okhttp
+    api("com.squareup.okhttp3:okhttp:$okhttpVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:3.12.1")
+
+    // Ktor client
+    val ktorHttpClientVersion = dependency.version.ktorHttpClient
+    api("io.ktor:ktor-client-core:$ktorHttpClientVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorHttpClientVersion")
 
     // Toothpick
     // https://github.com/stephanenicolas/toothpick
@@ -55,12 +67,4 @@ dependencies {
 
     val androidxAppcompatVersion = dependency.version.androidAppCompat
     implementation("androidx.appcompat:appcompat:$androidxAppcompatVersion")
-
-    testImplementation("junit:junit:4.12")
-
-    val runner = dependency.version.androidTestRunner
-    androidTestImplementation("androidx.test:runner:$runner")
-
-    val espresso = dependency.version.androidTestEspresso
-    androidTestImplementation("androidx.test.espresso:espresso-core:$espresso")
 }
