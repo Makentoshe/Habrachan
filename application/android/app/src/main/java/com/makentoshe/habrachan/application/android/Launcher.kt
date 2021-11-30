@@ -8,8 +8,6 @@ import com.makentoshe.habrachan.application.android.analytics.event.analyticEven
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen2
 import com.makentoshe.habrachan.application.android.screen.comments.articles.navigation.ArticleCommentsScreen
 import com.makentoshe.habrachan.application.android.screen.comments.thread.navigation.ThreadCommentsScreen
-import com.makentoshe.habrachan.application.android.screen.user.model.UserAccount
-import com.makentoshe.habrachan.application.android.screen.user.navigation.UserScreen
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.entity.commentId
@@ -44,7 +42,7 @@ class Launcher(private val defaultScreen: Screen) {
         while (iterator.hasNext()) {
             when (val segment = iterator.next()) {
                 "post", "blog" -> return article(iterator)
-                "users" -> return users(iterator)
+//                "users" -> return users(iterator)
                 "company" -> company(segment, iterator)
             }
         }
@@ -70,11 +68,15 @@ class Launcher(private val defaultScreen: Screen) {
         return ArticleScreen2(articleId)
     }
 
-    private fun users(iterator: Iterator<String>) : Screen {
-        if (!iterator.hasNext()) return defaultScreen
-        val login = iterator.next()
-        return UserScreen(UserAccount.User(login))
-    }
+//    private fun users(iterator: Iterator<String>) : Screen {
+//        if (!iterator.hasNext()) return defaultScreen
+//        val login = iterator.next()
+//        return com.makentoshe.habrachan.application.android.screen.user.legacy.navigation.UserScreen(
+//            com.makentoshe.habrachan.application.android.screen.user.legacy.model.UserAccount.User(
+//                login
+//            )
+//        )
+//    }
 
     private fun company(segment: String, iterator: Iterator<String>) : Screen {
         return defaultScreen

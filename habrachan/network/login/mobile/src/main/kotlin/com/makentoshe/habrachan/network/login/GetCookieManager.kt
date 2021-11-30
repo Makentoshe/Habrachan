@@ -1,8 +1,8 @@
 package com.makentoshe.habrachan.network.login
 
+import com.makentoshe.habrachan.api.HabrApiGet
 import com.makentoshe.habrachan.api.mobile.MobileHabrApi
 import com.makentoshe.habrachan.api.mobile.login
-import com.makentoshe.habrachan.api.mobile.login.api.HabrLoginCookiesApi
 import com.makentoshe.habrachan.api.mobile.login.build
 import com.makentoshe.habrachan.api.mobile.login.cookies
 import com.makentoshe.habrachan.functional.Either2
@@ -19,8 +19,7 @@ import kotlinx.serialization.json.JsonObject
 class GetCookieManager(private val client: HttpClient) {
 
     suspend fun execute(request: GetCookieRequest): Either2<GetCookieResponse, GetCookieException> = try {
-        val api = MobileHabrApi.login().cookies().build(request.parameters)
-        val ktorResponse = ktorCookiesRequest(api).call.response
+        val ktorResponse = executeKtorCookies(request)
         Either2.Left(GetCookieResponse(request, ktorResponse.internalQueries, ktorResponse.internalHeaders))
     } catch (exception: ClientRequestException) {
         val parameters = Json.decodeFromString<JsonObject>(exception.response.readText()).toMap()
@@ -29,12 +28,13 @@ class GetCookieManager(private val client: HttpClient) {
         Either2.Right(GetCookieException(request, exception, emptyMap()))
     }
 
-    private fun ktorCookiesUrl(url: HabrLoginCookiesApi): Url {
-        return Url(url.path.plus("?").plus(url.queriesString))
+    private suspend fun executeKtorCookies(request: GetCookieRequest): HttpResponse {
+        return ktorCookiesRequest(MobileHabrApi.login().cookies().build(request.parameters))
     }
 
-    private suspend fun ktorCookiesRequest(api: HabrLoginCookiesApi): HttpResponse {
-        return client.request(ktorCookiesUrl(api)) {
+    private suspend fun ktorCookiesRequest(api: HabrApiGet): HttpResponse {
+        return client.request(api.path) {
+            api.queries.forEach { (key, value) -> parameter(key, value) }
             api.headers.forEach { (key, value) -> header(key, value) }
         }
     }

@@ -61,7 +61,8 @@ class ApplicationModule(private val context: Context) : Module() {
         initializeDefaultUserSearches()
 
         val defaultUserSearches = userDatabase.articlesUserSearchDao().getAll().map { it.toArticlesUserSearch() }
-        bind<Launcher>().toInstance(Launcher(ArticlesFlowScreen(defaultUserSearches)))
+        val defaultScreen = ArticlesFlowScreen(defaultUserSearches)
+        bind<Launcher>().toInstance(Launcher(defaultScreen))
     }
 
     private fun initializeDefaultUserSearches() {

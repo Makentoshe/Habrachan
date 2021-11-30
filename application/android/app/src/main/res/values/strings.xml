@@ -107,9 +107,6 @@
         <item>@string/user_content_bookmarks</item>
     </string-array>
 
-    <string name="menu_logout">Logout</string>
-    <string name="menu_send_message">Send message</string>
-
     <string name="comments_message_no_comments">There are no comments\nfor this publication at now</string>
     <string name="comments_button_first_comment">Be the first one</string>
     <string name="comments_fragment_subtitle">Comments</string>

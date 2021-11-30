@@ -37,7 +37,7 @@ class LoginWebViewClient(
             coroutineScope.launch(Dispatchers.IO) {
                 cookieViewModel.loginChannel.send(GetCookieSpec.Login(listOf(cookie)))
             }
-        }.any().also { capture(analyticEvent { "Should override url: $it. ${request.url}" }) }
+        }.any()
     }
 
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {

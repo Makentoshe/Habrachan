@@ -5,8 +5,9 @@ import com.makentoshe.habrachan.application.common.arena.FlowArena
 import com.makentoshe.habrachan.functional.Either2
 import com.makentoshe.habrachan.network.me.mobile.MeUserManager
 import com.makentoshe.habrachan.network.me.mobile.MeUserRequest
+import javax.inject.Inject
 
-class MeUserArena internal constructor(
+class MeUserArena @Inject constructor(
     private val manager: MeUserManager,
     override val arenaStorage: ArenaCache3<in MeUserArenaRequest, MeUserArenaResponse>,
 ) : FlowArena<MeUserArenaRequest, MeUserArenaResponse>() {

@@ -1,9 +1,8 @@
 package com.makentoshe.habrachan.application.android.di
 
-import com.makentoshe.habrachan.BuildConfig
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
-import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.di.module.BaseNetworkModule
 import com.makentoshe.habrachan.network.*
 import com.makentoshe.habrachan.network.articles.get.GetArticlesManager
 import com.makentoshe.habrachan.network.articles.get.mobile.GetArticlesManagerImpl
@@ -11,51 +10,40 @@ import com.makentoshe.habrachan.network.login.GetCookieManager
 import com.makentoshe.habrachan.network.login.GetLoginManager
 import com.makentoshe.habrachan.network.manager.*
 import com.makentoshe.habrachan.network.request.*
-import io.ktor.client.*
-import io.ktor.client.engine.okhttp.*
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import toothpick.config.Module
 import toothpick.ktp.binding.bind
-import javax.net.ssl.HostnameVerifier
 
-class NetworkModule : Module() {
+class NetworkModule : BaseNetworkModule() {
 
     companion object : Analytics(LogAnalytic())
 
-    private val client = OkHttpClient.Builder().followRedirects(true).addLoggingInterceptor().build()
-
-    private val ktorHttpClient = HttpClient(OkHttp) {
-        engine { preconfigured = client }
-    }
-
     init {
-        bind<OkHttpClient>().toInstance(client)
+        bind<OkHttpClient>().toInstance(okHttpClient)
 
-        bind<GetContentManager>().toInstance(GetContentManager(client))
+        bind<GetContentManager>().toInstance(GetContentManager(okHttpClient))
 
-        val getArticleManager = NativeGetArticleManager.Builder(client).build()
+        val getArticleManager = NativeGetArticleManager.Builder(okHttpClient).build()
         bind<GetArticleManager<out GetArticleRequest2>>().toInstance(getArticleManager)
 
         bind<GetArticlesManager>().toInstance(GetArticlesManagerImpl(ktorHttpClient))
 
-        val nativeMeManager = NativeGetMeManager.Builder(client).build()
-        val loginManager = NativeLoginManager.Builder(client, nativeMeManager).build()
+        val nativeMeManager = NativeGetMeManager.Builder(okHttpClient).build()
+        val loginManager = NativeLoginManager.Builder(okHttpClient, nativeMeManager).build()
         bind<NativeLoginManager>().toInstance(loginManager)
 
-        val nativeGetUserManager = NativeGetUserManager.Builder(client).build()
+        val nativeGetUserManager = NativeGetUserManager.Builder(okHttpClient).build()
         bind<GetUserManager<out GetUserRequest>>().toInstance(nativeGetUserManager)
 
-        val nativeGetCommentsManager = NativeGetArticleCommentsManager.Builder(client).build()
+        val nativeGetCommentsManager = NativeGetArticleCommentsManager.Builder(okHttpClient).build()
         bind<GetArticleCommentsManager<out GetArticleCommentsRequest>>().toInstance(nativeGetCommentsManager)
 
-        val nativeVoteArticleManager = NativeVoteArticleManager.Builder(client).build()
+        val nativeVoteArticleManager = NativeVoteArticleManager.Builder(okHttpClient).build()
         bind<VoteArticleManager<out VoteArticleRequest>>().toInstance(nativeVoteArticleManager)
 
-        val nativeVoteCommentManager = NativeVoteCommentManager.Builder(client).build()
+        val nativeVoteCommentManager = NativeVoteCommentManager.Builder(okHttpClient).build()
         bind<VoteCommentManager<out VoteCommentRequest2>>().toInstance(nativeVoteCommentManager)
 
-        val nativePostCommentManager = NativePostCommentManager.Builder(client).build()
+        val nativePostCommentManager = NativePostCommentManager.Builder(okHttpClient).build()
         bind<PostCommentManager<out PostCommentRequest>>().toInstance(nativePostCommentManager)
 
         val getCookieManager = GetCookieManager(ktorHttpClient)
@@ -65,26 +53,4 @@ class NetworkModule : Module() {
         bind<GetLoginManager>().toInstance(getLoginManager)
     }
 
-    private fun OkHttpClient.Builder.addLoggingInterceptor(): OkHttpClient.Builder {
-        if (BuildConfig.DEBUG) {
-            val logging = HttpLoggingInterceptor {
-                capture(analyticEvent("OkHttpClient", it))
-            }
-            logging.level = HttpLoggingInterceptor.Level.BASIC
-            addInterceptor(logging)
-        }
-        return this
-    }
-
-    /**
-     * Requires for oauth
-     * todo: make xml certificate?
-     */
-    private fun OkHttpClient.Builder.addHostnameVerifier(): OkHttpClient.Builder {
-        val hostnameVerifier = HostnameVerifier { hostname, _ ->
-            hostname == "habr.com" || hostname == "account.habr.com" || hostname == "github.com"
-        }
-        this.hostnameVerifier(hostnameVerifier)
-        return this
-    }
 }

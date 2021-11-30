@@ -13,8 +13,9 @@ import com.makentoshe.habrachan.functional.Either2
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-class MeUserArenaStorage(
+class MeUserArenaStorage @Inject constructor(
     private val sharedPreferences: SharedPreferences,
 ) : ArenaCache3<MeUserArenaRequest, MeUserArenaResponse> {
 

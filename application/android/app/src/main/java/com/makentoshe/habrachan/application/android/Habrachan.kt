@@ -19,6 +19,7 @@ import com.makentoshe.habrachan.application.android.screen.content.di.ContentFra
 import com.makentoshe.habrachan.application.android.screen.login.di.LoginFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.main.di.MainFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.user.di.UserFragmentInjector
+import com.makentoshe.habrachan.application.android.screen.user.di.module.MeUserNetworkModule
 import ru.terrakok.cicerone.Cicerone
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
@@ -56,7 +57,10 @@ class Habrachan : Application() {
         val userModule = UserModule(applicationContext, buildVersionProvider)
 
         val scopes = Toothpick.openScopes(ApplicationScope::class)
-        scopes.installModules(applicationModule, userModule, navigationModule, networkModule).inject(this)
+        scopes.installModules(
+            applicationModule, userModule, navigationModule, networkModule,
+            MeUserNetworkModule(this)
+        ).inject(this)
 
         registerActivityLifecycleCallbacks(injectActivityLifecycleCallback)
 

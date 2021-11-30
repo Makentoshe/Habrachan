@@ -55,7 +55,7 @@ class MeUserViewModel(
     class Factory @Inject constructor(
         private val userSessionProvider: AndroidUserSessionProvider,
         private val meUserArena: MeUserArena,
-        private val initialMeUserRequestOption: Option2<MeUserViewModelRequest>
+        private val initialMeUserRequestOption: Option2<MeUserViewModelRequest>,
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")

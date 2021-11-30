@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
@@ -56,8 +55,8 @@ class ArticlesFlowFragment : BaseFragment() {
 
         if (androidUserSessionProvider.get()?.isUserLoggedIn == true) updateToolbarLogin() else updateToolbarLogout()
         binding.fragmentFlowArticlesToolbar.setNavigationOnClickListener {
-            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
-//            navigateToUserOrLoginScreen()
+//            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
+            navigateToUserOrLoginScreen()
         }
     }
 
