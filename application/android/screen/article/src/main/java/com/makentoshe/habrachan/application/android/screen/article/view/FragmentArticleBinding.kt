@@ -7,7 +7,7 @@ import android.util.Base64
 import android.view.View
 import android.webkit.WebViewClient
 import androidx.core.content.ContextCompat
-import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
+import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
 import com.makentoshe.habrachan.application.android.screen.article.R
 import com.makentoshe.habrachan.application.android.screen.article.databinding.FragmentArticleBinding
 import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
@@ -58,7 +58,7 @@ internal fun FragmentArticleBinding.showProgress(): FragmentArticleBinding {
     return this
 }
 
-internal fun FragmentArticleBinding.showException(exceptionEntry: ExceptionEntry): FragmentArticleBinding {
+internal fun FragmentArticleBinding.showException(exceptionEntry: ExceptionEntry<*>): FragmentArticleBinding {
     fragmentArticleExceptionTitle.visibility = View.VISIBLE
     fragmentArticleExceptionTitle.text = exceptionEntry.title
 

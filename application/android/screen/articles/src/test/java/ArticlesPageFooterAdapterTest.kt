@@ -4,8 +4,6 @@ import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.paging.LoadState
 import androidx.test.core.app.ApplicationProvider
-import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
-import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.R
 import com.makentoshe.habrachan.application.android.screen.articles.databinding.LayoutArticlesFooterBinding
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesPageAdapter
@@ -29,8 +27,7 @@ import java.net.UnknownHostException
 class ArticlesPageFooterAdapterTest {
 
     private val mockArticlesPageAdapter = mockk<ArticlesPageAdapter>()
-    private val mockExceptionHandler = mockk<ExceptionHandler>()
-    private val adapter = ArticlesPageFooterAdapter(mockArticlesPageAdapter, mockExceptionHandler)
+    private val adapter = ArticlesPageFooterAdapter(mockArticlesPageAdapter)
 
     @Test
     fun testShouldBindViewHolderOnPaginationEnd() {
@@ -79,10 +76,13 @@ class ArticlesPageFooterAdapterTest {
     fun testShouldBindViewHolderViaExceptionHandler() {
         val mockViewHolder = viewHolder()
 
-        val title = mockViewHolder.context.getString(R.string.exception_handler_network_unknown_host_title)
-        val message = mockViewHolder.context.getString(R.string.exception_handler_network_unknown_host_message)
-        every { mockExceptionHandler.handle(any<Throwable>()) } returns ExceptionEntry(title, message)
+//        TODO(fix handling arena exceptions)
+//        val title = mockViewHolder.context.getString(R.string.exception_handler_network_unknown_host_title)
+//        val message = mockViewHolder.context.getString(R.string.exception_handler_network_unknown_host_message)
+//        every { mockExceptionHandler.handle(any<Throwable>()) } returns ExceptionEntry(title, message, Throwable())
 
+        val title = mockViewHolder.context.getString(R.string.exception_handler_unknown_title)
+        val message = mockViewHolder.context.getString(R.string.exception_handler_unknown_message)
 
         val mockLoadState = mockk<LoadState.Error>()
         every { mockLoadState.endOfPaginationReached } returns false
@@ -97,9 +97,9 @@ class ArticlesPageFooterAdapterTest {
         assertEquals(View.INVISIBLE, mockViewHolder.progress.visibility)
         assertEquals(View.VISIBLE, mockViewHolder.retry.visibility)
         assertEquals(View.VISIBLE, mockViewHolder.message.visibility)
-        assertEquals(message, mockViewHolder.message.text)
         assertEquals(View.VISIBLE, mockViewHolder.title.visibility)
         assertEquals(title, mockViewHolder.title.text)
+        assertEquals(message, mockViewHolder.message.text)
     }
 
     private fun viewHolder(): ArticlesFooterViewHolder {

@@ -4,7 +4,6 @@ import com.makentoshe.habrachan.api.AdditionalRequestParameters
 import com.makentoshe.habrachan.functional.Option2
 import com.makentoshe.habrachan.functional.Require2
 import com.makentoshe.habrachan.functional.toRequire2
-import com.makentoshe.habrachan.network.UserSession
 
 @JvmInline
 value class ClientId(val string: String) {
@@ -21,6 +20,15 @@ value class HabrSessionIdCookie(val string: String) {
 
     companion object {
         const val NAME = "habrsession_id"
+    }
+}
+
+@JvmInline
+value class ConnectSidCookie(val string: String) {
+    val name: String get() = NAME
+
+    companion object {
+        const val NAME = "connect_sid"
     }
 }
 
@@ -47,18 +55,21 @@ data class AndroidUserSession(
     val api: Require2<ClientApi>,
     val accessToken: Option2<AccessToken>,
     val habrSessionId: Option2<HabrSessionIdCookie>,
+    val connectSid: Option2<ConnectSidCookie>,
 ) {
 
     constructor(
         client: ClientId,
         api: ClientApi,
         accessToken: AccessToken?,
-        habrSessionId: HabrSessionIdCookie?
+        habrSessionId: HabrSessionIdCookie?,
+        connectSidCookie: ConnectSidCookie?,
     ) : this(
         client.toRequire2(),
         api.toRequire2(),
         Option2.from(accessToken),
         Option2.from(habrSessionId),
+        Option2.from(connectSidCookie),
     )
 }
 
@@ -69,6 +80,7 @@ fun AndroidUserSession.toRequestParameters(): AdditionalRequestParameters {
 
     val cookies = hashMapOf<String, String>()
     habrSessionId.onNotEmpty { cookies[it.name] = it.string }
+    connectSid.onNotEmpty { cookies[it.name] = it.string }
 
     val headers = hashMapOf(
         api.value.name to api.value.string,
@@ -77,22 +89,4 @@ fun AndroidUserSession.toRequestParameters(): AdditionalRequestParameters {
     accessToken.onNotEmpty { headers[it.name] = it.string }
 
     return AdditionalRequestParameters(headers, queries, cookies)
-}
-
-@Deprecated("Just for backward compatibility", replaceWith = ReplaceWith("AndroidUserSession"))
-fun AndroidUserSession.toUserSession() = object : UserSession {
-    override val api: String = this@toUserSession.api.value.string
-    override val client: String = this@toUserSession.client.value.string
-
-    override var token: String
-        get() = this@toUserSession.accessToken.nullableValue?.string ?: ""
-        set(value) = Unit
-
-    override var habrLanguage: String
-        get() = "en"
-        set(value) = Unit
-
-    override var filterLanguage: String
-        get() = "ru%2Cen"
-        set(value) = Unit
 }

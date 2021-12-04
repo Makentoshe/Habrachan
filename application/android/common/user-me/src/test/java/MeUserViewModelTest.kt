@@ -74,7 +74,7 @@ class MeUserViewModelTest {
         initial: Option2<MeUserViewModelRequest> = Option2.from(MeUserViewModelRequest()),
     ): MeUserViewModel {
         val androidUserSessionProvider = object : AndroidUserSessionProvider {
-            override fun get() = AndroidUserSession(ClientId(""), ClientApi(""), null, null)
+            override fun get() = AndroidUserSession(ClientId(""), ClientApi(""), null, null, null)
         }
 
         return MeUserViewModel(androidUserSessionProvider, arena, initial)

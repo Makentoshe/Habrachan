@@ -55,7 +55,6 @@ dependencies {
     implementation(project(":application:android:common"))
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:navigation"))
-    implementation(project(":application:android:exception"))
     implementation(project(":application:android:screen"))
     implementation(project(":application:android:di"))
 
@@ -70,11 +69,6 @@ dependencies {
     implementation("com.github.stephanenicolas.toothpick:smoothie-lifecycle-ktp:$toothpickVersion")
     testImplementation("com.github.stephanenicolas.toothpick:toothpick-testing-junit5:$toothpickVersion")
 
-    val ktorHttpClientVersion = dependency.version.ktorHttpClient
-    implementation("io.ktor:ktor-client-core:$ktorHttpClientVersion")
-    implementation("io.ktor:ktor-client-cio:$ktorHttpClientVersion")
-    implementation("io.ktor:ktor-client-logging:$ktorHttpClientVersion")
-    testImplementation("io.ktor:ktor-client-mock:$ktorHttpClientVersion")
 
     // Material components
     // https://github.com/material-components/material-components-android

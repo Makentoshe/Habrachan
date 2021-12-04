@@ -3,24 +3,25 @@ package com.makentoshe.habrachan.application.android.screen.login
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.binding.viewBinding
+import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
 import com.makentoshe.habrachan.application.android.common.fragment.BindableBaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
-import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.BackwardNavigator
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.MeScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.login.databinding.FragmentLoginBinding
+import com.makentoshe.habrachan.application.android.screen.login.model.LoginConnectCookieWebViewClient
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginJavascriptInterface
-import com.makentoshe.habrachan.application.android.screen.login.model.LoginWebViewClient
+import com.makentoshe.habrachan.application.android.screen.login.model.LoginWebViewCookieWebViewClient
 import com.makentoshe.habrachan.application.android.screen.login.model.ZippedLoginModel
 import com.makentoshe.habrachan.application.android.screen.login.view.*
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.*
 import com.makentoshe.habrachan.functional.Either2
+import com.makentoshe.habrachan.functional.left
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterIsInstance
@@ -31,74 +32,81 @@ import toothpick.ktp.delegate.inject
 
 class LoginFragment : BindableBaseFragment() {
 
-    companion object : Analytics(LogAnalytic()) {
-        fun build() = LoginFragment()
-    }
-
     override val arguments = Arguments(this)
 
     override val binding: FragmentLoginBinding by viewBinding()
 
     private val cookieViewModel by inject<GetCookieViewModel>()
     private val loginViewModel by inject<GetLoginViewModel>()
+
     private val loginJavascriptInterface by inject<LoginJavascriptInterface>()
+    private val loginConnectWebViewClient by inject<LoginConnectCookieWebViewClient>()
+    private val loginWebViewClientFactory by inject<LoginWebViewCookieWebViewClient.Factory>()
 
     private val backwardNavigator by inject<BackwardNavigator>()
     private val meScreenNavigator by inject<MeScreenNavigator>()
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val url = "https://habr.com/kek/v1/auth/habrahabr?back=%2Fen%2Fall%2F"
         binding.onCreateWebView(loginJavascriptInterface)
         binding.onCreateToolbar(backwardNavigator)
+        binding.onStartWebView(url, loginConnectWebViewClient)
 
         binding.fragmentLoginExceptionRetry.setOnClickListener {
-            binding.onProgressState()
-            lifecycleScope.launch(Dispatchers.IO) {
-                cookieViewModel.cookieChannel.send(GetCookieSpec.Request)
+            binding.apply { onProgressState(); onStartWebView(url, loginConnectWebViewClient) }
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            cookieViewModel.connectCookieModel.collectLatest { model ->
+                model.fold(::onConnectCookieSuccess, ::onFailureResponse)
             }
         }
 
         lifecycleScope.launch(Dispatchers.IO) {
-            cookieViewModel.cookieModel.collectLatest { response ->
-                response.fold(::onCookieResponse, ::onFailureResponse)
+            cookieViewModel.webviewCookieModel.collectLatest { model ->
+                model.fold(::onWebViewCookieSuccess, ::onFailureResponse)
             }
         }
 
         lifecycleScope.launch(Dispatchers.IO) {
-            mobileLoginModelFlow().zip(androidLoginModelFlow()) { getCookieModel, getLoginModel ->
-                ZippedLoginModel(getCookieModel.value.habrSessionIdCookie, getLoginModel.value.response.loginSession)
+            cookieViewModel.sessionCookieModel.zip(loginModelFlow()) { sessionResponse, loginResponse ->
+                ZippedLoginModel(sessionResponse.habrSessionIdCookie, loginResponse.loginSession)
             }.collectLatest(::onZippedLoginModel)
         }
     }
 
-    private fun onCookieResponse(model: GetCookieModel.Request) = lifecycleScope.launch(Dispatchers.Main) {
-        capture(this@LoginFragment.analyticEvent { "Perform login via WebView with selected params: $model" })
+    private fun onConnectCookieSuccess(response: GetConnectCookieViewModelResponse) =
+        lifecycleScope.launch(Dispatchers.IO) {
+            capture(this@LoginFragment.analyticEvent { "Received: $response" })
+            cookieViewModel.webviewCookieChannel.send(GetWebViewCookieViewModelRequest())
+        }
 
-        binding.onCookiesLoaded()
+    private fun onWebViewCookieSuccess(response: GetWebViewCookieViewModelResponse) =
+        lifecycleScope.launch(Dispatchers.Main) {
+            capture(this@LoginFragment.analyticEvent { "Received: $response" })
 
-        binding.fragmentLoginWebview.webViewClient = LoginWebViewClient(requireContext(), model, lifecycleScope, cookieViewModel)
-        binding.fragmentLoginWebview.loadUrl(model.referer)
-    }
+            binding.onCookiesLoaded()
+            binding.fragmentLoginWebview.webViewClient = loginWebViewClientFactory.build(response.state)
+            binding.fragmentLoginWebview.loadUrl(response.referer)
+        }
 
-    private fun onFailureResponse(throwable: Throwable) = lifecycleScope.launch(Dispatchers.Main) {
-        capture(analyticEvent(throwable = throwable))
-        binding.onFailureCaused(ExceptionEntry("Exception", throwable.toString()))
+    private fun onFailureResponse(entry: ExceptionEntry<*>) = lifecycleScope.launch(Dispatchers.Main) {
+        capture(this@LoginFragment.analyticEvent(message = entry.message))
+
+        binding.onFailureCaused(entry)
     }
 
     private fun onZippedLoginModel(zippedLoginModel: ZippedLoginModel) = lifecycleScope.launch(Dispatchers.Main) {
-        capture(this@LoginFragment.analyticEvent { zippedLoginModel.toString() })
-        Toast.makeText(requireContext(), "Navigate to User screen", Toast.LENGTH_LONG).show()
+        capture(this@LoginFragment.analyticEvent { "Received: $zippedLoginModel" })
         meScreenNavigator.toMeScreen()
     }
 
-    private fun mobileLoginModelFlow() = cookieViewModel.loginModel.map {
-        it.mapRight(::onFailureResponse)
-    }.filterIsInstance<Either2.Left<GetCookieModel.Login>>()
-
-    private fun androidLoginModelFlow() = loginViewModel.loginModel.map {
-        it.mapRight(::onFailureResponse)
-    }.filterIsInstance<Either2.Left<GetLoginModel>>()
+    private fun loginModelFlow() = loginViewModel.loginModel.map {
+        it.onRight(::onFailureResponse)
+    }.filterIsInstance<Either2.Left<GetLoginViewModelResponse>>().map { it.left() }
 
     class Arguments(fragment: LoginFragment) : FragmentArguments(fragment)
 
+    companion object : Analytics(LogAnalytic())
 }

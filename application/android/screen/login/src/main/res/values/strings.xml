@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="fragment_login_retry">Retry</string>
+    <string name="exception_handler_network_cookie_message">Couldn\'t retrieve cookies</string>
+    <string name="exception_handler_network_login_title">Couldn\'t perform login action</string>
+    <string name="exception_handler_network_login_message">Some issues occurred in network process</string>
+    <string name="exception_handler_network_login_credentials_message">User credentials weren\'t found</string>
 </resources>

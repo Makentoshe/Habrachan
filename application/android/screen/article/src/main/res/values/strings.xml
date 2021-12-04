@@ -4,6 +4,10 @@
     <string name="article_vote_action_negative_dialog_positive">Select reason</string>
     <string name="article_vote_action_negative_dialog_neutral">Cancel</string>
     <string name="menu_article_share">Share article</string>
+
+    <string name="exception_handler_article_title">Couldn\'t retrieve article</string>
+    <string name="exception_handler_article_message">Unknown error was occurred</string>
+
     <string-array name="article_vote_action_negative_dialog_reasons">
         <item>It’s hardly a tech article</item>
         <item>Seems more like a commercial to me</item>

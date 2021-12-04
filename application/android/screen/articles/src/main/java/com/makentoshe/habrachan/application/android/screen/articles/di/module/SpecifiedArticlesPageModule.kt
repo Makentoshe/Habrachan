@@ -6,7 +6,6 @@ import com.makentoshe.habrachan.application.android.common.articles.viewmodel.Ge
 import com.makentoshe.habrachan.application.android.database.user.UserSessionDatabase
 import com.makentoshe.habrachan.application.android.database.user.record.toArticlesFilter
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesPageFragment
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesScope
 import com.makentoshe.habrachan.application.android.screen.articles.di.provider.GetArticlesViewModelProvider
@@ -28,7 +27,6 @@ class SpecifiedArticlesPageModule(fragment: ArticlesPageFragment) : Module() {
         bind<ArticlesPageFragment>().toInstance(fragment)
 
         bind<Option2<GetArticlesSpec>>().toInstance(Option2.Value(GetArticlesSpec(articleFilters(fragment.arguments))))
-        bind<ExceptionHandler>().toInstance(ExceptionHandler(fragment.requireContext()))
 
         bind<GetArticlesViewModel>().toProvider(GetArticlesViewModelProvider::class).singleton()
         bind<ArticlesPageAdapter>().toClass<ArticlesPageAdapter>().singleton()

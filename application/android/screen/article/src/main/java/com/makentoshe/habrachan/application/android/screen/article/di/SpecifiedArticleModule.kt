@@ -7,7 +7,6 @@ import com.makentoshe.habrachan.application.android.common.article.voting.viewmo
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModelProvider
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
 import com.makentoshe.habrachan.application.android.screen.article.di.provider.SpecifiedGetArticleViewModelProvider
 import com.makentoshe.habrachan.application.android.screen.article.di.provider.SpecifiedVoteArticleViewModelProvider
@@ -40,7 +39,6 @@ class SpecifiedArticleModule(fragment: ArticleFragment) : Module() {
         bind<ArticleFragment>().toInstance(fragment)
 
         bind<GetAvatarViewModel>().toInstance(getAvatarViewModelProvider.get(fragment))
-        bind<ExceptionHandler>().toInstance(ExceptionHandler(fragment.requireContext()))
 
         bind<ArticleArena>().toInstance(articleArenaFactory.sourceFirstArena())
         bind<GetArticleViewModel>().toProvider(SpecifiedGetArticleViewModelProvider::class).providesSingleton()

@@ -53,7 +53,6 @@ include(":application:android:analytics")
 include(":application:android:navigation")
 include(":application:android:di")
 include(":application:android:filesystem")
-include(":application:android:exception")
 
 include(":application:android:screen")
 include(":application:android:screen:comments")

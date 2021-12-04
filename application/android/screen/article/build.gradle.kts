@@ -59,7 +59,6 @@ dependencies {
     implementation(project(":application:android:di"))
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:navigation"))
-    implementation(project(":application:android:exception"))
     implementation(project(":application:android:common"))
     implementation(project(":application:android:common:article"))
     implementation(project(":application:android:common:article-voting"))

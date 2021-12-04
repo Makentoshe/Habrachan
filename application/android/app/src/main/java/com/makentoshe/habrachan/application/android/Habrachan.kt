@@ -51,7 +51,7 @@ class Habrachan : Application() {
 
         LogAnalytic.Factory.registry(BuildConfig.DEBUG)
 
-        val applicationModule = ApplicationModule(applicationContext)
+        val applicationModule = ApplicationModule(this)
         val navigationModule = NavigationModule(Cicerone.create(StackRouter()))
         val networkModule = NetworkModule()
         val userModule = UserModule(applicationContext, buildVersionProvider)

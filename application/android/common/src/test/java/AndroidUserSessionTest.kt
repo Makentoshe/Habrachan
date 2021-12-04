@@ -45,11 +45,13 @@ class AndroidUserSessionTest {
         clientApi: String = DEFAULT_CLIENT_API,
         accessToken: String? = null,
         habrSessionId: String? = null,
+        connectSidCookie: String? = null,
     ) = AndroidUserSession(
         client = ClientId(clientId),
         api = ClientApi(clientApi),
         accessToken = accessToken?.let(::AccessToken),
         habrSessionId = habrSessionId?.let(::HabrSessionIdCookie),
+        connectSidCookie = connectSidCookie?.let(::ConnectSidCookie)
     )
 
     private fun AdditionalRequestParameters.`should contain headers`(action: (Map<String, String>) -> Boolean) {

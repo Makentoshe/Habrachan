@@ -14,6 +14,10 @@ class Require2<out V>(private val internalValue: V?) {
         return this
     }
 
+    inline fun <T> map(action: (V) -> T): Require2<T> {
+        return Require2(nullableValue?.let(action))
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

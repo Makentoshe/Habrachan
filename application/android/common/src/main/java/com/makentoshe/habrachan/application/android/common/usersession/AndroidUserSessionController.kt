@@ -27,6 +27,7 @@ abstract class AndroidUserSessionController :
         private const val CLIENT_ID = "client id"
         private const val TOKEN = "token"
         private const val HABR_SESSION_ID = "habr session id cookie"
+        private const val CONNECT_SID = "habr connect sid"
     }
 
     protected abstract val sharedPreferences: SharedPreferences
@@ -38,6 +39,7 @@ abstract class AndroidUserSessionController :
             this.putString(CLIENT_ID, androidUserSession.client.nullableValue?.string)
             this.putString(TOKEN, androidUserSession.accessToken.nullableValue?.string)
             this.putString(HABR_SESSION_ID, androidUserSession.habrSessionId.nullableValue?.string)
+            this.putString(CONNECT_SID, androidUserSession.connectSid.nullableValue?.string)
         }.commit()
     }
 
@@ -46,7 +48,8 @@ abstract class AndroidUserSessionController :
         val client = sharedPreferences.getString(CLIENT_ID, null)?.let(::ClientId)?.toRequire2() ?: return null
         val accessToken = sharedPreferences.getString(TOKEN, null)?.let(::AccessToken).toOption2()
         val habrSessionId = sharedPreferences.getString(HABR_SESSION_ID, null)?.let(::HabrSessionIdCookie).toOption2()
-        return AndroidUserSession(client, api, accessToken, habrSessionId)
+        val connectSid = sharedPreferences.getString(CONNECT_SID, null)?.let(::ConnectSidCookie).toOption2()
+        return AndroidUserSession(client, api, accessToken, habrSessionId, connectSid)
     }
 
     override fun accept(t: (AndroidUserSessionControllerApply.() -> Unit)) {
@@ -58,8 +61,9 @@ abstract class AndroidUserSessionController :
         var api: Require2<ClientApi> = old?.api ?: Require2(null)
         var accessToken: Option2<AccessToken> = old?.accessToken ?: Option2.None
         var habrSessionId: Option2<HabrSessionIdCookie> = old?.habrSessionId ?: Option2.None
+        var connectSid: Option2<ConnectSidCookie> = old?.connectSid ?: Option2.None
 
-        fun apply() = AndroidUserSession(client, api, accessToken, habrSessionId)
+        fun apply() = AndroidUserSession(client, api, accessToken, habrSessionId, connectSid)
     }
 }
 
@@ -70,7 +74,8 @@ class EncryptedAndroidUserSessionController(
 ) : AndroidUserSessionController() {
 
     private val file = File(ContextCompat.getDataDir(context), encryption.filename)
-    private val masterKey = MasterKey.Builder(context, encryption.mainKeyAlias).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
+    private val masterKey =
+        MasterKey.Builder(context, encryption.mainKeyAlias).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
 
     override val sharedPreferences = EncryptedSharedPreferences.create(
         context,

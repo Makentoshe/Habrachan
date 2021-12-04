@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
-import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
-import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
+import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
+import com.makentoshe.habrachan.application.android.common.exception.exceptionEntry
 import com.makentoshe.habrachan.application.android.screen.articles.R
 import com.makentoshe.habrachan.application.android.screen.articles.databinding.LayoutArticlesFooterBinding
 import com.makentoshe.habrachan.application.android.screen.articles.view.ArticlesFooterViewHolder
@@ -18,7 +18,6 @@ import javax.inject.Inject
 
 class ArticlesPageFooterAdapter @Inject constructor(
     private val adapter: ArticlesPageAdapter,
-    private val exceptionHandler: ExceptionHandler,
 ) : LoadStateAdapter<ArticlesFooterViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): ArticlesFooterViewHolder {
@@ -39,19 +38,19 @@ class ArticlesPageFooterAdapter @Inject constructor(
         if (arenaException !is ArenaException) onBindViewHolderError(holder, exceptionEntry) else {
             val getArticlesException = arenaException.sourceException?.cause
             if (getArticlesException == null) onBindViewHolderError(holder, exceptionEntry) else {
-                onBindViewHolderError(holder, exceptionHandler.handle(getArticlesException))
+                onBindViewHolderError(holder, exceptionEntry(holder.context, getArticlesException))
             }
         }
     }
 
-    private fun defaultExceptionEntry(context: Context, error: LoadState.Error): ExceptionEntry {
+    private fun defaultExceptionEntry(context: Context, error: LoadState.Error): ExceptionEntry<*> {
         val title = context.getString(R.string.articles_footer_exception_title)
 //        val message = context.getString(R.string.articles_footer_exception_message)
         val message = error.error.toString()
-        return ExceptionEntry(title, message)
+        return ExceptionEntry(title, message, error.error)
     }
 
-    private fun onBindViewHolderError(holder: ArticlesFooterViewHolder, exceptionEntry: ExceptionEntry) {
+    private fun onBindViewHolderError(holder: ArticlesFooterViewHolder, exceptionEntry: ExceptionEntry<*>) {
         holder.error(exceptionEntry.title, exceptionEntry.message) { adapter.retry() }
     }
 }

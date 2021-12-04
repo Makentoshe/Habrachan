@@ -10,15 +10,15 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.articles.viewmodel.GetArticlesViewModel
 import com.makentoshe.habrachan.application.android.common.binding.viewBinding
+import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
+import com.makentoshe.habrachan.application.android.common.exception.exceptionEntry
 import com.makentoshe.habrachan.application.android.common.fragment.BindableBaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
-import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
-import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.databinding.FragmentPageArticlesBinding
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesPageAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.model.ArticlesPageFooterAdapter
 import com.makentoshe.habrachan.application.android.screen.articles.view.ArticlesPageItemDecoration
-import com.makentoshe.habrachan.application.common.arena.ArenaException
+import com.makentoshe.habrachan.network.articles.get.GetArticlesException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -36,7 +36,6 @@ class ArticlesPageFragment : BindableBaseFragment() {
     override val arguments = Arguments(this)
     override val binding: FragmentPageArticlesBinding by viewBinding()
 
-    private val exceptionHandler by inject<ExceptionHandler>()
     private val getArticlesViewModel by inject<GetArticlesViewModel>()
     private val adapter by inject<ArticlesPageAdapter>()
     private val footerAdapter by inject<ArticlesPageFooterAdapter>()
@@ -61,7 +60,7 @@ class ArticlesPageFragment : BindableBaseFragment() {
         }
     }
 
-    private fun onLoadStateChanged(combinedStates: CombinedLoadStates) = when (val refresh = combinedStates.also { println(it) }.refresh) {
+    private fun onLoadStateChanged(combinedStates: CombinedLoadStates) = when (val refresh = combinedStates.refresh) {
         is LoadState.Loading -> onLoadStateChangedLoading()
         is LoadState.NotLoading -> onLoadStateChangedContent()
         is LoadState.Error -> onLoadStateChangedError(refresh.error)
@@ -83,15 +82,16 @@ class ArticlesPageFragment : BindableBaseFragment() {
     }
 
     private fun onLoadStateChangedError(throwable: Throwable) {
-        val arenaException = throwable as ArenaException
-        val getArticlesException = arenaException.cause?.cause
-        if (getArticlesException != null) exceptionHandler.handle(getArticlesException) else {
-            val title = getString(R.string.articles_initial_exception_title)
-            ExceptionEntry(title, throwable.toString())
-        }.let(::onLoadStateChangedError)
+        val exception = throwable.cause?.cause
+        val exceptionEntry = if (exception is GetArticlesException) {
+            articlesExceptionEntry(exception)
+        } else {
+            exceptionEntry(requireContext(), throwable)
+        }
+        onLoadStateChangedError(exceptionEntry)
     }
 
-    private fun onLoadStateChangedError(exceptionEntry: ExceptionEntry) {
+    private fun onLoadStateChangedError(exceptionEntry: ExceptionEntry<*>) {
         binding.fragmentPageArticlesSwipe.isRefreshing = false
         binding.fragmentPageArticlesSwipe.visibility = View.GONE
         binding.fragmentPageArticlesProgress.visibility = View.GONE
@@ -104,6 +104,12 @@ class ArticlesPageFragment : BindableBaseFragment() {
 
         binding.fragmentPageArticlesRetry.visibility = View.VISIBLE
     }
+
+    private fun articlesExceptionEntry(getArticlesException: GetArticlesException) = ExceptionEntry(
+        title = getString(R.string.exception_handler_articles_title),
+        message = getString(R.string.exception_handler_articles_message),
+        throwable = getArticlesException
+    )
 
     class Arguments(fragment: ArticlesPageFragment) : FragmentArguments(fragment) {
 

@@ -20,11 +20,11 @@ import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetA
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
 import com.makentoshe.habrachan.application.android.common.binding.viewBinding
 import com.makentoshe.habrachan.application.android.common.dp2px
+import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
+import com.makentoshe.habrachan.application.android.common.exception.exceptionEntry
 import com.makentoshe.habrachan.application.android.common.fragment.BindableBaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.toRoundedDrawable
-import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
-import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.article.databinding.FragmentArticleBinding
 import com.makentoshe.habrachan.application.android.screen.article.model.*
 import com.makentoshe.habrachan.application.android.screen.article.view.*
@@ -64,7 +64,6 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
     private val getArticleViewModel by inject<GetArticleViewModel>()
     private val voteArticleViewModel by inject<VoteArticleViewModel>()
 
-    private val exceptionHandler by inject<ExceptionHandler>()
     private val contentScreenNavigator by inject<ContentScreenNavigator>()
     private val commentsScreenNavigator by inject<ArticleCommentsScreenNavigator>()
     private val backwardNavigator by inject<BackwardNavigator>()
@@ -123,7 +122,7 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
             binding.showContent(articleHtmlController.render(article))
             binding.showBottom(article.votesCount, article.readingCount, article.commentsCount, article.vote)
         } catch (exception: Throwable) {
-            binding.hideProgress().showException(exceptionHandler.handle(exception))
+            binding.hideProgress().showException(exceptionEntry(requireContext(), exception))
         }
 
         binding.fragmentArticleAppbarCollapsingToolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
@@ -152,14 +151,15 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
         binding.showToolbarAvatarStub()
     }
 
-    private fun onArticleFailure(throwable: Throwable) {
-        val arenaException = throwable as? ArenaException
-            ?: return onArticleFailure(exceptionHandler.handle(throwable))
+    private fun onArticleFailure(throwable: Throwable): Unit = if (throwable is ArenaException) {
+        onArticleFailure(throwable)
+    } else {
+        onArticleFailure(unknownExceptionEntry(throwable))
+    }
 
-        val getArticleException = arenaException.sourceException as? GetArticleException
-            ?: return onArticleFailure(exceptionHandler.handle(arenaException))
-
-        onArticleFailure(getArticleException.cause?.let(exceptionHandler::handle) ?: exceptionHandler.handle(throwable))
+    private fun onArticleFailure(arenaException: ArenaException) = when (val throwable = arenaException.cause) {
+        is GetArticleException -> onArticleFailure(articleExceptionEntry(throwable))
+        else -> onArticleFailure(unknownExceptionEntry(throwable ?: Throwable()))
     }
 
     private fun onArticleRetry() = lifecycleScope.launch(Dispatchers.Main) {
@@ -171,7 +171,7 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
         }
     }
 
-    private fun onArticleFailure(exceptionEntry: ExceptionEntry) {
+    private fun onArticleFailure(exceptionEntry: ExceptionEntry<*>) {
         binding.hideProgress().showException(exceptionEntry).showToolbarAvatarStub()
     }
 
@@ -192,7 +192,7 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
     }
 
     private fun onArticleVoteFailure(throwable: Throwable) {
-        return showSnackbar(exceptionHandler.handle(throwable).message, "Got it")
+        return showSnackbar(exceptionEntry(requireContext(), throwable).message, "Got it")
 
 //        if (throwable !is NativeVoteArticleException) return
 //
@@ -227,6 +227,14 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
     override fun onWebReceivedError(
         view: WebView?, errorCode: Int, description: String?, failingUrl: String?
     ) = onArticleFailure(Exception(description))
+
+    private fun articleExceptionEntry(getArticleException: GetArticleException) = ExceptionEntry(
+        title = getString(R.string.exception_handler_article_title),
+        message = getString(R.string.exception_handler_article_message),
+        throwable = getArticleException
+    )
+
+    private fun unknownExceptionEntry(throwable: Throwable?) = exceptionEntry(requireContext(), throwable)
 
     class Arguments(articleFragment: ArticleFragment) : FragmentArguments(articleFragment) {
 

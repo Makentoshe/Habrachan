@@ -6,7 +6,6 @@ import com.makentoshe.habrachan.application.android.common.article.viewmodel.Get
 import com.makentoshe.habrachan.application.android.common.article.voting.viewmodel.VoteArticleViewModel
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
 import com.makentoshe.habrachan.application.android.screen.article.di.ArticleScope
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.ArticleCommentsScreenNavigator
@@ -32,7 +31,6 @@ class ArticleFragmentTest {
 
     private val mockResources = mockk<Resources>()
     private val mockCoroutineScope = mockk<CoroutineScope>()
-    private val mockExceptionHandler = mockk<ExceptionHandler>(relaxed = true)
     private val mockGetArticleViewModel = mockk<GetArticleViewModel>(relaxed = true)
     private val mockGetAvatarViewModel = mockk<GetAvatarViewModel>(relaxed = true)
     private val mockVoteArticleViewModel = mockk<VoteArticleViewModel>(relaxed = true)
@@ -43,7 +41,6 @@ class ArticleFragmentTest {
         bind<ArticleId>().toInstance(articleId)
         bind<Resources>().toInstance(mockResources)
         bind<CoroutineScope>().toInstance(mockCoroutineScope)
-        bind<ExceptionHandler>().toInstance(mockExceptionHandler)
         bind<GetAvatarViewModel>().toInstance(mockGetAvatarViewModel)
         bind<VoteArticleViewModel>().toInstance(mockVoteArticleViewModel)
         bind<GetArticleViewModel>().toInstance(mockGetArticleViewModel)

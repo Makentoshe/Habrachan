@@ -4,9 +4,8 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.makentoshe.habrachan.application.android.common.articles.viewmodel.GetArticlesViewModel
+import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
-import com.makentoshe.habrachan.application.android.exception.ExceptionHandler
 import com.makentoshe.habrachan.application.android.screen.articles.ArticlesPageFragment
 import com.makentoshe.habrachan.application.android.screen.articles.R
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesScope
@@ -27,12 +26,10 @@ import java.net.UnknownHostException
 @RunWith(AndroidJUnit4::class)
 class ArticlesPageFragmentTest {
 
-    private val mockExceptionHandler = mockk<ExceptionHandler>()
     private val mockGetArticlesViewModel = mockk<GetArticlesViewModel>(relaxed = true)
     private val mockArticlesPageAdapter = mockk<ArticlesPageAdapter>(relaxed = true)
 
     private val toothpickModule = module {
-        bind<ExceptionHandler>().toInstance(mockExceptionHandler)
         bind<GetArticlesViewModel>().toInstance(mockGetArticlesViewModel)
         bind<ArticlesPageAdapter>().toInstance(mockArticlesPageAdapter)
     }
@@ -281,17 +278,19 @@ class ArticlesPageFragmentTest {
         `launch and resume fragment than execute` {
 
             slot.captured `trigger with` `error state`(exception)
-            fragment_page_articles_message `text should be` exception.toString()
+            fragment_page_articles_message `text should be` R.string.exception_handler_unknown_message
         }.`and release at finish`()
     }
 
+    // TODO update handling arena exception
     @Test
     fun `test should check exception message text on known error state`() {
-        val exceptionEntry = ExceptionEntry("Title", "Exception handler test")
         val slot = `inject capturing slot for adapter`()
-        val exception = `internet exception`() `also bind to exception handler and return` exceptionEntry
+        val exception = `internet exception`()
 
         `launch and resume fragment than execute` {
+            val message = getString(R.string.exception_handler_unknown_message)
+            val exceptionEntry = ExceptionEntry("Title", message, Throwable())
 
             slot.captured `trigger with` `error state`(exception)
             fragment_page_articles_message `text should be` exceptionEntry.message
@@ -383,11 +382,6 @@ class ArticlesPageFragmentTest {
     private fun `undefined exception`() = ArenaException()
 
     private fun `internet exception`() = ArenaException(sourceException = Exception(UnknownHostException("test.host")))
-
-    private infix fun ArenaException.`also bind to exception handler and return`(entry: ExceptionEntry): ArenaException {
-        every { mockExceptionHandler.handle(any<Throwable>()) } returns entry
-        return this
-    }
 
     private fun `error state`(exception: Throwable = `undefined exception`()): CombinedLoadStates {
         val mockLoadState = mockk<CombinedLoadStates>(relaxed = true)

@@ -1,6 +1,6 @@
 package com.makentoshe.habrachan.application.android.di
 
-import android.content.Context
+import android.app.Application
 import androidx.room.Room
 import com.makentoshe.habrachan.BuildConfig.API_KEY
 import com.makentoshe.habrachan.BuildConfig.CLIENT_KEY
@@ -8,10 +8,7 @@ import com.makentoshe.habrachan.api.articles.ArticlesFilter
 import com.makentoshe.habrachan.api.articles.DailyArticlesPeriod
 import com.makentoshe.habrachan.api.articles.and
 import com.makentoshe.habrachan.api.mobile.articles.*
-import com.makentoshe.habrachan.application.android.AndroidUserSession
-import com.makentoshe.habrachan.application.android.ExceptionHandler
-import com.makentoshe.habrachan.application.android.ExceptionHandlerImpl
-import com.makentoshe.habrachan.application.android.Launcher
+import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.common.AndroidUserSession2
 import com.makentoshe.habrachan.application.android.common.R
 import com.makentoshe.habrachan.application.android.database.cache.AndroidCacheDatabase
@@ -30,21 +27,22 @@ import toothpick.config.Module
 import toothpick.ktp.binding.bind
 
 
-class ApplicationModule(private val context: Context) : Module() {
+class ApplicationModule(private val application: Habrachan) : Module() {
 
     private val cacheDatabase = Room.databaseBuilder(
-        context, AndroidCacheDatabase::class.java, "HabrachanCache"
+        application, AndroidCacheDatabase::class.java, "HabrachanCache"
     ).addMigrations(AndroidCacheDatabaseMigration_1_2()).fallbackToDestructiveMigration().build()
 
     private val userDatabase = Room.databaseBuilder(
-        context, UserSessionDatabase::class.java, "HabrachanUserSensitive"
+        application, UserSessionDatabase::class.java, "HabrachanUserSensitive"
     ).allowMainThreadQueries().addMigrations(*userDatabaseMigrations).build()
 
     init {
+        bind<Application>().toInstance(application)
         bind<AndroidCacheDatabase>().toInstance(cacheDatabase)
         bind<UserSessionDatabase>().toInstance(userDatabase)
 
-        bind<ExceptionHandler>().toInstance(ExceptionHandlerImpl(context))
+        bind<ExceptionHandler>().toInstance(ExceptionHandlerImpl(application))
 
         if (userDatabase.userSessionDao().getAll().isEmpty()) {
             val record = UserSessionRecord(userSession(CLIENT_KEY, API_KEY), user = null)
@@ -74,7 +72,7 @@ class ApplicationModule(private val context: Context) : Module() {
     }
 
     private fun initializeDefaultAllArticlesUserSearchRecord() {
-        val title = context.getString(R.string.articles_default_search_all)
+        val title = application.getString(R.string.articles_default_search_all)
 
         val articlesUserSearchRecord = ArticlesUserSearchRecord(title, true)
         userDatabase.articlesUserSearchDao().insert(articlesUserSearchRecord)
@@ -96,7 +94,7 @@ class ApplicationModule(private val context: Context) : Module() {
     }
 
     private fun initializeDefaultTopDailyArticlesUserSearchRecord() {
-        val title = context.getString(R.string.articles_default_search_daily_top)
+        val title = application.getString(R.string.articles_default_search_daily_top)
 
         val articlesUserSearchRecord = ArticlesUserSearchRecord(title, true)
         userDatabase.articlesUserSearchDao().insert(articlesUserSearchRecord)
@@ -107,7 +105,7 @@ class ApplicationModule(private val context: Context) : Module() {
     }
 
     private fun initializeDefaultMostReadingArticlesUserSearchRecord() {
-        val title = context.getString(R.string.articles_default_search_most_reading)
+        val title = application.getString(R.string.articles_default_search_most_reading)
 
         val articlesUserSearchRecord = ArticlesUserSearchRecord(title, true)
         userDatabase.articlesUserSearchDao().insert(articlesUserSearchRecord)

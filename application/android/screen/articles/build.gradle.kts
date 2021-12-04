@@ -65,7 +65,6 @@ dependencies {
     implementation(project(":application:android:common"))
     implementation(project(":application:android:common:articles"))
     implementation(project(":application:android:navigation"))
-    implementation(project(":application:android:exception"))
 
     implementation(project(":application:android:screen"))
 

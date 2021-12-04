@@ -2,7 +2,8 @@ package com.makentoshe.habrachan.application.android.screen.login.view
 
 import android.annotation.SuppressLint
 import android.view.View
-import com.makentoshe.habrachan.application.android.exception.ExceptionEntry
+import android.webkit.WebViewClient
+import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.BackwardNavigator
 import com.makentoshe.habrachan.application.android.screen.login.databinding.FragmentLoginBinding
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginJavascriptInterface
@@ -16,7 +17,7 @@ fun FragmentLoginBinding.onCookiesLoaded() {
     fragmentLoginExceptionRetry.visibility = View.GONE
 }
 
-fun FragmentLoginBinding.onFailureCaused(entry: ExceptionEntry) {
+fun FragmentLoginBinding.onFailureCaused(entry: ExceptionEntry<*>) {
     fragmentLoginProgress.visibility = View.GONE
     fragmentLoginWebview.visibility = View.GONE
 
@@ -48,4 +49,9 @@ fun FragmentLoginBinding.onCreateToolbar(backwardNavigator: BackwardNavigator) {
 fun FragmentLoginBinding.onCreateWebView(loginJavascriptInterface: LoginJavascriptInterface) {
     fragmentLoginWebview.settings.javaScriptEnabled = true
     fragmentLoginWebview.addJavascriptInterface(loginJavascriptInterface, "AndroidLoginInterface")
+}
+
+fun FragmentLoginBinding.onStartWebView(url: String, webViewClient: WebViewClient) {
+    fragmentLoginWebview.webViewClient = webViewClient
+    fragmentLoginWebview.loadUrl(url)
 }
