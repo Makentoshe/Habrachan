@@ -29,16 +29,20 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 data class GetConnectCookieViewModelRequest(val connectSidCookie: ConnectSidCookie)
-
 data class GetConnectCookieViewModelResponse(val connectSidCookie: ConnectSidCookie)
 
 data class GetSessionCookieViewModelRequest(val habrSessionIdCookie: HabrSessionIdCookie)
-
 data class GetSessionCookieViewModelResponse(val habrSessionIdCookie: HabrSessionIdCookie)
 
 class GetWebViewCookieViewModelRequest
-
 data class GetWebViewCookieViewModelResponse(val referer: String, val state: String)
+
+data class WieldCookiesViewModelRequest(
+    val habrSessionIdCookie: HabrSessionIdCookie, val connectSidCookie: ConnectSidCookie,
+)
+data class WieldCookiesViewModelResponse(
+    val habrSessionIdCookie: HabrSessionIdCookie, val connectSidCookie: ConnectSidCookie,
+)
 
 class GetCookieViewModel(
     private val application: Application,
@@ -69,6 +73,12 @@ class GetCookieViewModel(
         GetSessionCookieViewModelResponse(request.habrSessionIdCookie)
     }.onEach { response ->
         androidUserSessionController.accept { this.habrSessionId = Option2.from(response.habrSessionIdCookie) }
+    }.flowOn(Dispatchers.IO)
+
+    private val internalWieldCookiesChannel = Channel<WieldCookiesViewModelRequest>()
+    val wieldCookiesChannel: SendChannel<WieldCookiesViewModelRequest> get() = internalWieldCookiesChannel
+    val wieldCookiesModel = internalWieldCookiesChannel.receiveAsFlow().map { request ->
+        WieldCookiesViewModelResponse(request.habrSessionIdCookie, request.connectSidCookie)
     }.flowOn(Dispatchers.IO)
 
     init {

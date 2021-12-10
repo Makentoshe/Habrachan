@@ -14,10 +14,7 @@ import com.makentoshe.habrachan.application.android.common.fragment.FragmentArgu
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.BackwardNavigator
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.MeScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.login.databinding.FragmentLoginBinding
-import com.makentoshe.habrachan.application.android.screen.login.model.LoginConnectCookieWebViewClient
-import com.makentoshe.habrachan.application.android.screen.login.model.LoginJavascriptInterface
-import com.makentoshe.habrachan.application.android.screen.login.model.LoginWebViewCookieWebViewClient
-import com.makentoshe.habrachan.application.android.screen.login.model.ZippedLoginModel
+import com.makentoshe.habrachan.application.android.screen.login.model.*
 import com.makentoshe.habrachan.application.android.screen.login.view.*
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.*
 import com.makentoshe.habrachan.functional.Either2
@@ -42,6 +39,7 @@ class LoginFragment : BindableBaseFragment() {
     private val loginJavascriptInterface by inject<LoginJavascriptInterface>()
     private val loginConnectWebViewClient by inject<LoginConnectCookieWebViewClient>()
     private val loginWebViewClientFactory by inject<LoginWebViewCookieWebViewClient.Factory>()
+    private val loginWieldWebViewClient by inject<LoginWieldCookieWebViewClient>()
 
     private val backwardNavigator by inject<BackwardNavigator>()
     private val meScreenNavigator by inject<MeScreenNavigator>()
@@ -74,6 +72,10 @@ class LoginFragment : BindableBaseFragment() {
                 ZippedLoginModel(sessionResponse.habrSessionIdCookie, loginResponse.loginSession)
             }.collectLatest(::onZippedLoginModel)
         }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            cookieViewModel.wieldCookiesModel.collectLatest(::onWieldCookiesModel)
+        }
     }
 
     private fun onConnectCookieSuccess(response: GetConnectCookieViewModelResponse) =
@@ -99,6 +101,12 @@ class LoginFragment : BindableBaseFragment() {
 
     private fun onZippedLoginModel(zippedLoginModel: ZippedLoginModel) = lifecycleScope.launch(Dispatchers.Main) {
         capture(this@LoginFragment.analyticEvent { "Received: $zippedLoginModel" })
+        val url = "https://habr.com/kek/v1/auth/habrahabr/?back=/en/all/&hl=en"
+        binding.onStartWebView(url, loginWieldWebViewClient)
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    private fun onWieldCookiesModel(response: WieldCookiesViewModelResponse) = lifecycleScope.launch(Dispatchers.Main) {
         meScreenNavigator.toMeScreen()
     }
 

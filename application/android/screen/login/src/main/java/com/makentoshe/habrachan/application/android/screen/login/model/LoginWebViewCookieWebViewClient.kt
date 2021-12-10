@@ -1,46 +1,34 @@
 package com.makentoshe.habrachan.application.android.screen.login.model
 
 import android.content.Context
-import android.webkit.*
+import android.webkit.CookieManager
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
+import androidx.lifecycle.viewModelScope
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
-import com.makentoshe.habrachan.application.android.common.exception.exceptionEntry
-import com.makentoshe.habrachan.application.android.common.usersession.HabrSessionIdCookie
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.GetCookieViewModel
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.GetSessionCookieViewModelRequest
-import com.makentoshe.habrachan.functional.Either2
+import com.makentoshe.habrachan.network.Cookie
 import com.makentoshe.habrachan.network.CookieParser
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.net.URL
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 class LoginWebViewCookieWebViewClient(
-    private val cookieManager: CookieManager,
-    private val coroutineScope: CoroutineScope,
+    cookieManager: CookieManager,
+    cookieParser: CookieParser,
     private val cookieViewModel: GetCookieViewModel,
     private val newState: String,
-    private val cookieParser: CookieParser,
-) : WebViewClient() {
+) : CookieWebViewClient(cookieManager, cookieParser, cookieViewModel) {
 
-    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-        // might be null, for example after captcha, so just allow this request and catch it on the next one.
-        val responseCookie = cookieManager.getCookie(request.url.toString()) ?: return false
-        val parsedResponseCookie = cookieParser.parseHeader(responseCookie)
+    override fun shouldOverrideUrlLoadingParsedCookies(request: WebResourceRequest, cookies: List<Cookie>): Boolean {
+        val habrSessionIdCookie = cookies.findHabrSessionIdCookie()
+        val connectSidCookie = cookies.findConnectSidCookie()
+        if (habrSessionIdCookie == null || connectSidCookie == null) return false
 
-        val habrSessionIdCookie = parsedResponseCookie.find {
-            it.name == HabrSessionIdCookie.NAME
-        }?.value?.let(::HabrSessionIdCookie)
-
-        return shouldOverrideUrlLoadingHabrSessionId(habrSessionIdCookie)
-    }
-
-    private fun shouldOverrideUrlLoadingHabrSessionId(habrSessionIdCookie: HabrSessionIdCookie?): Boolean {
-        if (habrSessionIdCookie == null) return false
-
-        coroutineScope.launch(Dispatchers.IO) {
+        cookieViewModel.viewModelScope.launch(Dispatchers.IO) {
             cookieViewModel.sessionCookieChannel.send(GetSessionCookieViewModelRequest(habrSessionIdCookie))
         }
 
@@ -76,25 +64,13 @@ class LoginWebViewCookieWebViewClient(
         return WebResourceResponse(context.contentResolver.getType(request.url), "utf-8", templateCss)
     }
 
-    override fun onReceivedError(view: WebView, errorCode: Int, description: String, failingUrl: String) {
-        val exceptionEntry = when(errorCode){
-            -2 -> exceptionEntry(view.context, UnknownHostException(URL(failingUrl).host))
-            else -> exceptionEntry(view.context, Exception(description))
-        }
-
-        coroutineScope.launch(Dispatchers.IO) {
-            cookieViewModel.connectCookieChannel.send(Either2.Right(exceptionEntry))
-        }
-    }
-
     class Factory @Inject constructor(
         private val cookieManager: CookieManager,
-        private val coroutineScope: CoroutineScope,
         private val cookieViewModel: GetCookieViewModel,
         private val parser: CookieParser,
     ) {
         fun build(newState: String): LoginWebViewCookieWebViewClient {
-            return LoginWebViewCookieWebViewClient(cookieManager, coroutineScope, cookieViewModel, newState, parser)
+            return LoginWebViewCookieWebViewClient(cookieManager, parser, cookieViewModel, newState)
         }
     }
 

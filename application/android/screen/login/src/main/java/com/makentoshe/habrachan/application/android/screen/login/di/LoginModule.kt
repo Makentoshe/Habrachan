@@ -9,6 +9,7 @@ import com.makentoshe.habrachan.application.android.screen.login.LoginFragment
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginConnectCookieWebViewClient
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginJavascriptInterface
 import com.makentoshe.habrachan.application.android.screen.login.model.LoginWebViewCookieWebViewClient
+import com.makentoshe.habrachan.application.android.screen.login.model.LoginWieldCookieWebViewClient
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.GetCookieViewModel
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.GetCookieViewModelProvider
 import com.makentoshe.habrachan.application.android.screen.login.viewmodel.GetLoginViewModel
@@ -33,7 +34,6 @@ class LoginModule(fragment: LoginFragment) : Module() {
 
     init {
         Toothpick.openScopes(ApplicationScope::class, LoginScope::class).inject(this)
-        bind<CoroutineScope>().toInstance(fragment.lifecycleScope)
         bind<CookieParser>().toInstance(KtorCookieParser())
         bind<CookieManager>().toInstance(CookieManager.getInstance().apply { setAcceptCookie(true) })
 
@@ -45,9 +45,11 @@ class LoginModule(fragment: LoginFragment) : Module() {
         val loginViewModel = GetLoginViewModelProvider(loginFactory).get(fragment)
         bind<GetLoginViewModel>().toInstance(loginViewModel)
 
+        bind<CoroutineScope>().toInstance(fragment.lifecycleScope)
         bind<LoginJavascriptInterface>().toClass<LoginJavascriptInterface>().singleton()
 
         bind<LoginConnectCookieWebViewClient>().toClass<LoginConnectCookieWebViewClient>().singleton()
         bind<LoginWebViewCookieWebViewClient.Factory>().toClass<LoginWebViewCookieWebViewClient.Factory>().singleton()
+        bind<LoginWieldCookieWebViewClient>().toClass<LoginWieldCookieWebViewClient>().singleton()
     }
 }
