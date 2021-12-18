@@ -14,7 +14,9 @@ abstract class FlowArena<in K, V> {
 
     suspend fun suspendFlowFetch(key: K): Flow<FlowArenaResponse<V, ArenaException>> = flow {
         emit(FlowArenaResponse(loading = true, content = suspendStorageFetch(key)))
-        emit(FlowArenaResponse(loading = false, content = suspendSourceFetch(key).mapRight(::ArenaException)))
+
+        val sourceContent = suspendSourceFetch(key).mapRight(::ArenaException).onLeft { arenaStorage.carry(key, it) }
+        emit(FlowArenaResponse(loading = false, content = sourceContent))
     }
 
     protected fun suspendStorageFetch(key: K) = arenaStorage.fetch(key).mapRight { arenaStorageException ->

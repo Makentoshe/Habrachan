@@ -14,7 +14,7 @@ fun <Type> propertyMapper(vararg keys: String, map: (JsonElement) -> Type?) = ob
 
 fun intPropertyMapper(vararg keys: String) = object: JsonElementPropertyMapper<Int> {
     override val keys: Array<out String> = keys
-    override val map: (JsonElement) -> Int? = { jsonElement -> jsonElement.jsonPrimitive.int }
+    override val map: (JsonElement) -> Int? = { jsonElement -> jsonElement.jsonPrimitive.intOrNull }
 }
 
 fun stringPropertyMapper(vararg keys: String) = object : JsonElementPropertyMapper<String> {

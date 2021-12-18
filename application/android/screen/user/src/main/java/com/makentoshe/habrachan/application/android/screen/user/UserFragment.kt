@@ -71,9 +71,11 @@ class UserFragment : BindableBaseFragment() {
      * that indicates that loading wasn't finished yet and the new batch of data might be received.
      * */
     private fun onMeUserSuccess(loading: Boolean, response: MeUserViewModelResponse) = lifecycleScope.launch(Dispatchers.Main) {
-        getUserViewModel.channel.send(GetUserViewModelRequest(response.me.login.value))
         println("loading=$loading, response=$response")
         Toast.makeText(requireContext(), response.me.login.value.string, Toast.LENGTH_LONG).show()
+
+        if (loading) return@launch
+        getUserViewModel.channel.send(GetUserViewModelRequest(response.me.login.value))
     }
 
     class Arguments(fragment: UserFragment) : FragmentArguments(fragment) {
