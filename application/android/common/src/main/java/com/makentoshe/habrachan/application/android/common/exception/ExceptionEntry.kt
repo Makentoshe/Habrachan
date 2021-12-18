@@ -2,6 +2,7 @@ package com.makentoshe.habrachan.application.android.common.exception
 
 import android.content.Context
 import com.makentoshe.habrachan.application.android.common.R
+import com.makentoshe.habrachan.application.android.common.strings.BundledStringsProvider
 import java.net.UnknownHostException
 
 data class ExceptionEntry<T : Throwable>(val title: String, val message: String, val throwable: T)
@@ -15,5 +16,11 @@ fun exceptionEntry(context: Context, unknownHostException: UnknownHostException)
 fun exceptionEntry(context: Context, throwable: Throwable?) = ExceptionEntry(
     title = context.getString(R.string.exception_handler_unknown_title),
     message = context.getString(R.string.exception_handler_unknown_message),
+    throwable = throwable ?: NullPointerException("Throwable is null")
+)
+
+fun exceptionEntry(stringsProvider: BundledStringsProvider, throwable: Throwable?) = ExceptionEntry(
+    title = stringsProvider.getString(R.string.exception_handler_unknown_title),
+    message = stringsProvider.getString(R.string.exception_handler_unknown_message),
     throwable = throwable ?: NullPointerException("Throwable is null")
 )

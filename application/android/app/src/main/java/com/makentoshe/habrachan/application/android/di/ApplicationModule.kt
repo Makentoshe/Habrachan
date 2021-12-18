@@ -11,6 +11,8 @@ import com.makentoshe.habrachan.api.mobile.articles.*
 import com.makentoshe.habrachan.application.android.*
 import com.makentoshe.habrachan.application.android.common.AndroidUserSession2
 import com.makentoshe.habrachan.application.android.common.R
+import com.makentoshe.habrachan.application.android.common.strings.BundledStringsProvider
+import com.makentoshe.habrachan.application.android.common.strings.StringsProvider
 import com.makentoshe.habrachan.application.android.database.cache.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.android.database.cache.migration.AndroidCacheDatabaseMigration_1_2
 import com.makentoshe.habrachan.application.android.database.cache.record.UserSessionRecord
@@ -20,7 +22,7 @@ import com.makentoshe.habrachan.application.android.database.user.record.Article
 import com.makentoshe.habrachan.application.android.database.user.record.ArticlesUserSearchArticlesFilterCrossRef
 import com.makentoshe.habrachan.application.android.database.user.record.ArticlesUserSearchRecord
 import com.makentoshe.habrachan.application.android.screen.articles.model.toArticlesUserSearch
-import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
+import com.makentoshe.habrachan.application.android.screen.user.MeUserScreen
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.userSession
 import toothpick.config.Module
@@ -42,6 +44,10 @@ class ApplicationModule(private val application: Habrachan) : Module() {
         bind<AndroidCacheDatabase>().toInstance(cacheDatabase)
         bind<UserSessionDatabase>().toInstance(userDatabase)
 
+        val stringsProvider = BundledStringsProvider(application)
+        bind<BundledStringsProvider>().toInstance(stringsProvider)
+        bind<StringsProvider<Int>>().toInstance(stringsProvider)
+
         bind<ExceptionHandler>().toInstance(ExceptionHandlerImpl(application))
 
         if (userDatabase.userSessionDao().getAll().isEmpty()) {
@@ -59,7 +65,7 @@ class ApplicationModule(private val application: Habrachan) : Module() {
         initializeDefaultUserSearches()
 
         val defaultUserSearches = userDatabase.articlesUserSearchDao().getAll().map { it.toArticlesUserSearch() }
-        val defaultScreen = ArticlesFlowScreen(defaultUserSearches)
+        val defaultScreen = MeUserScreen()//ArticlesFlowScreen(defaultUserSearches)
         bind<Launcher>().toInstance(Launcher(defaultScreen))
     }
 

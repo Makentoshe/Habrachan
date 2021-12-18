@@ -26,4 +26,10 @@
     <string name="exception_handler_articles_message">Could not fetch articles. Undefined error…</string>
     <string name="exception_handler_network_unknown_host_message">Unable to resolve host: No address associated with hostname</string>
     <string name="exception_handler_unknown_message">Unknown error was occurred…</string>
+
+    <string name="exception_handler_user_session_title">User credentials error</string>
+    <string name="exception_handler_user_session_message">Credentials weren\'t provided</string>
+
+    <string name="exception_handler_empty_storage_title">Arena storage error</string>
+    <string name="exception_handler_empty_storage_message">Arena storage is empty</string>
 </resources>

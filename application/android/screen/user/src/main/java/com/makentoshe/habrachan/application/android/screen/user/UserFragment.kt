@@ -2,17 +2,24 @@ package com.makentoshe.habrachan.application.android.screen.user
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.makentoshe.habrachan.application.android.analytics.Analytics
+import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
+import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.binding.viewBinding
+import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
 import com.makentoshe.habrachan.application.android.common.fragment.BindableBaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.common.user.me.viewmodel.MeUserViewModel
+import com.makentoshe.habrachan.application.android.common.user.me.viewmodel.MeUserViewModelResponse
 import com.makentoshe.habrachan.application.android.screen.user.databinding.FragmentUserBinding
+import com.makentoshe.habrachan.application.android.screen.user.view.onFailureCaused
+import com.makentoshe.habrachan.application.common.arena.FlowArenaResponse
+import com.makentoshe.habrachan.application.common.arena.user.me.login
 import com.makentoshe.habrachan.entity.user.component.UserLogin
 import com.makentoshe.habrachan.functional.Option2
-import com.makentoshe.habrachan.functional.rightOrNull
 import com.makentoshe.habrachan.functional.toOption2
-import com.makentoshe.habrachan.network.me.mobile.MeUserException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -27,20 +34,36 @@ class UserFragment : BindableBaseFragment() {
     private val meUserViewModel by inject<MeUserViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         arguments.login.fold(::onViewCreatedMe, ::onViewCreatedUser)
     }
 
     private fun onViewCreatedMe() {
         lifecycleScope.launch(Dispatchers.IO) {
-            meUserViewModel.model.collectLatest { response ->
-                println((response.content.rightOrNull()?.sourceException as? MeUserException)?.parameters)
-            }
+            meUserViewModel.model.collectLatest(::onMeUserResponse)
         }
     }
 
-    private fun onViewCreatedUser(userLogin: UserLogin) {
+    @Suppress("UNUSED_PARAMETER")
+    private fun onViewCreatedUser(userLogin: UserLogin) = Unit
 
+    private fun onMeUserResponse(response: FlowArenaResponse<MeUserViewModelResponse, ExceptionEntry<*>>) {
+        response.content.onLeft { onMeUserSuccess(response.loading, it) }.onRight { exceptionEntry ->
+            if (response.loading) return@onRight else onMeUserFailure(exceptionEntry)
+        }
+    }
+
+    private fun onMeUserFailure(entry: ExceptionEntry<*>) = lifecycleScope.launch(Dispatchers.Main) {
+        capture(analyticEvent(throwable = entry.throwable, title = entry.title) { entry.message })
+        binding.onFailureCaused(entry)
+    }
+
+    /**
+     * If loading is true - then we should display content and also progress indicator
+     * that indicates that loading wasn't finished yet and the new batch of data might be received.
+     * */
+    private fun onMeUserSuccess(loading: Boolean, response: MeUserViewModelResponse) = lifecycleScope.launch(Dispatchers.Main) {
+        println("loading=$loading, response=$response")
+        Toast.makeText(requireContext(), response.me.login.value.string, Toast.LENGTH_LONG).show()
     }
 
     class Arguments(fragment: UserFragment) : FragmentArguments(fragment) {
@@ -54,5 +77,7 @@ class UserFragment : BindableBaseFragment() {
             internal const val LOGIN_KEY = "UserLoginKey"
         }
     }
+
+    companion object : Analytics(LogAnalytic())
 }
 
