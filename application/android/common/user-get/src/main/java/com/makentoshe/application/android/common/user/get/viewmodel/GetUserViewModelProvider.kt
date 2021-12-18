@@ -1,4 +1,4 @@
-package com.makentoshe.application.android.common.user.get
+package com.makentoshe.application.android.common.user.get.viewmodel
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders

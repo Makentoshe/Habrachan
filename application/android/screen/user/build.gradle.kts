@@ -48,12 +48,15 @@ dependencies {
     implementation(project(":habrachan"))
     implementation(project(":habrachan:entity"))
     implementation(project(":habrachan:network:user-me:mobile"))
+    implementation(project(":habrachan:network:user-get"))
 
 
     implementation(project(":application:android:di"))
     implementation(project(":application:android:common"))
     implementation(project(":application:android:common:user-me"))
+    implementation(project(":application:android:common:user-get"))
     implementation(project(":application:android:analytics"))
+    implementation(project(":application:android:database"))
     implementation(project(":application:android:navigation"))
 
     implementation(project(":application:android:screen"))

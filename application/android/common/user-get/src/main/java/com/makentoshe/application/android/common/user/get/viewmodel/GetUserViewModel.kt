@@ -1,8 +1,9 @@
-package com.makentoshe.application.android.common.user.get
+package com.makentoshe.application.android.common.user.get.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.makentoshe.application.android.common.user.get.R
 import com.makentoshe.habrachan.api.AdditionalRequestParameters
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GetUserViewModelRequest(val userLogin: UserLogin)
-data class GetUserViewModelResponse(val request: GetUserViewModelRequest, val me: UserFromArena)
+data class GetUserViewModelResponse(val request: GetUserViewModelRequest, val user: UserFromArena)
 
 class GetUserViewModel(
     private val stringsProvider: BundledStringsProvider,
@@ -41,7 +42,9 @@ class GetUserViewModel(
     val channel: SendChannel<GetUserViewModelRequest> get() = internalChannel
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    val model = internalChannel.receiveAsFlow().map { viewModelRequest ->
+    val model = internalChannel.receiveAsFlow().onEach {
+        capture(analyticEvent { "Send $it" })
+    }.map { viewModelRequest ->
         val parameters = userSessionProvider.get()?.toRequestParameters() ?: return@map failureFlowDueUserSession()
         return@map successFlowViaMeUserArena(viewModelRequest, parameters)
     }.flowOn(Dispatchers.IO).flatMapMerge { it }
@@ -90,12 +93,12 @@ class GetUserViewModel(
         private val stringsProvider: BundledStringsProvider,
         private val userSessionProvider: AndroidUserSessionProvider,
         private val getUserArena: GetUserArena,
-        private val initialMeUserRequestOption: Option2<GetUserViewModelRequest>,
+        private val initialGetUserRequestOption: Option2<GetUserViewModelRequest>,
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return GetUserViewModel(stringsProvider, userSessionProvider, getUserArena, initialMeUserRequestOption) as T
+            return GetUserViewModel(stringsProvider, userSessionProvider, getUserArena, initialGetUserRequestOption) as T
         }
     }
 

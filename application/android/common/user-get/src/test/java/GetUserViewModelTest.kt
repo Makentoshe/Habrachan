@@ -1,6 +1,6 @@
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.makentoshe.application.android.common.user.get.GetUserViewModel
-import com.makentoshe.application.android.common.user.get.GetUserViewModelRequest
+import com.makentoshe.application.android.common.user.get.viewmodel.GetUserViewModel
+import com.makentoshe.application.android.common.user.get.viewmodel.GetUserViewModelRequest
 import com.makentoshe.habrachan.application.android.common.usersession.AndroidUserSession
 import com.makentoshe.habrachan.application.android.common.usersession.AndroidUserSessionProvider
 import com.makentoshe.habrachan.application.android.common.usersession.ClientApi

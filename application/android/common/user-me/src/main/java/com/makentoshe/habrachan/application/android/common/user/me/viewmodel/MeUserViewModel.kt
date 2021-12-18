@@ -86,7 +86,6 @@ class MeUserViewModel(
         throwable = throwable
     )
 
-
     class Factory @Inject constructor(
         private val stringsProvider: BundledStringsProvider,
         private val userSessionProvider: AndroidUserSessionProvider,

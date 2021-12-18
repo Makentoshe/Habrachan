@@ -5,8 +5,9 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.user.UserFragment
-import com.makentoshe.habrachan.application.android.screen.user.di.module.CommonUserModule
-import com.makentoshe.habrachan.application.android.screen.user.di.module.SpecificUserModule
+import com.makentoshe.habrachan.application.android.screen.user.di.module.GetUserNetworkModule
+import com.makentoshe.habrachan.application.android.screen.user.di.module.MeUserNetworkModule
+import com.makentoshe.habrachan.application.android.screen.user.di.module.UserScreenModule
 import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
@@ -19,7 +20,7 @@ class UserFragmentInjector : FragmentInjector<UserFragment>(UserFragment::class)
         val scope = UserScope(injectorScope.fragment.arguments.login.getOrNull())
 
         val toothpickScope = commonUserScope(injectorScope).openSubScope(scope)
-        val module = SpecificUserModule(injectorScope)
+        val module = UserScreenModule(injectorScope)
         captureModuleInstall(module, scope, injectorScope)
         toothpickScope.installModules(module).closeOnDestroy(injectorScope.fragment).inject(injectorScope.fragment)
     }
@@ -32,8 +33,10 @@ class UserFragmentInjector : FragmentInjector<UserFragment>(UserFragment::class)
         }
 
         val toothpickScope = Toothpick.openScopes(ApplicationScope::class, scope)
-        val module = CommonUserModule()
-        captureModuleInstall(module, scope, injectorScope)
-        return toothpickScope.installModules(module)
+        val getUserNetworkModule = GetUserNetworkModule()
+        captureModuleInstall(getUserNetworkModule, scope, injectorScope)
+        val meUserNetworkModule = MeUserNetworkModule(injectorScope.context)
+        captureModuleInstall(meUserNetworkModule, scope, injectorScope)
+        return toothpickScope.installModules(getUserNetworkModule, meUserNetworkModule)
     }
 }

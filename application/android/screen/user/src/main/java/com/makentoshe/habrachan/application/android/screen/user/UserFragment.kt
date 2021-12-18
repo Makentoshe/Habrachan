@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.makentoshe.application.android.common.user.get.viewmodel.GetUserViewModel
+import com.makentoshe.application.android.common.user.get.viewmodel.GetUserViewModelRequest
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
@@ -32,6 +34,7 @@ class UserFragment : BindableBaseFragment() {
     override val binding by viewBinding<FragmentUserBinding>()
 
     private val meUserViewModel by inject<MeUserViewModel>()
+    private val getUserViewModel by inject<GetUserViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments.login.fold(::onViewCreatedMe, ::onViewCreatedUser)
@@ -40,6 +43,12 @@ class UserFragment : BindableBaseFragment() {
     private fun onViewCreatedMe() {
         lifecycleScope.launch(Dispatchers.IO) {
             meUserViewModel.model.collectLatest(::onMeUserResponse)
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            getUserViewModel.model.collectLatest {
+                println(it)
+            }
         }
     }
 
@@ -62,6 +71,7 @@ class UserFragment : BindableBaseFragment() {
      * that indicates that loading wasn't finished yet and the new batch of data might be received.
      * */
     private fun onMeUserSuccess(loading: Boolean, response: MeUserViewModelResponse) = lifecycleScope.launch(Dispatchers.Main) {
+        getUserViewModel.channel.send(GetUserViewModelRequest(response.me.login.value))
         println("loading=$loading, response=$response")
         Toast.makeText(requireContext(), response.me.login.value.string, Toast.LENGTH_LONG).show()
     }

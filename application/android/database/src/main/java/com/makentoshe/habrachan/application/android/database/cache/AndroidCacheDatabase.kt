@@ -26,12 +26,13 @@ import com.makentoshe.habrachan.application.android.database.cache.record.*
         ArticleHubRecord3::class,
         ArticleAuthorCrossRef::class,
 
+        UserRecord::class,
 
         ArticleRecord2::class,
         ArticleHubCrossRef::class,
         ArticleFlowCrossRef::class,
         ArticleAuthorRecord::class,
-    ], version = 9
+    ], version = 10
 )
 abstract class AndroidCacheDatabase : RoomDatabase() {
 
@@ -114,4 +115,10 @@ abstract class AndroidCacheDatabase : RoomDatabase() {
      * That means that the cache should be released occasionally.
      */
     abstract fun articleHubCrossRefDao(): ArticleHubCrossRefDao
+
+    /**
+     * Stores users. Potential infinite.
+     * That means that the cache should be released occasionally.
+     */
+    abstract fun userDao(): UserDao
 }
