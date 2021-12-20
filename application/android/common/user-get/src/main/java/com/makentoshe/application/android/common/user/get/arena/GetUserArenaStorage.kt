@@ -48,9 +48,11 @@ class GetUserArenaStorage @Inject constructor(
         ratingPosition = ratingPosition.getOrNull(),
         scoresCount = scoreCount.value,
         votesCount = votesCount.value,
+        followersCount = followersCount.value,
+        followingCount = followingCount.value,
         lastActivityDateTimeRaw = lastActivity.value.string,
         registerDateTimeRaw = registered.value.string,
-        birthdayRaw = birthday.getOrNull()
+        birthdayRaw = birthday.getOrNull(),
     )
 
     private fun UserRecord3.toUserFromArena() = userFromArena(
@@ -63,6 +65,8 @@ class GetUserArenaStorage @Inject constructor(
         ratingPosition = ratingPosition,
         scoresCount = scoresCount,
         votesCount = votesCount,
+        followersCount = followersCount,
+        followingCount = followingCount,
         lastActivityDateTimeRaw = lastActivityDateTimeRaw,
         registerDateTimeRaw = registerDateTimeRaw,
         birthdayRaw = birthdayRaw,

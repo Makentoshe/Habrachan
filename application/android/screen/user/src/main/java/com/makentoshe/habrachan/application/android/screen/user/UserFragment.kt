@@ -2,10 +2,10 @@ package com.makentoshe.habrachan.application.android.screen.user
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.makentoshe.application.android.common.user.get.viewmodel.GetUserViewModel
 import com.makentoshe.application.android.common.user.get.viewmodel.GetUserViewModelRequest
+import com.makentoshe.application.android.common.user.get.viewmodel.GetUserViewModelResponse
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
@@ -17,6 +17,7 @@ import com.makentoshe.habrachan.application.android.common.user.me.viewmodel.MeU
 import com.makentoshe.habrachan.application.android.common.user.me.viewmodel.MeUserViewModelResponse
 import com.makentoshe.habrachan.application.android.screen.user.databinding.FragmentUserBinding
 import com.makentoshe.habrachan.application.android.screen.user.view.onFailureCaused
+import com.makentoshe.habrachan.application.android.screen.user.view.onUserSuccess
 import com.makentoshe.habrachan.application.common.arena.FlowArenaResponse
 import com.makentoshe.habrachan.application.common.arena.user.me.login
 import com.makentoshe.habrachan.entity.user.component.UserLogin
@@ -46,9 +47,7 @@ class UserFragment : BindableBaseFragment() {
         }
 
         lifecycleScope.launch(Dispatchers.IO) {
-            getUserViewModel.model.collectLatest {
-                println(it)
-            }
+            getUserViewModel.model.collectLatest(::onGetUserResponse)
         }
     }
 
@@ -57,11 +56,11 @@ class UserFragment : BindableBaseFragment() {
 
     private fun onMeUserResponse(response: FlowArenaResponse<MeUserViewModelResponse, ExceptionEntry<*>>) {
         response.content.onLeft { onMeUserSuccess(response.loading, it) }.onRight { exceptionEntry ->
-            if (response.loading) return@onRight else onMeUserFailure(exceptionEntry)
+            if (response.loading) return@onRight else onUserFailure(exceptionEntry)
         }
     }
 
-    private fun onMeUserFailure(entry: ExceptionEntry<*>) = lifecycleScope.launch(Dispatchers.Main) {
+    private fun onUserFailure(entry: ExceptionEntry<*>) = lifecycleScope.launch(Dispatchers.Main) {
         capture(analyticEvent(throwable = entry.throwable, title = entry.title) { entry.message })
         binding.onFailureCaused(entry)
     }
@@ -72,10 +71,20 @@ class UserFragment : BindableBaseFragment() {
      * */
     private fun onMeUserSuccess(loading: Boolean, response: MeUserViewModelResponse) = lifecycleScope.launch(Dispatchers.Main) {
         println("loading=$loading, response=$response")
-        Toast.makeText(requireContext(), response.me.login.value.string, Toast.LENGTH_LONG).show()
 
         if (loading) return@launch
         getUserViewModel.channel.send(GetUserViewModelRequest(response.me.login.value))
+    }
+
+    private fun onGetUserResponse(response: FlowArenaResponse<GetUserViewModelResponse, ExceptionEntry<*>>) {
+        response.content.onLeft { onGetUserSuccess(response.loading, it) }.onRight { exceptionEntry ->
+            if (response.loading) return@onRight else onUserFailure(exceptionEntry)
+        }
+    }
+
+    private fun onGetUserSuccess(loading: Boolean, response: GetUserViewModelResponse) = lifecycleScope.launch(Dispatchers.Main){
+        binding.onUserSuccess(response.user)
+        println("loading=$loading, response=$response")
     }
 
     class Arguments(fragment: UserFragment) : FragmentArguments(fragment) {

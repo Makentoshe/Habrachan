@@ -16,6 +16,8 @@ data class UserRecord3(
     val ratingPosition: Int?,
     val scoresCount: Int,
     val votesCount: Int,
+    val followersCount: Int,
+    val followingCount: Int,
     val lastActivityDateTimeRaw: String,
     val registerDateTimeRaw: String,
     val birthdayRaw: String?,

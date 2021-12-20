@@ -3,4 +3,11 @@
     <string name="user_options_menu_logout">Logout</string>
     <string name="user_options_menu_send_message">Send message</string>
 
+    <string name="fragment_user_fullname">Full name</string>
+    <string name="fragment_user_registered">Registered at</string>
+    <string name="fragment_user_registered_format">MMM dd, yyyy</string>
+    <string name="fragment_user_counter_rating">Rating</string>
+    <string name="fragment_user_counter_karma">Karma</string>
+    <string name="fragment_user_counter_followers">Followers</string>
+    <string name="fragment_user_counter_following">Following</string>
 </resources>

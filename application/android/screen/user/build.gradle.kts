@@ -53,6 +53,7 @@ dependencies {
 
     implementation(project(":application:android:di"))
     implementation(project(":application:android:common"))
+    implementation(project(":application:android:common:avatar"))
     implementation(project(":application:android:common:user-me"))
     implementation(project(":application:android:common:user-get"))
     implementation(project(":application:android:analytics"))

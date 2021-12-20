@@ -50,9 +50,9 @@ val UserFromArena.ratingPosition by optionReadonlyProperty(intPropertyMapper("ra
 //
 //val UserFromArena.commentCount by requireReadonlyProperty(intPropertyMapper("counterStats", "commentCount"))
 //
-//val UserFromArena.followCount by requireReadonlyProperty(intPropertyMapper("followStats", "followCount"))
-//
-//val UserFromArena.followersCount by requireReadonlyProperty(intPropertyMapper("followStats", "followersCount"))
+val UserFromArena.followingCount by requireReadonlyProperty(intPropertyMapper("followStats", "followCount"))
+
+val UserFromArena.followersCount by requireReadonlyProperty(intPropertyMapper("followStats", "followersCount"))
 
 val UserFromArena.scoreCount by requireReadonlyProperty(intPropertyMapper("scoreStats", "score"))
 
@@ -74,6 +74,8 @@ fun userFromArena(
     ratingPosition: Int?,
     scoresCount: Int,
     votesCount: Int,
+    followersCount: Int,
+    followingCount: Int,
     lastActivityDateTimeRaw: String,
     registerDateTimeRaw: String,
     birthdayRaw: String?,
@@ -86,6 +88,7 @@ fun userFromArena(
     "rating" to JsonPrimitive(rating),
     "ratingPos" to JsonPrimitive(ratingPosition),
     "scoreStats" to JsonObject(mapOf("score" to JsonPrimitive(scoresCount), "votesCount" to JsonPrimitive(votesCount))),
+    "followStats" to JsonObject(mapOf("followCount" to JsonPrimitive(followingCount), "followersCount" to JsonPrimitive(followersCount))),
     "scoresCount" to JsonPrimitive(scoresCount),
     "lastActivityDateTime" to JsonPrimitive(lastActivityDateTimeRaw),
     "registerDateTime" to JsonPrimitive(registerDateTimeRaw),
