@@ -44,8 +44,7 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    val kotlinVersion = dependency.version.kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    implementation(kotlin("stdlib"))
 
     implementation(project(":habrachan"))
     implementation(project(":habrachan:api"))
