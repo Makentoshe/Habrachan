@@ -10,6 +10,14 @@ allprojects {
         mavenCentral()
         maven(url = "https://jitpack.io")
     }
+
+    // Fixes an issue with mockk
+    // https://github.com/mockk/mockk/issues/281#issuecomment-483329039
+    configurations.all {
+        resolutionStrategy {
+            force("org.objenesis:objenesis:2.6")
+        }
+    }
 }
 
 buildscript {

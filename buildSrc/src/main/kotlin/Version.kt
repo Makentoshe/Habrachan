@@ -32,7 +32,7 @@ object Version {
     // for testing purposes - any module
     const val junit = "4.13"
 
-    const val mockk = "1.9.1"
+    const val mockk = "1.12.1"
 
     // https://github.com/stephanenicolas/toothpick
     const val toothpick = "3.1.0"
