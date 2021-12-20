@@ -20,6 +20,9 @@ dependencies {
     val kotlinSerializationJsonVersion = dependency.version.serializationJson
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationJsonVersion")
 
+    val kotlinVersion = dependency.version.kotlin
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+
     val junitVersion = dependency.version.junit
     testImplementation("junit:junit:$junitVersion")
 
