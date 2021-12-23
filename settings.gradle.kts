@@ -99,3 +99,5 @@ include(":habrachan:network:user-get")
 include(":application:android:screen:user")
 include(":user-get")
 include(":application:android:common:user-get")
+include("habrachan:network:content-get")
+findProject(":habrachan:network:content-get")?.name = "content-get"
