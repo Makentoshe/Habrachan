@@ -18,7 +18,7 @@ import org.junit.Test
 class ArticleAuthorTest {
 
     private val json: String
-        get() = javaClass.classLoader.getResourceAsStream("article.json").readAllBytes().decodeToString()
+        get() = javaClass.classLoader.getResourceAsStream("article.json").readBytes().decodeToString()
 
     private val properties: Map<String, JsonElement>
         get() = Json.decodeFromString<JsonObject>(json).toMap()

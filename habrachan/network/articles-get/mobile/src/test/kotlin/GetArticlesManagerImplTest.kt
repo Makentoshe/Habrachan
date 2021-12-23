@@ -25,7 +25,7 @@ class GetArticlesManagerImplTest {
 
     @Test
     fun `test should check response on success networking`() = runBlocking {
-        val json = javaClass.classLoader.getResourceAsStream("articles_success.json").readAllBytes().decodeToString()
+        val json = javaClass.classLoader.getResourceAsStream("articles_success.json").readBytes().decodeToString()
 
         val filters = sortArticlesFilter(RatingArticlesSort) and pageArticlesFilter(2)
         val request = GetArticlesRequest(AdditionalRequestParameters(), filters)
@@ -39,7 +39,7 @@ class GetArticlesManagerImplTest {
 
     @Test
     fun `test should check response on success networking with failure response`() = runBlocking {
-        val json = javaClass.classLoader.getResourceAsStream("articles_failure.json").readAllBytes().decodeToString()
+        val json = javaClass.classLoader.getResourceAsStream("articles_failure.json").readBytes().decodeToString()
 
         val filters = pageArticlesFilter(2)
         val request = GetArticlesRequest(AdditionalRequestParameters(), arrayOf(filters))

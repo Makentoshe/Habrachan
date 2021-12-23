@@ -23,7 +23,7 @@ class GetUserManagerTest {
 
     @Test
     fun `test should check response on success networking`() = runBlocking {
-        val json = javaClass.classLoader.getResourceAsStream("get_user_success.json").readAllBytes().decodeToString()
+        val json = javaClass.classLoader.getResourceAsStream("get_user_success.json").readBytes().decodeToString()
         val request = GetUserRequest(UserLogin("Makentoshe"), AdditionalRequestParameters())
 
         val response = requireManagerWithJson(json, HttpStatusCode.OK).execute(request) as Either2.Left

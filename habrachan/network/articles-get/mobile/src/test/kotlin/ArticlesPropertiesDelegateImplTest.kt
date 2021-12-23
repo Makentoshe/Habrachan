@@ -13,7 +13,7 @@ class ArticlesPropertiesDelegateImplTest {
 
     @Test
     fun `test should check articles property for default json`() {
-        val json = javaClass.classLoader.getResourceAsStream("articles_success.json").readAllBytes().decodeToString()
+        val json = javaClass.classLoader.getResourceAsStream("articles_success.json").readBytes().decodeToString()
         val articles = delegate(json)
 
         assertEquals(20, articles.articles.value.size)
@@ -21,7 +21,7 @@ class ArticlesPropertiesDelegateImplTest {
 
     @Test
     fun `test should check totalPages property for default json`() {
-        val json = javaClass.classLoader.getResourceAsStream("articles_success.json").readAllBytes().decodeToString()
+        val json = javaClass.classLoader.getResourceAsStream("articles_success.json").readBytes().decodeToString()
         val articles = delegate(json)
 
         assertEquals(50, articles.totalPages.getOrNull())
@@ -29,7 +29,7 @@ class ArticlesPropertiesDelegateImplTest {
 
     @Test
     fun `test should check articles property for most-reading json`() {
-        val json = javaClass.classLoader.getResourceAsStream("articles_mostreading_success.json").readAllBytes().decodeToString()
+        val json = javaClass.classLoader.getResourceAsStream("articles_mostreading_success.json").readBytes().decodeToString()
         val articles = delegate(json)
 
         assertEquals(20, articles.articles.value.size)
@@ -37,7 +37,7 @@ class ArticlesPropertiesDelegateImplTest {
 
     @Test
     fun `test should check totalPages property for most-reading json`() {
-        val json = javaClass.classLoader.getResourceAsStream("articles_mostreading_success.json").readAllBytes().decodeToString()
+        val json = javaClass.classLoader.getResourceAsStream("articles_mostreading_success.json").readBytes().decodeToString()
         val articles = delegate(json)
 
         assertNull(articles.totalPages.getOrNull())

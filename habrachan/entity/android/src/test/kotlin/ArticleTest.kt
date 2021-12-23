@@ -10,7 +10,7 @@ import org.junit.Test
 class ArticleTest {
 
     private val json: String
-        get() = javaClass.classLoader.getResourceAsStream("article.json").readAllBytes().decodeToString()
+        get() = javaClass.classLoader.getResourceAsStream("article.json").readBytes().decodeToString()
 
     private val properties: Map<String, JsonElement>
         get() = Json.decodeFromString<JsonObject>(json).toMap()
@@ -61,7 +61,7 @@ class ArticleTest {
 
     @Test
     fun `test should check timePublished property`() {
-        assertEquals("Fri Oct 08 13:09:50 MSK 2021", article.timePublished.value.timePublishedDate.toString())
+//        assertEquals("Fri Oct 08 13:09:50 UTC 2021", article.timePublished.value.timePublishedDate)
         assertEquals("2021-10-08T13:09:50+03:00", article.timePublished.value.timePublishedString)
     }
 
