@@ -10,7 +10,6 @@ object AndroidBuild : VcsBaseBuild("Android build", {
         Default Android build. This build prepares environment and runs tests.
     """.trimIndent()
 
-    // These params required for compatibility with 1.8 java
     params {
         add(Parameters.Configuration.JavaHome8)
         add(Parameters.Environment.JavaHome8)
@@ -27,6 +26,7 @@ object AndroidBuild : VcsBaseBuild("Android build", {
             name = "Android application build"
             tasks = "clean build"
             buildFile = "build.gradle.kts"
+            jdkHome = Parameters.Environment.JavaHome11.value
         }
     }
 })

@@ -51,7 +51,7 @@ object AndroidRelease : BaseBuild("Android release", {
             name = "Assemble unsigned release apk"
             tasks = "clean application:android:app:assembleRelease"
             buildFile = "build.gradle.kts"
-            jdkHome = "%env.JDK_18_x64%"
+            jdkHome = Parameters.Environment.JavaHome11.value
         }
         script {
             name = "Align apk file"
