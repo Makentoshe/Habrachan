@@ -6,11 +6,12 @@
     android:background="@color/background">
 
     <androidx.appcompat.widget.Toolbar
-        style="@style/Habrachan.Light.Toolbar"
+        style="@style/Habrachan.Toolbar"
         android:id="@+id/fragment_comments_article_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Здесь будет довольно длинное название статьи, которое точно не поместится в 1 строку"
+        android:layout_height="@dimen/heightLL"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="Loading..."
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
@@ -22,26 +23,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <include
-        layout="@layout/layout_exception"
-        android:id="@+id/fragment_comments_article_exception"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--    <include-->
+<!--        layout="@layout/layout_exception"-->
+<!--        android:id="@+id/fragment_comments_article_exception"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <include
-        layout="@layout/layout_comments_empty_state"
-        android:id="@+id/fragment_comments_article_empty_state"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/fragment_comments_article_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--    <include-->
+<!--        layout="@layout/layout_comments_empty_state"-->
+<!--        android:id="@+id/fragment_comments_article_empty_state"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/fragment_comments_article_toolbar"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/fragment_comments_article_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"

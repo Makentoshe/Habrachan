@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
@@ -85,8 +84,8 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
         binding.initializeWebView(webViewClient, javaScriptInterface)
         binding.fragmentArticleExceptionRetry.setOnClickListener { onArticleRetry() }
         binding.fragmentArticleBottomComments.setOnClickListener {
-            Toast.makeText(requireContext(), "This feature is disabled right now", Toast.LENGTH_LONG).show()
-//            commentsScreenNavigator.toArticleCommentsScreen(arguments.articleId, arguments.articleTitle)
+//            Toast.makeText(requireContext(), "This feature is disabled right now", Toast.LENGTH_LONG).show()
+            commentsScreenNavigator.toArticleCommentsScreen(arguments.articleId, arguments.articleTitle)
         }
         binding.fragmentArticleAppbarCollapsingToolbar.setNavigationOnClickListener {
             backwardNavigator.toPreviousScreen()

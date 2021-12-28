@@ -1,16 +1,13 @@
 package com.makentoshe.habrachan.application.android.screen.comments.articles
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.makentoshe.habrachan.application.android.ExceptionController
 import com.makentoshe.habrachan.application.android.ExceptionHandler
-import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
@@ -23,14 +20,12 @@ import com.makentoshe.habrachan.application.android.common.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.BackwardNavigator
 import com.makentoshe.habrachan.application.android.screen.comments.articles.model.CommentsEmptyStateController
-import com.makentoshe.habrachan.application.android.screen.comments.articles.view.CommentsEmptyStateViewHolder
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.Option
 import com.makentoshe.habrachan.functional.Result
 import com.makentoshe.habrachan.functional.suspendFold
-import kotlinx.android.synthetic.main.fragment_comments_article.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -57,9 +52,9 @@ class ArticleCommentsFragment : BaseFragment() {
     private lateinit var exceptionController: ExceptionController
     private lateinit var emptyStateController: CommentsEmptyStateController
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_comments_article, container, false)
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+//    ): View? = inflater.inflate(R.layout.fragment_comments_article, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val wasViewModelRecreated =
@@ -75,20 +70,20 @@ class ArticleCommentsFragment : BaseFragment() {
             articleCommentsViewModel.channel.send(getArticleCommentsSpec)
         }
 
-        exceptionController = ExceptionController(ExceptionViewHolder(fragment_comments_article_exception))
+//        exceptionController = ExceptionController(ExceptionViewHolder(fragment_comments_article_exception))
         exceptionController.setRetryButton { adapter.retry() }
 
-        emptyStateController =
-            CommentsEmptyStateController(CommentsEmptyStateViewHolder(fragment_comments_article_empty_state))
+//        emptyStateController =
+//            CommentsEmptyStateController(CommentsEmptyStateViewHolder(fragment_comments_article_empty_state))
         emptyStateController.buttonOnClickListener {
             Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_LONG).show()
         }
 
-        fragment_comments_article_toolbar.title = arguments.articleTitle
-        fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-        fragment_comments_article_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
+//        fragment_comments_article_toolbar.title = arguments.articleTitle
+//        fragment_comments_article_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+//        fragment_comments_article_toolbar.setNavigationOnClickListener { backwardNavigator.toPreviousScreen() }
 
-        fragment_comments_article_recycler.adapter = adapter
+//        fragment_comments_article_recycler.adapter = adapter
 
         lifecycleScope.launch {
             articleCommentsViewModel.model.collectLatest { result -> onGetArticleCommentsModel(result) }
@@ -116,25 +111,25 @@ class ArticleCommentsFragment : BaseFragment() {
     private fun loadStateListener(state: CombinedLoadStates) = when (val refresh = state.refresh) {
         is LoadState.NotLoading -> {
             exceptionController.hide()
-            fragment_comments_article_progress.visibility = View.GONE
+//            fragment_comments_article_progress.visibility = View.GONE
             if (state.append.endOfPaginationReached && adapter.itemCount <= 0) {
                 emptyStateController.show()
-                fragment_comments_article_recycler.visibility = View.GONE
+//                fragment_comments_article_recycler.visibility = View.GONE
             } else {
-                fragment_comments_article_recycler.visibility = View.VISIBLE
+//                fragment_comments_article_recycler.visibility = View.VISIBLE
             }
         }
         is LoadState.Loading -> {
-            exceptionController.hide()
-            emptyStateController.hide()
-            fragment_comments_article_progress.visibility = View.VISIBLE
-            fragment_comments_article_recycler.visibility = View.GONE
+//            exceptionController.hide()
+//            emptyStateController.hide()
+//            fragment_comments_article_progress.visibility = View.VISIBLE
+//            fragment_comments_article_recycler.visibility = View.GONE
         }
         is LoadState.Error -> {
-            exceptionController.render(exceptionHandler.handleException(refresh.error))
-            emptyStateController.hide()
-            fragment_comments_article_progress.visibility = View.GONE
-            fragment_comments_article_recycler.visibility = View.VISIBLE
+//            exceptionController.render(exceptionHandler.handleException(refresh.error))
+//            emptyStateController.hide()
+//            fragment_comments_article_progress.visibility = View.GONE
+//            fragment_comments_article_recycler.visibility = View.VISIBLE
         }
     }
 

@@ -11,7 +11,7 @@ import com.makentoshe.habrachan.application.android.screen.article.di.ArticleFra
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesFlowFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.di.ArticlesPageFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.StackRouter
-import com.makentoshe.habrachan.application.android.screen.comments.articles.di.ArticleCommentsFragmentInjector
+import com.makentoshe.habrachan.application.android.screen.comments.di.ArticleCommentsFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.comments.dispatch.DispatchCommentsFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.comments.thread.di.ThreadCommentsFragmentInjector
 import com.makentoshe.habrachan.application.android.screen.content.di.ContentFragmentInjector

@@ -7,10 +7,11 @@ import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.comment.model.GetArticleCommentsModel
+import com.makentoshe.habrachan.application.android.common.usersession.AndroidUserSessionProvider
+import com.makentoshe.habrachan.application.android.common.usersession.toUserSession
 import com.makentoshe.habrachan.application.common.arena.comments.ArticleCommentsArena
 import com.makentoshe.habrachan.functional.Option
 import com.makentoshe.habrachan.functional.map
-import com.makentoshe.habrachan.network.UserSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GetArticleCommentsViewModel(
-    private val userSession: UserSession,
+    private val userSessionProvider: AndroidUserSessionProvider,
     private val articleCommentsArena: ArticleCommentsArena,
     initialGetArticleCommentsSpecOption: Option<GetArticleCommentsSpec2>,
 ) : ViewModel() {
@@ -35,7 +36,7 @@ class GetArticleCommentsViewModel(
     val channel: SendChannel<GetArticleCommentsSpec2> = internalSpecChannel
 
     val model = internalSpecChannel.receiveAsFlow().map { spec ->
-        articleCommentsArena.suspendFetch(articleCommentsArena.request(userSession, spec.articleId.articleId))
+        articleCommentsArena.suspendFetch(articleCommentsArena.request(userSessionProvider.get()!!.toUserSession(), spec.articleId.articleId))
     }.map { result -> result.map { GetArticleCommentsModel(it) } }.flowOn(Dispatchers.IO)
 
     init {
@@ -49,14 +50,14 @@ class GetArticleCommentsViewModel(
     }
 
     data class Factory @Inject constructor(
-        private val session: UserSession,
+        private val userSessionProvider: AndroidUserSessionProvider,
         private val articleCommentsArena: ArticleCommentsArena,
         private val initialGetArticleCommentsSpecOption: Option<GetArticleCommentsSpec2>
     ) : ViewModelProvider.NewInstanceFactory() {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return GetArticleCommentsViewModel(session, articleCommentsArena, initialGetArticleCommentsSpecOption) as T
+            return GetArticleCommentsViewModel(userSessionProvider, articleCommentsArena, initialGetArticleCommentsSpecOption) as T
         }
     }
 }

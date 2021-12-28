@@ -43,6 +43,8 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    implementation(project(":habrachan"))
+
     implementation(project(":functional"))
     implementation(project(":entity"))
     implementation(project(":network"))
@@ -59,6 +61,7 @@ dependencies {
     implementation(project(":application:android:common:comment:getting"))
     implementation(project(":application:android:common"))
     implementation(project(":application:android:navigation"))
+    implementation(project(":application:android:database"))
     implementation(project(":application:android:di"))
     implementation(project(":application:android:common:avatar"))
     implementation(project(":application:android:common:arena"))

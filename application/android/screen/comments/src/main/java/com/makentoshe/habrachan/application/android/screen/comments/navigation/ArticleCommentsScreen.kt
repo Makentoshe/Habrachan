@@ -1,7 +1,7 @@
-package com.makentoshe.habrachan.application.android.screen.comments.articles.navigation
+package com.makentoshe.habrachan.application.android.screen.comments.navigation
 
 import androidx.fragment.app.Fragment
-import com.makentoshe.habrachan.application.android.screen.comments.articles.ArticleCommentsFragment
+import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.entity.Article
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.functional.Option
@@ -9,7 +9,7 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class ArticleCommentsScreen(
     val articleId: ArticleId,
-    val articleTitleOption: Option<String>
+    val articleTitleOption: Option<String>,
 ) : SupportAppScreen() {
 
     constructor(article: Article) : this(article, Option.from(article.title))

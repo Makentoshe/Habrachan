@@ -3,16 +3,16 @@ package com.makentoshe.habrachan.application.android.screen.comments.dispatch.di
 import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleSpec
 import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleViewModel
 import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleViewModelProvider
+import com.makentoshe.habrachan.application.android.common.usersession.AndroidUserSessionProvider
 import com.makentoshe.habrachan.application.android.screen.comments.dispatch.DispatchCommentsFragment
 import com.makentoshe.habrachan.application.common.arena.article.ArticleArena
 import com.makentoshe.habrachan.functional.Option
-import com.makentoshe.habrachan.network.UserSession
 import javax.inject.Inject
 import javax.inject.Provider
 
 internal class SpecifiedGetArticleViewModelProvider @Inject constructor(
     private val fragment: DispatchCommentsFragment,
-    private val userSession: UserSession,
+    private val userSessionProvider: AndroidUserSessionProvider,
     private val articleArena: ArticleArena,
 ): Provider<GetArticleViewModel> {
 
@@ -21,7 +21,7 @@ internal class SpecifiedGetArticleViewModelProvider @Inject constructor(
     )
 
     override fun get(): GetArticleViewModel {
-        val factory = GetArticleViewModel.Factory(userSession, articleArena, initialGetArticleSpecOption)
+        val factory = GetArticleViewModel.Factory(userSessionProvider, articleArena, initialGetArticleSpecOption)
         return GetArticleViewModelProvider(factory).get(fragment)
     }
 }

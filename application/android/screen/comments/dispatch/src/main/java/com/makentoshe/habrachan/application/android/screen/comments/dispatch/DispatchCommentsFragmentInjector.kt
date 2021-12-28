@@ -2,7 +2,6 @@ package com.makentoshe.habrachan.application.android.screen.comments.dispatch
 
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
-import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsModule
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
 import com.makentoshe.habrachan.application.android.screen.comments.dispatch.di.DispatchCommentsScope
 import com.makentoshe.habrachan.application.android.screen.comments.dispatch.di.module.DispatchCommentsModule
@@ -45,8 +44,8 @@ class DispatchCommentsFragmentInjector : FragmentInjector<DispatchCommentsFragme
         }
 
         val toothpickScope = Toothpick.openScopes(ApplicationScope::class, scope)
-        val module = CommentsModule(injectorScope.fragment.arguments.articleId, injectorScope.fragment)
-        captureModuleInstall(module, scope, injectorScope)
-        return toothpickScope.installModules(module)
+//        val module = CommentsScreenModule(injectorScope.fragment.arguments.articleId, injectorScope.fragment)
+//        captureModuleInstall(module, scope, injectorScope)
+        return toothpickScope//.installModules(module)
     }
 }

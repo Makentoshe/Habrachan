@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Habrachan</string>
+
+    <string name="not_implemented">Not implemented</string>
+
+    <string name="layout_comments_empty_state_title">Such empty…</string>
+    <string name="layout_comments_empty_state_message">There are no comments for this article yet</string>
+    <string name="layout_comments_empty_state_button">Be the first one</string>
+</resources>
