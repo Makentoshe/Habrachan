@@ -5,6 +5,7 @@ import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.user.UserFragment
+import com.makentoshe.habrachan.application.android.screen.user.di.module.GetAvatarNetworkModule
 import com.makentoshe.habrachan.application.android.screen.user.di.module.GetUserNetworkModule
 import com.makentoshe.habrachan.application.android.screen.user.di.module.MeUserNetworkModule
 import com.makentoshe.habrachan.application.android.screen.user.di.module.UserScreenModule
@@ -37,6 +38,8 @@ class UserFragmentInjector : FragmentInjector<UserFragment>(UserFragment::class)
         captureModuleInstall(getUserNetworkModule, scope, injectorScope)
         val meUserNetworkModule = MeUserNetworkModule(injectorScope.context)
         captureModuleInstall(meUserNetworkModule, scope, injectorScope)
-        return toothpickScope.installModules(getUserNetworkModule, meUserNetworkModule)
+        val getAvatarNetworkModule = GetAvatarNetworkModule()
+        captureModuleInstall(getAvatarNetworkModule, scope, injectorScope)
+        return toothpickScope.installModules(getUserNetworkModule, meUserNetworkModule, getAvatarNetworkModule)
     }
 }

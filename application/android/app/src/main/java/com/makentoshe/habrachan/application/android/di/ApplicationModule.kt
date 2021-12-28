@@ -22,12 +22,12 @@ import com.makentoshe.habrachan.application.android.database.user.record.Article
 import com.makentoshe.habrachan.application.android.database.user.record.ArticlesUserSearchArticlesFilterCrossRef
 import com.makentoshe.habrachan.application.android.database.user.record.ArticlesUserSearchRecord
 import com.makentoshe.habrachan.application.android.screen.articles.model.toArticlesUserSearch
-import com.makentoshe.habrachan.application.android.screen.user.MeUserScreen
+import com.makentoshe.habrachan.application.android.screen.articles.navigation.ArticlesFlowScreen
 import com.makentoshe.habrachan.network.UserSession
 import com.makentoshe.habrachan.network.userSession
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
-
+import java.io.File
 
 class ApplicationModule(private val application: Habrachan) : Module() {
 
@@ -48,6 +48,8 @@ class ApplicationModule(private val application: Habrachan) : Module() {
         bind<BundledStringsProvider>().toInstance(stringsProvider)
         bind<StringsProvider<Int>>().toInstance(stringsProvider)
 
+        bind<File>().toInstance(application.cacheDir)
+
         bind<ExceptionHandler>().toInstance(ExceptionHandlerImpl(application))
 
         if (userDatabase.userSessionDao().getAll().isEmpty()) {
@@ -65,7 +67,7 @@ class ApplicationModule(private val application: Habrachan) : Module() {
         initializeDefaultUserSearches()
 
         val defaultUserSearches = userDatabase.articlesUserSearchDao().getAll().map { it.toArticlesUserSearch() }
-        val defaultScreen = MeUserScreen()//ArticlesFlowScreen(defaultUserSearches)
+        val defaultScreen = ArticlesFlowScreen(defaultUserSearches)
         bind<Launcher>().toInstance(Launcher(defaultScreen))
     }
 

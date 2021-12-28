@@ -40,6 +40,12 @@ dependencies {
 
     implementation(kotlin("stdlib"))
 
+    // Inherits
+    api(project(":application:common:arena:content"))
+
+    implementation(project(":habrachan"))
+    implementation(project(":habrachan:api"))
+
     implementation(project(":entity"))
     implementation(project(":network"))
     implementation(project(":network:network-common:network-common-content"))
@@ -48,6 +54,7 @@ dependencies {
     implementation(project(":application:common:arena:content"))
     implementation(project(":application:core"))
     implementation(project(":application:android:database"))
+    implementation(project(":application:android:common"))
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:di"))
 

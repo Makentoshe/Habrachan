@@ -7,11 +7,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.usersession.AndroidUserSessionProvider
+import com.makentoshe.habrachan.application.android.common.usersession.toUserSession
 import com.makentoshe.habrachan.application.android.database.cache.AndroidCacheDatabase
 import com.makentoshe.habrachan.application.common.article.voting.VoteArticleArena
 import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.functional.onSuccess
-import com.makentoshe.habrachan.network.UserSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
@@ -21,7 +22,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 class VoteArticleViewModel(
-    private val userSession: UserSession,
+    private val userSessionProvider: AndroidUserSessionProvider,
     private val voteArticleArena: VoteArticleArena,
     private val database: AndroidCacheDatabase,
 ) : ViewModel() {
@@ -32,7 +33,7 @@ class VoteArticleViewModel(
     val channel: SendChannel<VoteArticleSpec> = internalChannel
 
     val model = internalChannel.receiveAsFlow().map { spec ->
-        val request = voteArticleArena.request(userSession, spec.articleId, spec.articleVote)
+        val request = voteArticleArena.request(userSessionProvider.get()!!.toUserSession(), spec.articleId, spec.articleVote)
         voteArticleArena.suspendCarry(request).onSuccess { response ->
             updateArticleScoreCache(spec.articleId, response.score)
         }
@@ -48,12 +49,12 @@ class VoteArticleViewModel(
     }
 
     class Factory @Inject constructor(
-        private val userSession: UserSession,
+        private val userSessionProvider: AndroidUserSessionProvider,
         private val voteArticleArena: VoteArticleArena,
         private val database: AndroidCacheDatabase,
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return VoteArticleViewModel(userSession, voteArticleArena, database) as T
+            return VoteArticleViewModel(userSessionProvider, voteArticleArena, database) as T
         }
     }
 }

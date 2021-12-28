@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
@@ -16,8 +17,9 @@ import com.makentoshe.habrachan.application.android.common.article.viewmodel.Get
 import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleViewModel
 import com.makentoshe.habrachan.application.android.common.article.voting.viewmodel.VoteArticleSpec
 import com.makentoshe.habrachan.application.android.common.article.voting.viewmodel.VoteArticleViewModel
-import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarSpec
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModelRequest
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModelResponse
 import com.makentoshe.habrachan.application.android.common.binding.viewBinding
 import com.makentoshe.habrachan.application.android.common.dp2px
 import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
@@ -37,7 +39,7 @@ import com.makentoshe.habrachan.entity.ArticleId
 import com.makentoshe.habrachan.entity.articleId
 import com.makentoshe.habrachan.functional.Option
 import com.makentoshe.habrachan.functional.fold
-import com.makentoshe.habrachan.network.GetContentResponse
+import com.makentoshe.habrachan.functional.leftOrNull
 import com.makentoshe.habrachan.network.exception.GetArticleException
 import com.makentoshe.habrachan.network.request.ArticleVote
 import com.makentoshe.habrachan.network.response.VoteArticleResponse
@@ -83,7 +85,8 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
         binding.initializeWebView(webViewClient, javaScriptInterface)
         binding.fragmentArticleExceptionRetry.setOnClickListener { onArticleRetry() }
         binding.fragmentArticleBottomComments.setOnClickListener {
-            commentsScreenNavigator.toArticleCommentsScreen(arguments.articleId, arguments.articleTitle)
+            Toast.makeText(requireContext(), "This feature is disabled right now", Toast.LENGTH_LONG).show()
+//            commentsScreenNavigator.toArticleCommentsScreen(arguments.articleId, arguments.articleTitle)
         }
         binding.fragmentArticleAppbarCollapsingToolbar.setNavigationOnClickListener {
             backwardNavigator.toPreviousScreen()
@@ -137,24 +140,27 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
         }
 
         lifecycleScope.launch(Dispatchers.IO) {
-            getAvatarViewModel.requestAvatar(GetAvatarSpec(article.author.avatar)).collectLatest { result ->
-                result.fold(::onAvatarSuccess, ::onAvatarFailure)
+            getAvatarViewModel.requestAvatar(GetAvatarViewModelRequest(article.author.avatar)).collectLatest { result ->
+                if (result.content.leftOrNull()?.request?.isStub == true && result.loading) return@collectLatest
+                result.content.fold(::onAvatarSuccess, ::onAvatarFailure)
             }
         }
     }
 
-    private fun onAvatarSuccess(response: GetContentResponse) = lifecycleScope.launch(Dispatchers.Main) {
-        binding.showToolbarAvatar(response.bytes.toRoundedDrawable(resources, dp2px(R.dimen.radiusS)))
+    private fun onAvatarSuccess(response: GetAvatarViewModelResponse) = lifecycleScope.launch(Dispatchers.Main) {
+        capture(analyticEvent { "Receive avatar: ${response.request.contentUrl}" })
+        binding.showToolbarAvatar(response.content.bytes.toRoundedDrawable(resources, dp2px(R.dimen.radiusS)))
     }
 
-    private fun onAvatarFailure(throwable: Throwable) = lifecycleScope.launch(Dispatchers.Main) {
+    private fun onAvatarFailure(entry: ExceptionEntry<*>) = lifecycleScope.launch(Dispatchers.Main) {
+        capture(analyticEvent(throwable = entry.throwable) { "Avatar error." })
         binding.showToolbarAvatarStub()
     }
 
     private fun onArticleFailure(throwable: Throwable): Unit = if (throwable is ArenaException) {
-        onArticleFailure(throwable)
+        onArticleFailure(throwable); Unit
     } else {
-        onArticleFailure(unknownExceptionEntry(throwable))
+        onArticleFailure(unknownExceptionEntry(throwable)); Unit
     }
 
     private fun onArticleFailure(arenaException: ArenaException) = when (val throwable = arenaException.cause) {
@@ -171,7 +177,7 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
         }
     }
 
-    private fun onArticleFailure(exceptionEntry: ExceptionEntry<*>) {
+    private fun onArticleFailure(exceptionEntry: ExceptionEntry<*>) = lifecycleScope.launch(Dispatchers.Main) {
         binding.hideProgress().showException(exceptionEntry).showToolbarAvatarStub()
     }
 

@@ -4,6 +4,7 @@ import com.makentoshe.habrachan.api.AdditionalRequestParameters
 import com.makentoshe.habrachan.functional.Option2
 import com.makentoshe.habrachan.functional.Require2
 import com.makentoshe.habrachan.functional.toRequire2
+import com.makentoshe.habrachan.network.UserSession
 
 @JvmInline
 value class ClientId(val string: String) {
@@ -89,4 +90,13 @@ fun AndroidUserSession.toRequestParameters(): AdditionalRequestParameters {
     accessToken.onNotEmpty { headers[it.name] = it.string }
 
     return AdditionalRequestParameters(headers, queries, cookies)
+}
+
+@Deprecated("UserSession interface should be replaced")
+fun AndroidUserSession.toUserSession() = object : UserSession {
+    override val client: String = this@toUserSession.client.value.string
+    override val api: String = this@toUserSession.api.value.string
+    override var token: String = this@toUserSession.accessToken.getOrNull()?.string ?: ""
+    override var filterLanguage = "en,ru"
+    override var habrLanguage = "en"
 }

@@ -46,6 +46,7 @@ dependencies {
 
     implementation(kotlin("stdlib"))
     implementation(project(":functional"))
+    implementation(project(":habrachan"))
 
     implementation(project(":entity"))
     implementation(project(":entity:entity-native"))

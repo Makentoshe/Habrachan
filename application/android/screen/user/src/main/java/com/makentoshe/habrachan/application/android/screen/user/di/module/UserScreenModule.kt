@@ -2,6 +2,8 @@ package com.makentoshe.habrachan.application.android.screen.user.di.module
 
 import com.makentoshe.application.android.common.user.get.viewmodel.GetUserViewModel
 import com.makentoshe.application.android.common.user.get.viewmodel.GetUserViewModelProvider
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
+import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModelProvider
 import com.makentoshe.habrachan.application.android.common.di.FragmentInjector
 import com.makentoshe.habrachan.application.android.common.strings.BundledStringsProvider
 import com.makentoshe.habrachan.application.android.common.user.me.viewmodel.MeUserViewModel
@@ -11,6 +13,7 @@ import com.makentoshe.habrachan.application.android.common.usersession.AndroidUs
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.user.UserFragment
 import com.makentoshe.habrachan.application.android.screen.user.di.UserScope
+import com.makentoshe.habrachan.application.common.arena.content.GetContentArena
 import com.makentoshe.habrachan.application.common.arena.user.get.GetUserArena
 import com.makentoshe.habrachan.application.common.arena.user.me.MeUserArena
 import com.makentoshe.habrachan.functional.Option2
@@ -25,6 +28,7 @@ class UserScreenModule(injectorScope: FragmentInjector.FragmentInjectorScope<Use
     private val userSessionProvider by inject<AndroidUserSessionProvider>()
     private val meUserArena by inject<MeUserArena>()
     private val getUserArena by inject<GetUserArena>()
+    private val getAvatarArena by inject<GetContentArena>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class, UserScope::class).inject(this)
@@ -36,6 +40,9 @@ class UserScreenModule(injectorScope: FragmentInjector.FragmentInjectorScope<Use
         val getInitialOption = Option2.None
         val getFactory = GetUserViewModel.Factory(stringsProvider, userSessionProvider, getUserArena, getInitialOption)
         bind<GetUserViewModel>().toInstance(GetUserViewModelProvider(getFactory).get(injectorScope.fragment))
+
+        val avatarFactory = GetAvatarViewModel.Factory(stringsProvider, userSessionProvider, getAvatarArena)
+        bind<GetAvatarViewModel>().toInstance(GetAvatarViewModelProvider(avatarFactory).get(injectorScope.fragment))
     }
 
 }
