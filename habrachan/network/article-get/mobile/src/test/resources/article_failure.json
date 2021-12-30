@@ -1,0 +1,10 @@
+{
+  "code": 404,
+  "message": "Resource not found",
+  "data": {
+    "url": "/posts/598425"
+  },
+  "additional": [
+    "NOT_FOUND"
+  ]
+}

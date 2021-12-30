@@ -101,3 +101,7 @@ include(":user-get")
 include(":application:android:common:user-get")
 include("habrachan:network:content-get")
 findProject(":habrachan:network:content-get")?.name = "content-get"
+include("habrachan:network:article-get")
+findProject(":habrachan:network:article-get")?.name = "article-get"
+include("habrachan:network:article-get:mobile")
+findProject(":habrachan:network:article-get:mobile")?.name = "mobile"
