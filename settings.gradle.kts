@@ -105,3 +105,5 @@ include("habrachan:network:article-get")
 findProject(":habrachan:network:article-get")?.name = "article-get"
 include("habrachan:network:article-get:mobile")
 findProject(":habrachan:network:article-get:mobile")?.name = "mobile"
+include("application:common:arena:article-get")
+findProject(":application:common:arena:article-get")?.name = "article-get"
