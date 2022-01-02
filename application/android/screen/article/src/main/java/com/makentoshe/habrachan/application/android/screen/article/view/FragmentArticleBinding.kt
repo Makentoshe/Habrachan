@@ -8,22 +8,70 @@ import android.view.View
 import android.webkit.WebViewClient
 import androidx.core.content.ContextCompat
 import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
+import com.makentoshe.habrachan.application.android.common.exception.exceptionEntry
 import com.makentoshe.habrachan.application.android.screen.article.R
 import com.makentoshe.habrachan.application.android.screen.article.databinding.FragmentArticleBinding
+import com.makentoshe.habrachan.application.android.screen.article.model.ArticleHtmlController
 import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
+import com.makentoshe.habrachan.application.common.arena.article.get.*
 import com.makentoshe.habrachan.entity.ArticleVote
-import com.makentoshe.habrachan.functional.Option
 
 internal val FragmentArticleBinding.context: Context
     get() = root.context
 
-internal fun FragmentArticleBinding.showContent(articleHtmlString: String): FragmentArticleBinding {
+// TODO implement ArticleVote
+internal fun FragmentArticleBinding.showArticleContent(article: ArticleFromArena, controller: ArticleHtmlController) {
+    // hide progress
+    fragmentArticleProgress.visibility = View.GONE
+    // show toolbar
+    fragmentArticleAppbar.visibility = View.VISIBLE
+    fragmentArticleAppbar.setExpanded(true, true)
+    // set article title
+    fragmentArticleAppbarCollapsingToolbar.visibility = View.VISIBLE
+    fragmentArticleAppbarCollapsingToolbar.title = article.title.value.articleTitle
+    fragmentArticleToolbarCalculator.text = article.title.value.articleTitle
+    // set article author
+    fragmentArticleToolbarLogin.text = article.author.value.authorLogin.value.authorLogin
+    // set additional article actions, like share
+    fragmentArticleAppbarCollapsingToolbar.overflowIcon = ContextCompat.getDrawable(context, R.drawable.ic_overflow)
+    fragmentArticleAppbarCollapsingToolbar.inflateMenu(R.menu.menu_article_overflow)
+    // show article bottom bar
+    fragmentArticleBottom.visibility = View.VISIBLE
+    // show article bottom bar scores
+    fragmentArticleBottomVoteview.text = article.votesCount.value.toString()
+    fragmentArticleBottomReadingCount.text = article.readingCount.value.toString()
+    fragmentArticleBottomCommentsCount.text = article.commentsCount.value.toString()
+    // show article main content
+    val htmlContent = article.articleText.getOrNull()?.html
+    if (htmlContent != null) showContent(controller.render(htmlContent))
+
+//    when (articleVote.value) {
+//        1.0 -> setVoteUpIcon()
+//        -1.0 -> setVoteDownIcon()
+//    }
+
+}
+
+internal fun FragmentArticleBinding.showArticleError(exceptionEntry: ExceptionEntry<*>) {
+    // hide progress
+    fragmentArticleProgress.visibility = View.GONE
+    // show error title
+    fragmentArticleExceptionTitle.visibility = View.VISIBLE
+    fragmentArticleExceptionTitle.text = exceptionEntry.title
+    // show error additional message
+    fragmentArticleExceptionMessage.visibility = View.VISIBLE
+    fragmentArticleExceptionMessage.text = exceptionEntry.message
+    // show retry button
+    fragmentArticleExceptionRetry.visibility = View.VISIBLE
+}
+
+internal fun FragmentArticleBinding.showContent(articleHtmlString: String) = try {
     fragmentArticleScroll.visibility = View.VISIBLE
 
     val base64content = Base64.encodeToString(articleHtmlString.toByteArray(), Base64.DEFAULT)
     fragmentArticleWebview.loadData(base64content, "text/html; charset=UTF-8", "base64")
-
-    return this
+} catch (exception: Exception) {
+    showException(exceptionEntry(context, exception))
 }
 
 internal fun FragmentArticleBinding.showBottom(
@@ -46,19 +94,15 @@ internal fun FragmentArticleBinding.showBottom(
     return this
 }
 
-internal fun FragmentArticleBinding.hideProgress(): FragmentArticleBinding {
-    fragmentArticleProgress.visibility = View.GONE
-
-    return this
-}
-
-internal fun FragmentArticleBinding.showProgress(): FragmentArticleBinding {
+internal fun FragmentArticleBinding.showArticleProgress() {
     fragmentArticleProgress.visibility = View.VISIBLE
 
-    return this
+    fragmentArticleExceptionTitle.visibility = View.GONE
+    fragmentArticleExceptionMessage.visibility = View.GONE
+    fragmentArticleExceptionRetry.visibility = View.GONE
 }
 
-internal fun FragmentArticleBinding.showException(exceptionEntry: ExceptionEntry<*>): FragmentArticleBinding {
+internal fun FragmentArticleBinding.showException(exceptionEntry: ExceptionEntry<*>) {
     fragmentArticleExceptionTitle.visibility = View.VISIBLE
     fragmentArticleExceptionTitle.text = exceptionEntry.title
 
@@ -66,16 +110,12 @@ internal fun FragmentArticleBinding.showException(exceptionEntry: ExceptionEntry
     fragmentArticleExceptionMessage.text = exceptionEntry.message
 
     fragmentArticleExceptionRetry.visibility = View.VISIBLE
-
-    return this
 }
 
-internal fun FragmentArticleBinding.hideException(): FragmentArticleBinding {
+internal fun FragmentArticleBinding.hideException() {
     fragmentArticleExceptionTitle.visibility = View.GONE
     fragmentArticleExceptionMessage.visibility = View.GONE
     fragmentArticleExceptionRetry.visibility = View.GONE
-
-    return this
 }
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -90,10 +130,7 @@ internal fun FragmentArticleBinding.initializeWebView(
     return this
 }
 
-internal fun FragmentArticleBinding.showToolbarContent(
-    title: String,
-    author: Option<String> = Option.None
-): FragmentArticleBinding {
+internal fun FragmentArticleBinding.showToolbarContent(title: String, author: String): FragmentArticleBinding {
     fragmentArticleAppbar.visibility = View.VISIBLE
     fragmentArticleAppbar.setExpanded(true, true)
 
@@ -101,11 +138,10 @@ internal fun FragmentArticleBinding.showToolbarContent(
     fragmentArticleAppbarCollapsingToolbar.title = title
     fragmentArticleToolbarCalculator.text = title
 
-    author.onNotEmpty(fragmentArticleToolbarLogin::setText)
+    fragmentArticleToolbarLogin.text = author
 
     fragmentArticleAppbarCollapsingToolbar.overflowIcon = ContextCompat.getDrawable(context, R.drawable.ic_overflow)
     fragmentArticleAppbarCollapsingToolbar.inflateMenu(R.menu.menu_article_overflow)
-//        fragment_article_toolbar.setOnMenuItemClickListener(::onOverflowMenuItemClick)
 
     return this
 }
@@ -117,12 +153,10 @@ internal fun FragmentArticleBinding.showToolbarAvatarProgress(): FragmentArticle
     return this
 }
 
-internal fun FragmentArticleBinding.showToolbarAvatarStub(): FragmentArticleBinding {
+internal fun FragmentArticleBinding.showToolbarAvatarStub() {
     fragmentArticleToolbarAvatarProgress.visibility = View.GONE
     fragmentArticleToolbarAvatar.visibility = View.VISIBLE
     fragmentArticleToolbarAvatar.setImageResource(R.drawable.ic_account_stub)
-
-    return this
 }
 
 internal fun FragmentArticleBinding.showToolbarAvatar(drawable: Drawable): FragmentArticleBinding {

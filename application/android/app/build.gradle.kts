@@ -69,6 +69,7 @@ dependencies {
     implementation(kotlin("stdlib"))
 
     implementation(project(":habrachan"))
+    implementation(project(":habrachan:entity"))
     implementation(project(":habrachan:api"))
     implementation(project(":habrachan:api:mobile"))
     implementation(project(":habrachan:network"))

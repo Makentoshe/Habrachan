@@ -1,10 +1,7 @@
 package com.makentoshe.habrachan.application.common.arena.article.get
 
 import com.makentoshe.habrachan.AnyWithVolumeParameters
-import com.makentoshe.habrachan.delegate.optionReadonlyProperty
-import com.makentoshe.habrachan.delegate.requireFloatReadonlyProperty
-import com.makentoshe.habrachan.delegate.requireReadonlyProperty
-import com.makentoshe.habrachan.delegate.requireStringReadonlyProperty
+import com.makentoshe.habrachan.delegate.*
 import com.makentoshe.habrachan.entity.article.author.component.AuthorAvatar
 import com.makentoshe.habrachan.entity.article.author.component.authorId
 import com.makentoshe.habrachan.entity.article.author.component.authorLogin
@@ -30,6 +27,7 @@ val ArticleAuthorFromArena.authorLogin by requireReadonlyProperty("alias") { jso
     authorLogin(jsonElement.jsonPrimitive.content)
 }
 
-val ArticleAuthorFromArena.authorAvatar by optionReadonlyProperty("avatar") { jsonElement ->
-    AuthorAvatar(jsonElement.jsonPrimitive.content)
-}
+val ArticleAuthorFromArena.authorAvatar by optionReadonlyProperty(
+    propertyMapper("avatar") { jsonElement -> AuthorAvatar(jsonElement.jsonPrimitive.content) },
+    propertyMapper("avatarUrl") { jsonElement -> AuthorAvatar(jsonElement.jsonPrimitive.content) }
+)

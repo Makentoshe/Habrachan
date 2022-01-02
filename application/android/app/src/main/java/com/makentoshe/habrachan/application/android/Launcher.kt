@@ -65,7 +65,7 @@ class Launcher(private val defaultScreen: Screen) {
             }
         }
 
-        return ArticleScreen2(articleId)
+        return ArticleScreen2(com.makentoshe.habrachan.entity.article.component.ArticleId(articleId.articleId))
     }
 
 //    private fun users(iterator: Iterator<String>) : Screen {

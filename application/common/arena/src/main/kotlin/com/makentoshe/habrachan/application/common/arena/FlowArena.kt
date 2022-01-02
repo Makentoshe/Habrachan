@@ -4,8 +4,6 @@ import com.makentoshe.habrachan.functional.Either2
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-data class FlowArenaResponse<V, E>(val loading: Boolean, val content: Either2<V, E>)
-
 abstract class FlowArena<in K, V> {
 
     protected abstract val arenaStorage: ArenaCache3<in K, V>

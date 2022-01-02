@@ -23,7 +23,7 @@ abstract class BaseNetworkModule: Module() {
             val logging = HttpLoggingInterceptor {
                 capture(analyticEvent("OkHttpClient", it))
             }
-            logging.level = HttpLoggingInterceptor.Level.BODY
+            logging.level = HttpLoggingInterceptor.Level.BASIC
             addInterceptor(logging)
         }
         return this

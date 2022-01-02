@@ -1,9 +1,9 @@
 package com.makentoshe.habrachan.application.android.screen.article.di.module
 
 import androidx.lifecycle.lifecycleScope
-import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleSpec
 import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleViewModel
 import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleViewModelProvider
+import com.makentoshe.habrachan.application.android.common.article.viewmodel.GetArticleViewModelRequest
 import com.makentoshe.habrachan.application.android.common.article.voting.viewmodel.VoteArticleViewModel
 import com.makentoshe.habrachan.application.android.common.article.voting.viewmodel.VoteArticleViewModelProvider
 import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetAvatarViewModel
@@ -18,10 +18,10 @@ import com.makentoshe.habrachan.application.android.screen.article.di.ArticleSco
 import com.makentoshe.habrachan.application.android.screen.article.model.ArticleHtmlController
 import com.makentoshe.habrachan.application.android.screen.article.model.ArticleShareController
 import com.makentoshe.habrachan.application.android.screen.article.model.JavaScriptInterface
-import com.makentoshe.habrachan.application.common.arena.article.ArticleArena
+import com.makentoshe.habrachan.application.common.arena.article.get.GetArticleArena
 import com.makentoshe.habrachan.application.common.arena.content.GetContentArena
 import com.makentoshe.habrachan.application.common.article.voting.VoteArticleArena
-import com.makentoshe.habrachan.functional.Option
+import com.makentoshe.habrachan.functional.Option2
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -34,7 +34,7 @@ class ArticleScreenModule(injectorScope: FragmentInjector.FragmentInjectorScope<
     private val database by inject<AndroidCacheDatabase>()
 
     private val voteArticleArena by inject<VoteArticleArena>()
-    private val getArticleArena by inject<ArticleArena>()
+    private val getArticleArena by inject<GetArticleArena>()
     private val getAvatarArena by inject<GetContentArena>()
 
     init {
@@ -54,8 +54,8 @@ class ArticleScreenModule(injectorScope: FragmentInjector.FragmentInjectorScope<
     }
 
     private fun getArticleViewModel(injectorScope: FragmentInjector.FragmentInjectorScope<ArticleFragment>): GetArticleViewModel {
-        val articleInitialOption = Option.from(GetArticleSpec(injectorScope.fragment.arguments.articleId))
-        val articleFactory = GetArticleViewModel.Factory(userSessionProvider, getArticleArena, articleInitialOption)
+        val articleInitialOption = Option2.from(GetArticleViewModelRequest(injectorScope.fragment.arguments.articleId))
+        val articleFactory = GetArticleViewModel.Factory(stringsProvider, userSessionProvider, getArticleArena, articleInitialOption)
         return GetArticleViewModelProvider(articleFactory).get(injectorScope.fragment)
     }
 

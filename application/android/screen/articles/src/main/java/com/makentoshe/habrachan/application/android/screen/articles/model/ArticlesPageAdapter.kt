@@ -13,7 +13,7 @@ import com.makentoshe.habrachan.application.android.screen.articles.view.Article
 import com.makentoshe.habrachan.application.android.screen.articles.view.initialize
 import com.makentoshe.habrachan.application.android.screen.articles.view.setOnClickListener
 import com.makentoshe.habrachan.entity.article.articleId
-import com.makentoshe.habrachan.entity.articleId
+import com.makentoshe.habrachan.entity.article.component.ArticleId
 import javax.inject.Inject
 
 class ArticlesPageAdapter @Inject constructor(
@@ -34,7 +34,7 @@ class ArticlesPageAdapter @Inject constructor(
             holder.initialize(model.article)
             holder.setOnClickListener {
                 val newArticleId = model.article.articleId.value
-                articleScreenNavigator.toArticleScreen(articleId(newArticleId.articleId))
+                articleScreenNavigator.toArticleScreen(ArticleId(newArticleId.articleId))
             }
         }
     } catch (exception: Exception) {

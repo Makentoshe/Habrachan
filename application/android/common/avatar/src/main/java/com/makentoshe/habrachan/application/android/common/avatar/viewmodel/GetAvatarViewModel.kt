@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
-import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
 import com.makentoshe.habrachan.application.android.common.avatar.R
 import com.makentoshe.habrachan.application.android.common.exception.ExceptionEntry
 import com.makentoshe.habrachan.application.android.common.exception.exceptionEntry
@@ -42,7 +41,6 @@ class GetAvatarViewModel(
     private val avatars = HashMap<GetAvatarViewModelRequest, GetAvatarViewModelFlow>()
 
     suspend fun requestAvatar(avatar: GetAvatarViewModelRequest): GetAvatarViewModelFlow {
-        capture(analyticEvent { "Request avatar: ${avatar.contentUrl}" })
         return if (avatars.containsKey(avatar)) {
             avatars[avatar] ?: requestAvatarFlow(avatar)
         } else requestAvatarFlow(avatar)

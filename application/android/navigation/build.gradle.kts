@@ -41,6 +41,7 @@ dependencies {
     implementation(kotlin("stdlib"))
 
     implementation(project(":entity"))
+    implementation(project(":habrachan:entity"))
     implementation(project(mapOf("path" to ":functional")))
 
     // Cicerone

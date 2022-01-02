@@ -40,22 +40,16 @@ dependencies {
 
     implementation(kotlin("stdlib"))
 
-    implementation(project(":entity"))
-    implementation(project(":entity:entity-native"))
+    api(project(":application:common:arena:article-get"))
 
-    implementation(project(":network"))
-    implementation(project(":network:network-native:network-native-common"))
-    implementation(project(":network:network-native"))
+    implementation(project(":habrachan"))
+    implementation(project(":habrachan:entity"))
+    implementation(project(":habrachan:api"))
 
     implementation(project(":application:android:analytics"))
     implementation(project(":application:android:database"))
     implementation(project(":application:android:common"))
     implementation(project(":application:android:di"))
-
-    implementation(project(":functional"))
-
-    // Inherits
-    api(project(":application:common:arena:article"))
 
     // Toothpick
     // https://github.com/stephanenicolas/toothpick
@@ -104,4 +98,9 @@ dependencies {
     // https://stackoverflow.com/questions/48049131/cannot-resolve-symbol-instanttaskexecutorrule
     val testArchitectureVersion = dependency.version.androidTestArchitecture
     testImplementation("androidx.arch.core:core-testing:$testArchitectureVersion")
+
+    // kotlinx.serialization - Json and other stuff serializing/deserializing
+    // https://github.com/Kotlin/kotlinx.serialization
+    val kotlinSerializationJsonVersion = dependency.version.serializationJson
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationJsonVersion")
 }

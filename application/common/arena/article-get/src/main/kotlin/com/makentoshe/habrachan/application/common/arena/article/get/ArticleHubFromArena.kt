@@ -17,3 +17,5 @@ val ArticleHubFromArena.hubId by requireReadonlyProperty("id") { jsonElement ->
 }
 
 val ArticleHubFromArena.title by requireStringReadonlyProperty("title")
+
+val ArticleHubFromArena.alias by requireStringReadonlyProperty("alias")

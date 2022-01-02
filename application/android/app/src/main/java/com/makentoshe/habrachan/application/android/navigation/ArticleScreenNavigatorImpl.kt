@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.application.android.navigation
 import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen2
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.StackRouter
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.ArticleScreenNavigator
-import com.makentoshe.habrachan.entity.ArticleId
+import com.makentoshe.habrachan.entity.article.component.ArticleId
 import javax.inject.Inject
 
 class ArticleScreenNavigatorImpl @Inject constructor(

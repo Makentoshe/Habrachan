@@ -8,11 +8,10 @@ import com.makentoshe.habrachan.application.android.common.avatar.viewmodel.GetA
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.article.ArticleFragment
 import com.makentoshe.habrachan.application.android.screen.article.di.ArticleScope
+import com.makentoshe.habrachan.application.android.screen.article.navigation.ArticleScreen2
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.ArticleCommentsScreenNavigator
 import com.makentoshe.habrachan.application.android.screen.articles.navigation.navigator.ContentScreenNavigator
-import com.makentoshe.habrachan.entity.ArticleId
-import com.makentoshe.habrachan.entity.articleId
-import com.makentoshe.habrachan.functional.Option
+import com.makentoshe.habrachan.entity.article.component.ArticleId
 import io.mockk.mockk
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +26,7 @@ import toothpick.smoothie.lifecycle.closeOnDestroy
 @RunWith(AndroidJUnit4::class)
 class ArticleFragmentTest {
 
-    private val articleId = articleId(39)
+    private val articleId = ArticleId(39)
 
     private val mockResources = mockk<Resources>()
     private val mockCoroutineScope = mockk<CoroutineScope>()
@@ -63,7 +62,7 @@ class ArticleFragmentTest {
     private fun `launch and resume fragment than execute`(
         action: ArticleFragment.() -> Unit
     ): FragmentScenario<ArticleFragment> {
-        return ArticleFragment.build(articleId, Option.None).`launch this fragment and execute` {
+        return ArticleScreen2(articleId).fragment.`launch this fragment and execute` {
             toothpickScope.closeOnDestroy(this).inject(this)
         }.`then resume and execute`(action)
     }
