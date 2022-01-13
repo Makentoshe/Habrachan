@@ -113,16 +113,15 @@ class ArticleFragment : BindableBaseFragment(), HabrachanWebViewClientListener {
             }
         }
 
-        // TODO check out and downvote dialog result handle
-//        childFragmentManager.setFragmentResultListener(
-//            ArticleVoteDownReasonDialogFragment.request,
-//            this@ArticleFragment
-//        ) { _, result ->
-//            val reason = result.getSerializable(ArticleVoteDownReasonDialogFragment.key) as ArticleVote.Down.Reason
-//            lifecycleScope.launch(Dispatchers.IO) {
-//                voteArticleViewModel.channel.send(VoteArticleSpec(arguments.articleId, ArticleVote.Down(reason)))
-//            }
-//        }
+        childFragmentManager.setFragmentResultListener(
+            ArticleVoteDownReasonDialogFragment.request,
+            this@ArticleFragment
+        ) { _, result ->
+            val reason = result.getSerializable(ArticleVoteDownReasonDialogFragment.key) as ArticleVote.Down.Reason
+            lifecycleScope.launch(IO) {
+                voteArticleViewModel.channel.send(VoteArticleSpec(articleId(arguments.articleId.articleId), ArticleVote.Down(reason)))
+            }
+        }
     }
 
     private fun onArticleResponseCollect(response: GetArticleViewModelFlowResponse) = lifecycleScope.launch(Main) {
