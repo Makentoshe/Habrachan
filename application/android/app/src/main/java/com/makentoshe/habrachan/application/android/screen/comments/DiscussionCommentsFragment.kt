@@ -18,7 +18,8 @@ import com.makentoshe.habrachan.application.android.screen.comments.model.adapte
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.DiscussionCommentSeparatorItemDecoration
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
-import kotlinx.android.synthetic.main.fragment_comments_discussion.*
+import kotlinx.android.synthetic.main.fragment_comments_discussion.fragment_comments_discussion_recycler
+import kotlinx.android.synthetic.main.fragment_comments_discussion.fragment_comments_discussion_toolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -57,7 +58,6 @@ class DiscussionCommentsFragment : BaseFragment() {
     ): View = inflater.inflate(R.layout.fragment_comments_discussion, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        println(commentAdapter)
         val wasViewModelRecreated = viewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
         if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch(Dispatchers.IO) {
             val message = "articleId=${arguments.articleId}, commentId=${arguments.commentId}"

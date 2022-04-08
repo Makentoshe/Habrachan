@@ -3,7 +3,7 @@ package com.makentoshe.habrachan.application.android.screen.comments.model.adapt
 import com.makentoshe.habrachan.application.android.common.comment.CommentViewHolder
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.CommentViewController
 import com.makentoshe.habrachan.application.android.common.comment.controller.comment.body.content.ContentBodyComment
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentModelElement
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelElement
 
 class ContentCommentAdapterController(
     private val commentAdapterController: CommentAdapterController?,

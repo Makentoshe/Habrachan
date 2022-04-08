@@ -15,16 +15,21 @@ import com.makentoshe.habrachan.application.android.ExceptionViewHolder
 import com.makentoshe.habrachan.application.android.analytics.Analytics
 import com.makentoshe.habrachan.application.android.analytics.LogAnalytic
 import com.makentoshe.habrachan.application.android.analytics.event.analyticEvent
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsSpec
+import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
 import com.makentoshe.habrachan.application.android.common.core.fragment.BaseFragment
 import com.makentoshe.habrachan.application.android.common.core.fragment.FragmentArguments
 import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsEmptyStateController
-import com.makentoshe.habrachan.application.android.screen.comments.model.CommentsSpec
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
 import com.makentoshe.habrachan.application.android.screen.comments.navigation.CommentsNavigation
 import com.makentoshe.habrachan.application.android.screen.comments.view.CommentsEmptyStateViewHolder
-import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
 import com.makentoshe.habrachan.entity.ArticleId
-import kotlinx.android.synthetic.main.fragment_comments_article.*
+import com.makentoshe.habrachan.entity.articleId
+import kotlinx.android.synthetic.main.fragment_comments_article.fragment_comments_article_empty_state
+import kotlinx.android.synthetic.main.fragment_comments_article.fragment_comments_article_exception
+import kotlinx.android.synthetic.main.fragment_comments_article.fragment_comments_article_progress
+import kotlinx.android.synthetic.main.fragment_comments_article.fragment_comments_article_recycler
+import kotlinx.android.synthetic.main.fragment_comments_article.fragment_comments_article_toolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -44,7 +49,7 @@ class ArticleCommentsFragment : BaseFragment() {
     override val arguments = Arguments(this)
 
     private val adapter by inject<ContentCommentAdapter>()
-    private val viewModel by inject<ArticleCommentsViewModel>()
+    private val viewModel by inject<GetArticleCommentsViewModel>()
     private val navigation by inject<CommentsNavigation>()
     private val exceptionHandler by inject<ExceptionHandler>()
 
@@ -59,8 +64,8 @@ class ArticleCommentsFragment : BaseFragment() {
         val wasViewModelRecreated = viewModel.toString() != savedInstanceState?.getString(VIEW_MODEL_STATE_KEY)
         if (savedInstanceState == null || wasViewModelRecreated) lifecycleScope.launch(Dispatchers.IO) {
             capture(analyticEvent(this@ArticleCommentsFragment.javaClass.simpleName, "articleId=${arguments.articleId}"))
-            val spec = CommentsSpec(arguments.articleId)
-            viewModel.sendSpecChannel.send(spec)
+            val spec = GetArticleCommentsSpec(articleId(arguments.articleId))
+            viewModel.channel.send(spec)
         }
 
         exceptionController = ExceptionController(ExceptionViewHolder(fragment_comments_article_exception))

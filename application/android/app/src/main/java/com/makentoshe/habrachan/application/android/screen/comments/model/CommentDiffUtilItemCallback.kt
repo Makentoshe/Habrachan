@@ -1,6 +1,7 @@
 package com.makentoshe.habrachan.application.android.screen.comments.model
 
 import androidx.recyclerview.widget.DiffUtil
+import com.makentoshe.habrachan.application.android.common.comment.model.forest.CommentModelElement
 
 class CommentDiffUtilItemCallback : DiffUtil.ItemCallback<CommentModelElement>() {
 
