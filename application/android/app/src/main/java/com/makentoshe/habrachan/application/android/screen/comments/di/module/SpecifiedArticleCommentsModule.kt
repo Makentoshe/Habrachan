@@ -9,10 +9,9 @@ import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.di.ArticleCommentsScope2
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
-import com.makentoshe.habrachan.application.android.screen.comments.di.provider.ArticleCommentsViewModelProvider
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.ContentCommentAdapterProvider
 import com.makentoshe.habrachan.application.android.screen.comments.model.adapter.ContentCommentAdapter
-import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.ArticleCommentsViewModel
+import com.makentoshe.habrachan.network.UserSession
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -20,12 +19,14 @@ import toothpick.ktp.delegate.inject
 
 class SpecifiedArticleCommentsModule(fragment: ArticleCommentsFragment) : Module() {
 
+    private val userSession by inject<UserSession>()
+
     // From CommentsScope
     private val voteCommentViewModelFactory by inject<VoteCommentViewModel.Factory>()
-
+//
     // From ArticleCommentsScope
-    private val articleCommentsViewModelProvider by inject<ArticleCommentsViewModelProvider>()
-    private val commentsViewModelFactory by inject<GetArticleCommentsViewModel.Factory>()
+    private val articleCommentsViewModelProvider by inject<GetArticleCommentsViewModelProvider>()
+//    private val commentsViewModelFactory by inject<GetArticleCommentsViewModel.Factory>()
 
     init {
         Toothpick.openScopes(ApplicationScope::class, CommentsScope::class, ArticleCommentsScope2::class).inject(this)
@@ -34,11 +35,8 @@ class SpecifiedArticleCommentsModule(fragment: ArticleCommentsFragment) : Module
         val voteCommentViewModelProvider = VoteCommentViewModelProvider(fragment, voteCommentViewModelFactory)
         bind<VoteCommentViewModelProvider>().toInstance(voteCommentViewModelProvider)
 
-        bind<ArticleCommentsViewModel>().toInstance(articleCommentsViewModelProvider.get(fragment))
-
         bind<ContentCommentAdapter>().toProvider(ContentCommentAdapterProvider::class)
 
-        val getArticleCommentsViewModelProvider = GetArticleCommentsViewModelProvider(commentsViewModelFactory)
-        bind<GetArticleCommentsViewModel>().toInstance(getArticleCommentsViewModelProvider.get(fragment))
+        bind<GetArticleCommentsViewModel>().toInstance(articleCommentsViewModelProvider.get(fragment))
     }
 }
