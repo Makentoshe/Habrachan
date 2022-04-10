@@ -14,13 +14,13 @@ android {
         exclude("META-INF/NOTICE*")
         exclude("META-INF/*.kotlin_module")
     }
-    compileSdkVersion(29)
+    compileSdkVersion(31)
     defaultConfig {
         applicationId = "com.makentoshe.habrachan"
         minSdkVersion(21)
-        targetSdkVersion(29)
-        versionCode = 10
-        versionName = "0.8.2"
+        targetSdkVersion(31)
+        versionCode = 11
+        versionName = "0.8.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
 //        val localPropertiesFile = project.rootProject.file("local.properties")
