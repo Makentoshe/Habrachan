@@ -15,7 +15,8 @@
         android:theme="@style/Habrachan.Light">
         <activity
             android:name=".application.android.AppActivity"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustNothing"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
