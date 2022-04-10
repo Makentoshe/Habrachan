@@ -1,7 +1,6 @@
 package com.makentoshe.habrachan.application.android.screen.comments.di.module
 
 import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModel
-import com.makentoshe.habrachan.application.android.common.comment.viewmodel.GetArticleCommentsViewModelProvider
 import com.makentoshe.habrachan.application.android.di.ApplicationScope
 import com.makentoshe.habrachan.application.android.screen.comments.ArticleCommentsFragment
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
@@ -26,7 +25,6 @@ class ArticleCommentsModule(private val fragment: ArticleCommentsFragment) : Mod
         bind<ArticleCommentsArena>().toInstance(articleCommentsArena)
 
         val factory = GetArticleCommentsViewModel.Factory(userSession, articleCommentsArena)
-        val provider = GetArticleCommentsViewModelProvider(factory)
-        bind<GetArticleCommentsViewModelProvider>().toInstance(provider)
+        bind<GetArticleCommentsViewModel.Factory>().toInstance(factory)
     }
 }
