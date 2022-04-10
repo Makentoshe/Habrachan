@@ -6,7 +6,6 @@ import com.makentoshe.habrachan.application.android.screen.comments.DiscussionCo
 import com.makentoshe.habrachan.application.android.screen.comments.di.CommentsScope
 import com.makentoshe.habrachan.application.android.screen.comments.di.provider.DiscussionCommentsViewModelFactoryProvider
 import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModel
-import com.makentoshe.habrachan.application.android.screen.comments.viewmodel.DiscussionCommentsViewModelProvider
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -18,6 +17,5 @@ class DiscussionCommentsModule(private val fragment: DiscussionCommentsFragment)
         bind<Context>().toInstance(fragment.requireActivity())
 
         bind<DiscussionCommentsViewModel.Factory>().toProvider(DiscussionCommentsViewModelFactoryProvider::class)
-        bind<DiscussionCommentsViewModelProvider>().toClass<DiscussionCommentsViewModelProvider>()
     }
 }
